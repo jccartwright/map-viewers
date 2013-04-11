@@ -1,0 +1,26 @@
+### Things for git to ignore: ###
+
+## build artifacts, outputs
+build/
+target/
+out/
+target-eclipse/
+*.log
+cobertura.ser
+
+## ide/os metadata
+*.iws
+*.iml
+*.ipr
+.idea/
+.classpath/
+.project
+.settings/
+.DS_Store/
+*Db.properties
+*Db.script
+
+.gradle/
+/xrun.sh
+/log
+/etc
