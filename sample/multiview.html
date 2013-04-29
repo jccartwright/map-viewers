@@ -156,14 +156,19 @@
                         zoom: 5,
                         logo: false
                     });
+
+                    /*
                     Connect.connect(arcticMapConfig.map, 'onLoad', arcticMapConfig, function(map){
                         //var arcticMapToolbar = new MapToolbar({map: arcticMapConfig.map}, "arcticMapToolbar");
-                        var arcticMapToolbar = new MapToolbar({map: arcticMapConfig.map});
-                        arcticMapConfig.map.addChild(arcticMapToolbar);
+                        //var arcticMapToolbar = new MapToolbar({map: arcticMapConfig.map});
+                        //arcticMapConfig.map.addChild(arcticMapToolbar);
                         //registry.byId('arctic').addChild(arcticMapToolbar);
                     } );
                     //var arcticMapToolbar = new MapToolbar({map: arcticMapConfig.map});
                     //registry.byId('arctic').addChild(arcticMapToolbar);
+                    */
+
+                    var arcticMapToolbar = new MapToolbar({map: arcticMapConfig.map}, "arcticMapToolbar");
 
                     var arcticBasemapToolbar = new BasemapToolbar({layerCollection: arcticMapConfig.mapLayerCollection}, "arcticBasemapToolbar");
                     basemapToolbar.startup();
