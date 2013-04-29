@@ -1,0 +1,1 @@
+package of javascript deployed independently and included at runtime via URL reference

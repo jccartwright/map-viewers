@@ -1,0 +1,6 @@
+/* positioning goes in calling page */
+.basemapToolbar {
+    border: solid 1px gray;
+    padding: 0px;
+    font-size: small;
+}

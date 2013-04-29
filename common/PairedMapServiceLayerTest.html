@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LayerCollection Test</title>
+    <script>
+        var dojoConfig = {
+            waitSeconds: 5,
+            async: true,
+            packages: [{
+                name: "ngdc",
+                location: location.pathname.replace(/\/[^/]*$/, '') + '/js/ngdc'
+            },
+            {
+                name: "app",
+                location: location.pathname.replace(/\/[^/]*$/, '') + '/js/app'
+            }],
+
+            //app-specific config values
+            app: {
+                loglevel: 2
+            }
+        };
+    </script>
+    <script src="//serverapi.arcgisonline.com/jsapi/arcgis/3.4/" data-dojo-config="parseOnLoad: false, async: 1"></script>
+    <script>
+        require(["ngdc/Logger", "ngdc/layers/PairedMapServiceLayer", "esri/layers/layer", "esri/layers/ArcGISTiledMapServiceLayer",
+                 "esri/layers/ArcGISDynamicMapServiceLayer", "dojo/_base/config", "dojo/io-query", "dojo/_base/lang",
+                 "dojo/domReady!"],
+                function(Logger, PairedMapServiceLayer, Layer, ArcGISTiledMapServiceLayer, ArcGISDynamicMapServiceLayer, config, ioQuery, lang){
+
+                    //add queryParams into config object
+                    var queryParams = ioQuery.queryToObject(location.search.substring(1));
+
+                    //values in queryParams take precedence
+                    lang.mixin(config.app, queryParams);
+
+                    var mapServices = [
+                        new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer", {
+                            id: "Multibeam (tiled)",
+                            visible: true,
+                            opacity: 1
+                        }),
+                        new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer", {
+                            id: "Multibeam (dynamic)",
+                            visible: false,
+                            opacity: 1,
+                            imageParameters: this.imageParametersPng32
+                        }),
+                        new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer", {
+                            id: "Ocean Basemap",
+                            visible: false,
+                            opacity: 1
+                        })
+                    ];
+
+                    var pairedMapServiceLayer = new PairedMapServiceLayer({
+                        id: "Multibeam",
+                        tiledService: mapServices[0],
+                        dynamicService: mapServices[1],
+                        visible: true,
+                        cutoffZoom: 5
+                    });
+                    console.log(pairedMapServiceLayer);
+                });
+    </script>
+</head>
+<body>
+<h1>PairedMapServiceLayer Test</h1>
+</body>
+</html>

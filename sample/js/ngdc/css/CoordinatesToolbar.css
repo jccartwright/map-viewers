@@ -1,0 +1,7 @@
+/* positioning goes in calling page */
+.coordinatesToolbar {
+    border: solid 1px gray;
+    padding: 0px;
+    background: rgb(119, 119, 119);
+    background: rgba(119, 119, 119, 0.8);
+}

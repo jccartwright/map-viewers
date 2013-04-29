@@ -1,0 +1,19 @@
+version = 1.0
+
+task copyToStaging(type: Copy) {
+    def destDir = "build/staging/${project.name}-${project.version}"
+
+    from ("../${project.name}") {
+        exclude 'README.md', '.idea', 'build', '.gradle', 'build.gradle', 'build.xml'
+    }
+
+    into "build/staging/${project.name}-${project.version}"
+}
+
+task buildDistribution(type: Zip, dependsOn: copyToStaging) {
+    from "build/staging"
+
+    doLast {
+        delete 'build/staging'
+    }
+}
