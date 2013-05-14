@@ -114,12 +114,12 @@
         require(
                 [
                     "ngdc/Logger", "ngdc/MapConfig", "ngdc/MapToolbar", "ngdc/BasemapToolbar", "ngdc/CoordinatesToolbar",
-                    "app/CreditsPanel",
+                    "app/CreditsPanel", "app/AppLayerCollection",
                     "dojo/_base/config", "dojo/io-query", "dojo/_base/lang", "dojo/dom", "dojo/_base/fx",
                     "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer",
                     "dojo/parser", "dojo/domReady!"
                 ],
-                function(Logger, MapConfig, MapToolbar, BasemapToolbar, CoordinatesToolbar, CreditsPanel, config, ioQuery, lang, dom,
+                function(Logger, MapConfig, MapToolbar, BasemapToolbar, CoordinatesToolbar, CreditsPanel, AppLayerCollection, config, ioQuery, lang, dom,
                          baseFx, BorderContainer, ContentPane, AccordionContainer, parser) {
                     parser.parse();
 
@@ -139,7 +139,7 @@
                         center:[-102,40],
                         zoom: 5,
                         logo: false
-                    });
+                    }, new AppLayerCollection());
 
                     var mapToolbar = new MapToolbar({map: mapConfig.map}, "mapToolbar");
 

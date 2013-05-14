@@ -40,10 +40,10 @@
     <script>
         require(
         [
-            "ngdc/Logger", "ngdc/MapConfig",
+            "ngdc/Logger", "ngdc/MapConfig", "app/AppLayerCollection",
             "dojo/_base/config", "dojo/io-query", "dojo/_base/lang", "dojo/ready", "dojo/domReady!"
         ],
-        function(Logger, MapConfig, config, ioQuery, lang, ready) {
+        function(Logger, MapConfig, AppLayerCollection, config, ioQuery, lang, ready) {
             ready(function() {
 
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
@@ -55,8 +55,7 @@
                 var mapConfig = new MapConfig("map", {
                     center:[-102,40],
                     zoom: 5
-                });
-                var map = mapConfig.map;
+                }, new AppLayerCollection());
             });
         }
         );

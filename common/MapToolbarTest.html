@@ -40,8 +40,8 @@
     </style>
     <script>
         require(["ngdc/Logger", "ngdc/MapToolbar", "ngdc/MapConfig", "esri/map", "dojo/_base/config", "dojo/io-query",
-                 "dojo/topic", "dojo/_base/lang", "dojo/_base/unload", "dojo/parser","dojo/domReady!"],
-            function(Logger, MapToolbar, MapConfig, Map, config, ioQuery, topic, lang, unload, parser){
+                 "app/AppLayerCollection", "dojo/topic", "dojo/_base/lang", "dojo/_base/unload", "dojo/parser","dojo/domReady!"],
+            function(Logger, MapToolbar, MapConfig, Map, config, ioQuery, AppLayerCollection, topic, lang, unload, parser){
                 parser.parse();
 
                 //add queryParams into config object
@@ -56,7 +56,7 @@
                     center:[-102,40],
                     zoom: 5,
                     logo: false
-                });
+                }, new AppLayerCollection());
 
                 var mapToolbar = new MapToolbar({map: mapConfig.map}, "mapToolbar");
 

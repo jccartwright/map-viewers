@@ -29,8 +29,8 @@
     <style>
         #coordinatesToolbar {
         position: absolute;
-        left: 60px;
-        bottom: 10px;
+        left: 40px;
+        bottom: 40px;
         z-index: 100;
         }
         html, body, #map {
@@ -41,8 +41,8 @@
     </style>
     <script>
         require(["ngdc/Logger", "ngdc/CoordinatesToolbar", "ngdc/MapConfig", "esri/map", "dojo/_base/config", "dojo/io-query",
-                 "dojo/topic", "dojo/_base/lang","dojo/parser", "dojo/_base/unload", "dojo/domReady!"],
-            function(Logger, CoordinatesToolbar, MapConfig, Map, config, ioQuery, topic, lang, parser, unload){
+                 "app/AppLayerCollection", "dojo/topic", "dojo/_base/lang","dojo/parser", "dojo/_base/unload", "dojo/domReady!"],
+            function(Logger, CoordinatesToolbar, MapConfig, Map, config, ioQuery, AppLayerCollection, topic, lang, parser, unload){
                 parser.parse();
 
                 //add queryParams into config object
@@ -59,7 +59,7 @@
                     center:[-102,40],
                     zoom: 5,
                     logo: false
-                });
+                }, new AppLayerCollection());
 
                 var coordinatesToolbar = new CoordinatesToolbar({map:mapConfig.map}, "coordinatesToolbar");
 

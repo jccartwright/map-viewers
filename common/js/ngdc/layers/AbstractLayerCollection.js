@@ -1,18 +1,19 @@
 define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters", "ngdc/layers/PairedMapServiceLayer"],
     function(declare, array, ImageParameters, PairedMapServiceLayer){
 
-        var mapServices;
-        var pairedMapServices;
+        //"static" properties
         var imageParameters;
 
-        //TODO necessary?
-        var firstZoomLevel;
-
         return declare([], {
-            constructor: function() {
-                this.firstZoomLevel = 2;
-                //TODO check to ensure unique id
-                //this.mapServices = mapServiceList;
+            //instance objects set in concrete class constructor
+            mapServices: null,
+            pairedMapServices: null,
+
+            //TODO still necessary?
+            firstZoomLevel: 2,
+
+        constructor: function() {
+                //TODO check to ensure unique id for mapServices
 
                 this.createImageParameters();
             },

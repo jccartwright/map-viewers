@@ -60,25 +60,28 @@
             background-repeat: no-repeat;
         }
 
-        #mapToolbar {
-            position: absolute;
+        .mapToolbar {
             left: 80px;
             top: 20px;
             z-index: 100;
+            display: inline-block;
+            position: absolute;
         }
 
-        #basemapToolbar {
-            position: absolute;
+        .basemapToolbar {
             right: 20px;
             top: 20px;
             z-index: 100;
+            display: inline-block;
+            position: absolute;
         }
 
-        #coordinatesToolbar {
-            position: absolute;
+        .coordinatesToolbar {
             left: 15px;
             bottom: 15px;
             z-index: 100;
+            display: inline-block;
+            position: absolute;
         }
     </style>
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
@@ -113,14 +116,14 @@
 
         require(
                 [
-                    "ngdc/Logger", "ngdc/MapConfig", "ngdc/MapToolbar", "ngdc/BasemapToolbar", "ngdc/CoordinatesToolbar",
-                    "app/CreditsPanel", "dojo/_base/connect",
-                    "dojo/_base/config", "dojo/io-query", "dojo/_base/lang", "dojo/dom", "dojo/_base/fx",
+                    "ngdc/Logger", "ngdc/MapConfig", "ngdc/MapToolbar", "app/BasemapToolbar", "app/ArcticBasemapToolbar", "app/AntarcticBasemapToolbar", "ngdc/CoordinatesToolbar",
+                    "app/CreditsPanel", "dojo/_base/connect", "dojo/aspect", "app/AppLayerCollection", "app/ArcticLayerCollection", "app/AntarcticLayerCollection",
+                    "dojo/_base/config", "dojo/io-query", "dojo/_base/lang", "dojo/dom", "dojo/_base/fx", "dojo/topic",
                     "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer",
-                    "dijit/layout/TabContainer", "dijit/registry", "dojo/parser", "dojo/domReady!"
+                    "dijit/layout/TabContainer", "dijit/registry", "dojo/_base/unload", "dojo/parser", "dojo/domReady!"
                 ],
-                function(Logger, MapConfig, MapToolbar, BasemapToolbar, CoordinatesToolbar, CreditsPanel, Connect, config, ioQuery, lang, dom,
-                         baseFx, BorderContainer, ContentPane, AccordionContainer, TabContainer, registry, parser) {
+                function(Logger, MapConfig, MapToolbar, BasemapToolbar, ArcticBasemapToolbar, AntarcticBasemapToolbar, CoordinatesToolbar, CreditsPanel, Connect, aspect, AppLayerCollection, ArcticLayerCollection, AntarcticLayerCollection, config, ioQuery, lang, dom,
+                         baseFx, topic, BorderContainer, ContentPane, AccordionContainer, TabContainer, registry, unload, parser) {
                     parser.parse();
 
                     //add queryParams into config object, values in queryParams take precedence
@@ -134,64 +137,77 @@
                     var loader = dom.byId("loader");
                     baseFx.fadeOut({ node: loader, duration: 500, onEnd: function(){ loader.style.display = "none"; }}).play();
 
-                    //create Map and add layers
-                    //web mercator
-                    var mapConfig = new MapConfig("global", {
-                        center:[-102,40],
-                        zoom: 5,
-                        logo: false
-                    });
-                    var mapToolbar = new MapToolbar({map: mapConfig.map}, "mapToolbar");
+                    // setup map views. You can only draw a Map into a visible container
+                    setupGlobalView();
 
-                    var basemapToolbar = new BasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "basemapToolbar");
-                    basemapToolbar.startup();
 
-                    var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "coordinatesToolbar");
-
-                    //arctic
-                    //you can only draw a Map into a visible container
                     registry.byId('mapContainer').selectChild('arctic');
-                    var arcticMapConfig = new MapConfig("arctic", {
-                        center:[-102,40],
-                        zoom: 5,
-                        logo: false
-                    });
+                    setupArcticView();
 
-                    /*
-                    Connect.connect(arcticMapConfig.map, 'onLoad', arcticMapConfig, function(map){
-                        //var arcticMapToolbar = new MapToolbar({map: arcticMapConfig.map}, "arcticMapToolbar");
-                        //var arcticMapToolbar = new MapToolbar({map: arcticMapConfig.map});
-                        //arcticMapConfig.map.addChild(arcticMapToolbar);
-                        //registry.byId('arctic').addChild(arcticMapToolbar);
-                    } );
-                    //var arcticMapToolbar = new MapToolbar({map: arcticMapConfig.map});
-                    //registry.byId('arctic').addChild(arcticMapToolbar);
-                    */
-
-                    var arcticMapToolbar = new MapToolbar({map: arcticMapConfig.map}, "arcticMapToolbar");
-
-                    var arcticBasemapToolbar = new BasemapToolbar({layerCollection: arcticMapConfig.mapLayerCollection}, "arcticBasemapToolbar");
-                    basemapToolbar.startup();
-
-                    var arcticCoordinatesToolbar = new CoordinatesToolbar({map: arcticMapConfig.map}, "arcticCoordinatesToolbar");
-
-
-                    //antarctic
                     registry.byId('mapContainer').selectChild('antarctic');
-                    var antarcticMapConfig = new MapConfig("antarctic", {
-                        center:[-102,40],
-                        zoom: 5,
-                        logo: false
-                    });
-                    var antarcticMapToolbar = new MapToolbar({map: mapConfig.map}, "antarcticMapToolbar");
-
-                    var antarcticBasemapToolbar = new BasemapToolbar({layerCollection: antarcticMapConfig.mapLayerCollection}, "antarcticBasemapToolbar");
-                    basemapToolbar.startup();
-
-                    var antarcticCoordinatesToolbar = new CoordinatesToolbar({map: antarcticMapConfig.map}, "antarcticCoordinatesToolbar");
+                    setupAntarcticView();
 
                     //go back to global as default view
                     registry.byId('mapContainer').selectChild('global');
+
+                    //listen for boundingbox events issued by MapToolbar
+                    var handle = topic.subscribe("/ngdc/boundingBox", function(geometry) {
+                        console.log('received geometry ',geometry);
+                    });
+
+                    unload.addOnUnload(function(){
+                        handle.remove();
+                    });
+
+
+                    function setupGlobalView() {
+                        var mapConfig = new MapConfig("global", {
+                            center:[-102,40],
+                            zoom: 5,
+                            logo: false,
+                            showAttribution: false
+                        }, new AppLayerCollection());
+
+                        var mapToolbar = new MapToolbar({map: mapConfig.map}, "mapToolbar");
+
+                        var basemapToolbar = new BasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "basemapToolbar");
+                        basemapToolbar.startup();
+
+                        var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "coordinatesToolbar");
+                    }
+
+                    function setupArcticView() {
+                        var mapConfig = new MapConfig("arctic", {
+                            //center:[0, 89],
+                            zoom: 2,
+                            logo: false,
+                            showAttribution: false,
+                            overview: false
+                        }, new ArcticLayerCollection());
+
+                        var mapToolbar = new MapToolbar({map: mapConfig.map}, "arcticMapToolbar");
+
+                        var basemapToolbar = new ArcticBasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "arcticBasemapToolbar");
+                        basemapToolbar.startup();
+
+                        var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "arcticCoordinatesToolbar");
+                    }
+
+                    function setupAntarcticView() {
+                        var mapConfig = new MapConfig("antarctic", {
+                            //center:[0, -89],
+                            zoom: 2,
+                            logo: false,
+                            overview: false
+                        }, new AntarcticLayerCollection());
+
+                        var mapToolbar = new MapToolbar({map: mapConfig.map}, "antarcticMapToolbar");
+
+                        var basemapToolbar = new AntarcticBasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "antarcticBasemapToolbar");
+                        basemapToolbar.startup();
+
+                        var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "antarcticCoordinatesToolbar");
+                    }
                 }
         );
     </script>
@@ -225,7 +241,7 @@
                 <div id="coordinatesToolbar"></div>
             </div>
             <div id="arctic" data-dojo-type="dijit/layout/ContentPane" title="Arctic">
-                <div id="arcticMapToolbar"></div>
+                <div id="arcticMapToolbar" class="myMapToolbar"></div>
                 <div id="arcticBasemapToolbar"></div>
                 <div id="arcticCoordinatesToolbar"></div>
             </div>

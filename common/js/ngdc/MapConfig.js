@@ -1,28 +1,30 @@
 //NOTE: uses legacy dojo.connect for Esri objects.  To be replace  w/ dojo/on with future JSAPI release
 
-define(["dojo/_base/declare", "esri/map", "esri/tasks/GeometryService", "esri/dijit/OverviewMap", "app/AppLayerCollection",
+define(["dojo/_base/declare", "esri/map", "esri/tasks/GeometryService", "esri/dijit/OverviewMap",
         "esri/geometry/webMercatorUtils", "dojo/_base/connect", "dojo/_base/array", "dojo/topic", "dojo/_base/lang"],
-    function(declare, Map, GeometryService, OverviewMap, AppLayerCollection, webMercatorUtils, Connect, array, topic, lang){
+    function(declare, Map, GeometryService, OverviewMap, webMercatorUtils, Connect, array, topic, lang){
         var map;
         var mapLayerCollection;
         var geometryService;
 
         return declare([], {
-            constructor: function(divId, options) {
+            constructor: function(divId, options, mapLayerCollection) {
                 this.map = new Map(divId, options);
 
-                this.mapLayerCollection = new AppLayerCollection();
+                this.mapLayerCollection = mapLayerCollection;
 
                 Connect.connect(this.map, 'onLoad', this, function(map){
-                    var overviewMap = new OverviewMap({
-                        map: map,
-                        attachTo: "bottom-right",
-                        width: 150,
-                        height: 120,
-                        visible: true,
-                        opacity: 0.3
-                    });
-                    overviewMap.startup();
+                    if (options.overview) {
+                        var overviewMap = new OverviewMap({
+                            map: map,
+                            attachTo: "bottom-right",
+                            width: 150,
+                            height: 120,
+                            visible: true,
+                            opacity: 0.3
+                        });
+                        overviewMap.startup();
+                    }
                 } );
 
                 //fires after each Layer added to Map

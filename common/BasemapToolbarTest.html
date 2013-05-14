@@ -42,8 +42,8 @@
     </style>
     <script>
         require(["ngdc/Logger", "ngdc/BasemapToolbar", "ngdc/MapConfig", "dojo/_base/config", "dojo/io-query",
-                 "dojo/topic", "dojo/_base/lang", "dojo/parser", "dojo/domReady!"],
-            function(Logger, BasemapToolbar, MapConfig, config, ioQuery, topic, lang, parser){
+                 "app/AppLayerConfig", "dojo/topic", "dojo/_base/lang", "dojo/parser", "dojo/domReady!"],
+            function(Logger, BasemapToolbar, MapConfig, config, ioQuery, AppLayerConfig, topic, lang, parser){
                 parser.parse();
 
                 //add queryParams into config object
@@ -60,7 +60,7 @@
                     center:[-102,40],
                     zoom: 5,
                     logo: false
-                });
+                }, new AppLayerCollection());
 
                 var basemapToolbar = new BasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "basemapToolbar");
                 //failure to startup gives "Cannot call method 'on' of null" error
