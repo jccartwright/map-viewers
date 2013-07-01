@@ -2,91 +2,14 @@
 <html>
 <head>
     <title>Sample Map Viewer</title>
-    <link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/dojo/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/dojo/dijit/themes/tundra/tundra.css" >
     <link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.4/js/esri/css/esri.css">
     <link rel="stylesheet" href="js/ngdc/css/BasemapToolbar.css">
     <link rel="stylesheet" href="js/ngdc/css/MapToolbar.css">
-    <style>
-        html,body {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        #mainWindow {
-            width:100%;
-            height:100%;
-        }
-
-        #header {
-            height: 75px;
-            background-color: gray;
-        }
-
-        #rightPane {
-            width: 250px;
-        }
-
-        #footer {
-            height: 25px;
-            background-color: gray;
-        }
-
-        #loader {
-            padding: 0;
-            margin: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #efefef;
-            opacity: 0.98;
-            z-index: 999;
-            vertical-align: middle;
-            background-color: white;
-        }
-
-        #loaderInner {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 32px;
-            height: 32px;
-            margin-top: -16px;
-            margin-left: -16px;
-            background-image: url('http://maps.ngdc.noaa.gov/viewers/common/2.8/images/loading.gif');
-            background-repeat: no-repeat;
-        }
-
-        .mapToolbar {
-            left: 80px;
-            top: 20px;
-            z-index: 100;
-            display: inline-block;
-            position: absolute;
-        }
-
-        .basemapToolbar {
-            right: 20px;
-            top: 20px;
-            z-index: 100;
-            display: inline-block;
-            position: absolute;
-        }
-
-        .coordinatesToolbar {
-            left: 15px;
-            bottom: 15px;
-            z-index: 100;
-            display: inline-block;
-            position: absolute;
-        }
-    </style>
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
     <link rel="stylesheet" href="js/ngdc/css/MapToolbar.css">
     <link rel="stylesheet" href="js/ngdc/css/CoordinatesToolbar.css">
+    <link rel="stylesheet" href="css/local.css" >
 
     <script>
         var dojoConfig = {
@@ -138,7 +61,7 @@
                     baseFx.fadeOut({ node: loader, duration: 500, onEnd: function(){ loader.style.display = "none"; }}).play();
 
                     // setup map views. You can only draw a Map into a visible container
-                    setupGlobalView();
+                    setupMercatorView();
 
 
                     registry.byId('mapContainer').selectChild('arctic');
@@ -147,8 +70,8 @@
                     registry.byId('mapContainer').selectChild('antarctic');
                     setupAntarcticView();
 
-                    //go back to global as default view
-                    registry.byId('mapContainer').selectChild('global');
+                    //go back to mercator as default view
+                    registry.byId('mapContainer').selectChild('mercator');
 
                     //listen for boundingbox events issued by MapToolbar
                     var handle = topic.subscribe("/ngdc/boundingBox", function(geometry) {
@@ -160,20 +83,20 @@
                     });
 
 
-                    function setupGlobalView() {
-                        var mapConfig = new MapConfig("global", {
+                    function setupMercatorView() {
+                        var mapConfig = new MapConfig("mercator", {
                             center:[-102,40],
                             zoom: 5,
                             logo: false,
                             showAttribution: false
                         }, new AppLayerCollection());
 
-                        var mapToolbar = new MapToolbar({map: mapConfig.map}, "mapToolbar");
+                        var mapToolbar = new MapToolbar({map: mapConfig.map}, "mercatorMapToolbar");
 
-                        var basemapToolbar = new BasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "basemapToolbar");
+                        var basemapToolbar = new BasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "mercatorBasemapToolbar");
                         basemapToolbar.startup();
 
-                        var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "coordinatesToolbar");
+                        var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "mercatorCoordinatesToolbar");
                     }
 
                     function setupArcticView() {
@@ -234,21 +157,27 @@
     </div> <!-- end rightPane -->
 
     <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
-        <div id="mapContainer" data-dojo-type="dijit/layout/TabContainer" style="width: 400px; height: 100px;" tabPosition="bottom">
-            <div id="global" data-dojo-type="dijit/layout/ContentPane" title="Global" selected="true">
-                <div id="mapToolbar"></div>
-                <div id="basemapToolbar"></div>
-                <div id="coordinatesToolbar"></div>
+        <div id="mapContainer" data-dojo-type="dijit/layout/TabContainer" tabPosition="left">
+            <div id="mercator" data-dojo-type="dijit/layout/ContentPane" title="Mercator" class="map" data-dojo-props="iconClass:'mercatorTabIcon', showTitle: false, tooltip: 'Mercator'">
+                <div id="mercatorToolBarContainer" class="inlineToolbar">
+                    <div id="mercatorMapToolbar"></div>
+                    <div id="mercatorBasemapToolbar"></div>
+                </div>
+                <div id="mercatorCoordinatesToolbar" class="coordsToolbar"></div>
             </div>
-            <div id="arctic" data-dojo-type="dijit/layout/ContentPane" title="Arctic">
-                <div id="arcticMapToolbar" class="myMapToolbar"></div>
-                <div id="arcticBasemapToolbar"></div>
-                <div id="arcticCoordinatesToolbar"></div>
+            <div id="arctic" data-dojo-type="dijit/layout/ContentPane" title="Arctic" class="map" data-dojo-props="iconClass:'arcticTabIcon', showTitle: false, tooltip: 'Arctic'">
+                <div id="arcticToolBarContainer" class="inlineToolbar">
+                    <div id="arcticMapToolbar"></div>
+                    <div id="arcticBasemapToolbar"></div>
+                </div>
+                <div id="arcticCoordinatesToolbar" class="coordsToolbar"></div>
             </div>
-            <div id="antarctic" data-dojo-type="dijit/layout/ContentPane" title="Antarctic">
-                <div id="antarcticMapToolbar"></div>
-                <div id="antarcticBasemapToolbar"></div>
-                <div id="antarcticCoordinatesToolbar"></div>
+            <div id="antarctic" data-dojo-type="dijit/layout/ContentPane" title="Antarctic" class="map" data-dojo-props="iconClass:'antarcticTabIcon', showTitle: false, tooltip: 'Antarctic'">
+                <div id="antarcticToolBarContainer" class="inlineToolbar">
+                    <div id="antarcticMapToolbar"></div>
+                    <div id="antarcticBasemapToolbar"></div>
+                </div>
+                <div id="antarcticCoordinatesToolbar" class="coordsToolbar"></div>
             </div>
         </div>
     </div> <!-- end centerPane -->
