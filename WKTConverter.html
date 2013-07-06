@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<meta charset='utf-8'>
+<html>
+<head>
+    <title>WKT Converter</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+            $('#inputCoords').on('click', function(){
+                $('#inputCoords').val('');
+            });
+
+            $('#convertBtn').on('click',function(evt){
+                $('#message').html('');
+                $('#outputWKT').val('');
+
+                var dmCoords = $( "#inputCoords").val().split(",");
+                try {
+                    var ddCoords = $.map(dmCoords, function(val) {
+                        return decimalMinutesToDecimalDegrees(val);
+                    });
+                } catch(err) {
+                    $('#message').html('Error parsing coordinates: '+err);
+                    return;
+                }
+
+                try {
+                    var wkt = convertToWkt(ddCoords);
+                    $("#outputWKT").val(wkt);
+                } catch(err) {
+                    $('#message').html('Error constructing geometry: '+err);
+                    return;
+                }
+            });
+        });
+
+        function decimalMinutesToDecimalDegrees(string) {
+            /*
+             break incoming string into it's constituent parts:
+             degrees, minutes, decimal minutes, N|S|E|W
+             */
+            //split on non-word characters to handle degree symbols, quote marks, spaces
+            var parts = $.trim(string).split(/\W+/);
+
+            //minimal format validation
+            if (parts.length != 4) {
+                throw 'invalid format - wrong number of enough parts';
+            }
+            if (! parts[3].match(/[NSEW]/i)) {
+                throw 'invalid format - quadrant missing';
+            }
+
+            /*
+             convert to decimal degrees
+             */
+            //Decimal Degrees = Degrees + (M.m / 60)
+            var dm = parseFloat(parts[1]+'.'+parts[2]);
+            var dd = parseInt(parts[0]) + (dm / 60);
+            //apply sign if appropriate
+            if (parts[3].match(/[SW]/i)) {
+                dd = dd * -1;
+            }
+            return dd.toFixed(4);
+        }
+
+        function convertToWkt(coords) {
+            if (coords.length < 2 || coords.length % 2) {
+                throw "invalid number of coordinates to create geometry"
+            }
+
+            if (coords.length == 2) {
+                //one pair, POINT
+                return ('POINT ( '+coords[0]+' '+coords[1]+' )');
+
+            } else if (coords.length > 2 && coords[0] == coords[coords.length-2] && coords[1] == coords[coords.length-1]) {
+
+                //first and last pairs are equal, POLYGON
+                var pairs = [];
+                var i=0;
+                while(coords[i]) {
+                    pairs.push(coords[i] + ' ' + coords[i+1]);
+                    i=i+2;
+                }
+                return('POLYGON ((' + pairs.join(', ') + '))');
+
+            } else {
+                //LINESTRING
+                var pairs = [];
+                var i=0;
+                while(coords[i]) {
+                    pairs.push(coords[i] + ' ' + coords[i+1]);
+                    i=i+2;
+                }
+                return('LINESTRING ((' + pairs.join(', ') + '))');
+            }
+        }
+    </script>
+</head>
+<body>
+<form>
+    <label for="inputCoords">Enter Decimal Minute Coordinates</label><br/>
+    <textarea id="inputCoords" rows="6" cols="80">
+        comma-separated list of decimal minute coordinates in the format:
+        longitude, latitude, longitude, latitude, ...
+
+        For example:  63°45.26'N, 10°15.15'W</textarea><br/>
+    <br/>
+    <label for="outputWKT">Well-Known Text</label><br/>
+    <textarea id="outputWKT" rows="6" cols="80"></textarea><br/>
+    <input id="convertBtn" type="button" value="Convert"><br/>
+    <br/>
+    <div id="message" style="color:red;"></div>
+</form>
+
+</body>
+</html>
