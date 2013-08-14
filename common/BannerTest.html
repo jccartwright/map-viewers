@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>Banner Test</title>
-    <link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/dojo/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/css/esri.css">
+    <link rel="stylesheet" href="http://js.arcgis.com/3.6/js/dojo/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="http://js.arcgis.com/3.6/js/esri/css/esri.css">
     <link rel="stylesheet" href="js/ngdc/css/Banner.css">
     <style>
         html,body {
@@ -19,7 +19,7 @@
         }
 
         #header {
-            height: 75px;
+            height: 80px;
             /*background-color: gray;*/
             /*color:red;*/
         }
@@ -56,7 +56,7 @@
             height: 32px;
             margin-top: -16px;
             margin-left: -16px;
-            background-image: url('http://maps.ngdc.noaa.gov/viewers/common/2.8/images/loading.gif');
+            background-image: url('images/loading.gif');
             background-repeat: no-repeat;
         }
     </style>
@@ -84,17 +84,17 @@
             }
         };
     </script>
-    <script src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/"></script>
+    <script src="http://js.arcgis.com/3.6/"></script>
     <script>
 
         require(
                 [
-                    "ngdc/Logger", "dojo/_base/config", "dojo/io-query", "dojo/_base/lang", "dojo/dom", "dojo/_base/fx",
+                    "ngdc/Banner", "ngdc/Logger", "dojo/_base/config", "dojo/io-query", "dojo/_base/lang", "dojo/dom", "dojo/_base/fx",
                     "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer",
-                    "dojo/parser", "dojo/domReady!"
+                    "dojo/parser", "dojo/ready", "dojo/domReady!"
                 ],
-                function(Logger, config, ioQuery, lang, dom,
-                         baseFx, BorderContainer, ContentPane, AccordionContainer, parser) {
+                function(Banner, Logger, config, ioQuery, lang, dom,
+                         baseFx, BorderContainer, ContentPane, AccordionContainer, parser, ready) {
                         parser.parse();
 
 
@@ -109,7 +109,10 @@
                     var loader = dom.byId("loader");
                     baseFx.fadeOut({ node: loader, duration: 500, onEnd: function(){ loader.style.display = "none"; }}).play();
 
-                    //var banner = new Banner();
+                    ready(function(){
+                        var banner = new Banner({}, dom.byId('banner'));
+                        //banner.startup();
+                    });
 
                 }
         );
@@ -122,7 +125,8 @@
 <div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false">
 
     <div id="header" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'">
-        <div id="banner" data-dojo-type="ngdc/Banner"></div>
+        <!--<div id="banner" data-dojo-type="ngdc/Banner"></div>-->
+        <div id="banner"></div>
     </div>
 
     <div id="rightPane" data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'right', splitter:true">

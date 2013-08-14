@@ -10,7 +10,13 @@
                 <img id="nesdisleft" src="http://www.ngdc.noaa.gov/image/nesdisngdcleft.gif" usemap="#noaangdc" border="0" height="50" width="440" alt="NOAA Logo, National Geophysical Data Center.">
             </td>
             <td>
-                <a href="" target="_blank"><img id="mapserviceImg" src="http://maps.ngdc.noaa.gov/viewers/dijits/banner/1.2/resources/sample.gif" width="400" height="50" border="0" alt="map service links" /></a>
+                <a data-dojo-attach-point="bannerDataUrl" href="" target="_blank"><img id="mapserviceImg" src="${imageUrl}" width="400" height="50" border="0" alt="map service links" /></a>
+            </td>
+        </tr>
+        <tr class="banner-lower">
+            <td data-dojo-attach-point="breadcrumbsContainer" align="left"></td>
+            <td align="right">
+                <a href="http://www.ngdc.noaa.gov/ngdcinfo/privacy.html" target="_blank" class="banner">Privacy Policy</a>
             </td>
         </tr>
     </table>
