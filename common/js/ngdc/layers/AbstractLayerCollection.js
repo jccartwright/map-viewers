@@ -34,6 +34,12 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters",
                 })
             },
 
+            getVisibleLayerIds: function() {
+                return array.filter(this.mapServices, function(svc){
+                    return svc.visible;
+                })
+            },
+
             createImageParameters: function() {
                 this.imageParameters = {};
                 this.imageParameters.png32 = new ImageParameters();
