@@ -1,6 +1,6 @@
-define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/_base/connect", "esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
+define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
     "esri/tasks/IdentifyResult", "dojo/_base/lang"],
-    function(declare, array, all, Connect, IdentifyTask, IdentifyParameters, IdentifyResult, lang){
+    function(declare, array, all, IdentifyTask, IdentifyParameters, IdentifyResult, lang){
         return declare([], {
             _map: null,
             _classname: 'AbstractIdentify',
@@ -20,7 +20,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/_bas
 
                 this._map = params[0].map;
 
-                //Connect.connect(this._map, "onClick", this, this.identify);
                 this._map.on("click", lang.hitch(this, "identify"));
 
 
