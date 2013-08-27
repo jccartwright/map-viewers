@@ -22,11 +22,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "esri/task
 
                 this._map.on("click", lang.hitch(this, "identify"));
 
-
-//				array.forEach(layerCollection.getVisibleLayerIds(), function(id) {
-//					console.debug(id);
-//				});
-
                 this.taskInfos = this.createTaskInfos(layerIds, layerCollection);
             },
 
