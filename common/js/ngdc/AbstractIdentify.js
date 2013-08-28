@@ -1,6 +1,6 @@
 define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
-    "esri/tasks/IdentifyResult", "dojo/_base/lang"],
-    function(declare, array, all, IdentifyTask, IdentifyParameters, IdentifyResult, lang){
+    "esri/tasks/IdentifyResult", "ngdc/IdentifyResultCollection", "dojo/_base/lang", "dojo/topic"],
+    function(declare, array, all, IdentifyTask, IdentifyParameters, IdentifyResult, IdentifyResultCollection, lang, topic){
         return declare([], {
             _map: null,
             _classname: 'AbstractIdentify',
@@ -50,10 +50,22 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "esri/task
                 }, this);
 
                 promises = new all(deferreds);
+
                 promises.then(function(results){
-                    var identifyResult = new IdentifyResult()
                     //produces an array of arrays each element of which is an IdentifyResult instance
-                    console.log('results: ',results);
+
+                    var layerId, identifyResultCollection = new IdentifyResultCollection();
+
+                    array.forEach(results, function(entry, i){
+                        layerId = activeLayers[i].id;
+                        identifyResultCollection.results[layerId] = entry;
+                    }, this);
+
+                    //TODO store last result?
+
+                    //publish message w/ results
+                    //TODO place into a Store instead?
+                    topic.publish("/identify/results", identifyResultCollection);
                 });
             },
 
