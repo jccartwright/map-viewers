@@ -35,7 +35,7 @@
         }
     </style>
     <script>
-        require(["ngdc/Logger", "ngdc/Identify", "ngdc/MapConfig", "app/AppLayerConfig", "dojo/_base/config", "dojo/io-query",
+        require(["ngdc/Logger", "ngdc/Identify", "ngdc/MapConfig", "app/AppLayerCollection", "dojo/_base/config", "dojo/io-query",
             "dojo/topic", "dojo/_base/lang", "dojo/parser", "dojo/domReady!"],
             function(Logger, Identify, MapConfig, AppLayerCollection, config, ioQuery, topic, lang, parser){
                 parser.parse();
@@ -49,14 +49,16 @@
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
 
+                logger.debug('creating mapConfig...');
                 //creates Map, AppLayerCollection
                 var mapConfig = new MapConfig("map", {
                     center:[-102,40],
                     zoom: 5,
                     logo: false
                 }, new AppLayerCollection());
-
+                logger.debug('creating Identify dijit...');
                 var identify = new Identify({map: mapConfig.map});
+                console.debug('created Identify dijit:',identify);
             }
         );
     </script>
