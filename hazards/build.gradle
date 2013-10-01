@@ -1,0 +1,36 @@
+version = 1.4
+
+task installNgdcDijits(type: Copy) {
+/*
+    doFirst {
+        uninstallNgdcDijits
+    }
+
+    from project(":common").file('js/ngdc')
+
+    into "js/ngdc"
+*/
+}
+
+task uninstallNgdcDijits(dependsOn: 'Clean') {
+//    delete 'js/ngdc'
+}
+
+task copyToStaging(type: Copy, dependsOn: installNgdcDijits) {
+    def destDir = "build/staging/${project.name}-${project.version}"
+
+    from ("../${project.name}") {
+        exclude 'README.md', '.idea', 'build', '.gradle', 'build.gradle', 'build.xml'
+    }
+
+    into "build/staging/${project.name}-${project.version}"
+}
+
+task buildDistribution(type: Zip, dependsOn: copyToStaging) {
+    println "building ${project.name}-${project.version}..."
+    from "build/staging"
+
+    doLast {
+        delete 'build/staging'
+    }
+}

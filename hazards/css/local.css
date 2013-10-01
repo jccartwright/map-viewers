@@ -1,0 +1,162 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #777777;
+	overflow: hidden;
+	/*font-family: "Trebuchet MS";*/
+	font-family: Verdana, Helvetica, sans-serif !important;
+	font-size: small;
+	visibility: hidden;
+}
+
+#mainWindow {
+	/* required for BorderContainer to layout */
+	width: 100%;
+	height: 100%;
+}
+
+#header {
+	height: 67px;
+	border: 0px;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+#footer {
+	height: 0px;
+	border: 0px;
+}
+
+#mapDiv {
+	/* don't set size for Center */
+	padding: 0px;
+	border: 2px solid #777777;
+	background-color: #777777;
+}
+
+#accordionContainer {
+	width: 250px;
+	border: 0px;
+	margin: 2px;
+}
+
+#loadingImg {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	z-index: 100;
+}
+
+.simpleBasemapToolbar {
+	position: absolute;
+	z-index: 9999;
+	right: 3px;
+	top: 3px;
+	border: solid 1px gray;
+}
+
+#coordsDiv {
+	margin-left: 5px;
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	color: #FFFFFF;
+	vertical-align: middle;
+}
+
+#bottomBar {
+	height: 17px;
+	width: auto;
+	position: absolute;
+	overflow: hidden;
+	bottom: 0px;
+	left: 0px;
+	margin: 0px;
+	padding: 2px;
+	border: none;
+	z-index: 100;
+	background: rgb(119, 119, 119);
+	background: rgba(119, 119, 119, 0.8);
+}
+
+#scalebar {
+	position: absolute;
+	left: 170px;
+}
+
+.tundra .esriScalebarLabel {
+	color: #FFFFFF;
+	font-family: Arial, sans-serif;
+	font-weight: normal;
+}
+
+.tundra #navToolbar.dijitToolbar {
+	background-color: transparent;
+	background-image: none;
+}
+
+#mapToolbar {
+	position: absolute;
+	left: 3px;
+	top: 3px;
+	z-index: 100;
+	border: solid 1px gray;
+	padding: 0px;
+}
+
+#filterDiv {
+	/*height:17px;*/
+	/*height:30px;*/
+	width: 200px;
+	position: absolute;
+	top: 0px;
+	left: 120px;
+	margin: 0px;
+	padding: 2px;
+	border: none;
+	z-index: 100;
+	background: rgb(80, 80, 80);
+	background: rgba(80, 80, 80, 0.8);
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	color: #FFFFFF;
+	vertical-align: middle;
+}
+
+.selectByCoordsIcon {
+	background-image: url(../images/select_rect_xy.png);
+	width: 16px;
+	height: 16px;
+}
+
+.selectByRectIcon {
+	background-image: url(../images/identify_rect.png);
+	width: 16px;
+	height: 16px;
+}
+
+.queryIcon {
+	background-image: url(../images/query_1.gif);
+	width: 16px;
+	height: 16px;
+}
+
+.clearSelectionIcon {
+	background-image: url(../images/clearhighlight_1.gif);
+	width: 16px;
+	height: 16px;
+}
+
+#switchProjectionDiv {
+	position: absolute;
+	bottom: 20px;
+	font-family: Arial, sans-serif;
+	font-size: 11px !important;
+	z-index: 9999;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}

@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<!--Uncomment Firebug Lite to debug in IE-->
+		<!--<script type="text/javascript" src="https://getfirebug.com/firebug-lite-debug.js"></script>-->
+		<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
+		<title>Natural Hazards Viewer | ngdc.noaa.gov</title>
+		<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dijit/themes/tundra/tundra.css" />
+ 		<link rel="stylesheet" type="text/css" href="./shared/dijits/simple_basemap_toolbar/src/simple_basemap_toolbar/themes/SimpleBasemapToolbar.css" />
+		<link rel="stylesheet" type="text/css" href="./shared/dijits/banner/src/banner/themes/banner.css">
+		<link rel="stylesheet" type="text/css" href="./shared/dijits/identify/src/identify/css/identify.css">
+        <link rel="stylesheet" type="text/css" href="./shared/dijits/bboxDialog/src/bboxDialog/themes/BoundingBoxDialog.css">
+		<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dojox/widget/Toaster/Toaster.css">
+		<!--<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.5/js/dojo/dojox/layout/resources/ExpandoPane.css">-->
+		<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dojox/layout/resources/FloatingPane.css">
+		<link rel="stylesheet" type="text/css" href="css/local.css">
+		<script type="text/javascript">
+			var djConfig = {
+				parseOnLoad: true,
+				debugAtAllCosts: false,
+				baseUrl: './',
+				modulePaths: {
+					'banner': 'shared/dijits/banner/src/banner',
+					'help_panel': 'shared/dijits/help_panel/src/help_panel',
+					'query_dialog': 'dijits/query_dialog',
+					'identify': 'shared/dijits/identify/src/identify',
+					'haz_identify': 'dijits/haz_identify',
+					'layers': 'shared/dijits/layers/src/layers',
+					'bboxDialog': 'shared/dijits/bboxDialog/src/bboxDialog',
+					'simple_basemap_toolbar': 'shared/dijits/simple_basemap_toolbar/src/simple_basemap_toolbar'
+				}
+			};
+		</script>
+		<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
+		<script type="text/javascript" src="src/mapConfig.js"></script>				
+		<script type="text/javascript" src="shared/src/map.js"></script>
+	</head>
+	<body class="tundra">	
+		<div dojoType="dojox.layout.FloatingPane" id="tsEventLegendPane" title="Tsunami Events" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
+			<img src="images/tsevent_legend.png"/>
+		</div>	
+		<div dojoType="dojox.layout.FloatingPane" id="tsObsLegendPane1" title="Tsunami Observations" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
+			<img src="images/tsobservation_legend1.png"/>
+		</div>
+		<div dojoType="dojox.layout.FloatingPane" id="tsObsLegendPane2" title="Tsunami Observations" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
+			<img src="images/tsobservation_legend2.png"/>
+		</div>
+		<div dojoType="dojox.layout.FloatingPane" id="signifEqLegendPane" title="Significant Earthquakes" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
+			<img src="images/signifeq_legend.png"/>
+		</div>
+		<div dojoType="dojox.layout.FloatingPane" id="volEventLegendPane" title="Significant Volcanic Eruptions" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
+			<img src="images/volevent_legend.png"/>
+		</div>
+		<div dojoType="dojox.layout.FloatingPane" id="dartLegendPane" title="DART Stations" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
+			<img src="images/dart_legend.png"/>
+		</div>
+		<div dojoType="dojox.layout.FloatingPane" id="plateBoundariesLegendPane" title="Plate Boundaries" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:20%;left:70%;visibility:hidden;">
+			<img src="images/plate_boundaries_legend.png"/>
+		</div>	
+		<!--TOPMOST LAYOUT CONTAINER-->
+		<div id="mainWindow" dojoType="dijit.layout.BorderContainer" gutters="false" design="headline">										
+			<!--HEADER SECTION-->
+			<div id="header" dojoType="dijit.layout.ContentPane" region="top" >
+				<div id="banner"></div>
+			</div>						
+	
+			<!--CENTER SECTION--><!--CENTER CONTAINER-->
+			<div id="mapDiv" dojoType="dijit.layout.ContentPane" region="center">				
+				<div id="mapToolbar" dojoType="dijit.Toolbar" layoutAlign="left">
+					<div dojoType="dijit.form.Button" id="selectByRectBtn" iconClass="selectByRectIcon" showLabel="false">Select with Rectangle</div>
+					<div dojoType="dijit.form.Button" id="selectByCoordsBtn" iconClass="selectByCoordsIcon" showLabel="false" onClick="globals.coordDialog.show();">Select with Coordinates</div>					
+				</div>
+				<img id="loadingImg" src="./shared/images/loading.gif" alt="refreshing map"></img>
+				<div id="basemapToolbar"></div>		
+				<div id="bottomBar" dojoType="dijit.layout.ContentPane">
+					<span id="coordsDiv">Position: not available</span>
+					<span id="scalebar"></span>
+				</div>
+			</div>
+			<!--RIGHT CONTAINER-->
+			<div id="accordionContainer" dojoType="dijit.layout.AccordionContainer" region="right" splitter="true">
+				<div id="tocPane" dojoType="dijit.layout.AccordionPane" title="Layers">
+					
+					<input checked id="checkTsEvents" type="checkBox" dojoType="dijit.form.CheckBox" onClick="toggleTsEventVisibility();">
+						<label id="labelTsEvents" for="checkTsEvents"><span id="tsEventsFlag"></span><a href="http://ngdc.noaa.gov/hazard/tsu_db.shtml" target="_blank"><b>Tsunami Events</b></a></label><br>
+					&nbsp;<div dojoType="dijit.form.Button" id="tsEventSearchButton" onClick="showTsEventSearchDialog();">Search</div>
+					<div dojoType="dijit.form.Button" id="tsEventResetButton" onClick="resetTsEvents();" disabled="true">Reset</div><br>
+					&nbsp;&nbsp;<span>Show as:</span><br>
+					&nbsp;&nbsp;<input type="radio" name="radioTsEvents" id="radioTsEvents1" dojoType="dijit.form.RadioButton" onClick="setTsEventVisibility(1);" checked>
+						<label for="tsEvents1" id="labelRadioTsEvents1">Symbols for Cause/Fatalities 
+						(<a href="#" onclick="dijit.byId('tsEventLegendPane').show();">Legend</a>)</label>																					
+						<br>						
+					&nbsp;&nbsp;<input type="radio" name="radioTsEvents" id="radioTsEvents2" dojoType="dijit.form.RadioButton" onClick="setTsEventVisibility(2);">
+						<label for="tsEvents2" id="labelRadioTsEvents2">Green Squares <img src="images/green_square.png"/></label><br>
+					<hr>	
+					<input id="checkTsObs" type="checkBox" dojoType="dijit.form.CheckBox" onClick="toggleTsObsVisibility">
+						<label id="labelTsObs" for="checkTsObs"><span id="tsObsFlag"></span><a href="http://ngdc.noaa.gov/hazard/tsu_db.shtml" target="_blank"><b>Tsunami Observations</b></a></label><br>
+					&nbsp;<div dojoType="dijit.form.Button" id="tsObsSearchButton" onClick="showTsObsSearchDialog();">Search</div>
+					<div dojoType="dijit.form.Button" id="tsObsResetButton" onClick="resetTsObs();" disabled="true">Reset</div><br>												
+					<span>Show as:</span><br>
+					&nbsp;&nbsp;<input type="radio" name="radioTsObs" id="radioTsObs1" dojoType="dijit.form.RadioButton" onClick="setTsObsVisibility(1);" checked>
+						<label for="radioTsObs1">Vertical Bars for Water Height (<a href="#" onclick="dijit.byId('tsObsLegendPane1').show();">Legend</a>)</label><br>									
+					&nbsp;&nbsp;<input type="radio" name="radioTsObs" id="radioTsObs2" dojoType="dijit.form.RadioButton" onClick="setTsObsVisibility(2);">
+						<label for="radioTsObs2">Color-Coded by Measurement Type 
+						(<a href="#" onclick="dijit.byId('tsObsLegendPane2').show();">Legend</a>)</label><br>										
+					<hr>	
+					<input id="checkSignifEq" type="checkBox" dojoType="dijit.form.CheckBox" onClick="toggleSignifEqVisibility">
+						<label id="labelSignifEq" for="checkSignifEq"><span id="signifEqFlag"></span><a href="http://www.ngdc.noaa.gov/nndc/struts/form?t=101650&s=1&d=1" target="_blank"><b>Significant Earthquakes</b></a> 
+						(<a href="#" onclick="dijit.byId('signifEqLegendPane').show();">Legend</a>)</label><br>						
+					&nbsp;<div dojoType="dijit.form.Button" id="signifEqSearchButton" onClick="showSignifEqSearchDialog();">Search</div>
+					<div dojoType="dijit.form.Button" id="signifEqResetButton" onClick="resetSignifEq();" disabled="true">Reset</div><br>
+					<hr>																							
+					
+					<input id="checkVolEvent" type="checkBox" dojoType="dijit.form.CheckBox" onClick="toggleVolEventVisibility">
+						<label id="labelVolEvent" for="checkVolEvent"><span id="volEventFlag"></span><a href="http://www.ngdc.noaa.gov/nndc/servlet/ShowDatasets?dataset=102557&search_look=50&display_look=50" target="_blank"><b>Significant Volcanic Eruptions</b></a> 
+						(<a href="#" onclick="dijit.byId('volEventLegendPane').show();">Legend</a>)
+						</label><br>
+					&nbsp;<div dojoType="dijit.form.Button" id="volEventSearchButton" onClick="showVolEventSearchDialog();">Search</div>												
+					<div dojoType="dijit.form.Button" id="volEventResetButton" onClick="resetVolEvents();" disabled="true">Reset</div><br>
+					<hr>
+					
+					<input id="checkDart" type="checkBox" dojoType="dijit.form.CheckBox" onClick="toggleDartVisibility">
+						<label id="labelDart" for="checkDart"><span id="dartFlag"></span><a href="http://ngdc.noaa.gov/hazard/DARTData.shtml" target="_blank"><b>DART Stations</b></a> 
+						(<a href="#" onclick="dijit.byId('dartLegendPane').show();">Legend</a>)</label><br>						
+					&nbsp;<div dojoType="dijit.form.Button" id="dartSearchButton" onClick="showDartSearchDialog();">Search</div>												
+					<div dojoType="dijit.form.Button" id="dartResetButton" onClick="resetDarts();" disabled="true">Reset</div><br>
+					<hr>
+					
+					<input id="checkTideGauges" type="checkBox" dojoType="dijit.form.CheckBox" onClick="toggleTideGaugeVisibility">
+						<label id="labelTideGauges" for="checkTideGauges"><a href="http://ngdc.noaa.gov/hazard/tide.shtml" target="_blank"><b>NOS Tsunami Tide Gauges</b></a> <img src="images/blue_square.png"/></label><br>											
+					
+				</div>		
+				<div id="creditsPane" dojoType="dijit.layout.AccordionPane" title="More Information">					
+					<p>
+						For more information about Natural Hazards data at NGDC, see <a href="http://ngdc.noaa.gov/hazard/hazards.shtml" target="_blank">http://ngdc.noaa.gov/hazard/hazards.shtml</a>.
+					<p>
+					<b>Basemap/reference layers:</b>
+						<ul>
+							<li>Terrain (GEBCO_08): The <a
+								href="http://www.gebco.net/data_and_products/gridded_bathymetry_data"
+								target="_blank">GEBCO_08 Grid</a>
+							</li>
+							<li>Terrain (ETOPO1): <a
+								href="http://www.ngdc.noaa.gov/mgg/global/global.html"
+								target="_blank">ETOPO1 Global Relief Model</a>
+							</li>
+							<li>Light Gray: <a
+								href="http://www.arcgis.com/home/item.html?id=8b3d38c0819547faa83f7b7aca80bd76"
+								target="_blank">Esri Light Gray Canvas</a></li>							
+							<li>Imagery: <a
+								href="http://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9"
+								target="_blank">Esri World Imagery</a>
+							</li>
+							<li>Ocean: <a
+								href="http://www.arcgis.com/home/item.html?id=5ae9e138a17842688b0b79283a4353f6"
+								target="_blank">Esri Ocean Basemap</a>
+							</li>
+							<li>National Geographic: <a
+								href="http://www.arcgis.com/home/item.html?id=d94dcdbe78e141c2b2d3a91d5ca8b9c9"
+								target="_blank">Esri/National Geographic Basemap</a></li>
+							<li>Boundaries/Labels: <a
+								href="http://www.arcgis.com/home/item.html?id=a842e359856a4365b1ddf8cc34fde079"
+								target="_blank">World Boundaries and Places (Esri)</a></li>							
+						</ul>
+					</p>
+					<p><b>Map projection:</b>WGS84 Web Mercator (Auxiliary Sphere); EPSG:3857.</p>
+					<p>
+						<b>Disclaimer:</b> All international boundaries, maritime boundaries, and placenames are shown for general orientation and reference only; they do not necessarily represent official U.S. policy.
+					</p>
+					<p><b>Version:</b> 1.4, last updated Sep. 2013</p>			
+				</div>
+				<div id="helpPane" dojoType="dijit.layout.AccordionPane" title="Help">
+					<div id="helpPanel" dojoType="help_panel.HelpPanel"></div>
+				</div>
+			</div>	
+		</div>
+	</body>
+</html>
