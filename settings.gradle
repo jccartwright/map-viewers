@@ -1,1 +1,1 @@
-include 'bathymetry', 'geophysics', 'sample28', 'sample', 'common'
+include 'bathymetry', 'geophysics', 'hazards', 'marine_geology', 'sample', 'sample_index', 'common'
