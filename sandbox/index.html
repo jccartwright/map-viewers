@@ -70,8 +70,11 @@
                     "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer",
                     "dojo/topic", "dojo/on", "dojo/aspect", "dojo/parser", "dojo/domReady!"
                 ],
-                function(Logger, MapConfig, MapToolbar, BasemapToolbar, CoordinatesToolbar, CreditsPanel, AppLayerCollection, Identify, IdentifyResultsPopup, config, ioQuery, lang, dom,
-                         baseFx, BorderContainer, ContentPane, AccordionContainer, topic, on, aspect, parser) {
+                function(Logger, MapConfig, MapToolbar, BasemapToolbar, CoordinatesToolbar,
+                         CreditsPanel, AppLayerCollection, Identify, IdentifyResultsPopup,
+                         config, ioQuery, lang, dom, baseFx,
+                         BorderContainer, ContentPane, AccordionContainer,
+                         topic, on, aspect, parser) {
                     parser.parse();
 
                     //add queryParams into config object, values in queryParams take precedence
@@ -103,21 +106,19 @@
                     var identify = new Identify({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection});
                     var identifyPopup = new IdentifyResultsPopup({map: mapConfig.map});
 
-//                    topic.subscribe("/identify/results", function(results){
-//                        console.log(identify.searchGeometry);
-//                        console.log('identify results: ', results);
-//                    });
-
+                    //for testing only
                     topic.subscribe("/ngdc/boundingBox", function(bbox){
-                       console.log("area of interest: ", bbox);
+                       console.debug("area of interest: ", bbox);
                     });
 
+                    //for testing only
                     on(dom.byId("execute1"), "click", function(evt){
                         //console.log('testme clicked');
                         var layer = mapConfig.mapLayerCollection.getLayerById('USA');
                         layer.setVisibleLayers([0,1,2,3]);
                     });
 
+                    //for testing only
                     on(dom.byId("execute2"), "click", function(evt){
                         //console.log('testme clicked');
                         var layer = mapConfig.mapLayerCollection.getLayerById('cities');
@@ -157,6 +158,7 @@
     </div> <!-- end centerPane -->
 
     <div id="footer" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'bottom'">
+        <!-- for testing only -->
         <input id="execute1" type="button" value="testme1">
         <input id="execute2" type="button" value="testme2">
 

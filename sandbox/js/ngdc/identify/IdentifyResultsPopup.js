@@ -11,7 +11,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/topic"],
 
                 topic.subscribe("/identify/results", function(results){
                     //console.log(identify.searchGeometry);
-                    console.log('my identify results: ', results);
+                    console.log('identify results: ', results.results);
                 });
             } //end constructor
         });

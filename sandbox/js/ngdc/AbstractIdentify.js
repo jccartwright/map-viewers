@@ -1,9 +1,11 @@
-define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Deferred", "esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
-    "esri/tasks/IdentifyResult", "dojo/_base/lang", "dojo/topic", "dojo/aspect"],
-    function(declare, array, all, Deferred, IdentifyTask, IdentifyParameters, IdentifyResult, lang, topic, aspect){
+define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Deferred", "esri/tasks/IdentifyTask",
+    "esri/tasks/IdentifyParameters", "esri/tasks/IdentifyResult", "ngdc/identify/IdentifyResultCollection",
+    "dojo/_base/lang", "dojo/topic", "dojo/aspect"],
+    function(declare, array, all, Deferred, IdentifyTask,
+             IdentifyParameters, IdentifyResult, IdentifyResultCollection,
+             lang, topic, aspect){
         return declare([], {
             _map: null,
-            _classname: 'AbstractIdentify',
             taskInfos: null, //list of IdentifyTasks
             results: null,   //reference to the most recent resultset
             promises: null,  //promise issued by the most recent "all"
@@ -13,7 +15,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
 
             //called prior to subclass constructor
             constructor: function(arguments) {
-                logger.debug('inside constructor for '+this._classname);
+                logger.debug('inside constructor for ngdc/AbstractIdentify');
             },
 
             init: function(params) {
@@ -31,6 +33,12 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
                 this._map.on("extent-change", lang.hitch(this, "updateMapExtent"));
 
                 this.taskInfos = this.createTaskInfos(layerIds, layerCollection);
+
+//                this._map.on("click", lang.hitch(this, function(evt) {
+//                    this._map.infoWindow.setTitle("Coordinates");
+//                    this._map.infoWindow.setContent("lat/lon : " + evt.mapPoint.y + ", " + evt.mapPoint.x);
+//                    this._map.infoWindow.show(evt.screenPoint,this._map.getInfoWindowAnchor(evt.screenPoint));
+//                }));
             },
 
             /*
@@ -68,18 +76,21 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
                 //this.deferreds = {'slowTask': this.slowTask()};
 
                 this.deferreds = {};
+//                this.deferreds = [];
 
                 array.forEach(this.taskInfos, function(taskInfo){
                     taskInfo.params.geometry = geometry;
 
                     if (taskInfo.enabled) {
                         this.deferreds[taskInfo.layer.id] = taskInfo.task.execute(taskInfo.params);
+//                        this.deferreds.push(taskInfo.task.execute(taskInfo.params));
                     } else {
                         logger.debug('task not enabled: '+taskInfo.layer.url);
                     }
                 }, this);
 
                 this.promises = new all(this.deferreds, true);
+//                topic.publish("/identify/start-query", this.deferreds);
 
                 this.promises.then(function(results) {
                     //produces an array of arrays. Each element of top-level array corresponds to a mapservice. The
@@ -90,7 +101,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
 
                     //publish message w/ results
                     //TODO place into a Store instead?
-                    topic.publish("/identify/results", results);
+                    topic.publish("/identify/results", new IdentifyResultCollection(results));
                 });
             },
 
