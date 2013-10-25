@@ -29,16 +29,19 @@ define(["dojo/_base/declare", "dojo/_base/array", "ngdc/AbstractIdentify", "dojo
 
                 topic.subscribe("/identify/results", lang.hitch(this, function(resultCollection){
                     var popup = this._map.infoWindow;
-                    popup.show(resultCollection.searchGeometry);
+                    popup.show(resultCollection.anchorPoint);
                     popup.setFeatures(resultCollection.features);
                 }));
 
+                //TODO something is causing this event to fire at a time when there is not selectedFeature
                 this._map.infoWindow.on('selection-change', lang.hitch(this, function() {
-                    logger.debug('selection changed...');
                     var popup = this._map.infoWindow;
 
                     var feature = popup.getSelectedFeature();
-                    console.debug('selectedFeature: ', feature);
+                    if (! feature) {
+                        return
+                    }
+                    //console.debug('selectedFeature: ', feature);
 
                     var formatter = this.formatters[feature.formatter];
                     popup.setContent(formatter.call(this, feature));

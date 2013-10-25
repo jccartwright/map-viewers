@@ -4,6 +4,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/tasks/IdentifyResult", "
             results: null,
             features: null,
             searchGeometry: null,
+            anchorPoint: null,
 
             constructor: function() {
                 logger.debug('inside constructor for ngdc/identify/IdentifyResultCollection');
@@ -14,6 +15,12 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/tasks/IdentifyResult", "
                 this.results = results;
                 this.setFeatures(results);
             },
+
+            setSearchGeometry: function(geometry) {
+                this.searchGeometry = geometry;
+                this.anchorPoint = (geometry.type === 'point') ? geometry : geometry.getCenter();
+            },
+
 
             setFeatures: function(results) {
                 var feature;

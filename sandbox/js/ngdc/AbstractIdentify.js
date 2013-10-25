@@ -65,7 +65,9 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
                 logger.debug('inside identify...');
                 this.resetMapInfoWindow();
 
+                //TODO still necessary since IdentifyResultCollection storing it?
                 this.searchGeometry = geometry;
+
                 //TODO use isResolved() or isFulFilled()?
                 if (this.promises && this.promises.isResolved() == false) {
                     logger.debug('cancelling an active promise...');
@@ -100,7 +102,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
 
                     var resultCollection = new IdentifyResultCollection();
                     resultCollection.setResultSet(results);
-                    resultCollection.searchGeometry = geometry;
+                    resultCollection.setSearchGeometry(geometry);
 
                     //publish message w/ results
                     //TODO place into a Store instead?
