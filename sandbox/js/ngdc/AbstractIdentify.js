@@ -63,6 +63,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
 
             identify: function(geometry) {
                 logger.debug('inside identify...');
+                this.resetMapInfoWindow();
 
                 this.searchGeometry = geometry;
                 //TODO use isResolved() or isFulFilled()?
@@ -76,33 +77,41 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
                 //this.deferreds = {'slowTask': this.slowTask()};
 
                 this.deferreds = {};
-//                this.deferreds = [];
 
                 array.forEach(this.taskInfos, function(taskInfo){
                     taskInfo.params.geometry = geometry;
 
                     if (taskInfo.enabled) {
                         this.deferreds[taskInfo.layer.id] = taskInfo.task.execute(taskInfo.params);
-//                        this.deferreds.push(taskInfo.task.execute(taskInfo.params));
                     } else {
                         logger.debug('task not enabled: '+taskInfo.layer.url);
                     }
                 }, this);
 
                 this.promises = new all(this.deferreds, true);
-//                topic.publish("/identify/start-query", this.deferreds);
 
                 this.promises.then(function(results) {
-                    //produces an array of arrays. Each element of top-level array corresponds to a mapservice. The
-                    // inner array is a list of IdentifyResult instances which the results from the sublayers intermingled
+                    //produces an map of arrays where each key/value pair represents a mapservice. The keys are the Layer
+                    // names, the values are an array of IdentifyResult instances.
 
+                    //TODO necessary? reference the resultCollection instead?
                     //keep a reference to the last result
                     this.results = results;
 
+                    var resultCollection = new IdentifyResultCollection();
+                    resultCollection.setResultSet(results);
+                    resultCollection.searchGeometry = geometry;
+
                     //publish message w/ results
                     //TODO place into a Store instead?
-                    topic.publish("/identify/results", new IdentifyResultCollection(results));
+                    topic.publish("/identify/results", resultCollection);
                 });
+            },
+
+            resetMapInfoWindow: function() {
+                console.log('resetting map infoWindow...');
+                this._map.infoWindow.hide();
+                this._map.infoWindow.clearFeatures();
             },
 
             //not currently used
