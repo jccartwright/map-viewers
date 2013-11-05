@@ -30,12 +30,12 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/tasks/IdentifyResult", "
                 //build a list of Feature, augmenting each with formatter key composed of it's layer and sublayer names
                 this.features = [];
                 for (key in results) {
+                    //add the query URL for later use
+                    feature.svcUrl = this.serviceUrls[key];
+
                     for (var i=0; i<results[key].length; i++) {
                         feature = results[key][i].feature;
                         feature.formatter = key+'/'+results[key][i].layerName;
-
-                        //add the query URL for later use
-                        feature.svcUrl = this.queryUrls[key];
 
                         this.features.push(feature);
                     }
