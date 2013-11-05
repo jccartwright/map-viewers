@@ -5,9 +5,11 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/tasks/IdentifyResult", "
             features: null,
             searchGeometry: null,
             anchorPoint: null,
+            serviceUrls: null,
 
-            constructor: function() {
+            constructor: function(serviceUrls) {
                 logger.debug('inside constructor for ngdc/identify/IdentifyResultCollection');
+                this.serviceUrls = serviceUrls;
             },
 
             setResultSet: function(results) {
@@ -31,6 +33,10 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/tasks/IdentifyResult", "
                     for (var i=0; i<results[key].length; i++) {
                         feature = results[key][i].feature;
                         feature.formatter = key+'/'+results[key][i].layerName;
+
+                        //add the query URL for later use
+                        feature.svcUrl = this.queryUrls[key];
+
                         this.features.push(feature);
                     }
                 }

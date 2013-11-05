@@ -92,7 +92,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
 
                 this.promises = new all(this.deferreds, true);
 
-                this.promises.then(function(results) {
+                this.promises.then(lang.hitch(this, function(results) {
                     //produces an map of arrays where each key/value pair represents a mapservice. The keys are the Layer
                     // names, the values are an array of IdentifyResult instances.
 
@@ -100,14 +100,20 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
                     //keep a reference to the last result
                     this.results = results;
 
-                    var resultCollection = new IdentifyResultCollection();
+                    //create a list of service URLs for each layer to be used in IdentifyResultCollection
+                    var serviceUrls = {};
+                    array.forEach(this.taskInfos, function(taskInfo) {
+                            serviceUrls[taskInfo.layer.id] = taskInfo.layer.url;
+                    });
+
+                    var resultCollection = new IdentifyResultCollection(serviceUrls);
                     resultCollection.setResultSet(results);
                     resultCollection.setSearchGeometry(geometry);
 
                     //publish message w/ results
                     //TODO place into a Store instead?
                     topic.publish("/identify/results", resultCollection);
-                });
+                }));
             },
 
             resetMapInfoWindow: function() {
