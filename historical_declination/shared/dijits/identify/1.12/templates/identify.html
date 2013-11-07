@@ -1,0 +1,96 @@
+<div class="tundra identifyWindow genid-rounded-corner genid-container">
+	<div dojoType="dijit.layout.BorderContainer" gutters="false" class="genid-border-container" dojoAttachPoint="_borderContainer">
+		<!-- TOP: holds the title bar with some icons -->
+		<div dojoType="dijit.layout.ContentPane" region="top" class="genid-top-region" id="${id}-titlebar">
+			<div class="genid-top-div">
+				<span id="${id}-label" class="genid-left-corner"><!--<img class="genid-icons" dojoattachpoint="_chainIcon" src="${basePath}/images/attached.png" title="click to detach from the map" dojoattachevent="onclick: _chainHandler"/>-->${label}</span>
+				<span class="genid-right-corner">
+					<!--<img class="genid-icons" src="${basePath}/images/gear.png" title="options" dojoattachevent="onclick: _showOptionsPage"/>-->
+					<img class="genid-icons" src="${basePath}/images/cross.png" title="hide" dojoattachevent="onclick: _closeWidget"/></span>
+					<!--<img class="genid-icons" src="http://maps.ngdc.noaa.gov/viewers/dijits/identify/images/cross.png" title="hide" dojoattachevent="onclick: _closeWidget"/></span>-->					
+			</div>
+		</div>
+		<!-- BOTTOM -->
+		<div dojoType="dijit.layout.ContentPane" region="bottom" class="genid-bottom-region" id="${id}-bottombar">
+			<div class="genid-button" dojoType="dijit.form.Button" id="showSummaryOrBackButton" showLabel="true" dojoAttachPoint="_showSummaryOrBackButton">
+				${_showSummaryOrBackButtonLabel}
+			</div>
+			<div class="genid-button" dojoType="dijit.form.Button" id="showNewWindowButton" style="display:none;" showLabel="true" dojoAttachPoint="_showNewWindowButton" dojoAttachEvent="onClick: _showNewWindow">
+				${_showNewWindowButtonLabel}
+			</div>
+			<div class="genid-button" dojoType="dijit.form.Button" id="getDataButton" style="display:none" showLabel="true" dojoAttachPoint="_getDataButton" dojoAttachEvent="onClick: _getData">
+				${_getDataButtonLabel}
+			</div>
+		</div>
+		<!-- LEFT: acts as the back button that when clicked displays the list of features -->
+		<div dojoType="dijit.layout.ContentPane" region="left" class="genid-left-region" dojoAttachPoint="_backButtonRegion" dojoAttachEvent="onClick: _backButtonClickHandler" id="${id}-leftbar">
+		</div>
+		<!-- RIGHT -->
+		<div dojoType="dijit.layout.ContentPane" region="right" class="genid-right-region" id="${id}-rightbar">
+		</div>
+		<!-- CENTER: body of this dijit -->
+		<div dojoType="dijit.layout.ContentPane" region="center">
+			<div dojoType="dijit.layout.StackContainer" class="genid-stack-container" id="${id}-stack" dojoAttachPoint="_stackContainer">
+				<!-- PAGE 1 - LIST OF FEATURES: visible by default -->
+				<div class="genid-featurePane" dojoType="dijit.layout.ContentPane">
+					<div class="genid-featuregrid-header" dojoType="dijit.layout.ContentPane">
+						<span id="${id}-featureGridHeader"></span>
+					</div>
+					<table class="genid-featuregrid" dojoType="dojox.grid.DataGrid" dojoAttachPoint="_featureGrid" dojoAttachEvent="onRowClick: _gridRowClickHandler, onRowMouseOver: _gridRowMouseOverHandler" canSort='noSort'>
+						<thead>
+							<tr>
+								<!-- See Identify.js where _cellFormatter() is defined -->
+								<th field="feature_name" formatter="identify.Identify._cellFormatter" width="330px" height="0px"></th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<!-- PAGE 2 - ATTRIBUTES -->
+				<div dojoAttachPoint="_infoPane" class="genid-infoPane" dojoType="dijit.layout.ContentPane">
+					<div dojoAttachPoint="_infoGridHeaderPane" class="genid-infogrid-header" dojoType="dijit.layout.ContentPane">
+						<span id="${id}-infoGridHeader"></span>
+					</div>
+					<table class="genid-infogrid" dojoType="dojox.grid.DataGrid" dojoAttachPoint="_infoGrid" canSort='noSort' rowHeight:"100">
+						<thead>
+							<tr>
+								<!-- See Identify.js where _cellFormatter() is defined -->
+								<th field="field_value" formatter="identify.Identify._cellFormatter" width="330px" height="0px">
+									<!--Attributes-->
+								</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<!-- PAGE 3 - OPTIONS -->
+				<div dojoType="dijit.layout.ContentPane">
+					<div class="genid-options-div">
+						<b>Options:</b>
+						<br/>
+						<br/>
+						<label for="${id}-opt-tolerance">
+							Tolerance:&nbsp;
+						</label>
+						<input dojoType="dijit.form.NumberSpinner" class="genid-opt-tolerance" dojoAttachPoint="_optTolerance" value="1" smallDelta="1" largeDelta="1" maxLength="1" constraints="{min:1, max:5}" />
+						<br/>
+						<br/>
+						<b>Map services to identify:</b>
+						<br/>
+						<br/>
+						<div>
+							${_optionsHtml}
+						</div>
+					</div>
+				</div>
+				<!-- PAGE 4 - SUMMARY -->
+				<div dojoType="dijit.layout.ContentPane">
+					<div id="summaryDiv" class="genid-summary-div">
+						<!--
+						<textarea class="genid-summary-text" dojoType="dijit.form.SimpleTextarea" dojoAttachPoint="_summaryText">						
+						</textarea>
+						-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
