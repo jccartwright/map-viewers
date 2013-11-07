@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
+	<title>Satellite Fire Detections</title>		
+	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.2/js/dojo/dijit/themes/tundra/tundra.css" />
+ 	<link rel="stylesheet" type="text/css" href="./shared/dijits/simple_basemap_toolbar/1.2/themes/SimpleBasemapToolbar.css" />
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/banner/1.2/themes/banner.css">
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/identify/1.04/css/identify.css">
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/checkBoxTreeTOC/1.04/themes/tundra/Checkbox.css">
+
+
+	<link rel="stylesheet" type="text/css" href="css/local.css">
+	<style type="text/css">
+		.claro .dojoxGridMasterHeader { display:none !important; }
+
+		.claro .dijitContentPane {
+			text-align: left;
+		}
+
+	
+	</style>
+	<script type="text/javascript">
+		var djConfig = {
+			parseOnLoad: true,
+			baseUrl: './',
+			modulePaths: {
+				'banner': 'src/dijits/banner',
+				'firedetects': 'src/dijits/firedetects',
+				'help_panel': './shared/dijits/help_panel/1.1',
+				'simple_basemap_toolbar': './shared/dijits/simple_basemap_toolbar/1.2',
+				'banner': './shared/dijits/banner/1.2',
+				'identify':	'./shared/dijits/identify/1.04',
+				'checkBoxTreeTOC': './shared/dijits/checkBoxTreeTOC/1.04'
+					
+				//'bboxDialog': 'http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog',
+			}
+		};
+	</script>
+	<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.2"></script>
+	<!-- TODO MapServicePair not loading via the modulePaths like all the other dijits -->
+<!--	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/viewers/common/1.0/MapServicePair.js"></script> -->
+ 	<script type="text/javascript" src="src/mapConfig.js"></script>
+<!--	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/viewers/common/2.0/src/map.js"></script> -->
+	<script type="text/javascript" src="src/map.js"></script>
+	<script type="text/javascript">
+		dojo.require("esri.map");
+		dojo.require("esri.dijit.OverviewMap");
+		dojo.require("dijit.layout.ContentPane");
+		dojo.require("dijit.layout.AccordionContainer");
+		dojo.require("dijit.layout.BorderContainer");
+		dojo.require("dijit.Toolbar");
+		dojo.require("dijit.form.Button");
+		dojo.require("esri.dijit.OverviewMap");
+		//dojo.require("esri.dijit.Scalebar");
+		dojo.require("esri.dijit.Legend");
+		dojo.require("help_panel.HelpPanel");
+		dojo.require("simple_basemap_toolbar.SimpleBasemapToolbar");
+		//dojo.require('bboxDialog.BoundingBoxDialog');
+		dojo.require("banner.Banner");
+		dojo.require("identify.Identify");
+		//dojo.require("mapServicePair.MapServicePair");
+		dojo.require("firedetects.DatePanel");
+		dojo.require('dojo.io.script');
+		dojo.require('firedetects.CreditsPanel');
+		dojo.require("checkBoxTreeTOC.CheckBoxTree");
+
+		
+		
+		dojo.subscribe("/ngdc/DateRange",function(data){	
+			var timeExtent = new esri.TimeExtent(data.startDate,data.endDate);
+			globals.map.setTimeExtent(timeExtent);
+		});
+		
+		dojo.connect(globals.map,'onTimeExtentChange',function(args){
+			//console.log('timeextent changed',args);
+		});
+		
+		</script>
+	</head>
+
+	<body class="tundra">
+		<div id="mainWindow" dojoType="dijit.layout.BorderContainer" gutters="true" design="headline">
+			<!--HEADER SECTION-->
+			<div id="header" dojoType="dijit.layout.ContentPane" region="top" >
+				<!-- TODO replace w/ XD dijit passing reference to local image -->
+				<div dojoType="banner.Banner"></div>
+			</div>
+	
+			<!--CENTER CONTAINER-->
+			<div id="mapDiv" dojoType="dijit.layout.ContentPane" region="center">
+<!--				
+				<div id="mapToolbar" dojoType="dijit.Toolbar" layoutAlign="left">
+					<div dojoType="dijit.form.Button" id="selectByRectBtn" iconClass="selectByRectIcon" showLabel="false">Select with Rectangle</div>
+					<div dojoType="dijit.form.Button" id="selectByCoordsBtn" iconClass="selectByCoordsIcon" showLabel="false">Select with Coordinates</div>
+				</div>
+-->
+				<img id="loadingImg" src="http://maps.ngdc.noaa.gov/viewers/common/2.0/images/loading.gif" alt="refreshing map"/>
+				<div id="basemapToolbar"></div>
+				<div id="bottomBar" dojoType="dijit.layout.ContentPane">
+					<span id="coordsDiv">Position: not available</span>
+					<span id="scalebar"></span>
+				</div>
+
+			</div>
+			<!--RIGHT CONTAINER-->
+			<div id="accordionContainer" dojoType="dijit.layout.AccordionContainer" region="right">
+				<div id="datePane" dojoType="dijit.layout.AccordionPane" title="Date">
+					<div id="datePanel" dojoType="firedetects.DatePanel"></div>
+				</div>
+				<div id="tocPane" dojoType="dijit.layout.AccordionPane" title="Layers">
+					<div id="toc"></div>
+				</div>
+
+				<div id="legendPane" dojoType="dijit.layout.AccordionPane" title="Legend">
+					<div id="legend"></div>	
+				</div>		
+				<div id="creditsPane" dojoType="dijit.layout.AccordionPane" title="Credits">
+					<div id="credits" dojoType="firedetects.CreditsPanel"></div>
+				</div>
+				<div id="helpPane" dojoType="dijit.layout.AccordionPane" title="Help">
+					<div id="helpPanel" dojoType="help_panel.HelpPanel"></div>
+				</div>			
+			</div>
+			
+			<div id="footer"  dojoType="dijit.layout.ContentPane" region="bottom">
+			</div>
+		</div>
+		<div id="identifyDiv" dojoType="dijit.layout.ContentPane"></div>
+	</body>
+</html>
