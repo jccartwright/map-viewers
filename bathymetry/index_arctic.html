@@ -4,12 +4,12 @@
 	<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
 	<title>Bathymetry Data Viewer (Arctic) | ngdc.noaa.gov</title>
 	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dijit/themes/tundra/tundra.css" />
- 	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.2/themes/SimpleBasemapToolbar.css" />
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/banner/1.2/themes/banner.css" />
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/identify/1.10/css/identify.css" />
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.0/themes/BoundingBoxDialog.css" />
+ 	<link rel="stylesheet" type="text/css" href="./shared/dijits/simple_basemap_toolbar/1.2/themes/SimpleBasemapToolbar.css" />
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/banner/1.2/themes/banner.css" />
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/identify/1.10/css/identify.css" />
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/bboxDialog/1.0/themes/BoundingBoxDialog.css" />
 	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dojox/widget/Toaster/Toaster.css" />
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/checkBoxTreeTOC/1.03/themes/tundra/Checkbox.css" />
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/checkBoxTreeTOC/1.03/themes/tundra/Checkbox.css" />
 	<link rel="stylesheet" type="text/css" href="css/local.css">
 
 	<script type="text/javascript">
@@ -19,12 +19,12 @@
 			baseUrl: './',
 			modulePaths: {
 				'help_panel': './dijits/help_panel',
-				'simple_basemap_toolbar': 'http://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.2',
-				'banner': 'http://maps.ngdc.noaa.gov/viewers/dijits/banner/1.2',
-				'identify':	'http://maps.ngdc.noaa.gov/viewers/dijits/identify/1.10',
-				'checkBoxTreeTOC': 'http://maps.ngdc.noaa.gov/viewers/dijits/checkBoxTreeTOC/1.04',
-				'layers': 'http://maps.ngdc.noaa.gov/viewers/dijits/layers/1.6',
-				'bboxDialog': 'http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.0',
+				'simple_basemap_toolbar': './shared/dijits/simple_basemap_toolbar/1.2',
+				'banner': './shared/dijits/banner/1.2',
+				'identify':	'./shared/dijits/identify/1.10',
+				'checkBoxTreeTOC': './shared/dijits/checkBoxTreeTOC/1.04',
+				'layers': './shared/dijits/layers/1.6',
+				'bboxDialog': './shared/dijits/bboxDialog/1.0',
 				'bathymetry': './dijits/bathymetry',
 				'survey_select': 'dijits/survey_select'
 			}
@@ -34,7 +34,7 @@
 	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
 	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/defs/EPSG3572.js"></script>
  	<script type="text/javascript" src="src/mapConfig_arctic.js"></script>
-	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/viewers/common/2.7.1/src/map.js"></script>
+	<script type="text/javascript" src="./shared/common/2.7.1/src/map.js"></script>
 </head>
 
 	<body class="tundra">
