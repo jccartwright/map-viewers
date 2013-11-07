@@ -164,6 +164,34 @@ function getMapServiceList(){
 
 function initIdentify(){
 	//console.log('inside initIdentify...');
+
+	var sampleIndexAttributes = [ 'Data Link', 'Repository', 'Platform',
+			'Cruise or Leg', 'Alternate Cruise or Leg', 'Sample ID', 'Device',
+			'Date Collected', 'End Date of Collection', 'Latitude',
+			'Longitude', 'End Latitude', 'End Longitude', 'Water Depth (m)',
+			'End Water Depth (m)', 'Storage Method', 'Core Length (cm)',
+			'Core Diameter (cm)', 'PI', 'Province', 'Lake',
+			'Date Information Last Updated', 'IGSN', 'Sample Comments', 'IMLGS' ];
+
+	var sampleIndexFieldUrls = {
+		'Data Link' : {
+			prefix : '',
+			postfix : '',
+			linkText : 'Data and Images'
+		},
+		'Cruise or Leg' : {
+			prefix : 'http://www.ngdc.noaa.gov/geosamples/leg.jsp?leg=',
+			postfix : ''
+		},
+		'Alternate Cruise or Leg' : {
+			prefix : 'http://www.ngdc.noaa.gov/geosamples/leg.jsp?leg=',
+			postfix : ''
+		},
+		'Repository' : {
+			prefix : 'http://www.ngdc.noaa.gov/geosamples/displayfacility.jsp?fac=',
+			postfix : ''
+		}
+	};
 	
 	globals.identifyDijit = new identify.Identify({
 		map: globals.map,
@@ -178,38 +206,8 @@ function initIdentify(){
 			displayOptions: {
 				0: {
 					layerAlias: "Sample Index",
-					attributes: [
-						'Data Link',
-						'Repository',
-						'Platform',
-						'Cruise or Leg',
-						'Sample ID',
-						'Device',
-						'Date Collected',
-						'Latitude',
-						'Longitude',
-						'Water Depth (m)',
-						'Core Length',
-						'PI',
-						'Province',
-						'Lake',
-						'IGSN' 
-					],
-					fieldUrls: {
-						'Data Link': {
-							prefix: '',
-							postfix: '',
-							linkText: 'Data and Images'
-						},
-						'Cruise or Leg': {
-							prefix: 'http://www.ngdc.noaa.gov/geosamples/leg.jsp?leg=',
-							postfix: ''			
-						},
-						'Repository': {
-							prefix: 'http://www.ngdc.noaa.gov/geosamples/displayfacility.jsp?fac=',
-							postfix: ''			
-						}
-					},
+					attributes: sampleIndexAttributes,
+					fieldUrls: sampleIndexFieldUrls,
 					visible: false,
 					displayFieldNames: ['Cruise or Leg', 'Sample ID', 'Device', 'Repository'],
 					displayFieldDelimiters: {

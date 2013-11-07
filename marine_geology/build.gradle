@@ -1,5 +1,15 @@
-version = 2.0
+version = 1.4.1
 
+dependencies {
+//    compile  project( ':shared' )
+}
+
+jar {
+    from "."
+    exclude 'build*'
+}
+
+/*
 task installNgdcDijits(type: Copy) {
     doFirst {
         uninstallNgdcDijits
@@ -32,3 +42,4 @@ task buildDistribution(type: Zip, dependsOn: copyToStaging) {
         delete 'build/staging'
     }
 }
+*/
