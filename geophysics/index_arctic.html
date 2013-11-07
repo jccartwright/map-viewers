@@ -4,10 +4,10 @@
 	<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
 	<title>Geophysical Survey Data Viewer (Arctic) | ngdc.noaa.gov</title>
 	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dijit/themes/tundra/tundra.css" />
- 	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.2/themes/SimpleBasemapToolbar.css" />
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/banner/1.2/themes/banner.css" />
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/identify/1.11/css/identify.css" />
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.1/themes/BoundingBoxDialog.css" />
+ 	<link rel="stylesheet" type="text/css" href="./shared/dijits/simple_basemap_toolbar/1.2/themes/SimpleBasemapToolbar.css" />
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/banner/1.2/themes/banner.css" />
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/identify/1.11/css/identify.css" />
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/bboxDialog/1.1/themes/BoundingBoxDialog.css" />
 	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dojox/widget/Toaster/Toaster.css" />
 	<link rel="stylesheet" type="text/css" href="./dijits/help_panel/themes/HelpPanel.css" />		
 	<link rel="stylesheet" type="text/css" href="css/local.css">
@@ -19,11 +19,11 @@
 			baseUrl: './',
 			modulePaths: {
 				'help_panel': './dijits/help_panel',
-				'simple_basemap_toolbar': 'http://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.2',
-				'banner': 'http://maps.ngdc.noaa.gov/viewers/dijits/banner/1.2',
-				'identify':	'http://maps.ngdc.noaa.gov/viewers/dijits/identify/1.11',
-				'layers': 'http://maps.ngdc.noaa.gov/viewers/dijits/layers/1.7',
-				'bboxDialog': 'http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.1',
+				'simple_basemap_toolbar': './shared/dijits/simple_basemap_toolbar/1.2',
+				'banner': './shared/dijits/banner/1.2',
+				'identify':	'./shared/dijits/identify/1.11',
+				'layers': './shared/dijits/layers/1.7',
+				'bboxDialog': './shared/dijits/bboxDialog/1.1',
 				'survey_select': 'dijits/survey_select'
 			}
 		};
