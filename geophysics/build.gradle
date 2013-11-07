@@ -1,0 +1,10 @@
+version = '1.6'
+
+dependencies {
+//    compile  project( ':shared' )
+}
+
+jar {
+    from "."
+    exclude 'build*'
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<!--Uncomment Firebug Lite to debug in IE-->
+	<!--<script type="text/javascript" src="https://getfirebug.com/firebug-lite-debug.js"></script>-->
+	<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
+	<title>Geophysical Survey Data Viewer | ngdc.noaa.gov</title>
+	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dijit/themes/tundra/tundra.css" />
+ 	<link rel="stylesheet" type="text/css" href="./shared/dijits/simple_basemap_toolbar/1.2/themes/SimpleBasemapToolbar.css" />
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/banner/1.2/themes/banner.css" />
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/identify/1.11/css/identify.css" />
+	<link rel="stylesheet" type="text/css" href="./shared/dijits/bboxDialog/1.1/themes/BoundingBoxDialog.css" />
+	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dojox/widget/Toaster/Toaster.css" />
+	<link rel="stylesheet" type="text/css" href="./dijits/help_panel/themes/HelpPanel.css" />		
+	<link rel="stylesheet" type="text/css" href="css/local.css">
+	<script type="text/javascript">
+		var djConfig = {
+			debugAtAllCosts: false,
+			parseOnLoad: true,
+			baseUrl: './',
+			modulePaths: {
+				'help_panel': './dijits/help_panel',
+				'simple_basemap_toolbar': './shared/dijits/simple_basemap_toolbar/1.2',
+				'banner': './shared/dijits/banner/1.2',
+				'identify':	'./shared/dijits/identify/1.11',
+				'layers': './shared/dijits/layers/1.7',
+				'bboxDialog': './shared/dijits/bboxDialog/1.1',
+				'survey_select': 'dijits/survey_select'
+			}
+		};
+	</script>
+	<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
+ 	<script type="text/javascript" src="src/mapConfig.js"></script>	
+	<script type="text/javascript" src="src/mapConfig_mercator.js"></script>
+	<script type="text/javascript" src="./shared/common/2.7.2/src/map.js"></script>
+	</head>
+	<body class="tundra">
+		<!--TOPMOST LAYOUT CONTAINER-->		
+		<div id="mainWindow" dojoType="dijit.layout.BorderContainer" gutters="false" design="headline">
+			<!--HEADER SECTION-->
+			<div id="header" dojoType="dijit.layout.ContentPane" region="top" >
+				<div id="banner"></div>
+			</div>
+	
+			<!--CENTER CONTAINER-->
+			<div id="mapDiv" dojoType="dijit.layout.ContentPane" region="center">
+				<div dojoType="dojox.widget.Toaster" id="toaster" messageTopic="toaster" positionDirection="tr-left"></div>
+		
+				<div id="mapToolbar" dojoType="dijit.Toolbar" layoutAlign="left">
+					<div dojoType="dijit.form.Button" id="selectByRectBtn" iconClass="selectByRectIcon" showLabel="false">Identify with Rectangle</div>
+					<div dojoType="dijit.form.Button" id="selectByCoordsBtn" iconClass="selectByCoordsIcon" showLabel="false" onClick="globals.coordDialog.show();">Identify with Coordinates</div>
+					<!--
+					<div dojoType="dijit.form.Button" id="filterBtn" iconClass="queryIcon" showLabel="false" onClick="showSurveySelectDialog();">Select Surveys using a set of search criteria</div>
+					<div dojoType="dijit.form.Button" id="clearBtn" iconClass="clearSelectionIcon" showLabel="false" onClick="clearSelection();">Clear Selection</div>
+					-->
+					<!-- <div id="filterDiv" dojoType="dijit.layout.ContentPane"><b>All Surveys</b></div>-->
+				</div>
+				<img id="loadingImg" src="http://maps.ngdc.noaa.gov/viewers/common/2.7.1/images/loading.gif" alt="refreshing map"/>
+				
+				<div id="basemapToolbar"></div>
+				<div id="switchProjectionDiv">
+					<div title="Show map in Arctic Projection (opens in new window)" dojoType="dijit.form.Button" onClick="launchViewer('Arctic');">Switch to Arctic View</div>
+					<div title="Show map in Antarctic Projection (opens in new window)" dojoType="dijit.form.Button" onClick="launchViewer('Antarctic');">Switch to Antarctic View</div>					
+				</div>
+				<div id="bottomBar" dojoType="dijit.layout.ContentPane">
+					<span id="coordsDiv">Position: not available</span>
+					<span id="scalebar"></span>
+				</div>
+			</div>
+			<!--RIGHT CONTAINER-->
+			<div id="accordionContainer" dojoType="dijit.layout.AccordionContainer" region="right" splitter="true">
+				<div id="tocPane" dojoType="dijit.layout.AccordionPane" title="Layers">
+					<b>Marine Surveys:</b>							
+					<table>
+						<tr>
+							<td>
+								<input id="chkLayer0" dojoType="dijit.form.CheckBox" onChange="toggleLayer(0);">
+							</td>
+							<td>
+								<label for="chkLayer0">All Parameters</label>
+								<span class="countSpan" id="countLayer0"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer1" dojoType="dijit.form.CheckBox" onChange="toggleLayer(1);">
+							</td>
+							<td>
+								<label for="chkLayer1">Bathymetry</label>
+								<span class="countSpan" id="countLayer1"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer2" dojoType="dijit.form.CheckBox" onChange="toggleLayer(2);">
+							</td>
+							<td>
+								<label for="chkLayer2">Gravity</label>
+								<span class="countSpan" id="countLayer2"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer3" dojoType="dijit.form.CheckBox" onChange="toggleLayer(3);">
+							</td>
+							<td>
+								<label for="chkLayer3">Magnetics</label>
+								<span class="countSpan" id="countLayer3"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer4" dojoType="dijit.form.CheckBox" onChange="toggleLayer(4);">
+							</td>
+							<td>
+								<label for="chkLayer4">Multi-Channel Seismics</label>
+								<span class="countSpan" id="countLayer4"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer5" dojoType="dijit.form.CheckBox" onChange="toggleLayer(5);">
+							</td>
+							<td>
+								<label for="chkLayer5">Seismic Refraction</label>
+								<span class="countSpan" id="countLayer5"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer6" dojoType="dijit.form.CheckBox" onChange="toggleLayer(6);">
+							</td>
+							<td>
+								<label for="chkLayer6">Shot-Point Navigation</label>
+								<span class="countSpan" id="countLayer6"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer7" dojoType="dijit.form.CheckBox" onChange="toggleLayer(7);">
+							</td>
+							<td>
+								<label for="chkLayer7">Side Scan Sonar</label>
+								<span class="countSpan" id="countLayer7"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer8" dojoType="dijit.form.CheckBox" onChange="toggleLayer(8);">
+							</td>
+							<td>
+								<label for="chkLayer8">Single Channel Seismics</label>
+								<span class="countSpan" id="countLayer8"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer9" dojoType="dijit.form.CheckBox" onChange="toggleLayer(9);">
+							</td>
+							<td>
+								<label for="chkLayer9">Subbottom Profile</label>
+								<span class="countSpan" id="countLayer9"></span>
+							</td>
+						</tr>						
+					</table>
+					<div dojoType="dijit.form.Button" id="filterMarineBtn" iconClass="queryIcon" showLabel="true" onClick="showMarineSurveySelectDialog();">Find Marine Surveys</div>
+					<div id="marineFilterDiv" class="filterText" dojoType="dijit.layout.ContentPane"></div>						
+					<hr/>
+					<table>
+						<b>Airborne Surveys:</b>
+						<tr>
+							<td>
+								<input id="chkLayer10" dojoType="dijit.form.CheckBox" onChange="toggleLayer(10);">
+							</td>
+							<td>
+								<label for="chkLayer10">Aeromagnetics</label>
+								<span class="countSpan" id="countLayer10"></span>
+							</td>
+						</tr>
+					</table>
+					<div dojoType="dijit.form.Button" id="filterAeroBtn" iconClass="queryIcon" showLabel="true" onClick="showAeroSurveySelectDialog();">Find Airborne Surveys</div>
+					<div id="aeroFilterDiv" class="filterText" dojoType="dijit.layout.ContentPane"></div>	
+					<hr/>
+					<div dojoType="dijit.form.Button" id="clearBtn" iconClass="clearSelectionIcon" showLabel="true" onClick="clearSelection();">Clear Selection</div>			
+				</div>
+				<div id="legendPane" dojoType="dijit.layout.AccordionPane" title="Legend">
+					<div id="legend"></div>
+				</div>
+				<div id="aboutPane" dojoType="dijit.layout.AccordionPane" title="More Information">
+					<p>
+						For more information about Marine Geophysical Trackline Data at NGDC, see <a href="http://ngdc.noaa.gov/mgg/geodas/trackline.html" target="_blank">http://ngdc.noaa.gov/mgg/geodas/trackline.html</a>.
+					<p>
+					<p>
+						Geomagnetic data at NGDC: <a href="http://ngdc.noaa.gov/geomag/data.shtml" target="_blank">http://ngdc.noaa.gov/geomag/data.shtml</a>
+					</p>
+					<b>Basemap and reference layers:</b>
+					<ul>
+						<li><a href="http://www.gebco.net/data_and_products/gridded_bathymetry_data" target="_blank">GEBCO_08</a> (30 arc-second grid) shaded-relief map</li>
+						<li><a href="http://ngdc.noaa.gov/mgg/global/global.html" target="_blank">ETOPO1 Global Relief Model</a> (1 arc-minute grid) shaded-relief map</li>
+						<li><a href="http://arcgis.com/home/item.html?id=8b3d38c0819547faa83f7b7aca80bd76" target="_blank">Esri Light Gray Canvas</li>
+						<li><a href="http://www.arcgis.com/home/item.html?id=5ae9e138a17842688b0b79283a4353f6" target="_blank">Esri Ocean Basemap</a></li>
+						<li>Imagery: <a href="http://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9" target="_blank">Esri World Imagery</a></li>
+						<li><a href="http://www.arcgis.com/home/item.html?id=d94dcdbe78e141c2b2d3a91d5ca8b9c9" target="_blank">National Geographic Basemap (Esri)</a></li>						
+						<li>Boundaries/Labels: <a href="http://arcgis.com/home/item.html?id=a842e359856a4365b1ddf8cc34fde079" target="_blank">ESRI World Boundaries and Places</a></li>					
+					</ul>	
+					</p>
+					<p><b>Map projection:</b>WGS84 Web Mercator (Auxiliary Sphere); EPSG:3857.</p>
+					<p>
+						<b>Disclaimer:</b> All international boundaries, maritime boundaries, and placenames are shown for general orientation and reference only; they do not necessarily represent official U.S. policy.
+					</p>
+					<p><b>Version:</b> 1.6, last updated May 2013</p>
+				</div>
+				<div id="helpPane" dojoType="dijit.layout.AccordionPane" title="Help">
+					<div id="helpPanel" dojoType="help_panel.HelpPanel"></div>
+				</div>			
+			</div>
+		</div>
+	</body>
+</html>

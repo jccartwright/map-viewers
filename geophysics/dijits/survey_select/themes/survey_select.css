@@ -1,0 +1,30 @@
+.surveySelect {
+	font-family: Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.surveySelect-multiSelect {
+	width: 300px;
+}
+
+.surveySelect-filteringSelect {
+	width: 200px;
+}
+
+.surveySelect-yearSpinner {
+	width: 55px;
+}
+
+.surveySelect-countSpan {
+	font-size: smaller;
+}
+
+.surveySelect-dateTextBox {
+	font: 12px arial,helvetica,verdana,sans-serif;
+	width: 8em;
+}
+
+#surveyListDiv {
+	white-space: normal;
+	width: 300px;
+}
