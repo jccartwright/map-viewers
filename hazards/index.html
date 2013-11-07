@@ -4,75 +4,36 @@
 		<!--Uncomment Firebug Lite to debug in IE-->
 		<!--<script type="text/javascript" src="https://getfirebug.com/firebug-lite-debug.js"></script>-->
 		<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
-		<title>Natural Hazards Viewer | ngdc.noaa.gov</title>
-        <link rel="stylesheet" href="http://js.arcgis.com/3.7/js/esri/css/esri.css">
-		<link rel="stylesheet" type="text/css" href="./shared/dijits/simple_basemap_toolbar/src/simple_basemap_toolbar/themes/SimpleBasemapToolbar.css" />
-		<link rel="stylesheet" type="text/css" href="./shared/dijits/banner/src/banner/themes/banner.css">
-		<link rel="stylesheet" type="text/css" href="./shared/dijits/identify/src/identify/css/identify.css">
-        <link rel="stylesheet" type="text/css" href="./shared/dijits/bboxDialog/src/bboxDialog/themes/BoundingBoxDialog.css">
-		<link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.7/js/dojo/dojox/widget/Toaster/Toaster.css">
+		<title>Natural Hazards Viewer | ngdc.noaa.gov</title>		
+		<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dijit/themes/tundra/tundra.css" />
+ 		<link rel="stylesheet" type="text/css" href="./shared/dijits/simple_basemap_toolbar/1.1/themes/SimpleBasemapToolbar.css" />
+		<link rel="stylesheet" type="text/css" href="./shared/dijits/banner/1.2/themes/banner.css">
+		<link rel="stylesheet" type="text/css" href="./shared/dijits/identify/1.10/css/identify.css">
+        <link rel="stylesheet" type="text/css" href="./shared/dijits/bboxDialog/1.0/themes/BoundingBoxDialog.css">
+		<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dojox/widget/Toaster/Toaster.css">
 		<!--<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.5/js/dojo/dojox/layout/resources/ExpandoPane.css">-->
-		<link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.7/js/dojo/dojox/layout/resources/FloatingPane.css">
+		<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dojox/layout/resources/FloatingPane.css">
 		<link rel="stylesheet" type="text/css" href="css/local.css">
 		<script type="text/javascript">
-            /*
 			var djConfig = {
 				parseOnLoad: true,
 				debugAtAllCosts: false,
 				baseUrl: './',
 				modulePaths: {
-					'banner': 'shared/dijits/banner/src/banner',
-					'help_panel': 'shared/dijits/help_panel/src/help_panel',
+					'banner': './shared/dijits/banner/1.2',
+					'help_panel': './shared/dijits/help_panel/1.1',
 					'query_dialog': 'dijits/query_dialog',
-					'identify': 'shared/dijits/identify/src/identify',
+					'identify': './shared/dijits/identify/1.10',
 					'haz_identify': 'dijits/haz_identify',
-					'layers': 'shared/dijits/layers/src/layers',
-					'bboxDialog': 'shared/dijits/bboxDialog/src/bboxDialog',
-					'simple_basemap_toolbar': 'shared/dijits/simple_basemap_toolbar/src/simple_basemap_toolbar'
+					'layers': './shared/dijits/layers/1.6',
+					'bboxDialog': './shared/dijits/bboxDialog/1.0',
+					'simple_basemap_toolbar': './shared/dijits/simple_basemap_toolbar/1.2'
 				}
 			};
-			*/
-            dojoConfig = {
-                parseOnLoad: true,
-                async: false,
-                packages: [
-                {
-                    "name": "banner",
-                    "location": location.pathname.replace(/\/[^/]+$/, "") + "/shared/dijits/banner/src/banner"
-                },
-                {
-                    "name": "help_panel",
-                    "location": location.pathname.replace(/\/[^/]+$/, "") + "/shared/dijits/help_panel/src/help_panel"
-                },
-                {
-                    "name": "query_dialog",
-                    "location": location.pathname.replace(/\/[^/]+$/, "") + "/dijits/query_dialog"
-                },
-                {
-                    "name": "identify",
-                    "location": location.pathname.replace(/\/[^/]+$/, "") + "/shared/dijits/identify/src/identify"
-                },
-                {
-                    "name": "haz_identify",
-                    "location": location.pathname.replace(/\/[^/]+$/, "") + "/dijits/haz_identify"
-                },
-                {
-                    "name": "bboxDialog",
-                    "location": location.pathname.replace(/\/[^/]+$/, "") + "/shared/dijits/bboxDialog/src/bboxDialog"
-                },
-                {
-                    "name": "layers",
-                    "location": location.pathname.replace(/\/[^/]+$/, "") + "/shared/dijits/layers/src/layers"
-                },
-                {
-                    "name": "simple_basemap_toolbar",
-                    "location": location.pathname.replace(/\/[^/]+$/, "") + "/shared/dijits/simple_basemap_toolbar/src/simple_basemap_toolbar"
-                }]
-            };
 		</script>
-		<script type="text/javascript" src="http://js.arcgis.com/3.7/"></script>
+		<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
 		<script type="text/javascript" src="src/mapConfig.js"></script>				
-		<script type="text/javascript" src="shared/src/map.js"></script>
+		<script type="text/javascript" src="./shared/common/2.7.1/src/map.js"></script>
 	</head>
 	<body class="tundra">	
 		<div dojoType="dojox.layout.FloatingPane" id="tsEventLegendPane" title="Tsunami Events" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
@@ -109,7 +70,7 @@
 					<div dojoType="dijit.form.Button" id="selectByRectBtn" iconClass="selectByRectIcon" showLabel="false">Select with Rectangle</div>
 					<div dojoType="dijit.form.Button" id="selectByCoordsBtn" iconClass="selectByCoordsIcon" showLabel="false" onClick="globals.coordDialog.show();">Select with Coordinates</div>					
 				</div>
-				<img id="loadingImg" src="./shared/images/loading.gif" alt="refreshing map"></img>
+				<img id="loadingImg" src="http://maps.ngdc.noaa.gov/viewers/common/2.7.1/images/loading.gif" alt="refreshing map"></img>
 				<div id="basemapToolbar"></div>		
 				<div id="bottomBar" dojoType="dijit.layout.ContentPane">
 					<span id="coordsDiv">Position: not available</span>

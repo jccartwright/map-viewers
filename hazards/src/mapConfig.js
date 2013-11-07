@@ -598,27 +598,27 @@ function mapReadyCustom(theMap) {
 		visibleLayers = queryParams.layers.split(',');		
 	}
 	if (dojo.indexOf(visibleLayers, '0') != -1) {
-		dijit.byId('checkTsEvents').set('checked', true);
+		dijit.byId('checkTsEvents').attr('checked', true);
 		toggleTsEventVisibility();
 	}
 	if (dojo.indexOf(visibleLayers, '1') != -1) {
-		dijit.byId('checkTsObs').set('checked', true);
+		dijit.byId('checkTsObs').attr('checked', true);
 		toggleTsObsVisibility();
 	}
 	if (dojo.indexOf(visibleLayers, '2') != -1) {
-		dijit.byId('checkSignifEq').set('checked', true);
+		dijit.byId('checkSignifEq').attr('checked', true);
 		toggleSignifEqVisibility();
 	}
 	if (dojo.indexOf(visibleLayers, '3') != -1) {
-		dijit.byId('checkVolEvent').set('checked', true);
+		dijit.byId('checkVolEvent').attr('checked', true);
 		toggleVolEventVisibility();
 	}
 	if (dojo.indexOf(visibleLayers, '4') != -1) {
-		dijit.byId('checkDart').set('checked', true);
+		dijit.byId('checkDart').attr('checked', true);
 		toggleDartVisibility();
 	}
 	if (dojo.indexOf(visibleLayers, '5') != -1) {
-		dijit.byId('checkTideGauges').set('checked', true);
+		dijit.byId('checkTideGauges').attr('checked', true);
 		toggleTideGaugeVisibility();
 	}
 	
@@ -665,37 +665,37 @@ function showDartSearchDialog() {
 }
 
 function toggleTsEventVisibility() {
-	if (dijit.byId('checkTsEvents').set('checked') == true) {
+	if (dijit.byId('checkTsEvents').attr('checked') == true) {
 		//console.log('tsEvents true');
-		dijit.byId('radioTsEvents1').set('disabled', false);
-		dijit.byId('radioTsEvents2').set('disabled', false);
-		setTsEventVisibility(dijit.byId('radioTsEvents1').set('checked') ? 1 : 2);
+		dijit.byId('radioTsEvents1').attr('disabled', false);
+		dijit.byId('radioTsEvents2').attr('disabled', false);
+		setTsEventVisibility(dijit.byId('radioTsEvents1').attr('checked') ? 1 : 2);
 	}
 	else {
 		//console.log('tsEvents false');
-		dijit.byId('radioTsEvents1').set('disabled', true);
-		dijit.byId('radioTsEvents2').set('disabled', true);
+		dijit.byId('radioTsEvents1').attr('disabled', true);
+		dijit.byId('radioTsEvents2').attr('disabled', true);	
 		setTsEventVisibility(0);
 	}
 }
 
 function toggleTsObsVisibility() {
-	if (dijit.byId('checkTsObs').set('checked') == true) {
+	if (dijit.byId('checkTsObs').attr('checked') == true) {
 		//console.log('tsObs true');
-		dijit.byId('radioTsObs1').set('disabled', false);
-		dijit.byId('radioTsObs2').set('disabled', false);
-		setTsObsVisibility(dijit.byId('radioTsObs1').set('checked') ? 1 : 2);
+		dijit.byId('radioTsObs1').attr('disabled', false);
+		dijit.byId('radioTsObs2').attr('disabled', false);
+		setTsObsVisibility(dijit.byId('radioTsObs1').attr('checked') ? 1 : 2);
 	}
 	else {
 		//console.log('tsObs false');
-		dijit.byId('radioTsObs1').set('disabled', true);
-		dijit.byId('radioTsObs2').set('disabled', true);
+		dijit.byId('radioTsObs1').attr('disabled', true);
+		dijit.byId('radioTsObs2').attr('disabled', true);	
 		setTsObsVisibility(0);
 	}
 }
 
 function toggleSignifEqVisibility() {
-	if (dijit.byId('checkSignifEq').set('checked') == true) {
+	if (dijit.byId('checkSignifEq').attr('checked') == true) {
 		dojo.publish("/toc/layer/show", [{name: 'Hazards', service: 'Hazards', subLayers: [globals.signifEqLayerID], state: true}]);
 	}
 	else {
@@ -704,7 +704,7 @@ function toggleSignifEqVisibility() {
 }
 
 function toggleVolEventVisibility() {
-	if (dijit.byId('checkVolEvent').set('checked') == true) {
+	if (dijit.byId('checkVolEvent').attr('checked') == true) {
 		dojo.publish("/toc/layer/show", [{name: 'Hazards', service: 'Hazards', subLayers: [globals.volEventLayerID], state: true}]);
 	}
 	else {
@@ -713,7 +713,7 @@ function toggleVolEventVisibility() {
 }
 
 function toggleDartVisibility() {
-	if (dijit.byId('checkDart').set('checked') == true) {
+	if (dijit.byId('checkDart').attr('checked') == true) {
 		dojo.publish("/toc/layer/show", [{name: 'Hazards', service: 'Hazards', subLayers: [globals.currentDartStationsLayerID, globals.retrospectiveDartStationsLayerID], state: true}]);
 	}
 	else {
@@ -722,7 +722,7 @@ function toggleDartVisibility() {
 }
 
 function toggleTideGaugeVisibility() {
-	if (dijit.byId('checkTideGauges').set('checked') == true) {
+	if (dijit.byId('checkTideGauges').attr('checked') == true) {
 		dojo.publish("/toc/layer/show", [{name: 'Hazards', service: 'Hazards', subLayers: [globals.tideGaugesLayerID], state: true}]);
 	}
 	else {
@@ -806,20 +806,20 @@ function filterTsEvents(values) {
 	
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 	
-	dijit.byId('checkTsEvents').set('checked', true);
+	dijit.byId('checkTsEvents').attr('checked', true);
 	toggleTsEventVisibility();
 	dojo.byId("tsEventsFlag").innerHTML = "*";
-	dijit.byId("tsEventResetButton").set("disabled", false);
+	dijit.byId("tsEventResetButton").attr("disabled", false);
 }
 
 function resetTsEvents() {
-	globals.hazLayerDefinitions[globals.tsEventLayerID1] = ['EVENT_VALIDITY_CODE>0'];
-	globals.hazLayerDefinitions[globals.tsEventLayerID2] = ['EVENT_VALIDITY_CODE>0'];
+	globals.hazLayerDefinitions[globals.tsEventLayerID1] = 'EVENT_VALIDITY_CODE>0';
+	globals.hazLayerDefinitions[globals.tsEventLayerID2] = 'EVENT_VALIDITY_CODE>0';
 	
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 	
 	dojo.byId("tsEventsFlag").innerHTML = "";
-	dijit.byId("tsEventResetButton").set("disabled", true);
+	dijit.byId("tsEventResetButton").attr("disabled", true);
 	globals.tsEventSearchDialog.resetForm();
 }
 
@@ -839,15 +839,15 @@ function showTsObsForEvent(params) {
 	
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 	
-	dijit.byId('checkTsEvents').set('checked', true);
+	dijit.byId('checkTsEvents').attr('checked', true);
 	toggleTsEventVisibility();
 	dojo.byId("tsEventsFlag").innerHTML = "*";
-	dijit.byId("tsEventResetButton").set("disabled", false);
+	dijit.byId("tsEventResetButton").attr("disabled", false);
 	
-	dijit.byId('checkTsObs').set('checked', true);
+	dijit.byId('checkTsObs').attr('checked', true);
 	toggleTsObsVisibility();
 	dojo.byId("tsObsFlag").innerHTML = "*";
-	dijit.byId("tsObsResetButton").set("disabled", false);
+	dijit.byId("tsObsResetButton").attr("disabled", false);
 	
 	//Zoom to results
 	zoomToTsEventAndObservations(tsEventID, geometry);
@@ -864,10 +864,10 @@ function showTsEventForObs(params) {
 		
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 	
-	dijit.byId('checkTsEvents').set('checked', true);
+	dijit.byId('checkTsEvents').attr('checked', true);
 	toggleTsEventVisibility();
 	dojo.byId("tsEventsFlag").innerHTML = "*";
-	dijit.byId("tsEventResetButton").set("disabled", false);
+	dijit.byId("tsEventResetButton").attr("disabled", false);
 	
 	//Zoom to results
 	zoomToTsEventForObservation(tsEventID, geometry);
@@ -931,21 +931,21 @@ function filterTsObs(values) {
 
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 		
-	dijit.byId('checkTsObs').set('checked', true);
+	dijit.byId('checkTsObs').attr('checked', true);
 	toggleTsObsVisibility();
 	dojo.byId("tsObsFlag").innerHTML = "*";
-	dijit.byId("tsObsResetButton").set("disabled", false);
+	dijit.byId("tsObsResetButton").attr("disabled", false);
 }
 
 function resetTsObs() {
-	globals.hazLayerDefinitions[globals.tsObsLayerID1] = [];
-	globals.hazLayerDefinitions[globals.tsObsLayerID2] = [];
-	globals.hazLayerDefinitions[globals.tsObsLayerID3] = [];
-	
+	globals.hazLayerDefinitions[globals.tsObsLayerID1] = '';
+	globals.hazLayerDefinitions[globals.tsObsLayerID2] = '';
+	globals.hazLayerDefinitions[globals.tsObsLayerID3] = '';
+
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 	
 	dojo.byId("tsObsFlag").innerHTML = "";
-	dijit.byId("tsObsResetButton").set("disabled", true);
+	dijit.byId("tsObsResetButton").attr("disabled", true);	
 	globals.tsObsSearchDialog.resetForm();
 }
 
@@ -993,18 +993,18 @@ function filterSignifEq(values) {
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 	
 	dojo.byId("signifEqFlag").innerHTML = "*";
-	dijit.byId('checkSignifEq').set('checked', true);
+	dijit.byId('checkSignifEq').attr('checked', true);
 	toggleSignifEqVisibility();
-	dijit.byId("signifEqResetButton").set("disabled", false);
+	dijit.byId("signifEqResetButton").attr("disabled", false);
 }
 
 function resetSignifEq() {
-	globals.hazLayerDefinitions[globals.signifEqLayerID] = [];
+	globals.hazLayerDefinitions[globals.signifEqLayerID] = '';
 	
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 		
 	dojo.byId("signifEqFlag").innerHTML = "";
-	dijit.byId("signifEqResetButton").set("disabled", true);
+	dijit.byId("signifEqResetButton").attr("disabled", true);
 	globals.signifEqSearchDialog.resetForm();
 }
 
@@ -1045,20 +1045,20 @@ function filterVolEvents(values) {
 
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 		
-	dijit.byId('checkVolEvent').set('checked', true);
+	dijit.byId('checkVolEvent').attr('checked', true);
 	toggleVolEventVisibility();
 	dojo.byId("volEventFlag").innerHTML = "*";
-	dijit.byId("volEventResetButton").set("disabled", false);
+	dijit.byId("volEventResetButton").attr("disabled", false);
 }
 
 function resetVolEvents() {
-	globals.hazLayerDefinitions[globals.volLocLayerID] = [];
-	globals.hazLayerDefinitions[globals.volEventLayerID] = [];
+	globals.hazLayerDefinitions[globals.volLocLayerID] = '';
+	globals.hazLayerDefinitions[globals.volEventLayerID] = '';
 
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 		
 	dojo.byId("volEventFlag").innerHTML = "";
-	dijit.byId("volEventResetButton").set("disabled", true);
+	dijit.byId("volEventResetButton").attr("disabled", true);	
 	globals.volEventSearchDialog.resetForm();
 }
 
@@ -1095,20 +1095,20 @@ function filterDarts(values) {
 
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 		
-	dijit.byId('checkDart').set('checked', true);
+	dijit.byId('checkDart').attr('checked', true);
 	toggleDartVisibility();
 	dojo.byId("dartFlag").innerHTML = "*";
-	dijit.byId("dartResetButton").set("disabled", false);
+	dijit.byId("dartResetButton").attr("disabled", false);
 }
 
 function resetDarts() {
-	globals.hazLayerDefinitions[globals.currentDartStationsLayerID] = [];
-	globals.hazLayerDefinitions[globals.retrospectiveDartStationsLayerID] = [];
+	globals.hazLayerDefinitions[globals.currentDartStationsLayerID] = '';
+	globals.hazLayerDefinitions[globals.retrospectiveDartStationsLayerID] = '';
 
 	globals.hazMapService.setLayerDefinitions(globals.hazLayerDefinitions);
 		
 	dojo.byId("dartFlag").innerHTML = "";
-	dijit.byId("dartResetButton").set("disabled", true);
+	dijit.byId("dartResetButton").attr("disabled", true);	
 	globals.dartSearchDialog.resetForm();
 }
 
