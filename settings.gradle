@@ -1,1 +1,1 @@
-include 'bathymetry', 'geophysics', 'hazards', 'marine_geology', 'sample', 'sample_index', 'common'
+include 'bathymetry', 'firedetects', 'fishmaps', 'geophysics', 'hazards', 'historical_declination', 'hot_springs', 'marine_geology', 'sample', 'sample_index', 'common', 'shared'
