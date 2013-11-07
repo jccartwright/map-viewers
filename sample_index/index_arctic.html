@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<!--Uncomment Firebug Lite to debug in IE--><!--<script type="text/javascript" src="https://getfirebug.com/firebug-lite-debug.js"></script>-->
+		<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
+		<title>Index to Marine and Lacustrine Geological Samples Viewer (Arctic) | ngdc.noaa.gov</title>
+		<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dijit/themes/tundra/tundra.css" />
+		<link rel="stylesheet" type="text/css" href="./shared/dijits/simple_basemap_toolbar/1.2/themes/SimpleBasemapToolbar.css" />
+		<link rel="stylesheet" type="text/css" href="./shared/dijits/banner/1.2/themes/banner.css" />
+		<link rel="stylesheet" type="text/css" href="./shared/dijits/identify/1.11/css/identify.css" />
+		<link rel="stylesheet" type="text/css" href="./shared/dijits/bboxDialog/1.0/themes/BoundingBoxDialog.css" />
+		<link rel="stylesheet" type="text/css" href="css/local.css">
+		<script type="text/javascript">
+			var djConfig = {
+				debugAtAllCosts: false,
+				parseOnLoad: true,
+				baseUrl: './',
+				modulePaths: {
+					'help_panel': './shared/dijits/help_panel/1.1',
+					'simple_basemap_toolbar': './shared/dijits/simple_basemap_toolbar/1.2',
+					'banner': './shared/dijits/banner/1.2',
+					'identify': './shared/dijits/identify/1.12',
+					'layers': './shared/dijits/layers/1.7',
+					'bboxDialog': './shared/dijits/bboxDialog/1.0',
+					'sample_index': './dijits/sample_index'
+				}
+			};
+		</script>
+		<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
+		<script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
+		<script type="text/javascript" src="epsg3995.js"></script>
+		<script type="text/javascript" src="src/mapConfig.js"></script>
+		<script type="text/javascript" src="src/mapConfig_arctic.js"></script>
+		<!-- <script type="text/javascript" src="http://maps.ngdc.noaa.gov/viewers/common/2.7.2/src/map.js"></script>-->
+		<script type="text/javascript" src="src/map.js"></script>	
+	</head>
+	<body class="tundra">
+		<!--TOPMOST LAYOUT CONTAINER-->
+		<div id="mainWindow" dojoType="dijit.layout.BorderContainer" gutters="false" design="headline">
+			<!--HEADER SECTION-->
+			<div id="header" dojoType="dijit.layout.ContentPane" region="top">
+				<div id="banner">
+				</div>
+			</div>
+			<!--CENTER SECTION--><!--CENTER CONTAINER-->
+			<div id="mapDiv" dojoType="dijit.layout.ContentPane" region="center">
+				<div id="mapToolbar" dojoType="dijit.Toolbar" layoutAlign="left">
+					<div dojoType="dijit.form.Button" id="selectByRectBtn" iconClass="selectByRectIcon" showLabel="false">
+						Select with Rectangle
+					</div>
+				</div>
+				<img id="loadingImg" src="http://maps.ngdc.noaa.gov/viewers/common/2.7.2/images/loading.gif" alt="refreshing map"/>
+				<div id="basemapToolbar"></div>
+				<div id="switchProjectionDiv">
+					<div title="Show map in Global Mercator Projection (opens in new window)" dojoType="dijit.form.Button" onClick="launchViewer('Mercator');">Switch to Global Mercator View</div>
+					<div title="Show map in Antarctic Projection (opens in new window)" dojoType="dijit.form.Button" onClick="launchViewer('Antarctic');">Switch to Antarctic View</div>
+				</div>
+				<div id="bottomBar" dojoType="dijit.layout.ContentPane">
+					<span id="coordsDiv">Position: not available</span>
+					<span id="scalebar"></span>
+				</div>
+			</div>
+			<!--RIGHT CONTAINER-->
+			<div id="accordionContainer" dojoType="dijit.layout.AccordionContainer" region="right" splitter="true">
+				<div class="tocPane" dojoType="dijit.layout.AccordionPane" title="Repositories">
+				<h3>Select Repository:</h3>	
+																
+				<input type="radio" name="selectInst" id="AllInst" dojoType="dijit.form.RadioButton" onClick="selectInstitution('AllInst')" checked />
+					<label for="AllInst">All Samples by Institution</label><br/>
+				<input type="radio" name="selectInst" id="None" dojoType="dijit.form.RadioButton" onClick="selectInstitution('None')" />
+					<label for="None">None</label><br/>					
+				<div id="AOML_div">	
+					<input type="radio" name="selectInst" id="AOML" dojoType="dijit.form.RadioButton" onClick="selectInstitution('AOML')" />
+					<label for="AOML"><img class="inst_icon" src="images/AOML_symbol.png"> AOML</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="AOML_div">NOAA Atlantic Oceanographic and Meteorological Lab</div>
+				</div>
+				<div id="AWI_div">
+					<input type="radio" name="selectInst" id="AWI" dojoType="dijit.form.RadioButton" onClick="selectInstitution('AWI')" />
+					<label for="AWI"><img class="inst_icon" src="images/AWI_symbol.png"> AWI</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="AWI_div">Alfred Wegener Institute, Germany</div>
+				</div>
+				<div id="BOSCORF_div">
+					<input type="radio" name="selectInst" id="BOSCORF" dojoType="dijit.form.RadioButton" onClick="selectInstitution('BOSCORF')" />
+					<label for="BOSCORF"><img class="inst_icon" src="images/BOSCORF_symbol.png"> BOSCORF</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="BOSCORF_div">British Ocean Sediment Core Research Facility, UK</div>
+				</div>
+				<div id="BPRC_div">	
+					<input type="radio" name="selectInst" id="BPRC" dojoType="dijit.form.RadioButton" onClick="selectInstitution('BPRC')" />
+					<label for="BPRC"><img class="inst_icon" src="images/BPRC_symbol.png"> BPRC</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="BPRC_div">Byrd Polar Research Facility</div>
+				</div>
+				<div id="Canada_div">	
+					<input type="radio" name="selectInst" id="Canada" dojoType="dijit.form.RadioButton" onClick="selectInstitution('Canada')" />				
+					<label for="Canada"><img class="inst_icon" src="images/Canada_symbol.png"> Canada</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="Canada_div">Geological Survey of Canada</div>
+				</div>
+				<div id="DSDP_div">	
+					<input type="radio" name="selectInst" id="DSDP" dojoType="dijit.form.RadioButton" onClick="selectInstitution('DSDP')" />
+					<label for="DSDP"><img class="inst_icon" src="images/DSDP_symbol.png"></img> DSDP</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="DSDP_div">Deep Sea Drilling Project, IODP</div>
+				</div>
+				<div id="ECS_div">				
+					<input type="radio" name="selectInst" id="ECS" dojoType="dijit.form.RadioButton" onClick="selectInstitution('ECS')" />
+					<label for="ECS"><img class="inst_icon" src="images/ECS_symbol.png"> ECS</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="ECS_div">Extended Continental Shelf Project</div>
+				</div>
+				<div id="FSU_div">	
+					<input type="radio" name="selectInst" id="FSU" dojoType="dijit.form.RadioButton" onClick="selectInstitution('FSU')" />
+					<label for="FSU"><img class="inst_icon" src="images/FSU_symbol.png"> FSU</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="FSU_div">Antarctic Research Facility, Florida State</div>
+				</div>
+				<div id="GEOMAR_div">	
+					<input type="radio" name="selectInst" id="GEOMAR" dojoType="dijit.form.RadioButton" onClick="selectInstitution('GEOMAR')" />
+					<label for="GEOMAR"><img class="inst_icon" src="images/GEOMAR_symbol.png"> GEOMAR</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="GEOMAR_div">IFM-GEOMAR, Germany</div>
+				</div>
+				<div id="IODP_div">	
+					<input type="radio" name="selectInst" id="IODP" dojoType="dijit.form.RadioButton" onClick="selectInstitution('IODP')" />
+					<label for="IODP"><img class="inst_icon" src="images/IODP_symbol.png"> IODP</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="IODP_div">Integrated Ocean Drilling Program</div>					
+				</div>
+				<div id="LDEO_div">	
+					<input type="radio" name="selectInst" id="LDEO" dojoType="dijit.form.RadioButton" onClick="selectInstitution('LDEO')" />
+					<label for="LDEO"><img class="inst_icon" src="images/LDEO_symbol.png"> LDEO</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="LDEO_div">Lamont-Doherty Earth Observatory</div>
+				</div>
+				<div id="LacCore_div">	
+					<input type="radio" name="selectInst" id="LacCore" dojoType="dijit.form.RadioButton" onClick="selectInstitution('LacCore')" />
+					<label for="LacCore"><img class="inst_icon" src="images/LacCore_symbol.png"> LacCore</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="LacCore_div">National Lacustrine Core Repository, U Minn</div>
+				</div>
+				<div id="ODP_div">	
+					<input type="radio" name="selectInst" id="ODP" dojoType="dijit.form.RadioButton" onClick="selectInstitution('ODP')" />
+					<label for="ODP"><img class="inst_icon" src="images/ODP_symbol.png"> ODP</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="ODP_div">Ocean Drilling Program, IODP</div>
+				</div>
+				<div id="OSU_div">											
+					<input type="radio" name="selectInst" id="OSU" dojoType="dijit.form.RadioButton" onClick="selectInstitution('OSU')" />
+					<label for="OSU"><img class="inst_icon" src="images/OSU_symbol.png"> OSU</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="OSU_div">Oregon State University</div>
+				</div>
+				<div id="PMEL_div">	
+					<input type="radio" name="selectInst" id="PMEL" dojoType="dijit.form.RadioButton" onClick="selectInstitution('PMEL')" />
+					<label for="PMEL"><img class="inst_icon" src="images/PMEL_symbol.png"> PMEL</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="PMEL_div">NOAA Pacific Marine Environmental Lab</div>
+				</div>
+				<div id="RSMAS_div">					
+					<input type="radio" name="selectInst" id="RSMAS" dojoType="dijit.form.RadioButton" onClick="selectInstitution('RSMAS')" />
+					<label for="RSMAS"><img class="inst_icon" src="images/RSMAS_symbol.png"> RSMAS</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="RSMAS_div">Rosenstiel School of Marine and Atmos Sciences</div>
+				</div>	
+				<div id="SIO_div">	
+					<input type="radio" name="selectInst" id="SIO" dojoType="dijit.form.RadioButton" onClick="selectInstitution('SIO')" />
+					<label for="SIO"><img class="inst_icon" src="images/SIO_symbol.png"> SIO</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="SIO_div">Scripps Institution of Oceanography</div>
+				</div>	
+				<div id="SOEST_div">	
+					<input type="radio" name="selectInst" id="SOEST" dojoType="dijit.form.RadioButton" onClick="selectInstitution('SOEST')" />
+					<label for="SOEST"><img class="inst_icon" src="images/SOEST_symbol.png"> SOEST</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="SOEST_div">University of Hawaii</div>
+				</div>
+				<div id="URI_div">	
+					<input type="radio" name="selectInst" id="URI" dojoType="dijit.form.RadioButton" onClick="selectInstitution('URI')" />
+					<label for="URI"><img class="inst_icon" src="images/URI_symbol.png"> URI</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="URI_div">University of Rhode Island</div>
+				</div>
+				<div id="USC_div">	
+					<input type="radio" name="selectInst" id="USC" dojoType="dijit.form.RadioButton" onClick="selectInstitution('USC')" />
+					<label for="USC"><img class="inst_icon" src="images/USC_symbol.png"> USC</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="USC_div">University of Southern California</div>
+				</div>
+				<div id="USGSMP_div">	
+					<input type="radio" name="selectInst" id="USGSMP" dojoType="dijit.form.RadioButton" onClick="selectInstitution('USGSMP')" />
+					<label for="USGSMP"><img class="inst_icon" src="images/USGS_symbol.png"> USGSMP</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="USGSMP_div">USGS West Coast Repository</div>
+				</div>
+				<div id="USGSWH_div">	
+					<input type="radio" name="selectInst" id="USGSWH" dojoType="dijit.form.RadioButton" onClick="selectInstitution('USGSWH')" />
+					<label for="USGSWH"><img class="inst_icon" src="images/USGS_symbol.png"> USGSWH</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="USGSWH_div">USGS East Coast Repository</div>				
+				</div>
+				<div id="USGSSP_div">	
+					<input type="radio" name="selectInst" id="USGSSP" dojoType="dijit.form.RadioButton" onClick="selectInstitution('USGSSP')" />
+					<label for="USGSSP"><img class="inst_icon" src="images/USGS_symbol.png"> USGSSP</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="USGSSP_div">USGS Southeast Repository</div>				
+				</div>
+				<div id="UT_div">										
+					<input type="radio" name="selectInst" id="UT" dojoType="dijit.form.RadioButton" onClick="selectInstitution('UT')" />
+					<label for="UT"><img class="inst_icon" src="images/UT_symbol.png"> UT</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="UT_div">University of Texas Institute of Geophysics</div>
+				</div>
+				<div id="WHOI_div">	
+					<input type="radio" name="selectInst" id="WHOI" dojoType="dijit.form.RadioButton" onClick="selectInstitution('WHOI')" />
+					<label for="WHOI"><img class="inst_icon" src="images/WHOI_symbol.png"> WHOI</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="WHOI_div">Woods Hole Oceanographic Institution</div>
+				</div>
+				<div id="WISC_div">					
+					<input type="radio" name="selectInst" id="WISC" dojoType="dijit.form.RadioButton" onClick="selectInstitution('WISC')" />
+					<label for="WISC"><img class="inst_icon" src="images/UWISC_symbol.png"> WISC</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="WISC_div">University of Wisconsin</div>
+				</div>
+				<div id="NMNH_div">	
+					<input type="radio" name="selectInst" id="NMNH" dojoType="dijit.form.RadioButton" onClick="selectInstitution('NMNH')" />
+					<label for="NMNH"><img class="inst_icon" src="images/NMNH_symbol.png"> NMNH</label><br/>
+					<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="NMNH_div">Smithsonian Institution Museum of Natural History</div>
+				</div>	
+				
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="AOML">NOAA Atlantic Oceanographic and Meteorological Lab</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="AWI">Alfred Wegener Institute, Germany</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="BOSCORF">British Ocean Sediment Core Research Facility, UK</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="BPRC">Byrd Polar Research Facility</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="Canada">Geological Survey of Canada</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="DSDP">Deep Sea Drilling Project, IODP</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="ECS">Extended Continental Shelf Project</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="ARFFSU">Antarctic Research Facility, Florida State</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="GEOMAR">IFM-GEOMAR, Germany</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="IODP">Integrated Ocean Drilling Program</div>					
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="LDEO">Lamont-Doherty Earth Observatory</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="LacCore">National Lacustrine Core Repository, U Minn</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="ODP">Ocean Drilling Program, IODP</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="OSU">Oregon State University</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="PMEL">NOAA Pacific Marine Environmental Lab</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="RSMAS">Rosenstiel School of Marine and Atmos Sciences</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="SIO">Scripps Institution of Oceanography</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="SOEST">University of Hawaii</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="URI">University of Rhode Island</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="USC">University of Southern California</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="USGSMP">USGS West Coast Repository</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="USGSWH">USGS East Coast Repository</div>				
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="UT">University of Texas Institute of Geophysics</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="WHOI">Woods Hole Oceanographic Institution</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="WISC">University of Wisconsin</div>
+				<div dojoType="dijit.Tooltip" showDelay="100" position="before" connectId="NMNH">Smithsonian Institution Museum of Natural History</div>			
+																					
+				</div>								
+				<div id="creditsPane" dojoType="dijit.layout.AccordionPane" title="More Information">					
+					<div id="aboutPanel" dojoType="sample_index.CreditsPanel"></div>				
+				</div>
+				<div id="helpPane" dojoType="dijit.layout.AccordionPane" title="Help">
+					<div id="helpPanel" dojoType="help_panel.HelpPanel">
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
