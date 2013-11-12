@@ -1,4 +1,4 @@
-version = 1.0
+version = '1.0'
 
 task copyToStaging(type: Copy) {
     def destDir = "build/staging/${project.name}-${project.version}"
