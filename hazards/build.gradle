@@ -3,11 +3,6 @@ version = '1.4.1'
 //needed in order to dependOn Clean task
 apply plugin: 'base'
 
-jar {
-    from "."
-    exclude 'build*', "tmp", "shared-sav"
-}
-
 task installNgdcDijits(type: Copy) {
     doFirst {
         uninstallNgdcDijits
@@ -20,6 +15,11 @@ task installNgdcDijits(type: Copy) {
 
 task uninstallNgdcDijits(dependsOn: 'Clean') {
     delete 'shared'
+}
+
+task buildDistribution(type: Jar, dependsOn: installNgdcDijits) {
+    from "."
+    exclude 'build*', "tmp", "shared-sav"
 }
 
 /*
