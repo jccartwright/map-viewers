@@ -251,10 +251,12 @@ function initBasemapToolbar() {
 
 function setDataRange() {
 	var jsonpArgs = {
-		url: 'http://www.ngdc.noaa.gov/gis-support/fires/dateRange',
+		//url: 'http://www.ngdc.noaa.gov/gis-support/fires/dateRange',
+		url: 'http://maps.ngdc.noaa.gov/mapviewer-support/fires/daterange.groovy',
 		callbackParamName:'callback',
 		content: {
-			dataset:'WFABBA'
+			//dataset:'WFABBA'
+			dataset:'wfabba'
 		},
 		timeout: 3000,
 		load: function(data) {
