@@ -1,21 +1,28 @@
-version = 1.4.1
+version = '1.4.1'
+
+//needed in order to dependOn Clean task
+apply plugin: 'base'
+
+jar {
+    from "."
+    exclude 'build*', "tmp", "shared-sav"
+}
 
 task installNgdcDijits(type: Copy) {
-/*
     doFirst {
         uninstallNgdcDijits
     }
-
-    from project(":common").file('js/ngdc')
-
-    into "js/ngdc"
-*/
+   from ("../shared") {
+      exclude "build.gradle", "README.md"
+   }
+   into "shared"
 }
 
 task uninstallNgdcDijits(dependsOn: 'Clean') {
-//    delete 'js/ngdc'
+    delete 'shared'
 }
 
+/*
 task copyToStaging(type: Copy, dependsOn: installNgdcDijits) {
     def destDir = "build/staging/${project.name}-${project.version}"
 
@@ -34,3 +41,4 @@ task buildDistribution(type: Zip, dependsOn: copyToStaging) {
         delete 'build/staging'
     }
 }
+*/
