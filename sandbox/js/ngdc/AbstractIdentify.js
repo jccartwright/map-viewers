@@ -163,7 +163,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
 
                 var identifyParams = new IdentifyParameters();
                 identifyParams.tolerance = 3;
-                identifyParams.returnGeometry = true;
+                identifyParams.returnGeometry = false;
                 identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
 
                 //initialize these based on current layer settings
