@@ -1,5 +1,5 @@
 define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layers/ArcGISTiledMapServiceLayer",
-        "esri/layers/ArcGISDynamicMapServiceLayer"],
+    "esri/layers/ArcGISDynamicMapServiceLayer"],
     function(declare, LayerCollection, ArcGISTiledMapServiceLayer, ArcGISDynamicMapServiceLayer){
 
         return declare([LayerCollection], {
@@ -85,6 +85,16 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         id: "cities",
                         visible: true
                     })
+                    // new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer", {
+                    //     id: "Multibeam",
+                    //     visible: true//,
+                    //     //imageParameters: imageParametersPng32
+                    // }),
+                    // new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/hazards/MapServer", {
+                    //     id: "Hazards",
+                    //     visible: true,
+                    //     imageParameters: this.imageParametersPng32
+                    // })
                 ];
             },  //end defineMapServices
 
@@ -105,6 +115,7 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
 //                logger.debug('setting subLayer visibility...');
                 this.getLayerById('USA').setVisibleLayers([0,1]);
                 this.getLayerById('cities').setVisibleLayers([0]);
+                //this.getLayerById('Hazards').setVisibleLayers([1]);
             }
         });
     }

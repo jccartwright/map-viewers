@@ -13,7 +13,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/tasks/IdentifyResult", "
             },
 
             setResultSet: function(results) {
-                console.log('inside setResultSet...');
                 this.results = results;
                 this.setFeatures(results);
             },
@@ -31,7 +30,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/tasks/IdentifyResult", "
                 this.features = [];
                 for (key in results) {
                     //add the query URL for later use
-                    feature.svcUrl = this.serviceUrls[key];
+                    results[key].svcUrl = this.serviceUrls[key]
 
                     for (var i=0; i<results[key].length; i++) {
                         feature = results[key][i].feature;
