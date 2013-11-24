@@ -67,6 +67,7 @@
                     "ngdc/Logger",
                     "ngdc/web_mercator/MapConfig",
                     "app/SimpleAppLayerCollection",
+                    "app/BasemapToolbar",
                     "dojo/_base/config",
                     "dojo/io-query",
                     "dojo/_base/lang",
@@ -79,6 +80,7 @@
                     "dojo/on",
                     "dojo/aspect",
                     "dojo/parser",
+                    "dojo/_base/unload",
                     "dojo/domReady!"
                 ],
                 function(Banner,
@@ -88,6 +90,7 @@
                          Logger,
                          MapConfig,
                          AppLayerCollection,
+                         BasemapToolbar,
                          config,
                          ioQuery,
                          lang,
@@ -99,7 +102,8 @@
                          topic,
                          on,
                          aspect,
-                         parser) {
+                         parser,
+                         unload) {
                     parser.parse();
 
                     //add queryParams into config object, values in queryParams take precedence
