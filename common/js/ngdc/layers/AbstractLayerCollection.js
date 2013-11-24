@@ -1,5 +1,5 @@
-define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters", "esri/layers/ImageServiceParameters", "ngdc/layers/PairedMapServiceLayer"],
-    function(declare, array, ImageParameters, ImageServiceParameters, PairedMapServiceLayer){
+define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters", "ngdc/layers/PairedMapServiceLayer"],
+    function(declare, array, ImageParameters, PairedMapServiceLayer){
 
         //"static" properties
         var imageParameters;
@@ -8,11 +8,12 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters",
             //instance objects set in concrete class constructor
             mapServices: null,
             pairedMapServices: null,
+            layerTimeouts: null,
 
             //TODO still necessary?
             firstZoomLevel: 2,
 
-        constructor: function() {
+            constructor: function() {
                 //TODO check to ensure unique id for mapServices
 
                 this.createImageParameters();
@@ -34,20 +35,12 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters",
                 })
             },
 
-            getVisibleLayerIds: function() {
-                return array.filter(this.mapServices, function(svc){
-                    return svc.visible;
-                })
-            },
-
             createImageParameters: function() {
                 this.imageParameters = {};
                 this.imageParameters.png32 = new ImageParameters();
                 this.imageParameters.png32.format = "png32";
                 this.imageParameters.jpg = new ImageParameters();
                 this.imageParameters.jpg.format = "jpg";
-                this.imageParameters.interpolationBilinear = new ImageServiceParameters();
-                this.imageParameters.interpolationBilinear.interpolation = ImageServiceParameters.INTERPOLATION_BILINEAR;
             },
 
             buildPairedMapServices: function(map) {
@@ -61,6 +54,18 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters",
                     this.updateMapServiceList(layer);
                 }, this);
             },
+
+            setLayerTimeouts: function() {
+                console.debug('setting layer timeouts...');
+                //setup timeouts for each layer to load
+                this.layerTimeouts = {};
+                dojo.forEach(this.mapServices, function(svc) {
+                    this.layerTimeouts[svc.id] = setTimeout(dojo.partial(this.layerTimeoutHandler, svc), 5000);
+                    //alternate way to bind argument to closure
+                    //globals.layerTimeouts[svc.id] = setTimeout(function(){layerTimeoutHandler(svc.id);}, 5000);
+                }, this);
+            },
+
 
             //TODO refactor
             updateMapServiceList: function(layer) {
@@ -86,7 +91,23 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters",
                 //WARNING: modifies the original list
                 this.mapServices.splice(idx[0], 1, layer);
                 this.mapServices.splice(idx[1], 1);
+            },
+
+            layerTimeoutHandler: function(mapservice) {
+                //logger.debug('inside layerTimeoutHandler with '+mapservice.id);
+                logger.warn("failed to load layer "+mapservice.id);
+                mapservice.suspend();
+
+                //TODO send message to server to log, email, etc.
+            },
+
+            clearLayerTimeout: function(mapserviceId) {
+                //logger.debug('clearing timeout for layer '+mapserviceId);
+                clearTimeout(this.layerTimeouts[mapserviceId]);
             }
+
+
+
         });
     }
 );

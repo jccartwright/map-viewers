@@ -13,7 +13,7 @@ require(
 
 			//spec
 			it("should calculate centroid", function() {
-			    expect( initialExtent.getCenter().x ).toEqual(10);
+			    expect( initialExtent.getCenter().x ).toEqual(0);
 		    });
 
             it("should have a SpatialReference", function(){

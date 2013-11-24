@@ -1,7 +1,5 @@
-//NOTE: uses legacy dojo.connect for Esri objects.  To be replace  w/ dojo/on with future JSAPI release
-
 define(["dojo/_base/declare", "esri/map", "esri/tasks/GeometryService", "esri/dijit/OverviewMap",
-        "esri/geometry/webMercatorUtils", "dojo/_base/connect", "dojo/_base/array", "dojo/topic", "dojo/_base/lang"],
+    "esri/geometry/webMercatorUtils", "dojo/_base/connect", "dojo/_base/array", "dojo/topic", "dojo/_base/lang"],
     function(declare, Map, GeometryService, OverviewMap, webMercatorUtils, Connect, array, topic, lang){
         var map;
         var mapLayerCollection;
@@ -13,10 +11,10 @@ define(["dojo/_base/declare", "esri/map", "esri/tasks/GeometryService", "esri/di
 
                 this.mapLayerCollection = mapLayerCollection;
 
-                Connect.connect(this.map, 'onLoad', this, function(map){
+                this.map.on('load', function(evt){
                     if (options.overview) {
                         var overviewMap = new OverviewMap({
-                            map: map,
+                            map: evt.map,
                             attachTo: "bottom-right",
                             width: 150,
                             height: 120,
@@ -25,56 +23,68 @@ define(["dojo/_base/declare", "esri/map", "esri/tasks/GeometryService", "esri/di
                         });
                         overviewMap.startup();
                     }
-                } );
+                });
 
                 //fires after each Layer added to Map
-                Connect.connect(this.map, 'onLayerAddResult', this, function(layer, error){
-                    logger.debug('added layer '+layer.url+' to map...');
-                    if (error) {
-                        logger.warn('error adding layer '+layer.url+' to map');
-                    }
-                });
+                this.map.on('layer-add-result', lang.hitch(this, this.layerAddResultHandler));
 
-                //Fires after all Layers are added to the Map
-                Connect.connect(this.map, 'onLayersAddResult', this, function(results){
-                    //check for every layer reporting success
-                    var success = array.every(results, function(item) {
-                        return (item.success);
-                    });
+                //Fires after all Layers are added to the Map.  Appears to have a timeout of 60 seconds
+                //where it gets called even if a remote server is unresponsive
+                this.map.on('layers-add-result', lang.hitch(this, this.layersAddResultHandler));
 
-                    if (success) {
-                        logger.debug('all layers added to map.');
-                    } else {
-                        logger.warn('one or more layers failed to load');
-                    };
-
-                    //should always be true
-                    if (results.length !== this.mapLayerCollection.mapServices.length) {
-                        logger.warn('onLayersAddResult != mapservice collection length');
-                    }
-                    this.mapReady();
-                });
-
-                //all all layers to Map
+                //add all layers to Map
                 this.map.addLayers(this.mapLayerCollection.mapServices);
 
                 this.geometryService = new GeometryService("http://maps.ngdc.noaa.gov/rest/services/Geometry/GeometryServer");
             },  //end constructor
 
+            layerAddResultHandler: function( evt ) {
+                var error = evt.error;
+                var layer = evt.layer;
+
+                if (error) {
+                    logger.warn('error adding layer '+layer.url+' to map');
+                } else {
+                    logger.debug('added layer '+layer.url+' to map...');
+                }
+                //clear timeout even if error. time out handler designed for unresponsive server
+                this.mapLayerCollection.clearLayerTimeout(layer.id);
+            },
+
+            layersAddResultHandler: function( evt ) {
+                //logger.debug('inside handler for onLayersAddResult...');
+                var layers = evt.layers;
+                //check for every layer reporting success
+                var success = array.every(layers, function(item) {
+                    return (item.success);
+                });
+
+                if (success) {
+                    logger.debug('all layers added to map.');
+                } else {
+                    logger.warn('one or more layers failed to load');
+                };
+
+                //should always be true
+                if (layers.length !== this.mapLayerCollection.mapServices.length) {
+                    logger.warn('onLayersAddResult != mapservice collection length');
+                }
+                this.mapReady();
+            },
+
             //handle setup which requires all layers to be loaded
             mapReady: function() {
-               this.mapLayerCollection.buildPairedMapServices(this.map);
+                logger.debug('inside mapReady...');
+                this.mapLayerCollection.buildPairedMapServices(this.map);
 
-                //setup event handlers
-                Connect.connect(this.map, "onMouseMove", this, this.showCoordinates);
-                Connect.connect(this.map, "onMouseDrag", this, this.showCoordinates);
+                //setup mouse event handlers
+                this.map.on('mouse-move', lang.hitch(this, this.showCoordinates));
+                this.map.on('mouse-drag', lang.hitch(this, this.showCoordinates));
 
                 //TODO
                 /*
                  initBanner('banner');
                  initTOC('toc');
-                 initIdentify();
-                 initScalebar();
                  */
             },
 
@@ -94,7 +104,8 @@ define(["dojo/_base/declare", "esri/map", "esri/tasks/GeometryService", "esri/di
 
             //override for various projections
             mapPointToGeographic: function mapPointToGeographic(mapPoint) {
-                return (webMercatorUtils.webMercatorToGeographic(mapPoint));
+                //already in geographic - no conversion necessary
+                return(mapPoint);
             }
         });
     }
