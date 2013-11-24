@@ -27,6 +27,11 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         visible: false,
                         opacity: 1
                     }),
+                    new ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", {
+                        id: "World Imagery",
+                        visible: false,
+                        opacity: 1
+                    }),
                     new ArcGISDynamicMapServiceLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/USA/MapServer", {
                         id: "USA",
                         visible: true
