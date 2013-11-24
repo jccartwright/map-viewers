@@ -15,6 +15,7 @@ define(["dojo/_base/declare","dijit/_WidgetBase", "dijit/_TemplatedMixin", "diji
             aoiSymbol: null,
 
             constructor: function(arguments) {
+                logger.debug('inside constructor for MapToolbar');
                 this._map = arguments.map;
                 this._drawToolbar = new Draw(this._map);
                 Connect.connect(this._drawToolbar, "onDrawEnd", this, this._addAreaOfInterestToMap);
@@ -51,7 +52,8 @@ define(["dojo/_base/declare","dijit/_WidgetBase", "dijit/_TemplatedMixin", "diji
             },
 
             extentToGeographic: function(extent) {
-                return (webMercatorUtils.webMercatorToGeographic(extent));
+                //already in geographic - no conversion necessary
+                return(extent);
             }
         });
     }
