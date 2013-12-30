@@ -165,6 +165,9 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
                 identifyParams.tolerance = 3;
                 identifyParams.returnGeometry = false;
                 identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_VISIBLE;
+                identifyParams.width  = this._map.width;
+                identifyParams.height = this._map.height;
+                identifyParams.mapExtent = this._map.extent;
 
                 //initialize these based on current layer settings
                 identifyParams.layerIds = layer.visibleLayers
