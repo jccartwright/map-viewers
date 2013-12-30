@@ -1,8 +1,10 @@
 define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Deferred", "esri/tasks/IdentifyTask",
     "esri/tasks/IdentifyParameters", "esri/tasks/IdentifyResult", "ngdc/identify/IdentifyResultCollection",
+    "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol", "dojo/_base/Color", "esri/graphic",
     "dojo/_base/lang", "dojo/topic", "dojo/aspect"],
     function(declare, array, all, Deferred, IdentifyTask,
              IdentifyParameters, IdentifyResult, IdentifyResultCollection,
+             SimpleMarkerSymbol, SimpleLineSymbol, Color, Graphic,
              lang, topic, aspect){
         return declare([], {
             _map: null,
