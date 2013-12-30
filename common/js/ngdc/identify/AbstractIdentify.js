@@ -23,10 +23,11 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
             init: function(params) {
                 logger.debug('inside init...');
 
+                this._mapConfig = params[0].mapConfig;
                 var layerIds = params[0].layerIds,
-                    layerCollection = params[0].layerCollection;
+                    layerCollection = params[0].mapConfig.mapLayerCollection;
 
-                this._map = params[0].map;
+                this._map = params[0].mapConfig.map;
 
                 this._map.on("click", lang.hitch(this, "identifyPoint"));
 
