@@ -87,6 +87,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
                     taskInfo.params.geometry = geometry;
 
                     if (taskInfo.enabled) {
+                        this._mapConfig.showLoading();
                         this.deferreds[taskInfo.layer.id] = taskInfo.task.execute(taskInfo.params);
                     } else {
                         logger.debug('task not enabled: '+taskInfo.layer.url);
@@ -96,6 +97,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
                 this.promises = new all(this.deferreds, true);
 
                 this.promises.then(lang.hitch(this, function(results) {
+                    this._mapConfig.hideLoading();
                     //produces an map of arrays where each key/value pair represents a mapservice. The keys are the Layer
                     // names, the values are an array of IdentifyResult instances.
 
