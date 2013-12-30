@@ -37,6 +37,10 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
 
                 this.taskInfos = this.createTaskInfos(layerIds, layerCollection);
 
+                // the symbol used to represent the location where the user clicked on the map
+                this.clickSymbol = params.clickSymbol ||
+                    new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_X, 12, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0, 0, 255]), 3));
+
 //                this._map.on("click", lang.hitch(this, function(evt) {
 //                    this._map.infoWindow.setTitle("Coordinates");
 //                    this._map.infoWindow.setContent("lat/lon : " + evt.mapPoint.y + ", " + evt.mapPoint.x);
@@ -62,6 +66,17 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
 
             identifyPoint: function(evt) {
                 this.identify(evt.mapPoint);
+
+                //TOD factor out to better support alternate Identify styles, e.g. Popup
+                //Remove any identify graphic from the map
+                var graphic = Graphic(evt.mapPoint, this.clickSymbol);
+                if (this._map.identifyGraphic) {
+                    this._map.graphics.remove(this._map.identifyGraphic);
+                }
+                this._map.identifyGraphic = graphic;
+
+                //Add the click graphic to the map
+                this._map.graphics.add(graphic);
             },
 
             identify: function(geometry) {
