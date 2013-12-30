@@ -81,6 +81,9 @@ define(["dojo/_base/declare", "esri/map", "esri/tasks/GeometryService", "esri/di
                 this.map.on('mouse-move', lang.hitch(this, this.showCoordinates));
                 this.map.on('mouse-drag', lang.hitch(this, this.showCoordinates));
 
+                this.map.on('update-start', lang.hitch(this, this.showLoading));
+                this.map.on('update-end', lang.hitch(this, this.hideLoading));
+
                 //TODO
                 /*
                  initBanner('banner');
@@ -106,6 +109,20 @@ define(["dojo/_base/declare", "esri/map", "esri/tasks/GeometryService", "esri/di
             mapPointToGeographic: function mapPointToGeographic(mapPoint) {
                 //already in geographic - no conversion necessary
                 return(mapPoint);
+            },
+
+            showLoading: function() {
+                var loader = dom.byId("busy");
+                if (loader) {
+                    loader.style.display = "block";
+                }
+            },
+
+            hideLoading: function() {
+                var loader = dom.byId("busy");
+                if (loader) {
+                    loader.style.display = "none";
+                }
             }
         });
     }
