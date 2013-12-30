@@ -24,20 +24,26 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/tasks/IdentifyResult", "
 
 
             setFeatures: function(results) {
-                var feature;
+                //Build an object composed of a list of IdentifyResults for each sublayer in a service.
+                //Augment each with formatter key composed of its layer and sublayer names, layerUrl, and service ID.
+                this.results = {};
+                for (svcId in results) {
 
-                //build a list of Feature, augmenting each with formatter key composed of it's layer and sublayer names
-                this.features = [];
-                for (key in results) {
-                    //add the query URL for later use
-                    results[key].svcUrl = this.serviceUrls[key]
+                    for (var i=0; i<results[svcId].length; i++) {
+                        var result = results[svcId][i];
+                        result.formatter = svcId+'/'+results[svcId][i].layerName;
+                        result.layerUrl = this.serviceUrls[svcId] + '/' + results[svcId][i].layerId;
+                        result.svcId = svcId;
 
-                    for (var i=0; i<results[key].length; i++) {
-                        feature = results[key][i].feature;
-                        feature.formatter = key+'/'+results[key][i].layerName;
-
-                        this.features.push(feature);
+                        if (!this.results[svcId]) {
+                            this.results[svcId] = {};
+                        }
+                        if (!this.results[svcId][result.layerName]) {
+                            this.results[svcId][result.layerName] = [];
+                        }
+                        this.results[svcId][result.layerName].push(result);
                     }
+
                 }
             }
         });
