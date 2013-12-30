@@ -130,10 +130,18 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
                     resultCollection.setResultSet(results);
                     resultCollection.setSearchGeometry(geometry);
 
+                    //Sort the results (customized per viewer)
+                    this.sortResults(resultCollection.results);
+
                     //publish message w/ results
                     //TODO place into a Store instead?
                     topic.publish("/identify/results", resultCollection);
                 }));
+            },
+
+            sortResults: function(results) {
+                //Do nothing. Override this function in subclass if sorting is desired.
+                return;
             },
 
             resetMapInfoWindow: function() {
