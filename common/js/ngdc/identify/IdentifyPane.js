@@ -31,7 +31,10 @@ define([
     "esri/geometry/Point",
     "esri/geometry/Polygon",
     "esri/geometry/Multipoint",
-    "esri/geometry/Extent"
+    "esri/geometry/Extent",
+    "esri/geometry/screenUtils",
+    "esri/geometry/webMercatorUtils",
+    "dojo/window"
 ],
     function (
         declare,
@@ -66,7 +69,10 @@ define([
         Point,
         Polygon,
         Multipoint,
-        Extent
+        Extent,
+        screenUtils,
+        webMercatorUtils,
+        win
         )
     {
         return declare(FloatingPane, {
@@ -79,6 +85,7 @@ define([
                 this.doLayout = true;
                 this.duration = 100;
                 this.isFirstShow = true;
+                this.autoExpandTree = params.autoExpandTree && true;
 
                 lang.mixin(this, params);
 
@@ -127,12 +134,12 @@ define([
                 //Initialize the StackContainer with 2 ContentPanes: featurePage and infoPage
                 this.stackContainer = new StackContainer({
                     id: "stackContainer",
-                    style: "height: 100%; width: 100%"
+                    style: "height: 100%; width: 100%; padding: 0px;"
                 }, this.containerNode);
 
                 this.featurePage = new ContentPane({
                     id: "featurePage",
-                    style: "height: 100%; width: 100%"
+                    style: "height: 100%; width: 100%; padding: 0px;"
                 }).placeAt(this.containerNode);
                 this.stackContainer.addChild(this.featurePage);
 
@@ -152,7 +159,7 @@ define([
 
                 this.featurePane = new ContentPane({
                     region: "center",
-                    style: "background: #EEE"
+                    style: "background: #EEE; border: 1px solid #BFBFBF;"
                 });
                 bc.addChild(this.featurePane);
 
@@ -167,19 +174,20 @@ define([
                 //Create a BorderContainer for the infoPage.
                 var bc2 = new BorderContainer({
                     style: "height: 100%; width: 100%",
-                    gutters: false
+                    gutters: false,
+                    splitter: true
                 });
                 this.infoPane = new ContentPane({
                     region: "center",
-                    style: "background: #EEE"
+                    style: "background: #EEE; border: 1px solid #BFBFBF;"
                 });
                 bc2.addChild(this.infoPane);
 
-                var cp2 = new ContentPane({
-                    region: "bottom"//,
-                    //style: "height: 16px;",
+                this.infoPageBottomBar = new ContentPane({
+                    region: "bottom",
+                    style: "padding: 2px"
                 });
-                bc2.addChild(cp2);
+                bc2.addChild(this.infoPageBottomBar);
                 bc2.placeAt(this.infoPage);
 
                 //Initialize the infoPage with a back button
@@ -188,11 +196,10 @@ define([
                     label: "Back",
                     style: "bottom: 5px; left: 5px;",
                     onClick: lang.hitch(this, function(){
-                        console.log("button clicked!");
                         this.setTitle(this.featurePageTitle);
                         this.stackContainer.back();
                     })
-                }).placeAt(cp2);
+                }).placeAt(this.infoPageBottomBar);
 
                 this.stackContainer.startup();
 
@@ -220,11 +227,16 @@ define([
                 });
             },
 
-            resize: function() {
-                //console.log('inside resize...');
+            resize: function(newSize) {
+                var top = this.domNode.style.top;
+                var left = this.domNode.style.left;
+
                 this.inherited(arguments);
+                domStyle.set(this.domNode, "top", top);
+                domStyle.set(this.domNode, "left", left);
 
                 //Ensure the contents get properly resized when the entire widget resizes, doesn't seem to happen otherwise
+                this.stackContainer.resize();
                 this.featurePage.resize();
                 this.infoPage.resize();
             },
@@ -239,8 +251,18 @@ define([
                 //this.showFeaturePage();
             },
 
-            showResults: function(results) {
+            showResults: function(resultCollection) {
                 //console.log("inside showResults...");
+                var screenPt;
+                if (this.map.spatialReference.isWebMercator() && resultCollection.anchorPoint.spatialReference.wkid == 4326) {
+                    screenPt = screenUtils.toScreenGeometry(this.map.extent, this.map.width, this.map.height,
+                        webMercatorUtils.geographicToWebMercator(resultCollection.anchorPoint));
+                }
+                else {
+                    screenPt = screenUtils.toScreenGeometry(this.map.extent, this.map.width, this.map.height, resultCollection.anchorPoint);
+                }
+                screenPt.x += this.map.position.x;
+                screenPt.y += this.map.position.y;
 
                 this.removeHighlightGraphic();
 
@@ -253,39 +275,36 @@ define([
                 this.clearFeatureStore();
 
                 //Populate the store used by the tree
-                var numFeatures = this.populateFeatureStore(results.results);
+                var numFeatures = this.populateFeatureStore(resultCollection.results);
 
                 //Construct a new tree and place it in the feature pane.
                 this.constructFeatureTree();
 
                 this.featurePageTitle = "Identified Features (" + numFeatures + ")";
                 this.setTitle(this.featurePageTitle);
-                this.show(); //Show the widget
+                this.show(screenPt.x, screenPt.y); //Show the widget
+                //this.resize();
             },
 
             populateFeatureStore: function(results) {
                 var numFeatures = 0;
+                this.uid = 0;
 
-                //Iterate over each IdentifyResultCollection (one per service)
-                for (var svcId in results) {
-                    if (results.hasOwnProperty(svcId)) {
+                for (var svcName in results) {
+                    for (var layerName in results[svcName]) {
 
-                        numFeatures += results[svcId].length;
-                        var svcUrl = results[svcId].svcUrl;
+                        numFeatures += results[svcName][layerName].length;
 
-                        //TODO: allow custom sorting function for layers, and for features within a layer
-
-                        //Loop through the array of IdentifyResults
-                        for (var i = 0; i < results[svcId].length; i++) {
-                            var item = results[svcId][i];
-                            var layerUrl = svcUrl + '/' + item.layerId; //construct the layerUrl (needed for QueryTasks)
-                            var layerKey = svcId + '/' + item.layerName;
+                        for (var i = 0; i < results[svcName][layerName].length; i++) {
+                            var item = results[svcName][layerName][i];
+                            var layerKey = svcName + '/' + layerName;
+                            var layerUrl = results[svcName][layerName][i].layerUrl;
 
                             //Create a layer "folder" node if it doesn't already exist
-                            if (this.featureStore.query({name: item.layerName}).length == 0) {
+                            if (this.featureStore.query({name: layerName}).length == 0) {
                                 this.featureStore.put({
                                     uid: ++this.uid,
-                                    id: item.layerName,
+                                    id: layerName,
                                     label: this.getLayerDisplayLabel(item),
                                     type: 'layer',
                                     parent: 'root'
@@ -295,17 +314,17 @@ define([
                             //Add the current item to the store, with the layerName as parent
                             this.featureStore.put({
                                 uid: ++this.uid,
-                                id: item.value,
+                                id: this.uid,
                                 //TODO: point to the magnifying glass image using a module path
                                 displayLabel: this.getItemDisplayLabel(item),
                                 label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='js/ngdc/identify/images/magnifying-glass.png'></a>",
                                 layerUrl: layerUrl,
                                 layerKey: layerKey,
                                 attributes: item.feature.attributes,
-                                parent: item.layerName,
+                                parent: layerName,
                                 type: 'item'
                             });
-                        };
+                        }
                     }
                 }
                 return numFeatures;
@@ -317,7 +336,7 @@ define([
                     model: this.storeModel,
                     showRoot: false,
                     persist: false,
-                    autoExpand: true,
+                    autoExpand: this.autoExpandTree,
                     openOnClick: true,
                     onClick: lang.hitch(this, function(item) {
                         this.showInfo(item);
@@ -381,6 +400,8 @@ define([
                 topic.publish('identifyPane/showInfo', item);
 
                 this.showInfoPage();
+                var size = {w: this.domNode.clientWidth, h: this.domNode.clientHeight}; //hack: prevent it from resetting to the initial size/position when calling resize()
+                this.resize(size); //manually call resize() so the contents layout properly, even if line wrapping occurs.
             },
 
             setInfoPaneContent: function(content) {
@@ -473,7 +494,7 @@ define([
                 }
                 else {
                     var featureExtent = geometry.getExtent();
-                    if ((featureExtent.spatialReference.wkid === 3857 || featureExtent.spatialReference.wkid === 102100) &&
+                    if ((featureExtent.spatialReference.isWebMercator()) &&
                         featureExtent.xmin <= -20000000 && featureExtent.xmax >= 20000000) {
                         //Projection is Web Mercator, and the feature's bounding box crosses the entire globe.
                         //So, it's likely the feature crosses the antimeridian.
@@ -579,17 +600,39 @@ define([
                 //Remove any highlighted feature on the map.
                 this.removeHighlightGraphic();
 
+                //Remove any identify graphic (point or extent) from the map
+                if (this.map.identifyGraphic) {
+                    this.map.graphics.remove(this.map.identifyGraphic);
+                }
+
                 //Override the default close function so the widget doesn't get destroyed. Hide it instead.
                 this.hide();
             },
 
-            show: function() {
+            show: function(x, y) {
                 this.inherited(arguments);
+                var padding = 10;
+                var width = domStyle.get(this.domNode, 'width');
+                var height = domStyle.get(this.domNode, 'height');
+
+                x += padding;
+                y += padding;
+
 
                 if (this.isFirstShow) {
                     this.isFirstShow = false;
-                    domStyle.set(this.domNode, 'top', '40px');
-                    domStyle.set(this.domNode, 'left', '40px');
+
+                    //Default initial position is lower-right if the anchor point.
+                    //If it goes off the right edge of the map, position it to the left of the anchor.
+                    if ((x + width > win.getBox().w) && (x - width - 2*padding > 0))  {
+                        x = x - width - 2*padding;
+                    }
+                    //If it goes off the bottom edge of the map, position it to the top of the anchor.
+                    if ((y + height > win.getBox().h) && (y - height - 2*padding > 0)) {
+                        y = y - height - 2*padding;
+                    }
+                    domStyle.set(this.domNode, 'left', x+'px');
+                    domStyle.set(this.domNode, 'top', y+'px');
                 }
 
                 //Resume mouseover events on the tree
