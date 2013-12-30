@@ -231,9 +231,17 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
                     taskInfo.params.mapExtent = this._map.extent;
                     //TODO set maxAllowableOffset based on scale?
                 }, this);
+            },
 
+            //Helper function to replace attributes containging the string "Null" with an empty string.
+            replaceNullAttributes: function(attributes) {
+                for (attribute in attributes) {
+                    if (attributes[attribute] === 'Null') {
+                        attributes[attribute] = '';
+                    }
+                }
+                return attributes;
             }
-
         });
     }
 );
