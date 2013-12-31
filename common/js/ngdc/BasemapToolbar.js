@@ -1,15 +1,22 @@
 define(["dojo/_base/declare","dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
-        "dijit/_OnDijitClickMixin", "dijit/Toolbar", "dijit/form/Button", "dojo/_base/lang", "dojo/_base/array",
-        "dijit/form/DropDownButton", "dijit/Menu", "dijit/ToolbarSeparator", "dijit/MenuItem", "dijit/CheckedMenuItem",
-        "dojo/_base/connect", "dojo/on", "dojo/text!./templates/BasemapToolbar.html"],
-    function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _OnDijitClickMixin, Toolbar, Button, lang,
-             array, DropDownButton, Menu, ToolbarSeparator, MenuItem, CheckedMenuItem, Connect, on, template ){
+    "dijit/_OnDijitClickMixin", "dijit/Toolbar", "dijit/form/Button", "dojo/_base/lang", "dojo/_base/array", "dojo/dom-class",
+    "esri/toolbars/draw", "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol", "dojo/_base/Color",
+    "dijit/form/DropDownButton", "dijit/DropDownMenu", "dijit/ToolbarSeparator", "dijit/MenuItem", "dijit/CheckedMenuItem",
+    "ngdc/BoundingBoxDialog", "esri/graphic", "esri/toolbars/draw", "dojo/topic",
+    "dojo/_base/connect", "dojo/on", "dojo/text!./templates/BasemapToolbar.html"],
+    function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
+             _OnDijitClickMixin, Toolbar, Button, lang, array, domClass,
+             draw, SimpleFillSymbol, SimpleLineSymbol, Color,
+             DropDownButton, DropDownButton, ToolbarSeparator, MenuItem, CheckedMenuItem,
+             BoundingBoxDialog, Graphic, Draw, topic,
+             Connect, on, template ){
         return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _OnDijitClickMixin], {
 
             templateString: template,
             _basemaps: null,
             _overlays: null,
             defaultBasemapIndex: 0,
+            defaultBoundariesIndex: 0,
 
             // A class to be applied to the root node in template
             baseClass: "basemapToolbar",
@@ -18,6 +25,14 @@ define(["dojo/_base/declare","dijit/_WidgetBase", "dijit/_TemplatedMixin", "diji
             //constructor for parent called before constructor of child class
             constructor: function(arguments) {
                 this.layerCollection = arguments.layerCollection;
+                this.map = arguments.map;
+
+                this._drawToolbar = new Draw(this.map);
+                Connect.connect(this._drawToolbar, "onDrawEnd", this, this._addAreaOfInterestToMap);
+
+                this.aoiSymbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+                    new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASH, new Color([255, 0, 0]), 2),
+                    new Color([255, 255, 0, 0.25]));
             },
 
             showBasemap: function(selectedIndex) {
@@ -35,6 +50,21 @@ define(["dojo/_base/declare","dijit/_WidgetBase", "dijit/_TemplatedMixin", "diji
                         }, this);
                     }
                 }, this);
+
+                //Enable/disable the Boundaries/Labels checkbox
+                var menuItem = this.overlayMenu.getChildren()[this.defaultBoundariesIndex];
+                if (this._basemaps[selectedIndex].boundariesEnabled) {
+                    menuItem.set('disabled', false);
+                    domClass.remove(menuItem.domNode, "dijitMenuItemDisabled");  //Manually gray out the MenuItem (tundra.css is missing dijitCheckedMenuItemDisabled)
+                    if (menuItem.checked) {
+                        this.setOverlayVisibility(this.defaultBoundariesIndex, true);
+                    }
+                }
+                else {
+                    menuItem.set('disabled', true);
+                    domClass.add(menuItem.domNode, "dijitMenuItemDisabled");
+                    this.setOverlayVisibility(this.defaultBoundariesIndex, false);
+                }
             },
 
             toggleOverlay: function(selectedIndex) {
@@ -42,6 +72,14 @@ define(["dojo/_base/declare","dijit/_WidgetBase", "dijit/_TemplatedMixin", "diji
                 array.forEach(layers, function(targetId){
                     var layer = this.layerCollection.getLayerById(targetId);
                     layer.setVisibility(! layer.visible);
+                }, this);
+            },
+
+            setOverlayVisibility: function(selectedIndex, visible) {
+                var layers = this._overlays[selectedIndex].services;
+                array.forEach(layers, function(targetId){
+                    var layer = this.layerCollection.getLayerById(targetId);
+                    layer.setVisibility(visible);
                 }, this);
             },
 
@@ -57,6 +95,8 @@ define(["dojo/_base/declare","dijit/_WidgetBase", "dijit/_TemplatedMixin", "diji
                 array.forEach(this._overlays, function(item, idx) {
                     this._addOverlayMenuItem(this.overlayMenu, item, idx, this);
                 }, this);
+
+                this.showBasemap(this.defaultBasemapIndex);
             },
 
             _addBasemapMenuItem: function(menu, item, idx, parent) {
@@ -97,42 +137,40 @@ define(["dojo/_base/declare","dijit/_WidgetBase", "dijit/_TemplatedMixin", "diji
                         }
                     });
                 });
+            },
+
+            //attached to onClick event of identifyByRectButton
+            _identifyByRect: function(/*Event*/ evt) {
+                this.map.graphics.clear();
+                this._drawToolbar.activate(Draw.EXTENT);
+                this.map.hideZoomSlider();
+            },
+
+            //attached to onClick event of identifyByRectButton
+            _identifyByCoords: function(/*Event*/ evt) {
+                this.map.graphics.clear();
+                if (!this.bboxDialog) {
+                    this.bboxDialog = new BoundingBoxDialog({map: this.map});
+                }
+                this.bboxDialog.show();
+            },
+
+            //attached to onDrawEnd event
+            _addAreaOfInterestToMap: function(/*Geometry*/ geometry) {
+                this.map.identifyGraphic = new Graphic(geometry, this.aoiSymbol);
+                this.map.graphics.add(this.map.identifyGraphic);
+
+                //only allow one shape to be drawn
+                this._drawToolbar.deactivate();
+                this.map.showZoomSlider();
+
+                topic.publish("/ngdc/boundingBox", this.extentToGeographic(geometry));
+            },
+
+            extentToGeographic: function(extent) {
+                //already in geographic - no conversion necessary
+                return(extent);
             }
         });
     }
 );
-/*
-
-        //Enable/disable the Boundaries/Labels checkbox
-        if (this.basemaps[index].boundariesEnabled) {
-            var menuItem = this._overlayMenu.getChildren()[this.boundariesIndex];
-            menuItem.set('disabled', false);
-            if (menuItem.checked) {
-                this.setOverlayVisibility(this.boundariesIndex, true);
-            }
-        } else {
-            this._overlayMenu.getChildren()[this.boundariesIndex].set('disabled', true);
-            this.setOverlayVisibility(this.boundariesIndex, false);
-        }
-
-    setBasemapVisibility: function(index, value) {
-        dojo.forEach(this.basemaps[index].services, function(service) {
-            dojo.publish("/toc/layer/show", [{
-                service: service.id,
-                subLayers: service.subLayers || [],
-                state: value
-            }]);
-        });
-    },
-
-    setOverlayVisibility: function(index, value) {
-        dojo.forEach(this.overlays[index].services, function(service) {
-            dojo.publish("/toc/layer/show", [{
-                service: service.id,
-                subLayers: service.subLayers || [],
-                state: value
-            }]);
-        });
-    }
-});
-*/

@@ -106,7 +106,7 @@ define(["dojo/_base/declare", "esri/map", "esri/tasks/GeometryService", "esri/di
             },
 
             //override for various projections
-            mapPointToGeographic: function mapPointToGeographic(mapPoint) {
+            mapPointToGeographic: function (mapPoint) {
                 //already in geographic - no conversion necessary
                 return(mapPoint);
             },

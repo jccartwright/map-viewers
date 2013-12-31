@@ -13,7 +13,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/tasks/IdentifyResult", "
             },
 
             setResultSet: function(results) {
-                this.results = results;
+                //this.results = results;
                 this.setFeatures(results);
             },
 

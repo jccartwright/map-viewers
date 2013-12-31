@@ -1,7 +1,7 @@
 define(["dojo/_base/declare","dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/_WidgetsInTemplateMixin",
-        "dijit/_OnDijitClickMixin", "dijit/Toolbar", "dijit/form/Button", "dojo/_base/lang", "esri/graphic",
-        "esri/toolbars/draw", "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol", "dojo/_base/Color",
-        "esri/geometry/webMercatorUtils", "dojo/_base/connect", "dojo/topic", "dojo/on", "dojo/text!./templates/MapToolbar.html"],
+    "dijit/_OnDijitClickMixin", "dijit/Toolbar", "dijit/form/Button", "dojo/_base/lang", "esri/graphic",
+    "esri/toolbars/draw", "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol", "dojo/_base/Color",
+    "esri/geometry/webMercatorUtils", "dojo/_base/connect", "dojo/topic", "dojo/on", "dojo/text!./templates/MapToolbar.html"],
     function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _OnDijitClickMixin, Toolbar, Button, lang,
              Graphic, Draw, SimpleFillSymbol, SimpleLineSymbol, Color, webMercatorUtils, Connect, topic, on, template ){
         return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, _OnDijitClickMixin], {
@@ -26,7 +26,7 @@ define(["dojo/_base/declare","dijit/_WidgetBase", "dijit/_TemplatedMixin", "diji
             },
 
             postCreate: function() {
-                  //replaced by using data-dojo-attach-event in template
+                //replaced by using data-dojo-attach-event in template
 //                this.own(
 //                    on(this.selectByRectButton, "click", lang.hitch(this, "_selectByRect"))
 //                );
@@ -41,8 +41,8 @@ define(["dojo/_base/declare","dijit/_WidgetBase", "dijit/_TemplatedMixin", "diji
 
             //attached to onDrawEnd event
             _addAreaOfInterestToMap: function(/*Geometry*/ geometry) {
-                var graphic = new Graphic(geometry, this.aoiSymbol);
-                this._map.graphics.add(graphic);
+                this._map.identifyGraphic = new Graphic(geometry, this.aoiSymbol);
+                this._map.graphics.add(this._map.identifyGraphic);
 
                 //only allow one shape to be drawn
                 this._drawToolbar.deactivate();
