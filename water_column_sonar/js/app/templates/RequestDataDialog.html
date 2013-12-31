@@ -1,0 +1,34 @@
+<div class="dijitDialog" role="dialog" aria-labelledby="${id}_title">
+    <div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+        <span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="${id}_title"
+              role="header" level="1"></span>
+        <span style="display: none;" data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon"
+              data-dojo-attach-event="ondijitclick: onCancel" title="${buttonCancel}" role="button" tabIndex="-1">
+            <span data-dojo-attach-point="closeText" class="closeText" title="${buttonCancel}">x</span>
+        </span>
+    </div>
+    <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
+        Please enter your name and email address to request these data files. A data manager will reply to your request.
+        <table>
+            <tr>
+                <td>
+                    Name:<input id="name" name="name" data-dojo-type="dijit/form/TextBox"/><br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Email:<input id="email" name="email" data-dojo-type="dijit/form/ValidationTextBox"
+                        data-dojo-props="validator:dojox.validate.isEmailAddress, invalidMessage:'invalid email address'"/>
+                </td>
+            </tr>
+
+        </table>  
+        <div class="dijitDialogPaneActionBar right-align">
+            <button disabled data-dojo-type="dijit.form.Button" data-dojo-attach-point="submitButton" type="submit">OK</button>
+            <button data-dojo-type="dijit.form.Button" data-dojo-attach-point="cancelButton">Cancel</button>
+        </div>
+    </div>
+</div>
+
+
+
