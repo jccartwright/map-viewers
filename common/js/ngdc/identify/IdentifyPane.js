@@ -163,11 +163,11 @@ define([
                 });
                 bc.addChild(this.featurePane);
 
-                var cp = new ContentPane({
+                this.featurePageBottomBar = new ContentPane({
                     region: "bottom",
                     style: "height: 16px;"
                 });
-                bc.addChild(cp);
+                bc.addChild(this.featurePageBottomBar);
                 bc.placeAt(this.featurePage);
 
 
@@ -391,6 +391,8 @@ define([
             showInfo: function(item) {
                 //Should be overidden by subclasses in most cases
                 //console.log("inside showInfo...");
+
+                this.currentItem = item;
 
                 //Highlight the current geometry (specifically for touch-screen devices where the mouseOver event won't fire)
                 this.queryForHighlightGeometry(item);
