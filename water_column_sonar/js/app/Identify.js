@@ -1,4 +1,4 @@
-define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/AbstractIdentify", "dojo/topic", "esri/dijit/Popup", "dojo/_base/lang"],
+define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/AbstractIdentify", "dojo/topic", "esri/dijit/Popup", "dojo/_base/lang"],
     function(declare, array, string, AbstractIdentify, topic, Popup, lang){
 
         return declare([AbstractIdentify], {
