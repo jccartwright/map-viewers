@@ -1,6 +1,6 @@
 define(["dojo/_base/declare", "esri/map", "esri/tasks/GeometryService", "esri/dijit/OverviewMap",
-    "esri/geometry/webMercatorUtils", "dojo/_base/connect", "dojo/_base/array", "dojo/topic", "dojo/_base/lang"],
-    function(declare, Map, GeometryService, OverviewMap, webMercatorUtils, Connect, array, topic, lang){
+    "esri/geometry/webMercatorUtils", "dojo/_base/connect", "dojo/_base/array", "dojo/topic", "dojo/_base/lang", "dojo/dom"],
+    function(declare, Map, GeometryService, OverviewMap, webMercatorUtils, Connect, array, topic, lang, dom){
         var map;
         var mapLayerCollection;
         var geometryService;
