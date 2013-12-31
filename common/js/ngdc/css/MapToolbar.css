@@ -1,5 +1,11 @@
-.selectByRectIcon {
+.identifyByRectIcon {
     background-image: url(../images/identify_rect.png);
+    width: 16px;
+    height: 16px;
+}
+
+.identifyByCoordsIcon {
+    background-image: url(../images/identify_xy.png);
     width: 16px;
     height: 16px;
 }
