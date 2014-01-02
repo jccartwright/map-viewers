@@ -9,7 +9,7 @@ require(
         "dojo/topic", "dojo/on", "dojo/aspect", "dojo/parser", "dojo/domReady!"
     ],
     function(esriConfig, Logger, AppMapConfig,
-             CreditsPanel, AppLayerCollection,            
+             CreditsPanel, AppLayerCollection,
              config, ioQuery, lang, dom, baseFx,
              BorderContainer, ContentPane, AccordionContainer, CheckBox, registry,
              Button, RadioButton,

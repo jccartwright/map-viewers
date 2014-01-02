@@ -1,14 +1,14 @@
 define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/IdentifyPane", "dojo/topic", "esri/dijit/Popup", "dojo/_base/lang", "dijit/form/Button",
     "dojo/dom-style", "app/RequestDataDialog"],
     function(declare, array, string, IdentifyPane, topic, Popup, lang, Button,
-        domStyle, RequestDataDialog){
+             domStyle, RequestDataDialog){
 
         return declare([IdentifyPane], {
 
             postCreate: function() {
                 this.inherited(arguments);
                 domStyle.set(this.domNode, 'height', '350px');
-                domStyle.set(this.domNode, 'width', '400px');   
+                domStyle.set(this.domNode, 'width', '400px');
 
                 domStyle.set(this.featurePageBottomBar.domNode, 'height', '30px');
                 //this.featurePageBottomBar.style = 'height: 50px;';
@@ -35,7 +35,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
             },
 
             getItemDisplayLabel: function(item) {
-                return item.value;                
+                return item.value;
             },
 
             requestDataFiles: function() {
@@ -47,7 +47,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                 }
 
                 if (!this.requestDataDialog) {
-                    this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});                
+                    this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
                 }
                 this.requestDataDialog.filenames = filenames;
                 this.requestDataDialog.show();
