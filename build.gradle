@@ -1,7 +1,9 @@
+defaultTasks 'buildDistribution'
+
 subprojects {
    apply plugin: 'java'
    group = 'ngdc.gis'
-   project(':sample') {
-      version = 1.1 //overridden in module build file
-   }
+//   project(':sample') {
+//      version = 1.1 //overridden in module build file
+//   }
 }
