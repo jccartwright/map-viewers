@@ -45,7 +45,7 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         id: "Ocean Basemap",
                         visible: false,
                     }),
-                    new esri.layers.ArcGISDynamicMapServiceLayer("http://agsdevel.ngdc.noaa.gov:6080/arcgis/rest/services/water_column_sonar/MapServer", {
+                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer", {
                         id: "Water Column Sonar",
                         visible: true,
                         imageParameters: this.imageParameters.png32
