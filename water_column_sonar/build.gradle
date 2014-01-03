@@ -2,20 +2,32 @@ version = '2.0-SNAPSHOT'
 defaultTasks 'buildDistribution'
 
 task installNgdcDijits(type: Copy) {
+println 'inside installNgdcDijits...'
     doFirst {
         uninstallNgdcDijits
     }
+println 'copying ngdc dijits...'
    from ("../common/js/ngdc") {
       exclude "build.gradle", "README.md"
    }
    into "js/ngdc"
 }
 
-task uninstallNgdcDijits(dependsOn: clean) {
+task uninstallNgdcDijits() {
+println 'inside uninstall NgdcDijits...'
     delete 'js/ngdc'
 }
 
+/*
 task buildDistribution(type: Jar, dependsOn: installNgdcDijits) {
+println 'inside buildDistribution...'
+    from "."
+    exclude 'build*'
+}
+*/
+
+jar {
+    dependsOn installNgdcDijits
     from "."
     exclude 'build*'
 }
