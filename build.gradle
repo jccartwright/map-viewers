@@ -1,5 +1,3 @@
-defaultTasks 'buildDistribution'
-
 subprojects {
    apply plugin: 'java'
    group = 'ngdc.gis'
