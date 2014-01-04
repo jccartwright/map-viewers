@@ -217,7 +217,11 @@ define([
                 this.storeModel = new ObjectStoreModel({
                     store: this.featureStore,
                     query: {id: 'root'},
-                    labelAttr: 'label'
+                    labelAttr: 'label',
+                    mayHaveChildren: function(item) {
+                        //items of type 'item' never have children.
+                        return (item.type != 'item');
+                    }
                 });
 
                 //Custom TreeNode class (based on dijit.TreeNode) that allows rich text labels.
@@ -336,7 +340,7 @@ define([
                     model: this.storeModel,
                     showRoot: false,
                     persist: false,
-                    autoExpand: this.autoExpandTree,
+                    autoExpand: false, //seems to be more efficient to call expandAll() later.
                     openOnClick: true,
                     onClick: lang.hitch(this, function(item) {
                         this.showInfo(item);
@@ -356,6 +360,7 @@ define([
                         return new this.CustomTreeNode(args);
                     })
                 });
+
                 //Attach the onMouseOver handler for highlighting features.
                 //It's pausable so we can pause it when hiding the dijit to avoid extraneous mouseovers firing
                 this.onMouseOverHandler = on.pausable(this.tree, "mouseOver", lang.hitch(this, function(item) {
@@ -363,6 +368,9 @@ define([
                 }));
                 this.tree.placeAt(this.featurePane);
                 this.tree.startup();
+                if (this.autoExpandTree) {
+                    this.tree.expandAll();
+                }
             },
 
             getLayerDisplayLabel: function(item) {
