@@ -19,7 +19,7 @@ define(["dojo/_base/declare", "ngdc/BasemapToolbar"],
                 ];
 
                 //define the default base
-                this.defaultBasemapIndex = 1;
+                this.defaultBasemapIndex = 0;
 
                 this._validateLayerIds();
 
