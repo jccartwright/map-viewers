@@ -279,12 +279,12 @@ define([
                 this.clearFeatureStore();
 
                 //Populate the store used by the tree
-                var numFeatures = this.populateFeatureStore(resultCollection.results);
+                this.numFeatures = this.populateFeatureStore(resultCollection.results);
 
                 //Construct a new tree and place it in the feature pane.
                 this.constructFeatureTree();
 
-                this.featurePageTitle = "Identified Features (" + numFeatures + ")";
+                this.featurePageTitle = "Identified Features (" + this.numFeatures + ")";
                 this.setTitle(this.featurePageTitle);
                 this.show(screenPt.x, screenPt.y); //Show the widget
                 //this.resize();
