@@ -33,7 +33,7 @@ define([
             templateString: template,
             
             // A class to be applied to the root node in template
-            baseClass: "SearchDialog",            
+            baseClass: "searchDialog",
 
             constructor: function(/*Object*/ kwArgs) {
                 console.log("inside SearchDialog constructor...");
