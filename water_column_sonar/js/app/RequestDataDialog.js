@@ -75,13 +75,27 @@ define([
                     files: this.filenames
                 });
 
+                var okDialog = new Dialog({
+                    title: 'Request Submitted',
+                    content: 'Thank you for contacting us.',
+                    class: "requestDataDialog"
+                });
+                var okButton = new Button({
+                    label: "OK",
+                    type: "submit",
+                    onClick: lang.hitch(this, function(){
+                        okDialog.destroy();
+                    })
+                }).placeAt(okDialog.containerNode);
+
                 xhr.post(
-                    "http://agsdevel.ngdc.noaa.gov/mapviewer-support/wcd/generateOrder.groovy", {
+                    "http://maps.ngdc.noaa.gov/mapviewer-support/wcd/generateOrder.groovy", {
                         data: jsonString,
                         handleAs: "json",
                         headers: {'Content-Type':'application/json'}
                     }).then(function(response){
-                        alert('Thank you for contacting us.');
+                        //alert('Thank you for contacting us.');
+                        okDialog.show();
                     }, function(error) {
                         alert('Error: ' + error);
                     });
