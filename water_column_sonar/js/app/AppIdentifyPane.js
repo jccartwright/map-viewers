@@ -30,6 +30,14 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                 }).placeAt(this.infoPageBottomBar);
             },
 
+            showResults: function(resultCollection) {
+                this.inherited(arguments);
+                if (this.numFeatures >= 1000) {
+                    this.featurePageTitle = "Identified Features (" + this.numFeatures + "+, results limited to 1000)";
+                    this.setTitle(this.featurePageTitle);
+                }
+            },
+
             getLayerDisplayLabel: function(item) {
                 return '<i><b>' + item.layerName + '</b></i>';
             },
