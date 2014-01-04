@@ -19,7 +19,7 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                 this.mapServices = [
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer", {
                         id: "NatGeo Overview",
-                        visible: true
+                        visible: false
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_hillshade/MapServer", {
                         id: "GEBCO_08",
