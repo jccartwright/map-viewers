@@ -10,7 +10,22 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
         topic, on, string){
         
         return declare([MapConfig], {
-            
+
+            constructor: function() {
+                this.banner = new Banner({
+                    breadcrumbs: [
+                        {url: 'http://www.noaa.gov', label: 'NOAA'},
+                        {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
+                        {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
+                        {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
+                        {url: 'http://www.ngdc.noaa.gov/mgg/wcd/', label: 'Multibeam Water Column Data'}
+                    ],
+                    dataUrl: "http://www.ngdc.noaa.gov/mgg/wcd/",
+                    image: "/images/water_column_sonar_data_viewer_logo.png"
+                });
+                this.banner.placeAt('banner');
+            },
+
             //handle setup which requires all layers to be loaded
             mapReady: function() {
                 this.inherited(arguments);
@@ -24,20 +39,7 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
                         title: 'Water Column Sonar Data'
                     }]
                 }, "legendDiv");
-                this.legend.startup();   
-
-                this.banner = new Banner({
-                    breadcrumbs: [
-                        {url: 'http://www.noaa.gov', label: 'NOAA'},
-                        {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
-                        {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
-                        {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
-                        {url: 'http://www.ngdc.noaa.gov/mgg/wcd/', label: 'Multibeam Water Column Data'}           
-                    ],
-                    dataUrl: "http://www.ngdc.noaa.gov/mgg/wcd/",
-                    image: "/images/water_column_sonar_data_viewer_logo.png"
-                });
-                this.banner.placeAt('banner');    
+                this.legend.startup();
 
                 this.wcdMapService = this.mapLayerCollection.getLayerById('Water Column Sonar');
 
