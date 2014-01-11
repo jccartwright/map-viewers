@@ -32,8 +32,8 @@ require(
 
         //create Map and add layers
         var mapConfig = new AppMapConfig("mapDiv", {
-            center:[-75,40],
-            zoom: 5,
+            center:[-45,45],
+            zoom: 3,
             logo: false,
             showAttribution: false,
             overview: true,
