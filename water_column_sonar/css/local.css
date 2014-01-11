@@ -10,12 +10,6 @@ html,body {
 }
 
 
-#mapContainer {
-    overflow: hidden;
-    width: 400px;
-    height: 100px;
-}
-
 .map {
     padding-left: 0px;
     padding-bottom: 0px;
