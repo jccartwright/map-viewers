@@ -43,8 +43,6 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
 
                 this.wcdMapService = this.mapLayerCollection.getLayerById('Water Column Sonar');
 
-                //this.mapToolbar = new MapToolbar({map: this.map}, "mapToolbar");
-
                 this.basemapToolbar = new BasemapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, "basemapToolbar");
                 this.basemapToolbar.startup();
 
