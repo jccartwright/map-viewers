@@ -127,9 +127,9 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
                     sql.push("UPPER(CRUISE_NAME)='" + values.cruiseId.toUpperCase() + "'");
                 }
                 if (values.instruments.length > 0) {
+                    var quoted = [];
                     for (var i = 0; i < values.instruments.length; i++) {
                         //Surround each string with single quotes
-                        var quoted = [];
                         quoted.push("'" + values.instruments[i] + "'");
                     }
                     sql.push("INSTRUMENT_NAME in (" + quoted.join(',') + ")");
