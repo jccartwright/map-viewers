@@ -213,12 +213,12 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/promise/all", "dojo/Defe
                 });
             },
 
-            updateLayerDefinitions: function(layer, visibleLayers) {
-                logger.debug('inside updateVisibleLayers with '+layer.id+' visibleLayers: '+visibleLayers);
+            updateLayerDefinitions: function(layer, layerDefinitions) {
+                logger.debug('inside updateLayerDefinitions with '+layer.id+' layerDefinitions: '+layerDefinitions);
 
                 array.forEach(this.taskInfos, function(taskInfo){
                     if (taskInfo.layer.id == layer.id) {
-                        taskInfo.params.layerIds = visibleLayers;
+                        taskInfo.params.layerDefinitions = layerDefinitions;
                     }
                 });
             },
