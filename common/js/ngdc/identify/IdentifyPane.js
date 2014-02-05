@@ -385,14 +385,12 @@ define([
 
             clearFeatureStore: function() {
                 //console.log("inside clearFeatureStore...");
-                //TODO: just destroy it and define a new store instead?
-                var children = this.featureStore.getChildren(this.featureStore.get('root'));
-                array.forEach(children, lang.hitch(this, function(child) {
-                    var subChildren = this.featureStore.getChildren(this.featureStore.get(child.id));
-                    array.forEach(subChildren, lang.hitch(this, function(child) {
-                        this.featureStore.remove(child.id);
-                    }));
-                    this.featureStore.remove(child.id);
+                //Remove all items except for the root
+                var allItems = this.featureStore.query();
+                array.forEach(allItems, lang.hitch(this, function(item) {
+                    if (item.id != 'root') {
+                        this.featureStore.remove(item.id);
+                    }
                 }));
             },
 
