@@ -55,7 +55,7 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
                 this.identifyPane = new AppIdentifyPane({
                     map: this.map,
                     class: "identifyPane",
-                    autoExpandTree: true
+                    autoExpandTree: false
                 }, dom.byId("identifyPaneDiv"));
                 this.identifyPane.startup();
 
