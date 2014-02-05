@@ -177,3 +177,8 @@ html,body {
     font-size: 12px;
     background-color:#EFECCA;
 }
+
+.identifyPane {
+    width:450px !important;
+    height:350px !important;
+}
