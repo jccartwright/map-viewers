@@ -69,8 +69,72 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                 }
                 this.requestDataDialog.filenames = [filename];
                 this.requestDataDialog.show();
-            }
+            },
 
+            populateFeatureStore: function(results) {
+                console.log('Inside custom populateFeatureStore...');
+                var numFeatures = 0;
+                this.uid = 0;
+                for (var svcName in results) {
+                    for (var layerName in results[svcName]) {
+
+                        numFeatures += results[svcName][layerName].length;
+                        for (var i = 0; i < results[svcName][layerName].length; i++) {
+                            var item = results[svcName][layerName][i];
+                            var layerKey = svcName + '/' + layerName;
+                            var layerUrl = results[svcName][layerName][i].layerUrl;
+                            //Create a layer "folder" node if it doesn't already exist
+                            if (this.featureStore.query({id: layerName}).length == 0) {
+                                this.featureStore.put({
+                                    uid: ++this.uid,
+                                    id: layerName,
+                                    label: this.getLayerDisplayLabel(item),
+                                    type: 'folder',
+                                    parent: 'root'
+                                });
+                            }
+                            //Create a survey "folder" node if it doesn't already exist
+                            var surveyId = item.feature.attributes['Survey ID'];
+                            var surveyKey = layerName + '/' + surveyId;
+                            if (this.featureStore.query({id: surveyKey}).length == 0) {
+                                this.featureStore.put({
+                                    uid: ++this.uid,
+                                    id: surveyKey,
+                                    label: '<b><i>Survey ID: ' + surveyId + '</i></b>',
+                                    type: 'folder',
+                                    parent: layerName
+                                });
+                            }
+                            //Create an instrument "folder" node if it doesn't already exist
+                            var instrument = item.feature.attributes['Instrument Name'];
+                            var instrumentKey = layerName + '/' + surveyId + '/' + instrument;
+                            if (this.featureStore.query({id: instrumentKey}).length == 0) {
+                                this.featureStore.put({
+                                    uid: ++this.uid,
+                                    id: instrumentKey,
+                                    label: '<b><i>Instrument: ' + instrument + '</i></b>',
+                                    type: 'folder',
+                                    parent: surveyKey
+                                });
+                            }
+                            //Add the current item to the store, with the layerName as parent
+                            this.featureStore.put({
+                                uid: ++this.uid,
+                                id: this.uid,
+                                //TODO: point to the magnifying glass image using a module path
+                                displayLabel: this.getItemDisplayLabel(item),
+                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='js/ngdc/identify/images/magnifying-glass.png'></a>",
+                                layerUrl: layerUrl,
+                                layerKey: layerKey,
+                                attributes: item.feature.attributes,
+                                parent: instrumentKey,
+                                type: 'item'
+                            });
+                        }
+                    }
+                }
+                return numFeatures;
+            }
         });
     }
 );
