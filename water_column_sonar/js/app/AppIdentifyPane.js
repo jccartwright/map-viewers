@@ -100,7 +100,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                                 this.featureStore.put({
                                     uid: ++this.uid,
                                     id: surveyKey,
-                                    label: '<b><i>Survey ID: ' + surveyId + '</i></b>',
+                                    label: '<b>Survey: ' + surveyId + '</b>',
                                     type: 'folder',
                                     parent: layerName
                                 });
@@ -112,7 +112,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                                 this.featureStore.put({
                                     uid: ++this.uid,
                                     id: instrumentKey,
-                                    label: '<b><i>Instrument: ' + instrument + '</i></b>',
+                                    label: '<b>Instrument: ' + instrument + '</b>',
                                     type: 'folder',
                                     parent: surveyKey
                                 });
