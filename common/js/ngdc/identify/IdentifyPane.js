@@ -310,7 +310,7 @@ define([
                                     uid: ++this.uid,
                                     id: layerName,
                                     label: this.getLayerDisplayLabel(item),
-                                    type: 'layer',
+                                    type: 'folder',
                                     parent: 'root'
                                 });
                             }
@@ -349,7 +349,7 @@ define([
                         if (item.type == 'item') {
                             return "iconBlank";
                         }
-                        else if (item.type == 'layer') {
+                        else if (item.type == 'folder') {
                             return (opened ? "dijitFolderOpened" : "dijitFolderClosed");
                         }
                         else {
