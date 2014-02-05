@@ -9,7 +9,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                         'Earthquake Depth','Max Event Runup','Tsunami Intensity','Comments','Damage in millions of dollars','Damage Description','Houses Destroyed','Houses Destroyed Description',
                         'Deaths','Deaths Description','Injuries','Injuries Description','Missing','Missing Description','Number of Observations'],*/
                 var html = string.substitute('\
-                    <table cellpadding="0" border="1" cellspacing="0">\
+                    <table cellpadding="1" border="1" cellspacing="1">\
                         <tr><td><b>File Name:</b></td><td>${fileName}</td></tr>\
                         <tr><td><b>Survey ID:</b></td><td>${surveyID}</td></tr>\
                         <tr><td><b>Ship:</b></td><td>${shipName}</td></tr>\
