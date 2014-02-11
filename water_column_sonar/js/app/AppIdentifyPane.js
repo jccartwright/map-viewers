@@ -49,25 +49,35 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
             requestDataFiles: function() {
                 console.log('inside requestData...');
                 var items = this.storeModel.store.query({type: 'item'});
-                var filenames = [];
+                var fileInfos = [];
                 for (var i = 0; i < items.length; i++) {
-                    filenames.push(items[i].displayLabel);
+                    fileInfos.push({
+                        file: items[i].displayLabel,
+                        cruise: items[i].attributes['Survey ID'],
+                        ship: items[i].attributes['Ship Name'],
+                        instrument: items[i].attributes['Instrument Name']
+                    });
                 }
 
                 if (!this.requestDataDialog) {
                     this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
                 }
-                this.requestDataDialog.filenames = filenames;
+                this.requestDataDialog.fileInfos = fileInfos;
                 this.requestDataDialog.show();
             },
 
             requestDataFile: function() {
-                var filename = this.currentItem.displayLabel;
+                var fileInfo = {
+                    file: this.currentItem.displayLabel,
+                    cruise: this.currentItem.attributes['Survey ID'],
+                    ship: this.currentItem.attributes['Ship Name'],
+                    instrument: this.currentItem.attributes['Instrument Name']
+                };
 
                 if (!this.requestDataDialog) {
                     this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
                 }
-                this.requestDataDialog.filenames = [filename];
+                this.requestDataDialog.fileInfos = [fileInfo];
                 this.requestDataDialog.show();
             },
 

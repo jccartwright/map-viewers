@@ -72,7 +72,7 @@ define([
                 var jsonString = JSON.stringify({
                     name: formContents.name,
                     email: formContents.email,
-                    files: this.filenames
+                    files: this.fileinfos
                 });
 
                 var okDialog = new Dialog({
