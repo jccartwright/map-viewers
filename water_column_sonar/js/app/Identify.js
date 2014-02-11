@@ -19,13 +19,13 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                     <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>\
                     <div class="valueName">Recording Range (m): <span class="parameterValue">${recordingRange}</span></div>';
                 if (a['Instrument Name'] == 'EK60') {
+                    template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
+                }
+                else {
                     template += '\
                         <div class="valueName">Swath Width (degrees): <span class="parameterValue">${swathWidth}</span></div>\
                         <div class="valueName">Number of Beams: <span class="parameterValue">${numBeams}</span></div>\
                         <div class="valueName">Beam Type: <span class="parameterValue">${beamType}</span></div>';
-                }
-                else {
-                    template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
                 }
                 template += '\
                     <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>\
