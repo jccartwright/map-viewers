@@ -47,7 +47,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
             },
 
             requestDataFiles: function() {
-                console.log('inside requestData...');
                 var items = this.storeModel.store.query({type: 'item'});
                 var fileInfos = [];
                 for (var i = 0; i < items.length; i++) {
@@ -82,7 +81,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
             },
 
             populateFeatureStore: function(results) {
-                console.log('Inside custom populateFeatureStore...');
                 var numFeatures = 0;
                 this.uid = 0;
                 this.expandedNodePaths = [];

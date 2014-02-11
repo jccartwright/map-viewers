@@ -41,7 +41,6 @@ define([
             title: "Request Data",
 
             constructor: function(/*Object*/ kwArgs) {
-                console.log("inside RequestDataDialog constructor...");
                 this.filenames = arguments.filenames;
                 lang.mixin(this, kwArgs);
             },
@@ -65,14 +64,10 @@ define([
             },
 
             execute: function(formContents) {
-                console.log('Name: ' + formContents.name);
-                console.log('Email: ' + formContents.email);
-                console.log('Files: ' + this.filenames.join(','));
-
                 var jsonString = JSON.stringify({
                     name: formContents.name,
                     email: formContents.email,
-                    files: this.fileinfos
+                    files: this.fileInfos
                 });
 
                 var okDialog = new Dialog({
