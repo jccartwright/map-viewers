@@ -179,6 +179,38 @@ html,body {
 }
 
 .identifyPane {
-    width:450px !important;
-    height:350px !important;
+    width:450px;
+    height:350px;
+}
+
+.fileHeader {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #33F;
+    padding-top: 10px;
+}
+
+.fileName {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.valueName {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    font-style: italic;
+    color: #626262;
+    padding-left: 10px;
+    padding-bottom: 3px;
+}
+
+.parameterValue {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: normal;
+    color: #000;
 }

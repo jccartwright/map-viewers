@@ -5,28 +5,33 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
             wcdFormatter: function(feature) {
                 var a = this.replaceNullAttributes(feature.attributes);
-                /*'ID','Date String','Latitude','Longitude','Location Name','Area','Country','Cause','Event Validity','Earthquake Magnitude',
-                        'Earthquake Depth','Max Event Runup','Tsunami Intensity','Comments','Damage in millions of dollars','Damage Description','Houses Destroyed','Houses Destroyed Description',
-                        'Deaths','Deaths Description','Injuries','Injuries Description','Missing','Missing Description','Number of Observations'],*/
-                var html = string.substitute('\
-                    <table cellpadding="1" border="1" cellspacing="1">\
-                        <tr><td><b>File Name:</b></td><td>${fileName}</td></tr>\
-                        <tr><td><b>Survey ID:</b></td><td>${surveyID}</td></tr>\
-                        <tr><td><b>Ship:</b></td><td>${shipName}</td></tr>\
-                        <tr><td><b>Instrument:</b></td><td>${instrumentName}</td></tr>\
-                        <tr><td><b>Scientist:</b></td><td>${scientistName}</td></tr>\
-                        <tr><td><b>Source Name:</b></td><td>${sourceName}</td></tr>\
-                        <tr><td><b>Source Group:</b></td><td>${sourceGroup}</td></tr>\
-                        <tr><td><b>Project:</b></td><td>${projectName}</td></tr>\
-                        <tr><td><b>Minimum Depth (m):</b></td><td>${minDepth}</td></tr>\
-                        <tr><td><b>Collection Date:</b></td><td>${collectionDate}</td></tr>\
-                        <tr><td><b>Publish Date:</b></td><td>${publishDate}</td></tr>\
-                        <tr><td><b>Beam Type:</b></td><td>${beamType}</td></tr>\
-                        <tr><td><b>Number of Beams:</b></td><td>${numBeams}</td></tr>\
-                        <tr><td><b>Swath Width (degrees):</b></td><td>${swathWidth}</td></tr>\
-                        <tr><td><b>Recording Range (m):</b></td><td>${recordingRange}</td></tr>\
-                        <tr><td><b>Frequency (kHz):</b></td><td>${frequency}</td></tr>\
-                    </table>', { 
+
+                var template = '\
+                    <div class="fileName">Attributes for ${fileName}</div>\
+                    <div class="fileHeader">Survey Details:</div>\
+                    <div class="valueName">Survey ID: <span class="parameterValue">${surveyID}</span></div>\
+                    <div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>\
+                    <div class="valueName"> Project(s): <span class="parameterValue">${projectName}</span></div>\
+                    <div class="valueName">Source Group: <span class="parameterValue">${sourceGroup}</span></div>\
+                    <div class="valueName">Source Name: <span class="parameterValue">${sourceName}</span></div>\
+                    <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
+                    <div class="fileHeader">Instrument Details:</div>\
+                    <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>\
+                    <div class="valueName">Recording Range (m): <span class="parameterValue">${recordingRange}</span></div>';
+                if (a['Instrument Name'] == 'EK60') {
+                    template += '\
+                        <div class="valueName">Swath Width (degrees): <span class="parameterValue">${swathWidth}</span></div>\
+                        <div class="valueName">Number of Beams: <span class="parameterValue">${numBeams}</span></div>\
+                        <div class="valueName">Beam Type: <span class="parameterValue">${beamType}</span></div>';
+                }
+                else {
+                    template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
+                }
+                template += '\
+                    <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>\
+                    <div class="fileHeader">Products</div>';
+
+                var html = string.substitute(template, {
                         fileName: a['File Name'],
                         surveyID: a['Survey ID'],
                         shipName: a['Ship Name'],
