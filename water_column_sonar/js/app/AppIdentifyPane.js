@@ -85,6 +85,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                 console.log('Inside custom populateFeatureStore...');
                 var numFeatures = 0;
                 this.uid = 0;
+                this.expandedNodePaths = [];
                 for (var svcName in results) {
                     for (var layerName in results[svcName]) {
 
@@ -126,7 +127,11 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                                     type: 'folder',
                                     parent: surveyKey
                                 });
+
+                                //Add this node to the list of nodes to be expanded to in constructFeatureTree
+                                this.expandedNodePaths.push(['root', layerName, surveyKey, instrumentKey]);
                             }
+
                             //Add the current item to the store, with the layerName as parent
                             this.featureStore.put({
                                 uid: ++this.uid,
@@ -144,6 +149,12 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                     }
                 }
                 return numFeatures;
+            },
+
+            constructFeatureTree: function() {
+                this.inherited(arguments);
+                //Expand the tree to the instrument level. All nodes will be opened except for these.
+                this.tree.set('paths', this.expandedNodePaths);
             }
         });
     }
