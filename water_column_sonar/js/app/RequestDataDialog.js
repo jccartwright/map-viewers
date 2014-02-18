@@ -72,8 +72,9 @@ define([
 
                 var okDialog = new Dialog({
                     title: 'Request Submitted',
-                    content: 'Thank you for contacting us.',
-                    class: "requestDataDialog"
+                    content: 'Your order has been received. We will contact you when your order is ready for pickup. Please contact the water column sonar data manager at <a href="mailto:wcd.info@noaa.gov">wcd.info@noaa.gov</a> if you have any questions.',
+                    class: "requestDataDialog",
+                    style: 'width:300px'
                 });
                 var okButton = new Button({
                     label: "OK",
