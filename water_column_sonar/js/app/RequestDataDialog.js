@@ -90,7 +90,6 @@ define([
                         handleAs: "json",
                         headers: {'Content-Type':'application/json'}
                     }).then(function(response){
-                        //alert('Thank you for contacting us.');
                         okDialog.show();
                     }, function(error) {
                         alert('Error: ' + error);
