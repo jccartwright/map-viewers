@@ -13,7 +13,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                     <div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>\
                     <div class="valueName"> Project(s): <span class="parameterValue">${projectName}</span></div>\
                     <div class="valueName">Source Group: <span class="parameterValue">${sourceGroup}</span></div>\
-                    <div class="valueName">Source Name: <span class="parameterValue">${sourceName}</span></div>\
+                    <div class="valueName">Source Name(s): <span class="parameterValue">${sourceName}</span></div>\
                     <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
                     <div class="fileHeader">Instrument Details:</div>\
                     <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>\
