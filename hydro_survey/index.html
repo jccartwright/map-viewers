@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NOS Hydrographic Survey Preview | ngdc.noaa.gov</title>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/dojo/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+    <link rel="stylesheet" href="css/local.css">
+    <script>
+        var dojoConfig = {
+            waitSeconds: 5,
+            async: true,
+            parseOnLoad: false,
+
+            //list local packages
+            packages: [
+            {
+                name: "ngdc",
+                location: location.pathname.replace(/\/[^/]*$/, '') + '/js/ngdc'
+            },
+            {
+                name: "app",
+                location: location.pathname.replace(/\/[^/]*$/, '') + '/js/app'
+            }
+            ],
+
+            //app-specific config values
+            app: {
+                loglevel: 4  //DEBUG
+            }
+        };
+    </script>
+    <script src="http://js.arcgis.com/3.8/"></script>
+    <script src="js/app/mapLoader.js"></script>
+</head>
+<body class="tundra">
+<div id="loader"><div id="loaderInner"></div></div>
+<div id="busy"></div>
+
+<div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false" >
+        
+    <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
+        <div id="mapDiv" data-dojo-type="dijit/layout/ContentPane" class="mercatorMap">          
+            <div id="homeButton"></div>
+            <div id="toggleRnc" class="toggleRnc" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:false">
+                Show RNCs
+            </div>
+        </div>
+    </div> <!-- end centerPane -->
+    
+</div> <!-- end mainWindow BorderContainer -->
+</body>
+</html>
