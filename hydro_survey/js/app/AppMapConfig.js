@@ -1,10 +1,12 @@
 define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig",
         "dojo/_base/lang", "dojo/dom", "dojo/_base/fx", "dijit/registry", "esri/dijit/HomeButton",
-        "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol", "dojo/_base/Color", "esri/renderers/SimpleRenderer",  
+        "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol", "dojo/_base/Color", "esri/renderers/SimpleRenderer",
+        "dojo/dom-construct", "dojo/dom",
         "dojo/topic", "dojo/on", "esri/config"],
     function(declare, lang, MapConfig,  
         lang, dom, baseFx, registry, HomeButton,
         SimpleFillSymbol, SimpleLineSymbol, Color, SimpleRenderer,
+        domConstruct, dom,
         topic, on, esriConfig){
         
         return declare([MapConfig], {
@@ -51,7 +53,7 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig",
                     oEvent.relatedTarget = null;
                 }
 
-                var mapElement = document.getElementById('mapDiv');
+                var mapElement = dom.byId('mapDiv');
 
                 if (document.createEvent) {
                     mapElement.dispatchEvent(oEvent);
@@ -64,6 +66,8 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig",
             //handle setup which requires all layers to be loaded
             mapReady: function() {
                 this.inherited(arguments);
+
+                domConstruct.place(dom.byId('mapDiv_Boundaries/Labels'), dom.byId('mapDiv_gc'), "after");
 
                 var homeButton;
                 //Set the map extent to the survey extent.
