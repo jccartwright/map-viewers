@@ -67,6 +67,8 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig",
             mapReady: function() {
                 this.inherited(arguments);
 
+                //Manually place the Boundaries/Labels tiled service above the graphics layer.
+                //Be aware that this can cause problems if we need to be able to click on the graphics layer.
                 domConstruct.place(dom.byId('mapDiv_Boundaries/Labels'), dom.byId('mapDiv_gc'), "after");
 
                 var homeButton;
