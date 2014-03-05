@@ -83,6 +83,7 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig",
                 }));
                                       
                 var imageryLayer = this.mapLayerCollection.getLayerById('World Imagery');
+                var boundariesLayer = this.mapLayerCollection.getLayerById('Boundaries/Labels');
                 var rncLayer = this.mapLayerCollection.getLayerById('RNC');
 
                 //For testing
@@ -101,16 +102,19 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig",
                         toggleRnc.set('label', 'Hide RNCs');
                         //50% opaque RNC over 70% opaque imagery
                         imageryLayer.setOpacity(0.7);
+                        boundariesLayer.hide();
                         rncLayer.show();
                     }
                     else {                        
                         toggleRnc.set('label', 'Show RNCs');
                         //100% opaque imagery
                         imageryLayer.setOpacity(1);
+                        boundariesLayer.show();
                         rncLayer.hide();
                     }
                 }));
                 imageryLayer.show();
+                boundariesLayer.show();
 
                 //Set the BAG Hillshades definition query
                 var bagLayer = this.mapLayerCollection.getLayerById('BAG Hillshades');
