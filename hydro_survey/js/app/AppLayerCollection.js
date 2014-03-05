@@ -46,7 +46,11 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         id: "NOS Hydro Non-Digital",
                         mode: FeatureLayer.MODE_ONDEMAND,
                         visible: false
-                    })                                
+                    }),
+                    new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer", {
+                        id: "Boundaries/Labels",
+                        visible: false
+                    })
                 ];
             },  //end defineMapServices
 
