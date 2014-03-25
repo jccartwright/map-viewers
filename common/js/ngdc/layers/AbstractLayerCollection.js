@@ -1,5 +1,15 @@
-define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters", "ngdc/layers/PairedMapServiceLayer"],
-    function(declare, array, ImageParameters, PairedMapServiceLayer){
+define([
+    "dojo/_base/declare",
+    "dojo/_base/array",
+    "esri/layers/ImageParameters",
+    "esri/layers/ImageServiceParameters",
+    "ngdc/layers/PairedMapServiceLayer"],
+    function(
+        declare,
+        array,
+        ImageParameters,
+        ImageServiceParameters,
+        PairedMapServiceLayer){
 
         //"static" properties
         var imageParameters;
@@ -41,6 +51,9 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters",
                 this.imageParameters.png32.format = "png32";
                 this.imageParameters.jpg = new ImageParameters();
                 this.imageParameters.jpg.format = "jpg";
+
+                this.imageServiceParameters = new ImageServiceParameters();
+                this.imageServiceParameters.interpolation = ImageServiceParameters.INTERPOLATION_BILINEAR;
             },
 
             buildPairedMapServices: function(map) {
@@ -65,7 +78,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters",
                     //globals.layerTimeouts[svc.id] = setTimeout(function(){layerTimeoutHandler(svc.id);}, 5000);
                 }, this);
             },
-
 
             //TODO refactor
             updateMapServiceList: function(layer) {
@@ -105,9 +117,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/ImageParameters",
                 //logger.debug('clearing timeout for layer '+mapserviceId);
                 clearTimeout(this.layerTimeouts[mapserviceId]);
             }
-
-
-
         });
     }
 );
