@@ -1,79 +1,89 @@
-define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/layer", "dojo/_base/connect"],
-    function(declare, array, Layer, Connect) {
-        //constructor options
-        var id; //required
-        var loaded = false;
-        var opacity = 1.0;
-        var url;
-        var visible = true;
-        var layerDefinitions;
-        var visibleLayers;
-
-        //internal state
-        var _active;
-        var _isDynamic = false;
-        var _cutoffZoom = 5;
-        var _dynamicService; //required, esri.layers.ArcGISDynamicMapServiceLayer
-        var _tiledService;   //required, esri.layers.ArcGISTiledMapServiceLayer
-        var _map;
+define([
+    "dojo/_base/declare",
+    "dojo/_base/array",
+    "esri/layers/layer",
+    "dojo/on",
+    "dojo/_base/lang"],
+    function(
+        declare,
+        array,
+        Layer,
+        on,
+        lang) {
 
         return declare([Layer], {
+            //parameters
+            id: null,              //required
+            loaded: false,
+            opacity: 1.0,
+            url: null,
+            visible: true,
+            layerDefinitions: null,
+            visibleLayers: null,
+
+            //internal state
+            _active:null,
+            _isDynamic: null,
+            _cutoffZoom: 5,
+            _dynamicService: null, //required, esri.layers.ArcGISDynamicMapServiceLayer
+            _tiledService: null,   //required, esri.layers.ArcGISTiledMapServiceLayer
+            _map:null,             //required, esri.Map
+
             constructor: function(params, map) {
-                this._map = map;
+                if (!map || !params.id || !params.dynamicService || !params.tiledService) {
+                    logger.error("PairedMapServiceLayer is missing required parameters in constructor");
+                    return;
+                }
+
+                //TODO use safeMixin to transfer params, but will need param names to match
+                //declare.safeMixin(this, params);
 
                 //options allowed in the constructor
-                //TODO why should params ever be null?
-                params = params || {};
+                params = params || {}; //TODO why should params ever be null?
                 this.id = params.id;
                 this._dynamicService = params.dynamicService;
                 this._tiledService = params.tiledService;
                 this._cutoffZoom = params.cutoffZoom;
+                this.visible = params.visible;
+                this._map = map;
 
                 //TODO ??
                 //based on values from layerInfos[], populated in layersLoaded()
                 //opacity, visible, id seem to be set automatically. Why not others?
                 this._defaultVisibleLayers = params.defaultVisibleLayers || [];
 
-                Connect.connect(map, "onZoomEnd", this, function(extent, zoomFactor, anchor, level){
-                    logger.debug('zoom level: '+level);
-                    this._toggleService();
-                });
-
+                //TODO any difference between these?
+                on(map, "zoom-end", lang.hitch(this, this.zoomHandler));
+//                map.on("zoom-end", lang.hitch(this, this.zoomHandler));
 
                 //verify layers loaded
-                if (this._dynamicService.loaded && this._tiledService.loaded) {
-                    this.layersLoaded();
-                } else {
-                    logger.warn("component layers in PairedMapServiceLayer not  loaded");
-                }
-            }, //end constructor function
-
-            //called when both mapservices loaded
-            layersLoaded: function () {
-                if (this._dynamicService.loaded === false || this._tiledService.loaded === false) {
-                    logger.warn('not ready yet...');
+                if (!this._dynamicService.loaded || !this._tiledService.loaded) {
+                    logger.warn("component layers in PairedMapServiceLayer not loaded");
                     return;
                 }
 
-                //both layers loaded at this point;
-                this.loaded = true;
+                this.initialize();
+            }, //end constructor function
 
-                //The url field should always contain the dynamic service url.
+            zoomHandler: function(evt) {
+                logger.debug('zoom level: '+evt.level);
+                this._toggleService();
+            },
+
+            initialize: function () {
+                //inherit properties from the DynamicMapService
                 this.url = this._dynamicService.url;
-
-                //maxRecordCount is the dynamic service's maxRecordCount.
                 this.maxRecordCount = this._dynamicService.maxRecordCount;
-
-                if (!this.visible) {
-                    this._dynamicService.setVisibility(false);
-                    this._tiledService.setVisibility(false);
-                }
-
-                //copy the Dynamic Layer properties to make them visible in the PairedLayer
                 this.visibleLayers = this._dynamicService.visibleLayers;
                 this.layerDefinitions = this._dynamicService.layerDefinitions;
 
                 this.setOpacity(this.opacity);
+
+                //in case one of the pair were originally visible
+                if (!this.visible) {
+                    this._dynamicService.setVisibility(false);
+                    this._tiledService.setVisibility(false);
+                }
 
                 //build list of layer ids visible by default, if not already set in the constructor
                 if (this._defaultVisibleLayers.length === 0) {
@@ -215,11 +225,14 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/layer", "dojo/_ba
                     return;
                 }
 
-                //console.log('switching to tiled service...');
                 this._activateTiledService();
             },
 
             _activateTiledService: function(){
+                if (this._isDynamic === false) {
+                    //no change necessary
+                    return;
+                }
                 logger.debug('activating tiled layer ' + this._tiledService.id + '...');
 
                 this._active = this._tiledService;
@@ -235,6 +248,10 @@ define(["dojo/_base/declare", "dojo/_base/array", "esri/layers/layer", "dojo/_ba
             },
 
             _activateDynamicService: function(){
+                if (this._isDynamic === true) {
+                    //no change necessary
+                    return;
+                }
                 logger.debug('activating dynamic layer ' + this._dynamicService.id + '...');
 
                 this._active = this._dynamicService;
