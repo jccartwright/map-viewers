@@ -1,6 +1,6 @@
 define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", "ngdc/Banner", "ngdc/MapToolbar", "app/BasemapToolbar",
         "ngdc/CoordinatesToolbar", "app/Identify", "app/AppIdentifyPane",
-        "app/SearchDialog", "ngdc/bboxDialog/BoundingBoxDialog",
+        "app/SearchDialog", "ngdc/BoundingBoxDialog",
         "dojo/_base/lang", "dojo/dom", "dojo/_base/fx", "dijit/registry",        
         "dojo/topic", "dojo/on", "dojo/string"],
     function(declare, lang, MapConfig, Banner, MapToolbar, BasemapToolbar,
