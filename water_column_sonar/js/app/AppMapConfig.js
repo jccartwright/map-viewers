@@ -1,16 +1,16 @@
-define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", "esri/dijit/Legend", "ngdc/Banner", "ngdc/MapToolbar", "app/BasemapToolbar",
+define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", "ngdc/Banner", "ngdc/MapToolbar", "app/BasemapToolbar",
         "ngdc/CoordinatesToolbar", "app/Identify", "app/AppIdentifyPane",
-        "app/SearchDialog", "ngdc/BoundingBoxDialog",
+        "app/SearchDialog", "ngdc/bboxDialog/BoundingBoxDialog",
         "dojo/_base/lang", "dojo/dom", "dojo/_base/fx", "dijit/registry",        
         "dojo/topic", "dojo/on", "dojo/string"],
-    function(declare, lang, MapConfig, Legend, Banner, MapToolbar, BasemapToolbar,
+    function(declare, lang, MapConfig, Banner, MapToolbar, BasemapToolbar,
         CoordinatesToolbar, Identify, AppIdentifyPane,
         SearchDialog, BoundingBoxDialog,
         lang, dom, baseFx, registry,
         topic, on, string){
         
         return declare([MapConfig], {
-
+            
             constructor: function() {
                 this.banner = new Banner({
                     breadcrumbs: [
@@ -18,30 +18,22 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
                         {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
                         {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
                         {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
-                        {url: 'http://www.ngdc.noaa.gov/mgg/wcd/', label: 'Multibeam Water Column Data'}
+                        {url: 'http://www.ngdc.noaa.gov/mgg/wcd/', label: 'Water Column Sonar Data'}           
                     ],
                     dataUrl: "http://www.ngdc.noaa.gov/mgg/wcd/",
                     image: "/images/water_column_sonar_data_viewer_logo.png"
                 });
-                this.banner.placeAt('banner');
+                this.banner.placeAt('banner');   
             },
 
             //handle setup which requires all layers to be loaded
             mapReady: function() {
                 this.inherited(arguments);
 
-                console.log("inside custom mapReady...");
+                //console.log("inside custom mapReady...");
                   
-                this.legend = new Legend({
-                    map: this.map,
-                    layerInfos: [{
-                        layer: this.mapLayerCollection.getLayerById('Water Column Sonar'),
-                        title: 'Water Column Sonar Data'
-                    }]
-                }, "legendDiv");
-                this.legend.startup();
-
                 this.wcdMapService = this.mapLayerCollection.getLayerById('Water Column Sonar');
+
 
                 this.basemapToolbar = new BasemapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, "basemapToolbar");
                 this.basemapToolbar.startup();
@@ -50,7 +42,8 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
 
                 this.identify = new Identify({mapConfig: this});
 
-                this.visibleLayers = {0: true, 1: true, 2: true, 3: true};
+                this.visibleLayers = {1: true, 2: true, 3: true, 4: true};
+                
                 
                 this.identifyPane = new AppIdentifyPane({
                     map: this.map,
@@ -58,21 +51,22 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
                     autoExpandTree: false
                 }, dom.byId("identifyPaneDiv"));
                 this.identifyPane.startup();
+                
 
                 //remove?
                 this.map.identifyPane = this.identifyPane; 
 
                 on(registry.byId("checkNMFS"), "change", lang.hitch(this, function(checked) {
-                    this.setSublayerVisibility(0, checked);
-                })); 
-                on(registry.byId("checkOER"), "change", lang.hitch(this, function(checked) {
                     this.setSublayerVisibility(1, checked);
                 })); 
-                on(registry.byId("checkUNOLS"), "change", lang.hitch(this, function(checked) {
+                on(registry.byId("checkOER"), "change", lang.hitch(this, function(checked) {
                     this.setSublayerVisibility(2, checked);
                 })); 
-                on(registry.byId("checkOther"), "change", lang.hitch(this, function(checked) {
+                on(registry.byId("checkUNOLS"), "change", lang.hitch(this, function(checked) {
                     this.setSublayerVisibility(3, checked);
+                })); 
+                on(registry.byId("checkOther"), "change", lang.hitch(this, function(checked) {
+                    this.setSublayerVisibility(4, checked);
                 })); 
 
                 on(registry.byId("searchButton"), "click", lang.hitch(this, function() {
@@ -86,13 +80,6 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
                     this.resetWcd();
                 }));
 
-                // on(registry.byId("identifyXYButton"), "click", lang.hitch(this, function() {
-                //     if (!this.bboxDialog) {
-                //         bboxDialog = new BoundingBoxDialog({map: this.map});
-                //     }
-                //     bboxDialog.show();
-                // }));
-
                 //Subscribe to messages passed by the search dialogs
                 topic.subscribe("/wcd/Search", lang.hitch(this, function(values) {
                     this.filterWcd(values);
@@ -100,6 +87,8 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
                 topic.subscribe("/wcd/ResetSearch", lang.hitch(this, function() {
                     this.resetWcd();
                 }));
+
+                //this.map.centerAt([0,40]);
             },
 
             setSublayerVisibility: function(index, visible) {
@@ -124,7 +113,8 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
                     sql.push("COLLECTION_DATE<=date '" + this.toDateString(values.endDate) + "'");
                 }
                 if (values.cruiseId) {
-                    sql.push("UPPER(CRUISE_NAME)='" + values.cruiseId.toUpperCase() + "'");
+                    //sql.push("UPPER(CRUISE_NAME)='" + values.cruiseId.toUpperCase() + "'");
+                    sql.push("UPPER(CRUISE_NAME) LIKE '" + values.cruiseId.toUpperCase().replace('*', '%') + "'");
                 }
                 if (values.instruments.length > 0) {
                     var quoted = [];
@@ -156,10 +146,10 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
 
                 //Apply to all 4 sublayers
                 layerDefinition = sql.join(' AND ');
-                layerDefinitions[0] = layerDefinition;
                 layerDefinitions[1] = layerDefinition;
                 layerDefinitions[2] = layerDefinition;
                 layerDefinitions[3] = layerDefinition;
+                layerDefinitions[4] = layerDefinition;
                 
                 this.wcdMapService.setLayerDefinitions(layerDefinitions);
                 
@@ -188,8 +178,8 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
                     s += 'Ending date: ' + this.toDateString(values.endDate) + '<br>';
                 }
 
-                if (values.cruiseID) {
-                    s += 'Survey ID: ' + values.cruiseID + '<br>';
+                if (values.cruiseId) {
+                    s += 'Survey ID: ' + values.cruiseId + '<br>';
                 }
                 if (values.instruments.length > 0) {
                     s += 'Instrument: ' + values.instruments.join(',') + '<br>';
@@ -261,4 +251,3 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
         });
     }
 );
-

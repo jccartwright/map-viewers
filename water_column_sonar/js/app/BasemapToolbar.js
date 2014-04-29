@@ -5,7 +5,8 @@ define(["dojo/_base/declare", "ngdc/BasemapToolbar"],
             constructor: function() {
                 //TODO redesign this data structure
                 this._basemaps = [
-                    {services: ['Ocean Basemap'], label: 'Ocean Basemap (Esri)', boundariesEnabled: false},
+                    {services: ['Ocean Base', 'Ocean Reference'], label: 'Ocean Basemap (Esri)', boundariesEnabled: false},
+
                     {services: ['GEBCO_08'], label: 'Shaded Relief (GEBCO_08)', boundariesEnabled: true},
                     {services: ['ETOPO1'], label: 'Shaded Relief (ETOPO1)', boundariesEnabled: true},
                     {services: ['Light Gray', 'Light Gray Reference'], label: 'Light Gray (Esri)', boundariesEnabled: false},
