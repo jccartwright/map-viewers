@@ -32,8 +32,9 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
             showResults: function(resultCollection) {
                 this.inherited(arguments);
-                if (this.numFeatures >= 1000) {
-                    this.featurePageTitle = "Identified Features (" + this.numFeatures + "+, results limited to 1000)";
+
+		if (this.numFeatures >= 1000) {
+                    this.featurePageTitle = "Identified Features (results limited to 1000 files. Zoom in for greater detail)";
                     this.setTitle(this.featurePageTitle);
                 }
             },
