@@ -1,24 +1,21 @@
-version = '1.6.2'
-
-//needed in order to dependOn Clean task
-apply plugin: 'base'
+version = '2.0-SNAPSHOT'
 
 task installNgdcDijits(type: Copy) {
     doFirst {
         uninstallNgdcDijits
     }
-   from ("../shared") {
+   from ("../common/js/ngdc") {
       exclude "build.gradle", "README.md"
    }
-   into "shared"
+   into "js/ngdc"
 }
 
-task uninstallNgdcDijits(dependsOn: 'Clean') {
-    delete 'shared'
+task uninstallNgdcDijits() {
+    delete 'js/ngdc'
 }
 
-task buildDistribution(type: Jar, dependsOn: installNgdcDijits) {
+jar {
+    dependsOn installNgdcDijits
     from "."
     exclude 'build*'
 }
-
