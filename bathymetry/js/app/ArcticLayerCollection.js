@@ -8,7 +8,7 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
 
                 this.setLayerTimeouts();
 
-                this.buildPairedMapServices();
+                this.definePairedMapServices();
 
                 this.setSubLayerVisibility();
             },
@@ -87,15 +87,14 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                 ];
             },  //end defineMapServices
 
-            buildPairedMapServices: function() {
-                logger.debug('creating pairedMapServices...');
+            definePairedMapServices: function() {
+                //logger.debug('creating pairedMapServices...');
             },
 
             setSubLayerVisibility: function() {
-                logger.debug('setting subLayer visibility...');
+                //logger.debug('setting subLayer visibility...');
             }
         });
     }
 );
-
 
