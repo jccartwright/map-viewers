@@ -152,7 +152,7 @@ html,body {
     background-color: gray;
 }
 
-#rightPane {
+#leftPane {
     width: 300px;
 }
 
@@ -213,4 +213,14 @@ html,body {
     font-style: normal;
     font-weight: normal;
     color: #000;
+}
+
+.filterText {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    vertical-align: middle;
+    background: #EEE;
 }

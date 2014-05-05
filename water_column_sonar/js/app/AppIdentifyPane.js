@@ -32,8 +32,9 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
             showResults: function(resultCollection) {
                 this.inherited(arguments);
-                if (this.numFeatures >= 1000) {
-                    this.featurePageTitle = "Identified Features (" + this.numFeatures + "+, results limited to 1000)";
+
+		if (this.numFeatures >= 1000) {
+                    this.featurePageTitle = "Identified Features (results limited to 1000 files. Zoom in for greater detail)";
                     this.setTitle(this.featurePageTitle);
                 }
             },
@@ -52,7 +53,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                 for (var i = 0; i < items.length; i++) {
                     fileInfos.push({
                         file: items[i].displayLabel,
-                        cruise: items[i].attributes['Survey ID'],
+                        cruise: items[i].attributes['Cruise ID'],
                         ship: items[i].attributes['Ship Name'],
                         instrument: items[i].attributes['Instrument Name']
                     });
@@ -68,7 +69,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
             requestDataFile: function() {
                 var fileInfo = {
                     file: this.currentItem.displayLabel,
-                    cruise: this.currentItem.attributes['Survey ID'],
+                    cruise: this.currentItem.attributes['Cruise ID'],
                     ship: this.currentItem.attributes['Ship Name'],
                     instrument: this.currentItem.attributes['Instrument Name']
                 };
@@ -103,13 +104,13 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                                 });
                             }
                             //Create a survey "folder" node if it doesn't already exist
-                            var surveyId = item.feature.attributes['Survey ID'];
+                            var surveyId = item.feature.attributes['Cruise ID'];
                             var surveyKey = layerName + '/' + surveyId;
                             if (this.featureStore.query({id: surveyKey}).length == 0) {
                                 this.featureStore.put({
                                     uid: ++this.uid,
                                     id: surveyKey,
-                                    label: '<b>Survey: ' + surveyId + '</b>',
+                                    label: '<b>Cruise ID: ' + surveyId + '</b>',
                                     type: 'folder',
                                     parent: layerName
                                 });

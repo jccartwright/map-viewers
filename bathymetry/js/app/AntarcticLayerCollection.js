@@ -41,10 +41,11 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         id: "NatGeo Basemap",
                         visible: false
                     }),
-                    new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer", {
-                        id: "Ocean Base",
-                        visible: true,
-                    }),                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer", {
+                    new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer", {
+                        id: "Ocean Basemap",
+                        visible: true
+                    }),
+                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer", {
                         id: "Water Column Sonar",
                         visible: true,
                         imageParameters: this.imageParameters.png32
@@ -57,13 +58,9 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         id: "Light Gray Reference",
                         visible: false
                     }),
-                    new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer", {
-                        id: "Ocean Reference",
-                        visible: true,
-                    }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer", {
                         id: "Graticule",
-                        visible: false,
+                        visible: true,
                         opacity: 0.7,
                         imageParameters: this.imageParameters.png32
                     })

@@ -4,7 +4,7 @@ define([
     "dijit/_Widget",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
-    "dijit/form/Button", "dijit/form/NumberSpinner", "dijit/form/Select", "dijit/form/CheckBox", "dijit/form/MultiSelect", "dijit/form/TextBox", "dijit/form/FilteringSelect",
+    "dijit/form/Button", "dijit/form/NumberSpinner", "dijit/form/Select", "dijit/form/CheckBox", "dojox/form/CheckedMultiSelect", "dijit/form/TextBox", "dijit/form/FilteringSelect",
     "dijit/form/DateTextBox",
     "dojo/_base/lang",
     "dojo/_base/array",
@@ -19,7 +19,7 @@ define([
         _Widget,
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
-        Button, NumberSpinner, Select, CheckBox, MultiSelect, TextBox, FilteringSelect,   
+        Button, NumberSpinner, Select, CheckBox, CheckedMultiSelect, TextBox, FilteringSelect,   
         DateTextBox,
         lang,
         array,
@@ -75,7 +75,12 @@ define([
                 this.startDate.reset();
                 this.endDate.reset();
                 this.cruiseIdText.set('value', '');
-                this.instrumentSelect.set('value', '');
+                //this.instrumentSelect.set('value', '');
+                
+                //Need to manually call _updateSelection for the CheckedMultiSelect. From here: https://bugs.dojotoolkit.org/ticket/16606
+                this.instrumentSelect.reset();
+                this.instrumentSelect._updateSelection();
+                             
                 this.minNumBeamsSpinner.set('value', '');
                 this.maxNumBeamsSpinner.set('value', '');
                 this.minRecordingRangeSpinner.set('value', '');

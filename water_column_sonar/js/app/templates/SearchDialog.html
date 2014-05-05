@@ -11,32 +11,40 @@
         <table cellpadding="6" cellspacing="3">
         <tr>
             <td>
-                Collection Date:<br>
-                <label for="startDate">Start:</label>
-                <input type="text" data-dojo-attach-point='startDate' name="startDate" id="startDate" value="" data-dojo-type="dijit/form/DateTextBox" style="width: 90px;"/>
-                <label for="startDate">End:</label>
-                <input type="text" data-dojo-attach-point='endDate' name="endDate" id="endDate" value="" data-dojo-type="dijit/form/DateTextBox" style="width: 90px;"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="cruiseIdText">Cruise ID:</label>
-                <input data-dojo-type="dijit/form/TextBox" type="text" name="cruiseId" data-dojo-attach-point="cruiseIdText" style="width: 200px;">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="instrumentSelect">Instrument:</label>
-                <select data-dojo-type="dijit/form/MultiSelect" data-dojo-attach-point="instrumentSelect" data-dojo-props="size:4" name="instruments" style="width: 120px;">
+                Instrument:<br>
+                <select multiple="true" data-dojo-type="dojox/form/CheckedMultiSelect" data-dojo-attach-point="instrumentSelect" name="instruments">
                     <option value="EM122">EM122</option>
                     <option value="EM302">EM302</option>
                     <option value="EK60">EK60</option>
                     <option value="ME70">ME70</option>
                 </select>
             </td>
+            <td style="horizontal-align:right;">
+                <table border="0">
+                    <tr>
+                        <td>Collection Date:<br></td>
+                    </tr>
+                    <tr>
+                        <td><label for="startDate">Start:</label>
+                        <input type="text" data-dojo-attach-point='startDate' name="startDate" id="startDate" value="" data-dojo-type="dijit/form/DateTextBox" style="width: 90px;"/><br></td>
+                    </tr>
+                    <tr>
+                        <td><label for="startDate">End:</label>
+                        <input type="text" data-dojo-attach-point='endDate' name="endDate" id="endDate" value="" data-dojo-type="dijit/form/DateTextBox" style="width: 90px;"/></td>
+                    </tr>
+                </table>
+            </td>
         </tr>
         <tr>
-            <td>
+            <td colspan="2">
+                <table>
+                    <td><label for="cruiseIdText">Cruise ID:<br><span style="font-size:10px;">(wildcards accepted: *)</span></label></td>
+                    <td><input data-dojo-type="dijit/form/TextBox" type="text" name="cruiseId" data-dojo-attach-point="cruiseIdText" style="width: 150px;"></td>
+                </table>
+            </td>
+        </tr>        
+        <tr>
+            <td colspan="2">
                 Number of Beams:
                 <label for="minNumBeamsSpinner">Min:</label>
                 <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minNumBeamsSpinner" 
@@ -47,7 +55,7 @@
             </td>
         </tr>
         <tr>
-            <td>
+            <td colspan="2">
                 Recording Range (m):
                 <label for="minRecordingRangeSpinner">Min:</label>
                 <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minRecordingRangeSpinner" 
@@ -58,7 +66,7 @@
             </td>
         </tr>
         <tr>
-            <td>
+            <td colspan="2">
                 Swath Width (degrees):
                 <label for="minSwathWidthSpinner">Min:</label>
                 <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minSwathWidthSpinner" 
@@ -83,9 +91,9 @@
         -->
         </table>
         <div class="dijitDialogPaneActionBar right-align">
-            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="submitButton" type="submit">OK</button>
+            <button class="left-align" data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton">Reset</button>
             <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="cancelButton">Cancel</button>
-            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton">Reset</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="submitButton" type="submit"><b>OK</b></button>
         </div>
     </div>
 </div>

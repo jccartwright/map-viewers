@@ -2,14 +2,16 @@
 <html>
 <head>
     <title>Water Column Sonar Viewer | ngdc.noaa.gov</title>
-    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/dojo/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
     <link rel="stylesheet" href="js/ngdc/css/BasemapToolbar.css">
     <link rel="stylesheet" href="js/ngdc/css/MapToolbar.css">
     <link rel="stylesheet" href="js/ngdc/identify/IdentifyPane.css">
     <link rel="stylesheet" href="js/ngdc/themes/tundra/BoundingBoxDialog.css">
-    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.8/js/dojo/dojox/layout/resources/FloatingPane.css"/>
-    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.8/js/dojo/dojox/layout/resources/ResizeHandle.css"/>
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/FloatingPane.css"/>
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/ResizeHandle.css"/>
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/form/resources/CheckedMultiSelect.css"/>
+    
     <link rel="stylesheet" href="css/local.css">
     <style>
 
@@ -64,7 +66,7 @@
             }
         };
     </script>
-    <script src="http://js.arcgis.com/3.8/"></script>
+    <script src="http://js.arcgis.com/3.9/"></script>
     <script src="js/app/mapLoader.js"></script>
 </head>
 <body class="tundra">
@@ -80,36 +82,85 @@
 
     <div id="leftPane" data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true">
         <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" title="Layers">
-            <h4>Water Column Sonar Data by Source Group:</h4>
-            <input id="checkNMFS" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input>                          
-            <label for="checkNMFS">NMFS</label>
-            <br>
-            <input id="checkOER" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input>                          
-            <label for="checkOER">OER</label>
-            <br>
-            <input id="checkUNOLS" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input>                          
-            <label for="checkUNOLS">UNOLS</label>
-            <br>
-            <input id="checkOther" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input>                          
-            <label for="checkOther">Other</label>
+            <h4>Water Column Sonar Data</h4>
+            <table cellpadding=-"1" cellspacing="2">
+                <tr>
+                    <td><input id="checkNMFS" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>
+                    <td><label for="checkNMFS" title="NOAA National Marine Fisheries Service">NMFS</label></td>
+                    <td><img style="vertical-align:middle;" src="images/red_line.png"></img></td>
+                </tr>
+                
+                <tr>
+                    <td><input id="checkOER" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                        
+                    <td><label for="checkOER" title="NOAA's Office of Ocean Exploration and Research">OER</label></td>
+                    <td><img style="vertical-align:middle;" src="images/blue_line.png"></img></td>
+                </tr>
+
+                <tr>
+                    <td><input id="checkUNOLS" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                          
+                    <td><label for="checkUNOLS" title="University-National Oceanographic Laboratory System">UNOLS</label></td>
+                    <td><img style="vertical-align:middle;" src="images/green_line.png"></img></td>
+                </tr>
+
+                <tr>
+                    <td><input id="checkOther" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                          
+                    <td><label for="checkOther">Other</label></td>
+                    <td><img style="vertical-align:middle;" src="images/orange_line.png"></img></td>
+                </tr>
+            </table>
             <hr>
             <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" id="searchButton">Filter Data</div>
             <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" id="resetButton" disabled>Reset</div><br>
-            <div id="currentFilter"></div>
-            <!--<div data-dojo-type="dijit/form/Button" data-dojo-attach-point="identifyXYButton" id="identifyXYButton">Identify using coordinates</div>-->
+            <div id="currentFilter" class="filterText"></div><br>
 
-        </div>        
-        <div id="legendPanel" data-dojo-type="dijit/layout/ContentPane" title="Legend">
-            <div id="legendDiv"></div>
-        </div>
+            <div id="abstractDiv">
+            <b>Abstract</b><br>
+            Water column sonar data are collected by active 
+            acoustic (or sonar) technology and contain 
+            acoustic scattering information from the near-
+            surface to the seafloor. Scientists use these data 
+            to assess physical and biological characteristics 
+            of the ocean, including the spatial distribution of 
+            plankton, fish, methane seeps and underwater 
+            oil plumes.<br><br>
 
+            <b><i>Data Providers:</i></b> NOAA National Marine Fisheries 
+            Service (<a href="http://www.nmfs.noaa.gov/" target="_blank">NMFS</a>), NOAA Office of Exploration 
+            and Research (<a href="http://explore.noaa.gov/" target="_blank">OER</a>), University-National
+            Oceanographic Laboratory System (<a href="http://www.unols.org/" target="_blank">UNOLS</a>), and 
+            international or non-NOAA/non-academic groups 
+            (Other).<br><br>
+
+            <b><i>Data Collection:</i></b> A variety of sonars are used 
+            by the data providers with Kongsberg EM 122 
+            (12 kHz), Kongsberg EM 302 (30 kHz), Simrad 
+            EK60 (18-710 kHz, split beam), and Simrad ME 
+            70 (70-120 kHz, can be split beam) echosounders 
+            being most common. The configuration of each 
+            cruise's sonar system (e.g., angle, type and 
+            number of beams) can be found in the file 
+            metadata.<br><br>
+
+            <b><i>Data Citation:</i></b> Proper citation for these data 
+            can be found in the ReadMe file provided during 
+            download. Citations are unique to the cruise and 
+            sonar type.<br><br>
+
+            <b>Online Resources</b><br>
+            <a href="http://www.ngdc.noaa.gov/mgg/wcd" target="_blank">NGDC Water Column Sonar Data Archive</a><br>
+            <a href="http://www.ngdc.noaa.gov/metadata/published/NOAA/NESDIS/NGDC/MGG/Sonar_Water_Column/iso" target="_blank">Metadata for this archive</a><br>
+            NGDC <a href="http://ngdc.noaa.gov/mgg/bathymetry/" target="_blank">Bathymetry</a>, 
+            <a href="http://ngdc.noaa.gov/mgg/bathymetry/multibeam.html" target="_blank">Multibeam</a>, and 
+            <a href="http://ngdc.noaa.gov/mgg/bathymetry/hydro.html" target="_blank">NOS Hydrographic Survey</a> Archives
+            </div>
+
+        </div>                
         <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
-            <div id="credits" data-dojo-type="app/CreditsPanel"></div>
+            <div id="credits" data-dojo-type="app/CreditsPanel"></div>            
         </div>
         <div id="helpPanel" data-dojo-type="dijit/layout/ContentPane" title="Help">
             <div id="help" data-dojo-type="app/HelpPanel"></div>
         </div>
-
     </div> <!-- end rightPane -->
 
     <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">

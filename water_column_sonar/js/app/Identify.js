@@ -8,10 +8,10 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
                 var template = '\
                     <div class="fileName">Attributes for ${fileName}</div>\
-                    <div class="fileHeader">Survey Details:</div>\
-                    <div class="valueName">Survey ID: <span class="parameterValue">${surveyID}</span></div>\
+                    <div class="fileHeader">Cruise Details:</div>\
+                    <div class="valueName">Cruise ID: <span class="parameterValue">${surveyID}</span></div>\
                     <div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>\
-                    <div class="valueName"> Project(s): <span class="parameterValue">${projectName}</span></div>\
+                    <div class="valueName">Project(s): <span class="parameterValue">${projectName}</span></div>\
                     <div class="valueName">Source Group: <span class="parameterValue">${sourceGroup}</span></div>\
                     <div class="valueName">Source Name(s): <span class="parameterValue">${sourceName}</span></div>\
                     <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
@@ -33,7 +33,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
                 var html = string.substitute(template, {
                         fileName: a['File Name'],
-                        surveyID: a['Survey ID'],
+                        surveyID: a['Cruise ID'],
                         shipName: a['Ship Name'],
                         instrumentName: a['Instrument Name'],
                         scientistName: a['Scientist Name'],
