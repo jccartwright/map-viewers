@@ -19,6 +19,7 @@ define([
     "app/MercatorLayerCollection",
     "app/ArcticLayerCollection",
     "app/AntarcticLayerCollection",
+    "app/BasemapToolbar",
     "dojo/domReady!"],
     function(
         declare,
@@ -40,7 +41,8 @@ define([
         Banner,
         MercatorLayerCollection,
         ArcticLayerCollection,
-        AntarcticLayerCollection
+        AntarcticLayerCollection,
+        BasemapToolbar
         ){
         return declare(null, {
             constructor:function(args){
@@ -108,8 +110,8 @@ define([
 
                 //var mapToolbar = new MapToolbar({map: mapConfig.map}, "mercatorMapToolbar");
 
-                //var basemapToolbar = new BasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "mercatorBasemapToolbar");
-                //basemapToolbar.startup();
+                var basemapToolbar = new BasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "mercatorBasemapToolbar");
+                basemapToolbar.startup();
 
                 //var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "mercatorCoordinatesToolbar");
 
