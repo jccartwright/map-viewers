@@ -20,6 +20,7 @@ define([
     "app/ArcticLayerCollection",
     "app/AntarcticLayerCollection",
     "app/BasemapToolbar",
+    "app/arctic/BasemapToolbar",
     "dojo/domReady!"],
     function(
         declare,
@@ -42,7 +43,8 @@ define([
         MercatorLayerCollection,
         ArcticLayerCollection,
         AntarcticLayerCollection,
-        BasemapToolbar
+        BasemapToolbar,
+        ArcticBasemapToolbar
         ){
         return declare(null, {
             constructor:function(args){
@@ -138,6 +140,9 @@ define([
                     overview: false,
                     sliderStyle: 'large'
                 }, new ArcticLayerCollection());
+
+                var basemapToolbar = new ArcticBasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "arcticBasemapToolbar");
+                basemapToolbar.startup();
             },
 
             setupAntarcticView: function() {
@@ -159,6 +164,9 @@ define([
                     overview: false,
                     sliderStyle: 'large'
                 }, new AntarcticLayerCollection());
+
+                //var basemapToolbar = new AntarcticBasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "antarcticBasemapToolbar");
+                //basemapToolbar.startup();
             }
         })
     }
