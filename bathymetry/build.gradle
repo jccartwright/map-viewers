@@ -1,21 +1,23 @@
+import org.apache.tools.ant.filters.*
+
+ext.buildDate = new Date().format('YYYY-MM-dd')
 version = '2.0-SNAPSHOT'
 
-task installNgdcDijits(type: Copy) {
-    doFirst {
-        uninstallNgdcDijits
-    }
-   from ("../common/js/ngdc") {
-      exclude "build.gradle", "README.md"
-   }
-   into "js/ngdc"
-}
-
-task uninstallNgdcDijits() {
-    delete 'js/ngdc'
-}
-
 jar {
-    dependsOn installNgdcDijits
     from "."
+//    from ('../css') { into 'css' }
+//    from('../fonts') { into 'fonts' }
+//    from('../img') { into 'img' }
+//    from('../js') { into 'js' }
+
     exclude 'build*'
+    exclude '.gradle'
+
+    eachFile {
+	  if (it.name.endsWith('.html')) {
+    	filter(ReplaceTokens, tokens: [
+    		'application.version': version,
+    		'application.buildDate': buildDate])
+	  }
+    }
 }
