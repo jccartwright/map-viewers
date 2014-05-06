@@ -26,7 +26,7 @@ html,body {
     border-left: 1px solid #B5BCC7;
     position: absolute;
     top: 10;
-    left: 100px;
+    right: 50px;
     z-index: 1;
 }
 
@@ -43,6 +43,10 @@ html,body {
 
 .basemapToolbar {
     border: none;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 100;
 }
 
 .coordinatesToolbar {

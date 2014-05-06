@@ -95,10 +95,16 @@
 
         <div id="mapContainer" data-dojo-type="dijit/layout/TabContainer" data-dojo-props="tabPosition: 'right'">
             <div id="mercator" data-dojo-type="dijit/layout/ContentPane" title="Mercator" class="map" data-dojo-props="iconClass:'mercatorTabIcon', showTitle: false, tooltip: 'Mercator'">
+                <div id="mercatorBasemapToolbar"></div>
+                <div id="mercatorCoordinatesToolbar"></div>
             </div>
             <div id="arctic" data-dojo-type="dijit/layout/ContentPane" title="Arctic" class="map" data-dojo-props="iconClass:'arcticTabIcon', showTitle: false, tooltip: 'Arctic'">
+                <div id="arcticBasemapToolbar"></div>
+                <div id="arcticCoordinatesToolbar"></div>
             </div>
             <div id="antarctic" data-dojo-type="dijit/layout/ContentPane" title="Antarctic" class="map" data-dojo-props="iconClass:'antarcticTabIcon', showTitle: false, tooltip: 'Antarctic'">
+                <div id="antarcticBasemapToolbar"></div>
+                <div id="antarcticCoordinatesToolbar"></div>
             </div>
         </div>
 
