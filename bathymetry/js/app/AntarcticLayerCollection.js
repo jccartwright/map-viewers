@@ -28,10 +28,10 @@ define([
                         visible: true,
                         opacity: 1
                     }),
-                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/gebco08_hillshade/ImageServer", {
-                        id: "GEBCO 08",
-                        visible: false
-                    }),
+//                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/gebco08_hillshade/ImageServer", {
+//                        id: "GEBCO 08",
+//                        visible: false
+//                    }),
                     new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/ibcso_contours/MapServer", {
                         id: "Contours",
                         visible: false,
