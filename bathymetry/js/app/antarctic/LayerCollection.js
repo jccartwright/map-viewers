@@ -11,6 +11,7 @@ define([
 
         return declare([LayerCollection], {
             constructor: function() {
+                this.name = "app.antarctic.LayerCollection";
                 this.defineMapServices();
 
                 this.setLayerTimeouts();

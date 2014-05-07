@@ -4,6 +4,8 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
 
         return declare([LayerCollection], {
             constructor: function() {
+                this.name = "app/arctic/LayerCollection";
+
                 this.defineMapServices();
 
                 this.setLayerTimeouts();
