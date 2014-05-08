@@ -22,7 +22,7 @@ define(["dojo/_base/declare", "ngdc/BasemapToolbar"],
                 this._identifyTools = [
                     {label: 'Point (Single-Click)', id: 'point', iconClass: 'identifyByPointIcon'},
                     {label: 'Draw Rectangle', id: 'rect', iconClass: 'identifyByRectIcon'},
-                    {label: 'Draw Polygon', id: 'freehand-polygon', iconClass: 'identifyByPolygonIcon'},
+                    {label: 'Draw Freehand Polygon', id: 'freehand-polygon', iconClass: 'identifyByPolygonIcon'},
                     {label: 'Define Bounding Box', id: 'coords', iconClass: 'identifyByCoordsIcon'}
                 ];
 
