@@ -1,7 +1,7 @@
-define(["dojo/_base/declare", "ngdc/BasemapToolbar"],
-    function(declare, BasemapToolbar){
+define(["dojo/_base/declare", "ngdc/MapToolbar"],
+    function(declare, MapToolbar){
 
-        return declare([BasemapToolbar], {
+        return declare([MapToolbar], {
             constructor: function() {
                 //TODO redesign this data structure
                 this._basemaps = [
