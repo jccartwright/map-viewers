@@ -26,6 +26,11 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         id: "DEM Hillshades",
                         visible: false,
                         imageParameters: this.imageParameters.png32
+                    }),                    
+                    new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/ibcao_contours/MapServer", {
+                        id: "IBCAO Contours",
+                        visible: false,
+                        opacity: 0.5
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
                         id: "NOS Hydrographic Surveys",
@@ -41,16 +46,16 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         id: "Multibeam",
                         visible: true,
                         imageParameters: this.imageParameters.png32
-                    }),
-                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/reference/MapServer", {
-                        id: "Reference",
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
+                    }),                    
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/graticule/MapServer", {
                         id: "Graticule",
                         visible: true,
                         opacity: 0.7,
+                        imageParameters: this.imageParameters.png32
+                    }),
+                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/reference/MapServer", {
+                        id: "Reference",
+                        visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer", {

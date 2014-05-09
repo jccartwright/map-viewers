@@ -55,6 +55,11 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         id: "BAG Hillshades",
                         visible: false
                     }),
+                    new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_contours/MapServer", {
+                        id: "GEBCO_08 Contours",
+                        visible: false,
+                        opacity: 0.5
+                    }),
                     new esri.layers.ArcGISImageServiceLayer("http://egisws02.nos.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
                         id: "RNC",
                         visible: false,
@@ -122,6 +127,11 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         id: "DEM Extents",
                         visible: false,
                         opacity: 1,
+                        imageParameters: this.imageParameters.png32
+                    }),
+                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer", {
+                        id: "Poles Mask",
+                        visible: true,
                         imageParameters: this.imageParameters.png32
                     })
                 ];

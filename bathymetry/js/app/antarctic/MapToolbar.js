@@ -8,7 +8,8 @@ define(["dojo/_base/declare", "ngdc/MapToolbar"],
                 ];
 
                 this._overlays = [
-                    {services: ['Reference'], label: 'Boundaries/Labels'}, //Ocean Basemap/Reference is the default combo
+                    {services: ['Reference'], label: 'Boundaries/Labels'},
+                    {services: ['IBCSO Contours'], label: 'Bathymetry Contours (IBCSO/GEBCO_08)'},
                     {services: ['Graticule'], label: 'Graticule'}
                 ];
 

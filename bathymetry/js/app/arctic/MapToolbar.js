@@ -9,6 +9,7 @@ define(["dojo/_base/declare", "ngdc/MapToolbar"],
 
                 this._overlays = [
                     {services: ['Reference'], label: 'Boundaries/Labels'},
+                    {services: ['IBCAO Contours'], label: 'Bathymetry Contours (IBCAO/GEBCO_08)'},
                     {services: ['Graticule'], label: 'Graticule'}
                 ];
 
