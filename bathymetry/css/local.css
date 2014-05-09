@@ -36,12 +36,8 @@ html,body {
 }
 
 /* overwrite default map toolbar styles */
+
 .mapToolbar {
-    border: none;
-}
-
-
-.basemapToolbar {
     border: none;
     position: absolute;
     right: 20px;

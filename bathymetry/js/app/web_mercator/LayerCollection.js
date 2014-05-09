@@ -19,51 +19,32 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                 //TODO check to ensure unique id
                 this.mapServices = [
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer", {
-                        id: "NatGeo Overview",
-                        visible: false,
-                        opacity: 1
+                        id: "NatGeo",
+                        visible: false
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_hillshade/MapServer", {
-                        id: "GEBCO_08 (tiled)",
-                        visible: false,
-                        opacity: 1
-                    }),
-                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_hillshade/MapServer", {
-                        id: "GEBCO_08 (dynamic)",
-                        visible: false,
-                        opacity: 1,
-                        imageParameters: this.imageParameters.jpg
-                    }),
+                        id: "GEBCO_08",
+                        visible: false
+                    }),                    
                     new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer", {
-                        id: "ETOPO1 (tiled)",
-                        visible: false,
-                        opacity: 1
-                    }),
-                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer", {
-                        id: "ETOPO1 (dynamic)",
-                        visible: false,
-                        opacity: 1,
-                        imageParameters: this.imageParameters.jpg
+                        id: "ETOPO1",
+                        visible: false
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer", {
                         id: "Light Gray",
-                        visible: false,
-                        opacity: 1
+                        visible: false
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", {
                         id: "World Imagery",
-                        visible: false,
-                        opacity: 1
+                        visible: false
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer", {
                         id: "NatGeo Basemap",
-                        visible: false,
-                        opacity: 1
+                        visible: false
                     }),
-                    new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer", {
-                        id: "Ocean Basemap",
+                    new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer", {
+                        id: "Ocean Base",
                         visible: true,
-                        opacity: 1
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_hillshades_mosaic/MapServer", {
                         id: "DEM Hillshades",
@@ -121,13 +102,15 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer", {
                         id: "World Boundaries and Places",
-                        visible: false,
-                        opacity: 1
+                        visible: false
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer", {
                         id: "Light Gray Reference",
-                        visible: false,
-                        opacity: 1
+                        visible: false
+                    }),
+                    new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer", {
+                        id: "Ocean Reference",
+                        visible: true,
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer", {
                         id: "Graticule",
@@ -167,21 +150,7 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                          dynamicService: this.getLayerById("NOS Hydro (dynamic)"),
                          visible: true,
                          cutoffZoom: 5
-                     },
-                     {
-                         id: "GEBCO_08",
-                         tiledService: this.getLayerById("GEBCO_08 (tiled)"),
-                         dynamicService: this.getLayerById("GEBCO_08 (dynamic)"),
-                         visible: false,
-                         cutoffZoom: 5
-                     },
-                     {
-                         id: "ETOPO1",
-                         tiledService: this.getLayerById("ETOPO1 (tiled)"),
-                         dynamicService: this.getLayerById("ETOPO1 (dynamic)"),
-                         visible: false,
-                         cutoffZoom: 5
-                     }
+                     }                     
                 ];
             },
 

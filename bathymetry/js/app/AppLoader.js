@@ -1,50 +1,15 @@
 define([
-    "dojo/_base/declare",
-    "dijit/registry",
-    "dojo/dom",
-    "dojo/_base/config",
-    "dojo/io-query",
-    "dojo/_base/lang",
-    "dojo/topic",
-    "dojo/on",
-    "dojo/aspect",
-    "esri/config",
-    "esri/geometry/Extent",
-    "esri/SpatialReference",
-    "ngdc/Logger",
-    "ngdc/web_mercator/MapConfig",
-    "ngdc/arctic/MapConfig",
-    "ngdc/antarctic/MapConfig",
-    "ngdc/Banner",
-    "app/web_mercator/LayerCollection",
-    "app/arctic/LayerCollection",
-    "app/antarctic/LayerCollection",
-    "app/web_mercator/BasemapToolbar",
-    "app/arctic/BasemapToolbar",
-    "dojo/domReady!"],
+    "dojo/_base/declare", "dijit/registry", "dojo/dom", "dojo/_base/config", "dojo/io-query", "dojo/_base/lang",
+    "dojo/topic", "dojo/on", "dojo/aspect", "esri/config", "esri/geometry/Extent", "esri/SpatialReference",
+    "ngdc/Logger", "ngdc/web_mercator/MapConfig", "ngdc/arctic/MapConfig", "ngdc/antarctic/MapConfig",
+    "ngdc/Banner", "app/web_mercator/LayerCollection", "app/arctic/LayerCollection", "app/antarctic/LayerCollection",
+    "app/web_mercator/MapToolbar", "app/arctic/MapToolbar", "app/antarctic/MapToolbar", "dojo/domReady!"],
     function(
-        declare,
-        registry,
-        dom,
-        config,
-        ioQuery,
-        lang,
-        topic,
-        on,
-        aspect,
-        esriConfig,
-        Extent,
-        SpatialReference,
-        Logger,
-        MercatorMapConfig,
-        ArcticMapConfig,
-        AntarcticMapConfig,
-        Banner,
-        MercatorLayerCollection,
-        ArcticLayerCollection,
-        AntarcticLayerCollection,
-        BasemapToolbar,
-        ArcticBasemapToolbar
+        declare, registry, dom, config, ioQuery, lang,
+        topic, on, aspect, esriConfig, Extent, SpatialReference,
+        Logger, MercatorMapConfig, ArcticMapConfig, AntarcticMapConfig,
+        Banner, MercatorLayerCollection, ArcticLayerCollection, AntarcticLayerCollection,
+        MapToolbar, ArcticMapToolbar, AntarcticMapToolbar
         ){
         return declare(null, {
             constructor:function(args){
@@ -110,10 +75,8 @@ define([
                     sliderStyle: 'large'
                 }, new MercatorLayerCollection());
 
-                //var mapToolbar = new MapToolbar({map: mapConfig.map}, "mercatorMapToolbar");
-
-                var basemapToolbar = new BasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "mercatorBasemapToolbar");
-                basemapToolbar.startup();
+                var mapToolbar = new MapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "mercatorMapToolbar");
+                mapToolbar.startup();
 
                 //var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "mercatorCoordinatesToolbar");
 
@@ -121,52 +84,50 @@ define([
 
             setupArcticView: function() {
                 logger.debug('setting up Arctic view...');
-                /*
+                
                 var initialExtent = new Extent({
-                    xmin:-30000000,
-                    ymin:-30000000,
-                    xmax:30000000,
-                    ymax:30000000,
-                    spatialReference: new SpatialReference({wkid:3995})
-                });
-                */
+                    xmin: -4000000,
+                    ymin: -4000000,
+                    xmax: 4000000,
+                    ymax: 4000000,
+                    spatialReference: new SpatialReference({wkid: 3995})
+                });                
 
                 var mapConfig = new ArcticMapConfig("arctic", {
-                    //extent: initialExtent,
-                    //center:[0, 89],
-                    zoom: 2,
+                    extent: initialExtent,
+                    //zoom: 3,
                     logo: false,
                     showAttribution: false,
                     overview: false,
                     sliderStyle: 'large'
                 }, new ArcticLayerCollection());
 
-                var basemapToolbar = new ArcticBasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "arcticBasemapToolbar");
-                basemapToolbar.startup();
+                var mapToolbar = new ArcticMapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "arcticMapToolbar");
+                mapToolbar.startup();
             },
 
             setupAntarcticView: function() {
                 logger.debug('setting up Antarctic view...');
-                /*
+                
                 var initialExtent = new Extent({
-                    xmin:-30000000,
-                    ymin:-30000000,
-                    xmax:30000000,
-                    ymax:30000000,
-                    spatialReference: new SpatialReference({wkid:3031})
-                });
-                */
+                    xmin: -4000000,
+                    ymin: -4000000,
+                    xmax: 4000000,
+                    ymax: 4000000,
+                    spatialReference: new SpatialReference({wkid: 3031})
+                });                
 
                 var mapConfig = new AntarcticMapConfig("antarctic", {
-                    zoom: 3,
+                    extent: initialExtent,
+                    //zoom: 3,
                     logo: false,
                     showAttribution: false,
                     overview: false,
                     sliderStyle: 'large'
                 }, new AntarcticLayerCollection());
 
-                //var basemapToolbar = new AntarcticBasemapToolbar({layerCollection: mapConfig.mapLayerCollection}, "antarcticBasemapToolbar");
-                //basemapToolbar.startup();
+                var mapToolbar = new AntarcticMapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "antarcticMapToolbar");
+                mapToolbar.startup();
             }
         })
     }
