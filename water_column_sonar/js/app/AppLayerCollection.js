@@ -18,7 +18,7 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
 
                 this.mapServices = [
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer", {
-                        id: "NatGeo Overview",
+                        id: "NatGeo",
                         visible: false
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_hillshade/MapServer", {
@@ -44,7 +44,8 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer", {
                         id: "Ocean Base",
                         visible: true,
-                    }),                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer", {
+                    }),
+                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer", {
                         id: "Water Column Sonar",
                         visible: true,
                         imageParameters: this.imageParameters.png32

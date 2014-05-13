@@ -1,9 +1,9 @@
-define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", "ngdc/Banner", "ngdc/MapToolbar", "app/BasemapToolbar",
+define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", "ngdc/Banner", "app/MapToolbar",
         "ngdc/CoordinatesToolbar", "app/Identify", "app/AppIdentifyPane",
         "app/SearchDialog", "ngdc/BoundingBoxDialog",
         "dojo/_base/lang", "dojo/dom", "dojo/_base/fx", "dijit/registry",        
         "dojo/topic", "dojo/on", "dojo/string"],
-    function(declare, lang, MapConfig, Banner, MapToolbar, BasemapToolbar,
+    function(declare, lang, MapConfig, Banner, MapToolbar,
         CoordinatesToolbar, Identify, AppIdentifyPane,
         SearchDialog, BoundingBoxDialog,
         lang, dom, baseFx, registry,
@@ -35,8 +35,8 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig", 
                 this.wcdMapService = this.mapLayerCollection.getLayerById('Water Column Sonar');
 
 
-                this.basemapToolbar = new BasemapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, "basemapToolbar");
-                this.basemapToolbar.startup();
+                this.mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, "mapToolbar");
+                this.mapToolbar.startup();
 
                 this.coordinatesToolbar = new CoordinatesToolbar({map: this.map}, "coordinatesToolbar");
 

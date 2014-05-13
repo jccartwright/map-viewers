@@ -4,26 +4,31 @@
     <title>Water Column Sonar Viewer | ngdc.noaa.gov</title>
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/tundra/tundra.css" />
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
-    <link rel="stylesheet" href="js/ngdc/css/BasemapToolbar.css">
+    
+    <!--
     <link rel="stylesheet" href="js/ngdc/css/MapToolbar.css">
     <link rel="stylesheet" href="js/ngdc/identify/IdentifyPane.css">
     <link rel="stylesheet" href="js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="js/ngdc/css/Banner.css">    
+    <link rel="stylesheet" href="js/ngdc/css/CoordinatesToolbar.css">
+    -->
+
+    <link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css">
+    <link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css">
+    <link rel="stylesheet" href="../../dijits/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="../../dijits/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="../../dijits/js/ngdc/css/CoordinatesToolbar.css">
+
+    <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
+    <link rel="stylesheet" href="css/local.css">
+    
     <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/FloatingPane.css"/>
     <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/ResizeHandle.css"/>
     <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/form/resources/CheckedMultiSelect.css"/>
-    
-    <link rel="stylesheet" href="css/local.css">
+      
     <style>
 
-
         #mapToolbar {
-            position: absolute;
-            left: 80px;
-            top: 20px;
-            z-index: 100;
-        }
-
-        #basemapToolbar {
             position: absolute;
             right: 20px;
             top: 20px;
@@ -37,10 +42,7 @@
             z-index: 100;
         }
     </style>
-    <link rel="stylesheet" href="js/ngdc/css/Banner.css">
-    <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
-    <link rel="stylesheet" href="js/ngdc/css/MapToolbar.css">
-    <link rel="stylesheet" href="js/ngdc/css/CoordinatesToolbar.css">
+    
 
     <script>
         var dojoConfig = {
@@ -52,7 +54,8 @@
             packages: [
             {
                 name: "ngdc",
-                location: location.pathname.replace(/\/[^/]*$/, '') + '/js/ngdc'
+                //location: location.pathname.replace(/\/[^/]*$/, '') + '/js/ngdc'
+                location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'                
             },
             {
                 name: "app",
@@ -165,8 +168,7 @@
 
     <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
         <div id="mapDiv" data-dojo-type="dijit/layout/ContentPane" class="mercatorMap">
-            <!--<div id="mapToolbar"></div>-->
-            <div id="basemapToolbar"></div>
+            <div id="mapToolbar"></div>
             <div id="coordinatesToolbar"></div>
         </div>
     </div> <!-- end centerPane -->

@@ -5,28 +5,28 @@
     <title>Bathymetry Data Viewer | ngdc.noaa.gov</title>
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/tundra/tundra.css" />
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/css/BasemapToolbar.css">
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/FloatingPane.css"/>
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/ResizeHandle.css"/>
+
+    <!--
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/css/MapToolbar.css">
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/identify/IdentifyPane.css">
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/themes/tundra/BoundingBoxDialog.css">
-    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/FloatingPane.css"/>
-    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/ResizeHandle.css"/>
-    <link rel="stylesheet" href="css/local.css">
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/css/Banner.css">
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/css/MapToolbar.css">
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/css/CoordinatesToolbar.css">
+    -->
 
+    <link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css">
+    <link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css">
+    <link rel="stylesheet" href="../../dijits/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="../../dijits/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="../../dijits/js/ngdc/css/CoordinatesToolbar.css">
+  
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
+    <link rel="stylesheet" href="css/local.css">
 
     <style>
         #mapToolbar {
-            position: absolute;
-            left: 80px;
-            top: 20px;
-            z-index: 100;
-        }
-
-        #basemapToolbar {
             position: absolute;
             right: 20px;
             top: 20px;
@@ -51,7 +51,8 @@
             packages: [
             {
                 name: "ngdc",
-                location: 'http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc'
+                //location: 'http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc'
+                location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'   
             },
             {
                 name: "app",
@@ -95,15 +96,15 @@
 
         <div id="mapContainer" data-dojo-type="dijit/layout/TabContainer" data-dojo-props="tabPosition: 'right'">
             <div id="mercator" data-dojo-type="dijit/layout/ContentPane" title="Mercator" class="map" data-dojo-props="iconClass:'mercatorTabIcon', showTitle: false, tooltip: 'Mercator'">
-                <div id="mercatorBasemapToolbar"></div>
+                <div id="mercatorMapToolbar"></div>
                 <div id="mercatorCoordinatesToolbar"></div>
             </div>
             <div id="arctic" data-dojo-type="dijit/layout/ContentPane" title="Arctic" class="map" data-dojo-props="iconClass:'arcticTabIcon', showTitle: false, tooltip: 'Arctic'">
-                <div id="arcticBasemapToolbar"></div>
+                <div id="arcticMapToolbar"></div>
                 <div id="arcticCoordinatesToolbar"></div>
             </div>
             <div id="antarctic" data-dojo-type="dijit/layout/ContentPane" title="Antarctic" class="map" data-dojo-props="iconClass:'antarcticTabIcon', showTitle: false, tooltip: 'Antarctic'">
-                <div id="antarcticBasemapToolbar"></div>
+                <div id="antarcticMapToolbar"></div>
                 <div id="antarcticCoordinatesToolbar"></div>
             </div>
         </div>
@@ -116,17 +117,9 @@
 <script>
     //unless the Dijit is listed in the require list, it cannot be addressed via the registry
     require([
-        "ngdc/LoadingOverlay",
-        "dijit/registry",
-        "dojo/parser",
-        "app/AppLoader",
-        "dijit/layout/BorderContainer",
-        "dijit/layout/ContentPane",
-        "dijit/layout/AccordionContainer",
-        "dijit/layout/TabContainer",
-        "app/HelpPanel",
-        "app/CreditsPanel",
-        "dojo/domReady!" ],
+        "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "app/AppLoader",
+        "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer", "dijit/layout/TabContainer",
+        "app/HelpPanel", "app/CreditsPanel", "dojo/domReady!" ],
             function(LoadingOverlay, registry, parser, AppLoader) {
                 var loadingOverlay = new LoadingOverlay();
                 var appLoader = new AppLoader();

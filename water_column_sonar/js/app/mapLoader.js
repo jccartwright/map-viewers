@@ -4,20 +4,20 @@ require(
         "app/CreditsPanel", "app/AppLayerCollection",
         "dojo/_base/config", "dojo/io-query", "dojo/_base/lang", "dojo/dom", "dojo/_base/fx",
         "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer", "dijit/form/CheckBox", "dijit/registry",
-        "dijit/form/Button", "dijit/form/RadioButton",
-        "ngdc/MapToolbar", "ngdc/BasemapToolbar",
+        "dijit/form/Button", "dijit/form/RadioButton", "esri/tasks/GeometryService", "app/MapToolbar",
         "dojo/topic", "dojo/on", "dojo/aspect", "dojo/parser", "dojo/domReady!"
     ],
     function(esriConfig, Logger, AppMapConfig,
              CreditsPanel, AppLayerCollection,
              config, ioQuery, lang, dom, baseFx,
              BorderContainer, ContentPane, AccordionContainer, CheckBox, registry,
-             Button, RadioButton,
-             MapToolbar, BasemapToolbar,
+             Button, RadioButton, GeometryService, MapToolbar,
              topic, on, aspect, parser) {
         parser.parse();
 
-        esriConfig.defaults.io.corsEnabledServers = ["http://maps.ngdc.noaa.gov/arcgis/rest/services", "http://agsdevel.ngdc.noaa.gov/arcgis/rest/services"];
+        esriConfig.defaults.io.corsEnabledServers = ["http://maps.ngdc.noaa.gov/arcgis/rest/services", "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services"];
+
+        esriConfig.defaults.geometryService = new GeometryService("http://maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer");
 
         //add queryParams into config object, values in queryParams take precedence
         var queryParams = ioQuery.queryToObject(location.search.substring(1));
