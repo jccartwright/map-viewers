@@ -22,6 +22,8 @@ define([
     "app/web_mercator/MapToolbar",
     "app/arctic/MapToolbar",
     "app/antarctic/MapToolbar",
+    "app/web_mercator/Identify",
+    "app/AppIdentifyPane",
     "dojo/domReady!"],
     function(
         declare,
@@ -46,7 +48,9 @@ define([
         AntarcticLayerCollection,
         MapToolbar,
         ArcticMapToolbar,
-        AntarcticMapToolbar) {
+        AntarcticMapToolbar,
+        WebMercatorIdentify,
+        IdentifyPane) {
 
         return declare(null, {
             constructor:function(args){
@@ -115,7 +119,15 @@ define([
                 var mapToolbar = new MapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "mercatorMapToolbar");
                 mapToolbar.startup();
 
-                var identify = new Identify({mapConfig: mapConfig});
+                console.log('mapConfig:',mapConfig);
+                var identify = new WebMercatorIdentify({mapConfig: mapConfig});
+
+                var identifyPane = new IdentifyPane({
+                    map: mapConfig.map,
+                    class: "identifyPane",
+                    autoExpandTree: false
+                }, dom.byId("identifyPaneDiv"));
+                identifyPane.startup();
 
                 //var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "mercatorCoordinatesToolbar");
 

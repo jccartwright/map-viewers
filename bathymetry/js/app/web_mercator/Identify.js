@@ -54,10 +54,11 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
             //called after parent class constructor
             constructor: function() {
-                logger.debug('inside constructor for app/Identify');
+                logger.debug('inside constructor for app/web_mercator/Identify');
 
-                //configure for specific viewer
-                arguments[0].layerIds = ['Water Column Sonar'];
+                //augment arguments object with list of layers to identify.
+                // Don't use pairedMapserviceLayers as they're not yet available
+                arguments[0].layerIds = ['Multibeam (dynamic)'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
