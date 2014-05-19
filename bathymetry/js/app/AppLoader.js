@@ -1,16 +1,57 @@
 define([
-    "dojo/_base/declare", "dijit/registry", "dojo/dom", "dojo/_base/config", "dojo/io-query", "dojo/_base/lang",
-    "dojo/topic", "dojo/on", "dojo/aspect", "esri/config", "esri/geometry/Extent", "esri/SpatialReference",
-    "ngdc/Logger", "ngdc/web_mercator/MapConfig", "ngdc/arctic/MapConfig", "ngdc/antarctic/MapConfig",
-    "ngdc/Banner", "app/web_mercator/LayerCollection", "app/arctic/LayerCollection", "app/antarctic/LayerCollection",
-    "app/web_mercator/MapToolbar", "app/arctic/MapToolbar", "app/antarctic/MapToolbar", "dojo/domReady!"],
+    "dojo/_base/declare",
+    "dijit/registry",
+    "dojo/dom",
+    "dojo/_base/config",
+    "dojo/io-query",
+    "dojo/_base/lang",
+    "dojo/topic",
+    "dojo/on",
+    "dojo/aspect",
+    "esri/config",
+    "esri/geometry/Extent",
+    "esri/SpatialReference",
+    "ngdc/Logger",
+    "ngdc/web_mercator/MapConfig",
+    "ngdc/arctic/MapConfig",
+    "ngdc/antarctic/MapConfig",
+    "ngdc/Banner",
+    "app/web_mercator/LayerCollection",
+    "app/arctic/LayerCollection",
+    "app/antarctic/LayerCollection",
+    "app/web_mercator/MapToolbar",
+    "app/arctic/MapToolbar",
+    "app/antarctic/MapToolbar",
+    "app/web_mercator/Identify",
+    "app/AppIdentifyPane",
+    "dojo/domReady!"],
     function(
-        declare, registry, dom, config, ioQuery, lang,
-        topic, on, aspect, esriConfig, Extent, SpatialReference,
-        Logger, MercatorMapConfig, ArcticMapConfig, AntarcticMapConfig,
-        Banner, MercatorLayerCollection, ArcticLayerCollection, AntarcticLayerCollection,
-        MapToolbar, ArcticMapToolbar, AntarcticMapToolbar
-        ){
+        declare,
+        registry,
+        dom,
+        config,
+        ioQuery,
+        lang,
+        topic,
+        on,
+        aspect,
+        esriConfig,
+        Extent,
+        SpatialReference,
+        Logger,
+        MercatorMapConfig,
+        ArcticMapConfig,
+        AntarcticMapConfig,
+        Banner,
+        MercatorLayerCollection,
+        ArcticLayerCollection,
+        AntarcticLayerCollection,
+        MapToolbar,
+        ArcticMapToolbar,
+        AntarcticMapToolbar,
+        WebMercatorIdentify,
+        IdentifyPane) {
+
         return declare(null, {
             constructor:function(args){
                 declare.safeMixin(this,args);
@@ -77,6 +118,16 @@ define([
 
                 var mapToolbar = new MapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "mercatorMapToolbar");
                 mapToolbar.startup();
+
+                console.log('mapConfig:',mapConfig);
+                var identify = new WebMercatorIdentify({mapConfig: mapConfig});
+
+                var identifyPane = new IdentifyPane({
+                    map: mapConfig.map,
+                    class: "identifyPane",
+                    autoExpandTree: false
+                }, dom.byId("identifyPaneDiv"));
+                identifyPane.startup();
 
                 //var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "mercatorCoordinatesToolbar");
 
