@@ -120,14 +120,17 @@ define([
                 mapToolbar.startup();
 
                 console.log('mapConfig:',mapConfig);
-                var identify = new WebMercatorIdentify({mapConfig: mapConfig});
-
+                
                 var identifyPane = new IdentifyPane({
                     map: mapConfig.map,
                     class: "identifyPane",
                     autoExpandTree: false
                 }, dom.byId("identifyPaneDiv"));
                 identifyPane.startup();
+
+                var identify = new WebMercatorIdentify({mapConfig: mapConfig, identifyPane: identifyPane});
+
+                
 
                 //var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "mercatorCoordinatesToolbar");
 
