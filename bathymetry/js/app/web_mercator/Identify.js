@@ -72,7 +72,10 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
             },
 
             multibeamSort: function(a, b) {
-                //Sort on survey year (descending)
+                //Sort by year descending, then alphabetical by survey ID
+                if (a.feature.attributes['Survey Year'] == b.feature.attributes['Survey Year']) {
+                    return a.feature.attributes['Survey Name'] <= b.feature.attributes['Survey Name'] ? -1 : 1;
+                }
                 return a.feature.attributes['Survey Year'] < b.feature.attributes['Survey Year'] ? 1 : -1;
             },
 
