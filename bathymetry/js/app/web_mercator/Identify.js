@@ -3,55 +3,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
         return declare([AbstractIdentify], {
 
-            wcdFormatter: function(feature) {
-                var a = this.replaceNullAttributes(feature.attributes);
-
-                var template = '\
-                    <div class="fileName">Attributes for ${fileName}</div>\
-                    <div class="fileHeader">Survey Details:</div>\
-                    <div class="valueName">Survey ID: <span class="parameterValue">${surveyID}</span></div>\
-                    <div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>\
-                    <div class="valueName"> Project(s): <span class="parameterValue">${projectName}</span></div>\
-                    <div class="valueName">Source Group: <span class="parameterValue">${sourceGroup}</span></div>\
-                    <div class="valueName">Source Name(s): <span class="parameterValue">${sourceName}</span></div>\
-                    <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
-                    <div class="fileHeader">Instrument Details:</div>\
-                    <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>\
-                    <div class="valueName">Recording Range (m): <span class="parameterValue">${recordingRange}</span></div>';
-                if (a['Instrument Name'] == 'EK60') {
-                    template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
-                }
-                else {
-                    template += '\
-                        <div class="valueName">Swath Width (degrees): <span class="parameterValue">${swathWidth}</span></div>\
-                        <div class="valueName">Number of Beams: <span class="parameterValue">${numBeams}</span></div>\
-                        <div class="valueName">Beam Type: <span class="parameterValue">${beamType}</span></div>';
-                }
-                template += '\
-                    <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>\
-                    <div class="fileHeader">Products</div>';
-
-                var html = string.substitute(template, {
-                        fileName: a['File Name'],
-                        surveyID: a['Survey ID'],
-                        shipName: a['Ship Name'],
-                        instrumentName: a['Instrument Name'],
-                        scientistName: a['Scientist Name'],
-                        sourceName: a['Source Name'],
-                        sourceGroup: a['Source Group'],
-                        projectName: a['Project Name'],
-                        minDepth: a['Minimum Depth'],
-                        collectionDate: a['Collection Date'],
-                        publishDate: a['Publish Date'],
-                        beamType: a['Beam Type'],
-                        numBeams: a['Number of Beams'],
-                        swathWidth: a['Swath Width (degrees)'],
-                        recordingRange: a['Recording Range (m)'],
-                        frequency: a['Frequency']
-                    });                
-                return html;
-            },
-
             //called after parent class constructor
             constructor: function() {
                 logger.debug('inside constructor for app/web_mercator/Identify');
@@ -63,50 +14,74 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
 
+                this.identifyPane = arguments[0].identifyPane;
+
                 topic.subscribe("identifyPane/showInfo", lang.hitch(this, function(item) {
                     console.log('identifyPane/showInfo received ' + item);
 
-                    var identifyPane = this._map.identifyPane;
-                    if (identifyPane) {
+                    //var identifyPane = this._map.identifyPane;
+                    if (this.identifyPane) {
                         var layerKey = item.layerKey;
-                        identifyPane.setInfoPaneContent(this.formatters[layerKey](item));
+                        this.identifyPane.setInfoPaneContent(this.formatters[layerKey](item));
                     }
                 }));
 
                 //formatter specific to each sublayer, keyed by Layer/sublayer name.
                 this.formatters = {
-                    'Water Column Sonar/Source Group: NMFS': lang.hitch(this, this.wcdFormatter),
-                    'Water Column Sonar/Source Group: OER': lang.hitch(this, this.wcdFormatter), 
-                    'Water Column Sonar/Source Group: UNOLS': lang.hitch(this, this.wcdFormatter), 
-                    'Water Column Sonar/Source Group: Other': lang.hitch(this, this.wcdFormatter)
+                    'Multibeam (dynamic)/Multibeam Bathymetric Surveys': lang.hitch(this, this.multibeamFormatter)                    
                 };
 
                 this.sortFunctions = {
-                    'Water Column Sonar/Source Group: OER': this.wcdSort
+                    'Multibeam (dynamic)/Multibeam Bathymetric Surveys': this.multibeamSort
                 }
 
             }, //end constructor
 
-            wcdSort: function(a, b) {
-                //Sort alphabetically on File Name
-                return a.feature.attributes['File Name'] > b.feature.attributes['File Name'] ? 1 : -1;
+            multibeamFormatter: function(feature) {
+                var a = this.replaceNullAttributes(feature.attributes);
+
+                var template = '\
+                    <div class="valueName"><span class="parameterValue"><a href="${urlPrefix}${ngdcId}" target="_blank">Link to Data</a></span></div>\
+                    <div class="valueName">Survey Name: <span class="parameterValue">${surveyName}</span></div>\
+                    <div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>\
+                    <div class="valueName">Chief Scientist: <span class="parameterValue">${chiefScientist}</span></div>\
+                    <div class="valueName">Instrument: <span class="parameterValue">${instrument}</span></div>\
+                    <div class="valueName">File Count: <span class="parameterValue">${fileCount}</span></div>\
+                    <div class="valueName">Track Length: <span class="parameterValue">${trackLength} km</span></div>\
+                    <div class="valueName">Total Time: <span class="parameterValue">${totalTime} hours</span></div>\
+                    <div class="valueName">Bathymetry Beams: <span class="parameterValue">${bathymetryBeams} million</span></div>\
+                    <div class="valueName">Amplitude Beams: <span class="parameterValue">${amplitudeBeams} million</span></div>\
+                    <div class="valueName">Sidescan: <span class="parameterValue">${sidescan} million pixels</span></div>';
+
+                var html = string.substitute(template, {
+                        urlPrefix: 'http://www.ngdc.noaa.gov/nndc/struts/results?op_0=eq&t=101378&s=8&d=70&d=75&d=76&d=91&d=74&d=73&d=72&d=81&d=82&d=85&d=86&d=79&no_data=suppress&v_0=',
+                        ngdcId: a['NGDC ID'],
+                        surveyName: a['Survey Name'],
+                        surveyYear: a['Survey Year'],
+                        shipName: a['Ship Name'],
+                        chiefScientist: a['Chief Scientist'],
+                        instrument: a['Instrument'],
+                        fileCount: a['File Count'],
+                        trackLength: a['Track Length (km)'],
+                        totalTime: a['Total Time (hrs)'],
+                        bathymetryBeams: a['Bathymetry Beams'] / 1000000.0,
+                        amplitudeBeams: a['Amplitude Beams'] / 1000000.0,
+                        sidescan: a['Sidescan'] / 1000000.0
+                    });                
+                return html;
+            },
+
+            multibeamSort: function(a, b) {
+                //Sort on survey year (descending)
+                return a.feature.attributes['Survey Year'] < b.feature.attributes['Survey Year'] ? 1 : -1;
             },
 
             sortResults: function(results) {
                 var features;
-                if (results['Water Column Sonar']) {    
-                    if (features = results['Water Column Sonar']['Source Group: NMFS']) {
-                        features.sort(this.wcdSort);
-                    }
-                    if (features = results['Water Column Sonar']['Source Group: OER']) {
-                        features.sort(this.wcdSort);
-                    }
-                    if (features = results['Water Column Sonar']['Source Group: UNOLS']) {
-                        features.sort(this.wcdSort);
-                    }
-                    if (features = results['Water Column Sonar']['Source Group: Other']) {
-                        features.sort(this.wcdSort);
-                    }
+                if (results['Multibeam (dynamic)']) {    
+                    if (features = results['Multibeam (dynamic)']['Multibeam Bathymetric Surveys']) {
+                        features.sort(this.multibeamSort);
+                    }                    
                 }
             }
 
