@@ -39,13 +39,46 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
             },
 
             getLayerDisplayLabel: function(item) {
-                return '<i><b>' + item.layerName + '</b></i>';
+
+                if (item.layerName == 'Multibeam Bathymetric Surveys') {
+                    return '<i><b>' + item.layerName + '</b></i>';
+                } 
+                else if (item.layerName == 'Marine Trackline Surveys: Bathymetry') {
+                    return '<i><b>Trackline Bathymetry Surveys (single-beam)</b></i>';
+                } 
+                else if (item.layerName == 'Surveys with BAGs') {
+                    return '<i><b>NOS Hydrographic Surveys wth BAGs</b></i>';
+                } 
+                else if (item.layerName == 'Digital Data') {
+                    return '<i><b>NOS Hydrographic Surveys with Digital Sounding Data</b></i>';
+                } 
+                else if (item.layerName == 'Non-Digital') {
+                    return '<i><b>NOS Hydrographic Surveys without Digital Sounding Data</b></i>';
+                } 
+                else if (item.layerName == 'All NGDC Bathymetry DEMs') {
+                    return '<i><b>Bathymetry DEMs</b></i>';
+                }
             },
 
             getItemDisplayLabel: function(item) {
                 //return item.value;
                 if (item.layerName == 'Multibeam Bathymetric Surveys') {
                     return item.feature.attributes['Survey Name'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>';
+                } 
+                else if (item.layerName == 'Marine Trackline Surveys: Bathymetry') {
+                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Start Year'] + ')</i>';
+                } 
+                else if (item.layerName == 'Surveys with BAGs') {
+                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Year'] + ')</i>';
+                } 
+                else if (item.layerName == 'Digital Data') {
+                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Year'] + ')</i>';
+                } 
+                else if (item.layerName == 'Non-Digital') {
+                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Year'] + ')</i>';
+                } 
+                else if (item.layerName == 'All NGDC Bathymetry DEMs') {
+                    return item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>';
                 }
             },
 
@@ -75,9 +108,9 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                             //Add the current item to the store, with the layerName as parent
                             this.featureStore.put({
                                 uid: ++this.uid,
-                                id: this.uid,
-                                //TODO: point to the magnifying glass image using a module path
+                                id: this.uid,                                
                                 displayLabel: this.getItemDisplayLabel(item),
+                                //TODO: point to the magnifying glass image using a module path?
                                 label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='../../dijits/js/ngdc/identify/images/magnifier.png'></a>",
                                 layerUrl: layerUrl,
                                 layerKey: layerKey,
