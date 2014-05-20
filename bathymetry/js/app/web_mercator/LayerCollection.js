@@ -118,7 +118,7 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer", {
                         id: "DEM Extents",
-                        visible: false,
+                        visible: true,
                         imageParameters: this.imageParameters.png32
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer", {
