@@ -113,7 +113,8 @@ define([
                     logo: false,
                     showAttribution: false,
                     overview: true,
-                    sliderStyle: 'large'
+                    sliderStyle: 'large',
+                    navigationMode: 'classic'
                 }, new MercatorLayerCollection());
 
                 var mapToolbar = new MapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "mercatorMapToolbar");
