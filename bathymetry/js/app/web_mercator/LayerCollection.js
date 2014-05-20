@@ -49,7 +49,6 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                     new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_hillshades_mosaic/MapServer", {
                         id: "DEM Hillshades",
                         visible: false,
-                        opacity: 1
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/bag_hillshades/MapServer", {
                         id: "BAG Hillshades",
@@ -69,12 +68,10 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                     new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer", {
                         id: "Trackline Bathymetry (tiled)",
                         visible: false,
-                        opacity: 1
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer", {
-                        id: "Trackline Bathymetry (dynamic)",
+                        id: "Trackline Combined (dynamic)",
                         visible: false,
-                        opacity: 1,
                         imageParameters: this.imageParameters.png32
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
@@ -85,24 +82,20 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro/MapServer", {
                         id: "NOS Hydro (tiled)",
-                        visible: false,
-                        opacity: 1
+                        visible: false
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
                         id: "NOS Hydro (dynamic)",
                         visible: false,
-                        opacity: 1,
                         imageParameters: this.imageParameters.png32
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer", {
                         id: "Multibeam (tiled)",
-                        visible: false,
-                        opacity: 1
+                        visible: false
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer", {
                         id: "Multibeam (dynamic)",
                         visible: false,
-                        opacity: 1,
                         imageParameters: this.imageParameters.png32
                     }),
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer", {
@@ -126,7 +119,6 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer", {
                         id: "DEM Extents",
                         visible: false,
-                        opacity: 1,
                         imageParameters: this.imageParameters.png32
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer", {
@@ -144,14 +136,14 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         tiledService: this.getLayerById("Multibeam (tiled)"),
                         dynamicService: this.getLayerById("Multibeam (dynamic)"),
                         visible: true,
-                        cutoffZoom: 5
+                        cutoffZoom: 9
                     },
                     {
                         id: "Trackline Bathymetry",
                         tiledService: this.getLayerById("Trackline Bathymetry (tiled)"),
-                        dynamicService: this.getLayerById("Trackline Bathymetry (dynamic)"),
-                        visible: false,
-                        cutoffZoom: 5,
+                        dynamicService: this.getLayerById("Trackline Combined (dynamic)"),
+                        visible: true,
+                        cutoffZoom: 9,
                         defaultVisibleLayers: [1]
                      },
                      {
@@ -159,7 +151,7 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                          tiledService: this.getLayerById("NOS Hydro (tiled)"),
                          dynamicService: this.getLayerById("NOS Hydro (dynamic)"),
                          visible: true,
-                         cutoffZoom: 5
+                         cutoffZoom: 9
                      }                     
                 ];
             },
@@ -167,11 +159,12 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
             setSubLayerVisibility: function() {
                 //logger.debug('setting subLayer visibility...');
                 //this.getLayerById('Water Column Sonar').setVisibleLayers([0,1,2,3]);
-                this.getLayerById('DEM Extents').setVisibleLayers([9999]); //Manually set all the sublayers to invisible for "DEM Extents"
+                //this.getLayerById('DEM Extents').setVisibleLayers([9999]); //Manually set all the sublayers to invisible for "DEM Extents"
                 //set on PairedService or dynamic service?
-                this.getLayerById('NOS Hydro (dynamic)').setVisibleLayers([9999]);
+                //this.getLayerById('NOS Hydro (dynamic)').setVisibleLayers([9999]);
                 //this.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([9999]); //Manually set all the sublayers to invisible for "NOS Hydro"
-                this.getLayerById('NOS Hydro Non-Digital').setVisibleLayers([9999]);
+                //this.getLayerById('NOS Hydro Non-Digital').setVisibleLayers([9999]);
+
             }
         });
     }
