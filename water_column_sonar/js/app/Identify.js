@@ -4,7 +4,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
         return declare([AbstractIdentify], {
 
             wcdFormatter: function(feature) {
-                var a = this.replaceNullAttributes(feature.attributes);
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template = '\
                     <div class="fileName">Attributes for ${fileName}</div>\
