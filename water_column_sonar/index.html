@@ -5,19 +5,11 @@
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/tundra/tundra.css" />
     <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
     
-    <!--
-    <link rel="stylesheet" href="js/ngdc/css/MapToolbar.css">
-    <link rel="stylesheet" href="js/ngdc/identify/IdentifyPane.css">
-    <link rel="stylesheet" href="js/ngdc/themes/tundra/BoundingBoxDialog.css">
-    <link rel="stylesheet" href="js/ngdc/css/Banner.css">    
-    <link rel="stylesheet" href="js/ngdc/css/CoordinatesToolbar.css">
-    -->
-
-    <link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css">
-    <link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css">
-    <link rel="stylesheet" href="../../dijits/js/ngdc/themes/tundra/BoundingBoxDialog.css">
-    <link rel="stylesheet" href="../../dijits/js/ngdc/css/Banner.css">
-    <link rel="stylesheet" href="../../dijits/js/ngdc/css/CoordinatesToolbar.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/css/MapToolbar.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/identify/IdentifyPane.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc/css/CoordinatesToolbar.css">
 
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
     <link rel="stylesheet" href="css/local.css">
@@ -50,12 +42,11 @@
             async: true,
             parseOnLoad: false,
 
-            //list local packages
             packages: [
             {
                 name: "ngdc",
-                //location: location.pathname.replace(/\/[^/]*$/, '') + '/js/ngdc'
-                location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'                
+                location: 'http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc'
+                //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
             },
             {
                 name: "app",
@@ -65,7 +56,8 @@
 
             //app-specific config values
             app: {
-                loglevel: 4  //DEBUG
+                loglevel: 4,  //DEBUG
+                ngdcDijitsUrl: 'http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc'
             }
         };
     </script>
