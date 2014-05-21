@@ -113,21 +113,25 @@ define([
                     logo: false,
                     showAttribution: false,
                     overview: true,
-                    sliderStyle: 'large'
+                    sliderStyle: 'large',
+                    navigationMode: 'classic'
                 }, new MercatorLayerCollection());
 
                 var mapToolbar = new MapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "mercatorMapToolbar");
                 mapToolbar.startup();
 
                 console.log('mapConfig:',mapConfig);
-                var identify = new WebMercatorIdentify({mapConfig: mapConfig});
-
+                
                 var identifyPane = new IdentifyPane({
                     map: mapConfig.map,
                     class: "identifyPane",
                     autoExpandTree: false
                 }, dom.byId("identifyPaneDiv"));
                 identifyPane.startup();
+
+                var identify = new WebMercatorIdentify({mapConfig: mapConfig, identifyPane: identifyPane});
+
+                
 
                 //var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "mercatorCoordinatesToolbar");
 
@@ -142,7 +146,20 @@ define([
                     xmax: 4000000,
                     ymax: 4000000,
                     spatialReference: new SpatialReference({wkid: 3995})
-                });                
+                });   
+
+                //Arctic/Antarctic enabled zoom levels. Level 0 and 1 are disabled.
+                var lods = [ 
+                //{"level": 0, "resolution": 67733.46880027094, "scale": 256000000}, 
+                //{"level": 1, "resolution": 33866.73440013547, "scale": 128000000}, 
+                {"level": 2, "resolution": 16933.367200067736, "scale": 64000000}, 
+                {"level": 3, "resolution": 8466.683600033868, "scale": 32000000}, 
+                {"level": 4,"resolution": 4233.341800016934,"scale": 16000000}, 
+                {"level": 5,"resolution": 2116.670900008467,"scale": 8000000}, 
+                {"level": 6,"resolution": 1058.3354500042335,"scale": 4000000}, 
+                {"level": 7,"resolution": 529.1677250021168,"scale": 2000000}, 
+                {"level": 8,"resolution": 264.5838625010584,"scale": 1000000} 
+                ];             
 
                 var mapConfig = new ArcticMapConfig("arctic", {
                     extent: initialExtent,
@@ -150,7 +167,8 @@ define([
                     logo: false,
                     showAttribution: false,
                     overview: false,
-                    sliderStyle: 'large'
+                    sliderStyle: 'large',
+                    lods: lods
                 }, new ArcticLayerCollection());
 
                 var mapToolbar = new ArcticMapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "arcticMapToolbar");
@@ -166,7 +184,20 @@ define([
                     xmax: 4000000,
                     ymax: 4000000,
                     spatialReference: new SpatialReference({wkid: 3031})
-                });                
+                });  
+
+                //Arctic/Antarctic enabled zoom levels. Level 0 and 1 are disabled.
+                var lods = [ 
+                //{"level": 0, "resolution": 67733.46880027094, "scale": 256000000}, 
+                //{"level": 1, "resolution": 33866.73440013547, "scale": 128000000}, 
+                {"level": 2, "resolution": 16933.367200067736, "scale": 64000000}, 
+                {"level": 3, "resolution": 8466.683600033868, "scale": 32000000}, 
+                {"level": 4,"resolution": 4233.341800016934,"scale": 16000000}, 
+                {"level": 5,"resolution": 2116.670900008467,"scale": 8000000}, 
+                {"level": 6,"resolution": 1058.3354500042335,"scale": 4000000}, 
+                {"level": 7,"resolution": 529.1677250021168,"scale": 2000000}, 
+                {"level": 8,"resolution": 264.5838625010584,"scale": 1000000} 
+                ];               
 
                 var mapConfig = new AntarcticMapConfig("antarctic", {
                     extent: initialExtent,
@@ -174,7 +205,8 @@ define([
                     logo: false,
                     showAttribution: false,
                     overview: false,
-                    sliderStyle: 'large'
+                    sliderStyle: 'large',
+                    lods: lods
                 }, new AntarcticLayerCollection());
 
                 var mapToolbar = new AntarcticMapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "antarcticMapToolbar");

@@ -39,45 +39,47 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
             },
 
             getLayerDisplayLabel: function(item) {
-                return '<i><b>' + item.layerName + '</b></i>';
+
+                if (item.layerName == 'Multibeam Bathymetric Surveys') {
+                    return '<i><b>' + item.layerName + '</b></i>';
+                } 
+                else if (item.layerName == 'Marine Trackline Surveys: Bathymetry') {
+                    return '<i><b>Trackline Bathymetry Surveys (single-beam)</b></i>';
+                } 
+                else if (item.layerName == 'Surveys with BAGs') {
+                    return '<i><b>NOS Hydrographic Surveys wth BAGs</b></i>';
+                } 
+                else if (item.layerName == 'Digital Data') {
+                    return '<i><b>NOS Hydrographic Surveys with Digital Sounding Data</b></i>';
+                } 
+                else if (item.layerName == 'Non-Digital') {
+                    return '<i><b>NOS Hydrographic Surveys without Digital Sounding Data</b></i>';
+                } 
+                else if (item.layerName == 'All NGDC Bathymetry DEMs') {
+                    return '<i><b>Bathymetry DEMs</b></i>';
+                }
             },
 
             getItemDisplayLabel: function(item) {
-                return item.value;
-            },
-
-            requestDataFiles: function() {
-                var items = this.storeModel.store.query({type: 'item'});
-                var fileInfos = [];
-                for (var i = 0; i < items.length; i++) {
-                    fileInfos.push({
-                        file: items[i].displayLabel,
-                        cruise: items[i].attributes['Survey ID'],
-                        ship: items[i].attributes['Ship Name'],
-                        instrument: items[i].attributes['Instrument Name']
-                    });
+                //return item.value;
+                if (item.layerName == 'Multibeam Bathymetric Surveys') {
+                    return item.feature.attributes['Survey Name'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>';
+                } 
+                else if (item.layerName == 'Marine Trackline Surveys: Bathymetry') {
+                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Start Year'] + ')</i>';
+                } 
+                else if (item.layerName == 'Surveys with BAGs') {
+                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Year'] + ')</i>';
+                } 
+                else if (item.layerName == 'Digital Data') {
+                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Year'] + ')</i>';
+                } 
+                else if (item.layerName == 'Non-Digital') {
+                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Year'] + ')</i>';
+                } 
+                else if (item.layerName == 'All NGDC Bathymetry DEMs') {
+                    return item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>';
                 }
-
-                if (!this.requestDataDialog) {
-                    this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
-                }
-                this.requestDataDialog.fileInfos = fileInfos;
-                this.requestDataDialog.show();
-            },
-
-            requestDataFile: function() {
-                var fileInfo = {
-                    file: this.currentItem.displayLabel,
-                    cruise: this.currentItem.attributes['Survey ID'],
-                    ship: this.currentItem.attributes['Ship Name'],
-                    instrument: this.currentItem.attributes['Instrument Name']
-                };
-
-                if (!this.requestDataDialog) {
-                    this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
-                }
-                this.requestDataDialog.fileInfos = [fileInfo];
-                this.requestDataDialog.show();
             },
 
             populateFeatureStore: function(results) {
@@ -102,45 +104,18 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                                     parent: 'root'
                                 });
                             }
-                            //Create a survey "folder" node if it doesn't already exist
-                            var surveyId = item.feature.attributes['Survey ID'];
-                            var surveyKey = layerName + '/' + surveyId;
-                            if (this.featureStore.query({id: surveyKey}).length == 0) {
-                                this.featureStore.put({
-                                    uid: ++this.uid,
-                                    id: surveyKey,
-                                    label: '<b>Survey: ' + surveyId + '</b>',
-                                    type: 'folder',
-                                    parent: layerName
-                                });
-                            }
-                            //Create an instrument "folder" node if it doesn't already exist
-                            var instrument = item.feature.attributes['Instrument Name'];
-                            var instrumentKey = layerName + '/' + surveyId + '/' + instrument;
-                            if (this.featureStore.query({id: instrumentKey}).length == 0) {
-                                this.featureStore.put({
-                                    uid: ++this.uid,
-                                    id: instrumentKey,
-                                    label: '<b>Instrument: ' + instrument + '</b>',
-                                    type: 'folder',
-                                    parent: surveyKey
-                                });
-
-                                //Add this node to the list of nodes to be expanded to in constructFeatureTree
-                                this.expandedNodePaths.push(['root', layerName, surveyKey, instrumentKey]);
-                            }
-
+                            
                             //Add the current item to the store, with the layerName as parent
                             this.featureStore.put({
                                 uid: ++this.uid,
-                                id: this.uid,
-                                //TODO: point to the magnifying glass image using a module path
+                                id: this.uid,                                
                                 displayLabel: this.getItemDisplayLabel(item),
-                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='js/ngdc/identify/images/magnifying-glass.png'></a>",
+                                //TODO: point to the magnifying glass image using a module path?
+                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='../../dijits/js/ngdc/identify/images/magnifier.png'></a>",
                                 layerUrl: layerUrl,
                                 layerKey: layerKey,
                                 attributes: item.feature.attributes,
-                                parent: instrumentKey,
+                                parent: layerName,
                                 type: 'item'
                             });
                         }
@@ -152,7 +127,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
             constructFeatureTree: function() {
                 this.inherited(arguments);
                 //Expand the tree to the instrument level. All nodes will be opened except for these.
-                this.tree.set('paths', this.expandedNodePaths);
+                //this.tree.set('paths', this.expandedNodePaths);
             }
         });
     }

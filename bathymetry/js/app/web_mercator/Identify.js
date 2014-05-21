@@ -3,110 +3,236 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
         return declare([AbstractIdentify], {
 
-            wcdFormatter: function(feature) {
-                var a = this.replaceNullAttributes(feature.attributes);
-
-                var template = '\
-                    <div class="fileName">Attributes for ${fileName}</div>\
-                    <div class="fileHeader">Survey Details:</div>\
-                    <div class="valueName">Survey ID: <span class="parameterValue">${surveyID}</span></div>\
-                    <div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>\
-                    <div class="valueName"> Project(s): <span class="parameterValue">${projectName}</span></div>\
-                    <div class="valueName">Source Group: <span class="parameterValue">${sourceGroup}</span></div>\
-                    <div class="valueName">Source Name(s): <span class="parameterValue">${sourceName}</span></div>\
-                    <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
-                    <div class="fileHeader">Instrument Details:</div>\
-                    <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>\
-                    <div class="valueName">Recording Range (m): <span class="parameterValue">${recordingRange}</span></div>';
-                if (a['Instrument Name'] == 'EK60') {
-                    template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
-                }
-                else {
-                    template += '\
-                        <div class="valueName">Swath Width (degrees): <span class="parameterValue">${swathWidth}</span></div>\
-                        <div class="valueName">Number of Beams: <span class="parameterValue">${numBeams}</span></div>\
-                        <div class="valueName">Beam Type: <span class="parameterValue">${beamType}</span></div>';
-                }
-                template += '\
-                    <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>\
-                    <div class="fileHeader">Products</div>';
-
-                var html = string.substitute(template, {
-                        fileName: a['File Name'],
-                        surveyID: a['Survey ID'],
-                        shipName: a['Ship Name'],
-                        instrumentName: a['Instrument Name'],
-                        scientistName: a['Scientist Name'],
-                        sourceName: a['Source Name'],
-                        sourceGroup: a['Source Group'],
-                        projectName: a['Project Name'],
-                        minDepth: a['Minimum Depth'],
-                        collectionDate: a['Collection Date'],
-                        publishDate: a['Publish Date'],
-                        beamType: a['Beam Type'],
-                        numBeams: a['Number of Beams'],
-                        swathWidth: a['Swath Width (degrees)'],
-                        recordingRange: a['Recording Range (m)'],
-                        frequency: a['Frequency']
-                    });                
-                return html;
-            },
-
             //called after parent class constructor
             constructor: function() {
                 logger.debug('inside constructor for app/web_mercator/Identify');
 
                 //augment arguments object with list of layers to identify.
                 // Don't use pairedMapserviceLayers as they're not yet available
-                arguments[0].layerIds = ['Multibeam (dynamic)'];
+                arguments[0].layerIds = ['Multibeam (dynamic)', 'Trackline Combined (dynamic)', 'NOS Hydro (dynamic)', 'DEM Extents'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
 
+                this.identifyPane = arguments[0].identifyPane;
+
                 topic.subscribe("identifyPane/showInfo", lang.hitch(this, function(item) {
                     console.log('identifyPane/showInfo received ' + item);
 
-                    var identifyPane = this._map.identifyPane;
-                    if (identifyPane) {
+                    //var identifyPane = this._map.identifyPane;
+                    if (this.identifyPane) {
                         var layerKey = item.layerKey;
-                        identifyPane.setInfoPaneContent(this.formatters[layerKey](item));
+                        this.identifyPane.setInfoPaneContent(this.formatters[layerKey](item));
                     }
                 }));
 
                 //formatter specific to each sublayer, keyed by Layer/sublayer name.
                 this.formatters = {
-                    'Water Column Sonar/Source Group: NMFS': lang.hitch(this, this.wcdFormatter),
-                    'Water Column Sonar/Source Group: OER': lang.hitch(this, this.wcdFormatter), 
-                    'Water Column Sonar/Source Group: UNOLS': lang.hitch(this, this.wcdFormatter), 
-                    'Water Column Sonar/Source Group: Other': lang.hitch(this, this.wcdFormatter)
+                    'Multibeam (dynamic)/Multibeam Bathymetric Surveys': lang.hitch(this, this.multibeamFormatter),
+                    'Trackline Combined (dynamic)/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),
+                    'NOS Hydro (dynamic)/Surveys with BAGs': lang.hitch(this, this.nosHydroFormatter),
+                    'NOS Hydro (dynamic)/Digital Data': lang.hitch(this, this.nosHydroFormatter),
+                    'NOS Hydro (dynamic)/Non-Digital': lang.hitch(this, this.nosHydroFormatter),
+                    'DEM Extents/All NGDC Bathymetry DEMs': lang.hitch(this, this.demFormatter)
                 };
 
                 this.sortFunctions = {
-                    'Water Column Sonar/Source Group: OER': this.wcdSort
+                    'Multibeam (dynamic)/Multibeam Bathymetric Surveys': this.multibeamSort,
+                    'Trackline Combined (dynamic)/Marine Trackline Surveys: Bathymetry': this.tracklineSort,
+                    'NOS Hydro (dynamic)/Surveys with BAGs': this.nosHydroSort,
+                    'NOS Hydro (dynamic)/Digital Data': this.nosHydroSort,
+                    'NOS Hydro (dynamic)/Non-Digital': this.nosHydroSort,
+                    'DEM Extents/All NGDC Bathymetry DEMs': this.demSort
                 }
 
             }, //end constructor
 
-            wcdSort: function(a, b) {
-                //Sort alphabetically on File Name
-                return a.feature.attributes['File Name'] > b.feature.attributes['File Name'] ? 1 : -1;
+            multibeamFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>\
+                    <div class="valueName">Survey Name: <span class="parameterValue">${surveyName}</span></div>\
+                    <div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>\
+                    <div class="valueName">Chief Scientist: <span class="parameterValue">${chiefScientist}</span></div>\
+                    <div class="valueName">Instrument: <span class="parameterValue">${instrument}</span></div>\
+                    <div class="valueName">File Count: <span class="parameterValue">${fileCount}</span></div>\
+                    <div class="valueName">Track Length: <span class="parameterValue">${trackLength} km</span></div>\
+                    <div class="valueName">Total Time: <span class="parameterValue">${totalTime} hours</span></div>\
+                    <div class="valueName">Bathymetry Beams: <span class="parameterValue">${bathymetryBeams} million</span></div>\
+                    <div class="valueName">Amplitude Beams: <span class="parameterValue">${amplitudeBeams} million</span></div>\
+                    <div class="valueName">Sidescan: <span class="parameterValue">${sidescan} million pixels</span></div>';
+
+                var html = string.substitute(template, {
+                        url: a['Download URL'],
+                        ngdcId: a['NGDC ID'],
+                        surveyName: a['Survey Name'],
+                        surveyYear: a['Survey Year'],
+                        shipName: a['Ship Name'],
+                        chiefScientist: a['Chief Scientist'],
+                        instrument: a['Instrument'],
+                        fileCount: a['File Count'],
+                        trackLength: a['Track Length (km)'],
+                        totalTime: a['Total Time (hrs)'],
+                        bathymetryBeams: a['Bathymetry Beams'] / 1000000.0,
+                        amplitudeBeams: a['Amplitude Beams'] / 1000000.0,
+                        sidescan: a['Sidescan'] / 1000000.0
+                    });                
+                return html;
+            },
+
+            tracklineFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>\
+                    <div class="valueName">Survey ID: <span class="parameterValue">${surveyId}</span></div>\
+                    <div class="valueName">Survey Type: <span class="parameterValue">${surveyType}</span></div>\
+                    <div class="valueName">Platform Name: <span class="parameterValue">${platformName}</span></div>\
+                    <div class="valueName">Survey Start Year: <span class="parameterValue">${startYear}</span></div>\
+                    <div class="valueName">Survey End Year: <span class="parameterValue">${endYear}</span></div>\
+                    <div class="valueName">Source Institution: <span class="parameterValue">${sourceInstitution}</span></div>\
+                    <div class="valueName">Project: <span class="parameterValue">${project}</span></div>\
+                    <div class="valueName">Country: <span class="parameterValue">${country}</span></div>\
+                    <div class="valueName">Chief Scientist: <span class="parameterValue">${chiefScientist}</span></div>\
+                    <div class="valueName">Date Added: <span class="parameterValue">${dateAdded}</span></div>';
+
+                var html = string.substitute(template, {
+                        url: a['URL'],
+                        surveyId: a['Survey ID'],
+                        surveyType: a['Survey Type'],
+                        platformName: a['Platform Name'],
+                        startYear: a['Survey Start Year'],
+                        endYear: a['Survey End Year'],
+                        sourceInstitution: a['Source Institution'],
+                        project: a['Project'],
+                        country: a['Country'],
+                        chiefScientist: a['Chief Scientist'],
+                        dateAdded: a['Date Added']
+                    });                
+                return html;
+            },
+
+            nosHydroFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>\
+                    <div class="valueName">Survey ID: <span class="parameterValue">${surveyId}</span></div>\
+                    <div class="valueName">Survey Year: <span class="parameterValue">${surveyYear}</span></div>\
+                    <div class="valueName">Locality: <span class="parameterValue">${locality}</span></div>\
+                    <div class="valueName">Sublocality: <span class="parameterValue">${sublocality}</span></div>\
+                    <div class="valueName">Platform: <span class="parameterValue">${fieldUnit}</span></div>';
+
+                var html = string.substitute(template, {
+                        url: a['URL'],
+                        surveyId: a['Survey ID'],
+                        surveyYear: a['Year'],
+                        locality: a['Locality'],
+                        sublocality: a['Sublocality'],
+                        fieldUnit: a['Field Unit']
+                    });                
+                return html;
+            },
+
+            demFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>\
+                    <div class="valueName">Name: <span class="parameterValue">${name}</span></div>\
+                    <div class="valueName">Cell Size: <span class="parameterValue">${cellSize}</span></div>\
+                    <div class="valueName">Category: <span class="parameterValue">${category}</span></div>\
+                    <div class="valueName">Source: <span class="parameterValue">${source}</span></div>\
+                    <div class="valueName">Project: <span class="parameterValue">${project}</span></div>\
+                    <div class="valueName">Vertical Datum: <span class="parameterValue">${verticalDatum}</span></div>\
+                    <div class="valueName">Status: <span class="parameterValue">${status}</span></div>\
+                    <div class="valueName">Type: <span class="parameterValue">${type}</span></div>\
+                    <div class="valueName">Coverage: <span class="parameterValue">${coverage}</span></div>\
+                    <div class="valueName">Completion Date: <span class="parameterValue">${completionDate}</span></div>';
+
+                var html = string.substitute(template, {
+                        url: a['DEMURL'],
+                        name: a['Name'],
+                        cellSize: a['Cell Size'],
+                        category: a['Category'],
+                        source: a['Source'],
+                        project: a['Project'],
+                        verticalDatum: a['Vertical Datum'],
+                        status: a['STATUS'],
+                        type: a['Type'],
+                        coverage: a['Coverage'],
+                        completionDate: a['Completion Date']
+                    });                
+                return html;
+            },
+
+            multibeamSort: function(a, b) {
+                //Sort by year descending, then alphabetical by survey ID
+                if (a.feature.attributes['Survey Year'] == b.feature.attributes['Survey Year']) {
+                    return a.feature.attributes['Survey Name'] <= b.feature.attributes['Survey Name'] ? -1 : 1;
+                }
+                return a.feature.attributes['Survey Year'] < b.feature.attributes['Survey Year'] ? 1 : -1;
+            },
+
+            tracklineSort: function(a, b) {
+                //Sort by year descending, then alphabetical by survey ID
+                if (a.feature.attributes['Survey Start Year'] == b.feature.attributes['Survey Start Year']) {
+                    return a.feature.attributes['Survey ID'] <= b.feature.attributes['Survey ID'] ? -1 : 1;
+                }
+                return a.feature.attributes['Survey Start Year'] < b.feature.attributes['Survey Start Year'] ? 1 : -1;
+            },
+
+            nosHydroSort: function(a, b) {
+                //Sort by layer ID: BAGs, Digital, Non-Digital, then by year descending (nulls last) then alphabetical for hydro surveys.
+                if (a.layerId == b.layerId) {                   
+                    if (a.feature.attributes['Year'] == 'Null') {                                           
+                        return 1;
+                    }
+                    if (b.feature.attributes['Year'] == 'Null') { 
+                        return -1;
+                    }
+                    if (a.feature.attributes['Year'] == b.feature.attributes['Year']) {
+                        return a.feature.attributes['Survey ID'] <= b.feature.attributes['Survey ID'] ? -1 : 1;
+                    }
+                    return a.feature.attributes['Year'] < b.feature.attributes['Year'] ? 1 : -1;
+                }
+                return a.layerId <= b.layerId ? -1 : 1;
+            },
+
+            demSort: function(a, b) {
+                //Sort alphabetically, but Global relief (e.g. ETOPO1) should be at the end of the list
+                if (a.feature.attributes['Category'] == 'Global Relief')
+                    return 1;
+                if (b.feature.attributes['Category'] == 'Global Relief')
+                    return -1;
+                return a.feature.attributes['Name'] <= b.feature.attributes['Name'] ? -1 : 1;
             },
 
             sortResults: function(results) {
                 var features;
-                if (results['Water Column Sonar']) {    
-                    if (features = results['Water Column Sonar']['Source Group: NMFS']) {
-                        features.sort(this.wcdSort);
-                    }
-                    if (features = results['Water Column Sonar']['Source Group: OER']) {
-                        features.sort(this.wcdSort);
-                    }
-                    if (features = results['Water Column Sonar']['Source Group: UNOLS']) {
-                        features.sort(this.wcdSort);
-                    }
-                    if (features = results['Water Column Sonar']['Source Group: Other']) {
-                        features.sort(this.wcdSort);
-                    }
+                if (results['Multibeam (dynamic)']) {    
+                    if (features = results['Multibeam (dynamic)']['Multibeam Bathymetric Surveys']) {
+                        features.sort(this.multibeamSort);
+                    }                    
+                }
+                if (results['Trackline Combined (dynamic)']) {    
+                    if (features = results['Trackline Combined (dynamic)']['Marine Trackline Surveys: Bathymetry']) {
+                        features.sort(this.tracklineSort);
+                    }                    
+                }
+
+                if (results['NOS Hydro (dynamic)']) {  
+                    for (sublayer in results['NOS Hydro (dynamic)']) {
+                       results['NOS Hydro (dynamic)'][sublayer].sort(this.nosHydroSort);
+                    }                                
+                }
+                
+
+                if (results['DEM Extents']) {    
+                    if (features = results['DEM Extents']['All NGDC Bathymetry DEMs']) {
+                        features.sort(this.demSort);
+                    }                    
                 }
             }
 
