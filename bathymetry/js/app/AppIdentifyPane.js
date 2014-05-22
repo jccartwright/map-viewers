@@ -1,9 +1,33 @@
-define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/IdentifyPane", "dojo/topic", "esri/dijit/Popup", "dojo/_base/lang", "dijit/form/Button",
-    "dojo/dom-style", "app/RequestDataDialog"],
-    function(declare, array, string, IdentifyPane, topic, Popup, lang, Button,
-             domStyle, RequestDataDialog){
+define([
+    "dojo/_base/declare", 
+    "dojo/_base/config", 
+    "dojo/_base/array", 
+    "dojo/string",
+    "dojo/topic", 
+    "dojo/_base/lang",
+    "dojo/dom-style",
+    "dijit/form/Button", 
+    "ngdc/identify/IdentifyPane", 
+    "app/RequestDataDialog"
+    ],
+    function(
+        declare, 
+        config, 
+        array, 
+        string, 
+        topic,
+        lang,
+        domStyle,
+        Button,
+        IdentifyPane,
+        RequestDataDialog
+        ){
 
         return declare([IdentifyPane], {
+
+            constructor: function() {
+                this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl + "/identify/images/magnifier.png";
+            },
 
             postCreate: function() {
                 this.inherited(arguments);
@@ -128,8 +152,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                                 uid: ++this.uid,
                                 id: this.uid,                                
                                 displayLabel: this.getItemDisplayLabel(item),
-                                //TODO: point to the magnifying glass image using a module path?
-                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='../../dijits/js/ngdc/identify/images/magnifier.png'></a>",
+                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
                                 layerUrl: layerUrl,
                                 layerKey: layerKey,
                                 attributes: item.feature.attributes,
