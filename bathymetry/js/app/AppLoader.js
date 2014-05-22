@@ -12,7 +12,7 @@ define([
     "esri/geometry/Extent",
     "esri/SpatialReference",
     "ngdc/Logger",
-    "ngdc/web_mercator/MapConfig",
+    "app/web_mercator/MapConfig",
     "ngdc/arctic/MapConfig",
     "ngdc/antarctic/MapConfig",
     "ngdc/web_mercator/ZoomLevels",
@@ -78,7 +78,7 @@ define([
 
                 this.setupBanner();
 
-                this.setupMapViews();
+                this.setupMapViews();                
             },
 
             setupBanner: function() {
@@ -102,10 +102,10 @@ define([
                 this.setupMercatorView();
 
                 registry.byId('mapContainer').selectChild('arctic');
-                this.setupArcticView();
+                //this.setupArcticView();
 
                 registry.byId('mapContainer').selectChild('antarctic');
-                this.setupAntarcticView();
+                //this.setupAntarcticView();
 
                 //go back to mercator as default view
                 registry.byId('mapContainer').selectChild('mercator');
@@ -125,21 +125,41 @@ define([
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
-                }, new MercatorLayerCollection());
+                }, new MercatorLayerCollection());                
 
-                var mapToolbar = new MapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "mercatorMapToolbar");
-                mapToolbar.startup();
-
-                console.log('mapConfig:',mapConfig);
+                on(dom.byId('toggleMultibeam'), 'click', function() {
+                    var layer = mapConfig.mapLayerCollection.getLayerById('Multibeam');
+                    if (layer.visible) {
+                        layer.hide();
+                    } else {
+                        layer.show();
+                    }
+                });
+                on(dom.byId('toggleTrackline'), 'click', function() {
+                    var layer = mapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry');
+                    if (layer.visible) {
+                        layer.hide();
+                    } else {
+                        layer.show();
+                    }
+                });
+                on(dom.byId('toggleNosHydro'), 'click', function() {
+                    var layer = mapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys');
+                    if (layer.visible) {
+                        layer.hide();
+                    } else {
+                        layer.show();
+                    }
+                });
+                on(dom.byId('toggleDems'), 'click', function() {
+                    var layer = mapConfig.mapLayerCollection.getLayerById('DEM Extents');
+                    if (layer.visible) {
+                        layer.hide();
+                    } else {
+                        layer.show();
+                    }
+                });
                 
-                var identifyPane = new IdentifyPane({
-                    map: mapConfig.map,
-                    class: "identifyPane",
-                    autoExpandTree: false
-                }, dom.byId("identifyPaneDiv"));
-                identifyPane.startup();
-
-                var identify = new WebMercatorIdentify({mapConfig: mapConfig, identifyPane: identifyPane});
 
                 //var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "mercatorCoordinatesToolbar");
 
