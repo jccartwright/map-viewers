@@ -1,9 +1,33 @@
-define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/IdentifyPane", "dojo/topic", "esri/dijit/Popup", "dojo/_base/lang", "dijit/form/Button",
-    "dojo/dom-style", "app/RequestDataDialog"],
-    function(declare, array, string, IdentifyPane, topic, Popup, lang, Button,
-             domStyle, RequestDataDialog){
+define([
+    "dojo/_base/declare", 
+    "dojo/_base/config", 
+    "dojo/_base/array", 
+    "dojo/string",
+    "dojo/topic", 
+    "dojo/_base/lang",
+    "dojo/dom-style",
+    "dijit/form/Button", 
+    "ngdc/identify/IdentifyPane", 
+    "app/RequestDataDialog"
+    ],
+    function(
+        declare, 
+        config, 
+        array, 
+        string, 
+        topic,
+        lang,
+        domStyle,
+        Button,
+        IdentifyPane,
+        RequestDataDialog
+        ){
 
         return declare([IdentifyPane], {
+
+            constructor: function() {
+                this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl + "/identify/images/magnifier.png";
+            },
 
             postCreate: function() {
                 this.inherited(arguments);
@@ -44,19 +68,22 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                     return '<i><b>' + item.layerName + '</b></i>';
                 } 
                 else if (item.layerName == 'Marine Trackline Surveys: Bathymetry') {
-                    return '<i><b>Trackline Bathymetry Surveys (single-beam)</b></i>';
+                    return '<i><b>Single-Beam Bathymetry</b></i>';
                 } 
                 else if (item.layerName == 'Surveys with BAGs') {
-                    return '<i><b>NOS Hydrographic Surveys wth BAGs</b></i>';
+                    return '<i>Surveys wth BAGs</i>';
                 } 
                 else if (item.layerName == 'Digital Data') {
-                    return '<i><b>NOS Hydrographic Surveys with Digital Sounding Data</b></i>';
+                    return '<i>Surveys with Digital Sounding Data</i>';
                 } 
                 else if (item.layerName == 'Non-Digital') {
-                    return '<i><b>NOS Hydrographic Surveys without Digital Sounding Data</b></i>';
+                    return '<i>Surveys without Digital Sounding Data</i>';
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
                     return '<i><b>Bathymetry DEMs</b></i>';
+                }
+                else {
+                    return item.layerName;
                 }
             },
 
@@ -94,6 +121,20 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                             var item = results[svcName][layerName][i];
                             var layerKey = svcName + '/' + layerName;
                             var layerUrl = results[svcName][layerName][i].layerUrl;
+                            
+                            if (svcName == 'NOS Hydrographic Surveys') {
+                                //Create an "NOS Hydrographic Surveys" folder if it doesn't already exist
+                                if (this.featureStore.query({label: 'NOS Hydrographic Surveys'}).length == 0) {
+                                    this.featureStore.put({
+                                        uid: ++this.uid,
+                                        id: 'NOS Hydrographic Surveys',
+                                        label: '<b><i>NOS Hydrographic Surveys</i></b>',
+                                        type: 'folder',
+                                        parent: 'root'
+                                    });    
+                                }
+                            }
+
                             //Create a layer "folder" node if it doesn't already exist
                             if (this.featureStore.query({id: layerName}).length == 0) {
                                 this.featureStore.put({
@@ -101,17 +142,17 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                                     id: layerName,
                                     label: this.getLayerDisplayLabel(item),
                                     type: 'folder',
-                                    parent: 'root'
+                                    //If NOS Hydro, parent is the NOS Hydro folder, else parent is root.
+                                    parent: svcName == 'NOS Hydrographic Surveys' ? 'NOS Hydrographic Surveys' : 'root'
                                 });
                             }
                             
-                            //Add the current item to the store, with the layerName as parent
+                            //Add the current item to the store, with the layerName folder as parent
                             this.featureStore.put({
                                 uid: ++this.uid,
                                 id: this.uid,                                
                                 displayLabel: this.getItemDisplayLabel(item),
-                                //TODO: point to the magnifying glass image using a module path?
-                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='../../dijits/js/ngdc/identify/images/magnifier.png'></a>",
+                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
                                 layerUrl: layerUrl,
                                 layerKey: layerKey,
                                 attributes: item.feature.attributes,

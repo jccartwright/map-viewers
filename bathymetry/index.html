@@ -62,7 +62,8 @@
 
             //app-specific config values
             app: {
-                loglevel: 4  //DEBUG
+                loglevel: 4,  //DEBUG
+                ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
     </script>
@@ -82,6 +83,12 @@
     </div>
 
     <div id="leftPane" data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true">
+        <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" title="Layers">
+            <button id="toggleMultibeam" data-dojo-type="dijit/form/Button" type="button">Toggle Multibeam</button><br>
+            <button id="toggleTrackline" data-dojo-type="dijit/form/Button" type="button">Toggle Tracklines</button><br>
+            <button id="toggleNosHydro" data-dojo-type="dijit/form/Button" type="button">Toggle NOS Hydro</button><br>
+            <button id="toggleDems" data-dojo-type="dijit/form/Button" type="button">Toggle DEMs</button>
+        </div>
         <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
             <div id="credits" data-dojo-type="app/CreditsPanel"></div>
         </div>

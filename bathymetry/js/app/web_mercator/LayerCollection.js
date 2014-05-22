@@ -165,6 +165,7 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                 //this.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([9999]); //Manually set all the sublayers to invisible for "NOS Hydro"
                 //this.getLayerById('NOS Hydro Non-Digital').setVisibleLayers([9999]);
 
+                this.getLayerById('DEM Extents').setVisibleLayers([12]);
             }
         });
     }

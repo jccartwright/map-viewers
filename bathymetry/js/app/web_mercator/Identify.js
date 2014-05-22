@@ -9,7 +9,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
                 //augment arguments object with list of layers to identify.
                 // Don't use pairedMapserviceLayers as they're not yet available
-                arguments[0].layerIds = ['Multibeam (dynamic)', 'Trackline Combined (dynamic)', 'NOS Hydro (dynamic)', 'DEM Extents'];
+                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'DEM Extents'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
@@ -28,22 +28,22 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
                 //formatter specific to each sublayer, keyed by Layer/sublayer name.
                 this.formatters = {
-                    'Multibeam (dynamic)/Multibeam Bathymetric Surveys': lang.hitch(this, this.multibeamFormatter),
-                    'Trackline Combined (dynamic)/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),
-                    'NOS Hydro (dynamic)/Surveys with BAGs': lang.hitch(this, this.nosHydroFormatter),
-                    'NOS Hydro (dynamic)/Digital Data': lang.hitch(this, this.nosHydroFormatter),
-                    'NOS Hydro (dynamic)/Non-Digital': lang.hitch(this, this.nosHydroFormatter),
+                    'Multibeam/Multibeam Bathymetric Surveys': lang.hitch(this, this.multibeamFormatter),
+                    'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),
+                    'NOS Hydrographic Surveys/Surveys with BAGs': lang.hitch(this, this.nosHydroFormatter),
+                    'NOS Hydrographic Surveys/Digital Data': lang.hitch(this, this.nosHydroFormatter),
+                    'NOS Hydrographic Surveys/Non-Digital': lang.hitch(this, this.nosHydroFormatter),
                     'DEM Extents/All NGDC Bathymetry DEMs': lang.hitch(this, this.demFormatter)
                 };
 
-                this.sortFunctions = {
-                    'Multibeam (dynamic)/Multibeam Bathymetric Surveys': this.multibeamSort,
-                    'Trackline Combined (dynamic)/Marine Trackline Surveys: Bathymetry': this.tracklineSort,
-                    'NOS Hydro (dynamic)/Surveys with BAGs': this.nosHydroSort,
-                    'NOS Hydro (dynamic)/Digital Data': this.nosHydroSort,
-                    'NOS Hydro (dynamic)/Non-Digital': this.nosHydroSort,
-                    'DEM Extents/All NGDC Bathymetry DEMs': this.demSort
-                }
+                // this.sortFunctions = {
+                //     'Multibeam/Multibeam Bathymetric Surveys': this.multibeamSort,
+                //     'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry': this.tracklineSort,
+                //     'NOS Hydrographic Surveys/Surveys with BAGs': this.nosHydroSort,
+                //     'NOS Hydrographic Surveys/Digital Data': this.nosHydroSort,
+                //     'NOS Hydrographic Surveys/Non-Digital': this.nosHydroSort,
+                //     'DEM Extents/All NGDC Bathymetry DEMs': this.demSort
+                // }
 
             }, //end constructor
 
@@ -211,20 +211,20 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
             sortResults: function(results) {
                 var features;
-                if (results['Multibeam (dynamic)']) {    
-                    if (features = results['Multibeam (dynamic)']['Multibeam Bathymetric Surveys']) {
+                if (results['Multibeam']) {    
+                    if (features = results['Multibeam']['Multibeam Bathymetric Surveys']) {
                         features.sort(this.multibeamSort);
                     }                    
                 }
-                if (results['Trackline Combined (dynamic)']) {    
-                    if (features = results['Trackline Combined (dynamic)']['Marine Trackline Surveys: Bathymetry']) {
+                if (results['Trackline Bathymetry']) {    
+                    if (features = results['Trackline Bathymetry']['Marine Trackline Surveys: Bathymetry']) {
                         features.sort(this.tracklineSort);
                     }                    
                 }
 
-                if (results['NOS Hydro (dynamic)']) {  
-                    for (sublayer in results['NOS Hydro (dynamic)']) {
-                       results['NOS Hydro (dynamic)'][sublayer].sort(this.nosHydroSort);
+                if (results['NOS Hydrographic Surveys']) {  
+                    for (sublayer in results['NOS Hydrographic Surveys']) {
+                       results['NOS Hydrographic Surveys'][sublayer].sort(this.nosHydroSort);
                     }                                
                 }
                 
