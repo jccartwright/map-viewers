@@ -1,5 +1,5 @@
 version = '1.0'
-
+/*
 task installNgdcDijits(type: Copy) {
     doFirst {
         uninstallNgdcDijits
@@ -32,3 +32,4 @@ task buildDistribution(type: Zip, dependsOn: copyToStaging) {
         delete 'build/staging'
     }
 }
+*/
