@@ -35,7 +35,10 @@ define([
                 }, dom.byId("identifyPaneDiv"));
                 identifyPane.startup();
 
-                var identify = new Identify({mapConfig: this, identifyPane: identifyPane});             
+                var identify = new Identify({mapConfig: this, identifyPane: identifyPane});
+
+                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([2]);         
+
             }
          
             

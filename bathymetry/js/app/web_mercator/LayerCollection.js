@@ -166,6 +166,8 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                 //this.getLayerById('NOS Hydro Non-Digital').setVisibleLayers([9999]);
 
                 this.getLayerById('DEM Extents').setVisibleLayers([12]);
+
+                //this.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0])
             }
         });
     }

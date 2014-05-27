@@ -16,6 +16,8 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
                 this.identifyPane = arguments[0].identifyPane;
 
+                this.identifyPane.layerIds = arguments[0].layerIds;
+
                 topic.subscribe("identifyPane/showInfo", lang.hitch(this, function(item) {
                     console.log('identifyPane/showInfo received ' + item);
 
