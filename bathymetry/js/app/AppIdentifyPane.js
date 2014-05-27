@@ -62,25 +62,25 @@ define([
                 }
             },
 
-            getLayerDisplayLabel: function(item) {
+            getLayerDisplayLabel: function(item, count) {
 
                 if (item.layerName == 'Multibeam Bathymetric Surveys') {
-                    return '<i><b>' + item.layerName + '</b></i>';
+                    return '<i><b>Multibeam Bathymetry Surveys (' + count + ')</b></i>';
                 } 
                 else if (item.layerName == 'Marine Trackline Surveys: Bathymetry') {
-                    return '<i><b>Single-Beam Bathymetry</b></i>';
+                    return '<i><b>Single-Beam Bathymetry Surveys (' + count + ')</b></i>';
                 } 
                 else if (item.layerName == 'Surveys with BAGs') {
-                    return '<i>Surveys wth BAGs</i>';
+                    return '<i>Surveys wth BAGs (' + count + ')</i>';
                 } 
                 else if (item.layerName == 'Digital Data') {
-                    return '<i>Surveys with Digital Sounding Data</i>';
+                    return '<i>Surveys with Digital Sounding Data (' + count + ')</i>';
                 } 
                 else if (item.layerName == 'Non-Digital') {
-                    return '<i>Surveys without Digital Sounding Data</i>';
+                    return '<i>Surveys without Digital Sounding Data (' + count + ')</i>';
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
-                    return '<i><b>Bathymetry DEMs</b></i>';
+                    return '<i><b>Digital Elevation Models (' + count + ')</b></i>';
                 }
                 else {
                     return item.layerName;
@@ -96,13 +96,13 @@ define([
                     return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Start Year'] + ')</i>';
                 } 
                 else if (item.layerName == 'Surveys with BAGs') {
-                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Year'] + ')</i>';
+                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Year'] + ')</i>');
                 } 
                 else if (item.layerName == 'Digital Data') {
-                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Year'] + ')</i>';
+                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Year'] + ')</i>');
                 } 
                 else if (item.layerName == 'Non-Digital') {
-                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Year'] + ')</i>';
+                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Year'] + ')</i>');
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
                     return item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>';
@@ -110,28 +110,33 @@ define([
             },
 
             populateFeatureStore: function(results) {
-                var numFeatures = 0;
+                var totalFeatures = 0;
+                var numFeaturesForLayer = 0;
                 this.uid = 0;
                 this.expandedNodePaths = [];
-                for (var svcName in results) {
+                //for (var svcName in results) {
+                for (var i = 0; i < this.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
+                    var svcName = this.layerIds[i];
                     for (var layerName in results[svcName]) {
 
-                        numFeatures += results[svcName][layerName].length;
-                        for (var i = 0; i < results[svcName][layerName].length; i++) {
-                            var item = results[svcName][layerName][i];
+                        numFeaturesForLayer = results[svcName][layerName].length;
+                        totalFeatures += numFeaturesForLayer;
+
+                        for (var j = 0; j < results[svcName][layerName].length; j++) {
+                            var item = results[svcName][layerName][j];
                             var layerKey = svcName + '/' + layerName;
-                            var layerUrl = results[svcName][layerName][i].layerUrl;
+                            var layerUrl = results[svcName][layerName][j].layerUrl;
                             
                             if (svcName == 'NOS Hydrographic Surveys') {
                                 //Create an "NOS Hydrographic Surveys" folder if it doesn't already exist
-                                if (this.featureStore.query({label: 'NOS Hydrographic Surveys'}).length == 0) {
+                                if (this.featureStore.query({id: 'NOS Hydrographic Surveys'}).length == 0) {
                                     this.featureStore.put({
                                         uid: ++this.uid,
                                         id: 'NOS Hydrographic Surveys',
                                         label: '<b><i>NOS Hydrographic Surveys</i></b>',
                                         type: 'folder',
                                         parent: 'root'
-                                    });    
+                                    });                                      
                                 }
                             }
 
@@ -140,11 +145,12 @@ define([
                                 this.featureStore.put({
                                     uid: ++this.uid,
                                     id: layerName,
-                                    label: this.getLayerDisplayLabel(item),
+                                    label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
                                     type: 'folder',
                                     //If NOS Hydro, parent is the NOS Hydro folder, else parent is root.
                                     parent: svcName == 'NOS Hydrographic Surveys' ? 'NOS Hydrographic Surveys' : 'root'
                                 });
+                                //this.expandedNodePaths.push(layerName);
                             }
                             
                             //Add the current item to the store, with the layerName folder as parent
@@ -162,13 +168,20 @@ define([
                         }
                     }
                 }
-                return numFeatures;
+                return totalFeatures;
             },
+
+
 
             constructFeatureTree: function() {
                 this.inherited(arguments);
-                //Expand the tree to the instrument level. All nodes will be opened except for these.
-                //this.tree.set('paths', this.expandedNodePaths);
+
+                //Add the NOS Hydro sub-layers to the list of nodes to be expanded to
+                this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys with BAGs']);
+                this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Digital Data']);
+                this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Non-Digital']); 
+
+                this.tree.set('paths', this.expandedNodePaths);
             }
         });
     }
