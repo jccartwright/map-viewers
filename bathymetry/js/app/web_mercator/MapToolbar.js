@@ -15,6 +15,7 @@ define(["dojo/_base/declare", "ngdc/MapToolbar"],
                 this._overlays = [
                     {services: ['Ocean Reference'], label: 'Boundaries/Labels'}, //Ocean Basemap/Reference is the default combo
                     {services: ['GEBCO_08 Contours'], label: 'Bathymetry Contours (GEBCO_08)'},
+                    {services: ['RNC'], label: '<a href="http://www.nauticalcharts.noaa.gov/mcd/Raster/" target="_blank">NOAA Raster Navigational Charts (RNC®)</a>'},
                     {services: ['Graticule'], label: 'Graticule'}
                 ];
 
