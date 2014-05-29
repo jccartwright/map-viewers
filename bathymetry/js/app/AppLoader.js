@@ -8,6 +8,7 @@ define([
     "dojo/topic",
     "dojo/on",
     "dojo/aspect",
+    "dijit/form/CheckBox",
     "esri/config",
     "esri/geometry/Extent",
     "esri/SpatialReference",
@@ -27,6 +28,7 @@ define([
     "app/antarctic/MapToolbar",
     "app/web_mercator/Identify",
     "app/AppIdentifyPane",
+    "app/LayersPanel",
     "dojo/domReady!"],
     function(
         declare,
@@ -38,6 +40,7 @@ define([
         topic,
         on,
         aspect,
+        CheckBox,
         esriConfig,
         Extent,
         SpatialReference,
@@ -56,7 +59,8 @@ define([
         ArcticMapToolbar,
         AntarcticMapToolbar,
         WebMercatorIdentify,
-        IdentifyPane) {
+        IdentifyPane,
+        LayersPanel) {
 
         return declare(null, {
             constructor:function(args){
@@ -126,40 +130,6 @@ define([
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
                 }, new MercatorLayerCollection());                
-
-                on(dom.byId('toggleMultibeam'), 'click', function() {
-                    var layer = mapConfig.mapLayerCollection.getLayerById('Multibeam');
-                    if (layer.visible) {
-                        layer.hide();
-                    } else {
-                        layer.show();
-                    }
-                });
-                on(dom.byId('toggleTrackline'), 'click', function() {
-                    var layer = mapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry');
-                    if (layer.visible) {
-                        layer.hide();
-                    } else {
-                        layer.show();
-                    }
-                });
-                on(dom.byId('toggleNosHydro'), 'click', function() {
-                    var layer = mapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys');
-                    if (layer.visible) {
-                        layer.hide();
-                    } else {
-                        layer.show();
-                    }
-                });
-                on(dom.byId('toggleDems'), 'click', function() {
-                    var layer = mapConfig.mapLayerCollection.getLayerById('DEM Extents');
-                    if (layer.visible) {
-                        layer.hide();
-                    } else {
-                        layer.show();
-                    }
-                });
-                
 
                 //var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "mercatorCoordinatesToolbar");
 
