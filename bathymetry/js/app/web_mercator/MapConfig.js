@@ -37,7 +37,11 @@ define([
 
                 var identify = new Identify({mapConfig: this, identifyPane: identifyPane});
 
-                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([2]);         
+                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0,1]);
+                this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
+
+                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
+
 
             }
          
