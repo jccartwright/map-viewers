@@ -1,6 +1,15 @@
-define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layers/ArcGISTiledMapServiceLayer",
-    "esri/layers/ArcGISDynamicMapServiceLayer"],
-    function(declare, AbstractLayerCollection, ArcGISTiledMapServiceLayer, ArcGISDynamicMapServiceLayer){
+define([
+    "dojo/_base/declare", 
+    "ngdc/layers/AbstractLayerCollection", 
+    "esri/layers/ArcGISTiledMapServiceLayer",
+    "esri/layers/ArcGISDynamicMapServiceLayer"
+    ],
+    function(
+        declare, 
+        AbstractLayerCollection, 
+        ArcGISTiledMapServiceLayer, 
+        ArcGISDynamicMapServiceLayer
+        ){
 
         return declare([AbstractLayerCollection], {
             constructor: function() {
