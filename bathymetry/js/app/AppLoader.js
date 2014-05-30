@@ -122,31 +122,47 @@ define([
                     var mapId = nval.id;
                     console.debug(mapId + ' map view selected');
                     topic.publish('/ngdc/mapViewActivated', mapId);
+                    this.enableMapView(mapId);
                 }));
             },
 
-            enableIdentify: function(/*String*/ mapId) {
+            enableMapView: function(/*String*/ mapId) {
                 if (mapId == 'mercator') {
                     this.mercatorMapConfig.identify.enabled = true;
-                    this.mercatorMapConfig.identifyPane.enable();                    
+                    this.mercatorMapConfig.identifyPane.enable();  
+                    this.mercatorMapConfig.mapLayerCollection.resume();
+
                     this.arcticMapConfig.identify.enabled = false;
                     this.arcticMapConfig.identifyPane.disable();
+                    this.arcticMapConfig.mapLayerCollection.suspend();
+
                     this.antarcticMapConfig.identify.enabled = false;
                     this.antarcticMapConfig.identifyPane.disable();
+                    this.antarcticMapConfig.mapLayerCollection.suspend();
                 } else if (mapId == 'arctic') {
                     this.mercatorMapConfig.identify.enabled = false;
                     this.mercatorMapConfig.identifyPane.disable();
+                    this.mercatorMapConfig.mapLayerCollection.suspend();
+
                     this.arcticMapConfig.identify.enabled = true;
                     this.arcticMapConfig.identifyPane.enable();
+                    this.arcticMapConfig.mapLayerCollection.resume();
+
                     this.antarcticMapConfig.identify.enabled = false;
                     this.antarcticMapConfig.identifyPane.disable();
+                    this.antarcticMapConfig.mapLayerCollection.suspend();
                 } else { //antarctic
                     this.mercatorMapConfig.identify.enabled = false;
                     this.mercatorMapConfig.identifyPane.disable();
+                    this.mercatorMapConfig.mapLayerCollection.suspend();
+
                     this.arcticMapConfig.identify.enabled = false;
                     this.arcticMapConfig.identifyPane.disable();
+                    this.arcticMapConfig.mapLayerCollection.suspend();
+
                     this.antarcticMapConfig.identify.enabled = true;
                     this.antarcticMapConfig.identifyPane.enable();
+                    this.antarcticMapConfig.mapLayerCollection.resume();
                 }   
             },
 
