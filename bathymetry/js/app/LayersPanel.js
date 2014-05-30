@@ -4,6 +4,8 @@ define([
     "dojo/topic",
     "dojo/on",
     "dojo/aspect",
+    "dojo/dom",
+    "dojo/dom-attr",
     "dijit/form/CheckBox",
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
@@ -15,6 +17,8 @@ define([
         topic,
         on,
         aspect,
+        dom,
+        domAttr,
         CheckBox,
         _WidgetBase, 
         _TemplatedMixin,
@@ -59,7 +63,25 @@ define([
                 })); 
                 on(this.chkDemHillshades, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'DEM Hillshades', this.chkDemHillshades.checked);
-                }));                
+                }));     
+
+                topic.subscribe('/ngdc/mapViewActivated', lang.hitch(this, function(mapId) {
+                    if (mapId == 'antarctic') {
+                        this.setNosHydroDisabled(true);
+                    } else {
+                        this.setNosHydroDisabled(false);
+                    }
+                }));
+            },
+
+            setNosHydroDisabled: function(disabled) {
+                domAttr.set('chkNosHydro0', 'disabled', disabled);
+                domAttr.set('chkNosHydro1', 'disabled', disabled);
+                domAttr.set('chkNosHydro2', 'disabled', disabled);
+                domAttr.set('chkBagHillshades', 'disabled', disabled);
+                domAttr.set('chkDemHillshades', 'disabled', disabled);
+                domAttr.set('chkDems', 'disabled', disabled);
+
             }
         });
     }
