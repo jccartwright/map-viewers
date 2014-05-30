@@ -19,10 +19,10 @@ define([
 
             //called after parent class constructor
             constructor: function() {
-                logger.debug('inside constructor for app/web_mercator/Identify');
+                logger.debug('inside constructor for app/antarctic/Identify');
 
                 //augment arguments object with list of layers to identify.
-                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'NOS Hydro (non-digital)', 'DEM Extents'];
+                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'DEM Extents'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
@@ -30,10 +30,7 @@ define([
                 //formatter specific to each sublayer, keyed by Layer/sublayer name.
                 this.formatters = {
                     'Multibeam/Multibeam Bathymetric Surveys': lang.hitch(this, this.multibeamFormatter),
-                    'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),
-                    'NOS Hydrographic Surveys/Surveys with BAGs': lang.hitch(this, this.nosHydroFormatter),
-                    'NOS Hydrographic Surveys/Digital Data': lang.hitch(this, this.nosHydroFormatter),
-                    'NOS Hydro (non-digital)/Non-Digital': lang.hitch(this, this.nosHydroFormatter),
+                    'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),                    
                     'DEM Extents/All NGDC Bathymetry DEMs': lang.hitch(this, this.demFormatter)
                 };
             }, //end constructor
@@ -104,28 +101,6 @@ define([
                 return html;
             },
 
-            nosHydroFormatter: function(feature) {
-                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
-
-                var template = '\
-                    <div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>\
-                    <div class="valueName">Survey ID: <span class="parameterValue">${surveyId}</span></div>\
-                    <div class="valueName">Survey Year: <span class="parameterValue">${surveyYear}</span></div>\
-                    <div class="valueName">Locality: <span class="parameterValue">${locality}</span></div>\
-                    <div class="valueName">Sublocality: <span class="parameterValue">${sublocality}</span></div>\
-                    <div class="valueName">Platform: <span class="parameterValue">${fieldUnit}</span></div>';
-
-                var html = string.substitute(template, {
-                        url: a['URL'],
-                        surveyId: a['Survey ID'],
-                        surveyYear: a['Year'],
-                        locality: a['Locality'],
-                        sublocality: a['Sublocality'],
-                        fieldUnit: a['Field Unit']
-                    });                
-                return html;
-            },
-
             demFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
@@ -174,23 +149,6 @@ define([
                 return a.feature.attributes['Survey Start Year'] < b.feature.attributes['Survey Start Year'] ? 1 : -1;
             },
 
-            nosHydroSort: function(a, b) {
-                //Sort by layer ID: BAGs, Digital, Non-Digital, then by year descending (nulls last) then alphabetical for hydro surveys.
-                if (a.layerId == b.layerId) {                   
-                    if (a.feature.attributes['Year'] == 'Null') {                                           
-                        return 1;
-                    }
-                    if (b.feature.attributes['Year'] == 'Null') { 
-                        return -1;
-                    }
-                    if (a.feature.attributes['Year'] == b.feature.attributes['Year']) {
-                        return a.feature.attributes['Survey ID'] <= b.feature.attributes['Survey ID'] ? -1 : 1;
-                    }
-                    return a.feature.attributes['Year'] < b.feature.attributes['Year'] ? 1 : -1;
-                }
-                return a.layerId <= b.layerId ? -1 : 1;
-            },
-
             demSort: function(a, b) {
                 //Sort alphabetically, but Global relief (e.g. ETOPO1) should be at the end of the list
                 if (a.feature.attributes['Category'] == 'Global Relief')
@@ -212,13 +170,6 @@ define([
                         features.sort(this.tracklineSort);
                     }                    
                 }
-
-                if (results['NOS Hydrographic Surveys']) {  
-                    for (sublayer in results['NOS Hydrographic Surveys']) {
-                       results['NOS Hydrographic Surveys'][sublayer].sort(this.nosHydroSort);
-                    }                                
-                }
-                
 
                 if (results['DEM Extents']) {    
                     if (features = results['DEM Extents']['All NGDC Bathymetry DEMs']) {
