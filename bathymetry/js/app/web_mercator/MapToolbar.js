@@ -1,5 +1,11 @@
-define(["dojo/_base/declare", "ngdc/MapToolbar"],
-    function(declare, MapToolbar){
+define([
+    "dojo/_base/declare", 
+    "ngdc/MapToolbar"
+    ],
+    function(
+        declare, 
+        MapToolbar
+        ){
 
         return declare([MapToolbar], {
             constructor: function() {
