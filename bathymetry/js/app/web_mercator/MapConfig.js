@@ -29,7 +29,7 @@ define([
                 mapToolbar.startup();
 
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
-                
+
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
                     identify: this.identify,
@@ -39,7 +39,7 @@ define([
                 this.identifyPane.startup();
 
                 
-                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0,1]);
+                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
                 this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
 
                 this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
