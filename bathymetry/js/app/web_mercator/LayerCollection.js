@@ -134,7 +134,7 @@ define([
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer", {
                         id: "DEM Extents",
-                        visible: true,
+                        visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer", {
@@ -158,7 +158,7 @@ define([
                         id: "Trackline Bathymetry",
                         tiledService: this.getLayerById("Trackline Bathymetry (tiled)"),
                         dynamicService: this.getLayerById("Trackline Combined (dynamic)"),
-                        visible: true,
+                        visible: false,
                         cutoffZoom: 9,
                         defaultVisibleLayers: [1]
                      },
@@ -166,7 +166,7 @@ define([
                          id: "NOS Hydrographic Surveys",
                          tiledService: this.getLayerById("NOS Hydro (tiled)"),
                          dynamicService: this.getLayerById("NOS Hydro (dynamic)"),
-                         visible: true,
+                         visible: false,
                          cutoffZoom: 9
                      }                     
                 ];
