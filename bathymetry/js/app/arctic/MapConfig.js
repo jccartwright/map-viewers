@@ -31,6 +31,8 @@ define([
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
                 this.identify.enabled = false;
 
+                this.mapLayerCollection.suspend();
+
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
                     identify: this.identify,
@@ -40,8 +42,10 @@ define([
                 this.identifyPane.startup();
                 this.identifyPane.enabled = false;
 
-                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0,1]);
+                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
                 this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
+                
+                this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
 
                 this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
             }
