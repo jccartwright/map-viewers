@@ -115,8 +115,8 @@ define([
                 this.uid = 0;
                 this.expandedNodePaths = [];
                 //for (var svcName in results) {
-                for (var i = 0; i < this.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
-                    var svcName = this.layerIds[i];
+                for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
+                    var svcName = this.identify.layerIds[i];
                     for (var layerName in results[svcName]) {
 
                         numFeaturesForLayer = results[svcName][layerName].length;
