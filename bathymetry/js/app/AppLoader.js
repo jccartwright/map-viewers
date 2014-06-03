@@ -20,6 +20,7 @@ define([
     "ngdc/arctic/ZoomLevels",
     "ngdc/antarctic/ZoomLevels",
     "ngdc/Banner",
+    "ngdc/CoordinatesToolbar",
     "app/web_mercator/LayerCollection",
     "app/arctic/LayerCollection",
     "app/antarctic/LayerCollection",
@@ -52,6 +53,7 @@ define([
         ArcticZoomLevels,
         AntarcticZoomLevels,
         Banner,
+        CoordinatesToolbar,
         MercatorLayerCollection,
         ArcticLayerCollection,
         AntarcticLayerCollection,
@@ -130,39 +132,39 @@ define([
                 if (mapId == 'mercator') {
                     this.mercatorMapConfig.identify.enabled = true;
                     this.mercatorMapConfig.identifyPane.enable();  
-                    this.mercatorMapConfig.mapLayerCollection.resume();
+                    // this.mercatorMapConfig.mapLayerCollection.resume();
 
                     this.arcticMapConfig.identify.enabled = false;
                     this.arcticMapConfig.identifyPane.disable();
-                    this.arcticMapConfig.mapLayerCollection.suspend();
+                    // this.arcticMapConfig.mapLayerCollection.suspend();
 
                     this.antarcticMapConfig.identify.enabled = false;
                     this.antarcticMapConfig.identifyPane.disable();
-                    this.antarcticMapConfig.mapLayerCollection.suspend();
+                    // this.antarcticMapConfig.mapLayerCollection.suspend();
                 } else if (mapId == 'arctic') {
                     this.mercatorMapConfig.identify.enabled = false;
                     this.mercatorMapConfig.identifyPane.disable();
-                    this.mercatorMapConfig.mapLayerCollection.suspend();
+                    // this.mercatorMapConfig.mapLayerCollection.suspend();
 
                     this.arcticMapConfig.identify.enabled = true;
                     this.arcticMapConfig.identifyPane.enable();
-                    this.arcticMapConfig.mapLayerCollection.resume();
+                    // this.arcticMapConfig.mapLayerCollection.resume();
 
                     this.antarcticMapConfig.identify.enabled = false;
                     this.antarcticMapConfig.identifyPane.disable();
-                    this.antarcticMapConfig.mapLayerCollection.suspend();
+                    // this.antarcticMapConfig.mapLayerCollection.suspend();
                 } else { //antarctic
                     this.mercatorMapConfig.identify.enabled = false;
                     this.mercatorMapConfig.identifyPane.disable();
-                    this.mercatorMapConfig.mapLayerCollection.suspend();
+                    // this.mercatorMapConfig.mapLayerCollection.suspend();
 
                     this.arcticMapConfig.identify.enabled = false;
                     this.arcticMapConfig.identifyPane.disable();
-                    this.arcticMapConfig.mapLayerCollection.suspend();
+                    // this.arcticMapConfig.mapLayerCollection.suspend();
 
                     this.antarcticMapConfig.identify.enabled = true;
                     this.antarcticMapConfig.identifyPane.enable();
-                    this.antarcticMapConfig.mapLayerCollection.resume();
+                    // this.antarcticMapConfig.mapLayerCollection.resume();
                 }   
             },
 
@@ -182,7 +184,23 @@ define([
                     lods: zoomLevels.lods
                 }, new MercatorLayerCollection());  
 
-                //var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "mercatorCoordinatesToolbar");
+                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, "mercatorCoordinatesToolbar");
+
+                //Hide the scalebar at small scales <= 4
+                on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
+                    var level = this.mercatorMapConfig.map.getAbsoluteLevel();
+                    console.log(level);
+                    if (level <= 4) {
+                        //These need to be on a short timer due to unexpected errors during the zoom animation
+                        setTimeout(function() {
+                            coordinatesToolbar.hideScalebar();
+                        }, 100);
+                    } else {
+                        setTimeout(function() {
+                            coordinatesToolbar.showScalebar();
+                        }, 100);
+                    }
+                }));
 
             },
 
@@ -209,6 +227,8 @@ define([
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
                 }, new ArcticLayerCollection());
+
+                var coordinatesToolbar = new CoordinatesToolbar({map: this.arcticMapConfig.map}, "arcticCoordinatesToolbar");
             },
 
             setupAntarcticView: function() {
@@ -234,6 +254,8 @@ define([
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
                 }, new AntarcticLayerCollection());
+
+                var coordinatesToolbar = new CoordinatesToolbar({map: this.antarcticMapConfig.map}, "antarcticCoordinatesToolbar");
             }
         })
     }
