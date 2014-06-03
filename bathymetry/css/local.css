@@ -11,10 +11,7 @@ html,body {
 
 
 .map {
-    padding-left: 0px;
-    padding-bottom: 0px;
-    padding-right: 0px;
-    padding-top: 0px;
+    padding: 0px !important;
 }
 
 #mercator, #arctic, #antarctic {
@@ -46,19 +43,10 @@ html,body {
 }
 
 .coordinatesToolbar {
-    display: block;
-    font-size: 10px;
     position: absolute;
-    bottom: 0;
-    left: 10;
-    z-index: 1;
-    height: 50px;
-    width: 190px;
-    border: none;
-    padding: 0px 3px 0px 3px;
-    color: #FFF;
-    margin-bottom: 5px;
-    white-space: nowrap;
+    bottom: 10px;
+    left: 10px;
+    z-index: 9999;
 }
 
 
@@ -164,7 +152,6 @@ html,body {
 
 #header {
     height: 75px;
-    background-color: gray;
 }
 
 #leftPane {
