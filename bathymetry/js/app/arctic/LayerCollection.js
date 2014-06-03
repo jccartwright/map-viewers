@@ -1,6 +1,14 @@
-define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layers/ArcGISTiledMapServiceLayer",
-    "esri/layers/ArcGISDynamicMapServiceLayer"],
-    function(declare, LayerCollection, ArcGISTiledMapServiceLayer, ArcGISDynamicMapServiceLayer){
+define([
+    "dojo/_base/declare", 
+    "ngdc/layers/AbstractLayerCollection", 
+    "esri/layers/ArcGISTiledMapServiceLayer",
+    "esri/layers/ArcGISDynamicMapServiceLayer"
+    ],
+    function(
+        declare, 
+        LayerCollection, 
+        ArcGISTiledMapServiceLayer, 
+        ArcGISDynamicMapServiceLayer){
 
         return declare([LayerCollection], {
             constructor: function() {
@@ -22,10 +30,15 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         id: "Arctic Basemap",
                         visible: true
                     }),                 
-                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_hillshades_mosaic/MapServer", {
+                    new esri.layers.ArcGISImageServiceLayer("http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer", {
                         id: "DEM Hillshades",
                         visible: false,
-                        imageParameters: this.imageParameters.png32
+                        imageServiceParameters: this.imageServiceParameters
+                    }),
+                    new esri.layers.ArcGISImageServiceLayer("http://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer", {
+                        id: "BAG Hillshades",
+                        visible: false,
+                        imageServiceParameters: this.imageServiceParameters
                     }),                    
                     new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/ibcao_contours/MapServer", {
                         id: "IBCAO Contours",
@@ -33,12 +46,17 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         opacity: 0.5
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
+                        id: "NOS Hydro (non-digital)",
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),
+                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
                         id: "NOS Hydrographic Surveys",
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer", {
-                        id: "Trackline Combined",
+                        id: "Trackline Bathymetry",
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),                    

@@ -8,17 +8,19 @@ define([
     "dojo/topic",
     "dojo/on",
     "dojo/aspect",
+    "dijit/form/CheckBox",
     "esri/config",
     "esri/geometry/Extent",
     "esri/SpatialReference",
     "ngdc/Logger",
     "app/web_mercator/MapConfig",
-    "ngdc/arctic/MapConfig",
-    "ngdc/antarctic/MapConfig",
+    "app/arctic/MapConfig",
+    "app/antarctic/MapConfig",
     "ngdc/web_mercator/ZoomLevels",
     "ngdc/arctic/ZoomLevels",
     "ngdc/antarctic/ZoomLevels",
     "ngdc/Banner",
+    "ngdc/CoordinatesToolbar",
     "app/web_mercator/LayerCollection",
     "app/arctic/LayerCollection",
     "app/antarctic/LayerCollection",
@@ -27,6 +29,7 @@ define([
     "app/antarctic/MapToolbar",
     "app/web_mercator/Identify",
     "app/AppIdentifyPane",
+    "app/LayersPanel",
     "dojo/domReady!"],
     function(
         declare,
@@ -38,6 +41,7 @@ define([
         topic,
         on,
         aspect,
+        CheckBox,
         esriConfig,
         Extent,
         SpatialReference,
@@ -49,6 +53,7 @@ define([
         ArcticZoomLevels,
         AntarcticZoomLevels,
         Banner,
+        CoordinatesToolbar,
         MercatorLayerCollection,
         ArcticLayerCollection,
         AntarcticLayerCollection,
@@ -56,10 +61,15 @@ define([
         ArcticMapToolbar,
         AntarcticMapToolbar,
         WebMercatorIdentify,
-        IdentifyPane) {
+        IdentifyPane,
+        LayersPanel) {
 
         return declare(null, {
-            constructor:function(args){
+            mercatorMapConfig: null,
+            arcticMapConfig: null,
+            antarcticMapConfig: null,
+
+            constructor: function(args){
                 declare.safeMixin(this,args);
                 this.overlayNode = dom.byId(this.overlayNodeId);
             },
@@ -67,7 +77,7 @@ define([
             init: function() {
                 esriConfig.defaults.io.corsEnabledServers = [
                     "http://maps.ngdc.noaa.gov/arcgis/rest/services",
-                    "http://agsdevel.ngdc.noaa.gov/arcgis/rest/services"];
+                    "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services"];
 
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
@@ -78,7 +88,7 @@ define([
 
                 this.setupBanner();
 
-                this.setupMapViews();                
+                this.setupMapViews();
             },
 
             setupBanner: function() {
@@ -102,13 +112,60 @@ define([
                 this.setupMercatorView();
 
                 registry.byId('mapContainer').selectChild('arctic');
-                //this.setupArcticView();
+                this.setupArcticView();
 
                 registry.byId('mapContainer').selectChild('antarctic');
-                //this.setupAntarcticView();
+                this.setupAntarcticView();
 
                 //go back to mercator as default view
                 registry.byId('mapContainer').selectChild('mercator');
+
+                registry.byId('mapContainer').watch('selectedChildWidget', lang.hitch(this, function(name, oval, nval){
+                    var mapId = nval.id;
+                    console.debug(mapId + ' map view selected');
+                    topic.publish('/ngdc/mapViewActivated', mapId);
+                    this.enableMapView(mapId);
+                }));
+            },
+
+            enableMapView: function(/*String*/ mapId) {
+                if (mapId == 'mercator') {
+                    this.mercatorMapConfig.identify.enabled = true;
+                    this.mercatorMapConfig.identifyPane.enable();  
+                    // this.mercatorMapConfig.mapLayerCollection.resume();
+
+                    this.arcticMapConfig.identify.enabled = false;
+                    this.arcticMapConfig.identifyPane.disable();
+                    // this.arcticMapConfig.mapLayerCollection.suspend();
+
+                    this.antarcticMapConfig.identify.enabled = false;
+                    this.antarcticMapConfig.identifyPane.disable();
+                    // this.antarcticMapConfig.mapLayerCollection.suspend();
+                } else if (mapId == 'arctic') {
+                    this.mercatorMapConfig.identify.enabled = false;
+                    this.mercatorMapConfig.identifyPane.disable();
+                    // this.mercatorMapConfig.mapLayerCollection.suspend();
+
+                    this.arcticMapConfig.identify.enabled = true;
+                    this.arcticMapConfig.identifyPane.enable();
+                    // this.arcticMapConfig.mapLayerCollection.resume();
+
+                    this.antarcticMapConfig.identify.enabled = false;
+                    this.antarcticMapConfig.identifyPane.disable();
+                    // this.antarcticMapConfig.mapLayerCollection.suspend();
+                } else { //antarctic
+                    this.mercatorMapConfig.identify.enabled = false;
+                    this.mercatorMapConfig.identifyPane.disable();
+                    // this.mercatorMapConfig.mapLayerCollection.suspend();
+
+                    this.arcticMapConfig.identify.enabled = false;
+                    this.arcticMapConfig.identifyPane.disable();
+                    // this.arcticMapConfig.mapLayerCollection.suspend();
+
+                    this.antarcticMapConfig.identify.enabled = true;
+                    this.antarcticMapConfig.identifyPane.enable();
+                    // this.antarcticMapConfig.mapLayerCollection.resume();
+                }   
             },
 
             setupMercatorView: function() {
@@ -116,7 +173,7 @@ define([
 
                 var zoomLevels = new MercatorZoomLevels();
 
-                var mapConfig = new MercatorMapConfig("mercator", {
+                this.mercatorMapConfig = new MercatorMapConfig("mercator", {
                     center:[-45,45],
                     zoom: 3,
                     logo: false,
@@ -125,43 +182,25 @@ define([
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
-                }, new MercatorLayerCollection());                
+                }, new MercatorLayerCollection());  
 
-                on(dom.byId('toggleMultibeam'), 'click', function() {
-                    var layer = mapConfig.mapLayerCollection.getLayerById('Multibeam');
-                    if (layer.visible) {
-                        layer.hide();
-                    } else {
-                        layer.show();
-                    }
-                });
-                on(dom.byId('toggleTrackline'), 'click', function() {
-                    var layer = mapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry');
-                    if (layer.visible) {
-                        layer.hide();
-                    } else {
-                        layer.show();
-                    }
-                });
-                on(dom.byId('toggleNosHydro'), 'click', function() {
-                    var layer = mapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys');
-                    if (layer.visible) {
-                        layer.hide();
-                    } else {
-                        layer.show();
-                    }
-                });
-                on(dom.byId('toggleDems'), 'click', function() {
-                    var layer = mapConfig.mapLayerCollection.getLayerById('DEM Extents');
-                    if (layer.visible) {
-                        layer.hide();
-                    } else {
-                        layer.show();
-                    }
-                });
-                
+                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, "mercatorCoordinatesToolbar");
 
-                //var coordinatesToolbar = new CoordinatesToolbar({map: mapConfig.map}, "mercatorCoordinatesToolbar");
+                //Hide the scalebar at small scales <= 4
+                on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
+                    var level = this.mercatorMapConfig.map.getAbsoluteLevel();
+                    console.log(level);
+                    if (level <= 4) {
+                        //These need to be on a short timer due to unexpected errors during the zoom animation
+                        setTimeout(function() {
+                            coordinatesToolbar.hideScalebar();
+                        }, 100);
+                    } else {
+                        setTimeout(function() {
+                            coordinatesToolbar.showScalebar();
+                        }, 100);
+                    }
+                }));
 
             },
 
@@ -178,7 +217,7 @@ define([
 
                 var zoomLevels = new ArcticZoomLevels();            
 
-                var mapConfig = new ArcticMapConfig("arctic", {
+                this.arcticMapConfig = new ArcticMapConfig("arctic", {
                     extent: initialExtent,
                     //zoom: 3,
                     logo: false,
@@ -189,8 +228,7 @@ define([
                     lods: zoomLevels.lods
                 }, new ArcticLayerCollection());
 
-                var mapToolbar = new ArcticMapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "arcticMapToolbar");
-                mapToolbar.startup();
+                var coordinatesToolbar = new CoordinatesToolbar({map: this.arcticMapConfig.map}, "arcticCoordinatesToolbar");
             },
 
             setupAntarcticView: function() {
@@ -206,7 +244,7 @@ define([
 
                 var zoomLevels = new AntarcticZoomLevels();
             
-                var mapConfig = new AntarcticMapConfig("antarctic", {
+                this.antarcticMapConfig = new AntarcticMapConfig("antarctic", {
                     extent: initialExtent,
                     //zoom: 3,
                     logo: false,
@@ -217,8 +255,7 @@ define([
                     lods: zoomLevels.lods
                 }, new AntarcticLayerCollection());
 
-                var mapToolbar = new AntarcticMapToolbar({map: mapConfig.map, layerCollection: mapConfig.mapLayerCollection}, "antarcticMapToolbar");
-                mapToolbar.startup();
+                var coordinatesToolbar = new CoordinatesToolbar({map: this.antarcticMapConfig.map}, "antarcticCoordinatesToolbar");
             }
         })
     }

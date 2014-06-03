@@ -25,22 +25,6 @@
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
     <link rel="stylesheet" href="css/local.css">
 
-    <style>
-        #mapToolbar {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            z-index: 100;
-        }
-
-        #coordinatesToolbar {
-            position: absolute;
-            left: 15px;
-            bottom: 15px;
-            z-index: 100;
-        }
-    </style>
-
     <script>
         var dojoConfig = {
             waitSeconds: 5,
@@ -68,6 +52,9 @@
         };
     </script>
     <script src="http://js.arcgis.com/3.9/"></script>
+    <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
+    <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3995.js"></script>
+    <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3031.js"></script>
 </head>
 <body class="tundra">
 <div id="loadingOverlay" class="loadingOverlay pageOverlay">
@@ -84,10 +71,7 @@
 
     <div id="leftPane" data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true">
         <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" title="Layers">
-            <button id="toggleMultibeam" data-dojo-type="dijit/form/Button" type="button">Toggle Multibeam</button><br>
-            <button id="toggleTrackline" data-dojo-type="dijit/form/Button" type="button">Toggle Tracklines</button><br>
-            <button id="toggleNosHydro" data-dojo-type="dijit/form/Button" type="button">Toggle NOS Hydro</button><br>
-            <button id="toggleDems" data-dojo-type="dijit/form/Button" type="button">Toggle DEMs</button>
+            <div id="layers" data-dojo-type="app/LayersPanel"></div>
         </div>
         <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
             <div id="credits" data-dojo-type="app/CreditsPanel"></div>
@@ -119,7 +103,9 @@
     </div> <!-- end centerPane -->
 
 </div> <!-- end mainWindow BorderContainer -->
-<div id="identifyPaneDiv"></div>
+<div id="mercatorIdentifyPaneDiv"></div>
+<div id="arcticIdentifyPaneDiv"></div>
+<div id="antarcticIdentifyPaneDiv"></div>
 
 <script>
     //unless the Dijit is listed in the require list, it cannot be addressed via the registry

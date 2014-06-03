@@ -19,7 +19,7 @@ define([
 
             //called after parent class constructor
             constructor: function() {
-                logger.debug('inside constructor for app/web_mercator/Identify');
+                logger.debug('inside constructor for app/arctic/Identify');
 
                 //augment arguments object with list of layers to identify.
                 arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'NOS Hydro (non-digital)', 'DEM Extents'];

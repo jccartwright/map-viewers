@@ -2,9 +2,9 @@ define([
     "dojo/_base/declare", 
     "dojo/_base/lang",
     "dojo/dom",
-    "ngdc/web_mercator/MapConfig",
-    "app/web_mercator/MapToolbar",
-    "app/web_mercator/Identify",
+    "ngdc/arctic/MapConfig",
+    "app/arctic/MapToolbar",
+    "app/arctic/Identify",
     "app/AppIdentifyPane"
     ],
     function(
@@ -23,28 +23,31 @@ define([
             mapReady: function() {
                 this.inherited(arguments);
 
-                console.log("inside custom Web Mercator mapReady...");   
+                console.log("inside custom Arctic mapReady...");   
 
-                var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, "mercatorMapToolbar");
+                var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, "arcticMapToolbar");
                 mapToolbar.startup();
-
+                
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
+                this.identify.enabled = false;
+
+                //this.mapLayerCollection.suspend();
 
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
                     identify: this.identify,
                     class: "identifyPane",
                     autoExpandTree: false
-                }, dom.byId("mercatorIdentifyPaneDiv"));
+                }, dom.byId("arcticIdentifyPaneDiv"));
                 this.identifyPane.startup();
+                this.identifyPane.enabled = false;
 
-                
                 this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
                 this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
+                
+                this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
 
                 this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
-
-
             }
          
             

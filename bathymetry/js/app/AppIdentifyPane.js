@@ -115,8 +115,8 @@ define([
                 this.uid = 0;
                 this.expandedNodePaths = [];
                 //for (var svcName in results) {
-                for (var i = 0; i < this.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
-                    var svcName = this.layerIds[i];
+                for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
+                    var svcName = this.identify.layerIds[i];
                     for (var layerName in results[svcName]) {
 
                         numFeaturesForLayer = results[svcName][layerName].length;
@@ -127,7 +127,7 @@ define([
                             var layerKey = svcName + '/' + layerName;
                             var layerUrl = results[svcName][layerName][j].layerUrl;
                             
-                            if (svcName == 'NOS Hydrographic Surveys') {
+                            if (svcName == 'NOS Hydrographic Surveys' || svcName == 'NOS Hydro (non-digital)') {
                                 //Create an "NOS Hydrographic Surveys" folder if it doesn't already exist
                                 if (this.featureStore.query({id: 'NOS Hydrographic Surveys'}).length == 0) {
                                     this.featureStore.put({
@@ -148,7 +148,8 @@ define([
                                     label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
                                     type: 'folder',
                                     //If NOS Hydro, parent is the NOS Hydro folder, else parent is root.
-                                    parent: svcName == 'NOS Hydrographic Surveys' ? 'NOS Hydrographic Surveys' : 'root'
+                                    parent: svcName == 'NOS Hydrographic Surveys' || svcName == 'NOS Hydro (non-digital)' ? 
+                                        'NOS Hydrographic Surveys' : 'root'
                                 });
                                 //this.expandedNodePaths.push(layerName);
                             }

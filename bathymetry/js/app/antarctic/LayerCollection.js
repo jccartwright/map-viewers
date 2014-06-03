@@ -1,6 +1,15 @@
-define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layers/ArcGISTiledMapServiceLayer",
-    "esri/layers/ArcGISDynamicMapServiceLayer"],
-    function(declare, LayerCollection, ArcGISTiledMapServiceLayer, ArcGISDynamicMapServiceLayer){
+define([
+    "dojo/_base/declare", 
+    "ngdc/layers/AbstractLayerCollection", 
+    "esri/layers/ArcGISTiledMapServiceLayer",
+    "esri/layers/ArcGISDynamicMapServiceLayer"
+    ],
+    function(
+        declare, 
+        LayerCollection, 
+        ArcGISTiledMapServiceLayer, 
+        ArcGISDynamicMapServiceLayer
+        ){
 
         return declare([LayerCollection], {
             constructor: function() {
@@ -38,7 +47,7 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         imageParameters: this.imageParameters.png32
                     }),
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer", {
-                        id: "Trackline Combined",
+                        id: "Trackline Bathymetry",
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),                    
