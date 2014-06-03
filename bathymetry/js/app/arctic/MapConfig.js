@@ -31,7 +31,7 @@ define([
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
                 this.identify.enabled = false;
 
-                this.mapLayerCollection.suspend();
+                //this.mapLayerCollection.suspend();
 
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
