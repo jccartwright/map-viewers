@@ -44,7 +44,14 @@ define([
 
                 this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
 
+                this.mapLayerCollection.getLayerById('CSC Lidar').setVisibleLayers([-1]);
 
+                //Data_Classes_Available
+                //this.mapLayerCollection.getLayerById('DAV').setDefinitionExpression('Data_Classes_Available = 11');
+                //Bathymetric Lidar Points
+                var layerDefinitions = [];
+                layerDefinitions[4] = "Data_Classes_Available LIKE '%Bathymetric Lidar Points%'";
+                this.mapLayerCollection.getLayerById('CSC Lidar').setLayerDefinitions(layerDefinitions);
             }
          
             

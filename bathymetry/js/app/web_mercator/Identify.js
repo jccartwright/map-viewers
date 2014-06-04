@@ -22,7 +22,7 @@ define([
                 logger.debug('inside constructor for app/web_mercator/Identify');
 
                 //augment arguments object with list of layers to identify.
-                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'NOS Hydro (non-digital)', 'DEM Extents'];
+                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'NOS Hydro (non-digital)', 'DEM Extents', 'CSC Lidar'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
@@ -34,7 +34,8 @@ define([
                     'NOS Hydrographic Surveys/Surveys with BAGs': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydrographic Surveys/Digital Data': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydro (non-digital)/Non-Digital': lang.hitch(this, this.nosHydroFormatter),
-                    'DEM Extents/All NGDC Bathymetry DEMs': lang.hitch(this, this.demFormatter)
+                    'DEM Extents/All NGDC Bathymetry DEMs': lang.hitch(this, this.demFormatter),
+                    'CSC Lidar/Lidar': lang.hitch(this, this.lidarFormatter)
                 };
             }, //end constructor
 
@@ -154,6 +155,26 @@ define([
                         type: a['Type'],
                         coverage: a['Coverage'],
                         completionDate: a['Completion Date']
+                    });                
+                return html;
+            },
+
+            lidarFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <div class="valueName">Survey ID: <span class="parameterValue">${id}</span></div>\
+                    <div class="valueName"><span class="parameterValue"><a href="${prefix}${id}" target="_blank">Link to Data</a></span></div>\
+                    <div class="valueName">Name: <span class="parameterValue">${name}</span></div>\
+                    <div class="valueName">Project: <span class="parameterValue">${project}</span></div>\
+                    <div class="valueName">Year: <span class="parameterValue">${year}</span></div>';
+
+                var html = string.substitute(template, {
+                        id: a['ID'],
+                        name: a['Name'],
+                        project: a['Project'],
+                        year: a['Year'],
+                        prefix: 'http://www.csc.noaa.gov/dataviewer/index.html?action=advsearch&qType=in&qFld=ID&qVal='
                     });                
                 return html;
             },

@@ -37,8 +37,8 @@ html,body {
 .mapToolbar {
     border: none;
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 10px;
+    top: 10px;
     z-index: 100;
 }
 
@@ -215,4 +215,53 @@ html,body {
     font-style: normal;
     font-weight: normal;
     color: #000;
+}
+
+.filterText {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    vertical-align: middle;
+    background: #EEE;
+}
+
+.surveySelect {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.surveySelect-multiSelect {
+    width: 300px;
+}
+
+.surveySelect-filteringSelect {
+    width: 200px;
+}
+
+.surveySelect-yearSpinner {
+    width: 55px;
+}
+
+.surveySelect-countSpan {
+    font-size: smaller;
+}
+
+.surveySelect-dateTextBox {
+    font: 12px arial,helvetica,verdana,sans-serif;
+    width: 8em;
+}
+
+#surveyListDiv {
+    white-space: normal;
+    width: 300px;
+}
+
+.layersPanel_class {
+    font: 12px arial,helvetica,verdana,sans-serif;
+}
+
+.wildcardLabel {
+    font-size: 11px;
 }

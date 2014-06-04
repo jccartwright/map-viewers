@@ -88,7 +88,17 @@ define([
 
                 this.setupBanner();
 
+                this.setupLayersPanel();
+
                 this.setupMapViews();
+
+                //Subscribe to messages passed by the search dialog
+                topic.subscribe("/bathymetry/Search", lang.hitch(this, function(values) {
+                    this.filterSurveys(values);
+                }));
+                topic.subscribe("/bathymetry/ResetSearch", lang.hitch(this, function() {
+                    this.resetSurveyFilter();
+                }));
             },
 
             setupBanner: function() {
@@ -104,6 +114,11 @@ define([
                     image: "images/bathymetry_viewer_logo.png"
                 });
                 banner.placeAt('banner');
+            },
+
+            setupLayersPanel: function() {
+                this.layersPanel = new LayersPanel();
+                this.layersPanel.placeAt('layersPanel');
             },
 
             setupMapViews: function() {
@@ -126,45 +141,23 @@ define([
                     topic.publish('/ngdc/mapViewActivated', mapId);
                     this.enableMapView(mapId);
                 }));
+
+                this.enableMapView('mercator');
             },
 
             enableMapView: function(/*String*/ mapId) {
                 if (mapId == 'mercator') {
-                    this.mercatorMapConfig.identify.enabled = true;
-                    this.mercatorMapConfig.identifyPane.enable();  
-                    // this.mercatorMapConfig.mapLayerCollection.resume();
-
-                    this.arcticMapConfig.identify.enabled = false;
-                    this.arcticMapConfig.identifyPane.disable();
-                    // this.arcticMapConfig.mapLayerCollection.suspend();
-
-                    this.antarcticMapConfig.identify.enabled = false;
-                    this.antarcticMapConfig.identifyPane.disable();
-                    // this.antarcticMapConfig.mapLayerCollection.suspend();
+                    this.mercatorMapConfig.setEnabled(true);
+                    this.arcticMapConfig.setEnabled(false);
+                    this.antarcticMapConfig.setEnabled(false);
                 } else if (mapId == 'arctic') {
-                    this.mercatorMapConfig.identify.enabled = false;
-                    this.mercatorMapConfig.identifyPane.disable();
-                    // this.mercatorMapConfig.mapLayerCollection.suspend();
-
-                    this.arcticMapConfig.identify.enabled = true;
-                    this.arcticMapConfig.identifyPane.enable();
-                    // this.arcticMapConfig.mapLayerCollection.resume();
-
-                    this.antarcticMapConfig.identify.enabled = false;
-                    this.antarcticMapConfig.identifyPane.disable();
-                    // this.antarcticMapConfig.mapLayerCollection.suspend();
+                    this.mercatorMapConfig.setEnabled(false);
+                    this.arcticMapConfig.setEnabled(true);
+                    this.antarcticMapConfig.setEnabled(false);
                 } else { //antarctic
-                    this.mercatorMapConfig.identify.enabled = false;
-                    this.mercatorMapConfig.identifyPane.disable();
-                    // this.mercatorMapConfig.mapLayerCollection.suspend();
-
-                    this.arcticMapConfig.identify.enabled = false;
-                    this.arcticMapConfig.identifyPane.disable();
-                    // this.arcticMapConfig.mapLayerCollection.suspend();
-
-                    this.antarcticMapConfig.identify.enabled = true;
-                    this.antarcticMapConfig.identifyPane.enable();
-                    // this.antarcticMapConfig.mapLayerCollection.resume();
+                    this.mercatorMapConfig.setEnabled(false);
+                    this.arcticMapConfig.setEnabled(false);
+                    this.antarcticMapConfig.setEnabled(true);
                 }   
             },
 
@@ -256,7 +249,110 @@ define([
                 }, new AntarcticLayerCollection());
 
                 var coordinatesToolbar = new CoordinatesToolbar({map: this.antarcticMapConfig.map}, "antarcticCoordinatesToolbar");
-            }
+            },
+
+            filterSurveys: function(values) {
+                var layerDefinitions;
+                var sql = [];
+                var i;
+                    
+                // if (!values.startYear && !values.endYear && !values.survey && !values.ship) {
+                //     clearSelection();
+                //     return;
+                // }
+                                
+                //Multibeam
+                if (values.startYear) {
+                    sql.push("SURVEY_YEAR >= " + values.startYear);
+                }   
+                if (values.endYear) {
+                    sql.push("SURVEY_YEAR <= " + values.endYear);
+                }
+                if (values.survey) {
+                    sql.push("UPPER(SURVEY_NAME) LIKE '" + values.survey.toUpperCase().replace('*', '%') + "'");
+                }
+                if (values.ship) {
+                    sql.push("UPPER(SHIP_NAME) LIKE '%" + values.ship.toUpperCase().replace('*', '%') + "'");
+                }
+                layerDefinitions = sql.join(' and ');
+                //console.log(layerDefinitions);
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinitions]);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinitions]);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinitions]);
+
+                
+                //Trackline Bathymetry
+                sql = [];
+                if (values.startYear) {
+                    sql.push("END_YR >= " + values.startYear);
+                }       
+                if (values.endYear) {
+                    sql.push("START_YR <= " + values.endYear);
+                }
+                if (values.survey) {
+                    sql.push("UPPER(SURVEY_ID) = '" + values.survey.toUpperCase() + "'");
+                }
+                if (values.ship) {
+                    sql.push("UPPER(PLATFORM) LIKE '%" + values.ship.toUpperCase() + "%'");
+                }
+                layerDefinitions = sql.join(' and ');
+                //console.log(layerDefinitions);
+                var allLayerDefinitions = [];
+                //allLayerDefinitions[0] = layerDefinitions;
+                allLayerDefinitions[1] = layerDefinitions;
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
+                
+                
+                //NOS Hydro 
+                sql = [];
+                if (values.startYear) {
+                    sql.push("YEAR >= " + values.startYear);
+                }       
+                if (values.endYear) {
+                    sql.push("YEAR <= " + values.endYear);
+                }
+                if (values.survey) {
+                    sql.push("UPPER(SURVEY) = '" + values.survey.toUpperCase() + "'");
+                }
+                if (values.ship) {
+                    sql.push("UPPER(FIELD_UNIT) LIKE '%" + values.ship.toUpperCase() + "%'");
+                }
+                layerDefinitions = sql.join(' and ');
+                //console.log(layerDefinitions);
+                var allLayerDefinitions = [];
+                allLayerDefinitions[0] = layerDefinitions;
+                allLayerDefinitions[1] = layerDefinitions;
+                allLayerDefinitions[2] = layerDefinitions;      
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions(allLayerDefinitions);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions(allLayerDefinitions);
+                    
+                       
+                this.layersPanel.enableResetButton();
+                this.layersPanel.setCurrentFilterString(values);
+            },
+
+            resetSurveyFilter: function() {            
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions([]);
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions([]);
+
+                this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions([]);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions([]);
+
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
+
+                this.layersPanel.disableResetButton();
+                this.layersPanel.searchDialog.clearForm();
+                this.layersPanel.setCurrentFilterString('');
+            },
         })
     }
 );

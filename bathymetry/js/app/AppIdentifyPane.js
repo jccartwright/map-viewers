@@ -82,8 +82,8 @@ define([
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
                     return '<i><b>Digital Elevation Models (' + count + ')</b></i>';
                 }
-                else {
-                    return item.layerName;
+                else if (item.layerName == 'Lidar') {
+                    return '<i><b>CSC Lidar</b></i>';
                 }
             },
 
@@ -106,6 +106,9 @@ define([
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
                     return item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>';
+                }
+                else if (item.layerName == 'Lidar') {
+                    return item.feature.attributes['Name'];
                 }
             },
 
