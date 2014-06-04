@@ -1,0 +1,73 @@
+<div class="layersPanel_class">
+    <h4>Water Column Sonar Data</h4>
+    <table cellpadding=-"1" cellspacing="2">
+        <tr>
+            <td><input data-dojo-attach-point="chkNMFS" id="chkNMFS" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>
+            <td><label for="chkNMFS" title="NOAA National Marine Fisheries Service">NMFS</label></td>
+            <td><img style="vertical-align:middle;" src="images/red_line.png"></img></td>
+        </tr>
+        
+        <tr>
+            <td><input data-dojo-attach-point="chkOER" id="chkOER" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                        
+            <td><label for="chkOER" title="NOAA's Office of Ocean Exploration and Research">OER</label></td>
+            <td><img style="vertical-align:middle;" src="images/blue_line.png"></img></td>
+        </tr>
+
+        <tr>
+            <td><input data-dojo-attach-point="chkUNOLS" id="chkUNOLS" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                          
+            <td><label for="chkUNOLS" title="University-National Oceanographic Laboratory System">UNOLS</label></td>
+            <td><img style="vertical-align:middle;" src="images/green_line.png"></img></td>
+        </tr>
+
+        <tr>
+            <td><input data-dojo-attach-point="chkOther" id="chkOther" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                          
+            <td><label for="chkOther">Other</label></td>
+            <td><img style="vertical-align:middle;" src="images/orange_line.png"></img></td>
+        </tr>
+    </table>
+    <hr>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" id="searchButton">Filter Data</div>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" id="resetButton" disabled>Reset</div><br>
+    <div id="currentFilter" class="filterText"></div><br>
+
+    <div id="abstractDiv">
+    <b>Abstract</b><br>
+    Water column sonar data are collected by active 
+    acoustic (or sonar) technology and contain 
+    acoustic scattering information from the near-
+    surface to the seafloor. Scientists use these data 
+    to assess physical and biological characteristics 
+    of the ocean, including the spatial distribution of 
+    plankton, fish, methane seeps and underwater 
+    oil plumes.<br><br>
+
+    <b><i>Data Providers:</i></b> NOAA National Marine Fisheries 
+    Service (<a href="http://www.nmfs.noaa.gov/" target="_blank">NMFS</a>), NOAA Office of Exploration 
+    and Research (<a href="http://explore.noaa.gov/" target="_blank">OER</a>), University-National
+    Oceanographic Laboratory System (<a href="http://www.unols.org/" target="_blank">UNOLS</a>), and 
+    international or non-NOAA/non-academic groups 
+    (Other).<br><br>
+
+    <b><i>Data Collection:</i></b> A variety of sonars are used 
+    by the data providers with Kongsberg EM 122 
+    (12 kHz), Kongsberg EM 302 (30 kHz), Simrad 
+    EK60 (18-710 kHz, split beam), and Simrad ME 
+    70 (70-120 kHz, can be split beam) echosounders 
+    being most common. The configuration of each 
+    cruise's sonar system (e.g., angle, type and 
+    number of beams) can be found in the file 
+    metadata.<br><br>
+
+    <b><i>Data Citation:</i></b> Proper citation for these data 
+    can be found in the ReadMe file provided during 
+    download. Citations are unique to the cruise and 
+    sonar type.<br><br>
+
+    <b>Online Resources</b><br>
+    <a href="http://www.ngdc.noaa.gov/mgg/wcd" target="_blank">NGDC Water Column Sonar Data Archive</a><br>
+    <a href="http://www.ngdc.noaa.gov/metadata/published/NOAA/NESDIS/NGDC/MGG/Sonar_Water_Column/iso" target="_blank">Metadata for this archive</a><br>
+    NGDC <a href="http://ngdc.noaa.gov/mgg/bathymetry/" target="_blank">Bathymetry</a>, 
+    <a href="http://ngdc.noaa.gov/mgg/bathymetry/multibeam.html" target="_blank">Multibeam</a>, and 
+    <a href="http://ngdc.noaa.gov/mgg/bathymetry/hydro.html" target="_blank">NOS Hydrographic Survey</a> Archives
+    </div>    
+</div>

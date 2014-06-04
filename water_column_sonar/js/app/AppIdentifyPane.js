@@ -1,14 +1,40 @@
-define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/IdentifyPane", "dojo/topic", "esri/dijit/Popup", "dojo/_base/lang", "dijit/form/Button",
-    "dojo/dom-style", "app/RequestDataDialog"],
-    function(declare, array, string, IdentifyPane, topic, Popup, lang, Button,
-             domStyle, RequestDataDialog){
+define([
+    "dojo/_base/declare", 
+    "dojo/_base/config", 
+    "dojo/_base/array", 
+    "dojo/string", 
+    "ngdc/identify/IdentifyPane", 
+    "dojo/topic", 
+    "esri/dijit/Popup",
+    "dojo/_base/lang", 
+    "dijit/form/Button",
+    "dojo/dom-style", 
+    "app/RequestDataDialog"
+    ],
+    function(
+        declare, 
+        config,
+        array, 
+        string, 
+        IdentifyPane, 
+        topic, 
+        Popup, 
+        lang, 
+        Button,
+        domStyle, 
+        RequestDataDialog
+        ){
 
         return declare([IdentifyPane], {
+
+            constructor: function() {
+                this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl + "/identify/images/magnifier.png";
+            },
 
             postCreate: function() {
                 this.inherited(arguments);
                 domStyle.set(this.domNode, 'height', '350px');
-                domStyle.set(this.domNode, 'width', '400px');
+                domStyle.set(this.domNode, 'width', '450px');
 
                 domStyle.set(this.featurePageBottomBar.domNode, 'height', '30px');
                 //this.featurePageBottomBar.style = 'height: 50px;';
@@ -32,8 +58,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
             showResults: function(resultCollection) {
                 this.inherited(arguments);
-
-		if (this.numFeatures >= 1000) {
+                if (this.numFeatures >= 1000) {
                     this.featurePageTitle = "Identified Features (results limited to 1000 files. Zoom in for greater detail)";
                     this.setTitle(this.featurePageTitle);
                 }
@@ -137,7 +162,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                                 id: this.uid,
                                 //TODO: point to the magnifying glass image using a module path
                                 displayLabel: this.getItemDisplayLabel(item),
-                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='js/ngdc/identify/images/magnifying-glass.png'></a>",
+                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
                                 layerUrl: layerUrl,
                                 layerKey: layerKey,
                                 attributes: item.feature.attributes,

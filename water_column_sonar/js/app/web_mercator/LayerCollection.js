@@ -1,21 +1,31 @@
-define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layers/ArcGISTiledMapServiceLayer",
-    "esri/layers/ArcGISDynamicMapServiceLayer"],
-    function(declare, LayerCollection, ArcGISTiledMapServiceLayer, ArcGISDynamicMapServiceLayer){
+define([
+    "dojo/_base/declare", 
+    "ngdc/layers/AbstractLayerCollection", 
+    "esri/layers/ArcGISTiledMapServiceLayer",
+    "esri/layers/ArcGISDynamicMapServiceLayer"
+    ],
+    function(
+        declare, 
+        AbstractLayerCollection, 
+        ArcGISTiledMapServiceLayer, 
+        ArcGISDynamicMapServiceLayer
+        ){
 
-        return declare([LayerCollection], {
+        return declare([AbstractLayerCollection], {
             constructor: function() {
+                this.name = "app.web_mercator.LayerCollection";
+
                 this.defineMapServices();
 
                 this.setLayerTimeouts();
 
-                this.buildPairedMapServices();
+                this.definePairedMapServices();
 
-                this.setSubLayerVisibility();
+                this.setSubLayerVisibility(); //When using PairedMapServiceLayers, need to do this later in MapConfig.MapReady()
             },
 
             defineMapServices: function() {
                 //TODO check to ensure unique id
-
                 this.mapServices = [
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer", {
                         id: "NatGeo",
@@ -44,12 +54,17 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer", {
                         id: "Ocean Base",
                         visible: true,
-                    }),
+                    }),                    
+                    new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_contours/MapServer", {
+                        id: "GEBCO_08 Contours",
+                        visible: false,
+                        opacity: 0.5
+                    }),   
                     new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer", {
                         id: "Water Column Sonar",
                         visible: true,
                         imageParameters: this.imageParameters.png32
-                    }),
+                    }),                                    
                     new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer", {
                         id: "World Boundaries and Places",
                         visible: false
@@ -67,20 +82,22 @@ define(["dojo/_base/declare", "ngdc/layers/AbstractLayerCollection", "esri/layer
                         visible: false,
                         opacity: 0.7,
                         imageParameters: this.imageParameters.png32
+                    }),
+                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer", {
+                        id: "Poles Mask",
+                        visible: true,
+                        imageParameters: this.imageParameters.png32
                     })
                 ];
             },  //end defineMapServices
 
-            buildPairedMapServices: function() {
-                logger.debug('creating pairedMapServices...');
+            definePairedMapServices: function() {                
             },
 
             setSubLayerVisibility: function() {
-                //logger.debug('setting subLayer visibility...');
-                this.getLayerById('Water Column Sonar').setVisibleLayers([0,1,2,3]);
+                this.getLayerById('Water Column Sonar').setVisibleLayers([1, 2, 3, 4]);
             }
         });
     }
 );
-
 
