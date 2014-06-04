@@ -271,7 +271,7 @@ define([
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);                
 
-                this.layersPanel.disableResetButton();
+                this.layersPanel.enableResetButton();
                 this.layersPanel.setCurrentFilterString(values);
             },
 
@@ -279,10 +279,10 @@ define([
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions([]);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions([]);
 
-                this.layersPanel.enableResetButton();
+                this.layersPanel.disableResetButton();
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
-            },
+            }
         })
     }
 );

@@ -52,7 +52,7 @@ define([
                 on(this.chkOther, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkOther.checked);                    
                 }));
-
+                
                 on(this.searchButton, "click", lang.hitch(this, function() {
                     if (!this.searchDialog) {
                         this.searchDialog = new SearchDialog({title: 'Water Column Sonar Data Search'});
@@ -65,15 +65,8 @@ define([
                 }));
             },
 
-            resetWcd: function() {            
-                this.wcdMapService.setLayerDefinitions([]);
-                this.disableResetButton();
-                this.searchDialog.clearForm();
-                this.setCurrentFilterString('');
-            },
-
             disableResetButton: function() {
-                this.resetButton.set("disabled", false);
+                this.resetButton.set("disabled", true);
             },
 
             enableResetButton: function() {
@@ -153,7 +146,7 @@ define([
                     }
                 }
                 return pd + n.toString();
-            },            
+            }            
         });
     }
 );
