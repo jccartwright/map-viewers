@@ -46,9 +46,7 @@ define([
 
                 this.mapLayerCollection.getLayerById('CSC Lidar').setVisibleLayers([-1]);
 
-                //Data_Classes_Available
-                //this.mapLayerCollection.getLayerById('DAV').setDefinitionExpression('Data_Classes_Available = 11');
-                //Bathymetric Lidar Points
+                //Apply layer definitions to the CSC Lidar layer to only show bathymetric lidar
                 var layerDefinitions = [];
                 layerDefinitions[4] = "Data_Classes_Available LIKE '%Bathymetric Lidar Points%'";
                 this.mapLayerCollection.getLayerById('CSC Lidar').setLayerDefinitions(layerDefinitions);

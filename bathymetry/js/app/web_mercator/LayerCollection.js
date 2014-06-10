@@ -114,7 +114,7 @@ define([
                         id: "CSC Lidar",
                         visible: false,
                         imageParameters: this.imageParameters.png32,
-                        opacity: 0.5
+                        opacity: 1
                     }),
                     new ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer", {
                         id: "World Boundaries and Places",

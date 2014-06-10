@@ -4,11 +4,11 @@
     <label for="chkMultibeam">Multibeam Bathymetry Surveys</label><br>
 
     <input type="checkbox" id="chkTrackline" data-dojo-attach-point="chkTrackline" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkTrackline">Single-Beam Bathymetry Surveys</label><br><br>
+    <label for="chkTrackline">Single-Beam (Trackline) Bathymetry Surveys</label><br><br>
 
     <b><i>NOS Hydrographic Surveys:</i></b><br>
     <input type="checkbox" id="chkNosHydro0" data-dojo-attach-point="chkNosHydro0" data-dojo-type="dijit/form/CheckBox">
-    <label id="lblNosHydro0" for="chkNosHydro0">Surveys with BAGs</label><br>
+    <label id="lblNosHydro0" for="chkNosHydro0">Surveys with BAGs (Bathymetric Attributed Grids)</label><br>
 
     <input type="checkbox" id="chkNosHydro1" data-dojo-attach-point="chkNosHydro1" data-dojo-type="dijit/form/CheckBox">
     <label id="lblNosHydro1"for="chkNosHydro1">Surveys with Digital Sounding Data</label><br>
@@ -22,8 +22,8 @@
     <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" id="searchButton">Filter Surveys</div>
     <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" id="resetButton" disabled>Reset</div><br>
     <div id="currentFilter" class="filterText"></div><br>
-
     <hr>
+
     <h3>Digital Elevation Models (DEMs)</h3>
 
     <input type="checkbox" id="chkDems" data-dojo-attach-point="chkDems" data-dojo-type="dijit/form/CheckBox">
@@ -33,8 +33,10 @@
     <label for="chkDemHillshades">DEM Color Shaded Relief Imagery</label>
     <hr>
 
+    <h3>Bathymetric Lidar</h3>
+
     <input type="checkbox" id="chkCscLidar" data-dojo-attach-point="chkCscLidar" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkCscLidar">CSC Lidar (demo)</label>
+    <label for="chkCscLidar">Coastal Lidar Datasets available from <a href="http://www.csc.noaa.gov/digitalcoast/data/coastallidar" target="_blank">NOAA's Coastal Services Center (CSC)</a></label>
 
     
 </div>

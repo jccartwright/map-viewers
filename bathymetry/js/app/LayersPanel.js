@@ -78,13 +78,13 @@ define([
                     topic.publish('/bathymetry/ResetSearch');
                 })); 
 
-                topic.subscribe('/ngdc/mapViewActivated', lang.hitch(this, function(mapId) {
-                    if (mapId == 'antarctic') {
-                        this.setNosHydroDisabled(true);
-                    } else {
-                        this.setNosHydroDisabled(false);
-                    }
-                }));
+                // topic.subscribe('/ngdc/mapViewActivated', lang.hitch(this, function(mapId) {
+                //     if (mapId == 'antarctic') {
+                //         this.setNosHydroDisabled(true);
+                //     } else {
+                //         this.setNosHydroDisabled(false);
+                //     }
+                // }));
             },
 
             setNosHydroDisabled: function(disabled) {

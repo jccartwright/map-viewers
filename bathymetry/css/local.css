@@ -265,3 +265,8 @@ html,body {
 .wildcardLabel {
     font-size: 11px;
 }
+
+#legend {
+    /*legend is hidden on startup to prevent premature display*/
+    display: none;
+}
