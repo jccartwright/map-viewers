@@ -27,6 +27,7 @@ define([
     "app/Identify",
     "app/AppIdentifyPane",
     "app/LayersPanel",
+    "app/HelpPanel",
     "dojo/domReady!"],
     function(
         declare,
@@ -56,7 +57,8 @@ define([
         ArcticMapToolbar,
         Identify,
         IdentifyPane,
-        LayersPanel
+        LayersPanel,
+        HelpPanel
         ) {
 
         return declare(null, {
