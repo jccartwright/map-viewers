@@ -146,7 +146,7 @@ define([
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template = '\
-                    <h3>Bathymetric Lidar: ${name}</h3>\                    
+                    <h3>Bathymetric Lidar: ${name}</h3>\
                     <div class="valueName">Name: <span class="parameterValue">${name}</span></div>\
                     <div class="valueName">Project: <span class="parameterValue">${project}</span></div>\
                     <div class="valueName">Year: <span class="parameterValue">${year}</span></div>\
