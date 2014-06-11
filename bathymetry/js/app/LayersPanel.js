@@ -10,6 +10,7 @@ define([
     "dijit/_WidgetBase",
     "dijit/_TemplatedMixin",
     "dijit/_WidgetsInTemplateMixin",
+    "app/SearchDialog",
     "dojo/text!./templates/LayersPanel.html"],
     function(
         declare, 
@@ -23,16 +24,13 @@ define([
         _WidgetBase, 
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
+        SearchDialog,
         template){
-        return declare([_WidgetBase, _TemplatedMixin], {
+        return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
             // Our template - important!
             templateString: template,
             // A class to be applied to the root node in our template
             baseClass: "layersPanel",
-
-            constructor: function() {
-                console.log('foo');
-            },
 
             postCreate: function() {
                 this.inherited(arguments);
@@ -63,15 +61,30 @@ define([
                 })); 
                 on(this.chkDemHillshades, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'DEM Hillshades', this.chkDemHillshades.checked);
-                }));     
+                }));  
 
-                topic.subscribe('/ngdc/mapViewActivated', lang.hitch(this, function(mapId) {
-                    if (mapId == 'antarctic') {
-                        this.setNosHydroDisabled(true);
-                    } else {
-                        this.setNosHydroDisabled(false);
-                    }
+                on(this.chkCscLidar, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'CSC Lidar', [4], this.chkCscLidar.checked);                    
                 }));
+
+                on(this.searchButton, "click", lang.hitch(this, function() {
+                    if (!this.searchDialog) {
+                        this.searchDialog = new SearchDialog({title: 'Bathymetry Survey Search'});
+                    }
+                    this.searchDialog.show();
+                }));  
+
+                on(this.resetButton, "click", lang.hitch(this, function() {
+                    topic.publish('/bathymetry/ResetSearch');
+                })); 
+
+                // topic.subscribe('/ngdc/mapViewActivated', lang.hitch(this, function(mapId) {
+                //     if (mapId == 'antarctic') {
+                //         this.setNosHydroDisabled(true);
+                //     } else {
+                //         this.setNosHydroDisabled(false);
+                //     }
+                // }));
             },
 
             setNosHydroDisabled: function(disabled) {
@@ -81,7 +94,42 @@ define([
                 domAttr.set('chkBagHillshades', 'disabled', disabled);
                 domAttr.set('chkDemHillshades', 'disabled', disabled);
                 domAttr.set('chkDems', 'disabled', disabled);
+            },
 
+            disableResetButton: function() {
+                this.resetButton.set("disabled", true);
+            },
+
+            enableResetButton: function() {
+                this.resetButton.set("disabled", false);
+            },
+
+            setCurrentFilterString: function(values) {
+                var filterDiv = dom.byId('currentFilter');
+                if (!values) {
+                    filterDiv.innerHTML = '';
+                    return;
+                }
+
+                var s = '<b>Current filter:</b><br>';
+                
+                if (values.startYear && values.endYear) {
+                    s += 'Year: ' + values.startYear + ' to ' + values.endYear + '<br>';
+                }
+                else if (values.startYear) {
+                    s += 'Starting year: ' + values.startYear + '<br>';
+                }
+                else if (values.endYear) {
+                    s += 'Ending year: ' + values.endYear + '<br>';
+                }
+
+                if (values.survey) {
+                    s += 'Survey ID: ' + values.survey + '<br>';
+                }
+                if (values.ship) {
+                    s += 'Ship Name: ' + values.ship + '<br>';
+                }                
+                filterDiv.innerHTML = s;
             }
         });
     }

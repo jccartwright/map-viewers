@@ -1,9 +1,14 @@
-define(["dojo/_base/declare", "ngdc/MapToolbar"],
-    function(declare, MapToolbar){
+define([
+    "dojo/_base/declare", 
+    "ngdc/MapToolbar"
+    ],
+    function(
+        declare, 
+        MapToolbar
+        ){
 
         return declare([MapToolbar], {
             constructor: function() {
-
                 this._basemaps = [
                     {base: 'Ocean Base', overlays: ['Ocean Reference'], label: 'Ocean Basemap (Esri)'},
                     {base: 'GEBCO_08', overlays: ['World Boundaries and Places'], label: 'Shaded Relief (GEBCO_08)'},
@@ -15,6 +20,7 @@ define(["dojo/_base/declare", "ngdc/MapToolbar"],
 
                 this._overlays = [
                     {services: ['Ocean Reference'], label: 'Boundaries/Labels'}, //Ocean Basemap/Reference is the default combo
+                    {services: ['GEBCO_08 Contours'], label: 'Bathymetry Contours (GEBCO_08)'},
                     {services: ['Graticule'], label: 'Graticule'}
                 ];
 

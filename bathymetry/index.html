@@ -47,6 +47,7 @@
             //app-specific config values
             app: {
                 loglevel: 4,  //DEBUG
+                //ngdcDijitsUrl: 'http://maps.ngdc.noaa.gov/viewers/dijits/2.0-SNAPSHOT/js/ngdc'
                 ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
@@ -71,7 +72,13 @@
 
     <div id="leftPane" data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true">
         <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" title="Layers">
-            <div id="layers" data-dojo-type="app/LayersPanel"></div>
+        </div>
+        <div id="legendPanel" data-dojo-type="dijit/layout/ContentPane" title="Legend">
+            <div id="legend">
+                <img src="images/bathy_viewer_legend.png"></img><hr/>
+                <img src="images/bag_hillshades_color_scale.png"></img><hr/>
+                <img src="images/dem_hillshades_color_scale.png"></img>
+            </div> 
         </div>
         <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
             <div id="credits" data-dojo-type="app/CreditsPanel"></div>
@@ -110,10 +117,10 @@
 <script>
     //unless the Dijit is listed in the require list, it cannot be addressed via the registry
     require([
-        "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "app/AppLoader",
+        "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "dojo/dom", "dojo/dom-style", "app/AppLoader",
         "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer", "dijit/layout/TabContainer",
         "app/HelpPanel", "app/CreditsPanel", "dojo/domReady!" ],
-            function(LoadingOverlay, registry, parser, AppLoader) {
+            function(LoadingOverlay, registry, parser, dom, domStyle, AppLoader) {
                 var loadingOverlay = new LoadingOverlay();
                 var appLoader = new AppLoader();
 
@@ -121,6 +128,9 @@
 
                 //hide the overlay now that parsing is complete
                 loadingOverlay.endLoading();
+
+                //Show the legend graphic, which was hidden on startup
+                domStyle.set(dom.byId('legend'), 'display', 'block');
 
                 //initialize the application
                 appLoader.init();

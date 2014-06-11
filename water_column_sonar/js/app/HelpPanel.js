@@ -7,7 +7,10 @@ define(["dojo/_base/declare","dojo/_base/config", "dijit/_WidgetBase", "dijit/_T
             baseClass: "helpPanel",
 
             constructor: function() {
-                this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl+"/identify/images/magnifying-glass.png";
+                this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl+"/identify/images/magnifier.png";
+                this.identifyRectIconUrl = config.app.ngdcDijitsUrl+"/images/layer-shape.png";
+                this.identifyPolyIconUrl = config.app.ngdcDijitsUrl+"/images/layer-shape-polygon.png";
+                this.identifyCoordsIconUrl = config.app.ngdcDijitsUrl+"/images/layer-shape-xy.png";
             }
         });
     }

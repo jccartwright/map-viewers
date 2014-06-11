@@ -7,8 +7,7 @@ define([
     "dojo/_base/lang",
     "dojo/dom-style",
     "dijit/form/Button", 
-    "ngdc/identify/IdentifyPane", 
-    "app/RequestDataDialog"
+    "ngdc/identify/IdentifyPane" 
     ],
     function(
         declare, 
@@ -19,8 +18,7 @@ define([
         lang,
         domStyle,
         Button,
-        IdentifyPane,
-        RequestDataDialog
+        IdentifyPane
         ){
 
         return declare([IdentifyPane], {
@@ -34,56 +32,64 @@ define([
                 domStyle.set(this.domNode, 'height', '350px');
                 domStyle.set(this.domNode, 'width', '400px');
 
-                domStyle.set(this.featurePageBottomBar.domNode, 'height', '30px');
+                //domStyle.set(this.featurePageBottomBar.domNode, 'height', '30px');
                 //this.featurePageBottomBar.style = 'height: 50px;';
 
-                this.requestDataFilesButton = new Button({
-                    label: "Request These Data Files",
-                    style: "bottom: 5px; left: 15px;",
-                    onClick: lang.hitch(this, function(){
-                        this.requestDataFiles();
-                    })
-                }).placeAt(this.featurePageBottomBar);
+                // this.requestDataFilesButton = new Button({
+                //     label: "Request These Data Files",
+                //     style: "bottom: 5px; left: 15px;",
+                //     onClick: lang.hitch(this, function(){
+                //         this.requestDataFiles();
+                //     })
+                // }).placeAt(this.featurePageBottomBar);
 
-                this.requestDataFileButton = new Button({
-                    label: "Request This Data File",
-                    style: "bottom: 25px; left: 15px;",
-                    onClick: lang.hitch(this, function(){
-                        this.requestDataFile();
-                    })
-                }).placeAt(this.infoPageBottomBar);
+                // this.requestDataFileButton = new Button({
+                //     label: "Request This Data File",
+                //     style: "bottom: 25px; left: 15px;",
+                //     onClick: lang.hitch(this, function(){
+                //         this.requestDataFile();
+                //     })
+                // }).placeAt(this.infoPageBottomBar);
             },
 
             showResults: function(resultCollection) {
                 this.inherited(arguments);
-                if (this.numFeatures >= 1000) {
-                    this.featurePageTitle = "Identified Features (" + this.numFeatures + "+, results limited to 1000)";
-                    this.setTitle(this.featurePageTitle);
-                }
+                // if (this.numFeatures >= 1000) {
+                //     this.featurePageTitle = "Identified Features (" + this.numFeatures + "+, results limited to 1000)";
+                //     this.setTitle(this.featurePageTitle);
+                // }
             },
 
             getLayerDisplayLabel: function(item, count) {
 
                 if (item.layerName == 'Multibeam Bathymetric Surveys') {
-                    return '<i><b>Multibeam Bathymetry Surveys (' + count + ')</b></i>';
+                    return '<i><b>Multibeam Bathymetry Surveys (' + this.formatCountString(count) + ')</b></i>';
                 } 
                 else if (item.layerName == 'Marine Trackline Surveys: Bathymetry') {
-                    return '<i><b>Single-Beam Bathymetry Surveys (' + count + ')</b></i>';
+                    return '<i><b>Single-Beam Bathymetry Surveys (' + this.formatCountString(count) + ')</b></i>';
                 } 
                 else if (item.layerName == 'Surveys with BAGs') {
-                    return '<i>Surveys wth BAGs (' + count + ')</i>';
+                    return '<i>Surveys wth BAGs (' + this.formatCountString(count) + ')</i>';
                 } 
                 else if (item.layerName == 'Digital Data') {
-                    return '<i>Surveys with Digital Sounding Data (' + count + ')</i>';
+                    return '<i>Surveys with Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
                 } 
                 else if (item.layerName == 'Non-Digital') {
-                    return '<i>Surveys without Digital Sounding Data (' + count + ')</i>';
+                    return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
-                    return '<i><b>Digital Elevation Models (' + count + ')</b></i>';
+                    return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
                 }
-                else {
-                    return item.layerName;
+                else if (item.layerName == 'Lidar') {
+                    return '<i><b>Bathymetric Lidar (' + this.formatCountString(count) + ')</b></i>';
+                }
+            },
+
+            formatCountString: function(count) {
+                if (count >= 1000) {
+                    return 'results limited to 1000';
+                } else {
+                    return count;
                 }
             },
 
@@ -106,6 +112,9 @@ define([
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
                     return item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>';
+                }
+                else if (item.layerName == 'Lidar') {
+                    return item.feature.attributes['Name'];
                 }
             },
 

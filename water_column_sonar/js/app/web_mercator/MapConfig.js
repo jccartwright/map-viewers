@@ -4,7 +4,7 @@ define([
     "dojo/dom",
     "ngdc/web_mercator/MapConfig",
     "app/web_mercator/MapToolbar",
-    "app/web_mercator/Identify",
+    "app/Identify",
     "app/AppIdentifyPane"
     ],
     function(
@@ -37,19 +37,6 @@ define([
                     autoExpandTree: false
                 }, dom.byId("mercatorIdentifyPaneDiv"));
                 this.identifyPane.startup();
-
-                
-                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
-                this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
-
-                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
-
-                this.mapLayerCollection.getLayerById('CSC Lidar').setVisibleLayers([-1]);
-
-                //Apply layer definitions to the CSC Lidar layer to only show bathymetric lidar
-                var layerDefinitions = [];
-                layerDefinitions[4] = "Data_Classes_Available LIKE '%Bathymetric Lidar Points%'";
-                this.mapLayerCollection.getLayerById('CSC Lidar').setLayerDefinitions(layerDefinitions);
             }
          
             
