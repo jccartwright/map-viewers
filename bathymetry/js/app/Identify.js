@@ -21,10 +21,10 @@ define([
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template = '\
-                    <h3>Multibeam Bathymetry Survey: ${surveyName}</h3>\
+                    <h3>Multibeam Bathymetry Survey: ${surveyId}</h3>\
                     <div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>\
-                    <div class="valueName">Survey Name: <span class="parameterValue">${surveyName}</span></div>\
-                    <div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>\
+                    <div class="valueName">Survey ID: <span class="parameterValue">${surveyId}</span></div>\
+                    <div class="valueName">Platform Name: <span class="parameterValue">${platformName}</span></div>\
                     <div class="valueName">Survey Year: <span class="parameterValue">${surveyYear}</span></div>\
                     <div class="valueName">Chief Scientist: <span class="parameterValue">${chiefScientist}</span></div>\
                     <div class="valueName">Instrument: <span class="parameterValue">${instrument}</span></div>\
@@ -38,9 +38,9 @@ define([
                 var html = string.substitute(template, {
                         url: a['Download URL'],
                         ngdcId: a['NGDC ID'],
-                        surveyName: a['Survey Name'],
+                        surveyId: a['Survey ID'],
                         surveyYear: a['Survey Year'],
-                        shipName: a['Ship Name'],
+                        platformName: a['Platform Name'],
                         chiefScientist: a['Chief Scientist'],
                         instrument: a['Instrument'],
                         fileCount: a['File Count'],
@@ -71,7 +71,7 @@ define([
                     <div class="valueName">Date Added: <span class="parameterValue">${dateAdded}</span></div>';
 
                 var html = string.substitute(template, {
-                        url: a['URL'],
+                        url: a['Download URL'],
                         surveyId: a['Survey ID'],
                         surveyType: a['Survey Type'],
                         platformName: a['Platform Name'],
@@ -96,15 +96,15 @@ define([
                     <div class="valueName">Survey Year: <span class="parameterValue">${surveyYear}</span></div>\
                     <div class="valueName">Locality: <span class="parameterValue">${locality}</span></div>\
                     <div class="valueName">Sublocality: <span class="parameterValue">${sublocality}</span></div>\
-                    <div class="valueName">Platform: <span class="parameterValue">${fieldUnit}</span></div>';
+                    <div class="valueName">Platform Name: <span class="parameterValue">${platformName}</span></div>';
 
                 var html = string.substitute(template, {
-                        url: a['URL'],
+                        url: a['Download URL'],
                         surveyId: a['Survey ID'],
-                        surveyYear: a['Year'],
+                        surveyYear: a['Survey Year'],
                         locality: a['Locality'],
                         sublocality: a['Sublocality'],
-                        fieldUnit: a['Field Unit']
+                        platformName: a['Platform Name']
                     });                
                 return html;
             },
@@ -167,7 +167,7 @@ define([
             multibeamSort: function(a, b) {
                 //Sort by year descending, then alphabetical by survey ID
                 if (a.feature.attributes['Survey Year'] == b.feature.attributes['Survey Year']) {
-                    return a.feature.attributes['Survey Name'] <= b.feature.attributes['Survey Name'] ? -1 : 1;
+                    return a.feature.attributes['Survey ID'] <= b.feature.attributes['Survey ID'] ? -1 : 1;
                 }
                 return a.feature.attributes['Survey Year'] < b.feature.attributes['Survey Year'] ? 1 : -1;
             },
@@ -183,16 +183,16 @@ define([
             nosHydroSort: function(a, b) {
                 //Sort by layer ID: BAGs, Digital, Non-Digital, then by year descending (nulls last) then alphabetical for hydro surveys.
                 if (a.layerId == b.layerId) {                   
-                    if (a.feature.attributes['Year'] == 'Null') {                                           
+                    if (a.feature.attributes['Survey Year'] == 'Null') {                                           
                         return 1;
                     }
-                    if (b.feature.attributes['Year'] == 'Null') { 
+                    if (b.feature.attributes['Survey Year'] == 'Null') { 
                         return -1;
                     }
-                    if (a.feature.attributes['Year'] == b.feature.attributes['Year']) {
+                    if (a.feature.attributes['Survey Year'] == b.feature.attributes['Year']) {
                         return a.feature.attributes['Survey ID'] <= b.feature.attributes['Survey ID'] ? -1 : 1;
                     }
-                    return a.feature.attributes['Year'] < b.feature.attributes['Year'] ? 1 : -1;
+                    return a.feature.attributes['Survey Year'] < b.feature.attributes['Survey Year'] ? 1 : -1;
                 }
                 return a.layerId <= b.layerId ? -1 : 1;
             },
@@ -225,7 +225,6 @@ define([
                     }                                
                 }
                 
-
                 if (results['DEM Extents']) {    
                     if (features = results['DEM Extents']['All NGDC Bathymetry DEMs']) {
                         features.sort(this.demSort);
