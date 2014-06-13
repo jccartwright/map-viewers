@@ -255,12 +255,7 @@ define([
                 var layerDefinitions;
                 var sql = [];
                 var i;
-                    
-                // if (!values.startYear && !values.endYear && !values.survey && !values.ship) {
-                //     clearSelection();
-                //     return;
-                // }
-                                
+                                                    
                 //Multibeam
                 if (values.startYear) {
                     sql.push("SURVEY_YEAR >= " + values.startYear);
@@ -269,10 +264,10 @@ define([
                     sql.push("SURVEY_YEAR <= " + values.endYear);
                 }
                 if (values.survey) {
-                    sql.push("UPPER(SURVEY_NAME) LIKE '" + values.survey.toUpperCase().replace('*', '%') + "'");
+                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace('*', '%') + "'");
                 }
-                if (values.ship) {
-                    sql.push("UPPER(SHIP_NAME) LIKE '%" + values.ship.toUpperCase().replace('*', '%') + "'");
+                if (values.platform) {
+                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase().replace('*', '%') + "'");
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);
@@ -292,8 +287,8 @@ define([
                 if (values.survey) {
                     sql.push("UPPER(SURVEY_ID) = '" + values.survey.toUpperCase() + "'");
                 }
-                if (values.ship) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.ship.toUpperCase() + "%'");
+                if (values.platform) {
+                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase() + "%'");
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);
@@ -308,16 +303,16 @@ define([
                 //NOS Hydro 
                 sql = [];
                 if (values.startYear) {
-                    sql.push("YEAR >= " + values.startYear);
+                    sql.push("SURVEY_YEAR >= " + values.startYear);
                 }       
                 if (values.endYear) {
-                    sql.push("YEAR <= " + values.endYear);
+                    sql.push("SURVEY_YEAR <= " + values.endYear);
                 }
                 if (values.survey) {
-                    sql.push("UPPER(SURVEY) = '" + values.survey.toUpperCase() + "'");
+                    sql.push("UPPER(SURVEY_ID) = '" + values.survey.toUpperCase() + "'");
                 }
-                if (values.ship) {
-                    sql.push("UPPER(FIELD_UNIT) LIKE '%" + values.ship.toUpperCase() + "%'");
+                if (values.platform) {
+                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase() + "%'");
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);

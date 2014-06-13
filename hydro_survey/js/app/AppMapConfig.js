@@ -133,7 +133,7 @@ define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig",
                 );
 
                 for (var i = 0; i < 2; i++) {
-                    outlineLayers[i].setDefinitionExpression("SURVEY = '" + this.survey + "'");
+                    outlineLayers[i].setDefinitionExpression("SURVEY_ID = '" + this.survey + "'");
                     outlineLayers[i].setRenderer(new SimpleRenderer(outlineSymbol));
                     outlineLayers[i].show();
                 }                          

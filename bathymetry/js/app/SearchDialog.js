@@ -68,12 +68,12 @@ define([
             },
                 
             isDefault: function(values) {
-                return (!values.startYear && !values.endYear && values.survey == '' && values.ship == '');
+                return (!values.startYear && !values.endYear && values.survey == '' && values.platform == '');
             },
                    
             clearForm: function() {                
                 this.surveyNameText.set('value', '');
-                this.shipNameText.set('value', '');                                            
+                this.platformNameText.set('value', '');                                            
                 this.startYearSpinner.set('value', '');
                 this.endYearSpinner.set('value', '');                             
             },

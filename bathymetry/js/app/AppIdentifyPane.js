@@ -96,19 +96,19 @@ define([
             getItemDisplayLabel: function(item) {
                 //return item.value;
                 if (item.layerName == 'Multibeam Bathymetric Surveys') {
-                    return item.feature.attributes['Survey Name'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>';
+                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>';
                 } 
                 else if (item.layerName == 'Marine Trackline Surveys: Bathymetry') {
-                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Start Year'] + ')</i>';
+                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>';
                 } 
                 else if (item.layerName == 'Surveys with BAGs') {
-                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Year'] + ')</i>');
+                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
                 } 
                 else if (item.layerName == 'Digital Data') {
-                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Year'] + ')</i>');
+                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
                 } 
                 else if (item.layerName == 'Non-Digital') {
-                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Year'] + ')</i>');
+                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
                     return item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>';

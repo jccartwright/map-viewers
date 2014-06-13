@@ -126,8 +126,8 @@ define([
                 if (values.survey) {
                     s += 'Survey ID: ' + values.survey + '<br>';
                 }
-                if (values.ship) {
-                    s += 'Ship Name: ' + values.ship + '<br>';
+                if (values.platform) {
+                    s += 'Platform Name: ' + values.platform + '<br>';
                 }                
                 filterDiv.innerHTML = s;
             }
