@@ -23,7 +23,7 @@ define([
             mapReady: function() {
                 this.inherited(arguments);
 
-                console.log("inside custom Web Mercator mapReady...");   
+                //console.log("inside custom Web Mercator mapReady...");   
 
                 var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, "mercatorMapToolbar");
                 mapToolbar.startup();
@@ -38,7 +38,12 @@ define([
                 }, dom.byId("mercatorIdentifyPaneDiv"));
                 this.identifyPane.startup();
                 
-                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0, 1]);
+                if (this.mapLayerCollection.nosHydroVisible) {
+                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0, 1]);
+                }
+                else {
+                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
+                }
                 this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
                 this.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setVisibleLayers([0]);
 

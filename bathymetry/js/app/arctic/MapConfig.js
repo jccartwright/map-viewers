@@ -23,7 +23,7 @@ define([
             mapReady: function() {
                 this.inherited(arguments);
 
-                console.log("inside custom Arctic mapReady...");   
+                //console.log("inside custom Arctic mapReady...");   
 
                 var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, "arcticMapToolbar");
                 mapToolbar.startup();
@@ -42,8 +42,14 @@ define([
                 this.identifyPane.startup();
                 this.identifyPane.enabled = false;
 
-                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
+                if (this.mapLayerCollection.nosHydroVisible) {
+                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0, 1]);
+                }
+                else {
+                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
+                }
                 this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
+                this.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setVisibleLayers([0]);
                 
                 this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
 

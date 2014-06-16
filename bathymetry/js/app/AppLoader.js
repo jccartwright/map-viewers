@@ -212,7 +212,6 @@ define([
                 //Hide the scalebar at small scales <= 4
                 on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
                     var level = this.mercatorMapConfig.map.getAbsoluteLevel();
-                    console.log(level);
                     if (level <= 4) {
                         //These need to be on a short timer due to unexpected errors during the zoom animation
                         setTimeout(function() {

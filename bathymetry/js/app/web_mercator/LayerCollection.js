@@ -87,7 +87,7 @@ define([
                     }),                    
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
                         id: "NOS Hydro (non-digital)",
-                        visible: false,//this.nosHydroVisible,
+                        visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro/MapServer", {
