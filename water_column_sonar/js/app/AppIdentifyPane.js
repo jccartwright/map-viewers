@@ -108,7 +108,6 @@ define([
 
             populateFeatureStore: function(results) {
                 var numFeatures = 0;
-                this.uid = 0;
                 this.expandedNodePaths = [];
                 for (var svcName in results) {
                     for (var layerName in results[svcName]) {

@@ -121,9 +121,8 @@ define([
             populateFeatureStore: function(results) {
                 var totalFeatures = 0;
                 var numFeaturesForLayer = 0;
-                this.uid = 0;
                 this.expandedNodePaths = [];
-                //for (var svcName in results) {
+
                 for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
                     var svcName = this.identify.layerIds[i];
                     for (var layerName in results[svcName]) {
