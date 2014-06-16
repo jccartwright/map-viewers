@@ -37,10 +37,10 @@ define([
                     autoExpandTree: false
                 }, dom.byId("mercatorIdentifyPaneDiv"));
                 this.identifyPane.startup();
-
                 
-                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
+                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0, 1]);
                 this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
+                this.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setVisibleLayers([0]);
 
                 this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
 

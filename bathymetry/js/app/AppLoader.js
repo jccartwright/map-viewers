@@ -83,12 +83,29 @@ define([
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
                 lang.mixin(config.app, queryParams);
 
+                var startupLayers = [];
+                if (queryParams.layers) {
+                    startupLayers = queryParams.layers.split(',');
+                }
+                this.initialExtent = null;
+                if (queryParams.minx && queryParams.maxx && queryParams.miny && queryParams.maxy) {
+                    this.initialExtent = new Extent({
+                        xmin: queryParams.minx,
+                        ymin: queryParams.miny,
+                        xmax: queryParams.maxx,
+                        ymax: queryParams.maxy,
+                        spatialReference: new SpatialReference({wkid: 4326})
+                    });
+                }
+
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
 
                 this.setupBanner();
 
                 this.setupLayersPanel();
+
+                this.setStartupLayers(startupLayers);
 
                 this.setupMapViews();
 
@@ -166,16 +183,29 @@ define([
 
                 var zoomLevels = new MercatorZoomLevels();
 
+                var center = undefined;
+                var zoom = undefined;
+                if (!this.initialExtent) {
+                    center = [-110, 20]; //centered over eastern Pacific
+                    zoom = 1; //relative zoom level; equivalent to absolute zoom level 3
+                }
+
                 this.mercatorMapConfig = new MercatorMapConfig("mercator", {
-                    center:[-110, 20], //centered over eastern Pacific
-                    zoom: 1, //relative zoom level; equivalent to absolute zoom level 3
+                    center: center,
+                    zoom: zoom,
+                    extent: this.initialExtent,
                     logo: false,
                     showAttribution: false,
                     overview: true,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
-                }, new MercatorLayerCollection());  
+                }, new MercatorLayerCollection({
+                    multibeamVisible: this.multibeamVisible,
+                    nosHydroVisible: this.nosHydroVisible,
+                    tracklineVisible: this.tracklineVisible,
+                    demVisible: this.demVisible
+                }));  
 
                 var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, "mercatorCoordinatesToolbar");
 
@@ -194,7 +224,6 @@ define([
                         }, 100);
                     }
                 }));
-
             },
 
             setupArcticView: function() {
@@ -219,7 +248,12 @@ define([
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
-                }, new ArcticLayerCollection());
+                }, new ArcticLayerCollection({
+                    multibeamVisible: this.multibeamVisible,
+                    nosHydroVisible: this.nosHydroVisible,
+                    tracklineVisible: this.tracklineVisible,
+                    demVisible: this.demVisible
+                }));
 
                 var coordinatesToolbar = new CoordinatesToolbar({map: this.arcticMapConfig.map}, "arcticCoordinatesToolbar");
             },
@@ -246,9 +280,46 @@ define([
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
-                }, new AntarcticLayerCollection());
+                }, new AntarcticLayerCollection({
+                    multibeamVisible: this.multibeamVisible,
+                    tracklineVisible: this.tracklineVisible,
+                    demVisible: this.demVisible
+                }));
 
                 var coordinatesToolbar = new CoordinatesToolbar({map: this.antarcticMapConfig.map}, "antarcticCoordinatesToolbar");
+            },
+
+            //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'
+            setStartupLayers: function(/*String[]*/ startupLayers) {                
+                if (startupLayers.length == 0) {
+                    this.layersPanel.chkMultibeam.set('checked', true);
+                    this.multibeamVisible = true;
+                    return;    
+                }
+
+                for (var i = 0; i < startupLayers.length; i++) {
+                    if (startupLayers[i].toLowerCase() === 'multibeam') {
+                        this.layersPanel.chkMultibeam.set('checked', true);
+                        this.multibeamVisible = true;
+                    } 
+                    else if (startupLayers[i].toLowerCase() === 'nos_hydro') {
+                        //Startup with "Surveys with Digital Sounding Data" and "Surveys with BAGs" visible
+                        this.layersPanel.chkNosHydroBags.set('checked', true);
+                        this.layersPanel.chkNosHydroDigital.set('checked', true);
+                        //this.layersPanel.chkBagHillshades.set('checked', true);
+                        this.nosHydroVisible = true;
+                    } 
+                    else if (startupLayers[i].toLowerCase() === 'trackline') {
+                        this.layersPanel.chkTrackline.set('checked', true);
+                        this.tracklineVisible = true;
+                    } 
+                    else if (startupLayers[i].toLowerCase() === 'dem') {
+                        //Startup with DEM Footprints and DEM Hillshades visible
+                        this.layersPanel.chkDems.set('checked', true);
+                        this.layersPanel.chkDemHillshades.set('checked', true);
+                        this.demVisible = true;
+                    }
+                }
             },
 
             filterSurveys: function(values) {

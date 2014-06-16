@@ -12,8 +12,22 @@ define([
         ){
 
         return declare([LayerCollection], {
-            constructor: function() {
+            constructor: function(options) {
                 this.name = "app/antarctic/LayerCollection";
+
+                this.multibeamVisible = false;
+                this.tracklineVisible = false;
+                this.demVisible = false;
+
+                if (options && options.multibeamVisible) {
+                    this.multibeamVisible = options.multibeamVisible;
+                }                
+                if (options && options.tracklineVisible) {
+                    this.tracklineVisible = options.tracklineVisible;
+                }
+                if (options && options.demVisible) {
+                    this.demVisible = options.demVisible;
+                }
 
                 this.defineMapServices();
 
@@ -30,30 +44,20 @@ define([
                     new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/antarctic_basemap/MapServer", {
                         id: "Antarctic Basemap",
                         visible: true
-                    }),                   
-                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_hillshades_mosaic/MapServer", {
-                        id: "DEM Hillshades",
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
+                    }),                                       
                     new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/ibcso_contours/MapServer", {
                         id: "IBCSO Contours",
                         visible: false,
                         opacity: 0.5
                     }),
-                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
-                        id: "NOS Hydrographic Surveys",
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer", {
                         id: "Trackline Bathymetry",
-                        visible: false,
+                        visible: this.tracklineVisible,
                         imageParameters: this.imageParameters.png32
                     }),                    
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer", {
                         id: "Multibeam",
-                        visible: true,
+                        visible: this.multibeamVisible,
                         imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/graticule/MapServer", {
@@ -69,7 +73,7 @@ define([
                     }),                    
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer", {
                         id: "DEM Extents",
-                        visible: false,
+                        visible: this.demVisible,
                         imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/clipping_donut/MapServer", {
