@@ -71,10 +71,10 @@ define([
                 else if (item.layerName == 'Surveys with BAGs') {
                     return '<i>Surveys wth BAGs (' + this.formatCountString(count) + ')</i>';
                 } 
-                else if (item.layerName == 'Digital Data') {
+                else if (item.layerName == 'Surveys with Digital Sounding Data') {
                     return '<i>Surveys with Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
                 } 
-                else if (item.layerName == 'Non-Digital') {
+                else if (item.layerName == 'Surveys without Digital Sounding Data') {
                     return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
@@ -104,10 +104,10 @@ define([
                 else if (item.layerName == 'Surveys with BAGs') {
                     return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
                 } 
-                else if (item.layerName == 'Digital Data') {
+                else if (item.layerName == 'Surveys with Digital Sounding Data') {
                     return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
                 } 
-                else if (item.layerName == 'Non-Digital') {
+                else if (item.layerName == 'Surveys without Digital Sounding Data') {
                     return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
@@ -187,8 +187,8 @@ define([
 
                 //Add the NOS Hydro sub-layers to the list of nodes to be expanded to
                 this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys with BAGs']);
-                this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Digital Data']);
-                this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Non-Digital']); 
+                this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys with Digital Sounding Data']);
+                this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys without Digital Sounding Data']); 
 
                 this.tree.set('paths', this.expandedNodePaths);
             }
