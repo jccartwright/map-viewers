@@ -71,10 +71,10 @@ define([
                 else if (item.layerName == 'Surveys with BAGs') {
                     return '<i>Surveys wth BAGs (' + this.formatCountString(count) + ')</i>';
                 } 
-                else if (item.layerName == 'Digital Data') {
+                else if (item.layerName == 'Surveys with Digital Sounding Data') {
                     return '<i>Surveys with Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
                 } 
-                else if (item.layerName == 'Non-Digital') {
+                else if (item.layerName == 'Surveys without Digital Sounding Data') {
                     return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
@@ -104,10 +104,10 @@ define([
                 else if (item.layerName == 'Surveys with BAGs') {
                     return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
                 } 
-                else if (item.layerName == 'Digital Data') {
+                else if (item.layerName == 'Surveys with Digital Sounding Data') {
                     return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
                 } 
-                else if (item.layerName == 'Non-Digital') {
+                else if (item.layerName == 'Surveys without Digital Sounding Data') {
                     return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
@@ -121,9 +121,8 @@ define([
             populateFeatureStore: function(results) {
                 var totalFeatures = 0;
                 var numFeaturesForLayer = 0;
-                this.uid = 0;
                 this.expandedNodePaths = [];
-                //for (var svcName in results) {
+
                 for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
                     var svcName = this.identify.layerIds[i];
                     for (var layerName in results[svcName]) {
@@ -188,8 +187,8 @@ define([
 
                 //Add the NOS Hydro sub-layers to the list of nodes to be expanded to
                 this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys with BAGs']);
-                this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Digital Data']);
-                this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Non-Digital']); 
+                this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys with Digital Sounding Data']);
+                this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys without Digital Sounding Data']); 
 
                 this.tree.set('paths', this.expandedNodePaths);
             }

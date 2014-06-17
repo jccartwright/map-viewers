@@ -32,8 +32,8 @@ define([
                     'Multibeam/Multibeam Bathymetric Surveys': lang.hitch(this, this.multibeamFormatter),
                     'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),
                     'NOS Hydrographic Surveys/Surveys with BAGs': lang.hitch(this, this.nosHydroFormatter),
-                    'NOS Hydrographic Surveys/Digital Data': lang.hitch(this, this.nosHydroFormatter),
-                    'NOS Hydro (non-digital)/Non-Digital': lang.hitch(this, this.nosHydroFormatter),
+                    'NOS Hydrographic Surveys/Surveys with Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
+                    'NOS Hydro (non-digital)/Surveys without Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
                     'DEM Extents/All NGDC Bathymetry DEMs': lang.hitch(this, this.demFormatter),
                     'CSC Lidar/Lidar': lang.hitch(this, this.lidarFormatter)
                 };

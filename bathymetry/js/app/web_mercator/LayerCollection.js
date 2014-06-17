@@ -14,8 +14,26 @@ define([
         ){
 
         return declare([AbstractLayerCollection], {
-            constructor: function() {
+            constructor: function(options) {
                 this.name = "app.web_mercator.LayerCollection";
+
+                this.multibeamVisible = false;
+                this.nosHydroVisible = false;
+                this.tracklineVisible = false;
+                this.demVisible = false;
+
+                if (options && options.multibeamVisible) {
+                    this.multibeamVisible = options.multibeamVisible;
+                }
+                if (options && options.nosHydroVisible) {
+                    this.nosHydroVisible = options.nosHydroVisible;
+                }
+                if (options && options.tracklineVisible) {
+                    this.tracklineVisible = options.tracklineVisible;
+                }
+                if (options && options.demVisible) {
+                    this.demVisible = options.demVisible;
+                }
 
                 this.defineMapServices();
 
@@ -59,34 +77,14 @@ define([
                     }),
                     new ArcGISImageServiceLayer("http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer", {
                         id: "DEM Hillshades",
-                        visible: false,
+                        visible: this.demVisible,
                         imageServiceParameters: this.imageServiceParameters
-                    }),
-                    new ArcGISImageServiceLayer("http://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer", {
-                        id: "BAG Hillshades",
-                        visible: false,
-                        imageServiceParameters: this.imageServiceParameters
-                    }),
+                    }),                    
                     new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_contours/MapServer", {
                         id: "GEBCO_08 Contours",
                         visible: false,
                         opacity: 0.5
-                    }),
-                    new ArcGISImageServiceLayer("http://egisws02.nos.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
-                        id: "RNC",
-                        visible: false,
-                        opacity: 0.5,
-                        imageServiceParameters: this.imageServiceParameters
-                    }),
-                    new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer", {
-                        id: "Trackline Bathymetry (tiled)",
-                        visible: false,
-                    }),
-                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer", {
-                        id: "Trackline Combined (dynamic)",
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
+                    }),                    
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
                         id: "NOS Hydro (non-digital)",
                         visible: false,
@@ -94,19 +92,26 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro/MapServer", {
                         id: "NOS Hydro (tiled)",
-                        visible: false
+                        visible: this.nosHydroVisible
                     }),
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
                         id: "NOS Hydro (dynamic)",
-                        visible: false,
+                        visible: this.nosHydroVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer", {
-                        id: "Multibeam (tiled)",
-                        visible: false
+                    new ArcGISImageServiceLayer("http://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer", {
+                        id: "BAG Hillshades",
+                        visible: false,
+                        imageServiceParameters: this.imageServiceParameters
                     }),
-                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer", {
-                        id: "Multibeam (dynamic)",
+                    new ArcGISImageServiceLayer("http://egisws02.nos.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
+                        id: "RNC",
+                        visible: false,
+                        opacity: 0.5,
+                        imageServiceParameters: this.imageServiceParameters
+                    }),
+                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
+                        id: "NOS Hydro (BAGs)",
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
@@ -116,6 +121,24 @@ define([
                         imageParameters: this.imageParameters.png32,
                         opacity: 1
                     }),
+                    new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer", {
+                        id: "Trackline Bathymetry (tiled)",
+                        visible: this.tracklineVisible,
+                    }),
+                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer", {
+                        id: "Trackline Combined (dynamic)",
+                        visible: this.tracklineVisible,
+                        imageParameters: this.imageParameters.png32
+                    }),
+                    new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer", {
+                        id: "Multibeam (tiled)",
+                        visible: this.multibeamVisible
+                    }),
+                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer", {
+                        id: "Multibeam (dynamic)",
+                        visible: this.multibeamVisible,
+                        imageParameters: this.imageParameters.png32
+                    }),                    
                     new ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer", {
                         id: "World Boundaries and Places",
                         visible: false
@@ -136,7 +159,7 @@ define([
                     }),
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer", {
                         id: "DEM Extents",
-                        visible: false,
+                        visible: this.demVisible,
                         imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer", {
@@ -153,14 +176,14 @@ define([
                         id: "Multibeam",
                         tiledService: this.getLayerById("Multibeam (tiled)"),
                         dynamicService: this.getLayerById("Multibeam (dynamic)"),
-                        visible: true,
+                        visible: this.multibeamVisible,
                         cutoffZoom: 9
                     },
                     {
                         id: "Trackline Bathymetry",
                         tiledService: this.getLayerById("Trackline Bathymetry (tiled)"),
                         dynamicService: this.getLayerById("Trackline Combined (dynamic)"),
-                        visible: false,
+                        visible: this.tracklineVisible,
                         cutoffZoom: 9,
                         defaultVisibleLayers: [1]
                      },
@@ -168,7 +191,7 @@ define([
                          id: "NOS Hydrographic Surveys",
                          tiledService: this.getLayerById("NOS Hydro (tiled)"),
                          dynamicService: this.getLayerById("NOS Hydro (dynamic)"),
-                         visible: false,
+                         visible: this.nosHydroVisible,
                          cutoffZoom: 9
                      }                     
                 ];

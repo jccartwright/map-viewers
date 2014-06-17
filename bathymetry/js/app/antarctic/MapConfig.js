@@ -23,7 +23,7 @@ define([
             mapReady: function() {
                 this.inherited(arguments);
 
-                console.log("inside custom Antarctic mapReady...");   
+                //console.log("inside custom Antarctic mapReady...");   
 
                 var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, "antarcticMapToolbar");
                 mapToolbar.startup();

@@ -14,8 +14,26 @@ define([
         ){
 
         return declare([LayerCollection], {
-            constructor: function() {
+            constructor: function(options) {
                 this.name = "app/arctic/LayerCollection";
+
+                this.multibeamVisible = false;
+                this.nosHydroVisible = false;
+                this.tracklineVisible = false;
+                this.demVisible = false;
+
+                if (options && options.multibeamVisible) {
+                    this.multibeamVisible = options.multibeamVisible;
+                }
+                if (options && options.nosHydroVisible) {
+                    this.nosHydroVisible = options.nosHydroVisible;
+                }
+                if (options && options.tracklineVisible) {
+                    this.tracklineVisible = options.tracklineVisible;
+                }
+                if (options && options.demVisible) {
+                    this.demVisible = options.demVisible;
+                }
 
                 this.defineMapServices();
 
@@ -35,14 +53,9 @@ define([
                     }),                 
                     new ArcGISImageServiceLayer("http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer", {
                         id: "DEM Hillshades",
-                        visible: false,
+                        visible: this.demVisible,
                         imageServiceParameters: this.imageServiceParameters
-                    }),
-                    new ArcGISImageServiceLayer("http://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer", {
-                        id: "BAG Hillshades",
-                        visible: false,
-                        imageServiceParameters: this.imageServiceParameters
-                    }),                    
+                    }),                                 
                     new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/ibcao_contours/MapServer", {
                         id: "IBCAO Contours",
                         visible: false,
@@ -55,17 +68,27 @@ define([
                     }),
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
                         id: "NOS Hydrographic Surveys",
+                        visible: this.nosHydroVisible,
+                        imageParameters: this.imageParameters.png32
+                    }),
+                    new ArcGISImageServiceLayer("http://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer", {
+                        id: "BAG Hillshades",
+                        visible: false,
+                        imageServiceParameters: this.imageServiceParameters
+                    }),  
+                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer", {
+                        id: "NOS Hydro (BAGs)",
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer", {
                         id: "Trackline Bathymetry",
-                        visible: false,
+                        visible: this.tracklineVisible,
                         imageParameters: this.imageParameters.png32
                     }),                    
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer", {
                         id: "Multibeam",
-                        visible: true,
+                        visible: this.multibeamVisible,
                         imageParameters: this.imageParameters.png32
                     }),                    
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/graticule/MapServer", {
@@ -81,7 +104,7 @@ define([
                     }),
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer", {
                         id: "DEM Extents",
-                        visible: false,
+                        visible: this.demVisible,
                         imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/clipping_donut/MapServer", {

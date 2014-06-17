@@ -42,18 +42,33 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'Trackline Bathymetry', this.chkTrackline.checked);                    
                 }));
 
+                on(this.chkNosHydroBags, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0], this.chkNosHydroBags.checked);
 
-                on(this.chkNosHydro0, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0], this.chkNosHydro0.checked);
+                    //If the BAG Hillshades are visible, toggle the extra "Surveys with BAGs" overlay on top of the hillshades.
+                    if (this.chkBagHillshades.checked) {
+                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', this.chkNosHydroBags.checked);
+                    }
+                    else {
+                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', false);
+                    }
                 }));
-                on(this.chkNosHydro1, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [1], this.chkNosHydro1.checked);
+                on(this.chkNosHydroDigital, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [1], this.chkNosHydroDigital.checked);
                 }));
-                on(this.chkNosHydro2, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'NOS Hydro (non-digital)', this.chkNosHydro2.checked);                    
+                on(this.chkNosHydroNonDigital, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'NOS Hydro (non-digital)', this.chkNosHydroNonDigital.checked);                    
                 }));
                 on(this.chkBagHillshades, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.chkBagHillshades.checked);                    
+                    topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.chkBagHillshades.checked);   
+
+                    //If the "Surveys with BAGs" are visible, toggle the extra overlay on top of the hillshades.
+                    if (this.chkBagHillshades.checked && this.chkNosHydroBags.checked) {
+                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', true);
+                    }
+                    else {
+                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', false);
+                    }                                     
                 }));
 
                 on(this.chkDems, 'change', lang.hitch(this, function() {
@@ -77,20 +92,12 @@ define([
                 on(this.resetButton, "click", lang.hitch(this, function() {
                     topic.publish('/bathymetry/ResetSearch');
                 })); 
-
-                // topic.subscribe('/ngdc/mapViewActivated', lang.hitch(this, function(mapId) {
-                //     if (mapId == 'antarctic') {
-                //         this.setNosHydroDisabled(true);
-                //     } else {
-                //         this.setNosHydroDisabled(false);
-                //     }
-                // }));
             },
 
             setNosHydroDisabled: function(disabled) {
-                domAttr.set('chkNosHydro0', 'disabled', disabled);
-                domAttr.set('chkNosHydro1', 'disabled', disabled);
-                domAttr.set('chkNosHydro2', 'disabled', disabled);
+                domAttr.set('chkNosHydroBags', 'disabled', disabled);
+                domAttr.set('chkNosHydroDigital', 'disabled', disabled);
+                domAttr.set('chkNosHydroNonDigital', 'disabled', disabled);
                 domAttr.set('chkBagHillshades', 'disabled', disabled);
                 domAttr.set('chkDemHillshades', 'disabled', disabled);
                 domAttr.set('chkDems', 'disabled', disabled);
