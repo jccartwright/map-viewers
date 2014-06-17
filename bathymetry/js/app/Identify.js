@@ -189,7 +189,7 @@ define([
                     if (b.feature.attributes['Survey Year'] == 'Null') { 
                         return -1;
                     }
-                    if (a.feature.attributes['Survey Year'] == b.feature.attributes['Year']) {
+                    if (a.feature.attributes['Survey Year'] == b.feature.attributes['Survey Year']) {
                         return a.feature.attributes['Survey ID'] <= b.feature.attributes['Survey ID'] ? -1 : 1;
                     }
                     return a.feature.attributes['Survey Year'] < b.feature.attributes['Survey Year'] ? 1 : -1;
