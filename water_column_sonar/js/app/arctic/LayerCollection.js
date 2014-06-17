@@ -1,8 +1,8 @@
 define([
-    "dojo/_base/declare", 
-    "ngdc/layers/AbstractLayerCollection", 
-    "esri/layers/ArcGISTiledMapServiceLayer",
-    "esri/layers/ArcGISDynamicMapServiceLayer"
+    'dojo/_base/declare', 
+    'ngdc/layers/AbstractLayerCollection', 
+    'esri/layers/ArcGISTiledMapServiceLayer',
+    'esri/layers/ArcGISDynamicMapServiceLayer'
     ],
     function(
         declare, 
@@ -12,7 +12,7 @@ define([
 
         return declare([LayerCollection], {
             constructor: function() {
-                this.name = "app/arctic/LayerCollection";
+                this.name = 'app/arctic/LayerCollection';
 
                 this.defineMapServices();
 
@@ -26,33 +26,33 @@ define([
             defineMapServices: function() {
                 //TODO check to ensure unique id
                 this.mapServices = [
-                    new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/arctic_basemap/MapServer", {
-                        id: "Arctic Basemap",
+                    new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/arctic_basemap/MapServer', {
+                        id: 'Arctic Basemap',
                         visible: true
                     }),                                                         
-                    new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/ibcao_contours/MapServer", {
-                        id: "IBCAO Contours",
+                    new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/ibcao_contours/MapServer', {
+                        id: 'IBCAO Contours',
                         visible: false,
                         opacity: 0.5
                     }),
-                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer", {
-                        id: "Water Column Sonar",
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer', {
+                        id: 'Water Column Sonar',
                         visible: true,
                         imageParameters: this.imageParameters.png32
                     }),                           
-                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/graticule/MapServer", {
-                        id: "Graticule",
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/graticule/MapServer', {
+                        id: 'Graticule',
                         visible: true,
                         opacity: 0.7,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/reference/MapServer", {
-                        id: "Reference",
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/reference/MapServer', {
+                        id: 'Reference',
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),                    
-                    new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/clipping_donut/MapServer", {
-                        id: "Clipping Donut",
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/clipping_donut/MapServer', {
+                        id: 'Clipping Donut',
                         visible: true,
                         imageParameters: this.imageParameters.png32
                     })

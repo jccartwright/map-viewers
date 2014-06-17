@@ -1,17 +1,17 @@
 define([
-    "dojo/_base/declare",
-    "dijit/Dialog",
-    "dijit/_Widget",
-    "dijit/_TemplatedMixin",
-    "dijit/_WidgetsInTemplateMixin",
-    "dijit/form/Button", "dijit/form/NumberSpinner", "dijit/form/Select", "dijit/form/CheckBox", "dojox/form/CheckedMultiSelect", "dijit/form/TextBox", "dijit/form/FilteringSelect",
-    "dijit/form/DateTextBox",
-    "dojo/_base/lang",
-    "dojo/_base/array",
-    "dojo/dom-attr",
-    "dojo/on",
-    "dojo/topic",
-    "dojo/text!./templates/SearchDialog.html"
+    'dojo/_base/declare',
+    'dijit/Dialog',
+    'dijit/_Widget',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dijit/form/Button', 'dijit/form/NumberSpinner', 'dijit/form/Select', 'dijit/form/CheckBox', 'dojox/form/CheckedMultiSelect', 'dijit/form/TextBox', 'dijit/form/FilteringSelect',
+    'dijit/form/DateTextBox',
+    'dojo/_base/lang',
+    'dojo/_base/array',
+    'dojo/dom-attr',
+    'dojo/on',
+    'dojo/topic',
+    'dojo/text!./templates/SearchDialog.html'
     ],
     function(
         declare,
@@ -33,20 +33,20 @@ define([
             templateString: template,
             
             // A class to be applied to the root node in template
-            baseClass: "searchDialog",
+            baseClass: 'searchDialog',
 
             constructor: function(/*Object*/ kwArgs) {
-                console.log("inside SearchDialog constructor...");
+                console.log('inside SearchDialog constructor...');
                 lang.mixin(this, kwArgs); 
             },
             
             postCreate: function() {
                 this.inherited(arguments);
 
-                on(this.cancelButton, "click", lang.hitch(this, function(evt){
+                on(this.cancelButton, 'click', lang.hitch(this, function(){
                     this.onCancel();
                 }));
-                on(this.resetButton, "click", lang.hitch(this, function(evt){
+                on(this.resetButton, 'click', lang.hitch(this, function(){
                     this.reset();
                 })); 
                 //this.clearForm();  
@@ -58,17 +58,17 @@ define([
                     this.reset();
                 }
                 else {       
-                    topic.publish("/wcd/Search", values);
+                    topic.publish('/wcd/Search', values);
                 }
             },
 
             isDefault: function(values) {
                 return (!values.startDate && !values.endDate &&
-                    values.cruiseId == '' &&
-                    values.instruments.length == 0 &&
+                    values.cruiseId === '' &&
+                    values.instruments.length === 0 &&
                     isNaN(values.minNumBeams) && isNaN(values.maxNumBeams) &&
                     isNaN(values.minRecordingRange) && isNaN(values.maxRecordingRange) &&
-                    isNaN(values.minSwathWidth) && isNaN(values.maxSwathWidth))
+                    isNaN(values.minSwathWidth) && isNaN(values.maxSwathWidth));
             },
                    
             clearForm: function() {
@@ -92,7 +92,7 @@ define([
 
             reset: function() {
                 this.clearForm();
-                topic.publish("/wcd/ResetSearch");
+                topic.publish('/wcd/ResetSearch');
             }    
     });
 });

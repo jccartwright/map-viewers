@@ -1,34 +1,33 @@
 define([
-    "dojo/_base/declare",
-    "dijit/registry",
-    "dojo/dom",
-    "dojo/_base/config",
-    "dojo/io-query",
-    "dojo/_base/lang",
-    "dojo/topic",
-    "dojo/on",
-    "dojo/aspect",
-    "dijit/form/CheckBox",
-    "esri/config",
-    "esri/geometry/Extent",
-    "esri/SpatialReference",
-    "esri/tasks/GeometryService",
-    "ngdc/Logger",
-    "app/web_mercator/MapConfig",
-    "app/arctic/MapConfig",
-    "ngdc/web_mercator/ZoomLevels",
-    "ngdc/arctic/ZoomLevels",
-    "ngdc/Banner",
-    "ngdc/CoordinatesToolbar",
-    "app/web_mercator/LayerCollection",
-    "app/arctic/LayerCollection",
-    "app/web_mercator/MapToolbar",
-    "app/arctic/MapToolbar",
-    "app/Identify",
-    "app/AppIdentifyPane",
-    "app/LayersPanel",
-    "app/HelpPanel",
-    "dojo/domReady!"],
+    'dojo/_base/declare',
+    'dijit/registry',
+    'dojo/dom',
+    'dojo/_base/config',
+    'dojo/io-query',
+    'dojo/_base/lang',
+    'dojo/topic',
+    'dojo/on',
+    'dojo/aspect',
+    'dijit/form/CheckBox',
+    'esri/config',
+    'esri/geometry/Extent',
+    'esri/SpatialReference',
+    'esri/tasks/GeometryService',
+    'ngdc/Logger',
+    'app/web_mercator/MapConfig',
+    'app/arctic/MapConfig',
+    'ngdc/web_mercator/ZoomLevels',
+    'ngdc/arctic/ZoomLevels',
+    'ngdc/Banner',
+    'ngdc/CoordinatesToolbar',
+    'app/web_mercator/LayerCollection',
+    'app/arctic/LayerCollection',
+    'app/web_mercator/MapToolbar',
+    'app/arctic/MapToolbar',
+    'app/Identify',
+    'app/AppIdentifyPane',
+    'app/LayersPanel',
+    'dojo/domReady!'],
     function(
         declare,
         registry,
@@ -57,8 +56,7 @@ define([
         ArcticMapToolbar,
         Identify,
         IdentifyPane,
-        LayersPanel,
-        HelpPanel
+        LayersPanel
         ) {
 
         return declare(null, {
@@ -72,10 +70,10 @@ define([
 
             init: function() {
                 esriConfig.defaults.io.corsEnabledServers = [
-                    "http://maps.ngdc.noaa.gov/arcgis/rest/services",
-                    "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services"];
+                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
+                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
 
-                esriConfig.defaults.geometryService = new GeometryService("http://maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer");
+                esriConfig.defaults.geometryService = new GeometryService('http://maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
@@ -91,10 +89,10 @@ define([
                 this.setupMapViews();
 
                 //Subscribe to messages passed by the search dialogs
-                topic.subscribe("/wcd/Search", lang.hitch(this, function(values) {
+                topic.subscribe('/wcd/Search', lang.hitch(this, function(values) {
                     this.filterWcd(values);
                 }));
-                topic.subscribe("/wcd/ResetSearch", lang.hitch(this, function() {
+                topic.subscribe('/wcd/ResetSearch', lang.hitch(this, function() {
                     this.resetWcd();
                 }));
             },
@@ -108,8 +106,8 @@ define([
                         {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
                         {url: 'http://www.ngdc.noaa.gov/mgg/wcd/', label: 'Water Column Sonar Data'}           
                     ],
-                    dataUrl: "http://www.ngdc.noaa.gov/mgg/wcd/",
-                    image: "/images/water_column_sonar_data_viewer_logo.png"
+                    dataUrl: 'http://www.ngdc.noaa.gov/mgg/wcd/',
+                    image: '/images/water_column_sonar_data_viewer_logo.png'
                 });
                 this.banner.placeAt('banner');
             },
@@ -163,7 +161,7 @@ define([
 
                 var zoomLevels = new MercatorZoomLevels();
 
-                this.mercatorMapConfig = new MercatorMapConfig("mercator", {
+                this.mercatorMapConfig = new MercatorMapConfig('mercator', {
                     center:[-110, 40], //centered over US
                     zoom: 1, //relative zoom level; equivalent to absolute zoom level 3
                     logo: false,
@@ -174,7 +172,7 @@ define([
                     lods: zoomLevels.lods
                 }, new MercatorLayerCollection());  
 
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, "mercatorCoordinatesToolbar");
+                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
 
                 //Hide the scalebar at small scales <= 4
                 on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
@@ -206,7 +204,7 @@ define([
 
                 var zoomLevels = new ArcticZoomLevels();            
 
-                this.arcticMapConfig = new ArcticMapConfig("arctic", {
+                this.arcticMapConfig = new ArcticMapConfig('arctic', {
                     extent: initialExtent,
                     //zoom: 3,
                     logo: false,
@@ -217,7 +215,7 @@ define([
                     lods: zoomLevels.lods
                 }, new ArcticLayerCollection());
 
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.arcticMapConfig.map}, "arcticCoordinatesToolbar");
+                new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
 
             filterWcd: function(values) {
@@ -285,6 +283,6 @@ define([
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
             }
-        })
+        });
     }
 );
