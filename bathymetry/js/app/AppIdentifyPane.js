@@ -137,7 +137,7 @@ define([
                             
                             if (svcName == 'NOS Hydrographic Surveys' || svcName == 'NOS Hydro (non-digital)') {
                                 //Create an "NOS Hydrographic Surveys" folder if it doesn't already exist
-                                if (this.featureStore.query({id: 'NOS Hydrographic Surveys'}).length == 0) {
+                                if (this.featureStore.query({id: 'NOS Hydrographic Surveys'}).length === 0) {
                                     this.featureStore.put({
                                         uid: ++this.uid,
                                         id: 'NOS Hydrographic Surveys',
@@ -149,7 +149,7 @@ define([
                             }
 
                             //Create a layer "folder" node if it doesn't already exist
-                            if (this.featureStore.query({id: layerName}).length == 0) {
+                            if (this.featureStore.query({id: layerName}).length === 0) {
                                 this.featureStore.put({
                                     uid: ++this.uid,
                                     id: layerName,
