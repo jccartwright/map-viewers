@@ -1,10 +1,10 @@
 define([
-    "dojo/_base/declare", 
-    "dojo/_base/array", 
-    "dojo/string", 
-    "dojo/topic", 
-    "dojo/_base/lang",
-    "ngdc/identify/AbstractIdentify"
+    'dojo/_base/declare', 
+    'dojo/_base/array', 
+    'dojo/string', 
+    'dojo/topic', 
+    'dojo/_base/lang',
+    'ngdc/identify/AbstractIdentify'
     ],
     function(
         declare, 
@@ -209,24 +209,24 @@ define([
             sortResults: function(results) {
                 var features;
                 if (results['Multibeam']) {    
-                    if (features = results['Multibeam']['Multibeam Bathymetric Surveys']) {
+                    if ((features = results['Multibeam']['Multibeam Bathymetric Surveys'])) {
                         features.sort(this.multibeamSort);
                     }                    
                 }
                 if (results['Trackline Bathymetry']) {    
-                    if (features = results['Trackline Bathymetry']['Marine Trackline Surveys: Bathymetry']) {
+                    if ((features = results['Trackline Bathymetry']['Marine Trackline Surveys: Bathymetry'])) {
                         features.sort(this.tracklineSort);
                     }                    
                 }
 
                 if (results['NOS Hydrographic Surveys']) {  
-                    for (sublayer in results['NOS Hydrographic Surveys']) {
+                    for (var sublayer in results['NOS Hydrographic Surveys']) {
                        results['NOS Hydrographic Surveys'][sublayer].sort(this.nosHydroSort);
                     }                                
                 }
                 
                 if (results['DEM Extents']) {    
-                    if (features = results['DEM Extents']['All NGDC Bathymetry DEMs']) {
+                    if ((features = results['DEM Extents']['All NGDC Bathymetry DEMs'])) {
                         features.sort(this.demSort);
                     }                    
                 }

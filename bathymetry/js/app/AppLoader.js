@@ -1,36 +1,36 @@
 define([
-    "dojo/_base/declare",
-    "dijit/registry",
-    "dojo/dom",
-    "dojo/_base/config",
-    "dojo/io-query",
-    "dojo/_base/lang",
-    "dojo/topic",
-    "dojo/on",
-    "dojo/aspect",
-    "dijit/form/CheckBox",
-    "esri/config",
-    "esri/geometry/Extent",
-    "esri/SpatialReference",
-    "ngdc/Logger",
-    "app/web_mercator/MapConfig",
-    "app/arctic/MapConfig",
-    "app/antarctic/MapConfig",
-    "ngdc/web_mercator/ZoomLevels",
-    "ngdc/arctic/ZoomLevels",
-    "ngdc/antarctic/ZoomLevels",
-    "ngdc/Banner",
-    "ngdc/CoordinatesToolbar",
-    "app/web_mercator/LayerCollection",
-    "app/arctic/LayerCollection",
-    "app/antarctic/LayerCollection",
-    "app/web_mercator/MapToolbar",
-    "app/arctic/MapToolbar",
-    "app/antarctic/MapToolbar",
-    "app/web_mercator/Identify",
-    "app/AppIdentifyPane",
-    "app/LayersPanel",
-    "dojo/domReady!"],
+    'dojo/_base/declare',
+    'dijit/registry',
+    'dojo/dom',
+    'dojo/_base/config',
+    'dojo/io-query',
+    'dojo/_base/lang',
+    'dojo/topic',
+    'dojo/on',
+    'dojo/aspect',
+    'dijit/form/CheckBox',
+    'esri/config',
+    'esri/geometry/Extent',
+    'esri/SpatialReference',
+    'ngdc/Logger',
+    'app/web_mercator/MapConfig',
+    'app/arctic/MapConfig',
+    'app/antarctic/MapConfig',
+    'ngdc/web_mercator/ZoomLevels',
+    'ngdc/arctic/ZoomLevels',
+    'ngdc/antarctic/ZoomLevels',
+    'ngdc/Banner',
+    'ngdc/CoordinatesToolbar',
+    'app/web_mercator/LayerCollection',
+    'app/arctic/LayerCollection',
+    'app/antarctic/LayerCollection',
+    'app/web_mercator/MapToolbar',
+    'app/arctic/MapToolbar',
+    'app/antarctic/MapToolbar',
+    'app/web_mercator/Identify',
+    'app/AppIdentifyPane',
+    'app/LayersPanel',
+    'dojo/domReady!'],
     function(
         declare,
         registry,
@@ -76,8 +76,8 @@ define([
 
             init: function() {
                 esriConfig.defaults.io.corsEnabledServers = [
-                    "http://maps.ngdc.noaa.gov/arcgis/rest/services",
-                    "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services"];
+                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
+                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
 
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
@@ -110,10 +110,10 @@ define([
                 this.setupMapViews();
 
                 //Subscribe to messages passed by the search dialog
-                topic.subscribe("/bathymetry/Search", lang.hitch(this, function(values) {
+                topic.subscribe('/bathymetry/Search', lang.hitch(this, function(values) {
                     this.filterSurveys(values);
                 }));
-                topic.subscribe("/bathymetry/ResetSearch", lang.hitch(this, function() {
+                topic.subscribe('/bathymetry/ResetSearch', lang.hitch(this, function() {
                     this.resetSurveyFilter();
                 }));
             },
@@ -127,8 +127,8 @@ define([
                         {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
                         {url: 'http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html', label: 'Bathymetry'}
                     ],
-                    dataUrl: "http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html",
-                    image: "images/bathymetry_viewer_logo.png"
+                    dataUrl: 'http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html',
+                    image: 'images/bathymetry_viewer_logo.png'
                 });
                 banner.placeAt('banner');
             },
@@ -183,14 +183,14 @@ define([
 
                 var zoomLevels = new MercatorZoomLevels();
 
-                var center = undefined;
-                var zoom = undefined;
+                var center;
+                var zoom;
                 if (!this.initialExtent) {
                     center = [-110, 20]; //centered over eastern Pacific
                     zoom = 1; //relative zoom level; equivalent to absolute zoom level 3
                 }
 
-                this.mercatorMapConfig = new MercatorMapConfig("mercator", {
+                this.mercatorMapConfig = new MercatorMapConfig('mercator', {
                     center: center,
                     zoom: zoom,
                     extent: this.initialExtent,
@@ -207,7 +207,7 @@ define([
                     demVisible: this.demVisible
                 }));  
 
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, "mercatorCoordinatesToolbar");
+                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
 
                 //Hide the scalebar at small scales <= 4
                 on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
@@ -238,7 +238,7 @@ define([
 
                 var zoomLevels = new ArcticZoomLevels();            
 
-                this.arcticMapConfig = new ArcticMapConfig("arctic", {
+                this.arcticMapConfig = new ArcticMapConfig('arctic', {
                     extent: initialExtent,
                     //zoom: 3,
                     logo: false,
@@ -254,7 +254,7 @@ define([
                     demVisible: this.demVisible
                 }));
 
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.arcticMapConfig.map}, "arcticCoordinatesToolbar");
+                new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
 
             setupAntarcticView: function() {
@@ -270,7 +270,7 @@ define([
 
                 var zoomLevels = new AntarcticZoomLevels();
             
-                this.antarcticMapConfig = new AntarcticMapConfig("antarctic", {
+                this.antarcticMapConfig = new AntarcticMapConfig('antarctic', {
                     extent: initialExtent,
                     //zoom: 3,
                     logo: false,
@@ -285,12 +285,12 @@ define([
                     demVisible: this.demVisible
                 }));
 
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.antarcticMapConfig.map}, "antarcticCoordinatesToolbar");
+                new CoordinatesToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
             },
 
             //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'
             setStartupLayers: function(/*String[]*/ startupLayers) {                
-                if (startupLayers.length == 0) {
+                if (startupLayers.length === 0) {
                     this.layersPanel.chkMultibeam.set('checked', true);
                     this.multibeamVisible = true;
                     return;    
@@ -324,7 +324,6 @@ define([
             filterSurveys: function(values) {
                 var layerDefinitions;
                 var sql = [];
-                var i;
                                                     
                 //Multibeam
                 if (values.startYear) {
@@ -386,7 +385,7 @@ define([
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);
-                var allLayerDefinitions = [];
+                allLayerDefinitions = [];
                 allLayerDefinitions[0] = layerDefinitions;
                 allLayerDefinitions[1] = layerDefinitions;
                 allLayerDefinitions[2] = layerDefinitions;      
@@ -418,6 +417,6 @@ define([
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
             },
-        })
+        });
     }
 );

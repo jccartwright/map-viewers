@@ -1,10 +1,10 @@
 define([
-    "dojo/_base/declare", 
-    "dojo/_base/array", 
-    "dojo/string", 
-    "dojo/topic", 
-    "dojo/_base/lang",
-    "app/Identify"
+    'dojo/_base/declare', 
+    'dojo/_base/array', 
+    'dojo/string', 
+    'dojo/topic', 
+    'dojo/_base/lang',
+    'app/Identify'
     ],
     function(
         declare, 

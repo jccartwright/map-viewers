@@ -1,13 +1,13 @@
 define([
-    "dojo/_base/declare", 
-    "dojo/_base/config", 
-    "dojo/_base/array", 
-    "dojo/string",
-    "dojo/topic", 
-    "dojo/_base/lang",
-    "dojo/dom-style",
-    "dijit/form/Button", 
-    "ngdc/identify/IdentifyPane" 
+    'dojo/_base/declare', 
+    'dojo/_base/config', 
+    'dojo/_base/array', 
+    'dojo/string',
+    'dojo/topic', 
+    'dojo/_base/lang',
+    'dojo/dom-style',
+    'dijit/form/Button', 
+    'ngdc/identify/IdentifyPane' 
     ],
     function(
         declare, 
@@ -24,7 +24,7 @@ define([
         return declare([IdentifyPane], {
 
             constructor: function() {
-                this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl + "/identify/images/magnifier.png";
+                this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl + '/identify/images/magnifier.png';
             },
 
             postCreate: function() {
@@ -52,7 +52,7 @@ define([
                 // }).placeAt(this.infoPageBottomBar);
             },
 
-            showResults: function(resultCollection) {
+            showResults: function() {
                 this.inherited(arguments);
                 // if (this.numFeatures >= 1000) {
                 //     this.featurePageTitle = "Identified Features (" + this.numFeatures + "+, results limited to 1000)";
