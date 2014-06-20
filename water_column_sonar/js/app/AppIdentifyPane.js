@@ -1,15 +1,15 @@
 define([
-    "dojo/_base/declare", 
-    "dojo/_base/config", 
-    "dojo/_base/array", 
-    "dojo/string", 
-    "ngdc/identify/IdentifyPane", 
-    "dojo/topic", 
-    "esri/dijit/Popup",
-    "dojo/_base/lang", 
-    "dijit/form/Button",
-    "dojo/dom-style", 
-    "app/RequestDataDialog"
+    'dojo/_base/declare', 
+    'dojo/_base/config', 
+    'dojo/_base/array', 
+    'dojo/string', 
+    'ngdc/identify/IdentifyPane', 
+    'dojo/topic', 
+    'esri/dijit/Popup',
+    'dojo/_base/lang', 
+    'dijit/form/Button',
+    'dojo/dom-style', 
+    'app/RequestDataDialog'
     ],
     function(
         declare, 
@@ -28,7 +28,7 @@ define([
         return declare([IdentifyPane], {
 
             constructor: function() {
-                this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl + "/identify/images/magnifier.png";
+                this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl + '/identify/images/magnifier.png';
             },
 
             postCreate: function() {
@@ -40,26 +40,26 @@ define([
                 //this.featurePageBottomBar.style = 'height: 50px;';
 
                 this.requestDataFilesButton = new Button({
-                    label: "Request These Data Files",
-                    style: "bottom: 5px; left: 15px;",
+                    label: 'Request These Data Files',
+                    style: 'bottom: 5px; left: 15px;',
                     onClick: lang.hitch(this, function(){
                         this.requestDataFiles();
                     })
                 }).placeAt(this.featurePageBottomBar);
 
                 this.requestDataFileButton = new Button({
-                    label: "Request This Data File",
-                    style: "bottom: 25px; left: 15px;",
+                    label: 'Request This Data File',
+                    style: 'bottom: 25px; left: 15px;',
                     onClick: lang.hitch(this, function(){
                         this.requestDataFile();
                     })
                 }).placeAt(this.infoPageBottomBar);
             },
 
-            showResults: function(resultCollection) {
+            showResults: function() {
                 this.inherited(arguments);
                 if (this.numFeatures >= 1000) {
-                    this.featurePageTitle = "Identified Features (results limited to 1000 files. Zoom in for greater detail)";
+                    this.featurePageTitle = 'Identified Features (results limited to 1000 files. Zoom in for greater detail)';
                     this.setTitle(this.featurePageTitle);
                 }
             },
@@ -118,7 +118,7 @@ define([
                             var layerKey = svcName + '/' + layerName;
                             var layerUrl = results[svcName][layerName][i].layerUrl;
                             //Create a layer "folder" node if it doesn't already exist
-                            if (this.featureStore.query({id: layerName}).length == 0) {
+                            if (this.featureStore.query({id: layerName}).length === 0) {
                                 this.featureStore.put({
                                     uid: ++this.uid,
                                     id: layerName,
@@ -130,7 +130,7 @@ define([
                             //Create a survey "folder" node if it doesn't already exist
                             var surveyId = item.feature.attributes['Cruise ID'];
                             var surveyKey = layerName + '/' + surveyId;
-                            if (this.featureStore.query({id: surveyKey}).length == 0) {
+                            if (this.featureStore.query({id: surveyKey}).length === 0) {
                                 this.featureStore.put({
                                     uid: ++this.uid,
                                     id: surveyKey,
@@ -142,7 +142,7 @@ define([
                             //Create an instrument "folder" node if it doesn't already exist
                             var instrument = item.feature.attributes['Instrument Name'];
                             var instrumentKey = layerName + '/' + surveyId + '/' + instrument;
-                            if (this.featureStore.query({id: instrumentKey}).length == 0) {
+                            if (this.featureStore.query({id: instrumentKey}).length === 0) {
                                 this.featureStore.put({
                                     uid: ++this.uid,
                                     id: instrumentKey,

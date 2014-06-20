@@ -1,5 +1,21 @@
-define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/AbstractIdentify", "dojo/topic", "esri/dijit/Popup", "dojo/_base/lang"],
-    function(declare, array, string, AbstractIdentify, topic, Popup, lang){
+define([
+    'dojo/_base/declare',
+    'dojo/_base/array',
+    'dojo/string',
+    'ngdc/identify/AbstractIdentify',
+    'dojo/topic',
+    'esri/dijit/Popup',
+    'dojo/_base/lang'
+    ],
+    function(
+        declare,
+        array,
+        string,
+        AbstractIdentify,
+        topic,
+        Popup,
+        lang
+        ){
 
         return declare([AbstractIdentify], {
 
@@ -62,7 +78,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
 
-                topic.subscribe("identifyPane/showInfo", lang.hitch(this, function(item) {
+                topic.subscribe('identifyPane/showInfo', lang.hitch(this, function(item) {
                     console.log('identifyPane/showInfo received ' + item);
 
                     var identifyPane = this._map.identifyPane;
@@ -82,7 +98,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
 
                 this.sortFunctions = {
                     'Water Column Sonar/Source Group: OER': this.wcdSort
-                }
+                };
 
             }, //end constructor
 
@@ -94,16 +110,16 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/string", "ngdc/identify/
             sortResults: function(results) {
                 var features;
                 if (results['Water Column Sonar']) {    
-                    if (features = results['Water Column Sonar']['Source Group: NMFS']) {
+                    if ((features = results['Water Column Sonar']['Source Group: NMFS'])) {
                         features.sort(this.wcdSort);
                     }
-                    if (features = results['Water Column Sonar']['Source Group: OER']) {
+                    if ((features = results['Water Column Sonar']['Source Group: OER'])) {
                         features.sort(this.wcdSort);
                     }
-                    if (features = results['Water Column Sonar']['Source Group: UNOLS']) {
+                    if ((features = results['Water Column Sonar']['Source Group: UNOLS'])) {
                         features.sort(this.wcdSort);
                     }
-                    if (features = results['Water Column Sonar']['Source Group: Other']) {
+                    if ((features = results['Water Column Sonar']['Source Group: Other'])) {
                         features.sort(this.wcdSort);
                     }
                 }

@@ -1,8 +1,8 @@
 define([
-    "dojo/_base/declare", 
-    "ngdc/layers/AbstractLayerCollection", 
-    "esri/layers/ArcGISTiledMapServiceLayer",
-    "esri/layers/ArcGISDynamicMapServiceLayer"
+    'dojo/_base/declare', 
+    'ngdc/layers/AbstractLayerCollection', 
+    'esri/layers/ArcGISTiledMapServiceLayer',
+    'esri/layers/ArcGISDynamicMapServiceLayer'
     ],
     function(
         declare, 
@@ -13,7 +13,7 @@ define([
 
         return declare([LayerCollection], {
             constructor: function(options) {
-                this.name = "app/antarctic/LayerCollection";
+                this.name = 'app/antarctic/LayerCollection';
 
                 this.multibeamVisible = false;
                 this.tracklineVisible = false;
@@ -41,43 +41,43 @@ define([
             defineMapServices: function() {
                 //TODO check to ensure unique id
                 this.mapServices = [
-                    new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/antarctic_basemap/MapServer", {
-                        id: "Antarctic Basemap",
+                    new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/antarctic_basemap/MapServer', {
+                        id: 'Antarctic Basemap',
                         visible: true
                     }),                                       
-                    new ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/ibcso_contours/MapServer", {
-                        id: "IBCSO Contours",
+                    new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/ibcso_contours/MapServer', {
+                        id: 'IBCSO Contours',
                         visible: false,
                         opacity: 0.5
                     }),
-                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer", {
-                        id: "Trackline Bathymetry",
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer', {
+                        id: 'Trackline Bathymetry',
                         visible: this.tracklineVisible,
                         imageParameters: this.imageParameters.png32
                     }),                    
-                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer", {
-                        id: "Multibeam",
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
+                        id: 'Multibeam',
                         visible: this.multibeamVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/graticule/MapServer", {
-                        id: "Graticule",
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/graticule/MapServer', {
+                        id: 'Graticule',
                         visible: true,
                         opacity: 0.7,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/reference/MapServer", {
-                        id: "Reference",
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/reference/MapServer', {
+                        id: 'Reference',
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),                    
-                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer", {
-                        id: "DEM Extents",
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer', {
+                        id: 'DEM Extents',
                         visible: this.demVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/clipping_donut/MapServer", {
-                        id: "Clipping Donut",
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/clipping_donut/MapServer', {
+                        id: 'Clipping Donut',
                         visible: true,
                         imageParameters: this.imageParameters.png32
                     })

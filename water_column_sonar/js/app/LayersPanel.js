@@ -1,18 +1,19 @@
 define([
-    "dojo/_base/declare",
-    "dojo/_base/lang",
-    "dojo/topic",
-    "dojo/on",
-    "dojo/aspect",
-    "dojo/dom",
-    "dojo/dom-attr",
-    "dijit/form/CheckBox",
-    "dijit/form/Button",
-    "dijit/_WidgetBase",
-    "dijit/_TemplatedMixin",
-    "dijit/_WidgetsInTemplateMixin",
-    "app/SearchDialog",
-    "dojo/text!./templates/LayersPanel.html"],
+    'dojo/_base/declare',
+    'dojo/_base/lang',
+    'dojo/topic',
+    'dojo/on',
+    'dojo/aspect',
+    'dojo/dom',
+    'dojo/dom-attr',
+    'dojo/string',
+    'dijit/form/CheckBox',
+    'dijit/form/Button',
+    'dijit/_WidgetBase',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'app/SearchDialog',
+    'dojo/text!./templates/LayersPanel.html'],
     function(
         declare, 
         lang,
@@ -21,6 +22,7 @@ define([
         aspect,
         dom,
         domAttr,
+        string,
         CheckBox,
         Button,
         _WidgetBase, 
@@ -33,7 +35,7 @@ define([
             // Our template - important!
             templateString: template,
             // A class to be applied to the root node in our template
-            baseClass: "layersPanel",
+            baseClass: 'layersPanel',
 
             searchDialog: null,
 
@@ -53,24 +55,24 @@ define([
                     topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkOther.checked);                    
                 }));
                 
-                on(this.searchButton, "click", lang.hitch(this, function() {
+                on(this.searchButton, 'click', lang.hitch(this, function() {
                     if (!this.searchDialog) {
                         this.searchDialog = new SearchDialog({title: 'Water Column Sonar Data Search'});
                     }
                     this.searchDialog.show();
                 }));
 
-                on(this.resetButton, "click", lang.hitch(this, function() {
+                on(this.resetButton, 'click', lang.hitch(this, function() {
                     topic.publish('/wcd/ResetSearch');
                 }));
             },
 
             disableResetButton: function() {
-                this.resetButton.set("disabled", true);
+                this.resetButton.set('disabled', true);
             },
 
             enableResetButton: function() {
-                this.resetButton.set("disabled", false);
+                this.resetButton.set('disabled', false);
             },
 
             setCurrentFilterString: function(values) {
@@ -141,7 +143,7 @@ define([
                 n = n.toString();
                 var pd = '';
                 if (totalDigits > n.length) {
-                    for (i = 0; i < (totalDigits - n.length); i++) {
+                    for (var i = 0; i < (totalDigits - n.length); i++) {
                         pd += '0';
                     }
                 }
