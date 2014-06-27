@@ -63,24 +63,29 @@ define([
                 if (this.isDefault(values)) {
                     this.reset();
                 } else {       
-                    topic.publish('/bathymetry/Search', values);
+                    topic.publish('/sample_index/Search', values);
                 }
             },
                 
             isDefault: function(values) {
-                return (!values.startYear && !values.endYear && values.survey === '' && values.platform === '');
+                return (!values.startYear && !values.endYear && values.cruise === '' && values.platform === '' && 
+                    values.device === '' && values.lake === '' && values.minWaterDepth === '' && values.maxWaterDepth === '');
             },
                    
             clearForm: function() {                
-                this.surveyNameText.set('value', '');
-                this.platformNameText.set('value', '');                                            
+                this.cruiseNameText.set('value', '');
+                this.platformNameText.set('value', '');    
+                this.lakeNameText.set('value', '');    
+                this.deviceSelect.set('value', '');    
+                this.minWaterDepthSpinner.set('value', ''); 
+                this.maxWaterDepthSpinner.set('value', '');                                 
                 this.startYearSpinner.set('value', '');
                 this.endYearSpinner.set('value', '');                             
             },
 
             reset: function() {
                 this.clearForm();
-                topic.publish('/bathymetry/ResetSearch');
+                topic.publish('/sample_index/ResetSearch');
             }    
     });
 });

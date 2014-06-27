@@ -111,12 +111,7 @@ define([
                         visible: false,
                         opacity: 0.7,
                         imageParameters: this.imageParameters.png32
-                    }),
-                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer', {
-                        id: 'DEM Extents',
-                        visible: this.demVisible,
-                        imageParameters: this.imageParameters.png32
-                    }),
+                    }),                    
                     new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
                         id: 'Poles Mask',
                         visible: true,

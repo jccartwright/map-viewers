@@ -21,16 +21,31 @@ define([
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template = '\
-                    <div class="valueName"><span class="parameterValue"><a href="${dataLink}" target="_blank">Data and Images</a></span></div>\
-                    <div class="valueName">Repository: <span class="parameterValue">${repository}</span></div>\
-                    <div class="valueName">Platform: <span class="parameterValue">${platform}</span></div>\
-                    <div class="valueName">Cruise or Leg: <span class="parameterValue"><a href="${cruiseOrLegLink}" target="_blank">${cruiseOrLeg}</a></span></div>\
-                    <div class="valueName">Alternate Cruise or Leg: <span class="parameterValue"><a href="${alternateCruiseOrLegLink}" target="_blank">${alternateCruiseOrLeg}</a></span></div>\
-                    <div class="valueName">Sample ID: <span class="parameterValue">${sampleId}</span></div>';
+                    <table>\
+                    <tr><td class="valueName" colspan="2"><span class="parameterValue"><a href="${dataLink}" target="_blank" title="go to more information, data, images, and links to related resources">Link to data and images</a></span></div>\
+                    <tr><td class="valueName">Repository:</td><td class="parameterValue"><a href="${repositoryLink}" target="_blank" title="contact info/links to the sample repository"><b>${repository} [Contact the Curator]</b></a></td></tr>\
+                    <tr><td class="valueName">Platform Name:</td><td class="parameterValue">${platform}</td></tr>\
+                    <tr><td class="valueName">Lake:</td><td class="parameterValue">${lake}</td></tr>\
+                    <tr><td class="valueName">Survey ' + (a['Alternate Cruise or Leg'] ? '(Alternate) ' : '') + 'ID:</td><td class="parameterValue"><a href="${cruiseOrLegLink}" target="_blank">${cruiseOrLeg}</a>' + (a['Alternate Cruise or Leg'] ? ' (<a href="${alternateCruiseOrLegLink}" target="_blank">${alternateCruiseOrLeg})' : '') + '</td></tr>\
+                    <tr><td class="valueName">Sample:</td><td class="parameterValue">${sampleId}</td></tr>\
+                    <tr><td class="valueName">Device:</td><td class="parameterValue">${device}</td></tr>\
+                    <tr><td class="valueName">Latitude:</td><td class="parameterValue">${latitude}' + (a['End Latitude'] ? ' to ${endLatitude}' : '') + '</td></tr>\
+                    <tr><td class="valueName">Longitude:</td><td class="parameterValue">${longitude}' + (a['End Longitude'] ? ' to ${endLongitude}' : '') + '</td></tr>\
+                    <tr><td class="valueName">Water Depth (m):</td><td class="parameterValue">${waterDepth}</td></tr>\
+                    <tr><td class="valueName">Date:</td><td class="parameterValue">${dateCollected}</td></tr>\
+                    <tr><td class="valueName">PI:</td><td class="parameterValue">${pi}</td></tr>\
+                    <tr><td class="valueName">Core Length (cm):</td><td class="parameterValue">${coreLength}</td></tr>\
+                    <tr><td class="valueName">Diameter (cm):</td><td class="parameterValue">${coreDiameter}</td></tr>\
+                    <tr><td class="valueName">Storage:</td><td class="parameterValue">${storageMethod}</td></tr>\
+                    <tr><td class="valueName">Province:</td><td class="parameterValue">${province}</td></tr>\
+                    <tr><td class="valueName">IGSN:</td><td class="parameterValue">${igsn}</td></tr>\
+                    <tr><td class="valueName">Sample Comments:</td><td class="parameterValue">${sampleComments}</td></tr>\
+                    </table>';
 
                 var html = string.substitute(template, {
                     dataLink: a['Data Link'],
                     repository: a['Repository'],
+                    repositoryLink: a['Repository Link'],
                     platform: a['Platform'],
                     cruiseOrLeg: a['Cruise or Leg'],
                     cruiseOrLegLink: a['Cruise or Leg Link'],
@@ -61,24 +76,23 @@ define([
             },
 
             sampleIndexSort: function(a, b) {
-                //Sort by Repository, Cruise, Sample ID, Device  
+                //Sort by Platform, Cruise, Alternate Cruise, Sample ID
                 var attr1 = a.feature.attributes;
                 var attr2 = b.feature.attributes;
 
-                if (attr1['Repository'] == attr2['Repository']) {
+                if (attr1['Platform'] == attr2['Platform']) {
 
                     if (attr1['Cruise or Leg'] == attr2['Cruise or Leg']) {
-                        if (attr1['Sample ID'] == attr2['Sample ID']) {
-                            return attr1['Device'] <= attr2['Device'] ? -1 : 1;
+                        if (attr1['Alternate Cruise or Leg'] == attr2['Alternate Cruise or Leg']) {
+                            return attr1['Sample ID'] <= attr2['Sample ID'] ? -1 : 1;
                         }
-                        return attr1['Sample ID'] <= attr2['Sample ID'] ? -1 : 1;
+                        return attr1['Alternate Cruise or Leg'] <= attr2['Alternate Cruise or Leg'] ? -1 : 1;
                     }
                     return attr1['Cruise or Leg'] <= attr2['Cruise or Leg'] ? -1 : 1;
                 }
-                return attr1['Repository'] <= attr2['Repository'] ? -1 : 1;
+                return attr1['Platform'] <= attr2['Platform'] ? -1 : 1;                
             },
 
-            
             sortResults: function(results) {
                 if (results['Sample Index']) { 
                     var features = results['Sample Index']['All Samples by Institution'];

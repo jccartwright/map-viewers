@@ -74,6 +74,9 @@ define([
             constructor: function(args){
                 declare.safeMixin(this,args);
                 this.overlayNode = dom.byId(this.overlayNodeId);
+
+                this.currentInstitution = null;
+                this.currentFilter = null;
             },
 
             init: function() {
@@ -84,10 +87,10 @@ define([
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
                 lang.mixin(config.app, queryParams);
-
-                var startupLayers = [];
-                if (queryParams.layers) {
-                    startupLayers = queryParams.layers.split(',');
+                
+                if (queryParams.institution) {
+                    //this.selectInstitution(queryParams.institution);   
+                    this.selectedInstitution = queryParams.institution;
                 }
                 this.initialExtent = null;
                 if (queryParams.minx && queryParams.maxx && queryParams.miny && queryParams.maxy) {
@@ -111,9 +114,19 @@ define([
 
                 this.setupMapViews();
 
-                topic.subscribe('/sample_index/SelectInst', lang.hitch(this, function(inst) {
-                    this.selectInst(inst);
-                }));                
+                //Subscribe to message passed by the LayersPanel. This is also triggered when specifying the 'institution' URL param
+                topic.subscribe('/sample_index/SelectInstitution', lang.hitch(this, function(institution) {
+                    this.layersPanel.setSelectedInst(institution);
+                    this.selectInstitution(institution);
+                }));
+
+                //Subscribe to messages passed by the search dialog
+                topic.subscribe('/sample_index/Search', lang.hitch(this, function(values) {
+                    this.filterSamples(values);
+                }));
+                topic.subscribe('/sample_index/ResetSearch', lang.hitch(this, function() {
+                    this.resetFilter();
+                }));          
             },
 
             setupBanner: function() {
@@ -125,7 +138,7 @@ define([
                         {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
                         {url: 'http://www.ngdc.noaa.gov/mgg/curator/curator.html', label: 'Sample Index'}
                     ],
-                    dataUrl: 'http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html',
+                    dataUrl: 'http://www.ngdc.noaa.gov/mgg/curator',
                     image: 'images/sample_index_viewer_logo.gif'
                 });
                 banner.placeAt('banner');
@@ -157,7 +170,7 @@ define([
                     this.enableMapView(mapId);
                 }));
 
-                //this.enableMapView('mercator');
+                this.enableMapView('mercator');
             },
 
             enableMapView: function(/*String*/ mapId) {
@@ -197,7 +210,8 @@ define([
                     overview: true,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
-                    lods: zoomLevels.lods
+                    lods: zoomLevels.lods,
+                    selectedInstitution: this.selectedInstitution
                 }, new MercatorLayerCollection());  
 
                 var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
@@ -239,7 +253,8 @@ define([
                     overview: false,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
-                    lods: zoomLevels.lods
+                    lods: zoomLevels.lods,
+                    selectedInstitution: this.selectedInstitution
                 }, new ArcticLayerCollection());
 
                 new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
@@ -266,29 +281,34 @@ define([
                     overview: false,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
-                    lods: zoomLevels.lods
+                    lods: zoomLevels.lods,
+                    selectedInstitution: this.selectedInstitution
                 }, new AntarcticLayerCollection());
 
                 new CoordinatesToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
             },
 
-            selectInst: function(/*String*/ inst) {
+            selectInstitution: function(/*String*/ inst) {
                 var layerDefinitions = [];
+                this.currentInstitution = inst;
+
                 var services = [
                     this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index'),
                     this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index'),
                     this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index')
                 ];
 
-                array.forEach(services, function(svc) {
+                array.forEach(services, lang.hitch(this, function(svc) {
 
                     if (inst === 'AllInst') {
                         svc.hide();
+                        if (this.currentFilter) {
+                            layerDefinitions[0] = this.currentFilter;
+                        }
                         svc.setLayerDefinitions(layerDefinitions);
                         svc.show();
                     } else if (inst === 'None') {
                         svc.hide();
-                        layerDefinitions = [-1];
                     } else {
                         svc.hide();
                         
@@ -299,11 +319,79 @@ define([
                             inst = 'U WISC';
                         }
                         
-                        layerDefinitions = ["FACILITY_CODE in ('" + inst + "')"];
+                        if (this.currentFilter) {
+                            layerDefinitions = [this.currentFilter + " AND FACILITY_CODE in ('" + inst + "')"];
+                        } else {
+                            layerDefinitions = ["FACILITY_CODE in ('" + inst + "')"];
+                        }
+
                         svc.setLayerDefinitions(layerDefinitions);   
                         svc.show();
                     }
-                });
+                }));
+            },
+
+            filterSamples: function(values) {
+                var layerDefinition;
+                var sql = [];
+                                                    
+                //Multibeam
+                if (values.startYear) {
+                    sql.push("TO_NUMBER(SUBSTR(BEGIN_DATE,0,4)) >= " + values.startYear);  //TODO replace Oracle-specific functions
+                }   
+                if (values.endYear) {
+                    sql.push("TO_NUMBER(SUBSTR(BEGIN_DATE,0,4)) <= " + values.endYear);  //TODO replace Oracle-specific functions
+                }
+                if (values.cruise) {
+                    sql.push("UPPER(CRUISE) LIKE '" + 
+                        //values.cruise.toUpperCase().replace('*', '%') + 
+                        values.cruise.toUpperCase().replace(/\*/g, '%') +
+                        "' OR UPPER(LEG) LIKE '" + 
+                        values.cruise.toUpperCase().replace(/\*/g, '%') + 
+                        "'");
+                }
+                if (values.platform) {
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
+                }
+                if (values.device) {
+                    sql.push("DEVICE LIKE '" + values.device + "'");
+                }
+                if (values.lake) {
+                    sql.push("UPPER(LAKE) LIKE '" + values.lake.toUpperCase().replace(/\*/g, '%') + "'");
+                }
+                if (values.minWaterDepth) {
+                    sql.push("WATER_DEPTH >= " + values.minWaterDepth);
+                }
+                if (values.maxWaterDepth) {
+                    sql.push("WATER_DEPTH <= " + values.maxWaterDepth);
+                }
+                layerDefinition = sql.join(' AND ');
+                this.currentFilter = layerDefinition;
+                if (this.currentInstitution && this.currentInstitution != 'AllInst') {
+                    layerDefinition += " AND FACILITY_CODE IN ('" + this.currentInstitution + "')";
+                }
+                //console.log(layerDefinitions);
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
+
+                this.layersPanel.enableResetButton();
+                this.layersPanel.setCurrentFilterString(values);
+            },
+
+            resetFilter: function() {
+                var layerDefinitions = [];
+                this.currentFilter = null;
+                if (this.currentInstitution && this.currentInstitution != 'AllInst') {
+                    layerDefinitions = ["FACILITY_CODE IN ('" + this.currentInstitution + "')"];
+                }       
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
+
+                this.layersPanel.disableResetButton();
+                this.layersPanel.searchDialog.clearForm();
+                this.layersPanel.setCurrentFilterString('');
             }        
         });
     }

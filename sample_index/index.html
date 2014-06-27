@@ -10,13 +10,13 @@
 
 
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/MapToolbar.css">
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/identify/IdentifyPane.css">
+    <!-- <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/identify/IdentifyPane.css"> -->
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/themes/tundra/BoundingBoxDialog.css">
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/Banner.css">
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/CoordinatesToolbar.css">
 
     <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css">-->
-    <!--<link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css">-->
+    <link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css">
     <!--<link rel="stylesheet" href="../../dijits/js/ngdc/themes/tundra/BoundingBoxDialog.css">-->
     <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/Banner.css">-->
     <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/CoordinatesToolbar.css">-->
@@ -46,8 +46,8 @@
             //app-specific config values
             app: {
                 loglevel: 2,
-                ngdcDijitsUrl: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc'
-                //ngdcDijitsUrl: '../../dijits/js/ngdc'
+                //ngdcDijitsUrl: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc'
+                ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
     </script>
@@ -71,14 +71,7 @@
 
     <div id="leftPane" data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true">
         <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" title="Layers">
-        </div>
-        <div id="legendPanel" data-dojo-type="dijit/layout/ContentPane" title="Legend">
-            <div id="legend">
-                <img src="images/bathy_viewer_legend.png"></img><hr/>
-                <img src="images/bag_hillshades_color_scale.png"></img><hr/>
-                <img src="images/dem_hillshades_color_scale.png"></img>
-            </div> 
-        </div>
+        </div>        
         <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
             <div id="credits" data-dojo-type="app/CreditsPanel"></div>
         </div>
@@ -127,10 +120,7 @@
 
                 //hide the overlay now that parsing is complete
                 loadingOverlay.endLoading();
-
-                //Show the legend graphic, which was hidden on startup
-                domStyle.set(dom.byId('legend'), 'display', 'block');
-
+                
                 //initialize the application
                 appLoader.init();
             }

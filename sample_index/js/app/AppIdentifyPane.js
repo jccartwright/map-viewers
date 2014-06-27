@@ -35,10 +35,17 @@ define([
 
             showResults: function() {
                 this.inherited(arguments);
-                if (this.numFeatures >= 1000) {
-                    this.featurePageTitle = "Identified Features (results limited to 1000)";
-                    this.setTitle(this.featurePageTitle);
+                //this.featurePageTitle = 'foo';
+                if (!this.numFeatures) {
+                    this.featurePageTitle = 'No Samples Found';
                 }
+                else if (this.numFeatures < 1000) {
+                    this.featurePageTitle = 'Identified Samples (' + this.numFeatures + ')<br><span class="identifyPane-titleDescription"><i>Cruise (Alternate Cruise):Sample ID:Device (Repository)</i></span>';
+                }
+                else {
+                    this.featurePageTitle = 'Identified Samples (results limited to 1000)<br><span class="identifyPane-titleDescription"><i>Cruise (Alternate Cruise):Sample ID:Device (Repository)</i></span>';
+                }
+                this.setTitle(this.featurePageTitle);
             },
 
             getLayerDisplayLabel: function(item, count) {
@@ -56,79 +63,108 @@ define([
             getItemDisplayLabel: function(item) {
                 //'Cruise:Sample ID:Device (Repository)'
                 var a = item.feature.attributes;
-                return a['Cruise or Leg'] + ':' + a['Sample ID'] + ':' + a['Device'] + ' (' + a['Repository'] + ')';
+                if (a['Alternate Cruise or Leg'] == 'Null') {
+                    return a['Cruise or Leg'] + ':' + a['Sample ID'] + ':' + a['Device'] + ' (' + a['Repository'] + ')';
+                }
+                else {
+                    return a['Cruise or Leg'] + ' (' + a['Alternate Cruise or Leg'] + '):' + a['Sample ID'] + ':' + a['Device'] + ' (' + a['Repository'] + ')';
+                }
             },
 
             populateFeatureStore: function(results) {
-                var totalFeatures = 0;
-                var numFeaturesForLayer = 0;
-                this.expandedNodePaths = [];
-                var repositoryCounts = this.getRepositoryCounts(results);
-
-                for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
-                    var svcName = this.identify.layerIds[i];
-                    for (var layerName in results[svcName]) {
-
-                        numFeaturesForLayer = results[svcName][layerName].length;
-                        totalFeatures += numFeaturesForLayer;
-
-                        for (var j = 0; j < results[svcName][layerName].length; j++) {
-                            var item = results[svcName][layerName][j];
-                            var layerKey = svcName + '/' + layerName;
-                            var layerUrl = results[svcName][layerName][j].layerUrl;
-                            var repositoryName = item.feature.attributes['Repository'];
-                                                                                    
-                            //Create a repository "folder" node if it doesn't already exist
-                            if (this.featureStore.query({id: repositoryName}).length === 0) {
-                                this.featureStore.put({
-                                    uid: ++this.uid,
-                                    id: repositoryName,
-                                    label: '<b>' + repositoryName + ' (' + repositoryCounts[repositoryName] + ')</b>',
-                                    type: 'folder',
-                                    parent: 'root'
-                                });
-                                //this.expandedNodePaths.push(layerName);
-                            }
-                            
-                            //Add the current item to the store, with the layerName folder as parent
-                            this.featureStore.put({
-                                uid: ++this.uid,
-                                id: this.uid,                                
-                                displayLabel: this.getItemDisplayLabel(item),
-                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
-                                layerUrl: layerUrl,
-                                layerKey: layerKey,
-                                attributes: item.feature.attributes,
-                                parent: repositoryName,
-                                type: 'item'
-                            });
-                        }
-                    }
-                }
-                return totalFeatures;
-            },
-
-            getRepositoryCounts: function(results) {
                 if (!results['Sample Index']) {
-                    return;                
+                    return;
                 }
                 if (!results['Sample Index']['All Samples by Institution']) {
                     return;
                 }
 
-                var repositoryCounts = {};
+                var sampleCounts = this.getSampleCounts(results);
+
+                var svcName = this.identify.layerIds[0];
+                var layerName = 'All Samples by Institution';
+                var layerResults = results[svcName][layerName];
+
+                for (var i = 0; i < layerResults.length; i++) {
+                    var item = layerResults[i];
+                    var attr = item.feature.attributes;
+                    var layerKey = svcName + '/' + layerName;
+                    var layerUrl = layerResults[i].layerUrl;
+                    var lakeAndPlatform = this.getLakeAndPlatformString(attr);
+                    var cruiseAndAlternate = this.getCruiseAndAlternateString(attr);
+                     
+                    //Create a lake/platform "folder" node if it doesn't already exist  
+                    if (this.featureStore.query({id: lakeAndPlatform}).length === 0) {
+                        this.featureStore.put({
+                            uid: ++this.uid,
+                            id: lakeAndPlatform,
+                            label: '<b>' + lakeAndPlatform + '</b>&nbsp;&nbsp<i>(' + sampleCounts[lakeAndPlatform].count + ')</i>',
+                            type: 'folder',
+                            parent: 'root'
+                        });
+                    }
+
+                    //Create a cruise/alternate "folder" node if it doesn't already exist, with the lake/platform as parent
+                    if (this.featureStore.query({id: cruiseAndAlternate}).length === 0) {
+                        this.featureStore.put({
+                            uid: ++this.uid,
+                            id: lakeAndPlatform + '/' + cruiseAndAlternate,
+                            label: '<b>' + cruiseAndAlternate + '</b>&nbsp;&nbsp<i>(' + sampleCounts[lakeAndPlatform].cruiseCounts[cruiseAndAlternate] + ')</i>',
+                            type: 'folder',
+                            parent: lakeAndPlatform
+                        });
+                    }
+                    
+                    //Add the current item to the store, with the cruise/alternate folder as parent
+                    this.featureStore.put({
+                        uid: ++this.uid,
+                        id: this.uid,                                
+                        displayLabel: this.getItemDisplayLabel(item),
+                        label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
+                        layerUrl: layerUrl,
+                        layerKey: layerKey,
+                        attributes: item.feature.attributes,
+                        parent: lakeAndPlatform + '/' + cruiseAndAlternate,
+                        type: 'item'
+                    });
+                }
+                
+                
+                return layerResults.length;
+            },
+
+            getSampleCounts: function(results) {
+                if (!results['Sample Index']) {
+                    return null;                
+                }
+                if (!results['Sample Index']['All Samples by Institution']) {
+                    return null;
+                }
+
+                // Example: {lakeAndPlatformString: {count: 45, cruiseCounts: {'CRUISE1': 20, 'CRUISE2': 25}} }
+                var counts = {};
 
                 var sampleIndexResults = results['Sample Index']['All Samples by Institution'];
                 for (var i = 0; i < sampleIndexResults.length; i++) {
-                    var repositoryName = sampleIndexResults[i].feature.attributes['Repository'];
+                    var attr = sampleIndexResults[i].feature.attributes;
+                    var lakeAndPlatform = this.getLakeAndPlatformString(attr);
+                    var cruiseAndAlternate = this.getCruiseAndAlternateString(attr);
 
-                    if (repositoryName in repositoryCounts) {
-                        repositoryCounts[repositoryName]++;
+                    if (lakeAndPlatform in counts) {
+                        counts[lakeAndPlatform].count++;
                     } else {
-                        repositoryCounts[repositoryName] = 1;
+                        counts[lakeAndPlatform] = {};
+                        counts[lakeAndPlatform].cruiseCounts = {};
+                        counts[lakeAndPlatform].count = 1;
+                    }
+
+                    if (cruiseAndAlternate in counts[lakeAndPlatform].cruiseCounts) {
+                        counts[lakeAndPlatform].cruiseCounts[cruiseAndAlternate]++;
+                    } else {
+                        counts[lakeAndPlatform].cruiseCounts[cruiseAndAlternate] = 1;
                     }
                 }
-                return repositoryCounts;                
+                return counts;                
             },
 
             constructFeatureTree: function() {
@@ -140,6 +176,14 @@ define([
                 // this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys without Digital Sounding Data']); 
 
                 //this.tree.set('paths', this.expandedNodePaths);
+            },
+
+            getLakeAndPlatformString: function(attr) {
+                return (attr['Lake'] == 'Null' ? '' : '(' + attr['Lake'] + ') ') + 'Platform: ' + attr['Platform'];   
+            },
+
+            getCruiseAndAlternateString: function(attr) {
+                return attr['Cruise or Leg'] + (attr['Alternate Cruise or Leg'] == 'Null' ? '' : ' (' + attr['Alternate Cruise or Leg'] + ')');
             }
         });
     }

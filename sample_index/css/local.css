@@ -207,6 +207,7 @@ html,body {
     color: #626262;
     padding-left: 10px;
     padding-bottom: 3px;
+    vertical-align: top;
 }
 
 .parameterValue {
@@ -228,7 +229,47 @@ html,body {
 }
 
 .instDiv {
-    width: auto;
+    display: inline-block;
+}
+
+.filterText {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    vertical-align: middle;
+    background: #EEE;
+}
+
+.searchDialog {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.searchDialog-multiSelect {
+    width: 300px;
+}
+
+.searchDialog-filteringSelect {
+    width: 200px;
+}
+
+.searchDialog-spinner {
+    width: 60px;
+}
+
+.searchDialog-countSpan {
+    font-size: smaller;
+}
+
+.searchDialog-dateTextBox {
+    font: 12px arial,helvetica,verdana,sans-serif;
+    width: 8em;
+}
+
+.searchDialog-deviceSelect {
+    width: 200px;
 }
 
 .layersPanel_class {
@@ -239,7 +280,6 @@ html,body {
     font-size: 11px;
 }
 
-#legend {
-    /*legend is hidden on startup to prevent premature display*/
-    display: none;
+.identifyPane-titleDescription {
+    font-size: 10px;
 }

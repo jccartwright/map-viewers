@@ -2,6 +2,7 @@ define([
     'dojo/_base/declare', 
     'dojo/_base/lang',
     'dojo/dom',
+    'dojo/topic',
     'ngdc/web_mercator/MapConfig',
     'app/web_mercator/MapToolbar',
     'app/web_mercator/Identify',
@@ -11,6 +12,7 @@ define([
         declare, 
         lang, 
         dom,
+        topic,
         MapConfig,
         MapToolbar,
         Identify,
@@ -18,6 +20,10 @@ define([
         ){
         
         return declare([MapConfig], {
+
+            constructor: function(name, options){
+                this.selectedInstitution = options.selectedInstitution
+            },
                         
             //handle setup which requires all layers to be loaded
             mapReady: function() {
@@ -36,10 +42,12 @@ define([
                     class: 'identifyPane',
                     autoExpandTree: false
                 }, dom.byId('mercatorIdentifyPaneDiv'));
-                this.identifyPane.startup();                
-            }
-         
-            
+                this.identifyPane.startup();
+
+                if (this.selectedInstitution) {
+                    topic.publish('/sample_index/SelectInstitution', this.selectedInstitution);
+                }
+            }            
         });
     }
 );
