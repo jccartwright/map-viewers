@@ -134,6 +134,8 @@ define([
                     topic.publish('/ngdc/mapViewActivated', mapId);
                     this.enableMapView(mapId);
                 }));
+
+                this.enableMapView('mercator');
             },
 
             enableMapView: function(/*String*/ mapId) {
