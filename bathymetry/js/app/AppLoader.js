@@ -416,7 +416,7 @@ define([
                 this.layersPanel.disableResetButton();
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
-            },
+            }
         });
     }
 );
