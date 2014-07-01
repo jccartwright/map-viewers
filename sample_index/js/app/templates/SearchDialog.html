@@ -11,8 +11,7 @@
         <table cellpadding="6" cellspacing="3"> 
         <tr>            
             <td align="left" colspan="2">               
-                <span class="wildcardLabel"><i>(case-insensitive; wildcards accepted: *)</i></span><br><br>
-                <label>Cruise ID:</label><br/>
+                <label>Cruise ID includes:</label><br/>
                 <div data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="cruiseNameText" name="cruise" 
                      style="width: 200px;" required="false">                 
                 </div>
@@ -20,7 +19,7 @@
         </tr>
         <tr>
             <td align="left" colspan="2">               
-                <label>Platform Name:</label><br/>
+                <label>Platform Name includes:</label><br/>
                 <div data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="platformNameText" name="platform" 
                      style="width: 200px;" required="false">                 
                 </div>
@@ -28,7 +27,7 @@
         </tr>
         <tr>
             <td align="left" colspan="2">               
-                <label>Lake:</label><br/>
+                <label>Lake Name includes:</label><br/>
                 <div data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="lakeNameText" name="lake" 
                      style="width: 200px;" required="false">                 
                 </div>
@@ -37,8 +36,8 @@
         <tr>
             <td align="left">  
                 Year:<br>                   
-                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="startYearSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1936,max:2020,places:0,pattern:'0000'}" name="startYear"></div> to
-                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="endYearSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1936,max:2020,places:0,pattern:'0000'}" name="endYear"></div>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="startYearSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1885,max:2020,places:0,pattern:'0000'}" name="startYear"></div> to
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="endYearSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1885,max:2020,places:0,pattern:'0000'}" name="endYear"></div>
             </td>           
         </tr>
         <tr>
@@ -73,8 +72,8 @@
                     <option value="trap, sediment">trap, sediment</option>                   
                     <option value="trawl">trawl</option>                   
                     <option value="unknown device">unknown device</option>                   
-                   <option value="core%">all cores</option>
-                   <option value="dredge%">all dredges</option>
+                   <option value="core">all cores</option>
+                   <option value="dredge">all dredges</option>
                 </select>             
             </td>
         </tr>
