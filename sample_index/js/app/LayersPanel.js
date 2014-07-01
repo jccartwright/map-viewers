@@ -105,36 +105,36 @@ define([
                 var s = '<b>Current filter:</b><br>';
                 
                 if (values.startYear && values.endYear) {
-                    s += 'Year: ' + values.startYear + ' to ' + values.endYear + '<br>';
+                    s += '<i>Year:</i> ' + values.startYear + ' to ' + values.endYear + '<br>';
                 }
                 else if (values.startYear) {
-                    s += 'Starting year: ' + values.startYear + '<br>';
+                    s += '<i>Starting year:</i> ' + values.startYear + '<br>';
                 }
                 else if (values.endYear) {
-                    s += 'Ending year: ' + values.endYear + '<br>';
+                    s += '<i>Ending year:</i> ' + values.endYear + '<br>';
                 }
 
-                if (values.survey) {
-                    s += 'Cruise or Leg: ' + values.survey + '<br>';
+                if (values.cruise) {
+                    s += '<i>Cruise or Leg:</i> ' + values.cruise + '<br>';
                 }
                 if (values.platform) {
-                    s += 'Platform Name: ' + values.platform + '<br>';
+                    s += '<i>Platform Name:</i> ' + values.platform + '<br>';
                 }
                 if (values.lake) {
-                    s += 'Lake Name: ' + values.lake + '<br>';
+                    s += '<i>Lake Name:</i> ' + values.lake + '<br>';
                 } 
                 if (values.device) {
-                    s += 'Device: ' + values.device + '<br>';
+                    s += '<i>Device:</i> ' + values.device + '<br>';
                 }   
 
                 if (values.minWaterDepth && values.maxWaterDepth) {
-                    s += 'Water Depth (m): ' + values.minWaterDepth + ' to ' + values.maxWaterDepth + '<br>';
+                    s += '<i>Water Depth (m):</i> ' + values.minWaterDepth + ' to ' + values.maxWaterDepth + '<br>';
                 }
                 else if (values.minWaterDepth) {
-                    s += 'Min Water Depth (m): ' + values.minWaterDepth + '<br>';
+                    s += '<i>Min Water Depth (m):</i> ' + values.minWaterDepth + '<br>';
                 }
                 else if (values.maxWaterDepth) {
-                    s += 'Max Water Depth (m): ' + values.maxWaterDepth + '<br>';
+                    s += '<i>Max Water Depth (m):</i> ' + values.maxWaterDepth + '<br>';
                 }             
                 filterDiv.innerHTML = s;
             }
