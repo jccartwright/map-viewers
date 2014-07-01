@@ -343,21 +343,16 @@ define([
                     sql.push("TO_NUMBER(SUBSTR(BEGIN_DATE,0,4)) <= " + values.endYear);  //TODO replace Oracle-specific functions
                 }
                 if (values.cruise) {
-                    sql.push("UPPER(CRUISE) LIKE '" + 
-                        //values.cruise.toUpperCase().replace('*', '%') + 
-                        values.cruise.toUpperCase().replace(/\*/g, '%') +
-                        "' OR UPPER(LEG) LIKE '" + 
-                        values.cruise.toUpperCase().replace(/\*/g, '%') + 
-                        "'");
+                    sql.push("(UPPER(CRUISE) LIKE '%" + values.cruise.toUpperCase() + "%' OR UPPER(LEG) LIKE '%" + values.cruise.toUpperCase() + "%')");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
+                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase() + "%'");
                 }
                 if (values.device) {
-                    sql.push("DEVICE LIKE '" + values.device + "'");
+                    sql.push("DEVICE LIKE '" + values.device + "%'");
                 }
                 if (values.lake) {
-                    sql.push("UPPER(LAKE) LIKE '" + values.lake.toUpperCase().replace(/\*/g, '%') + "'");
+                    sql.push("UPPER(LAKE) LIKE '%" + values.lake.toUpperCase() + "%'");
                 }
                 if (values.minWaterDepth) {
                     sql.push("WATER_DEPTH >= " + values.minWaterDepth);
