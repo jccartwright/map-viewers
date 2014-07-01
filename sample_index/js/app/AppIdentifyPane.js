@@ -179,7 +179,9 @@ define([
             },
 
             getLakeAndPlatformString: function(attr) {
-                return (attr['Lake'] == 'Null' ? '' : '(' + attr['Lake'] + ') ') + 'Platform: ' + attr['Platform'];   
+                return (attr['Lake'] == 'Null' ? '' : '(' + attr['Lake'] + ') ') + 
+                    (attr['Platform'] == 'Unknown Platform' ? '' : 'Platform: ') + 
+                    attr['Platform'];   
             },
 
             getCruiseAndAlternateString: function(attr) {
