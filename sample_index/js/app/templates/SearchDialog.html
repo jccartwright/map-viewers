@@ -1,0 +1,95 @@
+<div class="dijitDialog" role="dialog" aria-labelledby="${id}_title">
+    <div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+        <span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="${id}_title"
+              role="header" level="1"></span>
+        <span style="display: none;" data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon"
+              data-dojo-attach-event="ondijitclick: onCancel" title="${buttonCancel}" role="button" tabIndex="-1">
+            <span data-dojo-attach-point="closeText" class="closeText" title="${buttonCancel}">x</span>
+        </span>
+    </div>
+    <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
+        <table cellpadding="6" cellspacing="3"> 
+        <tr>            
+            <td align="left" colspan="2">               
+                <label>Cruise ID includes:</label><br/>
+                <div data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="cruiseNameText" name="cruise" 
+                     style="width: 200px;" required="false">                 
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" colspan="2">               
+                <label>Platform Name includes:</label><br/>
+                <div data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="platformNameText" name="platform" 
+                     style="width: 200px;" required="false">                 
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" colspan="2">               
+                <label>Lake Name includes:</label><br/>
+                <div data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="lakeNameText" name="lake" 
+                     style="width: 200px;" required="false">                 
+                </div>
+            </td>
+        </tr> 
+        <tr>
+            <td align="left">  
+                Year:<br>                   
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="startYearSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1885,max:2020,places:0,pattern:'0000'}" name="startYear"></div> to
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="endYearSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1885,max:2020,places:0,pattern:'0000'}" name="endYear"></div>
+            </td>           
+        </tr>
+        <tr>
+            <td align="left" colspan="2">               
+                <label>Device:</label><br/>
+                <select style="width: 150px;" data-dojo-attach-point="deviceSelect" name="device" data-dojo-type="dijit/form/Select">
+                    <option value="" selected>all devices</option>
+                    <option value="core">core</option>
+                    <option value="core, box">core, box</option>
+                    <option value="core, camera mounted">core, camera mounted</option>                   
+                    <option value="core, dart">core, dart</option>                   
+                    <option value="core, free-fall">core, free-fall</option>                
+                    <option value="core, gravity">core, gravity</option>                   
+                    <option value="core, hand-held">core, hand-held</option>                   
+                    <option value="core, kastenlot">core, kastenlot</option>                   
+                    <option value="core, multicorer">core, multicorer</option>                   
+                    <option value="core, piston">core, piston</option>                   
+                    <option value="core, piston(giant)">core, piston(giant)</option>                   
+                    <option value="core, submersible mounted">core, submersible mounted</option>                   
+                    <option value="core, vibrating">core, vibrating</option>                   
+                    <option value="corer, trigger wt.">corer, trigger wt.</option>                   
+                    <option value="downhole coring">downhole coring</option>                   
+                    <option value="dredge">dredge</option>                   
+                    <option value="dredge, rock">dredge, rock</option>                   
+                    <option value="drill">drill</option>                   
+                    <option value="drill, rock">drill, rock</option>                   
+                    <option value="drill, sediment">drill, sediment</option>                   
+                    <option value="grab">grab</option>                   
+                    <option value="grab, ROV">grab, ROV</option>                   
+                    <option value="probe">probe</option>                   
+                    <option value="suspended sediment">suspended sediment</option>                   
+                    <option value="trap, sediment">trap, sediment</option>                   
+                    <option value="trawl">trawl</option>                   
+                    <option value="unknown device">unknown device</option>                   
+                   <option value="core">all cores</option>
+                   <option value="dredge">all dredges</option>
+                </select>             
+            </td>
+        </tr>
+        <tr>            
+            <td align="left">               
+                Water Depth (m):<br>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minWaterDepthSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:100, constraints:{min:0,max:11000,places:0}" name="minWaterDepth"></div> to
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxWaterDepthSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:100, constraints:{min:0,max:11000,places:0}" name="maxWaterDepth"></div>
+            </td>
+        </tr> 
+       
+        </table>  
+        <div class="dijitDialogPaneActionBar right-align">
+            <button class="left-align" data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton">Reset</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="cancelButton">Cancel</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="submitButton" type="submit"><b>OK</b></button>
+        </div> 
+    </div>
+</div>

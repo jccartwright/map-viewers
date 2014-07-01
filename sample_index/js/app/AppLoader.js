@@ -1,5 +1,6 @@
 define([
     'dojo/_base/declare',
+    'dojo/_base/array',
     'dijit/registry',
     'dojo/dom',
     'dojo/_base/config',
@@ -7,7 +8,7 @@ define([
     'dojo/_base/lang',
     'dojo/topic',
     'dojo/on',
-    'dojo/aspect',
+    'dojo/aspect',    
     'dijit/form/CheckBox',
     'esri/config',
     'esri/geometry/Extent',
@@ -33,6 +34,7 @@ define([
     'dojo/domReady!'],
     function(
         declare,
+        array,
         registry,
         dom,
         config,
@@ -72,6 +74,9 @@ define([
             constructor: function(args){
                 declare.safeMixin(this,args);
                 this.overlayNode = dom.byId(this.overlayNodeId);
+
+                this.currentInstitution = null;
+                this.currentFilter = null;
             },
 
             init: function() {
@@ -82,10 +87,10 @@ define([
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
                 lang.mixin(config.app, queryParams);
-
-                var startupLayers = [];
-                if (queryParams.layers) {
-                    startupLayers = queryParams.layers.split(',');
+                
+                if (queryParams.institution) {
+                    //this.selectInstitution(queryParams.institution);   
+                    this.selectedInstitution = queryParams.institution;
                 }
                 this.initialExtent = null;
                 if (queryParams.minx && queryParams.maxx && queryParams.miny && queryParams.maxy) {
@@ -105,17 +110,23 @@ define([
 
                 this.setupLayersPanel();
 
-                this.setStartupLayers(startupLayers);
+                //this.setStartupLayers(startupLayers);
 
                 this.setupMapViews();
 
+                //Subscribe to message passed by the LayersPanel. This is also triggered when specifying the 'institution' URL param
+                topic.subscribe('/sample_index/SelectInstitution', lang.hitch(this, function(institution) {
+                    this.layersPanel.setSelectedInst(institution);
+                    this.selectInstitution(institution);
+                }));
+
                 //Subscribe to messages passed by the search dialog
-                topic.subscribe('/bathymetry/Search', lang.hitch(this, function(values) {
-                    this.filterSurveys(values);
+                topic.subscribe('/sample_index/Search', lang.hitch(this, function(values) {
+                    this.filterSamples(values);
                 }));
-                topic.subscribe('/bathymetry/ResetSearch', lang.hitch(this, function() {
-                    this.resetSurveyFilter();
-                }));
+                topic.subscribe('/sample_index/ResetSearch', lang.hitch(this, function() {
+                    this.resetFilter();
+                }));          
             },
 
             setupBanner: function() {
@@ -125,10 +136,10 @@ define([
                         {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
                         {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
                         {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
-                        {url: 'http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html', label: 'Bathymetry'}
+                        {url: 'http://www.ngdc.noaa.gov/mgg/curator/curator.html', label: 'Sample Index'}
                     ],
-                    dataUrl: 'http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html',
-                    image: 'images/bathymetry_viewer_logo.png'
+                    dataUrl: 'http://www.ngdc.noaa.gov/mgg/curator',
+                    image: 'images/sample_index_viewer_logo.gif'
                 });
                 banner.placeAt('banner');
             },
@@ -199,13 +210,9 @@ define([
                     overview: true,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
-                    lods: zoomLevels.lods
-                }, new MercatorLayerCollection({
-                    multibeamVisible: this.multibeamVisible,
-                    nosHydroVisible: this.nosHydroVisible,
-                    tracklineVisible: this.tracklineVisible,
-                    demVisible: this.demVisible
-                }));  
+                    lods: zoomLevels.lods,
+                    selectedInstitution: this.selectedInstitution
+                }, new MercatorLayerCollection());  
 
                 var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
 
@@ -246,13 +253,9 @@ define([
                     overview: false,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
-                    lods: zoomLevels.lods
-                }, new ArcticLayerCollection({
-                    multibeamVisible: this.multibeamVisible,
-                    nosHydroVisible: this.nosHydroVisible,
-                    tracklineVisible: this.tracklineVisible,
-                    demVisible: this.demVisible
-                }));
+                    lods: zoomLevels.lods,
+                    selectedInstitution: this.selectedInstitution
+                }, new ArcticLayerCollection());
 
                 new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
@@ -278,145 +281,113 @@ define([
                     overview: false,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
-                    lods: zoomLevels.lods
-                }, new AntarcticLayerCollection({
-                    multibeamVisible: this.multibeamVisible,
-                    tracklineVisible: this.tracklineVisible,
-                    demVisible: this.demVisible
-                }));
+                    lods: zoomLevels.lods,
+                    selectedInstitution: this.selectedInstitution
+                }, new AntarcticLayerCollection());
 
                 new CoordinatesToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
             },
 
-            //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'
-            setStartupLayers: function(/*String[]*/ startupLayers) {                
-                if (startupLayers.length === 0) {
-                    this.layersPanel.chkMultibeam.set('checked', true);
-                    this.multibeamVisible = true;
-                    return;    
-                }
+            selectInstitution: function(/*String*/ inst) {
+                var layerDefinitions = [];
+                this.currentInstitution = inst;
 
-                for (var i = 0; i < startupLayers.length; i++) {
-                    if (startupLayers[i].toLowerCase() === 'multibeam') {
-                        this.layersPanel.chkMultibeam.set('checked', true);
-                        this.multibeamVisible = true;
-                    } 
-                    else if (startupLayers[i].toLowerCase() === 'nos_hydro') {
-                        //Startup with "Surveys with Digital Sounding Data" and "Surveys with BAGs" visible
-                        this.layersPanel.chkNosHydroBags.set('checked', true);
-                        this.layersPanel.chkNosHydroDigital.set('checked', true);
-                        //this.layersPanel.chkBagHillshades.set('checked', true);
-                        this.nosHydroVisible = true;
-                    } 
-                    else if (startupLayers[i].toLowerCase() === 'trackline') {
-                        this.layersPanel.chkTrackline.set('checked', true);
-                        this.tracklineVisible = true;
-                    } 
-                    else if (startupLayers[i].toLowerCase() === 'dem') {
-                        //Startup with DEM Footprints and DEM Hillshades visible
-                        this.layersPanel.chkDems.set('checked', true);
-                        this.layersPanel.chkDemHillshades.set('checked', true);
-                        this.demVisible = true;
+                var services = [
+                    this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index'),
+                    this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index'),
+                    this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index')
+                ];
+
+                array.forEach(services, lang.hitch(this, function(svc) {
+
+                    if (inst === 'AllInst') {
+                        svc.hide();
+                        if (this.currentFilter) {
+                            layerDefinitions[0] = this.currentFilter;
+                        }
+                        svc.setLayerDefinitions(layerDefinitions);
+                        svc.show();
+                    } else if (inst === 'None') {
+                        svc.hide();
+                    } else {
+                        svc.hide();
+                        
+                        if (inst === 'FSU') {
+                            inst = 'ARFFSU';
+                        }
+                        if (inst === 'WISC') {
+                            inst = 'U WISC';
+                        }
+                        
+                        if (this.currentFilter) {
+                            layerDefinitions = [this.currentFilter + " AND FACILITY_CODE in ('" + inst + "')"];
+                        } else {
+                            layerDefinitions = ["FACILITY_CODE in ('" + inst + "')"];
+                        }
+
+                        svc.setLayerDefinitions(layerDefinitions);   
+                        svc.show();
                     }
-                }
+                }));
             },
 
-            filterSurveys: function(values) {
-                var layerDefinitions;
+            filterSamples: function(values) {
+                var layerDefinition;
                 var sql = [];
                                                     
                 //Multibeam
                 if (values.startYear) {
-                    sql.push("SURVEY_YEAR >= " + values.startYear);
+                    sql.push("TO_NUMBER(SUBSTR(BEGIN_DATE,0,4)) >= " + values.startYear);  //TODO replace Oracle-specific functions
                 }   
                 if (values.endYear) {
-                    sql.push("SURVEY_YEAR <= " + values.endYear);
+                    sql.push("TO_NUMBER(SUBSTR(BEGIN_DATE,0,4)) <= " + values.endYear);  //TODO replace Oracle-specific functions
                 }
-                if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace('*', '%') + "'");
+                if (values.cruise) {
+                    sql.push("(UPPER(CRUISE) LIKE '%" + values.cruise.toUpperCase() + "%' OR UPPER(LEG) LIKE '%" + values.cruise.toUpperCase() + "%')");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase().replace('*', '%') + "'");
+                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase() + "%'");
                 }
-                layerDefinitions = sql.join(' and ');
+                if (values.device) {
+                    sql.push("DEVICE LIKE '" + values.device + "%'");
+                }
+                if (values.lake) {
+                    sql.push("UPPER(LAKE) LIKE '%" + values.lake.toUpperCase() + "%'");
+                }
+                if (values.minWaterDepth) {
+                    sql.push("WATER_DEPTH >= " + values.minWaterDepth);
+                }
+                if (values.maxWaterDepth) {
+                    sql.push("WATER_DEPTH <= " + values.maxWaterDepth);
+                }
+                layerDefinition = sql.join(' AND ');
+                this.currentFilter = layerDefinition;
+                if (this.currentInstitution && this.currentInstitution != 'AllInst') {
+                    layerDefinition += " AND FACILITY_CODE IN ('" + this.currentInstitution + "')";
+                }
                 //console.log(layerDefinitions);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinitions]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinitions]);
-                this.antarcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinitions]);
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
 
-                
-                //Trackline Bathymetry
-                sql = [];
-                if (values.startYear) {
-                    sql.push("END_YR >= " + values.startYear);
-                }       
-                if (values.endYear) {
-                    sql.push("START_YR <= " + values.endYear);
-                }
-                if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) = '" + values.survey.toUpperCase() + "'");
-                }
-                if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase() + "%'");
-                }
-                layerDefinitions = sql.join(' and ');
-                //console.log(layerDefinitions);
-                var allLayerDefinitions = [];
-                //allLayerDefinitions[0] = layerDefinitions;
-                allLayerDefinitions[1] = layerDefinitions;
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
-                this.antarcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
-                
-                
-                //NOS Hydro 
-                sql = [];
-                if (values.startYear) {
-                    sql.push("SURVEY_YEAR >= " + values.startYear);
-                }       
-                if (values.endYear) {
-                    sql.push("SURVEY_YEAR <= " + values.endYear);
-                }
-                if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) = '" + values.survey.toUpperCase() + "'");
-                }
-                if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase() + "%'");
-                }
-                layerDefinitions = sql.join(' and ');
-                //console.log(layerDefinitions);
-                allLayerDefinitions = [];
-                allLayerDefinitions[0] = layerDefinitions;
-                allLayerDefinitions[1] = layerDefinitions;
-                allLayerDefinitions[2] = layerDefinitions;      
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions(allLayerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions(allLayerDefinitions);
-                    
-                       
                 this.layersPanel.enableResetButton();
                 this.layersPanel.setCurrentFilterString(values);
             },
 
-            resetSurveyFilter: function() {            
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions([]);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions([]);
-
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions([]);
-
-                this.antarcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
-                this.antarcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
+            resetFilter: function() {
+                var layerDefinitions = [];
+                this.currentFilter = null;
+                if (this.currentInstitution && this.currentInstitution != 'AllInst') {
+                    layerDefinitions = ["FACILITY_CODE IN ('" + this.currentInstitution + "')"];
+                }       
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
 
                 this.layersPanel.disableResetButton();
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
-            }
+            }        
         });
     }
 );

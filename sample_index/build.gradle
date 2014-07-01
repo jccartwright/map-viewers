@@ -1,24 +1,58 @@
-version = '1.8.1'
+import org.apache.tools.ant.filters.*
 
-//needed in order to dependOn Clean task
-apply plugin: 'base'
+ext.buildDate = new Date().format('YYYY-MM-dd')
+version = '2.0'
 
-task installNgdcDijits(type: Copy) {
-    doFirst {
-        uninstallNgdcDijits
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.mozilla:rhino:1.7R4'
+}
+
+// Declare your sources
+def jsSrcDir = "js"
+javascript.source {
+    dev {
+        js {
+            srcDir jsSrcDir
+            include "**/*.js"
+            exclude "**/*.min.js"
+        }
     }
-   from ("../shared") {
-      exclude "build.gradle", "README.md"
-   }
-   into "shared"
+    prod {
+        js {
+            srcDir jsSrcDir
+            include "**/*.min.js"
+        }
+    }
 }
 
-task uninstallNgdcDijits(dependsOn: 'Clean') {
-    delete 'shared'
+jshint {
+    tasks.jshint.source = javascript.source.dev.js.files
+    tasks.jshint.dest = file("${buildDir}/jshint-result.xml")
+    tasks.jshint.reporter = 'checkstyle'
+    jshint.options = [expr: "true", unused: "true"]
+    tasks.jshint.ignoreExitCode=true
+    jshint.predef=['define':1, 'esri':1]
 }
 
-task buildDistribution(type: Jar, dependsOn: installNgdcDijits) {
+jar {
     from "."
-    exclude 'build*'
-}
+//    from ('../css') { into 'css' }
+//    from('../fonts') { into 'fonts' }
+//    from('../img') { into 'img' }
+//    from('../js') { into 'js' }
 
+    exclude 'build*'
+    exclude '.gradle'
+
+    eachFile {
+	  if (it.name.endsWith('.html')) {
+    	filter(ReplaceTokens, tokens: [
+    		'application.version': version,
+    		'application.buildDate': buildDate])
+	  }
+    }
+}
