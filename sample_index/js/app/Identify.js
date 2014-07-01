@@ -22,24 +22,22 @@ define([
 
                 var template = '\
                     <table>\
-                    <tr><td class="valueName" colspan="2"><span class="parameterValue"><a href="${dataLink}" target="_blank" title="go to more information, data, images, and links to related resources">Link to data and images</a></span></div>\
                     <tr><td class="valueName">Repository:</td><td class="parameterValue"><a href="${repositoryLink}" target="_blank" title="contact info/links to the sample repository"><b>${repository} [Contact the Curator]</b></a></td></tr>\
                     <tr><td class="valueName">Platform Name:</td><td class="parameterValue">${platform}</td></tr>\
                     <tr><td class="valueName">Lake:</td><td class="parameterValue">${lake}</td></tr>\
                     <tr><td class="valueName">Survey ' + (a['Alternate Cruise or Leg'] ? '(Alternate) ' : '') + 'ID:</td><td class="parameterValue"><a href="${cruiseOrLegLink}" target="_blank">${cruiseOrLeg}</a>' + (a['Alternate Cruise or Leg'] ? ' (<a href="${alternateCruiseOrLegLink}" target="_blank">${alternateCruiseOrLeg})' : '') + '</td></tr>\
-                    <tr><td class="valueName">Sample:</td><td class="parameterValue">${sampleId}</td></tr>\
+                    <tr><td class="valueName">Sample:</td><td class="parameterValue"><a href="${dataLink}" target="_blank" title="go to more information, data, images, and links to related resources">${sampleId} [Data and images]</a></td></tr>\
                     <tr><td class="valueName">Device:</td><td class="parameterValue">${device}</td></tr>\
                     <tr><td class="valueName">Latitude:</td><td class="parameterValue">${latitude}' + (a['End Latitude'] ? ' to ${endLatitude}' : '') + '</td></tr>\
                     <tr><td class="valueName">Longitude:</td><td class="parameterValue">${longitude}' + (a['End Longitude'] ? ' to ${endLongitude}' : '') + '</td></tr>\
                     <tr><td class="valueName">Water Depth (m):</td><td class="parameterValue">${waterDepth}</td></tr>\
                     <tr><td class="valueName">Date:</td><td class="parameterValue">${dateCollected}</td></tr>\
                     <tr><td class="valueName">PI:</td><td class="parameterValue">${pi}</td></tr>\
-                    <tr><td class="valueName">Core Length (cm):</td><td class="parameterValue">${coreLength}</td></tr>\
-                    <tr><td class="valueName">Diameter (cm):</td><td class="parameterValue">${coreDiameter}</td></tr>\
-                    <tr><td class="valueName">Storage:</td><td class="parameterValue">${storageMethod}</td></tr>\
+                    <tr><td class="valueName">Core Len/Diam (cm):</td><td class="parameterValue">${coreLength}/${coreDiameter}</td></tr>\
                     <tr><td class="valueName">Province:</td><td class="parameterValue">${province}</td></tr>\
                     <tr><td class="valueName">IGSN:</td><td class="parameterValue">${igsn}</td></tr>\
                     <tr><td class="valueName">Sample Comments:</td><td class="parameterValue">${sampleComments}</td></tr>\
+                    <tr><td class="valueName">Storage:</td><td class="parameterValue">${storageMethod}</td></tr>\
                     </table>';
 
                 var html = string.substitute(template, {
