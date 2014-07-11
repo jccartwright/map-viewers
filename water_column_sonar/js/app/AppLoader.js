@@ -140,21 +140,11 @@ define([
 
             enableMapView: function(/*String*/ mapId) {
                 if (mapId == 'mercator') {
-                    this.mercatorMapConfig.identify.enabled = true;
-                    this.mercatorMapConfig.identifyPane.enable();  
-                    // this.mercatorMapConfig.mapLayerCollection.resume();
-
-                    this.arcticMapConfig.identify.enabled = false;
-                    this.arcticMapConfig.identifyPane.disable();
-                    // this.arcticMapConfig.mapLayerCollection.suspend();                    
+                    this.mercatorMapConfig.setEnabled(true);
+                    this.arcticMapConfig.setEnabled(false);                    
                 } else { //Arctic
-                    this.mercatorMapConfig.identify.enabled = false;
-                    this.mercatorMapConfig.identifyPane.disable();
-                    // this.mercatorMapConfig.mapLayerCollection.suspend();
-
-                    this.arcticMapConfig.identify.enabled = true;
-                    this.arcticMapConfig.identifyPane.enable();
-                    // this.arcticMapConfig.mapLayerCollection.resume();                    
+                    this.mercatorMapConfig.setEnabled(false);
+                    this.arcticMapConfig.setEnabled(true);                    
                 }
             },
 
