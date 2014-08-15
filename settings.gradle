@@ -1,1 +1,1 @@
-include 'bathymetry', 'bathymetry_intranet', 'firedetects', 'fishmaps', 'geophysics', 'hazards', 'historical_declination', 'hot_springs', 'marine_geology', 'sample', 'sample_index', 'water_column_sonar', 'hydro_survey', 'shared'
+include 'bathymetry', 'bathymetry_intranet', 'firedetects', 'fishmaps', 'geophysics', 'hazards', 'historical_declination', 'hot_springs', 'marine_geology', 'sample', 'sample_index', 'water_column_sonar', 'hydro_survey', 'northeast_ocm', 'shared'
