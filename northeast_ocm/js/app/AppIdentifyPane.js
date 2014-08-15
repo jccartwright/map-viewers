@@ -229,10 +229,10 @@ define([
                             datasetInfo.endYear = filter.endYear;
                         }
                         if (filter.platform) {
-                            datasetInfo.ship = filter.platform;
+                            datasetInfo.platforms = filter.platform;
                         }
                         if (filter.survey) {
-                            datasetInfo.survey = filter.survey;
+                            datasetInfo.surveys = filter.survey;
                         }
                     }
 
@@ -280,10 +280,10 @@ define([
                             datasetInfo.endYear = filter.endYear;
                         }
                         if (filter.platform) {
-                            datasetInfo.ship = filter.platform;
+                            datasetInfo.platforms = filter.platform;
                         }
                         if (filter.survey) {
-                            datasetInfo.survey = filter.survey;
+                            datasetInfo.surveys = filter.survey;
                         }
                     }
 
@@ -328,6 +328,7 @@ define([
                 form.method = 'POST';
                 form.target = '_blank';
 
+                postBody = {"items":[{"dataset":"Multibeam", "surveys": "RR0903"}]};
                 //JSON payload goes in "order" parameter
                 var inputElement = document.createElement("textarea");
                 inputElement.name = "order";
