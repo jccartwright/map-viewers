@@ -291,51 +291,57 @@ define([
                 }
                 
                 str += JSON.stringify(postBody);
-                this.postToNext(postBody);
-                alert(str);
+                //this.postToNext(postBody);
+                this.submitFormToNext(postBody);
             },
 
             postToNext: function(postBody) {
                 console.log('POSTing to NEXT: ' + JSON.stringify(postBody));
 
+                xhr.post("http://agile.ngdc.noaa.gov/next-web/orders/create", {
+                    handleAs: "text",
+                    headers: {'Content-Type':'application/json'},
+                    data: JSON.stringify(postBody)
 
-                // xhr.post("http://agile.ngdc.noaa.gov/next-web/orders/create", {
-                //     handleAs: "text",
-                //     data: postBody
-                // }).then(function(data){
-                //     var displayWindow = window.open('', 'nextExtract'+Math.floor(Math.random()*1001));
-                //     displayWindow.document.writeln(data);
-                //     displayWindow.document.close();
-                //     console.debug("Message posted.");
-                //     // Do something with the handled data
-                // }, function(err){
-                //     console.log('xhrPost err');
-                //     // Handle the error condition
-                // });
+                }).then(function(data) {
+                    //HACK convert relative next-web references to absolute URLs
+                    var re = new RegExp("/next-web/", 'gm');
+                    var parsedData = data.replace(re,"http://agile.ngdc.noaa.gov/next-web/");
+                    var displayWindow = window.open("", "_blank", "status=no, toolbar=no, titlebar=no, resizable=yes, scrollbars=yes, width=500, height=400");
+                    displayWindow.document.writeln(parsedData);
 
-                this.open('POST', 'http://agile.ngdc.noaa.gov/next-web/orders/create', postBody, '_blank');                
+                }, function(err) {
+                    console.log('xhrPost err');
+                    //TODO Handle the error condition
+                });
+
             },
 
-            // Arguments :
-            //  verb : 'GET'|'POST'
-            // From here: http://stackoverflow.com/questions/17793183/how-to-replace-window-open-with-a-post
-            open: function(verb, url, data, target) {
-              var form = document.createElement("form");
-              form.action = url;
-              form.method = verb;
-              form.target = target || "_self";
-              if (data) {
-                for (var key in data) {
-                  var input = document.createElement("textarea");
-                  input.name = key;
-                  input.value = typeof data[key] === "object" ? JSON.stringify(data[key]) : data[key];
-                  form.appendChild(input);
-                }
-              }
-              form.style.display = 'none';
-              document.body.appendChild(form);
-              form.submit();
+            submitFormToNext: function(postBody) {
+                console.log("sending order via form submission to NEXT: ", postBody);
+                //var url = 'http://maps.ngdc.noaa.gov/mapviewer-support/testForm.groovy';
+                var url = "http://agile.ngdc.noaa.gov/next-web/orders/create";
+
+                //create a new form element and submit it.
+                var form = document.createElement("form");
+                form.action = url;
+                form.method = 'POST';
+                form.target = '_blank';
+
+                //JSON payload goes in "order" parameter
+                var inputElement = document.createElement("textarea");
+                inputElement.name = "order";
+                inputElement.value = JSON.stringify(postBody);
+
+                form.appendChild(inputElement);
+                form.style.display = 'none';
+                document.body.appendChild(form);
+                form.submit();
+
+                //once the form is sent, it's useless to keep it.
+                document.body.removeChild(form);
             }
         });
+
     }
 );
