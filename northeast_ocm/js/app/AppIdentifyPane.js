@@ -328,7 +328,8 @@ define([
                 form.method = 'POST';
                 form.target = '_blank';
 
-                postBody = {"items":[{"dataset":"Multibeam", "surveys": "RR0903"}]};
+                //postBody = {"items":[{"dataset":"Multibeam", "surveys": "RR0903"}]};
+
                 //JSON payload goes in "order" parameter
                 var inputElement = document.createElement("textarea");
                 inputElement.name = "order";
