@@ -83,7 +83,7 @@
                         ) {
                     parser.parse();
 
-                    var map, query;
+                    var map, query, crowdmagService;
                     //var yLayer, zLayer, intensityLayer;
 
                     ready(function () {
@@ -103,6 +103,13 @@
                     function jQueryReady() {
                         console.log('inside jQueryReady...');
                         initMap();
+			
+			//setup handler to change map layers
+			$('.layerSelect').click(function(e) {
+				console.log('activate layer '+e.currentTarget.value);
+				//only one layer visible at a time
+                        	crowdmagService.setVisibleLayers([e.currentTarget.value]);
+			});
                     }
 
                     function initMap() {
@@ -115,7 +122,7 @@
                         });
                         on(map, "load", mapLoadHandler);
 
-                        var crowdmagService = new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crowdmag/MapServer");
+                        crowdmagService = new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crowdmag/MapServer");
 
                         //TODO currently limited to intensity
                         crowdmagService.setVisibleLayers([0]);
@@ -216,7 +223,19 @@
         </div>
         <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
             <div id="legendDiv">
-                this is a placeholder for the controls to select the active layer and display the legend
+		<div data-role="fieldcontain">
+		<label>Select a channel to display:</label>
+		<fieldset data-role="controlgroup" data-mini="true">
+    			<input type="radio" name="radio-mini" id="radio-mini-1" value="0" checked="checked"  class="layerSelect"/>
+    			<label for="radio-mini-1">Intensity</label>
+
+			<input type="radio" name="radio-mini" id="radio-mini-2" value="2"   class="layerSelect"/>
+    			<label for="radio-mini-2">Y</label>
+    	
+    			<input type="radio" name="radio-mini" id="radio-mini-3" value="1"  class="layerSelect" />
+    			<label for="radio-mini-3">Z</label>
+		</fieldset>
+		</div>
             </div>
         </div>
     </div>
