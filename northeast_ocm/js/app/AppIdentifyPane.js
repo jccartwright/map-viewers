@@ -8,8 +8,11 @@ define([
     'dojo/dom-style',
     'dojo/json',
     'dojo/request/xhr',
+    'dojo/promise/all',
     'dijit/form/Button',
     'esri/geometry/webMercatorUtils', 
+    'esri/tasks/QueryTask',
+    'esri/tasks/query',
     'ngdc/identify/IdentifyPane' 
     ],
     function(
@@ -22,8 +25,11 @@ define([
         domStyle,
         JSON,
         xhr,
+        all,
         Button,
         webMercatorUtils,
+        QueryTask,
+        Query,
         IdentifyPane
         ){
 
@@ -198,12 +204,117 @@ define([
                 this.tree.set('paths', this.expandedNodePaths);
             },
 
-            extractData: function() {
-                var str = 'Extract Data:\n';
-                var postBody = {};
-                postBody.items = [];
+            extractData: function() {                
+                var filterCriteria = this.constructFilterCriteria();
+
+                filterCriteria = this.replaceWildcardsAndSubmit(filterCriteria);
+            },
+
+            //If the 'platforms' or 'surveys' filters contain '*' wildcards, query the map services to get full lists of platforms/surveys.
+            replaceWildcardsAndSubmit: function(filterCriteria) {
+                var promises = {};
+                var queryTask;
+
+                array.forEach(filterCriteria.items, function(item) {                    
+                    var query = new Query();
+                    query.returnGeometry = false;
+
+                    if (item.platforms && array.indexOf(item.platforms, '*') > -1) {                            
+                        query.where = "UPPER(PLATFORM) LIKE '" + item.platforms.toUpperCase().replace(/\*/g, '%') + "'";
+                        query.outFields = ["PLATFORM"];
+                        if (item.dataset == 'Multibeam') {
+                            queryTask = new QueryTask("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0");
+                            promises.multibeamPlatformQuery = queryTask.execute(query);
+                        }
+                        if (item.dataset == 'Sounding') {
+                            queryTask = new QueryTask("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1"); 
+                            promises.nosHydroPlatformQuery = queryTask.execute(query);
+                        }                        
+                    }
+                    if (item.surveys && array.indexOf(item.surveys, '*') > -1) {
+                        query.where = "UPPER(SURVEY_ID) LIKE '" + item.surveys.toUpperCase().replace(/\*/g, '%') + "'";
+                        query.outFields = ["SURVEY_ID"];
+                        if (item.dataset == 'Multibeam') {
+                            queryTask = new QueryTask("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0");
+                            promises.multibeamSurveyQuery = queryTask.execute(query);
+                        }
+                        if (item.dataset == 'Sounding') {
+                            queryTask = new QueryTask("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1"); 
+                            promises.nosHydroSurveyQuery = queryTask.execute(query);
+                        }
+                    }
+                });
+
+                all(promises).then(lang.hitch(this, function(results) {
+                    console.log('all promises fulfilled.');
+                    
+                    var multibeamSurveyList, multibeamPlatformList, nosHydroSurveyList, nosHydroPlatformList;
+
+                    if (results.multibeamPlatformQuery) {
+                        this.getFilterItemById(filterCriteria, 'Multibeam').platforms = this.getPlatformListFromFeatureCollection(results.multibeamPlatformQuery);
+                    }
+                    if (results.multibeamSurveyQuery) {
+                        this.getFilterItemById(filterCriteria, 'Multibeam').surveys = this.getSurveyListFromFeatureCollection(results.multibeamSurveyQuery);
+                    }
+                    if (results.nosHydroPlatformQuery) {
+                        this.getFilterItemById(filterCriteria, 'Sounding').platforms = this.getPlatformListFromFeatureCollection(results.nosHydroPlatformQuery);
+                    }
+                    if (results.nosHydroSurveyQuery) {
+                        this.getFilterItemById(filterCriteria, 'Sounding').surveys = this.getSurveyListFromFeatureCollection(results.nosHydroSurveyQuery);
+                    }
+                    console.log(filterCriteria);
+
+                    if (filterCriteria.items.length > 0) {
+                        this.submitFormToNext(filterCriteria);
+                    }
+                }));
+                
+            },
+
+            getFilterItemById: function(filterCriteria, id /*'Multibeam'|'Sounding'*/) {
+                for (var i = 0; i < filterCriteria.items.length; i++) {
+                    if (filterCriteria.items[i].dataset == id) {
+                        return filterCriteria.items[i];
+                    }
+                }                
+            },
+
+            //Scans a FeatureCollection for unique platforms and returns a comma-separated string
+            getPlatformListFromFeatureCollection: function(featureCollection) {
+                var platforms = [];
+                array.forEach(featureCollection.features, function(feature) {
+                    var platform = feature.attributes['PLATFORM'];
+                    if (array.indexOf(platforms, platform) == -1) {
+                        platforms.push(platform);
+                    }
+                });
+
+                return platforms.join(',');
+            },
+
+            //Scans a FeatureCollection for unique survey IDs and returns a comma-separated string
+            getSurveyListFromFeatureCollection: function(featureCollection) {
+                var surveys = [];
+                array.forEach(featureCollection.features, function(feature) {
+                    var survey = feature.attributes['SURVEY_ID'];
+                    if (array.indexOf(surveys, survey) == -1) {
+                        surveys.push(survey);
+                    }
+                });
+
+                if (surveys.length >= 1000) {
+                    alert('Warning: Number of surveys returned by wildcard search exceeds 1000. Please narrow down your search criteria.');
+                }
+
+                return surveys.join(',');
+            },
+
+            //Construct an object containing the filter criteria, adhering to the format the NEXT API is expecting, 
+            //i.e.: {items: [{dataset: 'Multibeam', platforms: 'Knorr,Okeanos Explorer'}, {dataset: 'Sounding', startYear: 2000}]}
+            constructFilterCriteria: function() {
+                var filterCriteria = {items: []};
                 var geometry;
-                            
+
                 if (this.isMultibeam) {
                     var datasetInfo = {dataset: 'Multibeam'};
                     
@@ -236,7 +347,7 @@ define([
                         }
                     }
 
-                    postBody.items.push(datasetInfo);
+                    filterCriteria.items.push(datasetInfo);
                 }
                 if (this.isNosHydro) {
                     var datasetInfo = {dataset: 'Sounding'};
@@ -287,14 +398,12 @@ define([
                         }
                     }
 
-                    postBody.items.push(datasetInfo);
+                    filterCriteria.items.push(datasetInfo);
                 }
-                
-                str += JSON.stringify(postBody);
-                //this.postToNext(postBody);
-                this.submitFormToNext(postBody);
+                return filterCriteria;
             },
-
+            
+            /*
             postToNext: function(postBody) {
                 console.log('POSTing to NEXT: ' + JSON.stringify(postBody));
 
@@ -316,6 +425,7 @@ define([
                 });
 
             },
+            */
 
             submitFormToNext: function(postBody) {
                 console.log("sending order via form submission to NEXT: ", postBody);
@@ -327,8 +437,6 @@ define([
                 form.action = url;
                 form.method = 'POST';
                 form.target = '_blank';
-
-                //postBody = {"items":[{"dataset":"Multibeam", "surveys": "RR0903"}]};
 
                 //JSON payload goes in "order" parameter
                 var inputElement = document.createElement("textarea");
