@@ -82,10 +82,20 @@ define([
                     topic.publish('/ngdc/sublayer/visibility', 'CSC Lidar', [4], this.chkCscLidar.checked);                    
                 }));
 
+                on(this.chkSandyTrack, 'change', lang.hitch(this, function() {
+                    topic.publish('/hurricane/visibility', this.chkSandyTrack.checked);                    
+                }));
+
+                on(this.chkWindGusts, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'FEMA Peak Wind Gusts', this.chkWindGusts.checked);
+                }));
+                on(this.chkStormSurge, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'FEMA Storm Surge Area', this.chkStormSurge.checked);
+                }));
+
+                this.searchDialog = new SearchDialog({title: 'Bathymetry Survey Search'});
+
                 on(this.searchButton, 'click', lang.hitch(this, function() {
-                    if (!this.searchDialog) {
-                        this.searchDialog = new SearchDialog({title: 'Bathymetry Survey Search'});
-                    }
                     this.searchDialog.show();
                 }));  
 

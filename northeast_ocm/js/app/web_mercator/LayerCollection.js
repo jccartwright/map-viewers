@@ -85,6 +85,16 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),                    
+                    new ArcGISDynamicMapServiceLayer('http://services.femadata.com/arcgis/rest/services/2012_Sandy/2012_Sandy/MapServer', {
+                        id: 'FEMA Peak Wind Gusts',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),                                        
+                    new ArcGISDynamicMapServiceLayer('http://services.femadata.com/arcgis/rest/services/2012_Sandy/SurgeBoundaries_Final_0214/MapServer', {
+                        id: 'FEMA Storm Surge Area',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),  
                     new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (non-digital)',
                         visible: false,
@@ -92,11 +102,13 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro/MapServer', {
                         id: 'NOS Hydro (tiled)',
-                        visible: this.nosHydroVisible
+                        //visible: this.nosHydroVisible
+                        visible: false,
                     }),
                     new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (dynamic)',
-                        visible: this.nosHydroVisible,
+                        //visible: this.nosHydroVisible,
+                        visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISImageServiceLayer('http://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
@@ -123,20 +135,24 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer', {
                         id: 'Trackline Bathymetry (tiled)',
-                        visible: this.tracklineVisible,
+                        //visible: this.tracklineVisible,
+                        visible: false
                     }),
                     new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer', {
                         id: 'Trackline Combined (dynamic)',
-                        visible: this.tracklineVisible,
+                        //visible: this.tracklineVisible,
+                        visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer', {
                         id: 'Multibeam (tiled)',
-                        visible: this.multibeamVisible
+                        //visible: this.multibeamVisible
+                        visible: false
                     }),
                     new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
                         id: 'Multibeam (dynamic)',
-                        visible: this.multibeamVisible,
+                        //visible: this.multibeamVisible,
+                        visible: false,
                         imageParameters: this.imageParameters.png32
                     }),                    
                     new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer', {
@@ -159,7 +175,8 @@ define([
                     }),
                     new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer', {
                         id: 'DEM Extents',
-                        visible: this.demVisible,
+                        //visible: this.demVisible,
+                        visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
