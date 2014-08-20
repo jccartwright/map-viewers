@@ -101,6 +101,11 @@ define([
 
                 this.setupMapViews();
 
+                topic.subscribe('/ngdc/MapReady', lang.hitch(this, function() {
+                    var filterValues = {startYear: 2012};
+                    this.filterSurveys(filterValues);
+                }));
+
                 //Subscribe to messages passed by the search dialog
                 topic.subscribe('/bathymetry/Search', lang.hitch(this, function(values) {
                     this.filterSurveys(values);
@@ -135,8 +140,6 @@ define([
                 // setup map views. You can only draw a Map into a visible container
                 this.setupMercatorView();                
             },
-
-            
 
             setupMercatorView: function() {
                 logger.debug('setting up Mercator view...');
@@ -239,10 +242,10 @@ define([
                     sql.push("SURVEY_YEAR <= " + values.endYear);
                 }
                 if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace('*', '%') + "'");
+                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase().replace('*', '%') + "'");
+                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);
@@ -257,10 +260,10 @@ define([
                     sql.push("START_YR <= " + values.endYear);
                 }
                 if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) = '" + values.survey.toUpperCase() + "'");
+                    sql.push("UPPER(SURVEY_ID) = '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase() + "%'");
+                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);
@@ -278,10 +281,10 @@ define([
                     sql.push("SURVEY_YEAR <= " + values.endYear);
                 }
                 if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) = '" + values.survey.toUpperCase() + "'");
+                    sql.push("UPPER(SURVEY_ID) LIKE '%" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase() + "%'");
+                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);
@@ -304,8 +307,7 @@ define([
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions([]);
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions([]);
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions([]);
-
-                
+ 
                 this.layersPanel.disableResetButton();
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
