@@ -12,6 +12,7 @@ define([
     'esri/config',
     'esri/geometry/Extent',
     'esri/SpatialReference',
+    'esri/dijit/Legend',
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'ngdc/web_mercator/ZoomLevels',
@@ -37,6 +38,7 @@ define([
         esriConfig,
         Extent,
         SpatialReference,
+        Legend,
         Logger,
         MercatorMapConfig,        
         MercatorZoomLevels,        
@@ -168,7 +170,19 @@ define([
                     nosHydroVisible: this.nosHydroVisible,
                     tracklineVisible: this.tracklineVisible,
                     demVisible: this.demVisible
-                }));  
+                })); 
+
+                aspect.after(this.mercatorMapConfig, 'mapReady', lang.hitch(this, function() {
+                    var legend = new Legend({
+                        map: this.mercatorMapConfig.map,
+                        layerInfos: [
+                            {title: 'Hurricane Sandy Track (NOAA)', layer: this.mercatorMapConfig.hurricaneLayer},
+                            {title: 'Peak Wind Gusts (FEMA)', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('FEMA Peak Wind Gusts')},
+                            {title: 'Storm Surge Area (FEMA)', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('FEMA Storm Surge Area')}
+                        ]
+                    }, 'dynamicLegend');
+                    legend.startup();
+                }));
 
                 var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
 
@@ -245,7 +259,7 @@ define([
                     sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);
@@ -260,10 +274,10 @@ define([
                     sql.push("START_YR <= " + values.endYear);
                 }
                 if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) = '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
+                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);
@@ -281,10 +295,10 @@ define([
                     sql.push("SURVEY_YEAR <= " + values.endYear);
                 }
                 if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) LIKE '%" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
+                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);

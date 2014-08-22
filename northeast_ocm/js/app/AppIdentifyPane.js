@@ -251,16 +251,16 @@ define([
                     var multibeamSurveyList, multibeamPlatformList, nosHydroSurveyList, nosHydroPlatformList;
 
                     if (results.multibeamPlatformQuery) {
-                        this.getFilterItemById(filterCriteria, 'Multibeam').platforms = this.getPlatformListFromFeatureCollection(results.multibeamPlatformQuery);
+                        this.getFilterItemById(filterCriteria, 'Multibeam').platforms = this.getPlatformListFromFeatureSet(results.multibeamPlatformQuery);
                     }
                     if (results.multibeamSurveyQuery) {
-                        this.getFilterItemById(filterCriteria, 'Multibeam').surveys = this.getSurveyListFromFeatureCollection(results.multibeamSurveyQuery);
+                        this.getFilterItemById(filterCriteria, 'Multibeam').surveys = this.getSurveyListFromFeatureSet(results.multibeamSurveyQuery);
                     }
                     if (results.nosHydroPlatformQuery) {
-                        this.getFilterItemById(filterCriteria, 'Sounding').platforms = this.getPlatformListFromFeatureCollection(results.nosHydroPlatformQuery);
+                        this.getFilterItemById(filterCriteria, 'Sounding').platforms = this.getPlatformListFromFeatureSet(results.nosHydroPlatformQuery);
                     }
                     if (results.nosHydroSurveyQuery) {
-                        this.getFilterItemById(filterCriteria, 'Sounding').surveys = this.getSurveyListFromFeatureCollection(results.nosHydroSurveyQuery);
+                        this.getFilterItemById(filterCriteria, 'Sounding').surveys = this.getSurveyListFromFeatureSet(results.nosHydroSurveyQuery);
                     }
                     console.log(filterCriteria);
 
@@ -279,10 +279,10 @@ define([
                 }                
             },
 
-            //Scans a FeatureCollection for unique platforms and returns a comma-separated string
-            getPlatformListFromFeatureCollection: function(featureCollection) {
+            //Scans a FeatureSet for unique platforms and returns a comma-separated string
+            getPlatformListFromFeatureSet: function(featureSet) {
                 var platforms = [];
-                array.forEach(featureCollection.features, function(feature) {
+                array.forEach(featureSet.features, function(feature) {
                     var platform = feature.attributes['PLATFORM'];
                     if (array.indexOf(platforms, platform) == -1) {
                         platforms.push(platform);
@@ -292,10 +292,10 @@ define([
                 return platforms.join(',');
             },
 
-            //Scans a FeatureCollection for unique survey IDs and returns a comma-separated string
-            getSurveyListFromFeatureCollection: function(featureCollection) {
+            //Scans a FeatureSet for unique survey IDs and returns a comma-separated string
+            getSurveyListFromFeatureSet: function(featureSet) {
                 var surveys = [];
-                array.forEach(featureCollection.features, function(feature) {
+                array.forEach(featureSet.features, function(feature) {
                     var survey = feature.attributes['SURVEY_ID'];
                     if (array.indexOf(surveys, survey) == -1) {
                         surveys.push(survey);
@@ -429,8 +429,10 @@ define([
 
             submitFormToNext: function(postBody) {
                 console.log("sending order via form submission to NEXT: ", postBody);
-                //var url = 'http://maps.ngdc.noaa.gov/mapviewer-support/testForm.groovy';
-                var url = "http://agile.ngdc.noaa.gov/next-web/orders/create";
+                
+                //var url = "http://localhost:8080/next-web/orders/create";
+                //var url = "http://agile.ngdc.noaa.gov/next-web/orders/create";
+                var url = "http://sparrow.ngdc.noaa.gov/next-web/orders/create";
 
                 //create a new form element and submit it.
                 var form = document.createElement("form");
