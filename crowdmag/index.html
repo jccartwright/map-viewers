@@ -106,9 +106,24 @@
 			
 			//setup handler to change map layers
 			$('.layerSelect').click(function(e) {
-				console.log('activate layer '+e.currentTarget.value);
 				//only one layer visible at a time
-                        	crowdmagService.setVisibleLayers([e.currentTarget.value]);
+                crowdmagService.setVisibleLayers([e.currentTarget.value]);
+
+                var title;
+                switch (e.currentTarget.value) {
+                    case '0':
+                        title = 'CrowdMag - Total Intensity';
+                        break;
+                    case '1':
+                        title = 'CrowdMag - Vertical Intensity';
+                        break;
+                    case '2':
+                        title = 'CrowdMag - Horizontal Intensity';
+                        break;
+                    default:
+                        title = 'CrowdMag';
+                }
+                $('#pageTitle').text(title);
 			});
                     }
 
@@ -189,7 +204,7 @@
 <div data-role="page" id="page">
     <!-- header -->
     <div data-theme="a" data-role="header" data-position="fixed">
-        <h3>CrowdMag</h3>
+        <h3 id="pageTitle">CrowdMag - Total Intensity</h3>
         <a href="#aboutDialog" data-rel="popup" data-theme="a" data-position-to="window" data-role="button"
            data-inline="true" data-transition="pop" data-icon="info" data-iconpos="notext">About</a>
         <a href="#legendDialog" data-rel="popup" data-theme="a" data-position-to="window" data-role="button"
@@ -201,7 +216,7 @@
         <div id="map"></div>
     </div>
 
-    <div data-role="popup" id="aboutDialog" data-theme="a">
+    <div data-role="popup" id="aboutDialog" data-theme="a" style="width:50%;">
         <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext"
            class="ui-btn-right">Close</a>
 
