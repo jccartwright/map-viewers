@@ -1,0 +1,260 @@
+<div class="dijitDialog searchDialog" role="dialog" aria-labelledby="${id}_title">
+    <div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+        <span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="${id}_title"
+              role="header" level="1"></span>
+        <span style="display: none;" data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon"
+              data-dojo-attach-event="ondijitclick: onCancel" title="${buttonCancel}" role="button" tabIndex="-1">
+            <span data-dojo-attach-point="closeText" class="closeText" title="${buttonCancel}">x</span>
+        </span>
+    </div>
+    <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
+        <table cellpadding="6" cellspacing="3">
+        <tr>
+            <td>
+                Source Year (-2000 to present):<br>
+                <label for="startYearSpinner">Min:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="startYearSpinner" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:-2000,max:2015,places:0,pattern:'0000'}" name="startYear" style="width: 55px"></div>
+                <label for="endYearSpinner">Max:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="endYearSpinner" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:-2000,max:2015,places:0,pattern:'0000'}" name="endYear" style="width: 55px"></div>
+            </td>           
+        </tr>
+        <tr>
+            <td>
+                <label for="sourceLocationText">Source Location Name includes:</label>
+                <input data-dojo-type="dijit/form/TextBox" type="text" name="sourceLocationText" data-dojo-attach-point="sourceLocationText" style="width: 350px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="sourceRegionSelect">Source Region Name:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="sourceRegionSelect" data-dojo-props="maxHeight:200" name="sourceRegion" style="width: 350px;">
+                    <option value="" selected></option>
+                    <option value="77">West coast of Africa</option>
+                    <option value="78">Central Africa</option>
+                    <option value="73">Northeast Atlantic Ocean</option>
+                    <option value="72">Northwest Atlantic Ocean</option>
+                    <option value="70">Southeast Atlantic Ocean</option>
+                    <option value="71">Southwest Atlantic Ocean</option>
+                    <option value="75">East Coast of United States and Canada</option>
+                    <option value="76">Gulf of Mexico</option>
+                    <option value="74">Caribbean Sea</option>
+                    <option value="40">Black Sea</option>
+                    <option value="50">Mediterranean Sea</option>
+                    <option value="30">Red Sea</option>
+                    <option value="60">Indian Ocean (including W. Australia and W. Indonesia)</option>
+                    <option value="87">Alaska (including Aleutian Islands)</option>
+                    <option value="84">China, North and South Korea, Philippines, Taiwan</option>
+                    <option value="81">E. Australia, New Zealand, South Pacific Is.</option>
+                    <option value="80">Hawaii, Johnston Atoll, Midway I</option>
+                    <option value="83">E. Indonesia and Malaysia</option>
+                    <option value="82">New Caledonia, New Guinea, Solomon Is., Vanuatu</option>
+                    <option value="85">Japan</option>
+                    <option value="86">Kamchatka and Kuril Islands</option>
+                    <option value="88">West Coast of North and Central America</option>
+                    <option value="89">West Coast of South America </option>
+                </select>                               
+            </td>
+        </tr>       
+        <tr>
+            <td>
+                <label for="sourceCountrySelect">Source Country:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="sourceCountrySelect" name="sourceCountry" data-dojo-props="maxHeight:200" style="width: 350px;">
+                    <option value="" selected></option>
+                    <option value="ALBANIA">ALBANIA</option>
+                    <option value="ALGERIA">ALGERIA</option>
+                    <option value="ANTARCTICA">ANTARCTICA</option>
+                    <option value="ANTIGUA AND BARBUDA">ANTIGUA AND BARBUDA</option>
+                    <option value="ATLANTIC OCEAN">ATLANTIC OCEAN</option>
+                    <option value="AUSTRALIA">AUSTRALIA</option>
+                    <option value="BANGLADESH">BANGLADESH</option>
+                    <option value="BULGARIA">BULGARIA</option>
+                    <option value="CANADA">CANADA</option>
+                    <option value="CHILE">CHILE</option>
+                    <option value="CHINA">CHINA</option>
+                    <option value="COLOMBIA">COLOMBIA</option>
+                    <option value="CONGO">CONGO</option>
+                    <option value="COOK ISLANDS">COOK ISLANDS</option>
+                    <option value="COSTA RICA">COSTA RICA</option>
+                    <option value="CROATIA">CROATIA</option>
+                    <option value="CUBA">CUBA</option>
+                    <option value="CYPRUS ISLAND">CYPRUS ISLAND</option>
+                    <option value="CYPRUS">CYPRUS</option>
+                    <option value="DEAD SEA">DEAD SEA</option>
+                    <option value="DOMINICAN REPUBLIC">DOMINICAN REPUBLIC</option>
+                    <option value="EAST CHINA SEA">EAST CHINA SEA</option>
+                    <option value="ECUADOR">ECUADOR</option>
+                    <option value="EGYPT">EGYPT</option>
+                    <option value="EL SALVADOR">EL SALVADOR</option>
+                    <option value="ERITREA">ERITREA</option>
+                    <option value="FIJI">FIJI</option>
+                    <option value="FRANCE">FRANCE</option>
+                    <option value="FRENCH POLYNESIA">FRENCH POLYNESIA</option>
+                    <option value="GEORGIA">GEORGIA</option>
+                    <option value="GERMANY">GERMANY</option>
+                    <option value="GHANA">GHANA</option>
+                    <option value="GREECE">GREECE</option>
+                    <option value="GREENLAND">GREENLAND</option>
+                    <option value="GUADELOUPE (FRENCH TERRITORY)">GUADELOUPE (FRENCH TERRITORY)</option>
+                    <option value="GUATEMALA">GUATEMALA</option>
+                    <option value="HAITI">HAITI</option>
+                    <option value="HOLLAND">HOLLAND</option>
+                    <option value="HONDURAS">HONDURAS</option>
+                    <option value="ICELAND">ICELAND</option>
+                    <option value="INDIA">INDIA</option>
+                    <option value="INDONESIA">INDONESIA</option>
+                    <option value="IRAN">IRAN</option>
+                    <option value="ISRAEL">ISRAEL</option>
+                    <option value="ITALY">ITALY</option>
+                    <option value="JAMAICA">JAMAICA</option>
+                    <option value="JAPAN">JAPAN</option>
+                    <option value="JORDAN">JORDAN</option>
+                    <option value="KENYA">KENYA</option>
+                    <option value="KERMADEC ISLANDS">KERMADEC ISLANDS</option>
+                    <option value="LEBANON">LEBANON</option>
+                    <option value="MARTINIQUE (FRENCH TERRITORY)">MARTINIQUE (FRENCH TERRITORY)</option>
+                    <option value="MEXICO">MEXICO</option>
+                    <option value="MICRONESIA, FED. STATES OF">MICRONESIA, FED. STATES OF</option>
+                    <option value="MONTSERRAT">MONTSERRAT</option>
+                    <option value="MOROCCO">MOROCCO</option>
+                    <option value="MYANMAR (BURMA)">MYANMAR (BURMA)</option>
+                    <option value="NAURU">NAURU</option>
+                    <option value="NEPAL">NEPAL</option>
+                    <option value="NEW CALEDONIA">NEW CALEDONIA</option>
+                    <option value="NEW ZEALAND">NEW ZEALAND</option>
+                    <option value="NICARAGUA">NICARAGUA</option>
+                    <option value="NORTH KOREA">NORTH KOREA</option>
+                    <option value="NORTHWEST PACIFIC OCEAN">NORTHWEST PACIFIC OCEAN</option>
+                    <option value="NORWAY">NORWAY</option>
+                    <option value="PACIFIC OCEAN">PACIFIC OCEAN</option>
+                    <option value="PAKISTAN">PAKISTAN</option>
+                    <option value="PANAMA">PANAMA</option>
+                    <option value="PAPUA NEW GUINEA">PAPUA NEW GUINEA</option>
+                    <option value="PERU">PERU</option>
+                    <option value="PHILIPPINES">PHILIPPINES</option>
+                    <option value="PORTUGAL">PORTUGAL</option>
+                    <option value="RUSSIA">RUSSIA</option>
+                    <option value="SAINT VINCENT AND THE GRENADINES">SAINT VINCENT AND THE GRENADINES</option>
+                    <option value="SAMOA">SAMOA</option>
+                    <option value="SERBIA AND MONTENEGRO">SERBIA AND MONTENEGRO</option>
+                    <option value="SOLOMON ISLANDS">SOLOMON ISLANDS</option>
+                    <option value="SOUTH AFRICA">SOUTH AFRICA</option>
+                    <option value="SOUTH KOREA">SOUTH KOREA</option>
+                    <option value="SPAIN">SPAIN</option>
+                    <option value="SRI LANKA">SRI LANKA</option>
+                    <option value="SUDAN">SUDAN</option>
+                    <option value="SWEDEN">SWEDEN</option>
+                    <option value="SWITZERLAND">SWITZERLAND</option>
+                    <option value="SYRIA">SYRIA</option>
+                    <option value="TAIWAN">TAIWAN</option>
+                    <option value="TOGO">TOGO</option>
+                    <option value="TONGA">TONGA</option>
+                    <option value="TRINIDAD AND TOBAGO">TRINIDAD AND TOBAGO</option>
+                    <option value="TUNISIA">TUNISIA</option>
+                    <option value="TURKEY">TURKEY</option>
+                    <option value="TURKMENISTAN">TURKMENISTAN</option>
+                    <option value="UK TERRITORY">UK TERRITORY</option>
+                    <option value="UK">UK</option>
+                    <option value="UKRAINE">UKRAINE</option>
+                    <option value="URUGUAY">URUGUAY</option>
+                    <option value="USA TERRITORY">USA TERRITORY</option>
+                    <option value="USA">USA</option>
+                    <option value="VANUATU">VANUATU</option>
+                    <option value="VENEZUELA">VENEZUELA</option>
+                </select>                               
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="tsEventCauseSelect">Cause of Tsunami (shift-click to select multiple):</label><br>
+                <select data-dojo-type="dijit/form/MultiSelect" data-dojo-attach-point="tsEventCauseSelect" data-dojo-props="size:6" name="tsEventCause" style="width: 250px;">
+                    <option value="0">Unknown Cause</option>
+                    <option value="1">Earthquake</option>
+                    <option value="2">Questionable Earthquake</option>
+                    <option value="3">Earthquake and Landslide</option>
+                    <option value="4">Volcano and Earthquake</option>
+                    <option value="5">Volcano, Earthquake, and Landslide</option>
+                    <option value="6">Volcano</option>
+                    <option value="7">Volcano and Landslide</option>
+                    <option value="8">Landslide</option>
+                    <option value="9">Meteorological</option>
+                    <option value="10">Explosion</option>
+                    <option value="11">Astronomical Tide</option>       
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Event Validity:<br>
+                <label for="minEventValiditySelect">Min:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="minEventValiditySelect" data-dojo-props="maxHeight:200" name="minEventValidity" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="0">0: event that only caused a seiche/disturbance in a river</option>
+                    <option value="1" selected>1: very doubtful tsunami</option>
+                    <option value="2">2: questionable tsunami</option>
+                    <option value="3">3: probable tsunami</option>
+                    <option value="4">4: definite tsunami</option>
+                </select>
+                <label for="maxEventValiditySelect">Max:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="maxEventValiditySelect" data-dojo-props="maxHeight:200" name="maxEventValidity" style="width: 250px;">
+                    <option value="" selected></option>
+                    <option value="0">0: event that only caused a seiche/disturbance a river</option>
+                    <option value="1">1: very doubtful tsunami</option>
+                    <option value="2">2: questionable tsunami</option>
+                    <option value="3">3: probable tsunami</option>
+                    <option value="4">4: definite tsunami</option>
+                </select>           
+            </td>               
+        </tr>
+        <tr>
+            <td>
+                Number of Deaths:<br>
+                <label for="minDeathsSelect">Min:</label>
+                <div data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="minDeathsSelect" data-dojo-props="maxHeight:200" name="minDeaths" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Few (~1 to 50 deaths)</option>
+                    <option value="2">Some (~51 to 100 deaths)</option>
+                    <option value="3">Many (~101 to 1000 deaths)</option>
+                    <option value="4">Very Many (~1001 or more deaths)</option>
+                </div>
+                <label for="maxDeathsSelect">Max:</label>
+                <div data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="maxDeathsSelect" data-dojo-props="maxHeight:200" name="maxDeaths" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Few (~1 to 50 deaths)</option>
+                    <option value="2">Some (~51 to 100 deaths)</option>
+                    <option value="3">Many (~101 to 1000 deaths)</option>
+                    <option value="4">Very Many (~1001 or more deaths)</option>
+                </div>              
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Damage in Millions of Dollars:
+                <br>
+                <label for="minDamageSelect">Min:</label>
+                <div data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="minDamageSelect" data-dojo-props="maxHeight:200" name="minDamage" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Limited (less than about $1 million) </option>
+                    <option value="2">Moderate (~$1 to $5 million)</option>
+                    <option value="3">Severe (~$5 to $24 million)</option>
+                    <option value="4">Extreme (~$25 million or more)</option>
+                </div>
+                <label for="maxDamageSelect">Max:</label>
+                <div data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="maxDamageSelect" data-dojo-props="maxHeight:200" name="maxDamage" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Limited (less than about $1 million) </option>
+                    <option value="2">Moderate (~$1 to $5 million)</option>
+                    <option value="3">Severe (~$5 to $24 million)</option>
+                    <option value="4">Extreme (~$25 million or more)</option>
+                </div>
+            </td>
+        </tr>       
+        </table>
+        <div class="dijitDialogPaneActionBar right-align">
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="submitButton" type="submit">OK</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="cancelButton">Cancel</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton">Reset</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,579 @@
+<div class="dijitDialog searchDialog" role="dialog" aria-labelledby="${id}_title">
+    <div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+        <span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="${id}_title"
+              role="header" level="1"></span>
+        <span style="display: none;" data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon"
+              data-dojo-attach-event="ondijitclick: onCancel" title="${buttonCancel}" role="button" tabIndex="-1">
+            <span data-dojo-attach-point="closeText" class="closeText" title="${buttonCancel}">x</span>
+        </span>
+    </div>
+    <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
+        <table cellpadding="6" cellspacing="3">
+        <tr>
+            <td>
+                Source Year (-2000 to present):<br>
+                <label for="startYearSpinner">Min:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="startYearSpinner" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:-2000,max:2015,places:0,pattern:'0000'}" name="startYear" style="width: 55px"></div>
+                <label for="endYearSpinner">Max:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="endYearSpinner" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:-2000,max:2015,places:0,pattern:'0000'}" name="endYear" style="width: 55px"></div>
+            </td>           
+        </tr>
+        <tr>
+            <td>
+                <label for="sourceRegionSelect"><b>Source</b> Region Name:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="sourceRegionSelect" data-dojo-props="maxHeight:200" name="sourceRegion" style="width: 250px;">
+                    <option value="" selected></option>
+                    <option value="77">West coast of Africa</option>
+                    <option value="78">Central Africa</option>
+                    <option value="73">Northeast Atlantic Ocean</option>
+                    <option value="72">Northwest Atlantic Ocean</option>
+                    <option value="70">Southeast Atlantic Ocean</option>
+                    <option value="71">Southwest Atlantic Ocean</option>
+                    <option value="75">East Coast of United States and Canada</option>
+                    <option value="76">Gulf of Mexico</option>
+                    <option value="74">Caribbean Sea</option>
+                    <option value="40">Black Sea</option>
+                    <option value="50">Mediterranean Sea</option>
+                    <option value="30">Red Sea</option>
+                    <option value="60">Indian Ocean (including W. Australia and W. Indonesia)</option>
+                    <option value="87">Alaska (including Aleutian Islands)</option>
+                    <option value="84">China, North and South Korea, Philippines, Taiwan</option>
+                    <option value="81">E. Australia, New Zealand, South Pacific Is.</option>
+                    <option value="80">Hawaii, Johnston Atoll, Midway I</option>
+                    <option value="83">E. Indonesia and Malaysia</option>
+                    <option value="82">New Caledonia, New Guinea, Solomon Is., Vanuatu</option>
+                    <option value="85">Japan</option>
+                    <option value="86">Kamchatka and Kuril Islands</option>
+                    <option value="88">West Coast of North and Central America</option>
+                    <option value="89">West Coast of South America </option>
+                </select>                               
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="observationLocationText"><b>Observation</b> Location Name includes:</label>
+                <input data-dojo-type="dijit/form/TextBox" type="text" name="observationLocationText" data-dojo-attach-point="observationLocationText" style="width: 350px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="observationRegionSelect"><b>Observation</b> Region Name:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="observationRegionSelect" data-dojo-props="maxHeight:200" name="observationRegion" style="width: 350px;">
+                    <option value=""></option>
+                    <option value="77">West coast of Africa</option>
+                    <option value="78">Central Africa</option>
+                    <option value="73">Northeast Atlantic Ocean</option>
+                    <option value="72">Northwest Atlantic Ocean</option>
+                    <option value="70">Southeast Atlantic Ocean</option>
+                    <option value="71">Southwest Atlantic Ocean</option>
+                    <option value="75">East Coast of United States and Canada</option>
+                    <option value="76">Gulf of Mexico</option>
+                    <option value="74">Caribbean Sea</option>
+                    <option value="40">Black Sea</option>
+                    <option value="50">Mediterranean Sea</option>
+                    <option value="30">Red Sea</option>
+                    <option value="60">Indian Ocean (including W. Australia and W. Indonesia)</option>
+                    <option value="87">Alaska (including Aleutian Islands)</option>
+                    <option value="84">China, North and South Korea, Philippines, Taiwan</option>
+                    <option value="81">E. Australia, New Zealand, South Pacific Is.</option>
+                    <option value="80">Hawaii, Johnston Atoll, Midway I</option>
+                    <option value="83">E. Indonesia and Malaysia</option>
+                    <option value="82">New Caledonia, New Guinea, Solomon Is., Vanuatu</option>
+                    <option value="85">Japan</option>
+                    <option value="86">Kamchatka and Kuril Islands</option>
+                    <option value="88">West Coast of North and Central America</option>
+                    <option value="89">West Coast of South America </option>
+                </select>                               
+            </td>
+        </tr>   
+        <tr>
+        <td>
+            <label for="countrySelect"><b>Observation</b> Country:</label>
+            <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="countrySelect" data-dojo-props="maxHeight:200" name="country" style="width: 350px;">
+                <option value=""></option>
+                <option value="AFRICA, NORTH COAST">AFRICA, NORTH COAST</option>
+                <option value="ALBANIA">ALBANIA</option>
+                <option value="ALGERIA">ALGERIA</option>
+                <option value="ANGOLA">ANGOLA</option>
+                <option value="ANTARCTICA">ANTARCTICA</option>
+                <option value="ANTIGUA AND BARBUDA">ANTIGUA AND BARBUDA</option>
+                <option value="ARGENTINA">ARGENTINA</option>
+                <option value="AUSTRALIA">AUSTRALIA</option>
+                <option value="AZORES (PORTUGAL)">AZORES (PORTUGAL)</option>
+                <option value="BANGLADESH">BANGLADESH</option>
+                <option value="BARBADOS">BARBADOS</option>
+                <option value="BELGIUM">BELGIUM</option>
+                <option value="BENIN">BENIN</option>
+                <option value="BERMUDA (UK TERRITORY)">BERMUDA (UK TERRITORY)</option>
+                <option value="BRAZIL">BRAZIL</option>
+                <option value="BRITISH VIRGIN ISLANDS (UK TERRITORY)">BRITISH VIRGIN ISLANDS (UK TERRITORY)</option>
+                <option value="BULGARIA">BULGARIA</option>
+                <option value="CANADA">CANADA</option>
+                <option value="CHILE">CHILE</option>
+                <option value="CHINA">CHINA</option>
+                <option value="COLOMBIA">COLOMBIA</option>
+                <option value="CONGO">CONGO</option>
+                <option value="COOK ISLANDS">COOK ISLANDS</option>
+                <option value="COSTA RICA">COSTA RICA</option>
+                <option value="CROATIA">CROATIA</option>
+                <option value="CUBA">CUBA</option>
+                <option value="CYPRUS">CYPRUS</option>
+                <option value="DENMARK">DENMARK</option>
+                <option value="DOMINICA">DOMINICA</option>
+                <option value="DOMINICAN REPUBLIC">DOMINICAN REPUBLIC</option>
+                <option value="EAST TIMOR">EAST TIMOR</option>
+                <option value="ECUADOR">ECUADOR</option>
+                <option value="EGYPT">EGYPT</option>
+                <option value="EL SALVADOR">EL SALVADOR</option>
+                <option value="ERITREA">ERITREA</option>
+                <option value="FIJI">FIJI</option>
+                <option value="FINLAND">FINLAND</option>
+                <option value="FRANCE">FRANCE</option>
+                <option value="FRENCH POLYNESIA">FRENCH POLYNESIA</option>
+                <option value="FRENCH SOUTHERN AND ATLANTIC TERRITORIES">FRENCH SOUTHERN AND ATLANTIC TERRITORIES</option>
+                <option value="GEORGIA">GEORGIA</option>
+                <option value="GHANA">GHANA</option>
+                <option value="GREECE">GREECE</option>
+                <option value="GREENLAND">GREENLAND</option>
+                <option value="GRENADA">GRENADA</option>
+                <option value="GUADELOUPE (FRENCH TERRITORY)">GUADELOUPE (FRENCH TERRITORY)</option>
+                <option value="GUATEMALA">GUATEMALA</option>
+                <option value="GUYANA">GUYANA</option>
+                <option value="HAITI">HAITI</option>
+                <option value="HONDURAS">HONDURAS</option>
+                <option value="INDIA">INDIA</option>
+                <option value="INDONESIA">INDONESIA</option>
+                <option value="IRAN">IRAN</option>
+                <option value="IRELAND">IRELAND</option>
+                <option value="ISRAEL">ISRAEL</option>
+                <option value="ITALY">ITALY</option>
+                <option value="JAMAICA">JAMAICA</option>
+                <option value="JAPAN">JAPAN</option>
+                <option value="JORDAN">JORDAN</option>
+                <option value="KENYA">KENYA</option>
+                <option value="KIRIBATI">KIRIBATI</option>
+                <option value="LEBANON">LEBANON</option>
+                <option value="LIBYA">LIBYA</option>
+                <option value="MADAGASCAR">MADAGASCAR</option>
+                <option value="MALAYSIA">MALAYSIA</option>
+                <option value="MALDIVES">MALDIVES</option>
+                <option value="MALTA">MALTA</option>
+                <option value="MARSHALL ISLANDS, REP. OF">MARSHALL ISLANDS, REP. OF</option>
+                <option value="MARTINIQUE (FRENCH TERRITORY)">MARTINIQUE (FRENCH TERRITORY)</option>
+                <option value="MAURITIUS">MAURITIUS</option>
+                <option value="MEXICO">MEXICO</option>
+                <option value="MICRONESIA, FED. STATES OF">MICRONESIA, FED. STATES OF</option>
+                <option value="MONTSERRAT">MONTSERRAT</option>
+                <option value="MOROCCO">MOROCCO</option>
+                <option value="MOZAMBIQUE">MOZAMBIQUE</option>
+                <option value="MYANMAR (BURMA)">MYANMAR (BURMA)</option>
+                <option value="NAURU">NAURU</option>
+                <option value="NETHERLANDS">NETHERLANDS</option>
+                <option value="NEW CALEDONIA">NEW CALEDONIA</option>
+                <option value="NEW ZEALAND">NEW ZEALAND</option>
+                <option value="NICARAGUA">NICARAGUA</option>
+                <option value="NIUE">NIUE</option>
+                <option value="NORTH KOREA">NORTH KOREA</option>
+                <option value="NORWAY">NORWAY</option>
+                <option value="OMAN">OMAN</option>
+                <option value="PAKISTAN">PAKISTAN</option>
+                <option value="PALAU">PALAU</option>
+                <option value="PANAMA">PANAMA</option>
+                <option value="PAPUA NEW GUINEA">PAPUA NEW GUINEA</option>
+                <option value="PERU">PERU</option>
+                <option value="PHILIPPINES">PHILIPPINES</option>
+                <option value="PORTUGAL">PORTUGAL</option>
+                <option value="REUNION (FRENCH TERRITORY)">REUNION (FRENCH TERRITORY)</option>
+                <option value="RUSSIA">RUSSIA</option>
+                <option value="SABA (DUTCH TERRITORY)">SABA (DUTCH TERRITORY)</option>
+                <option value="SAINT BARTHELEMY (FRENCH TERRITORY)">SAINT BARTHELEMY (FRENCH TERRITORY)</option>
+                <option value="SAINT KITTS AND NEVIS">SAINT KITTS AND NEVIS</option>
+                <option value="SAINT LUCIA">SAINT LUCIA</option>
+                <option value="SAINT MARTIN (FRENCH AND DUTCH TERRITORIES)">SAINT MARTIN (FRENCH AND DUTCH TERRITORIES)</option>
+                <option value="SAINT PIERRE AND MIQUELON">SAINT PIERRE AND MIQUELON</option>
+                <option value="SAINT VINCENT AND THE GRENADINES">SAINT VINCENT AND THE GRENADINES</option>
+                <option value="SAMOA">SAMOA</option>
+                <option value="SERBIA AND MONTENEGRO">SERBIA AND MONTENEGRO</option>
+                <option value="SEYCHELLES">SEYCHELLES</option>
+                <option value="SINGAPORE">SINGAPORE</option>
+                <option value="SINT EUSTATIUS (DUTCH TERRITORY)">SINT EUSTATIUS (DUTCH TERRITORY)</option>
+                <option value="SOLOMON ISLANDS">SOLOMON ISLANDS</option>
+                <option value="SOMALIA">SOMALIA</option>
+                <option value="SOUTH AFRICA">SOUTH AFRICA</option>
+                <option value="SOUTH KOREA">SOUTH KOREA</option>
+                <option value="SPAIN">SPAIN</option>
+                <option value="SRI LANKA">SRI LANKA</option>
+                <option value="SWEDEN">SWEDEN</option>
+                <option value="SYRIA">SYRIA</option>
+                <option value="TAIWAN">TAIWAN</option>
+                <option value="TANZANIA">TANZANIA</option>
+                <option value="THAILAND">THAILAND</option>
+                <option value="TOGO">TOGO</option>
+                <option value="TONGA">TONGA</option>
+                <option value="TRINIDAD AND TOBAGO">TRINIDAD AND TOBAGO</option>
+                <option value="TUNISIA">TUNISIA</option>
+                <option value="TURKEY">TURKEY</option>
+                <option value="TURKMENISTAN">TURKMENISTAN</option>
+                <option value="TUVALU">TUVALU</option>
+                <option value="UA">UA</option>
+                <option value="UK TERRITORY">UK TERRITORY</option>
+                <option value="UK">UK</option>
+                <option value="UKRAINE">UKRAINE</option>
+                <option value="URUGUAY">URUGUAY</option>
+                <option value="USA TERRITORY">USA TERRITORY</option>
+                <option value="USA">USA</option>
+                <option value="VANUATU">VANUATU</option>
+                <option value="VENEZUELA">VENEZUELA</option>
+                <option value="VIETNAM">VIETNAM</option>
+                <option value="WALLIS AND FUTUNA (FRENCH TERRITORY)">WALLIS AND FUTUNA (FRENCH TERRITORY)</option>
+                <option value="YEMEN">YEMEN</option>
+            </select>
+        </td>
+        </tr> 
+        <tr>
+            <td>
+            <label for="areaSelect"><b>Observation</b> Area (state, province, prefecture, etc.):</label>
+            <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="areaSelect" data-dojo-props="maxHeight:200" name="area" style="width: 350px;">
+                <option value=""></option>
+                <option value="ACEH">ACEH</option>
+                <option value="AICHI">AICHI</option>
+                <option value="AK">AK</option>
+                <option value="AKITA">AKITA</option>
+                <option value="ALBAY">ALBAY</option>
+                <option value="ALIMIA">ALIMIA</option>
+                <option value="AMORGOS">AMORGOS</option>
+                <option value="ANAFI">ANAFI</option>
+                <option value="ANCASH">ANCASH</option>
+                <option value="ANDAMAN AND NICOBAR">ANDAMAN AND NICOBAR</option>
+                <option value="ANDHRA PRADESH">ANDHRA PRADESH</option>
+                <option value="ANSE LA RAYE QUARTER">ANSE LA RAYE QUARTER</option>
+                <option value="ANTIGUA">ANTIGUA</option>
+                <option value="ANTOFAGASTA">ANTOFAGASTA</option>
+                <option value="AOMORI">AOMORI</option>
+                <option value="AR">AR</option>
+                <option value="ARAUCO">ARAUCO</option>
+                <option value="ARICA">ARICA</option>
+                <option value="AS">AS</option>
+                <option value="ASTYPALAIA">ASTYPALAIA</option>
+                <option value="AUCKLAND">AUCKLAND</option>
+                <option value="AUSTRAL ISLANDS">AUSTRAL ISLANDS</option>
+                <option value="AYSEN">AYSEN</option>
+                <option value="BALI">BALI</option>
+                <option value="BANGKA-BELITUNG">BANGKA-BELITUNG</option>
+                <option value="BANTEN">BANTEN</option>
+                <option value="BATANGAS">BATANGAS</option>
+                <option value="BAY OF PLENTY">BAY OF PLENTY</option>
+                <option value="BC">BC</option>
+                <option value="BENGKULU">BENGKULU</option>
+                <option value="BIOBIO">BIOBIO</option>
+                <option value="BONIN IS, TOKYO">BONIN IS, TOKYO</option>
+                <option value="BRINDISI">BRINDISI</option>
+                <option value="CA">CA</option>
+                <option value="CALABRIA">CALABRIA</option>
+                <option value="CAMPANIA">CAMPANIA</option>
+                <option value="CANETE">CANETE</option>
+                <option value="CANTERBURY">CANTERBURY</option>
+                <option value="CARDENAL CARO">CARDENAL CARO</option>
+                <option value="CARRIACOU AND PETITE MARTINIQUE">CARRIACOU AND PETITE MARTINIQUE</option>
+                <option value="CAUQUENES">CAUQUENES</option>
+                <option value="CENTRAL JAVA">CENTRAL JAVA</option>
+                <option value="CENTRAL SULAWESI">CENTRAL SULAWESI</option>
+                <option value="CHANARAL">CHANARAL</option>
+                <option value="CHIBA">CHIBA</option>
+                <option value="CHILOE">CHILOE</option>
+                <option value="CONCEPCION">CONCEPCION</option>
+                <option value="COPIAPO">COPIAPO</option>
+                <option value="CRETE">CRETE</option>
+                <option value="CT">CT</option>
+                <option value="CURICO">CURICO</option>
+                <option value="DE">DE</option>
+                <option value="DECEPCION ISLAND">DECEPCION ISLAND</option>
+                <option value="DILI">DILI</option>
+                <option value="EAST JAVA">EAST JAVA</option>
+                <option value="EAST KALIMANTAN">EAST KALIMANTAN</option>
+                <option value="EAST NUSA TENGGARA">EAST NUSA TENGGARA</option>
+                <option value="EHIME">EHIME</option>
+                <option value="ELQUI">ELQUI</option>
+                <option value="ESMERALDAS">ESMERALDAS</option>
+                <option value="FATU HIVA">FATU HIVA</option>
+                <option value="FEDERAL">FEDERAL</option>
+                <option value="FL">FL</option>
+                <option value="FOLEGANDROS">FOLEGANDROS</option>
+                <option value="FUKUI">FUKUI</option>
+                <option value="FUKUOKA">FUKUOKA</option>
+                <option value="FUKUSHIMA">FUKUSHIMA</option>
+                <option value="GAMBIE ISLANDS">GAMBIE ISLANDS</option>
+                <option value="GAMBIER ISLANDS">GAMBIER ISLANDS</option>
+                <option value="GIFU">GIFU</option>
+                <option value="GISBORNE">GISBORNE</option>
+                <option value="GOA">GOA</option>
+                <option value="GORONTALO">GORONTALO</option>
+                <option value="GRENADA">GRENADA</option>
+                <option value="GRENADINES">GRENADINES</option>
+                <option value="GU">GU</option>
+                <option value="GUERRERO">GUERRERO</option>
+                <option value="GUJARAT">GUJARAT</option>
+                <option value="GUMMA">GUMMA</option>
+                <option value="HAWKE'S BAY">HAWKE'S BAY</option>
+                <option value="HI">HI</option>
+                <option value="HIROSHIMA">HIROSHIMA</option>
+                <option value="HOKKAIDO">HOKKAIDO</option>
+                <option value="HUASCO">HUASCO</option>
+                <option value="HYOGO">HYOGO</option>
+                <option value="IBARAKI">IBARAKI</option>
+                <option value="IL">IL</option>
+                <option value="ILES DES SAINTES">ILES DES SAINTES</option>
+                <option value="ILOCOS NORTE">ILOCOS NORTE</option>
+                <option value="IN">IN</option>
+                <option value="IQUIQUE">IQUIQUE</option>
+                <option value="ISHIKAWA">ISHIKAWA</option>
+                <option value="ISLA DE PASCUA">ISLA DE PASCUA</option>
+                <option value="IWATE">IWATE</option>
+                <option value="IZU-OSHIMA, TOKYO">IZU-OSHIMA, TOKYO</option>
+                <option value="JAKARTA">JAKARTA</option>
+                <option value="JALISCO">JALISCO</option>
+                <option value="JUAN FERNANDEZ IS.">JUAN FERNANDEZ IS.</option>
+                <option value="KAGAWA">KAGAWA</option>
+                <option value="KAGOSHIMA">KAGOSHIMA</option>
+                <option value="KALYMNOS">KALYMNOS</option>
+                <option value="KAMCHATKA">KAMCHATKA</option>
+                <option value="KANAGAWA">KANAGAWA</option>
+                <option value="KANTO">KANTO</option>
+                <option value="KARNATAKA">KARNATAKA</option>
+                <option value="KERALA">KERALA</option>
+                <option value="KHULNA">KHULNA</option>
+                <option value="KOCHI">KOCHI</option>
+                <option value="KUMAMOTO">KUMAMOTO</option>
+                <option value="KURIL ISLANDS">KURIL ISLANDS</option>
+                <option value="KYOTO">KYOTO</option>
+                <option value="LA">LA</option>
+                <option value="LAKSHADWEEP">LAKSHADWEEP</option>
+                <option value="LAMPUNG">LAMPUNG</option>
+                <option value="LAZIO">LAZIO</option>
+                <option value="LEROS">LEROS</option>
+                <option value="LIGURIA">LIGURIA</option>
+                <option value="LIMARI">LIMARI</option>
+                <option value="LIPSI">LIPSI</option>
+                <option value="LIQUICA">LIQUICA</option>
+                <option value="MA">MA</option>
+                <option value="MADANG">MADANG</option>
+                <option value="MAGADAN">MAGADAN</option>
+                <option value="MAGDALENA">MAGDALENA</option>
+                <option value="MAHARASHTRA">MAHARASHTRA</option>
+                <option value="MALUKU">MALUKU</option>
+                <option value="MANAWATU-WANGANUI">MANAWATU-WANGANUI</option>
+                <option value="MANUS">MANUS</option>
+                <option value="MATSUMAE">MATSUMAE</option>
+                <option value="MD">MD</option>
+                <option value="ME">ME</option>
+                <option value="MESSINA">MESSINA</option>
+                <option value="MH">MH</option>
+                <option value="MI">MI</option>
+                <option value="MIE">MIE</option>
+                <option value="MIYAGI">MIYAGI</option>
+                <option value="MIYAZAKI">MIYAZAKI</option>
+                <option value="MOROBE">MOROBE</option>
+                <option value="MP">MP</option>
+                <option value="MT">MT</option>
+                <option value="NAGANO">NAGANO</option>
+                <option value="NAGASAKI">NAGASAKI</option>
+                <option value="NAPLES">NAPLES</option>
+                <option value="NAXOS">NAXOS</option>
+                <option value="NC">NC</option>
+                <option value="NELSON">NELSON</option>
+                <option value="NEW BRITAIN">NEW BRITAIN</option>
+                <option value="NH">NH</option>
+                <option value="NIIGATA">NIIGATA</option>
+                <option value="NISYROS">NISYROS</option>
+                <option value="NJ">NJ</option>
+                <option value="NL">NL</option>
+                <option value="NORTH MALUKU">NORTH MALUKU</option>
+                <option value="NORTH SULAWESI">NORTH SULAWESI</option>
+                <option value="NORTH SUMATRA">NORTH SUMATRA</option>
+                <option value="NORTHLAND">NORTHLAND</option>
+                <option value="NS">NS</option>
+                <option value="NUBLE">NUBLE</option>
+                <option value="NY">NY</option>
+                <option value="OAXACA">OAXACA</option>
+                <option value="OCCIDENTAL MINDORO">OCCIDENTAL MINDORO</option>
+                <option value="OGAWARA">OGAWARA</option>
+                <option value="OH">OH</option>
+                <option value="OITA">OITA</option>
+                <option value="OKAYAMA">OKAYAMA</option>
+                <option value="OKINAWA">OKINAWA</option>
+                <option value="OKUSHIRI IS, HOKKAIDO">OKUSHIRI IS, HOKKAIDO</option>
+                <option value="OR">OR</option>
+                <option value="ORIENTAL MINDORO">ORIENTAL MINDORO</option>
+                <option value="ORISSA">ORISSA</option>
+                <option value="OSAKA">OSAKA</option>
+                <option value="OSORNO">OSORNO</option>
+                <option value="OTAGA">OTAGA</option>
+                <option value="OTAGO">OTAGO</option>
+                <option value="PA">PA</option>
+                <option value="PAPUA">PAPUA</option>
+                <option value="PATMOS">PATMOS</option>
+                <option value="PHANG NGA">PHANG NGA</option>
+                <option value="PITCAIRN ISLANDS">PITCAIRN ISLANDS</option>
+                <option value="PIURA">PIURA</option>
+                <option value="PR">PR</option>
+                <option value="PRIMORSKY">PRIMORSKY</option>
+                <option value="PUDUCHERRY">PUDUCHERRY</option>
+                <option value="REGIONE SICILIANA">REGIONE SICILIANA</option>
+                <option value="RHODOS">RHODOS</option>
+                <option value="RI">RI</option>
+                <option value="RIAU">RIAU</option>
+                <option value="RYUKYU ISLANDS">RYUKYU ISLANDS</option>
+                <option value="SAGA">SAGA</option>
+                <option value="SAINT KITTS">SAINT KITTS</option>
+                <option value="SAKHALIN">SAKHALIN</option>
+                <option value="SAN ANTONIO">SAN ANTONIO</option>
+                <option value="SANTORINI">SANTORINI</option>
+                <option value="SC">SC</option>
+                <option value="SHANGHAI">SHANGHAI</option>
+                <option value="SHIGA">SHIGA</option>
+                <option value="SHIMANE">SHIMANE</option>
+                <option value="SHIZUOKA">SHIZUOKA</option>
+                <option value="SICILY">SICILY</option>
+                <option value="SOUTH EAST SULAWESI">SOUTH EAST SULAWESI</option>
+                <option value="SOUTH ISLAND">SOUTH ISLAND</option>
+                <option value="SOUTH KALIMANTAN">SOUTH KALIMANTAN</option>
+                <option value="SOUTH PACIFIC OCEAN">SOUTH PACIFIC OCEAN</option>
+                <option value="SOUTH SULAWESI">SOUTH SULAWESI</option>
+                <option value="SOUTHLAND">SOUTHLAND</option>
+                <option value="ST. JOHN">ST. JOHN</option>
+                <option value="ST. LUCIA">ST. LUCIA</option>
+                <option value="ST. VINCENT">ST. VINCENT</option>
+                <option value="SULAWESI ISLAND">SULAWESI ISLAND</option>
+                <option value="SUMATRA">SUMATRA</option>
+                <option value="SUNDA STRAIT">SUNDA STRAIT</option>
+                <option value="SYMI">SYMI</option>
+                <option value="TALCA">TALCA</option>
+                <option value="TAMIL NADU">TAMIL NADU</option>
+                <option value="TILOS">TILOS</option>
+                <option value="TOHOKU">TOHOKU</option>
+                <option value="TOKUSHIMA">TOKUSHIMA</option>
+                <option value="TOKYO">TOKYO</option>
+                <option value="TOTTORI">TOTTORI</option>
+                <option value="TOYAMA">TOYAMA</option>
+                <option value="TSHIBA">TSHIBA</option>
+                <option value="TUSCANY">TUSCANY</option>
+                <option value="TX">TX</option>
+                <option value="UM">UM</option>
+                <option value="VA">VA</option>
+                <option value="VALDIVIA">VALDIVIA</option>
+                <option value="VALLE DEL CAUCA">VALLE DEL CAUCA</option>
+                <option value="VALPARAISO">VALPARAISO</option>
+                <option value="VENETO">VENETO</option>
+                <option value="VI">VI</option>
+                <option value="WA">WA</option>
+                <option value="WAIKATO">WAIKATO</option>
+                <option value="WAKAYAMA">WAKAYAMA</option>
+                <option value="WELLINGTON">WELLINGTON</option>
+                <option value="WEST BENGAL">WEST BENGAL</option>
+                <option value="WEST COAST">WEST COAST</option>
+                <option value="WEST JAVA">WEST JAVA</option>
+                <option value="WEST KALIMANTAN">WEST KALIMANTAN</option>
+                <option value="WEST NUSA TENGGARA">WEST NUSA TENGGARA</option>
+                <option value="WEST PAPUA">WEST PAPUA</option>
+                <option value="WEST SULAWESI">WEST SULAWESI</option>
+                <option value="WEST SUMATRA">WEST SUMATRA</option>
+                <option value="WESTJAVA">WESTJAVA</option>
+                <option value="WI">WI</option>
+                <option value="YAMAGATA">YAMAGATA</option>
+                <option value="YAMAGUCHI">YAMAGUCHI</option>
+                <option value="YOGYAKARTA">YOGYAKARTA</option>
+                <option value="ZHEJIANG">ZHEJIANG</option>
+            </select>
+            </td>
+        </tr>  
+        <tr>
+            <td>
+                Type of Measurement (shift-click to select multiple):<br>
+                <select data-dojo-type="dijit/form/MultiSelect" data-dojo-attach-point="measurementTypeSelect" data-dojo-props="size:6" name="measurementType" style="width: 350px;">
+                    <option VALUE="1">Eyewitness measurement</option>
+                    <option VALUE="4">Water Height, post-tsunami survey measurement</option>
+                    <option VALUE="5">Runup Height, post-tsunami survey measurement</option>                    
+                    <option VALUE="2">Tide-gauge measurement</option>
+                    <option VALUE="3">Deep ocean gauge</option>
+                    <option VALUE="6">Atmospheric pressure wave</option>
+                    <option VALUE="7">Seiche</option>
+                    <option VALUE="8">Height in harbor, post-tsunami survey measurement</option>
+                    <option VALUE="9">Splash mark, post-tsunami survey measurement</option>
+                    <option VALUE="10">Flow depth, post-tsunami survey measurement</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="left">
+                Water Height (m):
+                <label for="minWaterHeightText">Min:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minWaterHeightText" name="minWaterHeight" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:0.1, constraints:{min:0,max:600}" style="width: 55px"></div>
+                <label for="maxWaterHeightText">Max:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxWaterHeightText" name="maxWaterHeight" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:0.1, constraints:{min:0,max:600}" style="width: 55px"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left">
+                Distance from Source (km):
+                <label for="minDistText">Min:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minDistText" name="minDist" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:20000,places:0}" style="width: 55px"></div>
+                <label for="maxDistText">Max:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxDistText" name="maxDist" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:20000,places:0}" style="width: 55px"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Number of Deaths at Observation Location:<br>
+                <label for="minDeathsSelect">Min:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="minDeathsSelect" data-dojo-props="maxHeight:200" name="minDeaths" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Few (~1 to 50 deaths)</option>
+                    <option value="2">Some (~51 to 100 deaths)</option>
+                    <option value="3">Many (~101 to 1000 deaths)</option>
+                    <option value="4">Very Many (~1001 or more deaths)</option>
+                </select>
+                <label for="maxDeathsSelect">Max:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="maxDeathsSelect" data-dojo-props="maxHeight:200" name="maxDeaths" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Few (~1 to 50 deaths)</option>
+                    <option value="2">Some (~51 to 100 deaths)</option>
+                    <option value="3">Many (~101 to 1000 deaths)</option>
+                    <option value="4">Very Many (~1001 or more deaths)</option>
+                </select>               
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Damage in Millions of Dollars at Observation Location:<br>
+                <label for="minDamageSelect">Min:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="minDamageSelect" data-dojo-props="maxHeight:200" name="minDamage" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Limited (less than about $1 million) </option>
+                    <option value="2">Moderate (~$1 to $5 million)</option>
+                    <option value="3">Severe (~$5 to $24 million)</option>
+                    <option value="4">Extreme (~$25 million or more)</option>
+                </select>
+                <label for="maxDamageSelect">Max:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="maxDamageSelect" data-dojo-props="maxHeight:200" name="maxDamage" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Limited (less than about $1 million) </option>
+                    <option value="2">Moderate (~$1 to $5 million)</option>
+                    <option value="3">Severe (~$5 to $24 million)</option>
+                    <option value="4">Extreme (~$25 million or more)</option>
+                </select>               
+            </td>
+        </tr>       
+        </table>
+        <div class="dijitDialogPaneActionBar right-align">
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="submitButton" type="submit">OK</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="cancelButton">Cancel</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton">Reset</button>
+        </div>
+    </div>
+</div>
