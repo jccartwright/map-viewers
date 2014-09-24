@@ -1,4 +1,4 @@
-version = '1.4.1'
+version = '2.0'
 
 //needed in order to dependOn Clean task
 apply plugin: 'base'
