@@ -1,44 +1,18 @@
+import org.apache.tools.ant.filters.*
+
+ext.buildDate = new Date().format('YYYY-MM-dd')
 version = '2.0'
 
-//needed in order to dependOn Clean task
-apply plugin: 'base'
-
-task installNgdcDijits(type: Copy) {
-    doFirst {
-        uninstallNgdcDijits
-    }
-   from ("../shared") {
-      exclude "build.gradle", "README.md"
-   }
-   into "shared"
-}
-
-task uninstallNgdcDijits(dependsOn: 'Clean') {
-    delete 'shared'
-}
-
-task buildDistribution(type: Jar, dependsOn: installNgdcDijits) {
+jar {
     from "."
-    exclude 'build*', "tmp", "shared-sav"
-}
+    exclude 'build*'
+    exclude '.gradle'
 
-/*
-task copyToStaging(type: Copy, dependsOn: installNgdcDijits) {
-    def destDir = "build/staging/${project.name}-${project.version}"
-
-    from ("../${project.name}") {
-        exclude 'README.md', '.idea', 'build', '.gradle', 'build.gradle', 'build.xml'
-    }
-
-    into "build/staging/${project.name}-${project.version}"
-}
-
-task buildDistribution(type: Zip, dependsOn: copyToStaging) {
-    println "building ${project.name}-${project.version}..."
-    from "build/staging"
-
-    doLast {
-        delete 'build/staging'
+    eachFile {
+	  if (it.name.endsWith('.html')) {
+    	filter(ReplaceTokens, tokens: [
+    		'application.version': version,
+    		'application.buildDate': buildDate])
+	  }
     }
 }
-*/
