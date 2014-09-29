@@ -8,6 +8,7 @@ define([
     'dojo/topic',
     'dojo/on',
     'dojo/aspect',
+    'dojo/_base/array',
     'dijit/form/CheckBox',
     'esri/config',
     'esri/geometry/Extent',
@@ -38,6 +39,7 @@ define([
         topic,
         on,
         aspect,
+        array,
         CheckBox,
         esriConfig,
         Extent,
@@ -88,21 +90,7 @@ define([
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
                 lang.mixin(config.app, queryParams);
-
-                var startupLayers = [];
-                if (queryParams.layers) {
-                    startupLayers = queryParams.layers.split(',');
-                }
                 
-                //Initial extent centered over northeast US
-                // this.initialExtent = new Extent({
-                //     xmin: -78,
-                //     ymin: 37,
-                //     xmax: -70,
-                //     ymax: 43,
-                //     spatialReference: new SpatialReference({wkid: 4326})
-                // });
-
                 //Extent can be overridden with URL parameters
                 if (queryParams.minx && queryParams.maxx && queryParams.miny && queryParams.maxy) {
                     this.initialExtent = new Extent({
@@ -113,7 +101,7 @@ define([
                         spatialReference: new SpatialReference({wkid: 4326})
                     });
                 }
-
+                
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
 
@@ -250,7 +238,16 @@ define([
                     }, dom.byId('identifyPaneDiv'));
                     this.identifyPane.startup();
 
-                    //mapConfig.map.identifyPane = identifyPane;
+                    //If the 'tsEvent' URL param is specified, show the tsunami event and its runups
+                    if (config.app.tsEvent) {
+                        this.showTsEventOnStartup(config.app.tsEvent);
+                    }
+
+                    //The 'layers' URL param can contain a comma-separated list of numbers
+                    if (config.app.layers) {
+                        this.setStartupLayers(config.app.layers);
+                    }
+
                 }));
             },
 
@@ -312,6 +309,20 @@ define([
                 this.hazMapService.setLayerDefinitions(this.hazLayerDefinitions);
                 
                 this.layersPanel.setTsEventFilterActive(false);                
+            },
+
+            showTsEventOnStartup: function(tsEventId) {
+                var tsEvent = config.app.tsEvent
+                var queryTask = new QueryTask(this.hazMapService.url + "/" + this.tsEventLayerID1);
+                var query = new Query();
+                query.returnGeometry = true;
+                query.outFields = [];
+                query.where = 'ID=' + tsEvent;
+
+                queryTask.execute(query).then(lang.hitch(this, function(fset) {
+                    var point = new Point(fset.features[0].geometry.x, fset.features[0].geometry.y, new SpatialReference({ wkid:102100 }));
+                    this.showTsObsForEvent(tsEvent, point);
+                }));
             },
 
             showTsObsForEvent: function(tsEventId, tsEventPoint) {
@@ -639,6 +650,32 @@ define([
                 else {
                     var webMercExtent = new Extent(extent2.xmin - 20037507.067161795, extent2.ymin, extent2.xmax - 20037507.067161795, extent2.ymax, new SpatialReference({wkid: 3857}));
                     this.mapConfig.map.setExtent(webMercExtent, true);
+                }
+            },
+
+            setStartupLayers: function(layersString) {
+                var visibleLayers = [];
+                visibleLayers = layersString.split(',');
+
+                this.layersPanel.toggleTsEventVisibility(false);
+
+                if (array.indexOf(visibleLayers, '0') != -1) {
+                    this.layersPanel.toggleTsEventVisibility(true);
+                }
+                if (array.indexOf(visibleLayers, '1') != -1) {
+                    this.layersPanel.toggleTsObsVisibility(true);
+                }
+                if (array.indexOf(visibleLayers, '2') != -1) {
+                    this.layersPanel.toggleSignifEqVisibility(true);
+                }
+                if (array.indexOf(visibleLayers, '3') != -1) {
+                    this.layersPanel.toggleVolEventVisibility(true);
+                }
+                if (array.indexOf(visibleLayers, '4') != -1) {
+                    this.layersPanel.toggleDartVisibility(true);
+                }
+                if (array.indexOf(visibleLayers, '5') != -1) {
+                    this.layersPanel.toggleTideGaugeVisibility(true);
                 }
             },
 
