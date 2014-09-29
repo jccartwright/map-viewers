@@ -110,20 +110,30 @@
                 crowdmagService.setVisibleLayers([e.currentTarget.value]);
 
                 var title;
+                var color_scale;
+                var image_title;
                 switch (e.currentTarget.value) {
                     case '0':
                         title = 'CrowdMag - Total Intensity';
+                        color_scale = 'f_scale.png';
+                        image_title = 'values from 15,000nT to 75,000nT';
                         break;
                     case '1':
                         title = 'CrowdMag - Vertical Intensity';
+                        color_scale = 'z_scale.png';
+                        image_title = 'values from -65,000nT to 65,000nT';
                         break;
                     case '2':
                         title = 'CrowdMag - Horizontal Intensity';
+                        color_scale = 'h_scale.png';
+                        image_title = 'values from 0nT to 75,000nT';
                         break;
                     default:
                         title = 'CrowdMag';
                 }
                 $('#pageTitle').text(title);
+                $('#color_scale').attr('title',image_title);
+                $('#color_scale').attr('src',"images/"+color_scale);
 			});
                     }
 
@@ -258,7 +268,7 @@
 		        </div>
                 <br/>
                 <div align="center">
-                    <img src="images/crowdmag_color_ramp.png">
+                    <img id="color_scale" src="images/f_scale.png" title="values from 15,000nT to 75,000nT">
                 </div>
             </div>
         </div>
