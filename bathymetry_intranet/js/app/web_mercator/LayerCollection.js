@@ -115,7 +115,7 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('http://maps.csc.noaa.gov/arcgis/rest/services/DAV/DAV/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('http://coast.noaa.gov/arcgis/rest/services/DAV/DAV/MapServer', {
                         id: 'CSC Lidar',
                         visible: false,
                         imageParameters: this.imageParameters.png32,
