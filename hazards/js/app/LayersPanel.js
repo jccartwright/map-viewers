@@ -171,6 +171,8 @@ define([
             },
 
             toggleTsEventVisibility: function(visible) {
+                registry.byId('checkTsEvents').set('checked', visible);
+
                 //Enable/disable the radio buttons
                 registry.byId('radioTsEvents1').set('disabled', !visible);
                 registry.byId('radioTsEvents2').set('disabled', !visible);
@@ -192,6 +194,8 @@ define([
             },
 
             toggleTsObsVisibility: function(visible) {
+                registry.byId('checkTsObs').set('checked', visible);
+
                 //Enable/disable the radio buttons
                 registry.byId('radioTsObs1').set('disabled', !visible);
                 registry.byId('radioTsObs2').set('disabled', !visible);
@@ -226,27 +230,33 @@ define([
             },
 
             toggleSignifEqVisibility: function(visible) {
+                registry.byId('checkSignifEqs').set('checked', visible);
                 topic.publish('/ngdc/sublayer/visibility', 'Hazards', [5], visible);
             },
 
             toggleVolEventVisibility: function(visible) {
+                registry.byId('checkVolEvents').set('checked', visible);
                 topic.publish('/ngdc/sublayer/visibility', 'Hazards', [6], visible);
             },
 
             toggleVolcanoVisibility: function(visible) {
+                registry.byId('checkVolcanoes').set('checked', visible);
                 topic.publish('/ngdc/sublayer/visibility', 'Hazards', [7], visible);
             },
 
             toggleDartVisibility: function(visible) {
+                registry.byId('checkDarts').set('checked', visible);
                 topic.publish('/ngdc/sublayer/visibility', 'Hazards', [8], visible);
                 topic.publish('/ngdc/sublayer/visibility', 'Hazards', [9], visible);
             },
 
             toggleTideGaugeVisibility: function(visible) {
+                registry.byId('checkTideGauges').set('checked', visible);
                 topic.publish('/ngdc/sublayer/visibility', 'Hazards', [10], visible);
             },
 
             togglePlateBoundaries: function(visible) {
+                registry.byId('checkPlateBoundaries').set('checked', visible);
                 topic.publish('/ngdc/sublayer/visibility', 'Hazards', [11], visible);
             },
             
