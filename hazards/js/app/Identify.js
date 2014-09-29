@@ -40,11 +40,11 @@ define([
                     'Hazards/Tsunami Observations _cross symbols_': lang.hitch(this, this.tsObsFormatter),
                     'Hazards/Significant Earthquakes': lang.hitch(this, this.signifEqFormatter),
                     'Hazards/Significant Volcanic Eruptions': lang.hitch(this, this.volEventFormatter),
-                    'Hazards/Volcano Locations': lang.hitch(this, this.volcanoFormatter),
+                    'Hazards/Volcano Locations _from Smithsonian_': lang.hitch(this, this.volcanoFormatter),
                     'Hazards/Current DART Stations': lang.hitch(this, this.dartFormatter),
                     'Hazards/Retrospective BPR Stations': lang.hitch(this, this.retrospectiveBprFormatter),
-                    'Hazards/Tsunami Tide Gauges': lang.hitch(this, this.tideGaugeFormatter),
-                    'Hazards/Plate Boundaries': lang.hitch(this, this.plateBoundariesFormatter)
+                    'Hazards/NOS/COOPS Tsunami Tide Gauges': lang.hitch(this, this.tideGaugeFormatter),
+                    'Hazards/Plate Boundaries _from UTIG_': lang.hitch(this, this.plateBoundariesFormatter)
                 };
 
             }, //end constructor
@@ -895,37 +895,37 @@ define([
             sortResults: function(results) {
                 var features;
                 if (results['Hazards']) {    
-                    if ((features = results['Hazards']['Tsunami Events _green squares_'])) { //Tsunami Events _green squares_ (0)Tsunami Events by Cause_Fatalities (1)
+                    if ((features = results['Hazards']['Tsunami Events _green squares_'])) {
                         features.sort(this.tsEventSort);
                     }   
-                    if ((features = results['Hazards']['Tsunami Events by Cause_Fatalities'])) { //Tsunami Events _green squares_ (0)Tsunami Events by Cause_Fatalities (1)
+                    if ((features = results['Hazards']['Tsunami Events by Cause_Fatalities'])) {
                         features.sort(this.tsEventSort);
                     }
-                    if ((features = results['Hazards']['Tide Gauges_Deep Ocean Gauges'])) { //Tsunami Events _green squares_ (0)Tsunami Events by Cause_Fatalities (1)
+                    if ((features = results['Hazards']['Tide Gauges_Deep Ocean Gauges'])) {
                         features.sort(this.tsEventSort);
                     }
-                    if ((features = results['Hazards']['Eyewitness_Post-Tsunami Surveys'])) { //Tsunami Events _green squares_ (0)Tsunami Events by Cause_Fatalities (1)
+                    if ((features = results['Hazards']['Eyewitness_Post-Tsunami Surveys'])) {
                         features.sort(this.tsEventSort);
                     }
-                    if ((features = results['Hazards']['Tsunami Observations _cross symbols_'])) { //Tsunami Events _green squares_ (0)Tsunami Events by Cause_Fatalities (1)
+                    if ((features = results['Hazards']['Tsunami Observations _cross symbols_'])) {
                         features.sort(this.tsEventSort);
                     }
-                    if ((features = results['Hazards']['Significant Earthquakes'])) { //Tsunami Events _green squares_ (0)Tsunami Events by Cause_Fatalities (1)
+                    if ((features = results['Hazards']['Significant Earthquakes'])) {
                         features.sort(this.signifEqSort);
                     }
-                    if ((features = results['Hazards']['Significant Volcanic Eruptions'])) { //Tsunami Events _green squares_ (0)Tsunami Events by Cause_Fatalities (1)
+                    if ((features = results['Hazards']['Significant Volcanic Eruptions'])) {
                         features.sort(this.volEventSort);
                     }
-                    if ((features = results['Hazards']['Volcano Locations'])) { //Tsunami Events _green squares_ (0)Tsunami Events by Cause_Fatalities (1)
+                    if ((features = results['Hazards']['Volcano Locations _from Smithsonian_'])) {
                         features.sort(this.volLocSort);
                     }
-                    if ((features = results['Hazards']['Current DART Stations'])) { //Tsunami Events _green squares_ (0)Tsunami Events by Cause_Fatalities (1)
+                    if ((features = results['Hazards']['Current DART Stations'])) {
                         features.sort(this.dartSort);
                     }
-                    if ((features = results['Hazards']['Retrospective BPR Stations'])) { //Tsunami Events _green squares_ (0)Tsunami Events by Cause_Fatalities (1)
+                    if ((features = results['Hazards']['Retrospective BPR Stations'])) {
                         features.sort(this.retrospectiveBprSort);
                     }
-                    if ((features = results['Hazards']['Tsunami Tide Gauges'])) { //Tsunami Events _green squares_ (0)Tsunami Events by Cause_Fatalities (1)
+                    if ((features = results['Hazards']['NOS/COOPS Tsunami Tide Gauges'])) {
                         features.sort(this.tideGaugeSort);
                     }
                 }
