@@ -73,7 +73,13 @@ define([
                 }
                 else if (item.layerName == 'Tsunami Observations _cross symbols_') {
                     return '<i><b>Tsunami Observations (' + this.formatCountString(count) + ')</b></i>';
-                }            
+                }
+                else if (item.layerName == 'Volcano Locations _from Smithsonian_') {
+                    return '<i><b>Volcanoes (' + this.formatCountString(count) + ')</b></i>';
+                }
+                else if (item.layerName == 'Plate Boundaries _from UTIG_') {
+                    return '<i><b>Plate Boundaries (' + this.formatCountString(count) + ')</b></i>';
+                }
                 else {
                     return '<i><b>' + item.layerName + ' (' + this.formatCountString(count) + ')</b></i>';
                 }
@@ -114,7 +120,7 @@ define([
                 else if (item.layerName == 'Retrospective BPR Stations') {
                     return attr['Station ID'] + ': ' + attr['Location'];
                 }
-                else if (item.layerName == 'Tsunami Tide Gauges') {
+                else if (item.layerName == 'NOS/COOPS Tsunami Tide Gauges') {
                     return attr['Station'] + ': ' + attr['Name'] + ', ' + attr['State'];
                 }
                 else {
