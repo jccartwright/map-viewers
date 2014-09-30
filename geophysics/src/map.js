@@ -306,12 +306,13 @@ function init() {
 		var ll = esri.geometry.geographicToWebMercator(new esri.geometry.Point(minx, miny));
 		var ur = esri.geometry.geographicToWebMercator(new esri.geometry.Point(maxx, maxy));
 		if (maxx < minx) {
-			//Assume the geometry crosses the antimeridian if maxx > minx. Convert it to a multipart polygon using the GeometryService.
+			//Assume the geometry crosses the antimeridian if maxx > minx. Subtract the width of the world from the left x coordinate.
+			//The new box extends off the left side of the map. This is what we want.
+            var worldWidth = 40075014.13432359;
+            ll.x = ll.x - worldWidth;            
+
 			var geometry = new esri.geometry.Extent(ll.x, ll.y, ur.x, ur.y, new esri.SpatialReference({wkid: 3857}));	
-			esri.geometry.normalizeCentralMeridian([geometry], globals.geometryService, function(geometries) {
-				addToMap(geometries[0]);
-				//globals.map.setExtent(geometries[0].getExtent(), true);		
-			});		
+			addToMap(geometry);	
 		}
 		else {
 			var geometry = new esri.geometry.Extent(ll.x, ll.y, ur.x, ur.y, new esri.SpatialReference({wkid: 3857}));	

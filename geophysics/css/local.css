@@ -120,8 +120,9 @@ body {
 	padding: 2px;
 	border: none;
 	font-family: Arial, sans-serif;
-	font-size: 11px;
+	font-size: 12px;
 	vertical-align: middle;
+	background: #EEE;
 }
 
 .selectByCoordsIcon {
@@ -137,13 +138,13 @@ body {
 }
 
 .queryIcon {
-	background-image: url(../images/query_1.gif);
-	width: 16px;
-	height: 16px;
+	background-image: url(../images/magnifyingglass.png);
+	width: 20px;
+	height: 20px;
 }
 
 .clearSelectionIcon {
-	background-image: url(../images/clearhighlight_1.gif);
+	background-image: url(../images/x.png);
 	width: 16px;
 	height: 16px;
 }

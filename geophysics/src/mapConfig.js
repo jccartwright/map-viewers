@@ -9,7 +9,8 @@ dojo.require("esri.dijit.Scalebar");
 dojo.require("esri.dijit.Legend");
 dojo.require("simple_basemap_toolbar.SimpleBasemapToolbar");
 dojo.require("banner.Banner");
-dojo.require("identify.Identify");
+//dojo.require("identify.Identify");
+dojo.require("geophysics_identify.GeophysicsIdentify");
 dojo.require("help_panel.HelpPanel");
 dojo.require("dijit.ToolbarSeparator");
 dojo.require('layers.PairedMapServiceLayer');
@@ -28,7 +29,7 @@ globals.debug = false;
 globals.mapConfigLoaded = true;
 
 globals.publicAgsHost = "http://maps.ngdc.noaa.gov/arcgis";
-globals.privateAgsHost = "http://agsdevel.ngdc.noaa.gov:6080/arcgis";
+globals.privateAgsHost = "http://mapdevel.ngdc.noaa.gov:6080/arcgis";
 globals.arcgisOnlineHost = "http://server.arcgisonline.com/ArcGIS";
 
 //mandatory lifecycle methods
@@ -46,10 +47,10 @@ function preInit() {
 			{url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
 			{url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
 			{url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
-			{url: 'http://ngdc.noaa.gov/mgg/geodas/trackline.html', label: 'Geophysical Survey Data'}			
+			{url: 'http://ngdc.noaa.gov/mgg/geodas/trackline.html', label: 'Trackline Geophysical Data'}			
 		],
 		dataUrl: "http://ngdc.noaa.gov/mgg/geodas/trackline.html",
-		image: "/images/geophysical_survey_viewer_logo.png"
+		image: "/images/trackline_geophysical_viewer_logo.png"
 	});
 	mybanner.placeAt('banner');
 
@@ -107,14 +108,14 @@ function preInit() {
 		var aeromagSurveysStore = new dojo.data.ItemFileReadStore({data: results[1][1]});
 		
 		globals.marineSurveySelectDialog = new survey_select.MarineSurveySelectDialog({
-			title: 'Find Marine Surveys',
+			title: 'Search Marine Surveys',
 			shipsStore: shipsStore, 
 			surveysStore: surveysStore,
 			sourceInstStore: sourceInstStore,		
 			zoomToExtentEnabled: globals.srid == 3857 ? true : false		
 		});
 		globals.aeroSurveySelectDialog = new survey_select.AeroSurveySelectDialog({
-			title: 'Find Airborne Surveys',
+			title: 'Search Airborne Surveys',
 			projectsStore: projectsStore,
 			surveysStore: aeromagSurveysStore,		
 			zoomToExtentEnabled: globals.srid == 3857 ? true : false		
@@ -136,24 +137,34 @@ function postInit() {
 	}
 	
 	dojo.subscribe("/Identify/getData", openGetDataWindow);
+	
+	dojo.subscribe("/Identify/showWidget", function() {
+		dijit.byId('getMarineDataBtn').set('disabled', true);
+	});
+	
+	dojo.subscribe("/Identify/closeWidget", function() {
+		if (!globals.isCleared) {
+			dijit.byId('getMarineDataBtn').set('disabled', false);
+		}
+	});
 
 	//globals.geometryService = new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");	
 	globals.geometryService = new esri.tasks.GeometryService("http://maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer");	
 	
 	globals.visibleGeodasLayers = [
 		{name: "All Parameters", visible: false},
-		{abbrev: 'BATH', name: "Bathymetry", visible: false},
-    	{abbrev: 'GRAV', name: "Gravity", visible: false},
-    	{abbrev: 'MAG', name: "Magnetics", visible: false},
-    	{abbrev: 'SCSEIS', name: "Single-Channel Seismics", visible: false},
-    	{abbrev: 'CDP', name: "CDP Seismics", visible: false},
-    	{abbrev: 'SSCAN', name: "Side Scan Sonar", visible: false},
-    	{abbrev: 'REFRAC', name: "Seismic Refraction", visible: false},
-    	{abbrev: 'SHOT', name: "Shot-Point Navigation", visible: false},
-    	{abbrev: 'SUBBOTTOM', name: "Subbottom Profile", visible: false},
-    	{abbrev: 'AEROMAG', name: "Aeromag", visible: false}
+		{name: "Bathymetry", visible: false},
+    	{name: "Gravity", visible: false},
+    	{name: "Magnetics", visible: false},
+    	{name: "Multi-Channel Seismics", visible: false},
+    	{name: "Seismic Refraction", visible: false},
+    	{name: "Shot-Point Navigation", visible: false},
+    	{name: "Side Scan Sonar", visible: false},
+    	{name: "Single-Channel Seismics", visible: false},
+    	{name: "Subbottom Profile", visible: false},
+    	{name: "Aeromag", visible: false}
 	];
-	
+		
 	globals.tracklineLayerDefinitions = []; //Global object containing the current layer definitions for all sublayers of the "Trackline Combined" service.	
 }
 
@@ -201,6 +212,8 @@ function filterMarineSurveys(values) {
 		return;
 	}
 	globals.isCleared = false;
+	dijit.byId('getMarineDataBtn').set('disabled', false);
+	dijit.byId('clearBtn').set('disabled', false);
 	
 	//survey_name takes precedence over ship, year, institution
 	if (!values.surveyIds) {
@@ -239,11 +252,11 @@ function filterMarineSurveys(values) {
 		}
 		
 		if (values.startDateAdded) {
-			sql.push("DATE_ADDED >= TO_DATE('" + toDateString2(values.startDateAdded) + "','MM-DD-YYYY')");
+			sql.push("DATE_ADDED >= date '" + toDateString2(values.startDateAdded) + "'");			
 		}
 		
 		if (values.endDateAdded) {
-			sql.push("DATE_ADDED <= TO_DATE('" + toDateString2(values.endDateAdded) + "','MM-DD-YYYY')");				
+			sql.push("DATE_ADDED <= date '" + toDateString2(values.endDateAdded) + "'");				
 		}	
 	}
 	else {
@@ -336,7 +349,7 @@ function filterMarineSurveys(values) {
 			txt += '<br>Date Added: ' + toDateString(values.endDateAdded) + ' and earlier';
 		}				 	
 	}
-	dojo.byId('marineFilterDiv').innerHTML = '<b>Current filter:</b><br/> ' + txt;
+	dojo.byId('marineFilterDiv').innerHTML = '<b>Current search criteria:</b><br/> ' + txt;
 	
 	updateSurveyCounts(); //Update the number of surveys reported in the TOC
 	
@@ -417,10 +430,10 @@ function filterAeroSurveys(values) {
 			sql.push("START_YR <= " + values.endYear);
 		}		
 		if (values.startDateAdded) {
-			sql.push("DATE_ADDED >= TO_DATE('" + toDateString2(values.startDateAdded) + "','MM-DD-YYYY')");
+			sql.push("DATE_ADDED >= date '" + toDateString2(values.startDateAdded) + "'");
 		}		
 		if (values.endDateAdded) {
-			sql.push("DATE_ADDED <= TO_DATE('" + toDateString2(values.endDateAdded) + "','MM-DD-YYYY')");				
+			sql.push("DATE_ADDED <= date '" + toDateString2(values.startDateAdded) + "'");				
 		}	
 	}
 	else {
@@ -501,7 +514,7 @@ function filterAeroSurveys(values) {
 			txt += '<br>Date Added: ' + toDateString(values.endDateAdded) + ' and earlier';
 		}				 	
 	}
-	dojo.byId('aeroFilterDiv').innerHTML = '<b>Current filter:</b></br> ' + txt;
+	dojo.byId('aeroFilterDiv').innerHTML = '<b>Current search criteria:</b></br> ' + txt;
 	
 	if (values.zoomToSelection) {
 		zoomToAeroSelection();
@@ -523,6 +536,8 @@ function clearSelection() {
 	globals.marineSurveySelectDialog.reset(); //Reset to defaults in the Survey Select Dialog
 	globals.aeroSurveySelectDialog.reset(); //Reset to defaults in the Survey Select Dialog	
 	globals.isCleared = true;
+	dijit.byId('getMarineDataBtn').attr('disabled', true);
+	dijit.byId('clearBtn').set('disabled', true);
 }
 
 function zoomToMarineSelection() {
@@ -700,160 +715,111 @@ function updateSurveyCounts() {
 }
 
 function openGetDataWindow(geometry) {
-	var normalizedGeometry;
-	
-	var surveyIds = [];
-
-	//Get the current list of survey IDs from the Identify dijit's featureGrid store. Duplicates are ignored.
-	globals.identifyDijit._featureGrid.store.fetch({
-		onComplete: function (items) {
-			dojo.forEach(items, function (item, index) {
-				var surveyId = item.ref[0].attributes['Survey ID'];
-				if (dojo.indexOf(surveyIds, surveyId) == -1) {
-					surveyIds.push(surveyId);
-				}
-			});
-		}
-	});	
-	var surveyIdString = surveyIds.join('%0D'); //Separate Survey IDs with a carriage return character
+	var filter = globals.dialogValues;
+	var urlParams = [];
 		
-	var postParams = {};
-	//var queryString = '';
-	postParams.RUNTYPE = 'www-ims';
-	postParams.SURVS = surveyIdString;
-		
-	//Append the visible layer flags
-	//If "All Parameters" layer visible, set all parameters to 'on' 
+	var surveyTypes = [];
 	if (globals.visibleGeodasLayers[0].visible) {
-		postParams.BATH = 'on';
-		postParams.GRAV = 'on';
-		postParams.MAG = 'on';
-		postParams.SCSEIS = 'on';
-		postParams.CDP = 'on';
-		postParams.SSCAN = 'on';
-		postParams.REFRAC = 'on';
-		postParams.SHOT = 'on';
-		postParams.SUBBOTTOM = 'on';
+		surveyTypes.push('All Parameters');
+	}
+	if (globals.visibleGeodasLayers[1].visible) {
+		surveyTypes.push('Bathymetry');
+	}
+	if (globals.visibleGeodasLayers[2].visible) {
+		surveyTypes.push('Gravity');
+	}
+	if (globals.visibleGeodasLayers[3].visible) {
+		surveyTypes.push('Magnetics');
+	}
+	if (globals.visibleGeodasLayers[4].visible) {
+		surveyTypes.push('Multi-Channel Seismics');
+	}
+	if (globals.visibleGeodasLayers[5].visible) {
+		surveyTypes.push('Seismic Refraction');
+	}
+	if (globals.visibleGeodasLayers[6].visible) {
+		surveyTypes.push('Shot-Point Navigation');
+	}
+	if (globals.visibleGeodasLayers[7].visible) {
+		surveyTypes.push('Side Scan Sonar');
+	}
+	if (globals.visibleGeodasLayers[8].visible) {
+		surveyTypes.push('Single-Channel Seismics');
+	}
+	if (globals.visibleGeodasLayers[9].visible) {
+		surveyTypes.push('Subbottom Profile');
+	}
+	urlParams.push('surveyTypes=' + surveyTypes.join(','));
+	
+	if (geometry && (geometry.type == 'point' || geometry.type == 'polygon')) {		
+		//Get the current list of survey IDs from the Identify dijit's featureGrid store. Duplicates are ignored.
+		globals.identifyDijit._featureGrid.store.fetch({
+			onComplete: function (items) {
+				var surveyIds = [];
+				dojo.forEach(items, function (item, index) {
+					var surveyId = item.ref[0].attributes['Survey ID'];
+					if (dojo.indexOf(surveyIds, surveyId) == -1) {
+						surveyIds.push(surveyId);
+					}
+				});
+				urlParams.push('surveyIds=' + surveyIds.join(','));
+				
+				var url = 'http://www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
+				//var url = 'http://agile.ngdc.noaa.gov/sparrow/next-clients/geodas/index.html?' + urlParams.join('&');
+				
+				if (geometry.type == 'polygon' && (globals.srid == 3995 || globals.srid == 3031)) {
+					alert('Warning: bounding boxes in Arctic/Antarctic projections are currently unsupported for data extraction. The geometry parameter will be excluded.');
+				}
+				window.open(url);
+			}
+		});	
 	}
 	else {
-		if (globals.visibleGeodasLayers[1].visible) {
-			postParams.BATH = 'on';
-		}
-		if (globals.visibleGeodasLayers[2].visible) {
-			postParams.GRAV = 'on';
-		}
-		if (globals.visibleGeodasLayers[3].visible) {
-			postParams.MAG = 'on';
-		}
-		if (globals.visibleGeodasLayers[4].visible) {
-			postParams.SCSEIS = 'on';
-		}
-		if (globals.visibleGeodasLayers[5].visible) {
-			postParams.CDP = 'on';
-		}
-		if (globals.visibleGeodasLayers[6].visible) {
-			postParams.SSCAN = 'on';
-		}
-		if (globals.visibleGeodasLayers[7].visible) {
-			postParams.REFRAC = 'on';
-		}
-		if (globals.visibleGeodasLayers[8].visible) {
-			postParams.SHOT = 'on';
-		}
-		if (globals.visibleGeodasLayers[9].visible) {
-			postParams.SUBBOTTOM = 'on';
-		}		
-	}
-	
-	//Only append the ENVELOPE parameter if in Web Mercator
-	if (globals.map.spatialReference.wkid == 102100 || globals.map.spatialReference.wkid == 3857) {
-		//Normalize the geometry if it extends beyond the antimeridian. May result in a polygon with 2 rings.
-		esri.geometry.normalizeCentralMeridian([geometry], globals.geometryService, function (geometries) {
-			normalizedGeometry = geometries[0];
-		}, function () {
-			console.log("normalize error;")
-		});
-		var latLonGeometry = esri.geometry.webMercatorToGeographic(normalizedGeometry);
-		
-		//Add the ENVELOPE parameter if current geometry is polygon or extent.	
-		if (latLonGeometry instanceof esri.geometry.Polygon) {
-			var extent;
-			if (latLonGeometry.rings.length == 1) {
-				extent = latLonGeometry.getExtent();
+		if (filter && !globals.isCleared) {
+			if (filter.startYear) {
+				urlParams.push('startYear=' + filter.startYear);
 			}
-			else {
-				//Polygon crosses the antimeridian and contains 2 rings. Construct a new Extent with xmin on the left side of the antimeridian, and xmax on the right. 
-				var polygon1 = new esri.geometry.Polygon({"rings": [latLonGeometry.rings[0]],"spatialReference": {"wkid": 4326}});
-				var polygon2 = new esri.geometry.Polygon({"rings": [latLonGeometry.rings[1]],"spatialReference": {"wkid": 4326}});
-				var extent1 = polygon1.getExtent();
-				var extent2 = polygon2.getExtent();
-				extent = new esri.geometry.Extent(
-						extent1.xmin > extent2.xmin ? extent1.xmin : extent2.xmin, extent1.ymin, 
-								extent1.xmax < extent2.xmax ? extent1.xmax : extent2.xmax, extent1.ymax,
-										new esri.SpatialReference({wkid: 4326}));
+			if (filter.endYear) {
+				urlParams.push('endYear=' + filter.endYear);
 			}
-				
-			postParams.shape = "ENVELOPE((" + extent.xmin + " " + extent.ymin + ", " + extent.xmax + " " + extent.ymax + "))";
+			if (filter.ships) {
+				urlParams.push('platforms=' + filter.ships.join(','));
+			}
+			if (filter.surveyIds) {
+				urlParams.push('surveyIds=' + filter.surveyIds.join(','));
+			}
+			if (filter.institutions) {
+				var quoted = [];
+				for (var i = 0; i < filter.institutions.length; i++) {
+					quoted.push('"' + filter.institutions[i] + '"');
+				}
+				urlParams.push('institutions=' + quoted.join(','));
+			}
+			if (filter.startDateAdded) {
+				var date = filter.startDateAdded
+				urlParams.push('firstDateAdded=' + date.getFullYear() + '-' + padDigits(date.getMonth()+1,2) + '-' + padDigits(date.getDate(),2));
+			}
+			if (filter.endDateAdded) {
+				var date = filter.endDateAdded
+				urlParams.push('lastDateAdded=' + date.getFullYear() + '-' + padDigits(date.getMonth()+1,2) + '-' + padDigits(date.getDate(),2));
+			}
 		}
-		else if (latLonGeometry instanceof esri.geometry.Extent) {
-			postParams.shape = "ENVELOPE((" + latLonGeometry.xmin + " " + latLonGeometry.ymin + ", " + latLonGeometry.xmax + " " + latLonGeometry.ymax + "))";
+		if (geometry && geometry.type == 'extent') {
+			var extent = esri.geometry.webMercatorToGeographic(geometry);
+			//Round lat/lon values to 5 decimal places
+			urlParams.push('geometry=' + 
+					Math.round(extent.xmin*100000)/100000 + ',' + 
+					Math.round(extent.ymin*100000)/100000 + ',' + 
+					Math.round(extent.xmax*100000)/100000 + ',' + 
+					Math.round(extent.ymax*100000)/100000);
 		}
-		/*
-		else if (latLonGeometry instanceof esri.geometry.Point) {
-		//create a 1-degree box around the point
-			var extent = new esri.geometry.Extent(latLonGeometry.x-0.5, latLonGeometry.y-0.5, 
-				latLonGeometry.x+0.5, latLonGeometry.y+0.5, new esri.SpatialReference({wkid: 4326}));
-			postParams.shape = "ENVELOPE((" + extent.xmin + " " + extent.ymin + ", " + extent.xmax + " " + extent.ymax + "))";
+		var url = 'http://www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
+		//var url = 'http://agile.ngdc.noaa.gov/sparrow/next-clients/geodas/index.html?' + urlParams.join('&');
+		if (url.length > 2000) {
+			alert('Warning: request URL is greater than 2000 characters. Problems may be encountered in some web browsers.');
 		}
-		*/		
-	}
-	
-	//Add the search dialog values min/max year, ship(s), institution(s), date added to database	
-	var values = globals.dialogValues;
-	if (values) {
-		if (values.ships) {
-			postParams.ships = values.ships.join('%0D');
-		}
-		if (values.institutions) {
-			postParams.institutions = values.institutions.join('%0D');
-		}
-		if (values.startYear) {
-			postParams.startYear = values.startYear;
-		}
-		if (values.endYear) {
-			postParams.endYear = values.endYear;
-		}
-		if (values.startDateAdded) {
-			postParams.startDateAdded = values.startDateAdded;
-		}
-		if (values.endDateAdded) {
-			postParams.endDateAdded = values.endDateAdded;
-		}
-	}
-	
-	var xhrArgs = {
-		url : "http://maps.ngdc.noaa.gov/mapviewer-support/geophysics/proxy.groovy",
-		//url : "http://agsdevel.ngdc.noaa.gov/mapviewer-support/geophysics/proxy.groovy",			
-		content: postParams,				
-		handleAs : "text",
-		sync: true,
-		load : function(data) {
-			var displayWindow = window.open('', 'geodasSearch'+Math.floor(Math.random()*1001));
-			displayWindow.document.writeln(data);
-			displayWindow.document.close();
-			console.debug("Message posted.");
-			dojo.byId("getDataButton").innerHTML = 'Get Marine Data';
-		},
-		error : function(error) {
-			console.debug("xhrPost error" + error);
-			alert("xhrPost error: " + error);
-			dojo.byId("getDataButton").innerHTML = 'Get Marine Data';
-		}
-	}
-	console.debug("Message being sent...");
-	// Call the asynchronous xhrPost
-	dojo.byId("getDataButton").innerHTML = 'Please wait...';
-	var deferred = dojo.rawXhrPost(xhrArgs);
+		window.open(url);
+	}	
 }
 
 function launchViewer(name) {
@@ -904,9 +870,9 @@ function toDateString(date) {
 	return date.getMonth()+1 + '/' + date.getDate() + '/' + date.getFullYear();
 }
 
-//Format a date in the form mm-dd-yyyy
-function toDateString2(date) {
-	return padDigits(date.getMonth()+1,2) + '-' + padDigits(date.getDate(),2) + '-' + date.getFullYear();
+//Format a date in the form yyyy-mm-dd
+function toDateString2(date) {	
+	return date.getFullYear() + '-' + padDigits(date.getMonth()+1,2) + '-' + padDigits(date.getDate(),2)
 }
 
 //Format a date in the form yyyymmdd

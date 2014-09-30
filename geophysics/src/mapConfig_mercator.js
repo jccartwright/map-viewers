@@ -109,12 +109,12 @@ function getMapServiceList(){
 	 	imageParameters: imageParametersPng32
 	}),	
 	new esri.layers.ArcGISTiledMapServiceLayer(globals.publicAgsHost + "/rest/services/web_mercator/trackline_single_channel_seismics/MapServer", {
-	 	id: "Single Channel Seismics (tiled)",
+	 	id: "Single-Channel Seismics (tiled)",
 	 	visible: false,
 	 	opacity: 1
 	}),
 	new esri.layers.ArcGISDynamicMapServiceLayer(globals.publicAgsHost + "/rest/services/web_mercator/trackline_combined_dynamic/MapServer", {
-	 	id: "Single Channel Seismics (dynamic)",
+	 	id: "Single-Channel Seismics (dynamic)",
 	 	visible: false,
 	 	opacity: 1,
 	 	imageParameters: imageParametersPng32
@@ -177,11 +177,12 @@ function initIdentify(){
 	
 	//Setup common to all layers/sublayers
 	var attributes = ['Survey ID', 'Survey Type', 'Platform Name', 'Survey Start Year', 'Survey End Year', 'Source Institution', 'Project', 'Country', 'Chief Scientist', 'Date Added'];
-	var fieldUrls = {'Survey ID': {prefix: 'http://www.ngdc.noaa.gov/cgi-bin/mgg/gdas_tsea?RUNTYPE=www-ge&SURVS=', postfix: ''}};
+	var fieldUrls = {'Survey ID': {prefix: 'http://www.ngdc.noaa.gov/trackline/request/?surveyIds=', postfix: ''}};
+	//var fieldUrls = {'Survey ID': {prefix: 'http://agile.ngdc.noaa.gov/sparrow/next-clients/geodas/index.html?surveyIds=', postfix: ''}};
 	var displayFieldNames = ['Survey ID', 'Survey Start Year'];
  	var displayFieldDelimiters = {'Survey ID': ' (', 'Survey Start Year': ')'};
 	
-	globals.identifyDijit = new identify.Identify({
+	globals.identifyDijit = new geophysics_identify.GeophysicsIdentify({
 		map: globals.map,
 		label: "Identify",
 		defaultTolerance: 2,
@@ -192,7 +193,7 @@ function initIdentify(){
 			service: mapServiceById("All Parameters"),
 			name: "All Parameters",
 			displayOptions: {
-				0: {layerAlias: "All Parameters", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters}
+				0: {layerAlias: "All Survey Types", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters}
 			},
 			sortFunction: function(a, b) {
 				//Sort by year descending, then alphabetical by survey ID
@@ -207,8 +208,8 @@ function initIdentify(){
 			service: mapServiceById("Bathymetry"),			
 			name: "Bathymetry",
 			displayOptions: {
-				0: {layerAlias: "Bathymetry", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
-				1: {layerAlias: "Bathymetry", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters}				
+				0: {layerAlias: "Single-Beam Bathymetry", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
+				1: {layerAlias: "Single-Beam Bathymetry", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters}				
 			},
 			sortFunction: function(a, b) {
 				//Sort by year descending, then alphabetical by survey ID
@@ -251,12 +252,12 @@ function initIdentify(){
 			}
 		},
 		{
-			id: "Single Channel Seismics",
-			service: mapServiceById("Single Channel Seismics"),
-			name: "Single Channel Seismics",
+			id: "Single-Channel Seismics",
+			service: mapServiceById("Single-Channel Seismics"),
+			name: "Single-Channel Seismics",
 			displayOptions: {
-				0: {layerAlias: "Single Channel Seismics", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
-				8: {layerAlias: "Single Channel Seismics", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters}
+				0: {layerAlias: "Single-Channel Seismics", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
+				8: {layerAlias: "Single-Channel Seismics", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters}
 			},
 			sortFunction: function(a, b) {
 				//Sort by year descending, then alphabetical by survey ID
@@ -320,7 +321,7 @@ function initIdentify(){
 		fillSymbol: new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([64, 64, 64, 1]), 2), new dojo.Color([255, 255, 0, 0.3]))
 	});
 	globals.identifyDijit.startup();
-	dojo.byId("getDataButton").innerHTML = 'Get Marine Data';
+	dojo.byId("getDataButton").innerHTML = 'Get Marine Data for These Surveys';
 }
 
 //called on Map onLoad event
@@ -374,9 +375,9 @@ function mapReadyCustom(theMap) {
 		defaultVisibleLayers: [3]
 	});
 	new layers.PairedMapServiceLayer({
-		id: "Single Channel Seismics",
-		tiledServiceId: "Single Channel Seismics (tiled)",
-		dynamicServiceId: "Single Channel Seismics (dynamic)",
+		id: "Single-Channel Seismics",
+		tiledServiceId: "Single-Channel Seismics (tiled)",
+		dynamicServiceId: "Single-Channel Seismics (dynamic)",
 		mapServiceList: globals.mapServices,
 		visible: false,
 		map: globals.map,
@@ -432,8 +433,8 @@ function mapReadyCustom(theMap) {
 			{layer:mapServiceById('Gravity')._dynamicService, title: " "},
 			{layer:mapServiceById('Magnetics')._tiledService, title: " "},
 			{layer:mapServiceById('Magnetics')._dynamicService, title: " "},
-			{layer:mapServiceById('Single Channel Seismics')._tiledService, title: " "},	
-			{layer:mapServiceById('Single Channel Seismics')._dynamicService, title: " "},	            			
+			{layer:mapServiceById('Single-Channel Seismics')._tiledService, title: " "},	
+			{layer:mapServiceById('Single-Channel Seismics')._dynamicService, title: " "},	            			
 			{layer:mapServiceById('Trackline Combined'), title: " "}
 		],
 		respectCurrentMapScale: false
@@ -506,19 +507,19 @@ function toggleLayer(index) {
 		globals.visibleGeodasLayers[3].visible = dijit.byId('chkLayer3').checked;
 	} else if (index == 4) { //Multi-Channel Seismics
 		setLayerVisibility('Trackline Combined', [4], dijit.byId('chkLayer4').checked);
-		globals.visibleGeodasLayers[5].visible = dijit.byId('chkLayer4').checked;
+		globals.visibleGeodasLayers[4].visible = dijit.byId('chkLayer4').checked;
 	} else if (index == 5) { //Seismic Refraction
 		setLayerVisibility('Trackline Combined', [5], dijit.byId('chkLayer5').checked);
-		globals.visibleGeodasLayers[7].visible = dijit.byId('chkLayer5').checked;
+		globals.visibleGeodasLayers[5].visible = dijit.byId('chkLayer5').checked;
 	} else if (index == 6) { //Shot-Point Navigation
 		setLayerVisibility('Trackline Combined', [6], dijit.byId('chkLayer6').checked);
-		globals.visibleGeodasLayers[8].visible = dijit.byId('chkLayer6').checked;
+		globals.visibleGeodasLayers[6].visible = dijit.byId('chkLayer6').checked;
 	} else if (index == 7) { //Side Scan Sonar
 		setLayerVisibility('Trackline Combined', [7], dijit.byId('chkLayer7').checked);
-		globals.visibleGeodasLayers[6].visible = dijit.byId('chkLayer7').checked;		
-	} else if (index == 8) { //Single Channel Seismics
-		setLayerVisibility('Single Channel Seismics', [], dijit.byId('chkLayer8').checked);
-		globals.visibleGeodasLayers[4].visible = dijit.byId('chkLayer8').checked;		
+		globals.visibleGeodasLayers[7].visible = dijit.byId('chkLayer7').checked;		
+	} else if (index == 8) { //Single-Channel Seismics
+		setLayerVisibility('Single-Channel Seismics', [], dijit.byId('chkLayer8').checked);
+		globals.visibleGeodasLayers[8].visible = dijit.byId('chkLayer8').checked;		
 	} else if (index == 9) {//index == 9 Subbottom Profile
 		setLayerVisibility('Trackline Combined', [9], dijit.byId('chkLayer9').checked);
 		globals.visibleGeodasLayers[9].visible = dijit.byId('chkLayer9').checked;
