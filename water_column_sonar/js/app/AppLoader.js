@@ -13,6 +13,9 @@ define([
     'esri/geometry/Extent',
     'esri/SpatialReference',
     'esri/tasks/GeometryService',
+    'esri/tasks/QueryTask',
+    'esri/tasks/query',
+    'esri/tasks/StatisticDefinition',
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'app/arctic/MapConfig',
@@ -43,6 +46,9 @@ define([
         Extent,
         SpatialReference,
         GeometryService,
+        QueryTask,
+        Query,
+        StatisticDefinition,
         Logger,
         MercatorMapConfig,
         ArcticMapConfig,
@@ -68,7 +74,7 @@ define([
                 this.overlayNode = dom.byId(this.overlayNodeId);
             },
 
-            init: function() {
+            init: function() {                
                 esriConfig.defaults.io.corsEnabledServers = [
                     'http://maps.ngdc.noaa.gov/arcgis/rest/services',
                     'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
@@ -103,7 +109,7 @@ define([
                         {url: 'http://www.noaa.gov', label: 'NOAA'},
                         {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
                         {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
-                        {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
+                        {url: 'http://maps.ngdc.noaa.gov', label: 'Maps'},
                         {url: 'http://www.ngdc.noaa.gov/mgg/wcd/', label: 'Water Column Sonar Data'}           
                     ],
                     dataUrl: 'http://www.ngdc.noaa.gov/mgg/wcd/',
@@ -221,11 +227,27 @@ define([
                 if (values.endDate) {
                     sql.push("COLLECTION_DATE<=date '" + this.toDateString(values.endDate) + "'");
                 }
-                if (values.cruiseId) {
-                    //sql.push("UPPER(CRUISE_NAME)='" + values.cruiseId.toUpperCase() + "'");
-                    sql.push("UPPER(CRUISE_NAME) LIKE '" + values.cruiseId.toUpperCase().replace('*', '%') + "'");
+                if (values.ships && values.ships.length > 0) {
+                    var quoted = [];
+                    for (var i = 0; i < values.ships.length; i++) {
+                        //Surround each string with single quotes
+                        quoted.push("'" + values.ships[i] + "'");
+                    }
+                    sql.push("SHIP_NAME in (" + quoted.join(',') + ")");
                 }
-                if (values.instruments.length > 0) {
+                if (values.institutions && values.institutions.length > 0) {
+                    var quoted = [];
+                    for (var i = 0; i < values.institutions.length; i++) {
+                        //Surround each string with single quotes
+                        quoted.push("'" + values.institutions[i] + "'");
+                    }
+                    sql.push("SOURCE_NAME in (" + quoted.join(',') + ")");
+                }
+                if (values.surveyId) {
+                    //sql.push("UPPER(CRUISE_NAME)='" + values.cruiseId.toUpperCase() + "'");
+                    sql.push("UPPER(CRUISE_NAME) LIKE '" + values.surveyId.toUpperCase().replace('*', '%') + "'");
+                }
+                if (values.instruments && values.instruments.length > 0) {
                     var quoted = [];
                     for (var i = 0; i < values.instruments.length; i++) {
                         //Surround each string with single quotes
@@ -238,18 +260,15 @@ define([
                 }
                 if (values.maxNumBeams) {
                     sql.push("NUMBEROFBEAMS <= " + values.maxNumBeams);
-                }
-                if (values.minRecordingRange) {
-                    sql.push("RECORDINGRANGE >= " + values.minRecordingRange);
-                }
-                if (values.maxRecordingRange) {
-                    sql.push("RECORDINGRANGE <= " + values.maxRecordingRange);
-                }
+                }                
                 if (values.minSwathWidth) {
                     sql.push("SWATHWIDTH >= " + values.minSwathWidth);
                 }
                 if (values.maxSwathWidth) {
                     sql.push("SWATHWIDTH <= " + values.maxSwathWidth);
+                }
+                if (values.bottomSoundingsOnly) {
+                    sql.push("BOTTOM_HIT = 'Y'");
                 }
                 //TODO: Add frequency select
 
@@ -259,12 +278,37 @@ define([
                 layerDefinitions[2] = layerDefinition;
                 layerDefinitions[3] = layerDefinition;
                 layerDefinitions[4] = layerDefinition;
+                layerDefinitions[5] = layerDefinition;
+                layerDefinitions[6] = layerDefinition;
+
+                layerDefinitions[8] = layerDefinition;
+                layerDefinitions[9] = layerDefinition;
+                layerDefinitions[10] = layerDefinition;
+                layerDefinitions[11] = layerDefinition;
+                layerDefinitions[12] = layerDefinition;
+                layerDefinitions[13] = layerDefinition;
                 
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);                
 
                 this.layersPanel.enableResetButton();
                 this.layersPanel.setCurrentFilterString(values);
+
+                ///FOR TESTING
+                // var queryTask = new QueryTask('http://mapdevel.ngdc.noaa.gov:6080/arcgis/rest/services/water_column_sonar/MapServer/14');
+                // var query = new Query();
+                // var statDef = new StatisticDefinition;
+                
+                // statDef.statisticType = "max";
+                // statDef.onStatisticField = "XMAX";
+                // statDef.outStatisticFieldName = "maxX";
+                // query.returnGeometry = false;
+                // query.where = layerDefinition;
+                // //query.outFields = outFields;
+                // query.outStatistics = [ statDef ];
+                // queryTask.execute(query).then(function(featureSet) {
+                //     console.log('foo');
+                // });
             },
 
             resetWcd: function() {            

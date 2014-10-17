@@ -60,7 +60,7 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),   
-                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer', {
                         id: 'Water Column Sonar',
                         visible: true,
                         imageParameters: this.imageParameters.png32
@@ -95,7 +95,7 @@ define([
             },
 
             setSubLayerVisibility: function() {
-                this.getLayerById('Water Column Sonar').setVisibleLayers([1, 2, 3, 4]);
+                this.getLayerById('Water Column Sonar').setVisibleLayers([8, 9, 10, 11, 12, 13]);
             }
         });
     }
