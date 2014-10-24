@@ -247,6 +247,7 @@
                         <input type="radio" name="radio-mini" id="radio-mini-3" value="1" class="layerSelect"  data-theme="a" />
                         <label for="radio-mini-3">Z </label>
                     </fieldset>
+		        </div>
   
             </div>
 
