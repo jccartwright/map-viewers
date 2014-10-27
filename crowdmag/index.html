@@ -100,10 +100,19 @@
                         }                         
                     }
 
+			function adjustInfoPopup(){
+				var popup =document.getElementById('aboutDialog');
+				if(detectmob())
+					popup.style.width = '100%';
+				else
+					popup.style.width = '30%';
+			}
+
                     function jQueryReady() {
                         console.log('inside jQueryReady...');
                         initMap();
-			
+			adjustInfoPopup();
+			window.addEventListener('load', adjustInfoPopup); 
 			//setup handler to change map layers
 			$('.layerSelect').click(function(e) {
 				//only one layer visible at a time
@@ -114,19 +123,19 @@
                 var image_title;
                 switch (e.currentTarget.value) {
                     case '0':
-                        title = 'CrowdMag - Total Intensity';
+                        title = 'Total Intensity';
                         color_scale = 'f_scale.png';
                         image_title = 'values from 15,000nT to 75,000nT';
                         break;
                     case '1':
-                        title = 'CrowdMag - Vertical Intensity';
+                        title = 'Vertical Intensity';
                         color_scale = 'z_scale.png';
                         image_title = 'values from -65,000nT to 65,000nT';
                         break;
                     case '2':
-                        title = 'CrowdMag - Horizontal Intensity';
+                        title = 'Horizontal Intensity';
                         color_scale = 'h_scale.png';
-                        image_title = 'values from 0nT to 75,000nT';
+                        image_title = 'values from 0nT to 45,000nT';
                         break;
                     default:
                         title = 'CrowdMag';
@@ -136,17 +145,16 @@
                 $('#color_scale').attr('src',"images/"+color_scale);
 			});
                     }
-
                     function initMap() {
                         console.log('inside initMap...');
                         // create the map
                         map = new Map("map", {
                             center :[-105.292778, 40.019444],
                             zoom   :5,
+			   	slider: !detectmob(),
                             basemap:"streets"
                         });
                         on(map, "load", mapLoadHandler);
-
                         crowdmagService = new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crowdmag/MapServer");
 
                         //TODO currently limited to intensity
@@ -200,93 +208,85 @@
                     function zoomToLocation(position) {
                         $.mobile.hidePageLoadingMsg(); //true hides the dialog
                         var pt = esri.geometry.geographicToWebMercator(new Point(position.coords.longitude, position.coords.latitude));
-                        map.centerAndZoom(pt, 13);
+                        map.centerAndZoom(pt, 11);
                         //uncomment to add a graphic at the current location
-                        var symbol = new PictureMarkerSymbol("images/bluedot.png", 40, 40);
-                        map.graphics.add(new Graphic(pt, symbol));
+                       // var symbol = new PictureMarkerSymbol("images/bluedot.png", 40, 40);
+                        //map.graphics.add(new Graphic(pt, symbol));
                     }
-                }
-        )
+		})
+        
+		function detectmob() {
+  			 if(window.innerWidth <= 800 && window.innerHeight <= 600) {
+    		 	return true;
+  		 	} else {
+  			   return false;
+   		 }
+		}
     </script>
 </head>
 
 <body>
-<div data-role="page" id="page">
+<div data-role="page" id="page" style="position: relative">
     <!-- header -->
-    <div data-theme="a" data-role="header" data-position="fixed">
-        <h3 id="pageTitle">CrowdMag - Total Intensity</h3>
+    <!--<div data-theme="a" data-role="navbar"  data-position="fixed">
+        <h3 id="pageTitle">Total Intensity</h3>
         <a href="#aboutDialog" data-rel="popup" data-theme="a" data-position-to="window" data-role="button"
            data-inline="true" data-transition="pop" data-icon="info" data-iconpos="notext">About</a>
         <a href="#legendDialog" data-rel="popup" data-theme="a" data-position-to="window" data-role="button"
            data-inline="true" data-transition="pop" data-icon="grid" data-iconpos="notext">Legend</a>
-    </div>
+    </div>-->
+
 
     <!-- content -->
     <div data-role="content">
-        <div id="map"></div>
+        <div id="map">
     </div>
+	<div align="center" style="position:absolute; 
+	      bottom: 5%; left: 3%;">
+                    <img id="color_scale" src="images/f_scale.png" title="values from 15,000nT to 75,000nT">
+                </div>
+	
+	<div style="position: absolute; 
+	      top: 5%; right: 3%;">
 
-    <div data-role="popup" id="aboutDialog" data-theme="a" style="width:50%;">
+
+
+		            <fieldset data-mini="true" >
+			  <a href="#aboutDialog" data-rel="popup" data-theme=“f” data-position-to="window" data-role="button"
+           data-inline="true" data-transition="pop" data-icon="info" data-iconpos="notext">About</a>
+      
+                        <input type="radio" name="radio-mini" id="radio-mini-1" value="0" checked="checked"  class="layerSelect"  data-theme=“f”/>
+    			        <label for="radio-mini-1">F </label>
+
+                        <!-- y_elem -->
+                        <input type="radio" name="radio-mini" id="radio-mini-2" value="2"  class="layerSelect"     data-theme=“f”/>
+                        <label for="radio-mini-2">H </label>
+
+                        <!-- z_elem -->
+                        <input type="radio" name="radio-mini" id="radio-mini-3" value="1" class="layerSelect"  data-theme=“f” />
+                        <label for="radio-mini-3">Z </label>
+                    </fieldset>
+  
+            </div>
+
+    <div data-role="popup" id="aboutDialog" data-theme="a" style="width:100%;   margin: 0 auto;">
         <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext"
            class="ui-btn-right">Close</a>
 
-        <div data-role="header">
-            <h1>About this map</h1>
+        <div data-role="header" data-theme="a" >
+            <h1>Information</h1>
         </div>
-        <div data-role="content">
+        <div data-role="content" data-theme="a">
             This map shows data collected from phones around the world!  We compare each data point that is sent to NGDC
             with the <a href="http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml" target="_blank">World Magnetic Model</a>, so that we can discard the more noisy data and collect as much meaningful data as possible.
             Some uncertainty has been added to the location of each data point shown to ensure the privacy of our contributors.
-            The map is updated every hour.
+            The map is updated every hour. F channel represents Total Strength, H channel represents Horizontal Component and Z channel represents Vertical Component
         </div>
     </div>
 
-    <div data-role="popup" id="legendDialog" data-overlay-theme="a" data-theme="a" data-dismissible="false"
-         class="ui-corner-all" style="width:250px; height: 250px">
-        <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext"
-           class="ui-btn-right">Close</a>
-
-        <div data-role="header" data-theme="a" class="ui-corner-top">
-            <h1>Layers</h1>
-        </div>
-        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
-            <div id="legendDiv">
-		        <div data-role="fieldcontain">
-		            <label>Select a channel to display:</label>
-		            <fieldset data-role="controlgroup" data-mini="true">
-                        <input type="radio" name="radio-mini" id="radio-mini-1" value="0" checked="checked"  class="layerSelect"/>
-    			        <label for="radio-mini-1">Total Intensity</label>
-
-                        <!-- y_elem -->
-                        <input type="radio" name="radio-mini" id="radio-mini-2" value="2"   class="layerSelect"/>
-                        <label for="radio-mini-2">Horizontal Intensity</label>
-
-                        <!-- z_elem -->
-                        <input type="radio" name="radio-mini" id="radio-mini-3" value="1"  class="layerSelect" />
-                        <label for="radio-mini-3">Vertical Intensity</label>
-                    </fieldset>
-		        </div>
-                <br/>
-                <div align="center">
-                    <img id="color_scale" src="images/f_scale.png" title="values from 15,000nT to 75,000nT">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div data-role="popup" id="attributePage" data-overlay-theme="a" data-theme="a" data-dismissible="false"
-         class="ui-corner-all popupStyle" style="width:250px; height: 250px">
-        <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext"
-           class="ui-btn-right">Close</a>
-
-        <div data-role="header" data-theme="a" class="ui-corner-top">
-            <h1>Crowd-sourced Geomag Measurements</h1>
-        </div>
-        <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
-            <div id="contentDiv"></div>
-        </div>
-    </div>
-
+  
 </div>
 </body>
 </html>
+
+
