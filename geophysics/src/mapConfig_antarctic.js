@@ -100,11 +100,14 @@ function initIdentify(){
 		
 	//Setup common to all layers/sublayers
 	var attributes = ['Survey ID', 'Survey Type', 'Platform Name', 'Survey Start Year', 'Survey End Year', 'Source Institution', 'Project', 'Country', 'Chief Scientist', 'Date Added'];
-	var fieldUrls = {'Survey ID': {prefix: 'http://www.ngdc.noaa.gov/cgi-bin/mgg/gdas_tsea?RUNTYPE=www-ge&SURVS=', postfix: ''}};
+	
+	var fieldUrls = {'Survey ID': {prefix: 'http://www.ngdc.noaa.gov/trackline/request/?surveyIds=', postfix: ''}};	
+	//var fieldUrls = {'Survey ID': {prefix: 'http://agile.ngdc.noaa.gov/sparrow/next-clients/geodas/index.html?surveyIds=', postfix: ''}};
+	
 	var displayFieldNames = ['Survey ID', 'Survey Start Year'];
  	var displayFieldDelimiters = {'Survey ID': ' (', 'Survey Start Year': ')'};	
 	
-	globals.identifyDijit = new identify.Identify({
+	globals.identifyDijit = new geophysics_identify.GeophysicsIdentify({
 		map: globals.map,
 		label: "Identify",
 		defaultTolerance: 2,
@@ -115,15 +118,15 @@ function initIdentify(){
 			service: mapServiceById("Trackline Combined"),
 			name: "Trackline Combined",
 			displayOptions: {
-				0: {layerAlias: "All Parameters", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
-				1: {layerAlias: "Bathymetry", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
+				0: {layerAlias: "All Survey Types", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
+				1: {layerAlias: "Single-Beam Bathymetry", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
 				2: {layerAlias: "Gravity", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
 				3: {layerAlias: "Magnetics", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},				
 				4: {layerAlias: "Multi-Channel Seismics", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
 				5: {layerAlias: "Seismic Refraction", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
 				6: {layerAlias: "Shot-Point Navigation", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
 				7: {layerAlias: "Side Scan Sonar", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
-				8: {layerAlias: "Single Channel Seismics", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},				
+				8: {layerAlias: "Single-Channel Seismics", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},				
 				9: {layerAlias: "Subbottom Profile", visible: false, attributes: attributes, fieldUrls: fieldUrls, displayFieldNames: displayFieldNames, displayFieldDelimiters: displayFieldDelimiters},
 				10: {
 					layerAlias: "Aeromagnetic Surveys", 
@@ -170,7 +173,7 @@ function initIdentify(){
 		geometryService: globals.geometryService
 	});
 	globals.identifyDijit.startup();
-	dojo.byId("getDataButton").innerHTML = 'Get Marine Data';
+	dojo.byId("getDataButton").innerHTML = 'Get Marine Data for These Surveys';
 }
 
 //called on Map onLoad event
@@ -258,22 +261,22 @@ function toggleLayer(index) {
 		globals.visibleGeodasLayers[3].visible = dijit.byId('chkLayer3').checked;		
 	} else if (index == 4) { //Multi-Channel Seismics
 		setLayerVisibility('Trackline Combined', [4], dijit.byId('chkLayer4').checked);
-		globals.visibleGeodasLayers[5].visible = dijit.byId('chkLayer4').checked;
+		globals.visibleGeodasLayers[4].visible = dijit.byId('chkLayer4').checked;
 	} else if (index == 5) { //Seismic Refraction
 		setLayerVisibility('Trackline Combined', [5], dijit.byId('chkLayer5').checked);
-		globals.visibleGeodasLayers[7].visible = dijit.byId('chkLayer5').checked;
+		globals.visibleGeodasLayers[5].visible = dijit.byId('chkLayer5').checked;
 	} else if (index == 6) { //Shot-Point Navigation
 		setLayerVisibility('Trackline Combined', [6], dijit.byId('chkLayer6').checked);
-		globals.visibleGeodasLayers[8].visible = dijit.byId('chkLayer6').checked;
+		globals.visibleGeodasLayers[6].visible = dijit.byId('chkLayer6').checked;
 	} else if (index == 7) { //Side Scan Sonar
 		setLayerVisibility('Trackline Combined', [7], dijit.byId('chkLayer7').checked);
-		globals.visibleGeodasLayers[6].visible = dijit.byId('chkLayer7').checked;
-	} else if (index == 8) { //Single Channel Seismics
+		globals.visibleGeodasLayers[7].visible = dijit.byId('chkLayer7').checked;
+	} else if (index == 8) { //Single-Channel Seismics
 		setLayerVisibility('Trackline Combined', [8], dijit.byId('chkLayer8').checked);
-		globals.visibleGeodasLayers[4].visible = dijit.byId('chkLayer8').checked;
+		globals.visibleGeodasLayers[8].visible = dijit.byId('chkLayer8').checked;
 	} else if (index == 9) { //Subbottom Profile
 		setLayerVisibility('Trackline Combined', [9], dijit.byId('chkLayer9').checked);
-		globals.visibleGeodasLayers[4].visible = dijit.byId('chkLayer9').checked;		
+		globals.visibleGeodasLayers[9].visible = dijit.byId('chkLayer9').checked;		
 	} else if (index == 10) {//index == 10 Aeromagnetic Surveys
 		setLayerVisibility('Trackline Combined', [10], dijit.byId('chkLayer10').checked);
 		globals.visibleGeodasLayers[10].visible = dijit.byId('chkLayer10').checked;

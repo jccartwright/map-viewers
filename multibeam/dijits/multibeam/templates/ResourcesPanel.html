@@ -1,0 +1,54 @@
+<div class="resources_class">
+	<table>
+	<tr>
+		<td align="center">
+			<button dojoAttachPoint="txtInterfaceBtn" dojoType=dijit.form.Button type="input">Text Query Interface</button>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<button dojoAttachPoint="autochartBtn" dojoType=dijit.form.Button type="input">Autochart Bathymetric Map</button>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<button dojoAttachPoint="surveyListBtn" dojoType=dijit.form.Button type="input">Survey List</button>
+		</td>
+	</tr>
+	</table>
+	
+<br/><hr width="75%"/><br/>
+
+	<table>
+		<caption>Geographic Extent</caption>
+	<tr>
+		<td><label>Min Longitude</label></td>
+		<td>
+			<input dojoAttachPoint="minx" dojoType="dijit.form.NumberTextBox" style="width:80px;" name="minx" 
+			        	constraints="{min:-180,max:180}" required="true" invalidMessage= "Invalid Longitude"/>
+		</td>
+	</tr>
+	<tr>
+		<td><label>Min Latitude</label></td>
+		<td>	
+			<input dojoAttachPoint="miny" dojoType="dijit.form.NumberTextBox" style="width:80px;" name="miny" 
+			        	constraints="{min:-90,max:90}" required="true" invalidMessage= "Invalid Latitude"/>
+		</td>
+	</tr>
+	<tr>
+		<td><label>Max Longitude</label></td>
+		<td>
+			<input dojoAttachPoint="maxx" dojoType="dijit.form.NumberTextBox" style="width:80px;" name="maxx" 
+			        	constraints="{min:-180,max:180}" required="true" invalidMessage= "Invalid Longitude"/>
+		</td>
+	</tr>
+	<tr>
+		<td><label>Max Latitude</label></td>
+		<td>
+			<input dojoAttachPoint="maxy" dojoType="dijit.form.NumberTextBox" style="width:80px;" name="maxy" 
+			        	constraints="{min:-90,max:90}" required="true" invalidMessage= "Invalid Latitude"/>
+		</td>
+	</tr>
+	<tr><td colspan="2" align="center"><button dojoAttachPoint="resetBtn" dojoType=dijit.form.Button type="input">Reset</button></td></tr>
+	</table>
+</div>

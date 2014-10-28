@@ -20,15 +20,34 @@
         </tr>
 
         <tr>
-            <td><input data-dojo-attach-point="chkOther" id="chkOther" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                          
-            <td><label for="chkOther">Other</label></td>
+            <td><input data-dojo-attach-point="chkOtherNoaa" id="chkOtherNoaa" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                          
+            <td><label for="chkOtherNoaa">Other (NOAA)</label></td>
+            <td><img style="vertical-align:middle;" src="images/purple_line.png"></img></td>
+        </tr>
+
+        <tr>
+            <td><input data-dojo-attach-point="chkOtherNonNoaa" id="chkOtherNonNoaa" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                          
+            <td><label for="chkOtherNonNoaa">Other (Non-NOAA)</label></td>
             <td><img style="vertical-align:middle;" src="images/orange_line.png"></img></td>
         </tr>
+
+        <tr>
+            <td><input data-dojo-attach-point="chkNonUs" id="chkNonUs" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                          
+            <td><label for="chkNonUs">Non-U.S.</label></td>
+            <td><img style="vertical-align:middle;" src="images/yellow_line.png"></img></td>
+        </tr>
     </table>
-    <hr>
+    <br>
+    <input type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-attach-point="radioCruiseView" name="layerMode" id="radioCruiseView" checked value="cruise"/>
+    <label for="radioCruiseView"><b>Cruise View:</b> Provides information about the entire cruise. Best for large areas.</label> <br />
+    
+    <input type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-attach-point="radioFileView" name="layerMode" id="radioFileView" value="file"/>
+    <label for="radioFileView"><b>File View:</b> Provides information about the data files. Best for small areas.</label> <br />
+    
     <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" id="searchButton">Filter Data</div>
     <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" id="resetButton" disabled>Reset</div><br>
-    <div id="currentFilter" class="filterText"></div><br>
+    <div id="currentFilter" class="filterText"></div>
+    <hr>
 
     <div id="abstractDiv">
     <b>Abstract</b><br>

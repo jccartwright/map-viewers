@@ -1,0 +1,71 @@
+<div class="dijitDialog" tabindex="-1" waiRole="dialog" waiState="labelledby-${id}_title">
+	<div dojoAttachPoint="titleBar" class="dijitDialogTitleBar">
+		<span dojoAttachPoint="titleNode" class="dijitDialogTitle" id="${id}_title"></span>
+		<span dojoAttachPoint="closeButtonNode" class="dijitDialogCloseIcon" dojoAttachEvent="onclick: onCancel" title="${buttonCancel}"><span dojoAttachPoint="closeText" class="closeText" title="${buttonCancel}">x</span></span>
+	</div>
+	<div dojoAttachPoint="containerNode" class="dijitDialogPaneContent">
+		<table cellpadding="6" cellspacing="3">
+		<tr>
+			<td align="left" colspan="2">
+				<label>Ship</label>
+				<div dojoAttachPoint="shipSelect" name="ship"
+					dojoType="dijit.form.FilteringSelect"
+					searchAttr="name" required="false" style="width:200px;">
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td align="left">				
+				<label>Year</label>
+				<div dojoType="dijit.form.NumberSpinner" dojoAttachPoint="startYearSpinner" intermediateChanges="false" smallDelta="1" constraints="{min:1980,max:2015,places:0,pattern:'0000'}" name="startYear" style="width: 55px"></div>
+<!--
+				<label>Max Year</label>
+				<div dojoType="dijit.form.NumberSpinner" dojoAttachPoint="endYearSpinner" intermediateChanges="true" smallDelta="1" constraints="{min:1900,max:2015,places:0,pattern:'0000'}" name="endYear" style="width: 55px"></div>
+-->				
+				<input dojoAttachPoint="omitDate" dojoType="dijit.form.CheckBox" checked="true" value="true" type="checkbox" name="omitDate" />
+				<label>All Dates</label> 
+			</td>
+			<!--
+			<td align="center">
+				<input dojoAttachPoint="omitDate" dojoType="dijit.form.CheckBox" checked="true" value="true" type="checkbox" name="omitDate" />
+				<label>All Dates</label> 
+			</td>
+			-->
+		</tr>
+
+		<tr>
+			<td align="left" colspan="2">				
+				<label>Survey</label>
+				<div dojoType="dijit.form.FilteringSelect" dojoAttachPoint="surveyNameSelect" name="survey" 
+				     style="width: 200px;" searchAttr="name" required="false">				 
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td align="left" colspan="2">				
+				<input dojoAttachPoint="zoomToSelection" dojoType="dijit.form.CheckBox" checked="true" value="true" type="checkbox" name="zoomToSelection" />
+				<label>Automatically zoom to results?</label> 
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2" align="center">
+				<table style="width: 50%; align: center;">
+				<tr>
+					<td align="center">
+						<button dojoAttachPoint="okButton" dojoType=dijit.form.Button type="submit">OK</button>
+					</td>
+					<td align="center">
+						<button dojoAttachPoint="cancelButton" dojoType=dijit.form.Button type="button">Cancel</button>
+					</td>
+					<td align="center">
+						<button dojoAttachPoint="resetButton" dojoType=dijit.form.Button type="button">Reset</button>
+					</td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+	</div>
+</div>

@@ -39,28 +39,50 @@ define([
                 domStyle.set(this.featurePageBottomBar.domNode, 'height', '30px');
                 //this.featurePageBottomBar.style = 'height: 50px;';
 
-                this.requestDataFilesButton = new Button({
-                    label: 'Request These Data Files',
+                this.requestDataFilesOrSurveysButton = new Button({
+                    label: 'Request These Cruises',
                     style: 'bottom: 5px; left: 15px;',
                     onClick: lang.hitch(this, function(){
                         this.requestDataFiles();
                     })
                 }).placeAt(this.featurePageBottomBar);
 
-                this.requestDataFileButton = new Button({
-                    label: 'Request This Data File',
+                this.requestDataFileOrSurveyButton = new Button({
+                    label: 'Request This Cruise',
                     style: 'bottom: 25px; left: 15px;',
                     onClick: lang.hitch(this, function(){
                         this.requestDataFile();
                     })
                 }).placeAt(this.infoPageBottomBar);
+
+                //Subscribe to message passed by the LayersPanel to toggle between cruise/file mode
+                topic.subscribe('/water_column_sonar/layerMode', lang.hitch(this, function(layerMode) {
+                    this.setLayerMode(layerMode);
+                }));
             },
 
             showResults: function() {
+                this.featurePane.domNode.innerHTML = '';
+
                 this.inherited(arguments);
+
                 if (this.numFeatures >= 1000) {
-                    this.featurePageTitle = 'Identified Features (results limited to 1000 files. Zoom in for greater detail)';
+
+                    //Destroy the existing tree and clear the feature store
+                    if (this.tree) {
+                        this.tree.destroyRecursive();
+                    }
+                    this.clearFeatureStore();
+
+                    this.featurePageTitle = 'Too Many Features Identified';
+                    //this.featurePageTitle = 'More than 1000 files have been selected. Please select a smaller area or change to Cruise View.';
                     this.setTitle(this.featurePageTitle);
+                    this.featurePane.domNode.innerHTML = '<b>More than 1000 files have been selected. Please select a smaller area or change to Cruise View.</b>';
+
+                    domStyle.set(this.requestDataFilesOrSurveysButton.domNode, 'display', 'none');
+                }
+                else {
+                    domStyle.set(this.requestDataFilesOrSurveysButton.domNode, 'display', 'block');
                 }
             },
 
@@ -68,8 +90,8 @@ define([
                 return '<i><b>' + item.layerName + '</b></i>';
             },
 
-            getItemDisplayLabel: function(item) {
-                return item.value;
+            getItemDisplayLabel: function(item, uid) {
+                return '<span id="itemLabel-' + uid + '">' + item.value + '</span>';
             },
 
             requestDataFiles: function() {
@@ -127,7 +149,7 @@ define([
                                     parent: 'root'
                                 });
                             }
-                            //Create a survey "folder" node if it doesn't already exist
+                            //Create a cruise "folder" node if it doesn't already exist
                             var surveyId = item.feature.attributes['Cruise ID'];
                             var surveyKey = layerName + '/' + surveyId;
                             if (this.featureStore.query({id: surveyKey}).length === 0) {
@@ -160,8 +182,9 @@ define([
                                 uid: ++this.uid,
                                 id: this.uid,
                                 //TODO: point to the magnifying glass image using a module path
-                                displayLabel: this.getItemDisplayLabel(item),
-                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
+                                displayLabel: this.getItemDisplayLabel(item, this.uid),
+                                label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + 
+                                    "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "' title='Zoom to this feature'></a>",
                                 layerUrl: layerUrl,
                                 layerKey: layerKey,
                                 attributes: item.feature.attributes,
@@ -178,6 +201,18 @@ define([
                 this.inherited(arguments);
                 //Expand the tree to the instrument level. All nodes will be opened except for these.
                 this.tree.set('paths', this.expandedNodePaths);
+            },
+
+            setLayerMode: function(layerMode) {
+                this.layerMode = layerMode;
+                if (layerMode == 'cruise') {
+                    this.requestDataFilesOrSurveysButton.set('label', 'Request These Cruises');
+                    this.requestDataFileOrSurveyButton.set('label', 'Request This Cruise');
+                }
+                else {
+                    this.requestDataFilesOrSurveysButton.set('label', 'Request These Data Files');
+                    this.requestDataFileOrSurveyButton.set('label', 'Request This Data File');
+                }
             }
         });
     }
