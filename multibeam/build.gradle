@@ -1,0 +1,18 @@
+import org.apache.tools.ant.filters.*
+
+ext.buildDate = new Date().format('YYYY-MM-dd')
+version = '1.2'
+
+jar {
+    from "."
+    exclude 'build*'
+    exclude '.gradle'
+
+    eachFile {
+	  if (it.name.endsWith('.html')) {
+    	filter(ReplaceTokens, tokens: [
+    		'application.version': version,
+    		'application.buildDate': buildDate])
+	  }
+    }
+}
