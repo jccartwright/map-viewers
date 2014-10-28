@@ -21,29 +21,29 @@ define([
 
             wcdFileFormatter: function(feature) {
                 /*Attributes for ${fileName}
-Cruise Details:
-Survey: ${surveyID}
-Ship: ${shipName}
-Project(s): ${projectName}
-Source Group: ${sourceGroup}
-Institution: ${sourceName}
-Scientist(s): ${scientistName}
-Scientist(s): ${scientistName}
-Cruise Metadata
-Instrument Details:
-Instrument: ${instrumentName}
-Calibration State: ${calStateName}
-Recording Range (m): ${recordingRange}
-Swath Width (degrees): ${swathWidth}
-Number of Beams: ${numBeams}
-Beam Type: ${beamType}
-Frequency (kHz): ${frequency}
-Calibration State: ${CalStateName}
-Collection Date: ${collectionDate}
-Associated Data:
-Data at NODC: Get data
-Bathymetry at NGDC: Get data
-Products:*/
+                Cruise Details:
+                Survey: ${surveyID}
+                Ship: ${shipName}
+                Project(s): ${projectName}
+                Source Group: ${sourceGroup}
+                Institution: ${sourceName}
+                Scientist(s): ${scientistName}
+                Scientist(s): ${scientistName}
+                Cruise Metadata
+                Instrument Details:
+                Instrument: ${instrumentName}
+                Calibration State: ${calStateName}
+                Recording Range (m): ${recordingRange}
+                Swath Width (degrees): ${swathWidth}
+                Number of Beams: ${numBeams}
+                Beam Type: ${beamType}
+                Frequency (kHz): ${frequency}
+                Calibration State: ${CalStateName}
+                Collection Date: ${collectionDate}
+                Associated Data:
+                Data at NODC: Get data
+                Bathymetry at NGDC: Get data
+                Products:*/
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template = '\
@@ -68,6 +68,7 @@ Products:*/
                         <div class="valueName">Beam Type: <span class="parameterValue">${beamType}</span></div>';
                 }
                 template += '\
+                    <div class="valueName">Hit Bottom?: <span class="parameterValue">${hitBottom}</span></div>\
                     <div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>\
                     <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>\
                     <div class="fileHeader">Associated Data:</div>\
@@ -81,7 +82,6 @@ Products:*/
                         sourceName: a['Source Name'],
                         sourceGroup: a['Source Group'],
                         projectName: a['Project Name'],
-                        minDepth: a['Minimum Depth'],
                         collectionDate: a['Collection Date'],
                         publishDate: a['Publish Date'],
                         beamType: a['Beam Type'],
@@ -89,7 +89,8 @@ Products:*/
                         numBeams: a['Number of Beams'],
                         swathWidth: a['Swath Width (degrees)'],
                         recordingRange: a['Recording Range (m)'],
-                        frequency: a['Frequency']
+                        frequency: a['Frequency'],
+                        hitBottom: a['Hit Bottom?'] == 'Y' ? 'Yes' : 'No'
                     });                
                 return html;
             },

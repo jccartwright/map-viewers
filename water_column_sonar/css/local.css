@@ -290,3 +290,7 @@ html,body {
     white-space: normal;
     width: 300px;
 }
+
+.frequencyText {
+    width: 50px !important;
+}

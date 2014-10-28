@@ -216,16 +216,17 @@ define([
                 new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
 
-            filterWcd: function(values) {
-                var layerDefinition;
-                var layerDefinitions = [];
-                var sql = [];   
-
+            filterWcd: function(values) {                
+                var fileCond = [];
+                var cruiseCond = [];
+                
                 if (values.startDate) {
-                    sql.push("COLLECTION_DATE>=date '" + this.toDateString(values.startDate) + "'");
+                    fileCond.push("COLLECTION_DATE>=date '" + this.toDateString(values.startDate) + "'");
+                    cruiseCond.push("START_DATE>=date '" + this.toDateString(values.startDate) + "'");
                 }
                 if (values.endDate) {
-                    sql.push("COLLECTION_DATE<=date '" + this.toDateString(values.endDate) + "'");
+                    fileCond.push("COLLECTION_DATE<=date '" + this.toDateString(values.endDate) + "'");
+                    cruiseCond.push("END_DATE<=date '" + this.toDateString(values.endDate) + "'");
                 }
                 if (values.ships && values.ships.length > 0) {
                     var quoted = [];
@@ -233,19 +234,34 @@ define([
                         //Surround each string with single quotes
                         quoted.push("'" + values.ships[i] + "'");
                     }
-                    sql.push("SHIP_NAME in (" + quoted.join(',') + ")");
+                    fileCond.push("SHIP_NAME in (" + quoted.join(',') + ")");
+                    cruiseCond.push("SHIP_NAME in (" + quoted.join(',') + ")");
                 }
                 if (values.institutions && values.institutions.length > 0) {
-                    var quoted = [];
+                    var conditionals = [];
                     for (var i = 0; i < values.institutions.length; i++) {
-                        //Surround each string with single quotes
-                        quoted.push("'" + values.institutions[i] + "'");
+                        //Surround each string with wildcard characters and single quotes
+                        conditionals.push("SOURCE_NAME LIKE '%" + values.institutions[i] + "%'");
                     }
-                    sql.push("SOURCE_NAME in (" + quoted.join(',') + ")");
+                    //sql.push("SOURCE_NAME in (" + quoted.join(',') + ")");  //TODO comma-separated
+                    if (conditionals.length > 1) {
+                        fileCond.push('(' + conditionals.join(' OR ') + ')');
+                        cruiseCond.push('(' + conditionals.join(' OR ') + ')');
+                    }
+                    else {
+                        fileCond.push(conditionals[0]);
+                        cruiseCond.push(conditionals[0]);
+                    }
+
                 }
-                if (values.surveyId) {
-                    //sql.push("UPPER(CRUISE_NAME)='" + values.cruiseId.toUpperCase() + "'");
-                    sql.push("UPPER(CRUISE_NAME) LIKE '" + values.surveyId.toUpperCase().replace('*', '%') + "'");
+                if (values.surveyIds && values.surveyIds.length > 0) {
+                    var quoted = [];
+                    for (var i = 0; i < values.surveyIds.length; i++) {
+                        //Surround each string with single quotes
+                        quoted.push("'" + values.surveyIds[i] + "'");
+                    }
+                    fileCond.push("CRUISE_NAME in (" + quoted.join(',') + ")");
+                    cruiseCond.push("CRUISE_NAME in (" + quoted.join(',') + ")");
                 }
                 if (values.instruments && values.instruments.length > 0) {
                     var quoted = [];
@@ -253,62 +269,55 @@ define([
                         //Surround each string with single quotes
                         quoted.push("'" + values.instruments[i] + "'");
                     }
-                    sql.push("INSTRUMENT_NAME in (" + quoted.join(',') + ")");
+                    fileCond.push("INSTRUMENT_NAME in (" + quoted.join(',') + ")");
+                    cruiseCond.push("INSTR_NAME in (" + quoted.join(',') + ")");
                 }
                 if (values.minNumBeams) {
-                    sql.push("NUMBEROFBEAMS >= " + values.minNumBeams);
+                    fileCond.push("NUMBEROFBEAMS >= " + values.minNumBeams);
                 }
                 if (values.maxNumBeams) {
-                    sql.push("NUMBEROFBEAMS <= " + values.maxNumBeams);
+                    fileCond.push("NUMBEROFBEAMS <= " + values.maxNumBeams);
                 }                
                 if (values.minSwathWidth) {
-                    sql.push("SWATHWIDTH >= " + values.minSwathWidth);
+                    fileCond.push("SWATHWIDTH >= " + values.minSwathWidth);
                 }
                 if (values.maxSwathWidth) {
-                    sql.push("SWATHWIDTH <= " + values.maxSwathWidth);
+                    fileCond.push("SWATHWIDTH <= " + values.maxSwathWidth);
                 }
                 if (values.bottomSoundingsOnly) {
-                    sql.push("BOTTOM_HIT = 'Y'");
+                    fileCond.push("BOTTOM_HIT = 'Y'");
+                }   
+                if (values.frequency) {
+                    fileCond.push("FREQUENCY LIKE '%" + values.frequency + "kHz%'");
                 }
                 //TODO: Add frequency select
 
-                //Apply to all 4 sublayers
-                layerDefinition = sql.join(' AND ');
-                layerDefinitions[1] = layerDefinition;
-                layerDefinitions[2] = layerDefinition;
-                layerDefinitions[3] = layerDefinition;
-                layerDefinitions[4] = layerDefinition;
-                layerDefinitions[5] = layerDefinition;
-                layerDefinitions[6] = layerDefinition;
+                var fileLayerDefinition = fileCond.join(' AND ');
+                var cruiseLayerDefinition = cruiseCond.join(' AND ');
+                
+                var layerDefinitions = [];
 
-                layerDefinitions[8] = layerDefinition;
-                layerDefinitions[9] = layerDefinition;
-                layerDefinitions[10] = layerDefinition;
-                layerDefinitions[11] = layerDefinition;
-                layerDefinitions[12] = layerDefinition;
-                layerDefinitions[13] = layerDefinition;
+                //Apply to all 6 file-level sublayers
+                layerDefinitions[1] = fileLayerDefinition;
+                layerDefinitions[2] = fileLayerDefinition;
+                layerDefinitions[3] = fileLayerDefinition;
+                layerDefinitions[4] = fileLayerDefinition;
+                layerDefinitions[5] = fileLayerDefinition;
+                layerDefinitions[6] = fileLayerDefinition;
+
+                //Apply to all 6 cruise-level sublayers
+                layerDefinitions[8] = cruiseLayerDefinition;
+                layerDefinitions[9] = cruiseLayerDefinition;
+                layerDefinitions[10] = cruiseLayerDefinition;
+                layerDefinitions[11] = cruiseLayerDefinition;
+                layerDefinitions[12] = cruiseLayerDefinition;
+                layerDefinitions[13] = cruiseLayerDefinition;
                 
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);                
 
                 this.layersPanel.enableResetButton();
                 this.layersPanel.setCurrentFilterString(values);
-
-                ///FOR TESTING
-                // var queryTask = new QueryTask('http://mapdevel.ngdc.noaa.gov:6080/arcgis/rest/services/water_column_sonar/MapServer/14');
-                // var query = new Query();
-                // var statDef = new StatisticDefinition;
-                
-                // statDef.statisticType = "max";
-                // statDef.onStatisticField = "XMAX";
-                // statDef.outStatisticFieldName = "maxX";
-                // query.returnGeometry = false;
-                // query.where = layerDefinition;
-                // //query.outFields = outFields;
-                // query.outStatistics = [ statDef ];
-                // queryTask.execute(query).then(function(featureSet) {
-                //     console.log('foo');
-                // });
             },
 
             resetWcd: function() {            
@@ -318,6 +327,22 @@ define([
                 this.layersPanel.disableResetButton();
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
+            },
+
+            //Format a date in the form yyyy-mm-dd
+            toDateString: function(date) {
+                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
+            },
+
+            padDigits: function(n, totalDigits){
+                n = n.toString();
+                var pd = '';
+                if (totalDigits > n.length) {
+                    for (i = 0; i < (totalDigits - n.length); i++) {
+                        pd += '0';
+                    }
+                }
+                return pd + n.toString();
             }
         });
     }

@@ -191,8 +191,14 @@ define([
                     s += 'Ending date: ' + this.toDateString(values.endDate) + '<br>';
                 }
 
-                if (values.cruiseId) {
-                    s += 'Survey ID: ' + values.cruiseId + '<br>';
+                if (values.ships && values.ships.length > 0) {
+                    s += 'Ship: ' + values.ships.join(',') + '<br>';
+                }
+                if (values.institutions && values.institutions.length > 0) {
+                    s += 'Institution: ' + values.institutions.join(',') + '<br>';
+                }
+                if (values.surveyIds && values.surveyIds.length > 0) {
+                    s += 'Survey ID: ' + values.surveyIds.join(',') + '<br>';
                 }
                 if (values.instruments && values.instruments.length > 0) {
                     s += 'Instrument: ' + values.instruments.join(',') + '<br>';
@@ -208,16 +214,6 @@ define([
                     s += 'Number of beams: less than ' + values.maxNumBeams + '<br>';
                 }
 
-                if (values.minRecordingRange && values.maxRecordingRange) {
-                    s += 'Recording range: ' + values.minRecordingRange + ' to ' + values.maxRecordingRange + ' m<br>';
-                }
-                else if (values.minRecordingRange) {
-                    s += 'Recording range: greater than ' + values.minRecordingRange + ' m<br>';
-                }
-                else if (values.maxRecordingRange) {
-                    s += 'Recording range: less than ' + values.maxRecordingRange + ' m<br>';
-                }
-
                 if (values.minSwathWidth && values.maxSwathWidth) {
                     s += 'Swath width: ' + values.minSwathWidth + ' to ' + values.maxSwathWidth + ' degrees<br>';
                 }
@@ -226,6 +222,14 @@ define([
                 }
                 else if (values.maxSwathWidth) {
                     s += 'Swath width: less than ' + values.maxSwathWidth + ' degrees<br>';
+                }
+
+                if (values.bottomSoundingsOnly) {
+                    s += 'Bottom soundings only';
+                }
+
+                if (values.frequency) {
+                    s += 'Frequency: ' + values.frequency + 'kHz';
                 }
                 filterDiv.innerHTML = s;
             },

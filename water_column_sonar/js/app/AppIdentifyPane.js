@@ -42,8 +42,13 @@ define([
                 this.requestDataFilesOrSurveysButton = new Button({
                     label: 'Request These Cruises',
                     style: 'bottom: 5px; left: 15px;',
-                    onClick: lang.hitch(this, function(){
-                        this.requestDataFiles();
+                    onClick: lang.hitch(this, function(){    
+                        if (this.layerMode == 'file') {
+                            this.requestDataFiles();
+                        }
+                        else {
+                            this.requestCruises();
+                        }
                     })
                 }).placeAt(this.featurePageBottomBar);
 
@@ -51,7 +56,12 @@ define([
                     label: 'Request This Cruise',
                     style: 'bottom: 25px; left: 15px;',
                     onClick: lang.hitch(this, function(){
-                        this.requestDataFile();
+                        if (this.layerMode == 'file') {
+                            this.requestDataFile();
+                        }
+                        else {
+                            this.requestCruise();
+                        }
                     })
                 }).placeAt(this.infoPageBottomBar);
 
@@ -91,7 +101,12 @@ define([
             },
 
             getItemDisplayLabel: function(item, uid) {
-                return '<span id="itemLabel-' + uid + '">' + item.value + '</span>';
+                if (this.layerMode == 'file') {
+                    return '<span id="itemLabel-' + uid + '">' + item.value + '</span>';
+                }
+                else {
+                    return '<span id="itemLabel-' + uid + '">' + item.value + ' (Instrument: ' + item.feature.attributes['Instrument Name'] + ')</span>';
+                }
             },
 
             requestDataFiles: function() {
@@ -128,6 +143,43 @@ define([
                 this.requestDataDialog.show();
             },
 
+            requestCruises: function() {
+                var items = this.storeModel.store.query({type: 'item'});
+                var cruiseInfos = [];
+                for (var i = 0; i < items.length; i++) {
+                    cruiseInfos.push([items[i].attributes['Cruise ID'], items[i].attributes['Instrument Name']]);
+                    // cruiseInfos.push({
+                    //     cruise: items[i].attributes['Cruise ID'],
+                    //     ship: items[i].attributes['Ship Name'],
+                    //     instrument: items[i].attributes['Instrument Name']
+                    // });
+                }
+
+                if (!this.requestDataDialog) {
+                    this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
+                }
+                this.requestDataDialog.cruiseInfos = cruiseInfos;
+                this.requestDataDialog.show();
+            },
+
+            requestCruise: function() {
+                // var cruiseInfo = {
+                //     cruise: this.currentItem.attributes['Cruise ID'],
+                //     ship: this.currentItem.attributes['Ship Name'],
+                //     instrument: this.currentItem.attributes['Instrument Name']
+                // };
+                var cruiseInfo = [
+                    [this.currentItem.attributes['Cruise ID']],
+                    [this.currentItem.attributes['Instrument Name']]
+                ]
+
+                if (!this.requestDataDialog) {
+                    this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
+                }
+                this.requestDataDialog.cruiseInfos = [cruiseInfo];
+                this.requestDataDialog.show();
+            },
+
             populateFeatureStore: function(results) {
                 var numFeatures = 0;
                 this.expandedNodePaths = [];
@@ -161,23 +213,26 @@ define([
                                     parent: layerName
                                 });
                             }
-                            //Create an instrument "folder" node if it doesn't already exist
-                            var instrument = item.feature.attributes['Instrument Name'];
-                            var instrumentKey = layerName + '/' + surveyId + '/' + instrument;
-                            if (this.featureStore.query({id: instrumentKey}).length === 0) {
-                                this.featureStore.put({
-                                    uid: ++this.uid,
-                                    id: instrumentKey,
-                                    label: '<b>Instrument: ' + instrument + '</b>',
-                                    type: 'folder',
-                                    parent: surveyKey
-                                });
 
-                                //Add this node to the list of nodes to be expanded to in constructFeatureTree
-                                this.expandedNodePaths.push(['root', layerName, surveyKey, instrumentKey]);
+                            if (this.layerMode == 'file') {
+                                //Create an instrument "folder" node if it doesn't already exist
+                                var instrument = item.feature.attributes['Instrument Name'];
+                                var instrumentKey = layerName + '/' + surveyId + '/' + instrument;
+                                if (this.featureStore.query({id: instrumentKey}).length === 0) {
+                                    this.featureStore.put({
+                                        uid: ++this.uid,
+                                        id: instrumentKey,
+                                        label: '<b>Instrument: ' + instrument + '</b>',
+                                        type: 'folder',
+                                        parent: surveyKey
+                                    });
+
+                                    //Add this node to the list of nodes to be expanded to in constructFeatureTree
+                                    this.expandedNodePaths.push(['root', layerName, surveyKey, instrumentKey]);
+                                }
                             }
 
-                            //Add the current item to the store, with the layerName as parent
+                            //Add the current item to the store
                             this.featureStore.put({
                                 uid: ++this.uid,
                                 id: this.uid,
@@ -188,7 +243,7 @@ define([
                                 layerUrl: layerUrl,
                                 layerKey: layerKey,
                                 attributes: item.feature.attributes,
-                                parent: instrumentKey,
+                                parent: this.layerMode == 'file' ? instrumentKey : surveyKey,
                                 type: 'item'
                             });
                         }
@@ -199,8 +254,14 @@ define([
 
             constructFeatureTree: function() {
                 this.inherited(arguments);
-                //Expand the tree to the instrument level. All nodes will be opened except for these.
-                this.tree.set('paths', this.expandedNodePaths);
+
+                if (this.layerMode == 'file') {
+                    //Expand the tree to the instrument level. All nodes will be opened except for these.
+                    this.tree.set('paths', this.expandedNodePaths);
+                }
+                else {
+                    this.tree.expandAll();
+                }
             },
 
             setLayerMode: function(layerMode) {
