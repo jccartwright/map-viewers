@@ -170,14 +170,14 @@ Bathymetry at NGDC: Get data*/
                     'Water Column Sonar/File-Level: NMFS': lang.hitch(this, this.wcdFileFormatter),
                     'Water Column Sonar/File-Level: OER': lang.hitch(this, this.wcdFileFormatter), 
                     'Water Column Sonar/File-Level: UNOLS': lang.hitch(this, this.wcdFileFormatter), 
-                    'Water Column Sonar/File-Level: Other _NOAA_': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/File-Level: Other _Non-NOAA_': lang.hitch(this, this.wcdFileFormatter),
+                    'Water Column Sonar/File-Level: Other NOAA': lang.hitch(this, this.wcdFileFormatter),
+                    'Water Column Sonar/File-Level: Other': lang.hitch(this, this.wcdFileFormatter),
                     'Water Column Sonar/File-Level: Non-U.S.': lang.hitch(this, this.wcdFileFormatter),
                     'Water Column Sonar/Cruise-Level: NMFS': lang.hitch(this, this.wcdCruiseFormatter),
                     'Water Column Sonar/Cruise-Level: OER': lang.hitch(this, this.wcdCruiseFormatter), 
                     'Water Column Sonar/Cruise-Level: UNOLS': lang.hitch(this, this.wcdCruiseFormatter), 
-                    'Water Column Sonar/Cruise-Level: Other _NOAA_': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Cruise-Level: Other _Non-NOAA_': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Cruise-Level: Other NOAA': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Cruise-Level: Other': lang.hitch(this, this.wcdCruiseFormatter),
                     'Water Column Sonar/Cruise-Level: Non-U.S.': lang.hitch(this, this.wcdCruiseFormatter)
                 };
             }, //end constructor
@@ -204,10 +204,10 @@ Bathymetry at NGDC: Get data*/
                     if ((features = results['Water Column Sonar']['File-Level: UNOLS'])) {
                         features.sort(this.wcdFileSort);
                     }
-                    if ((features = results['Water Column Sonar']['File-Level: Other (NOAA)'])) {
+                    if ((features = results['Water Column Sonar']['File-Level: Other NOAA'])) {
                         features.sort(this.wcdFileSort);
                     }
-                    if ((features = results['Water Column Sonar']['File-Level: Other (Non-NOAA)'])) {
+                    if ((features = results['Water Column Sonar']['File-Level: Other'])) {
                         features.sort(this.wcdFileSort);
                     }
                     if ((features = results['Water Column Sonar']['File-Level: Non-U.S.'])) {
@@ -222,10 +222,10 @@ Bathymetry at NGDC: Get data*/
                     if ((features = results['Water Column Sonar']['Cruise-Level: UNOLS'])) {
                         features.sort(this.wcdCruiseSort);
                     }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: Other (NOAA)'])) {
+                    if ((features = results['Water Column Sonar']['Cruise-Level: Other NOAA'])) {
                         features.sort(this.wcdCruiseSort);
                     }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: Other (Non-NOAA)'])) {
+                    if ((features = results['Water Column Sonar']['Cruise-Level: Other'])) {
                         features.sort(this.wcdCruiseSort);
                     }
                     if ((features = results['Water Column Sonar']['Cruise-Level: Non-U.S.'])) {
