@@ -175,7 +175,7 @@ define([
                 var cruiseInfo = [
                     [this.currentItem.attributes['Cruise ID']],
                     [this.currentItem.attributes['Instrument Name']]
-                ]
+                ];
 
                 if (!this.requestDataDialog) {
                     this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
@@ -218,10 +218,11 @@ define([
                                 });
                             }
 
+                            var instrumentKey;
                             if (this.layerMode == 'file') {
                                 //Create an instrument "folder" node if it doesn't already exist
                                 var instrument = item.feature.attributes['Instrument Name'];
-                                var instrumentKey = layerName + '/' + surveyId + '/' + instrument;
+                                instrumentKey = layerName + '/' + surveyId + '/' + instrument;
                                 if (this.featureStore.query({id: instrumentKey}).length === 0) {
                                     this.featureStore.put({
                                         uid: ++this.uid,

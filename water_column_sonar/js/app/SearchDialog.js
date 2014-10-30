@@ -90,12 +90,10 @@ define([
                         handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
-                        console.log('populateShipSelect...')
                         this.populateShipSelect(data.items);
-                        console.log('populateShipSelect finished')
                     }
                 }), function(err){
-                    logger.error('Error retrieving ships JSON');
+                    logger.error('Error retrieving ships JSON: ' + err);
                 });
 
                 script.get("http://maps.ngdc.noaa.gov/mapviewer-support/wcd/institutions.groovy", {
@@ -104,12 +102,10 @@ define([
                         handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
-                        console.log('populateInstitutionSelect...')
                         this.populateInstitutionSelect(data.items);
-                        console.log('populateInstitutionSelect finished')
                     }
                 }), function(err){
-                    logger.error('Error retrieving ships JSON');
+                    logger.error('Error retrieving ships JSON: ' + err);
                 });
 
                 script.get("http://maps.ngdc.noaa.gov/mapviewer-support/wcd/surveys.groovy", {
@@ -118,12 +114,10 @@ define([
                         handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
-                        console.log('populateSurveySelect...')
                         this.populateSurveySelect(data.items);
-                        console.log('populateSurveySelect finished')
                     }
                 }), function(err){
-                    logger.error('Error retrieving ships JSON');
+                    logger.error('Error retrieving ships JSON: ' + err);
                 });
 
                 this.setFileCriteriaDisabled(true);

@@ -219,6 +219,8 @@ define([
             filterWcd: function(values) {                
                 var fileCond = [];
                 var cruiseCond = [];
+                var i;
+                var quoted;
                 
                 if (values.startDate) {
                     fileCond.push("COLLECTION_DATE>=date '" + this.toDateString(values.startDate) + "'");
@@ -229,8 +231,8 @@ define([
                     cruiseCond.push("END_DATE<=date '" + this.toDateString(values.endDate) + "'");
                 }
                 if (values.ships && values.ships.length > 0) {
-                    var quoted = [];
-                    for (var i = 0; i < values.ships.length; i++) {
+                    quoted = [];
+                    for (i = 0; i < values.ships.length; i++) {
                         //Surround each string with single quotes
                         quoted.push("'" + values.ships[i] + "'");
                     }
@@ -239,7 +241,7 @@ define([
                 }
                 if (values.institutions && values.institutions.length > 0) {
                     var conditionals = [];
-                    for (var i = 0; i < values.institutions.length; i++) {
+                    for (i = 0; i < values.institutions.length; i++) {
                         //Surround each string with wildcard characters and single quotes
                         conditionals.push("SOURCE_NAME LIKE '%" + values.institutions[i] + "%'");
                     }
@@ -255,8 +257,8 @@ define([
 
                 }
                 if (values.surveyIds && values.surveyIds.length > 0) {
-                    var quoted = [];
-                    for (var i = 0; i < values.surveyIds.length; i++) {
+                    quoted = [];
+                    for (i = 0; i < values.surveyIds.length; i++) {
                         //Surround each string with single quotes
                         quoted.push("'" + values.surveyIds[i] + "'");
                     }
@@ -264,8 +266,8 @@ define([
                     cruiseCond.push("CRUISE_NAME in (" + quoted.join(',') + ")");
                 }
                 if (values.instruments && values.instruments.length > 0) {
-                    var quoted = [];
-                    for (var i = 0; i < values.instruments.length; i++) {
+                    quoted = [];
+                    for (i = 0; i < values.instruments.length; i++) {
                         //Surround each string with single quotes
                         quoted.push("'" + values.instruments[i] + "'");
                     }
@@ -338,7 +340,7 @@ define([
                 n = n.toString();
                 var pd = '';
                 if (totalDigits > n.length) {
-                    for (i = 0; i < (totalDigits - n.length); i++) {
+                    for (var i = 0; i < (totalDigits - n.length); i++) {
                         pd += '0';
                     }
                 }
