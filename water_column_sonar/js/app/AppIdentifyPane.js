@@ -102,11 +102,15 @@ define([
 
             getItemDisplayLabel: function(item, uid) {
                 if (this.layerMode == 'file') {
-                    return '<span id="itemLabel-' + uid + '">' + item.value + '</span>';
+                    return this.getItemLabelSpan(item.value, uid);
                 }
                 else {
-                    return '<span id="itemLabel-' + uid + '">' + item.value + ' (Instrument: ' + item.feature.attributes['Instrument Name'] + ')</span>';
+                    return this.getItemLabelSpan(item.value + ' (Instrument: ' + item.feature.attributes['Instrument Name'] + ')', uid);
                 }
+            },
+
+            getItemLabelSpan: function(text, uid) {
+                return '<span id="itemLabel-' + uid + '">' + text + '</span>';
             },
 
             requestDataFiles: function() {
