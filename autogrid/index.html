@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Version: @application.version@, Last update: @application.buildDate@ -->
+    <title>AutoGrid | ngdc.noaa.gov</title>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.11/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="http://js.arcgis.com/3.11/esri/css/esri.css">
+    
+
+    <!-- <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/MapToolbar.css"> -->
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/identify/IdentifyPane.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/CoordinatesToolbar.css">
+
+    <link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css">
+    <!--<link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css">-->
+    <!--<link rel="stylesheet" href="../../dijits/js/ngdc/themes/tundra/BoundingBoxDialog.css">-->
+    <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/Banner.css">-->
+    <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/CoordinatesToolbar.css">-->
+
+    <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
+    
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.11/dojox/layout/resources/FloatingPane.css"/>
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.11/dojox/layout/resources/ResizeHandle.css"/>
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.11/dojox/form/resources/CheckedMultiSelect.css"/>
+
+    <link rel="stylesheet" href="css/local.css">
+      
+    <script>
+        var dojoConfig = {
+            waitSeconds: 5,
+            async: true,
+            parseOnLoad: false,
+
+            packages: [
+            {
+                name: "ngdc",
+                location: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc'
+                //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
+            },
+            {
+                name: "app",
+                location: location.pathname.replace(/\/[^/]*$/, '') + '/js/app'
+            }
+            ],
+
+            //app-specific config values
+            app: {
+                loglevel: 2,
+                ngdcDijitsUrl: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc'
+                //ngdcDijitsUrl: '../../dijits/js/ngdc'
+            }
+        };
+    </script>
+    <script src="http://js.arcgis.com/3.11/"></script>
+    <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
+    <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3995.js"></script>
+    <!--<script src="js/app/mapLoader.js"></script>-->
+</head>
+<body class="tundra">
+<div id="loadingOverlay" class="loadingOverlay pageOverlay">
+    <div id="loaderInner"></div>
+</div>
+
+<div id="busy"></div>
+
+<div id="mainWindow" class="noBorder" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false">
+
+    <div id="header" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'">
+        <div id="banner"></div>
+    </div>
+
+    <div id="leftPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'left', splitter:true" style="background-color: red;">
+
+        <div data-dojo-type="dijit/layout/ContentPane" style="height: 100px;">
+        </div>
+        <div data-dojo-type="dijit/layout/AccordionContainer">
+            <div id="gridOptions" data-dojo-type="dijit/layout/ContentPane" title="Grid Options">
+
+            </div>
+            <div id="mapOptions" data-dojo-type="dijit/layout/ContentPane" title="Map Options">
+            Map Options
+            </div>
+            <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" title="Layers">
+                <!--<div id="layers" data-dojo-type="app/LayersPanel"></div>-->
+            </div>
+            <!--<div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">-->
+                <!--<div id="credits" data-dojo-type="app/CreditsPanel"></div>-->
+            <!--</div>-->
+            <!--<div id="helpPanel" data-dojo-type="dijit/layout/ContentPane" title="Help">-->
+                <!--<div id="help" data-dojo-type="app/HelpPanel"></div>-->
+            <!--</div>-->
+        </div>
+
+    </div> <!-- end leftPane -->
+
+    <!-- mapContainer nested inside ContentPane because it seems to force map to initially fill pane -->
+    <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
+
+        <div id="mapContainer" data-dojo-type="dijit/layout/TabContainer" data-dojo-props="tabPosition: 'right'">
+            <div id="mercator" data-dojo-type="dijit/layout/ContentPane" title="Mercator" class="map" data-dojo-props="iconClass:'mercatorTabIcon', showTitle: false, tooltip: 'Mercator'">
+                <div id="mercatorMapToolbar"></div>
+                <div id="mercatorCoordinatesToolbar"></div>
+            </div>
+            <div id="arctic" data-dojo-type="dijit/layout/ContentPane" title="Arctic" class="map" data-dojo-props="iconClass:'arcticTabIcon', showTitle: false, tooltip: 'Arctic'">
+                <div id="arcticMapToolbar"></div>
+                <div id="arcticCoordinatesToolbar"></div>
+            </div>            
+        </div>
+
+    </div> <!-- end centerPane -->
+    
+</div> <!-- end mainWindow BorderContainer -->
+<div id="mercatorIdentifyPaneDiv"></div>
+<div id="arcticIdentifyPaneDiv"></div>
+
+<script>
+    //unless the Dijit is listed in the require list, it cannot be addressed via the registry
+    require([
+        "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "app/AppLoader",
+        "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer", "dijit/layout/TabContainer",
+        "app/HelpPanel", "app/CreditsPanel", "app/LayersPanel", "dojo/domReady!" ],
+            function(LoadingOverlay, registry, parser, AppLoader) {
+                var loadingOverlay = new LoadingOverlay();
+                var appLoader = new AppLoader();
+
+                parser.parse();
+
+                //hide the overlay now that parsing is complete
+                loadingOverlay.endLoading();
+
+                //initialize the application
+                appLoader.init();
+            }
+    );
+
+</script>
+</body>
+</html>
