@@ -67,6 +67,7 @@ define([
                 var jsonString = JSON.stringify({
                     name: formContents.name,
                     email: formContents.email,
+                    organization: formContents.organization,
                     files: this.fileInfos,
                     cruiseAndInstrumentPairs: this.cruiseInfos
                 });

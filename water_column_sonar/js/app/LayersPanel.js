@@ -66,28 +66,28 @@ define([
                     if (this.layerMode === 'cruise') {
                         topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [10], this.chkUNOLS.checked);
                     } else {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [3], this.chkOER.checked);
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [3], this.chkUNOLS.checked);
                     }
                 }));
                 on(this.chkOtherNoaa, 'change', lang.hitch(this, function() {
                     if (this.layerMode === 'cruise') {
                         topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [11], this.chkOtherNoaa.checked);
                     } else {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkOER.checked);
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkOtherNoaa.checked);
                     }
                 }));
-                on(this.chkOtherNonNoaa, 'change', lang.hitch(this, function() {
+                on(this.chkOther, 'change', lang.hitch(this, function() {
                     if (this.layerMode === 'cruise') {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [12], this.chkOtherNonNoaa.checked);
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [12], this.chkOther.checked);
                     } else {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [5], this.chkOER.checked);
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [5], this.chkOther.checked);
                     }
                 }));
                 on(this.chkNonUs, 'change', lang.hitch(this, function() {
                     if (this.layerMode === 'cruise') {
                         topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [13], this.chkNonUs.checked);
                     } else {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [6], this.chkOER.checked);
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [6], this.chkNonUs.checked);
                     }
                 }));
 
@@ -123,7 +123,7 @@ define([
                 if (this.chkOtherNoaa.checked) {
                     visibleLayers.push(11);
                 }
-                if (this.chkOtherNonNoaa.checked) {
+                if (this.chkOther.checked) {
                     visibleLayers.push(12);
                 }
                 if (this.chkNonUs.checked) {
@@ -151,7 +151,7 @@ define([
                 if (this.chkOtherNoaa.checked) {
                     visibleLayers.push(4);
                 }
-                if (this.chkOtherNonNoaa.checked) {
+                if (this.chkOther.checked) {
                     visibleLayers.push(5);
                 }
                 if (this.chkNonUs.checked) {
