@@ -63,10 +63,10 @@ define([
             getLayerDisplayLabel: function(item, count) {
 
                 if (item.layerName == 'Multibeam Bathymetric Surveys') {
-                    return '<i><b>Multibeam Bathymetry Surveys (' + this.formatCountString(count) + ')</b></i>';
+                    return '<i><b>Multibeam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i>';
                 } 
                 else if (item.layerName == 'Marine Trackline Surveys: Bathymetry') {
-                    return '<i><b>Single-Beam Bathymetry Surveys (' + this.formatCountString(count) + ')</b></i>';
+                    return '<i><b>Single-Beam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i>';
                 } 
                 else if (item.layerName == 'Surveys with BAGs') {
                     return '<i>Surveys wth BAGs (' + this.formatCountString(count) + ')</i>';
@@ -77,7 +77,7 @@ define([
                 else if (item.layerName == 'Surveys without Digital Sounding Data') {
                     return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
                 } 
-                else if (item.layerName == 'All NGDC Bathymetry DEMs') {
+                else if (item.layerName == 'All NGDC Bathymetric DEMs') {
                     return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
                 }
                 else if (item.layerName == 'Lidar') {
@@ -93,29 +93,33 @@ define([
                 }
             },
 
-            getItemDisplayLabel: function(item) {
+            getItemDisplayLabel: function(item, uid) {
                 //return item.value;
                 if (item.layerName == 'Multibeam Bathymetric Surveys') {
-                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>';
+                    return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
                 } 
                 else if (item.layerName == 'Marine Trackline Surveys: Bathymetry') {
-                    return item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>';
+                    return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
                 } 
                 else if (item.layerName == 'Surveys with BAGs') {
-                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
+                    return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
                 } 
                 else if (item.layerName == 'Surveys with Digital Sounding Data') {
-                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
+                    return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
                 } 
                 else if (item.layerName == 'Surveys without Digital Sounding Data') {
-                    return item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>');
+                    return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
                 } 
                 else if (item.layerName == 'All NGDC Bathymetry DEMs') {
-                    return item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>';
+                    return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
                 }
                 else if (item.layerName == 'Lidar') {
-                    return item.feature.attributes['Name'];
+                    return this.getItemLabelSpan(item.feature.attributes['Name'], uid);
                 }
+            },
+
+            getItemLabelSpan: function(text, uid) {
+                return '<span id="itemLabel-' + uid + '">' + text + '</span>';
             },
 
             populateFeatureStore: function(results) {
@@ -166,8 +170,8 @@ define([
                             this.featureStore.put({
                                 uid: ++this.uid,
                                 id: this.uid,                                
-                                displayLabel: this.getItemDisplayLabel(item),
-                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
+                                displayLabel: this.getItemDisplayLabel(item, this.uid),
+                                label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
                                 layerUrl: layerUrl,
                                 layerKey: layerKey,
                                 attributes: item.feature.attributes,

@@ -163,7 +163,7 @@ define([
             },  //end defineMapServices
 
             definePairedMapServices: function() {
-                this.pairedMapServices = [                    
+                this.pairedMapServices = [
                      {
                          id: 'NOS Hydrographic Surveys',
                          tiledService: this.getLayerById('NOS Hydro (tiled)'),
@@ -175,6 +175,19 @@ define([
             },
 
             setSubLayerVisibility: function() {
+                //logger.debug('setting subLayer visibility...');
+                //this.getLayerById('Water Column Sonar').setVisibleLayers([0,1,2,3]);
+                //this.getLayerById('DEM Extents').setVisibleLayers([9999]); //Manually set all the sublayers to invisible for 'DEM Extents'
+                //set on PairedService or dynamic service?
+                //this.getLayerById('NOS Hydro (dynamic)').setVisibleLayers([9999]);
+                //this.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([9999]); //Manually set all the sublayers to invisible for 'NOS Hydro'
+                //this.getLayerById('NOS Hydro Non-Digital').setVisibleLayers([9999]);
+
+                this.getLayerById('DEM Extents').setVisibleLayers([12]);
+
+                //this.getLayerById('DAV').setVisibleLayers([-1]);
+
+                //this.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0])
             }
         });
     }
