@@ -27,8 +27,6 @@ define([
             mapReady: function() {
                 this.inherited(arguments);
 
-                console.log('inside custom Arctic mapReady...');   
-
                 var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, 'arcticMapToolbar');
                 mapToolbar.startup();
                 

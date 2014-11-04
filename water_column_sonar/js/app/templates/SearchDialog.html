@@ -27,21 +27,17 @@
                 </td>
                 <td>
                     Institution:&nbsp;&nbsp;&nbsp;
-                    <input data-dojo-attach-point="chkAllInst" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllInst"/>
+                    <input data-dojo-attach-point="chkAllInstitutions" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllInstitutions"/>
                     <label>All Institutions</label><br>
                     <select multiple="true" data-dojo-attach-point="sourceInstSelect" class="surveySelect-multiSelect" name="institutions" data-dojo-type="dojox/form/CheckedMultiSelect"/>
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
-                    Survey ID:
-                    <div id="surveyIdSelect" data-dojo-attach-point="surveyIdSelect" data-dojo-type="dijit/form/FilteringSelect" name="surveyId"></div>
-                </td>
-            </tr>
-            <tr>
                 <td>
-                    Instrument:<br>
-                    <select multiple="true" data-dojo-type="dojox/form/CheckedMultiSelect" data-dojo-attach-point="instrumentSelect" name="instruments">
+                    Instrument:&nbsp;&nbsp;&nbsp;
+                    <input data-dojo-attach-point="chkAllInstruments" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllInstruments"/>
+                    <label>All Instruments</label><br>
+                    <select disabled multiple="true" data-dojo-type="dojox/form/CheckedMultiSelect" data-dojo-attach-point="instrumentSelect" name="instruments">
                         <option value="EM122">EM122</option>
                         <option value="EM302">EM302</option>
                         <option value="EK60">EK60</option>
@@ -49,21 +45,34 @@
                     </select>
                 </td>
                 <td>
-                    Frequency (kHz):<br>
-                    <label for="minFrequencySpinner">Min:</label>
-                    <div disabled data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minFrequencySpinner" 
-                        data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:710,places:0}" name="minFrequency" style="width: 55px"></div>
-                    <label for="maxFrequencySpinner">Max:</label>
-                    <div disabled data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxFrequencySpinner" 
-                        data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:710,places:0}" name="maxFrequency" style="width: 55px"></div><br>
-                    <input data-dojo-attach-point="chkAllFrequencies" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllFrequencies"/>
-                    <label for="chkAllFrequencies">All Frequencies</label>
-
+                    Survey ID:&nbsp;&nbsp;&nbsp;
+                    <input data-dojo-attach-point="chkAllSurveys" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllSurveys"/>
+                    <label>All Surveys</label><br>
+                    <select multiple="true" data-dojo-attach-point="surveyIdSelect" class="surveySelect-multiSelect" name="surveyIds" data-dojo-type="dojox/form/CheckedMultiSelect"/>
                 </td>
-            </tr>
+            </tr>            
         </table>
         Available for File View Only:
         <table style="border:1px solid #b3b3b3">
+            <tr>
+                <td>
+                    Frequency includes:
+                    <input id="frequencyText" data-dojo-attach-point="frequencyText" class="frequencyText" type="text" data-dojo-type="dijit/form/NumberTextBox" name="frequency" 
+                    data-dojo-props="constraints:{min:0,max:800,places:0},
+                        invalidMessage:'Please enter a numeric value.',
+                        rangeMessage:'Frequency out of range (0-800kHz).'" /> kHz
+                    <!--TODO min and max frequency-->
+                    <!-- <label for="minFrequencySpinner">Min:</label> -->
+                    <!-- <div disabled data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minFrequencySpinner"  -->
+                        <!-- data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:710,places:0}" name="minFrequency" style="width: 55px"></div> -->
+                    <!-- <label for="maxFrequencySpinner">Max:</label> -->
+                    <!-- <div disabled data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxFrequencySpinner"  -->
+                        <!-- data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:710,places:0}" name="maxFrequency" style="width: 55px"></div><br> -->
+                    <!-- <input data-dojo-attach-point="chkAllFrequencies" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllFrequencies"/> -->
+                    <!-- <label for="chkAllFrequencies">All Frequencies</label> -->
+
+                </td>
+            </tr>
             <tr>
                 <td colspan="2">
                     Number of Beams:
