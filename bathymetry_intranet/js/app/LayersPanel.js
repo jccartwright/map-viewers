@@ -36,10 +36,10 @@ define([
                 this.inherited(arguments);
 
                 on(this.chkMultibeam, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Multibeam', [0], this.chkMultibeam.checked);
+                    topic.publish('/ngdc/layer/visibility', 'Multibeam', this.chkMultibeam.checked);
                 }));
                 on(this.chkTrackline, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Trackline Bathymetry', [1], this.chkTrackline.checked);
+                    topic.publish('/ngdc/layer/visibility', 'Trackline Bathymetry', this.chkTrackline.checked);                    
                 }));
 
                 on(this.chkNosHydroBags, 'change', lang.hitch(this, function() {
