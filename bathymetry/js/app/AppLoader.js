@@ -333,10 +333,10 @@ define([
                     sql.push("SURVEY_YEAR <= " + values.endYear);
                 }
                 if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace('*', '%') + "'");
+                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase().replace('*', '%') + "'");
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");                    
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);
