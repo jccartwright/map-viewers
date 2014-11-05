@@ -118,7 +118,7 @@ define([
                 var fileInfos = [];
                 for (var i = 0; i < items.length; i++) {
                     fileInfos.push({
-                        file: items[i].displayLabel,
+                        file: items[i].attributes['File Name'],
                         cruise: items[i].attributes['Cruise ID'],
                         ship: items[i].attributes['Ship Name'],
                         instrument: items[i].attributes['Instrument Name']
@@ -134,7 +134,7 @@ define([
 
             requestDataFile: function() {
                 var fileInfo = {
-                    file: this.currentItem.displayLabel,
+                    file: this.currentItem.attributes['File Name'],
                     cruise: this.currentItem.attributes['Cruise ID'],
                     ship: this.currentItem.attributes['Ship Name'],
                     instrument: this.currentItem.attributes['Instrument Name']
@@ -152,11 +152,6 @@ define([
                 var cruiseInfos = [];
                 for (var i = 0; i < items.length; i++) {
                     cruiseInfos.push([items[i].attributes['Cruise ID'], items[i].attributes['Instrument Name']]);
-                    // cruiseInfos.push({
-                    //     cruise: items[i].attributes['Cruise ID'],
-                    //     ship: items[i].attributes['Ship Name'],
-                    //     instrument: items[i].attributes['Instrument Name']
-                    // });
                 }
 
                 if (!this.requestDataDialog) {
@@ -167,11 +162,6 @@ define([
             },
 
             requestCruise: function() {
-                // var cruiseInfo = {
-                //     cruise: this.currentItem.attributes['Cruise ID'],
-                //     ship: this.currentItem.attributes['Ship Name'],
-                //     instrument: this.currentItem.attributes['Instrument Name']
-                // };
                 var cruiseInfo = [
                     [this.currentItem.attributes['Cruise ID']],
                     [this.currentItem.attributes['Instrument Name']]
