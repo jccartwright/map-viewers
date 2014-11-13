@@ -93,39 +93,43 @@ define([
                 }
             },
 
-            getItemDisplayLabel: function(item) {
+            getItemDisplayLabel: function(item, uid) {
                 var attr = item.feature.attributes;
                 if (item.layerName == 'Tsunami Events _green squares_' || 
                     item.layerName == 'Tsunami Events by Cause_Fatalities' ||                    
                     item.layerName == 'Significant Earthquakes') {
 
-                    return attr['Location Name'] + ': ' + attr['Date String'];
+                    return this.getItemLabelSpan(attr['Location Name'] + ': ' + attr['Date String'], uid);
                 }
                 else if (item.layerName == 'Tide Gauges_Deep Ocean Gauges' || 
                         item.layerName == 'Eyewitness_Post-Tsunami Surveys' || 
                         item.layerName == 'Tsunami Observations _cross symbols_') {
                     if (attr['Water Height'] == 'Null') {
-                        return attr['Location Name'] + ': ' + attr['Date String'];
+                        return this.getItemLabelSpan(attr['Location Name'] + ': ' + attr['Date String'], uid);
                     }
                     else {
-                        return attr['Location Name'] + ': ' + attr['Date String'] + ' ' + attr['Water Height'] + 'm';
+                        return this.getItemLabelSpan(attr['Location Name'] + ': ' + attr['Date String'] + ' ' + attr['Water Height'] + 'm', uid);
                     }
                 }
                 else if (item.layerName == 'Significant Volcanic Eruptions') {
-                    return attr['YEAR'] + ': ' + attr['NAME'];
+                    return this.getItemLabelSpan(attr['YEAR'] + ': ' + attr['NAME'], uid);
                 }
                 else if (item.layerName == 'Current DART Stations') {
-                    return attr['Station'] + ': ' + attr['Description'];
+                    return this.getItemLabelSpan(attr['Station ID'] + ': ' + attr['Description'], uid);
                 }
                 else if (item.layerName == 'Retrospective BPR Stations') {
-                    return attr['Station ID'] + ': ' + attr['Location'];
+                    return this.getItemLabelSpan(attr['Station ID'] + ': ' + attr['Location'], uid);
                 }
                 else if (item.layerName == 'NOS/COOPS Tsunami Tide Gauges') {
-                    return attr['Station'] + ': ' + attr['Name'] + ', ' + attr['State'];
+                    return this.getItemLabelSpan(attr['Station'] + ': ' + attr['Name'] + ', ' + attr['State'], uid);
                 }
                 else {
-                    return item.value;
+                    return this.getItemLabelSpan(item.value, uid);
                 }
+            },
+
+            getItemLabelSpan: function(text, uid) {
+                return '<span id="itemLabel-' + uid + '">' + text + '</span>';
             },
 
             showResults: function() {
@@ -150,7 +154,7 @@ define([
                     else if (numRunups == 1) {
                         this.showTsObservationsButton.set('label', "Show This Tsunami Event and " + numRunups + " Observation");
                     } 
-                    else if (numRunups == 0) {
+                    else if (numRunups === 0) {
                         //No tsunami observations - hide the button
                         this.showTsObservationsButton.set('label', '');
                         this.showTsObservationsButton.domNode.style.display = 'none';
@@ -215,8 +219,8 @@ define([
                             this.featureStore.put({
                                 uid: ++this.uid,
                                 id: this.uid,                                
-                                displayLabel: this.getItemDisplayLabel(item),
-                                label: this.getItemDisplayLabel(item) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
+                                displayLabel: this.getItemDisplayLabel(item, this.uid),
+                                label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
                                 layerUrl: layerUrl,
                                 layerKey: layerKey,
                                 attributes: item.feature.attributes,
