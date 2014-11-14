@@ -556,8 +556,8 @@ define([
                 }
                 
                 retrospectiveDartSql.push(
-                    "DEPLOYMENT_DATE<=TO_DATE('" + this.toDateString(endDate) + "','YYYYMMDD') AND " +
-                    "RECOVERY_DATE>=TO_DATE('" + this.toDateString(startDate) + "','YYYYMMDD')");
+                    "DEPLOYMENT_DATE <= date '" + this.toDateString(endDate) + "' AND " +
+                    "RECOVERY_DATE >= date '" + this.toDateString(startDate) + "'");
                                                     
                 var currentDartLayerDefinitions = currentDartSql.join(' and ');
                 this.hazLayerDefinitions[this.currentDartStationsLayerID] = currentDartLayerDefinitions;  
@@ -679,9 +679,9 @@ define([
                 }
             },
 
-            //Format a date in the form yyyymmdd
-            toDateString: function(date) {
-                return date.getFullYear() + this.padDigits(date.getMonth()+1,2) + this.padDigits(date.getDate(),2);
+            //Format a date in the form yyyy-mm-dd
+            toDateString: function(date) {  
+                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2)
             },
 
             padDigits: function(n, totalDigits){
