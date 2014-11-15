@@ -1,0 +1,39 @@
+<div>
+    <br>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'aoiLabel',position:['above']">
+        specify an area of interest using the map tools on the right
+    </div>
+    <label id="aoiLabel" for="areaOfInterest">Area of Interest:</label><br>
+    <span data-dojo-attach-point="aoiSpan" id="areaOfInterest">select an area using the map</span><br/>
+    <br>
+    <br>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'saveGridLabel',position:['above']">
+        Save the generated netCDF grid
+    </div>
+    <label id="saveGridLabel" for="saveGrid">Save Grid</label>
+    <input type="checkbox" data-dojo-attach-point="saveGridCheckbox" name="saveGrid" checked="checked" id="saveGrid"/>
+    <br>
+    <br>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'saveXYZLabel',position:['above']">
+        ASCII lon/lat/depth (meters)
+    </div>
+    <label id="saveXYZLabel" for="saveXYZ">Save XYZ</label>
+    <input type="checkbox" data-dojo-attach-point="saveXYZCheckbox" name="saveXYZ" checked="checked" id="saveXYZ"/>
+    <br>
+    <br>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'etopo1Label',position:['above']">
+        fill undefined cells with ETOPO1 global relief model
+    </div>
+    <label id="etopo1Label" for="etopo1">Background Fill</label>
+    <input type="checkbox" data-dojo-attach-point="backgroundFillCheckbox" name="etopo1" id="etopo1"/>
+    <br>
+    <br>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'gridSizeLabel',position:['above']">
+        Size of cells in the generated grid.
+    </div>
+    <label id="gridSizeLabel" for="gSizeMtr">Cell Size</label>
+    <input type="text" data-dojo-attach-point="gridSizeText" id="gSizeMtr" size="10" name="gSizeMtr" value="1000"/>
+    <span class="navytext">meters</span>
+    <br><br>
+    <div id="gridSizeMessage"></div>
+</div>

@@ -1,0 +1,33 @@
+<div>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'cntrIntLabel',position:['above']">
+        Contour interval of map in meters
+    </div>
+
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'colorTableIntLabel',position:['above']">
+        Applies color based on depth. choices:<br/>
+        rainbow   : Rainbow colors: magenta-blue-cyan-green-yellow-red [0/300]<br/>
+        sealand   : Smith bathymetry/topography scale [-6000/+3000]<br/>
+        gebco     : Colors for GEBCO bathymetric charts [-7000/0]
+    </div>
+
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mapTitleLabel',position:['above']">
+        Map title
+    </div>
+
+    <label id="cntrIntLabel" for="cntrInt">Contour Interval</label>
+    <input type="text" id="cntrInt" name="cntrInt" size="10" value="100"/>
+    <br>
+    <div id="zRangeMessage"></div>
+    <br>
+    <br>
+    <label id="mapTitleLabel" for="mapTitle">Map Title</label>
+    <input type="text" name="mapTitle" size="60" value="Autochart" id="mapTitle"/>
+    <br>
+    <br>
+    <label id="colorTableLabel" for="colorTable">Color Table</label>
+    <select name="colorTable" id="colorTable">
+        <option value="rainbow" selected="selected">rainbow</option>
+        <option value="sealand">sealand</option>
+        <option value="gebco">gebco</option>
+    </select>
+</div>

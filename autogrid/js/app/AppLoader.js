@@ -30,6 +30,8 @@ define([
     'app/Identify',
     'app/AppIdentifyPane',
     'app/LayersPanel',
+    'app/GridOptionsPanel',
+    'app/MapOptionsPanel',
     'dojo/domReady!'],
     function(
         declare,
@@ -62,7 +64,9 @@ define([
         ArcticMapToolbar,
         Identify,
         IdentifyPane,
-        LayersPanel
+        LayersPanel,
+        GridOptionsPanel,
+        MapOptionsPanel
         ) {
 
         return declare(null, {
@@ -90,17 +94,17 @@ define([
 
                 this.setupBanner();
 
-                this.setupLayersPanel();
+                //this.setupLayersPanel();
 
                 this.setupMapViews();
 
                 //Subscribe to messages passed by the search dialogs
-                topic.subscribe('/wcd/Search', lang.hitch(this, function(values) {
-                    this.filterWcd(values);
-                }));
-                topic.subscribe('/wcd/ResetSearch', lang.hitch(this, function() {
-                    this.resetWcd();
-                }));
+                //topic.subscribe('/wcd/Search', lang.hitch(this, function(values) {
+                //    this.filterWcd(values);
+                //}));
+                //topic.subscribe('/wcd/ResetSearch', lang.hitch(this, function() {
+                //    this.resetWcd();
+                //}));
             },
 
             setupBanner: function() {
@@ -118,10 +122,10 @@ define([
                 this.banner.placeAt('banner');
             },
 
-            setupLayersPanel: function() {
-                this.layersPanel = new LayersPanel();
-                this.layersPanel.placeAt('layersPanel');
-            },
+            //setupLayersPanel: function() {
+            //    this.layersPanel = new LayersPanel();
+            //    this.layersPanel.placeAt('layersPanel');
+            //},
 
             setupMapViews: function() {
                 logger.debug('setting up map views...');
@@ -215,7 +219,7 @@ define([
 
                 new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
-
+/*
             filterWcd: function(values) {
                 var layerDefinition;
                 var layerDefinitions = [];
@@ -319,6 +323,7 @@ define([
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
             }
+*/
         });
     }
 );
