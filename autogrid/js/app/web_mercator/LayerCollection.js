@@ -82,6 +82,10 @@ define([
                         id: 'Poles Mask',
                         visible: true,
                         imageParameters: this.imageParameters.png32
+                    }),
+                    new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer', {
+                        id: 'Multibeam (tiled)',
+                        visible: false
                     })
                 ];
             },  //end defineMapServices

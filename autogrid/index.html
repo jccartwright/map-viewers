@@ -20,6 +20,8 @@
     <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/CoordinatesToolbar.css">-->
 
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
+    <link rel="stylesheet" href="js/app/css/MapOptionsPanel.css">
+    <link rel="stylesheet" href="js/app/css/GridOptionsPanel.css">
     
     <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.11/dojox/layout/resources/FloatingPane.css"/>
     <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.11/dojox/layout/resources/ResizeHandle.css"/>
@@ -71,24 +73,21 @@
         <div id="banner"></div>
     </div>
 
-    <div id="leftPane" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="region:'left', splitter:true, design:'headline', gutters:false" style="background-color: red;">
-        <div data-dojo-type="dijit/layout/ContentPane" style="height: 100px;" data-dojo-props="region: 'top'">
-            email
-            <br>
-            submit button
+    <div id="leftPane" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="region:'left', splitter:true, design:'headline', gutters:false">
+        <!-- nest a BorderContainer here to force layout. required to get a "fixed panel" on top of AccordionContainer -->
+        <div data-dojo-type="dijit/layout/ContentPane" style="height: 100px; margin: 10px;" data-dojo-props="region: 'top'">
+            <div id="input" data-dojo-type="app/InputPanel"></div>
         </div>
+
         <div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region: 'center'">
-            <div id="gridOptions" data-dojo-type="dijit/layout/ContentPane" title="Grid Options">
-                Grid Options
-            </div>
-            <div id="mapOptions" data-dojo-type="dijit/layout/ContentPane" title="Map Options">
-                Map Options
-            </div>
-            <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" title="Layers">
-                <!--<div id="layers" data-dojo-type="app/LayersPanel"></div>-->
-            </div>
-            <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
+            <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="About AutoGrid">
                 <div id="credits" data-dojo-type="app/CreditsPanel"></div>
+            </div>
+            <div id="gridOptionsPanel" data-dojo-type="dijit/layout/ContentPane" title="Grid Options">
+                <div id="gridOptions" data-dojo-type="app/GridOptionsPanel"></div>
+            </div>
+            <div id="mapOptionsPanel" data-dojo-type="dijit/layout/ContentPane" title="Map Options">
+                <div id="mapOptions" data-dojo-type="app/MapOptionsPanel"></div>
             </div>
             <div id="helpPanel" data-dojo-type="dijit/layout/ContentPane" title="Help">
                 <div id="help" data-dojo-type="app/HelpPanel"></div>

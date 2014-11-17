@@ -29,7 +29,9 @@ define([
     'app/arctic/MapToolbar',
     'app/Identify',
     'app/AppIdentifyPane',
-    'app/LayersPanel',
+    'app/InputPanel',
+    'app/GridOptionsPanel',
+    'app/MapOptionsPanel',
     'dojo/domReady!'],
     function(
         declare,
@@ -62,7 +64,9 @@ define([
         ArcticMapToolbar,
         Identify,
         IdentifyPane,
-        LayersPanel
+        InputPanel,
+        GridOptionsPanel,
+        MapOptionsPanel
         ) {
 
         return declare(null, {
@@ -90,17 +94,7 @@ define([
 
                 this.setupBanner();
 
-                this.setupLayersPanel();
-
                 this.setupMapViews();
-
-                //Subscribe to messages passed by the search dialogs
-                topic.subscribe('/wcd/Search', lang.hitch(this, function(values) {
-                    this.filterWcd(values);
-                }));
-                topic.subscribe('/wcd/ResetSearch', lang.hitch(this, function() {
-                    this.resetWcd();
-                }));
             },
 
             setupBanner: function() {
@@ -113,14 +107,9 @@ define([
                         {url: 'http://www.ngdc.noaa.gov/mgg/bathymetry/multibeam.html', label: 'Multibeam Bathymetry'}
                     ],
                     dataUrl: 'http://www.ngdc.noaa.gov/autogird',
-                    image: '/images/water_column_sonar_data_viewer_logo.png'
+                    image: '/images/autogrid_logo.png'
                 });
                 this.banner.placeAt('banner');
-            },
-
-            setupLayersPanel: function() {
-                this.layersPanel = new LayersPanel();
-                this.layersPanel.placeAt('layersPanel');
             },
 
             setupMapViews: function() {
@@ -186,7 +175,6 @@ define([
                         }, 100);
                     }
                 }));
-
             },
 
             setupArcticView: function() {
@@ -214,110 +202,6 @@ define([
                 }, new ArcticLayerCollection());
 
                 new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
-            },
-
-            filterWcd: function(values) {
-                var layerDefinition;
-                var layerDefinitions = [];
-                var sql = [];   
-
-                if (values.startDate) {
-                    sql.push("COLLECTION_DATE>=date '" + this.toDateString(values.startDate) + "'");
-                }
-                if (values.endDate) {
-                    sql.push("COLLECTION_DATE<=date '" + this.toDateString(values.endDate) + "'");
-                }
-                if (values.ships && values.ships.length > 0) {
-                    var quoted = [];
-                    for (var i = 0; i < values.ships.length; i++) {
-                        //Surround each string with single quotes
-                        quoted.push("'" + values.ships[i] + "'");
-                    }
-                    sql.push("SHIP_NAME in (" + quoted.join(',') + ")");
-                }
-                if (values.institutions && values.institutions.length > 0) {
-                    var quoted = [];
-                    for (var i = 0; i < values.institutions.length; i++) {
-                        //Surround each string with single quotes
-                        quoted.push("'" + values.institutions[i] + "'");
-                    }
-                    sql.push("SOURCE_NAME in (" + quoted.join(',') + ")");
-                }
-                if (values.surveyId) {
-                    //sql.push("UPPER(CRUISE_NAME)='" + values.cruiseId.toUpperCase() + "'");
-                    sql.push("UPPER(CRUISE_NAME) LIKE '" + values.surveyId.toUpperCase().replace('*', '%') + "'");
-                }
-                if (values.instruments && values.instruments.length > 0) {
-                    var quoted = [];
-                    for (var i = 0; i < values.instruments.length; i++) {
-                        //Surround each string with single quotes
-                        quoted.push("'" + values.instruments[i] + "'");
-                    }
-                    sql.push("INSTRUMENT_NAME in (" + quoted.join(',') + ")");
-                }
-                if (values.minNumBeams) {
-                    sql.push("NUMBEROFBEAMS >= " + values.minNumBeams);
-                }
-                if (values.maxNumBeams) {
-                    sql.push("NUMBEROFBEAMS <= " + values.maxNumBeams);
-                }                
-                if (values.minSwathWidth) {
-                    sql.push("SWATHWIDTH >= " + values.minSwathWidth);
-                }
-                if (values.maxSwathWidth) {
-                    sql.push("SWATHWIDTH <= " + values.maxSwathWidth);
-                }
-                if (values.bottomSoundingsOnly) {
-                    sql.push("BOTTOM_HIT = 'Y'");
-                }
-                //TODO: Add frequency select
-
-                //Apply to all 4 sublayers
-                layerDefinition = sql.join(' AND ');
-                layerDefinitions[1] = layerDefinition;
-                layerDefinitions[2] = layerDefinition;
-                layerDefinitions[3] = layerDefinition;
-                layerDefinitions[4] = layerDefinition;
-                layerDefinitions[5] = layerDefinition;
-                layerDefinitions[6] = layerDefinition;
-
-                layerDefinitions[8] = layerDefinition;
-                layerDefinitions[9] = layerDefinition;
-                layerDefinitions[10] = layerDefinition;
-                layerDefinitions[11] = layerDefinition;
-                layerDefinitions[12] = layerDefinition;
-                layerDefinitions[13] = layerDefinition;
-                
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);                
-
-                this.layersPanel.enableResetButton();
-                this.layersPanel.setCurrentFilterString(values);
-
-                ///FOR TESTING
-                // var queryTask = new QueryTask('http://mapdevel.ngdc.noaa.gov:6080/arcgis/rest/services/water_column_sonar/MapServer/14');
-                // var query = new Query();
-                // var statDef = new StatisticDefinition;
-                
-                // statDef.statisticType = "max";
-                // statDef.onStatisticField = "XMAX";
-                // statDef.outStatisticFieldName = "maxX";
-                // query.returnGeometry = false;
-                // query.where = layerDefinition;
-                // //query.outFields = outFields;
-                // query.outStatistics = [ statDef ];
-                // queryTask.execute(query).then(function(featureSet) {
-                //     console.log('foo');
-                // });
-            },
-
-            resetWcd: function() {            
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions([]);
-
-                this.layersPanel.disableResetButton();
-                this.layersPanel.searchDialog.clearForm();
-                this.layersPanel.setCurrentFilterString('');
             }
         });
     }

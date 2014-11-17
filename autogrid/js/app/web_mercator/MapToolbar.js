@@ -21,7 +21,8 @@ define([
                 this._overlays = [
                     {services: ['Ocean Reference'], label: 'Boundaries/Labels'}, //Ocean Basemap/Reference is the default combo
                     {services: ['GEBCO_08 Contours'], label: 'Bathymetry Contours (GEBCO_08)'},
-                    {services: ['Graticule'], label: 'Graticule'}
+                    {services: ['Graticule'], label: 'Graticule'},
+                    {services: ['Multibeam (tiled)'], label: 'Multibeam Surveys'}
                 ];
 
                 this._identifyTools = [
