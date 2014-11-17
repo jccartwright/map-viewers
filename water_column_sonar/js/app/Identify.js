@@ -20,30 +20,6 @@ define([
         return declare([AbstractIdentify], {
 
             wcdFileFormatter: function(feature) {
-                /*Attributes for ${fileName}
-Cruise Details:
-Survey: ${surveyID}
-Ship: ${shipName}
-Project(s): ${projectName}
-Source Group: ${sourceGroup}
-Institution: ${sourceName}
-Scientist(s): ${scientistName}
-Scientist(s): ${scientistName}
-Cruise Metadata
-Instrument Details:
-Instrument: ${instrumentName}
-Calibration State: ${calStateName}
-Recording Range (m): ${recordingRange}
-Swath Width (degrees): ${swathWidth}
-Number of Beams: ${numBeams}
-Beam Type: ${beamType}
-Frequency (kHz): ${frequency}
-Calibration State: ${CalStateName}
-Collection Date: ${collectionDate}
-Associated Data:
-Data at NODC: Get data
-Bathymetry at NGDC: Get data
-Products:*/
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template = '\
@@ -56,22 +32,22 @@ Products:*/
                     <div class="valueName">Institution: <span class="parameterValue">${sourceName}</span></div>\
                     <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
                     <div class="fileHeader">Instrument Details:</div>\
-                    <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>\
-                    <div class="valueName">Recording Range (m): <span class="parameterValue">${recordingRange}</span></div>';
+                    <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
                 if (a['Instrument Name'] == 'EK60') {
                     template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
                 }
                 else {
                     template += '\
-                        <div class="valueName">Swath Width (degrees): <span class="parameterValue">${swathWidth}</span></div>\
+                        <div class="valueName">Beam Type: <span class="parameterValue">${beamType}</span></div>\
                         <div class="valueName">Number of Beams: <span class="parameterValue">${numBeams}</span></div>\
-                        <div class="valueName">Beam Type: <span class="parameterValue">${beamType}</span></div>';
+                        <div class="valueName">Swath Width (degrees): <span class="parameterValue">${swathWidth}</span></div>';
+                        
                 }
                 template += '\
+                    <div class="valueName">Recording Range (m): <span class="parameterValue">${recordingRange}</span></div>\
+                    <div class="valueName">Hit Bottom?: <span class="parameterValue">${hitBottom}</span></div>\
                     <div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>\
-                    <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>\
-                    <div class="fileHeader">Associated Data:</div>\
-                    <div class="fileHeader">Products:</div>';
+                    <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>';
                 var html = string.substitute(template, {
                         fileName: a['File Name'],
                         surveyID: a['Cruise ID'],
@@ -81,7 +57,6 @@ Products:*/
                         sourceName: a['Source Name'],
                         sourceGroup: a['Source Group'],
                         projectName: a['Project Name'],
-                        minDepth: a['Minimum Depth'],
                         collectionDate: a['Collection Date'],
                         publishDate: a['Publish Date'],
                         beamType: a['Beam Type'],
@@ -89,28 +64,13 @@ Products:*/
                         numBeams: a['Number of Beams'],
                         swathWidth: a['Swath Width (degrees)'],
                         recordingRange: a['Recording Range (m)'],
-                        frequency: a['Frequency']
+                        frequency: a['Frequency'],
+                        hitBottom: a['Hit Bottom?'] == 'Y' ? 'Yes' : 'No'
                     });                
                 return html;
             },
 
             wcdCruiseFormatter: function(feature) {
-                /*Attributes for ${surveyID}
-Cruise Details:
-Cruise ID: ${surveyID}
-Ship: ${shipName}
-Dates: ${departureDate} to ${arrivalDate}
-Departure Port: ${departurePort}
-Arrival Port: ${arrivalPort}
-Project(s): ${projectName}
-Source Group(s): ${sourceGroup}
-Institutions(s)): ${sourceName}
-Scientist(s): ${scientistName}
-Instrument: ${instrumentName}
-Calibration State: ${calStateName}
-Associated Data:
-Data at NODC: Get data
-Bathymetry at NGDC: Get data*/
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template = '\
@@ -169,14 +129,14 @@ Bathymetry at NGDC: Get data*/
                     'Water Column Sonar/File-Level: NMFS': lang.hitch(this, this.wcdFileFormatter),
                     'Water Column Sonar/File-Level: OER': lang.hitch(this, this.wcdFileFormatter), 
                     'Water Column Sonar/File-Level: UNOLS': lang.hitch(this, this.wcdFileFormatter), 
-                    'Water Column Sonar/File-Level: Other _NOAA_': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/File-Level: Other _Non-NOAA_': lang.hitch(this, this.wcdFileFormatter),
+                    'Water Column Sonar/File-Level: Other NOAA': lang.hitch(this, this.wcdFileFormatter),
+                    'Water Column Sonar/File-Level: Other': lang.hitch(this, this.wcdFileFormatter),
                     'Water Column Sonar/File-Level: Non-U.S.': lang.hitch(this, this.wcdFileFormatter),
                     'Water Column Sonar/Cruise-Level: NMFS': lang.hitch(this, this.wcdCruiseFormatter),
                     'Water Column Sonar/Cruise-Level: OER': lang.hitch(this, this.wcdCruiseFormatter), 
                     'Water Column Sonar/Cruise-Level: UNOLS': lang.hitch(this, this.wcdCruiseFormatter), 
-                    'Water Column Sonar/Cruise-Level: Other _NOAA_': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Cruise-Level: Other _Non-NOAA_': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Cruise-Level: Other NOAA': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Cruise-Level: Other': lang.hitch(this, this.wcdCruiseFormatter),
                     'Water Column Sonar/Cruise-Level: Non-U.S.': lang.hitch(this, this.wcdCruiseFormatter)
                 };
             }, //end constructor
@@ -203,10 +163,10 @@ Bathymetry at NGDC: Get data*/
                     if ((features = results['Water Column Sonar']['File-Level: UNOLS'])) {
                         features.sort(this.wcdFileSort);
                     }
-                    if ((features = results['Water Column Sonar']['File-Level: Other (NOAA)'])) {
+                    if ((features = results['Water Column Sonar']['File-Level: Other NOAA'])) {
                         features.sort(this.wcdFileSort);
                     }
-                    if ((features = results['Water Column Sonar']['File-Level: Other (Non-NOAA)'])) {
+                    if ((features = results['Water Column Sonar']['File-Level: Other'])) {
                         features.sort(this.wcdFileSort);
                     }
                     if ((features = results['Water Column Sonar']['File-Level: Non-U.S.'])) {
@@ -221,10 +181,10 @@ Bathymetry at NGDC: Get data*/
                     if ((features = results['Water Column Sonar']['Cruise-Level: UNOLS'])) {
                         features.sort(this.wcdCruiseSort);
                     }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: Other (NOAA)'])) {
+                    if ((features = results['Water Column Sonar']['Cruise-Level: Other NOAA'])) {
                         features.sort(this.wcdCruiseSort);
                     }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: Other (Non-NOAA)'])) {
+                    if ((features = results['Water Column Sonar']['Cruise-Level: Other'])) {
                         features.sort(this.wcdCruiseSort);
                     }
                     if ((features = results['Water Column Sonar']['Cruise-Level: Non-U.S.'])) {

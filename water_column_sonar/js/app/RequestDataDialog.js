@@ -67,7 +67,9 @@ define([
                 var jsonString = JSON.stringify({
                     name: formContents.name,
                     email: formContents.email,
-                    files: this.fileInfos
+                    organization: formContents.organization,
+                    files: this.fileInfos,
+                    cruiseAndInstrumentPairs: this.cruiseInfos
                 });
 
                 var okDialog = new Dialog({
@@ -95,8 +97,7 @@ define([
                     }, function(error) {
                         alert('Error: ' + error);
                     });
+
             }
-
-
         });
     });

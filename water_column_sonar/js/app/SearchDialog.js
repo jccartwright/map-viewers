@@ -10,7 +10,7 @@ define([
     'dijit/form/CheckBox',
     'dijit/form/MultiSelect',
     'dojox/form/CheckedMultiSelect',
-    'dijit/form/TextBox',
+    'dijit/form/NumberTextBox',
     'dijit/form/FilteringSelect',
     'dijit/form/DateTextBox',
     'dojo/_base/lang',
@@ -35,7 +35,7 @@ define([
         CheckBox,
         MultiSelect,
         CheckedMultiSelect,
-        TextBox,
+        NumberTextBox,
         FilteringSelect,   
         DateTextBox,
         lang,
@@ -69,59 +69,85 @@ define([
                 on(this.resetButton, 'click', lang.hitch(this, function(){
                     this.reset();
                 })); 
-                //this.clearForm();  
                 this.instrumentSelect.set('value', '');
 
                 on(this.chkAllShips, 'click', lang.hitch(this, function() {
                     this.shipSelect.set('disabled', this.chkAllShips.checked);
                 }));
-                on(this.chkAllInst, 'click', lang.hitch(this, function() {
-                    this.sourceInstSelect.set('disabled', this.chkAllInst.checked);
-                }));                
+                on(this.chkAllInstitutions, 'click', lang.hitch(this, function() {
+                    this.sourceInstSelect.set('disabled', this.chkAllInstitutions.checked);
+                }));
+                on(this.chkAllSurveys, 'click', lang.hitch(this, function() {
+                    this.surveyIdSelect.set('disabled', this.chkAllSurveys.checked);
+                }));
+                on(this.chkAllInstruments, 'click', lang.hitch(this, function() {
+                    this.instrumentSelect.set('disabled', this.chkAllInstruments.checked);
+                }));
 
-                //script.get("http://mapdevel.ngdc.noaa.gov/viewers-2.0/map-viewers/water_column_sonar/ships.json", {
-                xhr("http://mapdevel.ngdc.noaa.gov/viewers-2.0/map-viewers/water_column_sonar/ships.json", {
-                        //preventCache: true,
-                        //jsonp: 'callback',
+                script.get("http://maps.ngdc.noaa.gov/mapviewer-support/wcd/ships.groovy", {
+                        preventCache: true,
+                        jsonp: 'callback',
                         handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populateShipSelect(data.items);
                     }
                 }), function(err){
-                    logger.error('Error retrieving ships JSON');
+                    logger.error('Error retrieving ships JSON: ' + err);
                 });
 
-                //script.get("http://mapdevel.ngdc.noaa.gov/viewers-2.0/map-viewers/water_column_sonar/ships.json", {
-                xhr("http://mapdevel.ngdc.noaa.gov/viewers-2.0/map-viewers/water_column_sonar/institutions.json", {
-                        //preventCache: true,
-                        //jsonp: 'callback',
+                script.get("http://maps.ngdc.noaa.gov/mapviewer-support/wcd/institutions.groovy", {
+                        preventCache: true,
+                        jsonp: 'callback',
                         handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populateInstitutionSelect(data.items);
                     }
                 }), function(err){
-                    logger.error('Error retrieving institutions JSON');
+                    logger.error('Error retrieving ships JSON: ' + err);
+                });
+
+                script.get("http://maps.ngdc.noaa.gov/mapviewer-support/wcd/surveys.groovy", {
+                        preventCache: true,
+                        jsonp: 'callback',
+                        handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data.items) {
+                        this.populateSurveySelect(data.items);
+                    }
+                }), function(err){
+                    logger.error('Error retrieving ships JSON: ' + err);
                 });
 
                 this.setFileCriteriaDisabled(true);
             },
 
             populateShipSelect: function(items) {
-                array.forEach(items, lang.hitch(this, function(item) {                    
-                    var option = { value: item.name, label: item.name, selected: false };
-                    this.shipSelect.addOption(option);
+                var options = [];
+                array.forEach(items, lang.hitch(this, function(item) { 
+                    options.push({ value: item.id, label: item.id, selected: false });
                 }));
+                this.shipSelect.addOption(options);
                 this.shipSelect.set('disabled', true); //Freezes the widget if it's in postCreate() for some reason
             },
 
             populateInstitutionSelect: function(items) {
-                array.forEach(items, lang.hitch(this, function(item) {                    
-                    var option = { value: item.id, label: item.id, selected: false };
-                    this.sourceInstSelect.addOption(option);
+                var options = [];
+                array.forEach(items, lang.hitch(this, function(item) {
+                    options.push({ value: item.id, label: item.id, selected: false });
                 }));
+                this.sourceInstSelect.addOption(options);
                 this.sourceInstSelect.set('disabled', true); //Freezes the widget if it's in postCreate() for some reason
+            },
+
+            populateSurveySelect: function(items) {
+                var options = [];
+                array.forEach(items, lang.hitch(this, function(item) {    
+                    options.push({ value: item.id, label: item.id, selected: false });
+                }));
+                this.surveyIdSelect.addOption(options);
+                this.surveyIdSelect.set('disabled', true); //Freezes the widget if it's in postCreate() for some reason
             },
 
             execute: function(values) {  
@@ -137,9 +163,10 @@ define([
             isDefault: function(values) {
                 return (!values.startDate && !values.endDate &&
                     (this.chkAllShips.checked || values.ships.length === 0) && 
-                    (this.chkAllInst.checked || values.institutions.length === 0) &&
-                    values.surveyId === '' &&
-                    values.instruments.length === 0 &&
+                    (this.chkAllInstitutions.checked || values.institutions.length === 0) &&
+                    (this.chkAllSurveys.checked || values.surveyIds.length === 0) &&
+                    (this.chkAllInstruments.checked || values.instruments.length === 0) &&
+                    !values.frequency &&
                     isNaN(values.minNumBeams) && isNaN(values.maxNumBeams) &&
                     isNaN(values.minSwathWidth) && isNaN(values.maxSwathWidth)) &&
                     !this.chkBottomSoundings.checked;
@@ -152,20 +179,28 @@ define([
                 //Need to manually call _updateSelection for the CheckedMultiSelect. From here: https://bugs.dojotoolkit.org/ticket/16606
                 this.shipSelect.reset();
                 this.shipSelect._updateSelection();
+                this.shipSelect.set('disabled', true);
                 this.chkAllShips.set('checked', true);
 
                 this.sourceInstSelect.reset();
                 this.sourceInstSelect._updateSelection();
-                this.chkAllInst.set('checked', true);
+                this.sourceInstSelect.set('disabled', true);
+                this.chkAllInstitutions.set('checked', true);
 
-                this.surveyIdSelect.set('value', '');
+                this.surveyIdSelect.reset();
+                this.surveyIdSelect._updateSelection();
+                this.surveyIdSelect.set('disabled', true);
+                this.chkAllSurveys.set('checked', true);
                  
                 this.instrumentSelect.reset();
                 this.instrumentSelect._updateSelection();
+                this.instrumentSelect.set('disabled', true);
+                this.chkAllInstruments.set('checked', true);
 
-                this.minFrequencySpinner.set('value', '');
-                this.maxFrequencySpinner.set('value', '');
-                this.chkAllFrequencies.set('checked', true);
+                this.frequencyText.set('value', '');
+                //this.minFrequencySpinner.set('value', '');
+                //this.maxFrequencySpinner.set('value', '');
+                //this.chkAllFrequencies.set('checked', true);
                              
                 this.minNumBeamsSpinner.set('value', '');
                 this.maxNumBeamsSpinner.set('value', '');
@@ -182,6 +217,7 @@ define([
             },
 
             setFileCriteriaDisabled: function(disabled) {
+                this.frequencyText.set('disabled', disabled);
                 this.minNumBeamsSpinner.set('disabled', disabled);
                 this.maxNumBeamsSpinner.set('disabled', disabled);
                 this.minSwathWidthSpinner.set('disabled', disabled);
@@ -189,6 +225,7 @@ define([
                 this.chkBottomSoundings.set('disabled', disabled);
 
                 if (disabled) { 
+                    this.frequencyText.set('value', '');
                     this.minNumBeamsSpinner.set('value', '');
                     this.maxNumBeamsSpinner.set('value', '');
                     this.minSwathWidthSpinner.set('value', '');

@@ -42,7 +42,6 @@ define([
                 this.identifyPane.startup();
                 this.identifyPane.enabled = false;    
 
-                this.mapLayerCollection.getLayerById('Multibeam').setVisibleLayers([0]);
                 this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
 
                 this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);            
