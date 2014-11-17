@@ -430,9 +430,7 @@ define([
             submitFormToNext: function(postBody) {
                 console.log("sending order via form submission to NEXT: ", postBody);
                 
-                //var url = "http://localhost:8080/next-web/orders/create";
-                //var url = "http://agile.ngdc.noaa.gov/next-web/orders/create";
-                var url = "http://sparrow.ngdc.noaa.gov/next-web/orders/create";
+                var url = "http://www.ngdc.noaa.gov/next-web/orders/create";
 
                 //create a new form element and submit it.
                 var form = document.createElement("form");
