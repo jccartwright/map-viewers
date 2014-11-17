@@ -29,7 +29,7 @@ define([
     'app/arctic/MapToolbar',
     'app/Identify',
     'app/AppIdentifyPane',
-    'app/LayersPanel',
+    'app/InputPanel',
     'app/GridOptionsPanel',
     'app/MapOptionsPanel',
     'dojo/domReady!'],
@@ -64,7 +64,7 @@ define([
         ArcticMapToolbar,
         Identify,
         IdentifyPane,
-        LayersPanel,
+        InputPanel,
         GridOptionsPanel,
         MapOptionsPanel
         ) {
@@ -95,8 +95,6 @@ define([
                 this.setupBanner();
 
                 this.setupMapViews();
-
-                this.setupSubmitRequest();
             },
 
             setupBanner: function() {
@@ -204,28 +202,6 @@ define([
                 }, new ArcticLayerCollection());
 
                 new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
-            },
-
-            //TODO relocate this to a dijit
-            setupSubmitRequest: function() {
-                on(dom.byId('submitBtn'), 'click', lang.hitch(this,'submitNextOrder'));
-            },
-
-            submitNextOrder: function() {
-                console.log('submitting NEXT order...');
-                var data = {"email" : dom.byId('email').value };
-
-                var gridOptionsDijit = registry.byId('gridOptions');
-                var mapOptionsDijit = registry.byId('mapOptions');
-
-                if (! data.email || ! gridOptionsDijit.validate() || ! mapOptionsDijit.validate()) {
-                    console.warn("missing or invalid data - cannot submit NEXT request");
-                    return;
-                }
-
-                lang.mixin(data, gridOptionsDijit.getData());
-                lang.mixin(data, mapOptionsDijit.getData());
-                console.log(data);
             }
         });
     }

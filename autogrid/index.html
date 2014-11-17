@@ -74,19 +74,9 @@
     </div>
 
     <div id="leftPane" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="region:'left', splitter:true, design:'headline', gutters:false">
-        <!-- TODO relocate this ContentPane to dijit? -->
-        <div data-dojo-type="dijit/layout/ContentPane" style="height: 100px; margin: 10px; border: solid 1px gray" data-dojo-props="region: 'top'">
-            <label id="emailLabel" for="email" style="font-size: large">Email:</label>
-            <span style="font-size: small; color: red">(required)</span>
-            <br>
-            <input type="text" id="email" name="email" required="true" data-dojo-type="dijit/form/ValidationTextBox"
-                   style="font-size: medium; width: 325px;"
-                   data-dojo-props="validator:dojox.validate.isEmailAddress, missingMessage: 'email address is required', invalidMessage:'invalid email address'"/>
-            <br>
-            <br>
-            <div align="center">
-            <input type="submit" id="submitBtn" value="Submit Request" style="font-size: xx-large;">
-            </div>
+        <!-- nest a BorderContainer here to force layout. required to get a "fixed panel" on top of AccordionContainer -->
+        <div data-dojo-type="dijit/layout/ContentPane" style="height: 100px; margin: 10px;" data-dojo-props="region: 'top'">
+            <div id="input" data-dojo-type="app/InputPanel"></div>
         </div>
 
         <div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region: 'center'">
