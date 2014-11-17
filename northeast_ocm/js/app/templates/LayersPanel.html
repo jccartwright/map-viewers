@@ -1,4 +1,5 @@
 <div class="layersPanel_class">
+    <p>Welcome to a new map viewer of the Sandy-impacted region, part of a beta-version access system to ocean and coastal mapping data. Please send any map viewer questions or comments to ngdc.maps@noaa.gov.</p>
     <h3>Bathymetry Surveys</h3>
     <input type="checkbox" data-dojo-attach-point="chkMultibeam" data-dojo-type="dijit/form/CheckBox">
     <label for="chkMultibeam">Multibeam Bathymetry Surveys</label><br>
@@ -14,14 +15,14 @@
     <label id="lblNosHydroDigital"for="chkNosHydroDigital">Surveys with Digital Sounding Data</label><br>
 
     <input type="checkbox" id="chkNosHydroNonDigital" data-dojo-attach-point="chkNosHydroNonDigital" data-dojo-type="dijit/form/CheckBox">
-    <label id="lblNosHydroNonDigital"for="chkNosHydroNonDigital">Surveys without Digital Sounding Data</label><br>
-
-    <input type="checkbox" id="chkBagHillshades" data-dojo-attach-point="chkBagHillshades" data-dojo-type="dijit/form/CheckBox">
-    <label id="lblBagHillshades"for="chkBagHillshades">BAG Color Shaded Relief Imagery</label><br><br>
+    <label id="lblNosHydroNonDigital"for="chkNosHydroNonDigital">Surveys without Digital Sounding Data</label><br><br>
 
     <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" id="searchButton">Filter Surveys</div>
     <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" id="resetButton" disabled>Reset</div><br>
     <div id="currentFilter" class="filterText"></div><br>
+
+    <input type="checkbox" id="chkBagHillshades" data-dojo-attach-point="chkBagHillshades" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblBagHillshades"for="chkBagHillshades">BAG Color Shaded Relief Imagery</label><br>
     <hr>
 
     <h3>Digital Elevation Models (DEMs)</h3>
@@ -36,7 +37,7 @@
     <h3>Bathymetric Lidar</h3>
 
     <input type="checkbox" id="chkCscLidar" data-dojo-attach-point="chkCscLidar" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkCscLidar">Coastal Lidar Datasets available from <a href="http://www.csc.noaa.gov/digitalcoast/data/coastallidar" target="_blank">NOAA's Coastal Services Center (CSC)</a></label>
+    <label for="chkCscLidar">Coastal Lidar Datasets available from <a href="http://www.coast.noaa.gov/digitalcoast/data/coastallidar" target="_blank">NOAA's Office for Coastal Management</a> (2012 and later)</label>
     <hr>
 
     <h3>Hurricane Sandy Reference Layers</h3>

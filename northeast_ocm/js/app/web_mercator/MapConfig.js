@@ -1,6 +1,7 @@
 define([
     'dojo/_base/declare', 
     'dojo/_base/lang',
+    'dojo/_base/array',
     'dojo/dom',
     'dojo/topic',
     'ngdc/web_mercator/MapConfig',
@@ -8,14 +9,28 @@ define([
     'app/web_mercator/Identify',
     'app/AppIdentifyPane',
     'esri/layers/FeatureLayer',
+    'esri/layers/GraphicsLayer',
     'esri/renderers/UniqueValueRenderer',
     'esri/renderers/SimpleRenderer',
     'esri/symbols/SimpleLineSymbol',
-    'esri/Color'
+    'esri/symbols/TextSymbol',
+    'esri/symbols/Font',
+    'esri/symbols/SimpleMarkerSymbol',
+    'esri/symbols/PictureMarkerSymbol',
+    'esri/layers/LabelClass',
+    'esri/layers/LabelLayer',
+    'esri/Color',
+    'esri/tasks/QueryTask',
+    'esri/tasks/query',
+    'esri/graphic',
+    'esri/geometry/Point',
+    'esri/SpatialReference',
+    'esri/geometry/webMercatorUtils'
     ],
     function(
         declare, 
         lang, 
+        array,
         dom,
         topic,
         MapConfig,
@@ -23,10 +38,23 @@ define([
         Identify,
         IdentifyPane,
         FeatureLayer,
+        GraphicsLayer,
         UniqueValueRenderer,
         SimpleRenderer,
         SimpleLineSymbol,
-        Color
+        TextSymbol,
+        Font,
+        SimpleMarkerSymbol,
+        PictureMarkerSymbol,
+        LabelClass,
+        LabelLayer,
+        Color,
+        QueryTask,
+        Query,
+        Graphic,
+        Point,
+        SpatialReference,
+        webMercatorUtils
         ){
         
         return declare([MapConfig], {
@@ -69,39 +97,88 @@ define([
 
                 //Apply layer definitions to the CSC Lidar layer to only show bathymetric lidar
                 var layerDefinitions = [];
-                layerDefinitions[4] = "Data_Classes_Available LIKE '%Bathymetric Lidar Points%'";
-                this.mapLayerCollection.getLayerById('CSC Lidar').setLayerDefinitions(layerDefinitions);
+                //layerDefinitions[4] = "Data_Classes_Available LIKE '%Bathymetric Lidar Points%'";
+                layerDefinitions[4] = 'Year >= 2012';
+                this.mapLayerCollection.getLayerById('CSC Lidar').setLayerDefinitions(layerDefinitions);    
 
-                //Custom renderer for Hurricane strength classifications
-                // var renderer = new UniqueValueRenderer(null, 'SaffirSimpsonScale');
-                // renderer.addValue('ET', new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([128,128,128]), 4));
-                // renderer.addValue('TS', new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([57,228,27]), 4));
-                // renderer.addValue('TD', new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([149,206,226]), 4));
-                // renderer.addValue('H1', new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255,224,0]), 4));
-                // renderer.addValue('H2', new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255,123,0]), 4));
-                // renderer.addValue('H3', new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255,0,0]), 4));
-                // renderer.addValue('H4', new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([220,20,220]), 4));
-                // renderer.addValue('H5', new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([106,30,210]), 4));
+                this.setupHurricaneLayer();                           
+            },
 
-                var renderer = new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbol.STYLE_SHORTDOT, new Color([255,0,0]), 4));
+            setupHurricaneLayer: function() {                
+                var queryTask = new QueryTask('http://maps.coast.noaa.gov/arcgis/rest/services/Hurricanes/AllStorms/MapServer/0');
+                var query = new Query();
+                query.where = "Display_StormName = 'SANDY 2012'";
+                query.returnGeometry = false;
+                query.outFields = ["NormalizedMSW", 'BEGINLAT', 'BEGINLON', 'Display_DateAndTime'];
+                queryTask.execute(query).then(lang.hitch(this, function(featureSet) {
+                   
+                    this.hurricanePointLayer = new GraphicsLayer();
+                    array.forEach(featureSet.features, lang.hitch(this, function(feature) {
+                        var pt = webMercatorUtils.geographicToWebMercator(new Point(feature.attributes['BEGINLON'], feature.attributes['BEGINLAT'], new SpatialReference(4326)));
+                        
+                        //var sms = new SimpleMarkerSymbol().setStyle(SimpleMarkerSymbol.STYLE_SQUARE).setColor(new Color([255,0,0,0.5]));
+                        var symbol = new PictureMarkerSymbol('http://mapdevel.ngdc.noaa.gov/viewers-2.0/map-viewers/northeast_ocm/images/hurricane_icon.png', 39, 35);
+                        var graphic = new Graphic(pt, symbol);
+
+                        // var textSymbol = new TextSymbol(feature.attributes['Display_DateAndTime'] + ': ' + feature.attributes['NormalizedMSW'] + 'mph');
+                        // textSymbol.setColor(new Color([0,0,0]));
+                        // textSymbol.setOffset(0, -23);
+                        // var font = new Font()
+                        // font.setSize("7pt");
+                        // font.setFamily("arial");
+                        // font.setWeight(Font.WEIGHT_BOLD)
+                        // textSymbol.setFont(font);
+                        // var labelGraphic = new Graphic(pt, textSymbol);
+
+                        this.hurricanePointLayer.add(graphic);
+                        //this.hurricanePointLayer.add(labelGraphic);
+                        
+                    }));
+
+                    this.map.addLayer(this.hurricanePointLayer);
+                }));
+
+
+                var renderer = new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbol.STYLE_DOT, new Color([216,4,4]), 3));
 
                 //Add hurricanes feature layer, set definition to be SANDY 2012
-                this.hurricaneLayer = new FeatureLayer('http://maps.csc.noaa.gov/arcgis/rest/services/Hurricanes/AllStorms/MapServer/0', {
+                this.hurricaneLayer = new FeatureLayer('http://maps.coast.noaa.gov/arcgis/rest/services/Hurricanes/AllStorms/MapServer/0', {
                     mode: FeatureLayer.MODE_ONDEMAND,
-                    renderer: renderer
+                    renderer: renderer,
+                    outFields: ['Display_StormName', 'Display_DateAndTime', 'NormalizedMSW']
                 });
                 this.hurricaneLayer.setRenderer(renderer);
                 this.hurricaneLayer.setDefinitionExpression("Display_StormName = 'SANDY 2012'");
+
+                // create a text symbol to define the style of labels
+                // var label = new TextSymbol().setColor(new Color([0,0,0]));
+                // label.font.setSize("8pt");
+                // label.font.setFamily("arial");
+                // label.font.setWeight(Font.WEIGHT_BOLD)
+                // var labelRenderer = new SimpleRenderer(label);
+                // var labels = new LabelLayer({ id: "labels" });
+                // // tell the label layer to label the countries feature layer 
+                // // using the field named "admin"
+                // labels.addFeatureLayer(this.hurricaneLayer, labelRenderer, 
+                //     '{Display_DateAndTime} {NormalizedMSW}mph', {
+                //     labelRotation: false,
+                //     lineLabelPlacement: 'PlaceAtEnd'
+                // });
+                // add the label layer to the map
+                
                 this.map.addLayer(this.hurricaneLayer);
+                //this.map.addLayer(labels);
 
                 topic.subscribe('/hurricane/visibility', lang.hitch(this, function(visible) {
                     if (visible) {
                         this.hurricaneLayer.show();
+                        this.hurricanePointLayer.show();
                     } else {
                         this.hurricaneLayer.hide();
+                        this.hurricanePointLayer.hide();
                     }
                     
-                }));                
+                })); 
             }
          
             

@@ -3,11 +3,11 @@
 <head>
     <!-- Version: @application.version@, Last update: @application.buildDate@ -->
     <title>OCM Data for Northeast U.S. Sandy Recovery | ngdc.noaa.gov</title>
-    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/dojo/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css">
-    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/FloatingPane.css"/>
-    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/ResizeHandle.css"/>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.11/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="http://js.arcgis.com/3.11/esri/css/esri.css">
 
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.11/dojox/layout/resources/FloatingPane.css"/>
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.11/dojox/layout/resources/ResizeHandle.css"/>
 
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/MapToolbar.css">
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/identify/IdentifyPane.css">
@@ -15,11 +15,11 @@
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/Banner.css">
     <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/CoordinatesToolbar.css">
 
-    <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css">-->
-    <!--<link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css">-->
-    <!--<link rel="stylesheet" href="../../dijits/js/ngdc/themes/tundra/BoundingBoxDialog.css">-->
-    <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/Banner.css">-->
-    <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/CoordinatesToolbar.css">-->
+    <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css"> -->
+    <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css"> -->
+    <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/themes/tundra/BoundingBoxDialog.css"> -->
+    <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/css/Banner.css"> -->
+    <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/css/CoordinatesToolbar.css"> -->
 
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
     <link rel="stylesheet" href="css/local.css">
@@ -51,7 +51,7 @@
             }
         };
     </script>
-    <script src="http://js.arcgis.com/3.10/"></script>
+    <script src="http://js.arcgis.com/3.11/"></script>
     <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
 </head>
 <body class="tundra">
@@ -61,7 +61,7 @@
 
 <div id="busy"></div>
 
-<div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false">
+<div id="mainWindow" class="noBorder" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false">
 
     <div id="header" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'">
         <div id="banner"></div>
