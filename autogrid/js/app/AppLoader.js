@@ -107,7 +107,7 @@ define([
                         {url: 'http://www.ngdc.noaa.gov/mgg/bathymetry/multibeam.html', label: 'Multibeam Bathymetry'}
                     ],
                     dataUrl: 'http://www.ngdc.noaa.gov/autogird',
-                    image: '/images/water_column_sonar_data_viewer_logo.png'
+                    image: '/images/autogrid_logo.png'
                 });
                 this.banner.placeAt('banner');
             },
