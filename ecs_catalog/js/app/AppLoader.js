@@ -1,0 +1,367 @@
+define([
+    'dojo/_base/declare',
+    'dijit/registry',
+    'dojo/dom',
+    'dojo/_base/config',
+    'dojo/io-query',
+    'dojo/_base/lang',
+    'dojo/topic',
+    'dojo/on',
+    'dojo/aspect',
+    'dijit/form/CheckBox',
+    'esri/config',
+    'esri/urlUtils',
+    'esri/geometry/Extent',
+    'esri/SpatialReference',
+    'esri/geometry/webMercatorUtils',
+    'ngdc/Logger',
+    'app/web_mercator/MapConfig',
+    'app/arctic/MapConfig',
+    'ngdc/web_mercator/ZoomLevels',
+    'ngdc/arctic/ZoomLevels',
+    'ngdc/Banner',
+    'ngdc/CoordinatesToolbar',
+    'app/web_mercator/LayerCollection',
+    'app/arctic/LayerCollection',
+    'app/web_mercator/MapToolbar',
+    'app/arctic/MapToolbar',
+    'app/web_mercator/Identify',
+    'app/AppIdentifyPane',
+    'app/LayersPanel',
+    'dojo/domReady!'],
+    function(
+        declare,
+        registry,
+        dom,
+        config,
+        ioQuery,
+        lang,
+        topic,
+        on,
+        aspect,
+        CheckBox,
+        esriConfig,
+        urlUtils,
+        Extent,
+        SpatialReference,
+        webMercatorUtils,
+        Logger,
+        MercatorMapConfig,
+        ArcticMapConfig,
+        MercatorZoomLevels,
+        ArcticZoomLevels,
+        Banner,
+        CoordinatesToolbar,
+        MercatorLayerCollection,
+        ArcticLayerCollection,
+        MapToolbar,
+        ArcticMapToolbar,
+        WebMercatorIdentify,
+        IdentifyPane,
+        LayersPanel) {
+
+        return declare(null, {
+            mercatorMapConfig: null,
+            arcticMapConfig: null,
+
+            constructor: function(args){
+                declare.safeMixin(this,args);
+                this.overlayNode = dom.byId(this.overlayNodeId);
+            },
+
+            init: function() {
+                esriConfig.defaults.io.corsEnabledServers = [
+                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
+                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
+
+
+                //Use the proxy for only the 'ecs_catalog' map service.
+                // urlUtils.addProxyRule({
+                //     urlPrefix: 'http://maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog',
+                //     proxyUrl: 'https://www.ngdc.noaa.gov/ecs-catalog/map/proxy'
+                // });
+
+                //add queryParams into config object, values in queryParams take precedence
+                var queryParams = ioQuery.queryToObject(location.search.substring(1));
+                lang.mixin(config.app, queryParams);
+
+                //Get the optional region parameter from the URL. Set the regionSelect widget accordingly.
+                if (queryParams.region !== undefined) {
+                    var region = parseInt(queryParams.region);
+                    if (!isNaN(region)) {
+                        //dijit.byId('regionSelect').set('value', String(region)); //onChange calls selectRegion()
+                    }
+                } 
+
+                this.initialExtent = null;
+                if (queryParams.minx && queryParams.maxx && queryParams.miny && queryParams.maxy) {
+                    this.initialExtent = new Extent({
+                        xmin: queryParams.minx,
+                        ymin: queryParams.miny,
+                        xmax: queryParams.maxx,
+                        ymax: queryParams.maxy,
+                        spatialReference: new SpatialReference({wkid: 4326})
+                    });
+                }
+
+                //put the logger into global so all modules have access
+                window.logger = new Logger(config.app.loglevel);
+
+                this.setupBanner();
+
+                this.setupLayersPanel();
+
+                this.setupMapViews();
+
+                //Subscribe to messages passed by the MapToolbar
+                topic.subscribe('/ecs_catalog/selectRegion', lang.hitch(this, function(region) {
+                    this.selectRegion(region);
+                }));
+                topic.subscribe('/ecs_catalog/selectScenario', lang.hitch(this, function(scenario) {
+                    this.selectScenario(scenario);
+                }));
+            },
+
+            setupBanner: function() {
+                var banner = new Banner({
+                    breadcrumbs: [
+                        {url: 'http://www.noaa.gov', label: 'NOAA'},
+                        {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
+                        {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
+                        {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
+                        {url: 'http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html', label: 'Bathymetry'}
+                    ],
+                    dataUrl: 'http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html',
+                    image: 'images/ecs-logo.gif'
+                });
+                banner.placeAt('banner');
+            },
+
+            setupLayersPanel: function() {
+                this.layersPanel = new LayersPanel();
+                this.layersPanel.placeAt('layersPanel');
+            },
+
+            setupMapViews: function() {
+                logger.debug('setting up map views...');
+                // setup map views. You can only draw a Map into a visible container
+                this.setupMercatorView();
+
+                //registry.byId('mapContainer').selectChild('arctic');
+                //this.setupArcticView();
+
+                //go back to mercator as default view
+                registry.byId('mapContainer').selectChild('mercator');
+
+                registry.byId('mapContainer').watch('selectedChildWidget', lang.hitch(this, function(name, oval, nval){
+                    var mapId = nval.id;
+                    console.debug(mapId + ' map view selected');
+                    topic.publish('/ngdc/mapViewActivated', mapId);
+                    this.enableMapView(mapId);
+                }));
+
+                this.enableMapView('mercator');
+            },
+
+            enableMapView: function(/*String*/ mapId) {
+                if (mapId == 'mercator') {
+                    this.mercatorMapConfig.setEnabled(true);
+                    //this.arcticMapConfig.setEnabled(false);
+                } else { //arctic
+                    this.mercatorMapConfig.setEnabled(false);
+                    //this.arcticMapConfig.setEnabled(true);
+                }   
+            },
+
+            setupMercatorView: function() {
+                logger.debug('setting up Mercator view...');
+
+                var zoomLevels = new MercatorZoomLevels();
+
+                var center;
+                var zoom;
+                if (!this.initialExtent) {
+                    center = [-110, 20]; //centered over eastern Pacific
+                    zoom = 1; //relative zoom level; equivalent to absolute zoom level 3
+                }
+
+                this.mercatorMapConfig = new MercatorMapConfig('mercator', {
+                    center: center,
+                    zoom: zoom,
+                    extent: this.initialExtent,
+                    logo: false,
+                    showAttribution: false,
+                    overview: true,
+                    sliderStyle: 'large',
+                    navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
+                    lods: zoomLevels.lods
+                }, new MercatorLayerCollection());  
+
+                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
+
+                //Hide the scalebar at small scales <= 4
+                on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
+                    var level = this.mercatorMapConfig.map.getAbsoluteLevel();
+                    if (level <= 4) {
+                        //These need to be on a short timer due to unexpected errors during the zoom animation
+                        setTimeout(function() {
+                            coordinatesToolbar.hideScalebar();
+                        }, 100);
+                    } else {
+                        setTimeout(function() {
+                            coordinatesToolbar.showScalebar();
+                        }, 100);
+                    }
+                }));
+            },
+
+            setupArcticView: function() {
+                logger.debug('setting up Arctic view...');
+                
+                var initialExtent = new Extent({
+                    xmin: -4000000,
+                    ymin: -4000000,
+                    xmax: 4000000,
+                    ymax: 4000000,
+                    spatialReference: new SpatialReference({wkid: 3995})
+                });   
+
+                var zoomLevels = new ArcticZoomLevels();            
+
+                this.arcticMapConfig = new ArcticMapConfig('arctic', {
+                    extent: initialExtent,
+                    //zoom: 3,
+                    logo: false,
+                    showAttribution: false,
+                    overview: false,
+                    sliderStyle: 'large',
+                    navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
+                    lods: zoomLevels.lods
+                }, new ArcticLayerCollection({
+                    multibeamVisible: this.multibeamVisible,
+                    nosHydroVisible: this.nosHydroVisible,
+                    tracklineVisible: this.tracklineVisible,
+                    demVisible: this.demVisible
+                }));
+
+                new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
+            },
+
+            /*
+             * Select a region by id.
+             * Zooms to the region extent and filters the scenarioSelect FilteringSelect widget. 
+             * Scenarios are filtered by selected region and its children.
+             */
+            selectRegion: function(region) {
+                console.log('Inside selectRegion: ' + region);
+                var regionName;
+                var extent;
+                var regions = [];
+                var regionStore = this.mercatorMapConfig.mapToolbar.regionStore;
+                var scenarioStore = this.mercatorMapConfig.mapToolbar.scenarioStore;
+
+                var result = regionStore.query({objectid: region});
+                if ( result.length > 0 ) {
+                    regionName = result[0].name;
+
+                    var minx = result[0].minx;
+                    var miny = result[0].miny;
+                    var maxx = result[0].maxx;
+                    var maxy = result[0].maxy;
+
+                    extent = webMercatorUtils.geographicToWebMercator(new Extent(minx, miny, maxx, maxy, new SpatialReference({ wkid: 4326 })));
+                }
+
+                if ( regionName === 'Global' ) {
+                    //Zoom to a Pacific-centered global view
+                    extent = webMercatorUtils.geographicToWebMercator(new Extent(30, -70, 390, 70, new SpatialReference({ wkid: 4326 })));
+                } else if ( regionName === 'Arctic' ) { //Arctic region selected, open the Arctic viewer in a new window
+                    //window.open('/ecs-catalog/map/arctic', 'ecs_catalog_arctic');
+                    return;
+                } else if ( regionName !== 'Global' ) {
+                    regions.push(region);
+
+                    //Get the current region's children, if they exist
+                    var children = regionStore.query({parent_id: region});
+                    for ( var i = 0; i < children.length; i++ ) {
+                        regions.push(children[i].objectid);
+                    }
+                }
+
+                this.mercatorMapConfig.map.setExtent(extent, true);
+                //this.arcticMapConfig.map.setExtent(extent, true);
+
+                //Filter the scenario FilteringSelect
+                regions.push(0); //add the dummy region so "All Scenarios" shows up in the list
+                var filter;
+                if ( regionName === 'Global' ) {
+                    filter = '*';
+                } else {
+                    filter = new RegExp(regions.join('|'), 'g')
+                }
+                this.mercatorMapConfig.mapToolbar.scenarioSelect.query = {region: filter};
+                //this.arcticMapToolbar.scenarioSelect.query = {region: filter};
+
+                if (scenarioStore) {
+                    var firstValue;
+                    var items = scenarioStore.query({region: filter});
+
+                    if ( items.length > 0 ) {
+                        firstValue = items[0].id;
+                        this.mercatorMapConfig.mapToolbar.scenarioSelect.set('value', firstValue);
+                    } else {
+                        this.mercatorMapConfig.mapToolbar.scenarioSelect.reset();
+                    }                                            
+                }
+            },
+
+
+            /*
+             * Select a BOS Scenario by id. If scenario == 0, clear the filter.
+             * Applies a filter to the "scenario products" from the map service (currently layers 1,2,3,4,6,7,9,10,11,13,14,15,19,20)
+             */
+            selectScenario: function(scenario) {
+                console.log('Inside selectScenario ' + scenario);
+
+                var allLayerDefs = [];
+                var service = this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
+
+                /*
+                 * Map Service Layers:
+                 * Scenario Products (0)
+                 FOS Point (1)
+                 60 M Formula Point (2)
+                 Sediment Thickness Formula (3, 10)
+                 Depth Constraint Isobath Point (4)
+                 Baseline Points (5)
+                 Outer Limit Point (6)
+                 FOS Profile (7)
+                 Final Constraint Line (8)
+                 60 M Formula Line (9)
+                 Sediment Thickness Formula Line (10)
+                 Final Formula Line (11)
+                 Distance Constraint Line (12)
+                 2500 m Isobath (13)
+                 Clipped 2500 m Isobath (14)
+                 Depth Constraint Line (15)
+                 Coastline (16)
+                 Outer Limit Line (17)
+                 International (18)
+                 Envelope of FOS Points (19)
+                 ECS Area (20)
+                 */
+
+                if ( scenario !== 0 ) {
+
+                    var scenarioProductLayers = [1, 2, 3, 4, 6, 7, 9, 10, 11, 13, 14, 15, 17, 19, 20];
+
+                    for ( var i = 0; i < scenarioProductLayers.length; i++ ) {
+                        allLayerDefs[scenarioProductLayers[i]] = 'BOSS_ID=' + scenario;
+                    }
+                }
+                service.setLayerDefinitions(allLayerDefs);
+            }
+
+        });
+    }
+);
