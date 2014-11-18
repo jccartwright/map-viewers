@@ -132,7 +132,7 @@ define([
                         {url: 'http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html', label: 'Bathymetry'}
                     ],
                     dataUrl: 'http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html',
-                    image: 'images/bathymetry_viewer_logo.png'
+                    image: 'images/ecs-logo.gif'
                 });
                 banner.placeAt('banner');
             },
