@@ -61,9 +61,7 @@ define([
              "dataset": "Autochart",
              "geometry": "-145.15625, 40.80315, -136.54297, 46.27649",
              "gridCellSize": 1060,
-             "saveXYZ": true,
-             "backgroundFill": true,
-             "saveGrid": true
+             "backgroundFill": true
              }]
              }
              */
