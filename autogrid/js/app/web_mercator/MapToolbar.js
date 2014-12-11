@@ -1,9 +1,9 @@
 define([
-    'dojo/_base/declare', 
+    'dojo/_base/declare',
     'ngdc/MapToolbar'
     ],
     function(
-        declare, 
+        declare,
         MapToolbar
         ){
 
@@ -35,7 +35,7 @@ define([
 
                 this._validateLayerIds();
 
-            } //end constructor            
+            } //end constructor
         });
     }
 );
