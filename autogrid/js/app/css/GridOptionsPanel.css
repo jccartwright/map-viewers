@@ -1,3 +1,13 @@
 .gridOptionsPanel {
     font-size: large;
 }
+
+#gridSizeMessage {
+    font-size: small;
+}
+#areaOfInterest  {
+    font-size: small;
+}
+#aoiMessage {
+    font-size: small;
+}

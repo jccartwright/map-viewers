@@ -1,8 +1,11 @@
 define([
     'dojo/_base/declare',
+    'dijit/registry',
     'dijit/_WidgetBase', 
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
+    'dijit/Dialog',
+    'dojo/request/xhr',
     'dojo/topic',
     'dojo/_base/lang',
     'dojo/on',
@@ -15,10 +18,13 @@ define([
     'dojo/text!./templates/InputPanel.html'
     ],
     function(
-        declare, 
+        declare,
+        registry,
         _WidgetBase, 
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
+        Dialog,
+        xhr,
         topic,
         lang,
         on,
@@ -48,26 +54,70 @@ define([
                 on(this.submitButton, 'click', lang.hitch(this,'submitNextOrder'));
             },
 
+            /*
+             {
+             "email": "john.c.cartwright@noaa.gov",
+             "items": [{
+             "dataset": "Autochart",
+             "geometry": "-145.15625, 40.80315, -136.54297, 46.27649",
+             "gridCellSize": 1060,
+             "backgroundFill": true
+             }]
+             }
+             */
+
             submitNextOrder: function(evt) {
                 console.log('inside submitNextOrder...',evt);
 
-                /*
-                 console.log('submitting NEXT order...');
-                 var data = {"email" : dom.byId('email').value };
+                var data = {
+                    "email": registry.byId('email').value,
+                    "items": []
+                };
+
 
                  var gridOptionsDijit = registry.byId('gridOptions');
                  var mapOptionsDijit = registry.byId('mapOptions');
 
                  if (! data.email || ! gridOptionsDijit.validate() || ! mapOptionsDijit.validate()) {
-                 console.warn("missing or invalid data - cannot submit NEXT request");
-                 return;
+                    console.warn("missing or invalid data - cannot submit NEXT request");
+                    return;
                  }
 
-                 lang.mixin(data, gridOptionsDijit.getData());
-                 lang.mixin(data, mapOptionsDijit.getData());
-                 console.log(data);
-                 */
+                var jobOptions = {
+                    "dataset": "Autochart"
+                }
+                lang.mixin(jobOptions, gridOptionsDijit.getData());
+                lang.mixin(jobOptions, mapOptionsDijit.getData());
+                data.items[0] = jobOptions;
 
+                console.log(JSON.stringify(data));
+
+                var okDialog = new Dialog({
+                    title: 'Request Submitted',
+                    content: 'Your order has been received. We will contact you when your order is ready for pickup.',
+                    class: 'requestDataDialog',
+                    style: 'width:300px'
+                });
+                new Button({
+                    label: 'OK',
+                    type: 'submit',
+                    onClick: lang.hitch(this, function(){
+                        //TODO reset form?
+                        okDialog.destroy();
+                    })
+                }).placeAt(okDialog.containerNode);
+
+                xhr.post(
+                    'http://sparrow.ngdc.noaa.gov/next-web/rest/orders', {
+                        data: JSON.stringify(data),
+                        handleAs: 'json',
+                        headers: {'Content-Type':'application/json'}
+                    }).then(function(response){
+                        logger.debug(response);
+                        okDialog.show();
+                    }, function(error) {
+                        alert('Error: ' + error);
+                    });
             },
 
             updateBBox: function(data) {

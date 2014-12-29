@@ -251,7 +251,7 @@ define([
 
                 all(promises).then(lang.hitch(this, function(results) {
                     console.log('all promises fulfilled.');
-                    
+
                     var multibeamSurveyList, multibeamPlatformList, nosHydroSurveyList, nosHydroPlatformList;
 
                     if (results.multibeamPlatformQuery) {
@@ -339,7 +339,7 @@ define([
                         array.forEach(this.identifyResults['Multibeam']['Multibeam Bathymetric Surveys'], lang.hitch(this, function(identifyResult) {
                             surveyIds.push(identifyResult.feature.attributes['Survey ID']);
                         }));
-                        datasetInfo.surveys = surveyIds;                        
+                        datasetInfo.surveys = surveyIds.join(',');
                     }
                     else if (this.identify.currentFilter) {
                         var filter = this.identify.currentFilter;
@@ -395,7 +395,7 @@ define([
                                 }
                             }));
                         }
-                        datasetInfo.surveys = surveyIds;                        
+                        datasetInfo.surveys = surveyIds.join(',');
                     }
                     else if (this.identify.currentFilter) {
                         var filter = this.identify.currentFilter;
