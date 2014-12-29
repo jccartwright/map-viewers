@@ -279,10 +279,10 @@
         <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext"
            class="ui-btn-right">Close</a>
 
-        <div data-role="header" data-theme="a" >
+        <div data-role="header" data-theme="b" >
             <h1>Information</h1>
         </div>
-        <div data-role="content" data-theme="a">
+        <div data-role="content" data-theme="b">
           This map shows data collected from phones around the world!  Displayed are the Crowdsourced magnetic data within a tolerance level of prediction by
                         <a href="http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml" target="_blank">
                         World Magnetic Model 
