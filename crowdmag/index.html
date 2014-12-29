@@ -26,17 +26,20 @@
             padding: 0 !important;
         }
 
-        #contentDiv {
-            font-size: 0.85em;
-            padding: 5px;
-        }
-
         #map {
             height: 100%;
             width: 100%;
             position: absolute;
             z-index: 0;
         }
+
+     #legend {
+	border-style: solid;
+    border-width: 2px;
+    border-radius: 25px;
+    border-color: rgba(81, 181, 229,1) ;
+ background-color: rgba(255, 255, 255,0.4) ;
+      }
 
     </style>
 
@@ -100,19 +103,22 @@
                         }                         
                     }
 
-			function adjustInfoPopup(){
+			function adjustStyle(){
 				var popup =document.getElementById('aboutDialog');
 				if(detectmob())
 					popup.style.width = '100%';
 				else
-					popup.style.width = '30%';
+					popup.style.width = '50%';
+
+				var label = document.getElementById('radio-mini-1');
+				 label.style.fontSize = "1"
 			}
 
                     function jQueryReady() {
                         console.log('inside jQueryReady...');
                         initMap();
-			adjustInfoPopup();
-			window.addEventListener('load', adjustInfoPopup); 
+			adjustStyle();
+			window.addEventListener('load', adjustStyle); 
 			//setup handler to change map layers
 			$('.layerSelect').click(function(e) {
 				//only one layer visible at a time
@@ -158,7 +164,7 @@
                         crowdmagService = new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crowdmag/MapServer");
 
                         //TODO currently limited to intensity
-                        crowdmagService.setVisibleLayers([0]);
+                     crowdmagService.setVisibleLayers([1]);
                         map.addLayer(crowdmagService);
 
                         //TODO switch to FeatureLayers?
@@ -243,7 +249,7 @@
     </div>
 	<div align="center" style="position:absolute; 
 	      bottom: 5%; left: 3%;">
-                    <img id="color_scale" src="images/f_scale.png" title="values from 15,000nT to 75,000nT">
+                    <img id="color_scale" src="images/z_scale.png" title="values from 15,000nT to 75,000nT">
                 </div>
 	
 	<div style="position: absolute; 
@@ -251,20 +257,20 @@
 
 
 
-		            <fieldset data-mini="true" >
-			  <a href="#aboutDialog" data-rel="popup" data-theme=“f” data-position-to="window" data-role="button"
-           data-inline="true" data-transition="pop" data-icon="info" data-iconpos="notext">About</a>
+	      <fieldset  id="legend" data-mini="true" >
+			<div align="center">  <a href="#aboutDialog" data-rel="popup" data-theme=“f” data-position-to="window" data-role="button"
+           data-inline="true" data-transition="pop" data-icon="info" data-iconpos="notext">About</a></div>
       
-                        <input type="radio" name="radio-mini" id="radio-mini-1" value="0" checked="checked"  class="layerSelect"  data-theme=“f”/>
-    			        <label for="radio-mini-1">F </label>
+                        <input type="radio" name="radio-mini" id="radio-mini-1" value="0"  class="layerSelect"  data-theme="f" style="display:none;"/>
+    			        <label for="radio-mini-1"> F</font></label>
 
                         <!-- y_elem -->
-                        <input type="radio" name="radio-mini" id="radio-mini-2" value="2"  class="layerSelect"     data-theme=“f”/>
-                        <label for="radio-mini-2">H </label>
+                        <input type="radio" name="radio-mini" id="radio-mini-2" value="2"  class="layerSelect"     data-theme=“f” style="display:none;"/>
+                        <label for="radio-mini-2">H</font> </label>
 
                         <!-- z_elem -->
-                        <input type="radio" name="radio-mini" id="radio-mini-3" value="1" class="layerSelect"  data-theme=“f” />
-                        <label for="radio-mini-3">Z </label>
+                        <input type="radio" name="radio-mini" id="radio-mini-3" value="1" checked="checked"  class="layerSelect"  data-theme=“f” style="display:none;" />
+                        <label for="radio-mini-3">Z</font> </label>
                     </fieldset>
   
             </div>
@@ -277,10 +283,11 @@
             <h1>Information</h1>
         </div>
         <div data-role="content" data-theme="a">
-            This map shows data collected from phones around the world!  We compare each data point that is sent to NGDC
-            with the <a href="http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml" target="_blank">World Magnetic Model</a>, so that we can discard the more noisy data and collect as much meaningful data as possible.
-            Some uncertainty has been added to the location of each data point shown to ensure the privacy of our contributors.
-            The map is updated every hour. F channel represents Total Strength, H channel represents Horizontal Component and Z channel represents Vertical Component
+          This map shows data collected from phones around the world!  Displayed are the Crowdsourced magnetic data within a tolerance level of prediction by
+                        <a href="http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml" target="_blank">
+                        World Magnetic Model 
+                        </a>
+                    . We have added some uncertainty to each data point shown to ensure the privacy of our contributors. This map is updated every hour. F channel represents Total Strength, H channel represents Horizontal Component, and Z channel represents Vertical Component.
         </div>
     </div>
 
