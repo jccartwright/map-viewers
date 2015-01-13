@@ -53,8 +53,11 @@ define([
             },
 
             getData: function() {
-                //TODO
-                return {};
+                return ({
+                    "colorTable": this.colorTableSelect.value,
+                    "contourInterval": parseInt(this.contourIntervalText.value),
+                    "mapTitle": this.mapTitleText.value
+                });
             },
 
             calculateDefaultContourInterval: function(minZ, maxZ) {

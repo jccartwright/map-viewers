@@ -82,10 +82,11 @@ define([
                 updateGridSizeMessage(gridSize);
 
                 //find the number of surveys w/in the area of interest
-                xhr("http://maps.ngdc.noaa.gov/mapviewer-support/autogrid/surveys.groovy", {
+                xhr("http://www.ngdc.noaa.gov/next-catalogs/rest/autogrid/catalog/extents", {
                     handleAs: "json",
                     query: {
-                        bbox: extentToString(this.extent, 5)
+                        geometry: extentToString(this.extent, 5),
+                        gridCellSize: this.gridSizeText.value
                     }
                 }).then(lang.hitch(this, function (data) {
                     topic.publish("/ngdc/surveyStats", data);
@@ -106,9 +107,9 @@ define([
 
             extentToString: function(geom, precision) {
                 return (
-                    geom.xmin.toFixed(precision)+", "+
-                    geom.ymin.toFixed(precision)+", "+
-                    geom.xmax.toFixed(precision)+", "+
+                    geom.xmin.toFixed(precision)+","+
+                    geom.ymin.toFixed(precision)+","+
+                    geom.xmax.toFixed(precision)+","+
                     geom.ymax.toFixed(precision)
                 );
             },

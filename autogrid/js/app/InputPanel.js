@@ -67,13 +67,12 @@ define([
              */
 
             submitNextOrder: function(evt) {
-                console.log('inside submitNextOrder...',evt);
+//                console.log('inside submitNextOrder...',evt);
 
                 var data = {
                     "email": registry.byId('email').value,
                     "items": []
                 };
-
 
                  var gridOptionsDijit = registry.byId('gridOptions');
                  var mapOptionsDijit = registry.byId('mapOptions');
@@ -89,8 +88,6 @@ define([
                 lang.mixin(jobOptions, gridOptionsDijit.getData());
                 lang.mixin(jobOptions, mapOptionsDijit.getData());
                 data.items[0] = jobOptions;
-
-                console.log(JSON.stringify(data));
 
                 var okDialog = new Dialog({
                     title: 'Request Submitted',
@@ -108,7 +105,7 @@ define([
                 }).placeAt(okDialog.containerNode);
 
                 xhr.post(
-                    'http://sparrow.ngdc.noaa.gov/next-web/rest/orders', {
+                    'http://www.ngdc.noaa.gov/next-web/rest/orders', {
                         data: JSON.stringify(data),
                         handleAs: 'json',
                         headers: {'Content-Type':'application/json'}
