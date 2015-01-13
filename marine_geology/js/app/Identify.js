@@ -110,7 +110,7 @@ define([
 
                 var template = '\
                     <table>\
-                    <tr><td class="valueName">NOS Survey ID:</td><td class="parameterValue"><a href="http://www.ngdc.noaa.gov/geosamples/survey.jsp?s=${nosSurveyId}" target="_blank">${nosSurveyId}</a></td></tr>\
+                    <tr><td class="valueName">NOS Survey ID:</td><td class="parameterValue"><a href="http://www.ngdc.noaa.gov/geosamples/survey.jsp?s=${nosSurveyId}&d=include" target="_blank">${nosSurveyId}</a></td></tr>\
                     <tr><td class="valueName">Sample ID:</td><td class="parameterValue">${sampleId}</td></tr>\
                     <tr><td class="valueName">Latitude:</td><td class="parameterValue">${latitude}</td></tr>\
                     <tr><td class="valueName">Longitude:</td><td class="parameterValue">${longitude}</td></tr>\
