@@ -86,13 +86,15 @@ define([
                 this.populateRegionSelect();
                 this.populateScenarioSelect();
 
-                on(this.regionSelect, 'change', lang.hitch(this, function() {
-                    topic.publish('/ecs_catalog/selectRegion', parseInt(this.regionSelect.get('value')));
+                this.selectRegionHandler = on.pausable(this.regionSelect, 'change', lang.hitch(this, function() {
+                    var regionId = parseInt(this.regionSelect.get('value'));                    
+                    this.selectRegion(regionId);                    
                 }));
 
-                on(this.scenarioSelect, 'change', lang.hitch(this, function() {
-                    topic.publish('/ecs_catalog/selectScenario', parseInt(this.scenarioSelect.get('value')));
-                }));
+                this.selectScenarioHandler = on.pausable(this.scenarioSelect, 'change', lang.hitch(this, function() {
+                    var scenarioId = parseInt(this.scenarioSelect.get('value'));
+                    this.selectScenario(scenarioId);
+                }));                
             },
 
             /*
@@ -105,7 +107,11 @@ define([
                     //handleAs: 'json'
                     jsonp: 'callback'
                 };
-                script.get('https://www.ngdc.noaa.gov/ecs-catalog/rest/region.json', ajaxArgs).then(lang.hitch(this, function(regionData) {
+
+                var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/region.json';
+                //var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/region';
+
+                script.get(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
                     //Create the store
                     regionData.identifier = 'objectid';
                     regionData.label = 'name';
@@ -148,13 +154,17 @@ define([
                     //handleAs: 'json',
                     jsonp: 'callback'
                 };
-                script.get('https://www.ngdc.noaa.gov/ecs-catalog/rest/bosScenario.json', ajaxArgs).then(lang.hitch(this, function(jsonData) {
+
+                var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/bosScenario.json';
+                //var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/bosScenario';
+
+                script.get(url, ajaxArgs).then(lang.hitch(this, function(jsonData) {
                     //Populate a new object from the json that will be used to create the store
                     var scenarioData = {};
                     scenarioData.identifier = 'id';
                     scenarioData.label = 'name';
                     scenarioData.items = [];
-                    scenarioData.items[0] = {name: 'All Scenarios', id: 0, region: 0};
+                    scenarioData.items[0] = {name: 'None Selected', id: 0, region: 0};
 
                     for ( var i = 0; i < jsonData.items.length; i++ ) {
                         scenarioData.items.push({
@@ -164,21 +174,66 @@ define([
                         });
                     }
 
-                    //Create the store. Apparently, we can't use a Memory with a FilteringSelect in Dojo 1.6
-                    //this.scenarioStore = new dojo.data.ItemFileWriteStore({data: scenarioData});
                     this.scenarioStore = new Memory({data: scenarioData});
 
                     //Populate the FilteringSelect with the store.
                     this.scenarioSelect.store = this.scenarioStore;
                     
-                    this.scenarioSelect.set('value', 0);
-                    //selectScenario(0); //Select the "All Scenarios" option by default.                    
+                    this.scenarioSelect.set('value', 0); //Select the "None Selected" option by default.
                 }), function(error) {
-                    console.log('Error retrieving regions json');
-                    alert('Error retrieving ECS regions. Are you logged into the ecs-catalog application?');
+                    console.log('Error retrieving scenarios json');
+                    alert('Error retrieving BOS scenarios. Are you logged into the ecs-catalog application?');
                 });
             },
 
+            selectRegion: function(regionId) {
+                var regions = [];
+                var regionName = this.regionStore.query({objectid: regionId})[0].name;
+
+                if (regionName !== 'Global') {
+                    regions.push(regionId);
+
+                    //Get the current region's children, if they exist
+                    var children = this.regionStore.query({parent_id: regionId});
+                    for (var i = 0; i < children.length; i++) {
+                        regions.push(children[i].objectid);
+                    }
+                }
+
+                //Filter the scenario FilteringSelect by region
+                regions.push(0); //add the dummy region so "None Selected" shows up in the list
+                var filter;
+                if (regionName === 'Global') {
+                    filter = /.*/; //show all scenarios
+                } else {
+                    filter = new RegExp(regions.join('|'), 'g')
+                }
+                this.scenarioSelect.query.region = filter;
+
+                if (this.scenarioChosen) {
+                    //The user just clicked on a scenario. After filtering the scenario list by region, make sure the current scenario is re-selected.
+                    //Pause the handler so it doesn't go into a loop.
+                    this.selectScenarioHandler.pause();
+                    this.scenarioSelect.set('value', this.scenarioChosen);
+                    this.selectScenarioHandler.resume();
+                } else {
+                    //Select "None Selected" scenario by default
+                    this.scenarioSelect.set('value', 0);
+                }
+                this.scenarioChosen = 0; //Revert to original behavior; no scenario was just clicked on
+
+                topic.publish('/ecs_catalog/selectRegion', parseInt(this.regionSelect.get('value'))); //Publish to AppLoader.js which will do the filtering
+            },
+
+            selectScenario: function(scenarioId) {
+                //After selecting a scenario, also select that scenario's region.             
+                if (scenarioId) {                 
+                    this.scenarioChosen = scenarioId;
+                    var regionId = this.scenarioStore.query({id: scenarioId})[0].region;
+                    this.regionSelect.set('value', regionId);
+                }
+                topic.publish('/ecs_catalog/selectScenario', scenarioId); //Publish to AppLoader.js which will do the filtering
+            }
 
         });
     }
