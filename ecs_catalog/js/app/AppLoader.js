@@ -5,6 +5,7 @@ define([
     'dojo/_base/config',
     'dojo/io-query',
     'dojo/_base/lang',
+    'dojo/_base/array',
     'dojo/topic',
     'dojo/on',
     'dojo/aspect',
@@ -36,6 +37,7 @@ define([
         config,
         ioQuery,
         lang,
+        array,
         topic,
         on,
         aspect,
@@ -72,13 +74,15 @@ define([
             init: function() {
                 esriConfig.defaults.io.corsEnabledServers = [
                     'http://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
+                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services',
+                    'http://sparrow.ngdc.noaa.gov'
+                ];
 
 
                 //Use the proxy for only the 'ecs_catalog' map service.
                 // urlUtils.addProxyRule({
-                //     urlPrefix: 'http://maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog',
-                //     proxyUrl: 'https://www.ngdc.noaa.gov/ecs-catalog/map/proxy'
+                //     urlPrefix: 'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog',
+                //     proxyUrl: 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/map/proxy'
                 // });
 
                 //add queryParams into config object, values in queryParams take precedence
@@ -120,6 +124,8 @@ define([
                 topic.subscribe('/ecs_catalog/selectScenario', lang.hitch(this, function(scenario) {
                     this.selectScenario(scenario);
                 }));
+
+                this.allLayerDefs = [];
             },
 
             setupBanner: function() {
@@ -278,43 +284,50 @@ define([
                 } else if ( regionName === 'Arctic' ) { //Arctic region selected, open the Arctic viewer in a new window
                     //window.open('/ecs-catalog/map/arctic', 'ecs_catalog_arctic');
                     return;
-                } else if ( regionName !== 'Global' ) {
-                    regions.push(region);
-
-                    //Get the current region's children, if they exist
-                    var children = regionStore.query({parent_id: region});
-                    for ( var i = 0; i < children.length; i++ ) {
-                        regions.push(children[i].objectid);
-                    }
                 }
 
                 this.mercatorMapConfig.map.setExtent(extent, true);
                 //this.arcticMapConfig.map.setExtent(extent, true);
 
-                //Filter the scenario FilteringSelect
-                regions.push(0); //add the dummy region so "All Scenarios" shows up in the list
-                var filter;
-                if ( regionName === 'Global' ) {
-                    filter = '*';
-                } else {
-                    filter = new RegExp(regions.join('|'), 'g')
-                }
-                this.mercatorMapConfig.mapToolbar.scenarioSelect.query = {region: filter};
-                //this.arcticMapToolbar.scenarioSelect.query = {region: filter};
-
-                if (scenarioStore) {
-                    var firstValue;
-                    var items = scenarioStore.query({region: filter});
-
-                    if ( items.length > 0 ) {
-                        firstValue = items[0].id;
-                        this.mercatorMapConfig.mapToolbar.scenarioSelect.set('value', firstValue);
-                    } else {
-                        this.mercatorMapConfig.mapToolbar.scenarioSelect.reset();
-                    }                                            
-                }
+                this.applyRegionFilter(region);
             },
 
+            applyRegionFilter: function(region) {                
+                var regionStore = this.mercatorMapConfig.mapToolbar.regionStore;
+                var service = this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
+                var regionIds = [region];
+                //var allLayerDefs = [];
+
+                //Get the 'Global' region id
+                var globalRegionId = regionStore.query({name: 'Global'})[0].objectid;
+
+                //Don't apply any filter if region is 'Global'
+                if (region === globalRegionId) {
+                    return;
+                }
+
+                //Get the current region's parent
+                var regionItems = regionStore.query({objectid: region})
+                if (regionItems && regionItems.length > 0) {
+                    regionIds.push(regionItems[0].parent_id);
+                }
+
+                //Add the 'Global' region id if it's not already there
+                if (array.indexOf(regionIds, globalRegionId) == -1) {
+                    regionIds.push(globalRegionId);
+                }
+
+                var sourceDataAndDataProductsLayers = [
+                    //1, 2, 3, 4, 6, 7, 9, 10, 11, 13, 14, 15, 17, 19, 20, //scenario products
+                    24, 25, 26, 27, 28, 29, 30, //source data
+                    32, 33, 34, 35, 36, 37, 38, 39 //data products
+                ];
+
+                for ( var i = 0; i < sourceDataAndDataProductsLayers.length; i++ ) {
+                    this.allLayerDefs[sourceDataAndDataProductsLayers[i]] = 'REGION_ID IN (' + regionIds.join(',') + ')';
+                }
+                service.setLayerDefinitions(this.allLayerDefs);
+            },
 
             /*
              * Select a BOS Scenario by id. If scenario == 0, clear the filter.
@@ -323,7 +336,7 @@ define([
             selectScenario: function(scenario) {
                 console.log('Inside selectScenario ' + scenario);
 
-                var allLayerDefs = [];
+                //var allLayerDefs = [];
                 var service = this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
 
                 /*
@@ -351,16 +364,18 @@ define([
                  ECS Area (20)
                  */
 
-                if ( scenario !== 0 ) {
+                //if ( scenario !== 0 ) {
 
                     var scenarioProductLayers = [1, 2, 3, 4, 6, 7, 9, 10, 11, 13, 14, 15, 17, 19, 20];
 
                     for ( var i = 0; i < scenarioProductLayers.length; i++ ) {
-                        allLayerDefs[scenarioProductLayers[i]] = 'BOSS_ID=' + scenario;
+                        this.allLayerDefs[scenarioProductLayers[i]] = 'BOSS_ID=' + scenario;
                     }
-                }
-                service.setLayerDefinitions(allLayerDefs);
-            }
+                //}
+                service.setLayerDefinitions(this.allLayerDefs);
+            },
+
+
 
         });
     }
