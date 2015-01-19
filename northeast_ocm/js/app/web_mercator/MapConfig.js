@@ -117,7 +117,7 @@ define([
                         var pt = webMercatorUtils.geographicToWebMercator(new Point(feature.attributes['BEGINLON'], feature.attributes['BEGINLAT'], new SpatialReference(4326)));
                         
                         //var sms = new SimpleMarkerSymbol().setStyle(SimpleMarkerSymbol.STYLE_SQUARE).setColor(new Color([255,0,0,0.5]));
-                        var symbol = new PictureMarkerSymbol('http://mapdevel.ngdc.noaa.gov/viewers-2.0/map-viewers/northeast_ocm/images/hurricane_icon.png', 39, 35);
+                        var symbol = new PictureMarkerSymbol('http://maps.ngdc.noaa.gov/viewers/northeast_ocm/images/hurricane_icon.png', 39, 35);
                         var graphic = new Graphic(pt, symbol);
 
                         // var textSymbol = new TextSymbol(feature.attributes['Display_DateAndTime'] + ': ' + feature.attributes['NormalizedMSW'] + 'mph');
