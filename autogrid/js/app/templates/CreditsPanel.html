@@ -1,27 +1,32 @@
 <div>
-    <p>This program creates grids and maps from multibeam data.</p>
-    <br/>
-    To create a new map, provide the following:
-    <ol>
-        <li>Your email address</li>
-        <li>Area of interest</li>
-        <li>Parameters for the grid and map</li>
-        <li>Select "Create" button</li>
-    </ol>
-    <br/>
-    <p>Your request is submitted for processing and you will be notified by email when the
-        job is complete.  This normally takes less than one hour, but can vary due to the size
-        of your request and the number of other users of the system.</p>
-    <br/>
-    Due to processing capacity, your request must abide by a few limits:
+    This program creates grids and map images from multibeam bathymetry data.
+    Three grid types are created:
     <ul>
-        <li>total number of grid cells must be less than 1,000,000</li>
-        <li>total number of survey lines must be less than 3,000</li>
+        <li>NetCDF binary grid
+        <li>ESRI ASCII Raster grid
+        <li>XYZ (lon/lat/depth) grid.
     </ul>
-    <br/>
-    <p>To select an area of interest, use the "Identify" map tool in the upper right. Either draw a rectangular area on
-        map or enter the corner points of a bounding box using decimal degrees.  Longitudes in the
-        western hemisphere are specified with negative values as are Latitudes in the southern hemisphere.</p>
-    <br/>
-    <p>If you have any questions, please email mb.info@noaa.gov</p>
+    Map images are produced in postscript, pdf, jpg, png, and gif formats.
+
+    To create a new map, use the interface to provide the following:
+    <ul>
+    <li>Your email address
+    <li>Area of interest
+    <li>Parameters for the request using the options tabs below
+    <li>Select "Submit Request" button
+    </ul>
+    To select an area of interest, hold down the Shift key while drawing a rectangle on the map. You may also enter the geographic limits of a bounding box using signed decimal degrees. Longitudes in the western hemisphere are specified with negative values as are Latitudes in the southern hemisphere.
+
+    Due to processing capacity, your request must abide by a few limits. Your request will not be submitted if the following conditions are not met:
+    <ul>
+    <li>total number of grid cells must be less than 1,000,000
+    <li>total number of survey lines must be less than 3,000
+    </ul>
+
+    Selecting Background Fill under options will instruct the application to populate data from the ETOPO1 global relief model into any cells that do not contain multibeam bathymetry. You can also adjust the depth contour interval, color palette used, and title of the map to be created for your job.
+
+    Your request is submitted for processing and you will be notified by email when the job is complete. This normally takes less than one hour, but can vary due to the size of your request and the number of other users of the system.
+
+    If you have any questions or suggestions for improvement, please email mb.info@noaa.gov
 </div>
+
