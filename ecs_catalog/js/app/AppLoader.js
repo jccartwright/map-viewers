@@ -153,8 +153,8 @@ define([
                 // setup map views. You can only draw a Map into a visible container
                 this.setupMercatorView();
 
-                //registry.byId('mapContainer').selectChild('arctic');
-                //this.setupArcticView();
+                registry.byId('mapContainer').selectChild('arctic');
+                this.setupArcticView();
 
                 //go back to mercator as default view
                 registry.byId('mapContainer').selectChild('mercator');
@@ -172,10 +172,10 @@ define([
             enableMapView: function(/*String*/ mapId) {
                 if (mapId == 'mercator') {
                     this.mercatorMapConfig.setEnabled(true);
-                    //this.arcticMapConfig.setEnabled(false);
+                    this.arcticMapConfig.setEnabled(false);
                 } else { //arctic
                     this.mercatorMapConfig.setEnabled(false);
-                    //this.arcticMapConfig.setEnabled(true);
+                    this.arcticMapConfig.setEnabled(true);
                 }   
             },
 
@@ -229,7 +229,7 @@ define([
                     ymin: -4000000,
                     xmax: 4000000,
                     ymax: 4000000,
-                    spatialReference: new SpatialReference({wkid: 3995})
+                    spatialReference: new SpatialReference({wkid: 3572})
                 });   
 
                 var zoomLevels = new ArcticZoomLevels();            
@@ -241,14 +241,9 @@ define([
                     showAttribution: false,
                     overview: false,
                     sliderStyle: 'large',
-                    navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
-                    lods: zoomLevels.lods
-                }, new ArcticLayerCollection({
-                    multibeamVisible: this.multibeamVisible,
-                    nosHydroVisible: this.nosHydroVisible,
-                    tracklineVisible: this.tracklineVisible,
-                    demVisible: this.demVisible
-                }));
+                    navigationMode: 'classic'//, //disable CSS transforms to eliminate annoying flickering in Chrome
+                    //lods: zoomLevels.lods
+                }, new ArcticLayerCollection());
 
                 new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
@@ -281,13 +276,15 @@ define([
                 if ( regionName === 'Global' ) {
                     //Zoom to a Pacific-centered global view
                     extent = webMercatorUtils.geographicToWebMercator(new Extent(30, -70, 390, 70, new SpatialReference({ wkid: 4326 })));
+                    registry.byId('mapContainer').selectChild('mercator');
                 } else if ( regionName === 'Arctic' ) { //Arctic region selected, open the Arctic viewer in a new window
-                    //window.open('/ecs-catalog/map/arctic', 'ecs_catalog_arctic');
+                    registry.byId('mapContainer').selectChild('arctic');
                     return;
+                } else {
+                    registry.byId('mapContainer').selectChild('mercator');
                 }
 
                 this.mercatorMapConfig.map.setExtent(extent, true);
-                //this.arcticMapConfig.map.setExtent(extent, true);
 
                 this.applyRegionFilter(region);
             },

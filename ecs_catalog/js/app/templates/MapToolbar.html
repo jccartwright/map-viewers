@@ -1,11 +1,11 @@
 <div class="${baseClass}">
     <div data-dojo-attach-point="mapToolbar" data-dojo-type="dijit/Toolbar" data-dojo-props="layoutAlign:'left'">
-        <label for="regionSelect">Zoom to Region:</label>
-        <div id="regionSelect" data-dojo-type="dijit/form/Select" data-dojo-attach-point="regionSelect"></div>
+        <label>Zoom to Region:</label>
+        <div data-dojo-type="dijit/form/Select" data-dojo-attach-point="regionSelect"></div>
         <span data-dojo-type="dijit/ToolbarSeparator"></span>
 
-        <label for="scenarioSelect">Select BOS Scenario:</label>
-        <div id="scenarioSelect" style="width: 120px;" data-dojo-type="dijit/form/FilteringSelect" 
+        <label>Select BOS Scenario:</label>
+        <div style="width: 120px;" data-dojo-type="dijit/form/FilteringSelect" 
             data-dojo-attach-point="scenarioSelect" data-dojo-props="name: 'scenarioSelect', searchAttr: 'name', value: 0">
         </div>
         <span data-dojo-type="dijit/ToolbarSeparator"></span>

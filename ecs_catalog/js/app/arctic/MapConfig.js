@@ -4,7 +4,7 @@ define([
     'dojo/dom',
     'ngdc/arctic/MapConfig',
     'app/arctic/MapToolbar',
-    'app/arctic/Identify',
+    'app/Identify',
     'app/AppIdentifyPane'
     ],
     function(
@@ -25,13 +25,10 @@ define([
 
                 //console.log('inside custom Arctic mapReady...');   
 
-                var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, 'arcticMapToolbar');
-                mapToolbar.startup();
-                
-                this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
-                this.identify.enabled = false;
+                this.mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, 'arcticMapToolbar');
+                this.mapToolbar.startup();
 
-                //this.mapLayerCollection.suspend();
+                this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
 
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
@@ -41,22 +38,21 @@ define([
                 }, dom.byId('arcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
                 this.identifyPane.enabled = false;
-
-                if (this.mapLayerCollection.nosHydroVisible) {
-                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0, 1]);
-                }
-                else {
-                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
-                }
-                this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
-                this.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setVisibleLayers([0]);
                 
-                this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
+                this.mapLayerCollection.getLayerById('ECS Catalog').setVisibleLayers([19, 20]); //US EEZ and International EEZs should be the only layers visible by default.
 
-                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
+                //Layer definitions for NGDC pre-2012 source data
+                this.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions(["ENTERED_DATE < date '2012-01-01' or ENTERED_DATE is null"]);
+    
+                var layerDefs = [];
+                for (var i = 0; i < 10; i++) {
+                    layerDefs[i] = "DATE_ADDED < date '2012-01-01' or DATE_ADDED is null";
+                }
+                this.mapLayerCollection.getLayerById('Trackline').setLayerDefinitions(layerDefs);
+                this.mapLayerCollection.getLayerById('Trackline').setVisibleLayers([-1]);
+
+                this.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(["CAST(SUBSTR(BEGIN_DATE,0,4) AS NUMBER) < 2012 or BEGIN_DATE is null"]);
             }
-         
-            
         });
     }
 );
