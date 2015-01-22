@@ -124,8 +124,23 @@
                 //hide the overlay now that parsing is complete
                 loadingOverlay.endLoading();
 
-                //initialize the application
-                appLoader.init();
+                //assume that mapviewer must run on same domain as catalog due to dependence on JSESSIONID cookie
+                var loginUrl = window.location.protocol + '//' + window.location.host + "/ecs-catalog/#/login";
+                var authUrl = window.location.protocol + '//' + window.location.host + "/ecs-catalog/rest/login/success";
+                var xhrOptions = {"preventCache":true, "handleAs": "json", "timeout":500};
+                request(authUrl, xhrOptions).then(function(data) {
+                    if (data.username == '__grails.anonymous.user__') {
+                        alert("WARNING: Not logged into ECS Catalog. Not all map layers will display");
+                        var loginWindow = window.open(loginUrl,"_blank");
+                        loginWindow.focus();
+                    } else {
+                        //initialize the application
+                        appLoader.init();
+                    }
+                }, function(err) {
+                    console.error("error checking ECS authentication:",err);
+                });
+
             }
     );
 
