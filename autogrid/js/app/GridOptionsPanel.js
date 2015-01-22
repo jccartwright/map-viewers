@@ -173,7 +173,7 @@ define([
                 return ({
                     "geometry": this.extentToString(this.extent, 5),
                     "gridCellSize": parseInt(this.gridSizeText.value),
-                    "backgroundFill": (this.backgroundFillCheckbox.value === 'on') ? true : false
+                    "backgroundFill": (this.backgroundFillCheckbox.checked)
                 });
             },
 
