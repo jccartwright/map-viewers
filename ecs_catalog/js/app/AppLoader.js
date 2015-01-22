@@ -80,10 +80,10 @@ define([
 
 
                 //Use the proxy for only the 'ecs_catalog' map service.
-                // urlUtils.addProxyRule({
-                //     urlPrefix: 'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog',
-                //     proxyUrl: 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/map/proxy'
-                // });
+                urlUtils.addProxyRule({
+                     urlPrefix: 'http://maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog',
+                     proxyUrl: window.location.protocol + '//' + window.location.host + "/ecs-catalog/rest/mapProxy"
+                });
 
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
