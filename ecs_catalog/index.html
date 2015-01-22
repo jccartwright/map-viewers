@@ -133,14 +133,13 @@
                         alert("WARNING: Not logged into ECS Catalog. Not all map layers will display");
                         var loginWindow = window.open(loginUrl,"_blank");
                         loginWindow.focus();
-                    } else {
-                        //initialize the application
-                        appLoader.init();
                     }
                 }, function(err) {
                     console.error("error checking ECS authentication:",err);
                 });
 
+                //initialize the application
+                appLoader.init();
             }
     );
 
