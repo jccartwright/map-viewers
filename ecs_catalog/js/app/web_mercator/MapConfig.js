@@ -6,7 +6,7 @@ define([
     'dojo/request',
     'ngdc/web_mercator/MapConfig',
     'app/web_mercator/MapToolbar',
-    'app/web_mercator/Identify',
+    'app/Identify',
     'app/AppIdentifyPane'
     ],
     function(
