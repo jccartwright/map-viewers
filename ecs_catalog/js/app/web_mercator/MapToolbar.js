@@ -7,6 +7,7 @@ define([
     'dijit/form/Select',
     'dijit/form/FilteringSelect',
     'dojo/request/script',
+    'dojo/request/xhr',
     'dojo/store/Memory',
     'dojo/text!../templates/MapToolbar.html'
     ],
@@ -19,6 +20,7 @@ define([
         Select,
         FilteringSelect,
         script,
+        xhr,
         Memory,
         template
         ){
@@ -56,12 +58,12 @@ define([
                     },
                     {
                         label: 'EEZs (NOAA OCS and VLIZ)',
-                        services: [{id: 'ECS Catalog', sublayers: [21, 22]}],
+                        services: [{id: 'ECS Catalog', sublayers: [19, 20]}],
                         visible: true
                     },
                     {
                         label: 'International ECS Areas',
-                        services: [{id: 'ECS Catalog', sublayers: [40]}],
+                        services: [{id: 'ECS Catalog', sublayers: [59]}],
                         visible: false
                     }
                 ];
@@ -103,15 +105,16 @@ define([
              */
             populateRegionSelect: function() {
                 var ajaxArgs = {
-                    preventCache: true,
+                    preventCache: true//,
                     //handleAs: 'json'
-                    jsonp: 'callback'
+                    //jsonp: 'callback'
                 };
 
-                var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/region.json';
-                //var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/region';
+                //var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/region.json';
+                var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/region';
 
-                script.get(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
+                xhr(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
+                //script.get(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
                     //Create the store
                     regionData.identifier = 'objectid';
                     regionData.label = 'name';
@@ -155,8 +158,8 @@ define([
                     jsonp: 'callback'
                 };
 
-                var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/bosScenario.json';
-                //var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/bosScenario';
+                //var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/bosScenario.json';
+                var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/bosScenario';
 
                 script.get(url, ajaxArgs).then(lang.hitch(this, function(jsonData) {
                     //Populate a new object from the json that will be used to create the store

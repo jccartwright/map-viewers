@@ -38,7 +38,7 @@ define([
                 }, dom.byId('mercatorIdentifyPaneDiv'));
                 this.identifyPane.startup();
                 
-                this.mapLayerCollection.getLayerById('ECS Catalog').setVisibleLayers([21, 22]);
+                this.mapLayerCollection.getLayerById('ECS Catalog').setVisibleLayers([19, 20]); //US EEZ and International EEZs should be the only layers visible by default.
 
                 //Layer definitions for NGDC pre-2012 source data
                 this.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions(["ENTERED_DATE < date '2012-01-01' or ENTERED_DATE is null"]);

@@ -37,116 +37,171 @@ define([
 
                 //Formula Line Products
                 on(this.chkFosProfile, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [7], this.chkFosProfile.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['FOS Profile'], this.chkFosProfile.checked);                    
                 }));
                 on(this.chkFosPoint, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [1], this.chkFosPoint.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['FOS Point'], this.chkFosPoint.checked);                    
                 }));
-                on(this.chk60mFormulaPoint, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [2], this.chk60mFormulaPoint.checked);                    
-                }));
-                on(this.chk60mFormulaLine, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [9], this.chk60mFormulaLine.checked);                    
-                }));
+                on(this.chk60mFormula, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['60 M Formula'], this.chk60mFormula.checked);                     
+                }));                
                 on(this.chkSedimentThicknessFormula, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [10], this.chkSedimentThicknessFormula.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Sediment Thickness Formula'], this.chkSedimentThicknessFormula.checked);                    
                 }));
                 on(this.chkFinalFormulaLine, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [11], this.chkFinalFormulaLine.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Final Formula Line'], this.chkFinalFormulaLine.checked);                    
                 }));
 
                 //Constraint Line Products
                 on(this.chkDistanceConstraintLine, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [12], this.chkDistanceConstraintLine.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Distance Constraint Line'], this.chkDistanceConstraintLine.checked);                    
                 }));
                 on(this.chk2500mIsobath, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [13], this.chk2500mIsobath.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['2500m Isobath'], this.chk2500mIsobath.checked);                    
                 }));
                 on(this.chkEnvelopeFosPoints, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [19], this.chkEnvelopeFosPoints.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['FOS Envelope'], this.chkEnvelopeFosPoints.checked);                    
                 }));
                 on(this.chkClipped2500mIsobath, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [14], this.chkClipped2500mIsobath.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Clipped 2500m Isobath'], this.chkClipped2500mIsobath.checked);                    
                 }));
-                on(this.chkDepthConstraintPoint, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [4], this.chkDepthConstraintPoint.checked);                    
-                }));
-                on(this.chkDepthConstraintLine, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [15], this.chkDepthConstraintLine.checked);                    
+                on(this.chkDepthConstraint, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Depth Constraint Line'], this.chkDepthConstraint.checked);                    
                 }));
                 on(this.chkFinalConstraintLine, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [8], this.chkFinalConstraintLine.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Final Constraint Line'], this.chkFinalConstraintLine.checked);                    
                 }));
 
                 //Outer Limit Products
-                on(this.chkOuterLimitPoint, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [6], this.chkOuterLimitPoint.checked);                    
-                }));
-                on(this.chkOuterLimitLine, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [17], this.chkOuterLimitLine.checked);                    
+                on(this.chkOuterLimit, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Outer Limit Line'], this.chkOuterLimit.checked);
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Outer Limit Point'], this.chkOuterLimit.checked);                     
                 }));
                 on(this.chkEcsArea, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [20], this.chkEcsArea.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['ECS Area'], this.chkEcsArea.checked);                    
                 }));
 
                 //Boundaries
                 on(this.chkBaselinePoints, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [5], this.chkBaselinePoints.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Baseline Point'], this.chkBaselinePoints.checked);                    
                 }));
                 on(this.chkCoastline, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [16], this.chkCoastline.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Coastline'], this.chkCoastline.checked);                    
                 }));
                 on(this.chkInternational, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [18], this.chkInternational.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['International Boundary'], this.chkInternational.checked);                    
                 }));
 
                 //Data Products
                 on(this.chkSedimentThickness, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [32], this.chkSedimentThickness.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Sediment Thickness Product (Point)'], this.chkSedimentThickness.checked);
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Sediment Thickness Product (Polygon)'], this.chkSedimentThickness.checked);                    
                 }));
                 on(this.chkBathymetricProduct, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [33], this.chkBathymetricProduct.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Bathymetric Product'], this.chkBathymetricProduct.checked);                    
                 }));
                 on(this.chkBathymetricSlopeProduct, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [34], this.chkBathymetricSlopeProduct.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Bathymetric Slope Product'], this.chkBathymetricSlopeProduct.checked);                    
                 }));
                 on(this.chkBathymetricCurvatureProduct, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [35], this.chkBathymetricCurvatureProduct.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Bathymetric Curvature Product'], this.chkBathymetricCurvatureProduct.checked);                    
                 }));
                 on(this.chkBackscatterProduct, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [36], this.chkBackscatterProduct.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Backscatter Product'], this.chkBackscatterProduct.checked);                    
                 }));
-                on(this.chkSeismicProduct, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [37], this.chkSeismicProduct.checked);                    
+
+                on(this.chkSeismicProductMCS, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Seismic Product (MCS)'], this.chkSeismicProductMCS.checked);                    
                 }));
-                on(this.chkVelocityGrid, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [38], this.chkVelocityGrid.checked);                    
+                on(this.chkSeismicProductMCS3D, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Seismic Product (MCS-3D)'], this.chkSeismicProductMCS3D.checked);                    
                 }));
-                on(this.chkBasementGeologyProduct, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [39], this.chkBasementGeologyProduct.checked);                    
+                on(this.chkSeismicProductSCS, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Seismic Product (SCS)'], this.chkSeismicProductSCS.checked);                    
+                }));
+                on(this.chkSeismicProduct35kHz, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Seismic Product (3.5 kHz)'], this.chkSeismicProduct35kHz.checked);                    
+                }));
+                on(this.chkSeismicProductOBS, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Seismic Product (OBS)'], this.chkSeismicProductOBS.checked);                    
+                }));
+                on(this.chkSeismicProductSonobuoy, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Seismic Product (Sonobuoy)'], this.chkSeismicProductSonobuoy.checked);                    
+                }));
+                on(this.chkSeismicProductOther, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Seismic Product (Other)'], this.chkSeismicProductOther.checked);                    
+                }));
+
+                on(this.chkBasementGeologyProductMagnetic, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Basement Geology Product (Magnetic)'], this.chkBasementGeologyProductMagnetic.checked);                    
+                }));
+                on(this.chkBasementGeologyProductGravity, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Basement Geology Product (Gravity)'], this.chkBasementGeologyProductGravity.checked);                    
+                }));
+                on(this.chkBasementGeologyProductGeology, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Basement Geology Product (Geology)'], this.chkBasementGeologyProductGeology.checked);                    
+                }));
+                on(this.chkBasementGeologyProductComposite, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Basement Geology Product (Composite)'], this.chkBasementGeologyProductComposite.checked);                    
                 }));
 
                 //Source Data
-                on(this.chkBathymetryData, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [24], this.chkBathymetryData.checked);                    
+                on(this.chkBathymetryDataMultibeam, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Bathymetry (Multibeam)'], this.chkBathymetryDataMultibeam.checked);                    
                 }));
-                on(this.chkBackscatterData, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [25], this.chkBackscatterData.checked);                    
+                on(this.chkBathymetryDataSingleBeam, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Bathymetry (Single-Beam)'], this.chkBathymetryDataSingleBeam.checked);                    
                 }));
-                on(this.chkSeismicData, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [26], this.chkSeismicData.checked);                    
+                on(this.chkBackscatterDataMultibeam, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Backscatter (Multibeam)'], this.chkBackscatterDataMultibeam.checked);                    
+                }));
+                on(this.chkBackscatterDataSideScanSonar, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Backscatter (Side-scan Sonar)'], this.chkBackscatterDataSideScanSonar.checked);                    
+                }));
+                on(this.chkSeismicDataMCS, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Seismic (MCS)'], this.chkSeismicDataMCS.checked);                    
+                }));
+                on(this.chkSeismicDataMCS3D, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Seismic (MCS-3D)'], this.chkSeismicDataMCS3D.checked);                    
+                }));
+                on(this.chkSeismicDataSCS, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Seismic (SCS)'], this.chkSeismicDataSCS.checked);                    
+                }));
+                on(this.chkSeismicData35kHz, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Seismic (3.5 kHz)'], this.chkSeismicData35kHz.checked);                    
+                }));
+                on(this.chkSeismicDataOBS, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Seismic (OBS)'], this.chkSeismicDataOBS.checked);                    
+                }));
+                on(this.chkSeismicDataSonobuoy, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Seismic (Sonobuoy)'], this.chkSeismicDataSonobuoy.checked);                    
+                }));
+                on(this.chkSeismicDataOther, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Seismic (Other)'], this.chkSeismicDataOther.checked);                    
                 }));
                 on(this.chkCombinedData, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [27], this.chkCombinedData.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Combined'], this.chkCombinedData.checked);                    
                 }));
                 on(this.chkGravityData, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [28], this.chkGravityData.checked);                    
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Gravity'], this.chkGravityData.checked);                    
                 }));
-                on(this.chkMagneticsData, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [29], this.chkMagneticsData.checked);                    
+                on(this.chkMagneticsDataMarine, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Magnetics (Marine)'], this.chkMagneticsDataMarine.checked);                    
                 }));
-                on(this.chkGeologicData, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'ECS Catalog', [30], this.chkGeologicData.checked);                    
+                on(this.chkMagneticsDataAirborne, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Magnetics (Airborne)'], this.chkMagneticsDataAirborne.checked);                    
+                }));
+                on(this.chkGeologicDataSeafloorPhoto, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Geologic (Seafloor Photo)'], this.chkGeologicDataSeafloorPhoto.checked);                    
+                }));
+                on(this.chkGeologicDataRockDredge, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Geologic (Rock Dredge)'], this.chkGeologicDataRockDredge.checked);                    
+                }));
+                on(this.chkGeologicDataCoreDescription, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Geologic (Core Description)'], this.chkGeologicDataCoreDescription.checked);                    
+                }));
+                on(this.chkGeologicDataBoreholeDescription, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Data: Geologic (Borehole Description)'], this.chkGeologicDataBoreholeDescription.checked);                    
                 }));
 
                 //Pre-2012 Source Data
