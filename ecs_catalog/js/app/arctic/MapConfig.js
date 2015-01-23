@@ -52,6 +52,19 @@ define([
                 this.mapLayerCollection.getLayerById('Trackline').setVisibleLayers([-1]);
 
                 this.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(["CAST(SUBSTR(BEGIN_DATE,0,4) AS NUMBER) < 2012 or BEGIN_DATE is null"]);
+
+                //TODO should be shared parent class or mixin
+                on(this.mapLayerCollection.getLayerById('ECS Catalog'),'update-start',function(e) {
+                    var authUrl = window.location.protocol + '//' + window.location.host + "/ecs-catalog/rest/login/success";
+                    var xhrOptions = {"preventCache":true, "handleAs": "json", "timeout":500};
+                    request(authUrl, xhrOptions).then(function(data) {
+                        if (data.username == '__grails.anonymous.user__') {
+                            alert("WARNING: Not logged into ECS Catalog. Not all map layers will display");
+                        }
+                    }, function(err) {
+                        console.error("error checking ECS authentication:",err);
+                    });
+                });
             }
         });
     }
