@@ -112,10 +112,10 @@
 <script>
     //unless the Dijit is listed in the require list, it cannot be addressed via the registry
     require([
-        "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "dojo/dom", "dojo/dom-style", "app/AppLoader",
+        "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "dojo/dom", "dojo/dom-style", "dojo/request", "app/AppLoader",
         "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer", "dijit/layout/TabContainer",
         "app/HelpPanel", "app/CreditsPanel", "dojo/domReady!" ],
-            function(LoadingOverlay, registry, parser, dom, domStyle, AppLoader) {
+            function(LoadingOverlay, registry, parser, dom, domStyle, request, AppLoader) {
                 var loadingOverlay = new LoadingOverlay();
                 var appLoader = new AppLoader();
 
