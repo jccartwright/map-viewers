@@ -26,8 +26,6 @@ define([
     'app/arctic/LayerCollection',
     'app/web_mercator/MapToolbar',
     'app/arctic/MapToolbar',
-    'app/web_mercator/Identify',
-    'app/AppIdentifyPane',
     'app/LayersPanel',
     'dojo/domReady!'],
     function(
@@ -58,8 +56,6 @@ define([
         ArcticLayerCollection,
         MapToolbar,
         ArcticMapToolbar,
-        WebMercatorIdentify,
-        IdentifyPane,
         LayersPanel) {
 
         return declare(null, {
@@ -82,7 +78,12 @@ define([
                 //Use the proxy for only the 'ecs_catalog' map service.
                 urlUtils.addProxyRule({
                      urlPrefix: 'http://maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog',
-                     proxyUrl: window.location.protocol + '//' + window.location.host + "/ecs-catalog/rest/mapProxy"
+                     proxyUrl: window.location.protocol + '//' + window.location.host + "/ecs-catalog/rest/map/proxy"
+                });
+
+                urlUtils.addProxyRule({
+                     urlPrefix: 'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog_mist',
+                     proxyUrl: window.location.protocol + '//' + window.location.host + "/ecs-catalog/rest/map/proxy"
                 });
 
                 //add queryParams into config object, values in queryParams take precedence
@@ -299,9 +300,9 @@ define([
                 var globalRegionId = regionStore.query({name: 'Global'})[0].objectid;
 
                 //Don't apply any filter if region is 'Global'
-                if (region === globalRegionId) {
-                    return;
-                }
+                //if (region === globalRegionId) {
+                //    return;
+                //}
 
                 //Get the current region's parent
                 var regionItems = regionStore.query({objectid: region})
@@ -321,14 +322,19 @@ define([
                 ];
 
                 for ( var i = 0; i < sourceDataAndDataProductsLayers.length; i++ ) {
-                    this.allLayerDefs[sourceDataAndDataProductsLayers[i]] = 'REGION_ID IN (' + regionIds.join(',') + ')';
+                    if (region === globalRegionId) {
+                        this.allLayerDefs[sourceDataAndDataProductsLayers[i]] = null;
+                    }
+                    else {
+                        this.allLayerDefs[sourceDataAndDataProductsLayers[i]] = 'REGION_ID IN (' + regionIds.join(',') + ')';
+                    }
                 }
                 service.setLayerDefinitions(this.allLayerDefs);
             },
 
             /*
-             * Select a BOS Scenario by id. If scenario == 0, clear the filter.
-             * Applies a filter to the "scenario products" from the map service (currently layers 1,2,3,4,6,7,9,10,11,13,14,15,19,20)
+             * Select a BOS Scenario by id. If scenario == 0, that means "no scenario selected" and will display no features.
+             * Applies a filter to the "scenario products" from the map service (currently layers 1,2,3,4,6,7,9,10,11,13,14,15,16,17,18)
              */
             selectScenario: function(scenario) {
                 console.log('Inside selectScenario ' + scenario);
@@ -336,44 +342,14 @@ define([
                 //var allLayerDefs = [];
                 var service = this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
 
-                /*
-                 * Map Service Layers:
-                 * Scenario Products (0)
-                 FOS Point (1)
-                 60 M Formula Point (2)
-                 Sediment Thickness Formula (3, 10)
-                 Depth Constraint Isobath Point (4)
-                 Baseline Points (5)
-                 Outer Limit Point (6)
-                 FOS Profile (7)
-                 Final Constraint Line (8)
-                 60 M Formula Line (9)
-                 Sediment Thickness Formula Line (10)
-                 Final Formula Line (11)
-                 Distance Constraint Line (12)
-                 2500 m Isobath (13)
-                 Clipped 2500 m Isobath (14)
-                 Depth Constraint Line (15)
-                 Coastline (16)
-                 Outer Limit Line (17)
-                 International (18)
-                 Envelope of FOS Points (19)
-                 ECS Area (20)
-                 */
 
-                //if ( scenario !== 0 ) {
+                var scenarioProductLayers = [1, 2, 3, 4, 6, 7, 9, 10, 11, 13, 14, 15, 16, 17, 18];
 
-                    var scenarioProductLayers = [1, 2, 3, 4, 6, 7, 9, 10, 11, 13, 14, 15, 17, 18];
-
-                    for ( var i = 0; i < scenarioProductLayers.length; i++ ) {
-                        this.allLayerDefs[scenarioProductLayers[i]] = 'BOSS_ID=' + scenario;
-                    }
-                //}
+                for (var i = 0; i < scenarioProductLayers.length; i++) {
+                    this.allLayerDefs[scenarioProductLayers[i]] = 'BOSS_ID=' + scenario;
+                }
                 service.setLayerDefinitions(this.allLayerDefs);
             },
-
-
-
         });
     }
 );

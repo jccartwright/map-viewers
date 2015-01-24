@@ -49,15 +49,15 @@ define([
             populateRegionSelect: function() {
                 var ajaxArgs = {
                     preventCache: true,
-                    //handleAs: 'json'
-                    jsonp: 'callback'
+                    handleAs: 'json'
+                    //jsonp: 'callback'
                 };
 
-                var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/region.json';
-                //var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/region';
+                //var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/region.json';
+                var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/region';
 
-                //xhr(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
-                script.get(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
+                xhr(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
+                //script.get(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
                     //Create the store
                     regionData.identifier = 'objectid';
                     regionData.label = 'name';
@@ -97,14 +97,15 @@ define([
 
                 var ajaxArgs = {
                     preventCache: true,
-                    //handleAs: 'json',
-                    jsonp: 'callback'
+                    handleAs: 'json'
+                    //jsonp: 'callback'
                 };
 
-                var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/bosScenario.json';
-                //var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/bosScenario';
+                //var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/bosScenario.json';
+                var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/bosScenario';
 
-                script.get(url, ajaxArgs).then(lang.hitch(this, function(jsonData) {
+                xhr(url, ajaxArgs).then(lang.hitch(this, function(jsonData) {
+                //script.get(url, ajaxArgs).then(lang.hitch(this, function(jsonData) {
                     //Populate a new object from the json that will be used to create the store
                     var scenarioData = {};
                     scenarioData.identifier = 'id';
@@ -112,11 +113,11 @@ define([
                     scenarioData.items = [];
                     scenarioData.items[0] = {name: 'None Selected', id: 0, region: 0};
 
-                    for ( var i = 0; i < jsonData.items.length; i++ ) {
+                    for ( var i = 0; i < jsonData.length; i++ ) {
                         scenarioData.items.push({
-                            name: jsonData.items[i].title,
-                            id: String(jsonData.items[i].id), //needs to be string to allow set('value', id) on the widget
-                            region: jsonData.items[i].region.id
+                            name: jsonData[i].title,
+                            id: String(jsonData[i].id), //needs to be string to allow set('value', id) on the widget
+                            region: jsonData[i].region.id
                         });
                     }
 
