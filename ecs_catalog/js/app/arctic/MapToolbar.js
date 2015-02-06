@@ -25,7 +25,8 @@ define([
             
             constructor: function() {
                 this._basemaps = [
-                    {base: 'Arctic Basemap', overlays: [{id: 'Reference'}], label: 'Arctic Basemap (IBCAO/GEBCO_08)'}
+                    {base: 'Arctic Basemap', overlays: [{id: 'Reference'}], label: 'Arctic Basemap (IBCAO/GEBCO_08)'},
+                    {base: 'Gray Continents', overlays: [{id: 'Reference'}], label: 'Gray Continents'}
                 ];
 
                 this._overlays = [
