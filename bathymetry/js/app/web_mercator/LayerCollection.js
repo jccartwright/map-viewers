@@ -59,7 +59,7 @@ define([
                         id: 'ETOPO1',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer', {
+                    new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer', {
                         id: 'Light Gray',
                         visible: false
                     }),
@@ -143,7 +143,7 @@ define([
                         id: 'World Boundaries and Places',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer', {
+                    new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer', {
                         id: 'Light Gray Reference',
                         visible: false
                     }),
