@@ -68,7 +68,7 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),                      
-                    new ArcGISDynamicMapServiceLayer('http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog_mist/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog/MapServer', {
                         id: 'ECS Catalog',
                         visible: true,
                         imageParameters: this.imageParameters.png32
