@@ -81,11 +81,6 @@ define([
                      proxyUrl: window.location.protocol + '//' + window.location.host + "/ecs-catalog/rest/map/proxy"
                 });
 
-                urlUtils.addProxyRule({
-                     urlPrefix: 'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog_mist',
-                     proxyUrl: window.location.protocol + '//' + window.location.host + "/ecs-catalog/rest/map/proxy"
-                });
-
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
                 lang.mixin(config.app, queryParams);
@@ -136,9 +131,9 @@ define([
                         {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
                         {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
                         {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
-                        {url: 'http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html', label: 'Bathymetry'}
+                        {url: window.location.protocol + '//' + window.location.host + '/ecs-catalog/', label: 'ECS Catalog'}
                     ],
-                    dataUrl: 'http://www.ngdc.noaa.gov/mgg/bathymetry/relief.html',
+                    dataUrl: window.location.protocol + '//' + window.location.host + '/ecs-catalog/',
                     image: 'images/ecs-logo.gif'
                 });
                 banner.placeAt('banner');
@@ -230,7 +225,7 @@ define([
                     ymin: -4000000,
                     xmax: 4000000,
                     ymax: 4000000,
-                    spatialReference: new SpatialReference({wkid: 3572})
+                    spatialReference: new SpatialReference({wkid: 5936})
                 });   
 
                 var zoomLevels = new ArcticZoomLevels();            

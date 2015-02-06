@@ -54,7 +54,7 @@ define([
                 };
 
                 //var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/region.json';
-                var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/region';
+                var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/region?max=100';
 
                 xhr(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
                 //script.get(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
@@ -85,7 +85,7 @@ define([
                     }
                 }), function(error) {
                     console.log('Error retrieving regions json');
-                    alert('Error retrieving ECS regions. Are you logged into the ecs-catalog application?');
+                    //alert('Error retrieving ECS regions. Are you logged into the ecs-catalog application?');
                 });
             },
 
@@ -102,7 +102,7 @@ define([
                 };
 
                 //var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/bosScenario.json';
-                var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/bosScenario';
+                var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/bosScenario?max=100';
 
                 xhr(url, ajaxArgs).then(lang.hitch(this, function(jsonData) {
                 //script.get(url, ajaxArgs).then(lang.hitch(this, function(jsonData) {
@@ -129,7 +129,7 @@ define([
                     this.scenarioSelect.set('value', 0); //Select the "None Selected" option by default.
                 }), function(error) {
                     console.log('Error retrieving scenarios json');
-                    alert('Error retrieving BOS scenarios. Are you logged into the ecs-catalog application?');
+                    //alert('Error retrieving BOS scenarios. Are you logged into the ecs-catalog application?');
                 });
             },
 
