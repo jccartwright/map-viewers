@@ -56,7 +56,11 @@ define([
             getCatalogUrl: function(classStr, objectId) {
                 var tokens = classStr.split('.');
                 var type = tokens[tokens.length - 1];
-                type = type[0].toLowerCase() + type.substring(1);
+                
+                //All types (except EEZ) should have their first character converted to lowercase.
+                if (type != 'EEZ') {    
+                    type = type[0].toLowerCase() + type.substring(1);
+                }
 
                 return 'http://sparrow.ngdc.noaa.gov/ecs-catalog/#/' + type + '/' + objectId;
             },
