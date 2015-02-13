@@ -1,29 +1,40 @@
 define([
     'dojo/_base/declare',
     'dojo/_base/lang',
+    'dojo/_base/array',
     'dojo/topic',
     'dojo/on',
-    'ngdc/MapToolbar',
     'dijit/form/Select',
     'dijit/form/FilteringSelect',
     'dojo/request/script',
     'dojo/request/xhr',
-    'dojo/store/Memory'
+    'dojo/store/Memory',
+    'dijit/_WidgetBase',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dojo/text!./templates/FilterPanel.html'
     ],
     function(
         declare,
         lang,
+        array,
         topic,
         on,
-        MapToolbar,
         Select,
         FilteringSelect,
         script,
         xhr,
-        Memory
-        ){
+        Memory,
+        _WidgetBase, 
+        _TemplatedMixin,
+        _WidgetsInTemplateMixin,
+        template){
 
-        return declare([MapToolbar], {
+        return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
+            // Our template - important!
+            templateString: template,
+            // A class to be applied to the root node in our template
+            baseClass: 'filterPanel',
 
             postCreate: function() {
                 this.inherited(arguments);
@@ -36,10 +47,19 @@ define([
                     this.selectRegion(regionId);                    
                 }));
 
+                this.selectPhaseHandler = on.pausable(this.phaseSelect, 'change', lang.hitch(this, function() {
+                    var phase = parseInt(this.phaseSelect.get('value'));                    
+                    this.selectPhase(phase);                    
+                }));
+
                 this.selectScenarioHandler = on.pausable(this.scenarioSelect, 'change', lang.hitch(this, function() {
                     var scenarioId = parseInt(this.scenarioSelect.get('value'));
                     this.selectScenario(scenarioId);
                 }));                
+            },
+
+            setRegion: function(region) {
+                this.regionSelect.set('value', String(region)); //onChange calls selectRegion()
             },
 
             /*
@@ -54,7 +74,7 @@ define([
                 };
 
                 //var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/region.json';
-                var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/region?max=100';
+                var url = window.location.protocol + '//' + window.location.host + '/ecs-catalog/rest/region?max=100';
 
                 xhr(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
                 //script.get(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
@@ -83,6 +103,7 @@ define([
                             }
                         }
                     }
+                    topic.publish('/ecs_catalog/regionsPopulated');
                 }), function(error) {
                     console.log('Error retrieving regions json');
                     //alert('Error retrieving ECS regions. Are you logged into the ecs-catalog application?');
@@ -102,7 +123,7 @@ define([
                 };
 
                 //var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/bosScenario.json';
-                var url = 'http://sparrow.ngdc.noaa.gov/ecs-catalog/rest/bosScenario?max=100';
+                var url = window.location.protocol + '//' + window.location.host + '/ecs-catalog/rest/bosScenario?max=100';
 
                 xhr(url, ajaxArgs).then(lang.hitch(this, function(jsonData) {
                 //script.get(url, ajaxArgs).then(lang.hitch(this, function(jsonData) {
@@ -149,11 +170,10 @@ define([
 
                 //Filter the scenario FilteringSelect by region
                 regions.push(0); //add the dummy region so "None Selected" shows up in the list
-                var filter;
                 if (regionName === 'Global') {
                     filter = /.*/; //show all scenarios
                 } else {
-                    filter = new RegExp(regions.join('|'), 'g')
+                    filter = new RegExp('^(' + regions.join('|') + ')$', 'm'); //'m' or multiline seems to be required for FilteringSelect to work properly
                 }
                 this.scenarioSelect.query.region = filter;
 
@@ -170,6 +190,13 @@ define([
                 this.scenarioChosen = 0; //Revert to original behavior; no scenario was just clicked on
 
                 topic.publish('/ecs_catalog/selectRegion', parseInt(this.regionSelect.get('value'))); //Publish to AppLoader.js which will do the filtering
+            },
+
+            selectPhase: function(phase) {
+                //Filter the scenario FilteringSelect by phase                
+                this.scenarioSelect.query.phase = phase;
+
+                topic.publish('/ecs_catalog/selectPhase', phase); //Publish to AppLoader.js which will do the filtering
             },
 
             selectScenario: function(scenarioId) {

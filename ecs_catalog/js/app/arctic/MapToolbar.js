@@ -3,10 +3,9 @@ define([
     'dojo/_base/lang',
     'dojo/topic',
     'dojo/on',
-    'app/MapToolbar',
+    'ngdc/MapToolbar',
     'dijit/form/Select',
-    'dijit/form/FilteringSelect',
-    'dojo/text!../templates/MapToolbar.html'
+    'dijit/form/FilteringSelect'
     ],
     function(
         declare,
@@ -15,13 +14,10 @@ define([
         on,
         MapToolbar,
         Select,
-        FilteringSelect,
-        template
+        FilteringSelect
         ){
 
         return declare([MapToolbar], {
-
-            templateString: template,
             
             constructor: function() {
                 this._basemaps = [
@@ -41,13 +37,13 @@ define([
                         visible: false
                     },
                     {
-                        label: 'EEZs (NOAA OCS and VLIZ)',
-                        services: [{id: 'ECS Catalog', sublayers: [19, 20]}],
+                        label: 'International EEZs (VLIZ)',
+                        services: [{id: 'ECS Catalog', sublayers: [21]}],
                         visible: true
                     },
                     {
                         label: 'International ECS Areas',
-                        services: [{id: 'ECS Catalog', sublayers: [59]}],
+                        services: [{id: 'ECS Catalog', sublayers: [60]}],
                         visible: false
                     }
                 ];

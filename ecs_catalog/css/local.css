@@ -172,7 +172,7 @@ html,body {
 }
 
 #leftPane {
-    width: 250px;
+    width: 270px;
 }
 
 /*#centerPane {*/
@@ -277,6 +277,12 @@ html,body {
 
 .layersPanel_class {
     font: 12px arial,helvetica,verdana,sans-serif;
+    padding: 5px;
+}
+
+.filterPanel_class {
+    font: 12px arial,helvetica,verdana,sans-serif;
+    padding: 5px;
 }
 
 .wildcardLabel {
