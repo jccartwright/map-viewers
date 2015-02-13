@@ -1,6 +1,6 @@
 <div class="layersPanel_class">
 
-    <h3>ECS Products</h3>
+    <h3>ECS Scenario Products</h3>
     <div id="formulaLinePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Formula Line Products', open: false">
         <input type="checkbox" data-dojo-attach-point="chkFosProfile" data-dojo-type="dijit/form/CheckBox">
         <label for="chkFosProfile">FOS Profile</label><br>
@@ -22,9 +22,6 @@
         <input type="checkbox" data-dojo-attach-point="chkDistanceConstraintLine" data-dojo-type="dijit/form/CheckBox">
         <label for="chkDistanceConstraintLine">Distance Constraint</label><br>
         
-        <input type="checkbox" data-dojo-attach-point="chk2500mIsobath" data-dojo-type="dijit/form/CheckBox">
-        <label for="chk2500mIsobath">2500 m Isobath</label><br>
-
         <input type="checkbox" data-dojo-attach-point="chkEnvelopeFosPoints" data-dojo-type="dijit/form/CheckBox">
         <label for="chkEnvelopeFosPoints">Envelope of FOS Points</label><br>
 
@@ -44,21 +41,27 @@
 
         <input type="checkbox" data-dojo-attach-point="chkEcsArea" data-dojo-type="dijit/form/CheckBox">
         <label for="chkEcsArea">ECS Area</label><br>
-    </div>
+    </div><br>
+    <hr>
 
+    <h3>Supporting Data and Products</h3>
     <div id="boundariesPane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Boundaries', open: false">
         <input type="checkbox" data-dojo-attach-point="chkBaselinePoints" data-dojo-type="dijit/form/CheckBox">
         <label for="chkBaselinePoints">Baseline Points</label><br>
+
+        <input checked type="checkbox" data-dojo-attach-point="chkEEZ" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkEEZ">U.S. EEZ</label><br>
 
         <input type="checkbox" data-dojo-attach-point="chkCoastline" data-dojo-type="dijit/form/CheckBox">
         <label for="chkCoastline">Coastline</label><br>
 
         <input type="checkbox" data-dojo-attach-point="chkInternational" data-dojo-type="dijit/form/CheckBox">
         <label for="chkInternational">International</label><br>
-    </div><br>
-    <hr>
 
-    <h3>Source Data and Data Products</h3>
+        <input type="checkbox" data-dojo-attach-point="chk2500mIsobath" data-dojo-type="dijit/form/CheckBox">
+        <label for="chk2500mIsobath">2500 m Isobath</label><br>
+    </div>
+
     <div id="dataProductsPane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Data Products', open: false">
         <b>Bathymetric Product:</b><br>
         &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBathymetricProduct" data-dojo-type="dijit/form/CheckBox">
