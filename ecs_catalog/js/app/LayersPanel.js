@@ -57,9 +57,7 @@ define([
                 on(this.chkDistanceConstraintLine, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Distance Constraint Line'], this.chkDistanceConstraintLine.checked);                    
                 }));
-                on(this.chk2500mIsobath, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['2500m Isobath'], this.chk2500mIsobath.checked);                    
-                }));
+                
                 on(this.chkEnvelopeFosPoints, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['FOS Envelope'], this.chkEnvelopeFosPoints.checked);                    
                 }));
@@ -83,8 +81,14 @@ define([
                 }));
 
                 //Boundaries
+                on(this.chkEEZ, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['US EEZ'], this.chkEEZ.checked);                    
+                }));
                 on(this.chkBaselinePoints, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Baseline Point'], this.chkBaselinePoints.checked);                    
+                }));
+                on(this.chk2500mIsobath, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['2500m Isobath'], this.chk2500mIsobath.checked);                    
                 }));
                 on(this.chkCoastline, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Coastline'], this.chkCoastline.checked);                    
