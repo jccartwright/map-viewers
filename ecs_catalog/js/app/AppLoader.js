@@ -62,6 +62,15 @@ define([
             mercatorMapConfig: null,
             arcticMapConfig: null,
 
+            scenarioProductLayerIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+            boundaryLayerIds: [16, 17, 18, 19, 20],
+            sourceDataLayerIds: [23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41],
+            dataProductLayerIds: [43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59],
+
+            regionFilter: '',
+            phaseFilter: '',
+            scenarioFilter: '',
+
             constructor: function(args){
                 declare.safeMixin(this,args);
                 this.overlayNode = dom.byId(this.overlayNodeId);
@@ -81,17 +90,11 @@ define([
                      proxyUrl: window.location.protocol + '//' + window.location.host + "/ecs-catalog/rest/map/proxy"
                 });
 
+                this.filterPanel = registry.byId('filterPanel');
+
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
                 lang.mixin(config.app, queryParams);
-
-                //Get the optional region parameter from the URL. Set the regionSelect widget accordingly.
-                if (queryParams.region !== undefined) {
-                    var region = parseInt(queryParams.region);
-                    if (!isNaN(region)) {
-                        //dijit.byId('regionSelect').set('value', String(region)); //onChange calls selectRegion()
-                    }
-                } 
 
                 this.initialExtent = null;
                 if (queryParams.minx && queryParams.maxx && queryParams.miny && queryParams.maxy) {
@@ -117,8 +120,20 @@ define([
                 topic.subscribe('/ecs_catalog/selectRegion', lang.hitch(this, function(region) {
                     this.selectRegion(region);
                 }));
+                topic.subscribe('/ecs_catalog/selectPhase', lang.hitch(this, function(phase) {
+                    this.selectPhase(phase);
+                }));
                 topic.subscribe('/ecs_catalog/selectScenario', lang.hitch(this, function(scenario) {
                     this.selectScenario(scenario);
+                }));
+                topic.subscribe('/ecs_catalog/regionsPopulated', lang.hitch(this, function() {
+                    //Get the optional region parameter from the URL. Set the regionSelect widget accordingly.
+                    if (queryParams.region !== undefined) {
+                        var region = parseInt(queryParams.region);
+                        if (!isNaN(region)) {
+                            this.filterPanel.setRegion(region);
+                        }
+                    }   
                 }));
 
                 this.allLayerDefs = [];
@@ -221,10 +236,10 @@ define([
                 logger.debug('setting up Arctic view...');
                 
                 var initialExtent = new Extent({
-                    xmin: -4000000,
-                    ymin: -4000000,
-                    xmax: 4000000,
-                    ymax: 4000000,
+                    xmin: 270000,
+                    ymin: -800000,
+                    xmax: 3300000,
+                    ymax: 1700000,
                     spatialReference: new SpatialReference({wkid: 5936})
                 });   
 
@@ -254,8 +269,8 @@ define([
                 var regionName;
                 var extent;
                 var regions = [];
-                var regionStore = this.mercatorMapConfig.mapToolbar.regionStore;
-                var scenarioStore = this.mercatorMapConfig.mapToolbar.scenarioStore;
+                var regionStore = this.filterPanel.regionStore;
+                var scenarioStore = this.filterPanel.scenarioStore;
 
                 var result = regionStore.query({objectid: region});
                 if ( result.length > 0 ) {
@@ -285,11 +300,20 @@ define([
                 this.applyRegionFilter(region);
             },
 
+            getRegionAndPhaseLayerDef: function() {
+                if (this.regionLayerDef && this.phaseLayerDef) {
+                    return this.regionLayerDef + ' AND ' + this.phaseLayerDef;
+                }
+                else {
+                    return this.phaseLayerDef;
+                }
+            },
+
             applyRegionFilter: function(region) {                
-                var regionStore = this.mercatorMapConfig.mapToolbar.regionStore;
-                var service = this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
+                var regionStore = this.filterPanel.regionStore;
+                var mercatorService = this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
+                var arcticService = this.arcticMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
                 var regionIds = [region];
-                //var allLayerDefs = [];
 
                 //Get the 'Global' region id
                 var globalRegionId = regionStore.query({name: 'Global'})[0].objectid;
@@ -310,21 +334,54 @@ define([
                     regionIds.push(globalRegionId);
                 }
 
-                var sourceDataAndDataProductsLayers = [
-                    //1, 2, 3, 4, 6, 7, 9, 10, 11, 13, 14, 15, 17, 19, 20, //scenario products
-                    22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, //source data
-                    42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58 //data products
-                ];
-
-                for ( var i = 0; i < sourceDataAndDataProductsLayers.length; i++ ) {
-                    if (region === globalRegionId) {
-                        this.allLayerDefs[sourceDataAndDataProductsLayers[i]] = null;
-                    }
-                    else {
-                        this.allLayerDefs[sourceDataAndDataProductsLayers[i]] = 'REGION_ID IN (' + regionIds.join(',') + ')';
-                    }
+                if (region === globalRegionId) {
+                    this.regionLayerDef = null;
                 }
-                service.setLayerDefinitions(this.allLayerDefs);
+                else {
+                    this.regionLayerDef = 'REGION_ID IN (' + regionIds.join(',') + ')';
+                }
+
+                array.forEach(this.boundaryLayerIds, lang.hitch(this, function(layerId) {
+                    this.allLayerDefs[layerId] = this.getRegionAndPhaseLayerDef();
+                }));
+                array.forEach(this.dataProductLayerIds, lang.hitch(this, function(layerId) {
+                    this.allLayerDefs[layerId] = this.getRegionAndPhaseLayerDef();
+                }));
+                array.forEach(this.sourceDataLayerIds, lang.hitch(this, function(layerId) {
+                    this.allLayerDefs[layerId] = this.regionLayerDef;
+                }));
+
+                // for ( var i = 0; i < sourceDataAndDataProductsLayers.length; i++ ) {
+                //     if (region === globalRegionId) {
+                //         this.allLayerDefs[sourceDataAndDataProductsLayers[i]] = null;
+                //     }
+                //     else {
+                //         this.allLayerDefs[sourceDataAndDataProductsLayers[i]] = 'REGION_ID IN (' + regionIds.join(',') + ')';
+                //     }
+                // }
+                mercatorService.setLayerDefinitions(this.allLayerDefs);
+                arcticService.setLayerDefinitions(this.allLayerDefs);
+            },
+
+            selectPhase: function(phase) {
+                console.log('Inside selectPhase ' + phase);
+
+                //var allLayerDefs = [];
+                var mercatorService = this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
+                var arcticService = this.arcticMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
+
+                //this.phaseLayerDef = 'PHASE=' + phase;
+                this.phaseLayerDef = '1=1';
+
+                array.forEach(this.boundaryLayerIds, lang.hitch(this, function(layerId) {
+                    this.allLayerDefs[layerId] = this.getRegionAndPhaseLayerDef();
+                }));
+                array.forEach(this.dataProductLayerIds, lang.hitch(this, function(layerId) {
+                    this.allLayerDefs[layerId] = this.getRegionAndPhaseLayerDef();
+                }));
+
+                mercatorService.setLayerDefinitions(this.allLayerDefs);
+                arcticService.setLayerDefinitions(this.allLayerDefs);
             },
 
             /*
@@ -335,15 +392,15 @@ define([
                 console.log('Inside selectScenario ' + scenario);
 
                 //var allLayerDefs = [];
-                var service = this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
+                var mercatorService = this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
+                var arcticService = this.arcticMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
 
+                array.forEach(this.scenarioProductLayerIds, lang.hitch(this, function(layerId) {
+                    this.allLayerDefs[layerId] = 'BOSS_ID=' + scenario;
+                }));
 
-                var scenarioProductLayers = [1, 2, 3, 4, 6, 7, 9, 10, 11, 13, 14, 15, 16, 17, 18];
-
-                for (var i = 0; i < scenarioProductLayers.length; i++) {
-                    this.allLayerDefs[scenarioProductLayers[i]] = 'BOSS_ID=' + scenario;
-                }
-                service.setLayerDefinitions(this.allLayerDefs);
+                mercatorService.setLayerDefinitions(this.allLayerDefs);
+                arcticService.setLayerDefinitions(this.allLayerDefs);
             },
         });
     }
