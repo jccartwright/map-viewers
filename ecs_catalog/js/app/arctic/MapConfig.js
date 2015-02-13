@@ -2,7 +2,7 @@ define([
     'dojo/_base/declare', 
     'dojo/_base/lang',
     'dojo/dom',
-    'ngdc/arctic/MapConfig',
+    'ngdc/MapConfig',
     'app/arctic/MapToolbar',
     'app/Identify',
     'app/AppIdentifyPane'
@@ -18,7 +18,34 @@ define([
         ){
         
         return declare([MapConfig], {
-                        
+                       
+            constructor: function() {
+                logger.debug('inside constructor for app/arctic/MapConfig');
+
+                if (window.proj4) {
+                    //WGS 1984 EPSG Alaska Polar Stereographic
+                    //WKT projection string copied from Esri's .prj file, with PROJECTION["Sterographic"] changed to PROJECTION["Polar_Stereographic"] for compatibility with Proj4js
+                    this.sourceProj = 'PROJCS["WGS_1984_EPSG_Alaska_Polar_Stereographic",GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Polar_Stereographic"],PARAMETER["False_Easting",2000000.0],PARAMETER["False_Northing",2000000.0],PARAMETER["Central_Meridian",-150.0],PARAMETER["Scale_Factor",0.994],PARAMETER["Latitude_Of_Origin",90.0],UNIT["Meter",1.0],AUTHORITY["EPSG",5936]]';
+                }
+            },
+
+            //override method in parent class for projection-specific conversion
+            mapPointToGeographic: function(mapPoint) {
+                var mp = {};
+                mp.x = mapPoint.x;
+                mp.y = mapPoint.y;
+                var coords;
+
+                 if (window.proj4) {    
+                    try {
+                        coords = proj4(this.sourceProj).inverse(mp);
+                    } catch (err) {
+                        logger.error(err);
+                    }
+                 }
+                return (coords);
+            },
+
             //handle setup which requires all layers to be loaded
             mapReady: function() {
                 this.inherited(arguments);
@@ -29,6 +56,7 @@ define([
                 this.mapToolbar.startup();
 
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
+                this.identify.enabled = false;
 
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
@@ -39,7 +67,7 @@ define([
                 this.identifyPane.startup();
                 this.identifyPane.enabled = false;
                 
-                this.mapLayerCollection.getLayerById('ECS Catalog').setVisibleLayers([19, 20]); //US EEZ and International EEZs should be the only layers visible by default.
+                this.mapLayerCollection.getLayerById('ECS Catalog').setVisibleLayers([18, 21]); //US EEZ and International EEZs should be the only layers visible by default.
 
                 //Layer definitions for NGDC pre-2012 source data
                 this.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions(["ENTERED_DATE < date '2012-01-01' or ENTERED_DATE is null"]);
