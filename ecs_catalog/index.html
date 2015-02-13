@@ -54,10 +54,8 @@
             }
         };
     </script>
+    <script src="http://maps.ngdc.noaa.gov/proj4js-2.3.3/proj4.js"></script>
     <script src="http://js.arcgis.com/3.12/"></script>
-    <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
-    <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3995.js"></script>
-    <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3031.js"></script>
 </head>
 <body class="tundra">
 <div id="loadingOverlay" class="loadingOverlay pageOverlay">
@@ -72,7 +70,11 @@
         <div id="banner"></div>
     </div>
 
-    <div id="leftPane" data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true">
+    <div id="leftPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'left', splitter:true">
+        <div data-dojo-type="dijit/layout/ContentPane">
+            <div id="filterPanel" data-dojo-type="app/FilterPanel"></div>
+        </div>
+        <hr>
         <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" title="Layers">
         </div>
         <!-- <div id="legendPanel" data-dojo-type="dijit/layout/ContentPane" title="Legend"> -->
@@ -114,7 +116,7 @@
     require([
         "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "dojo/dom", "dojo/dom-style", "dojo/request", "app/AppLoader",
         "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer", "dijit/layout/TabContainer",
-        "app/HelpPanel", "app/CreditsPanel", "dojo/domReady!" ],
+        "app/HelpPanel", "app/CreditsPanel", "app/FilterPanel", "dojo/domReady!" ],
             function(LoadingOverlay, registry, parser, dom, domStyle, request, AppLoader) {
                 var loadingOverlay = new LoadingOverlay();
                 var appLoader = new AppLoader();
@@ -130,7 +132,7 @@
                 var xhrOptions = {"preventCache":true, "handleAs": "json", "timeout":500};
                 request(authUrl, xhrOptions).then(function(data) {
                     if (data.username == '__grails.anonymous.user__') {
-                        alert("WARNING: Not logged into ECS Catalog. Not all map layers will display");
+                        alert("WARNING: Not logged into ECS Catalog. Please reload after logging in.");
                         var loginWindow = window.open(loginUrl,"_blank");
                         loginWindow.focus();
                     }
