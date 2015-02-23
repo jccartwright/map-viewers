@@ -48,12 +48,12 @@ define([
                     },
                     {
                         label: 'International EEZs (VLIZ)',
-                        services: [{id: 'ECS Catalog', sublayers: [21]}],
+                        services: [{id: 'ECS Catalog', sublayers: [20]}],
                         visible: true
                     },
                     {
                         label: 'International ECS Areas',
-                        services: [{id: 'ECS Catalog', sublayers: [60]}],
+                        services: [{id: 'ECS Catalog', sublayers: [59]}],
                         visible: false
                     }
                 ];

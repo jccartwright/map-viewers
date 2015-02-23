@@ -90,9 +90,6 @@ define([
                 on(this.chk2500mIsobath, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['2500m Isobath'], this.chk2500mIsobath.checked);                    
                 }));
-                on(this.chkCoastline, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['Coastline'], this.chkCoastline.checked);                    
-                }));
                 on(this.chkInternational, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayerByName/visibility', 'ECS Catalog', ['International Boundary'], this.chkInternational.checked);                    
                 }));
