@@ -70,25 +70,20 @@
         <div id="banner"></div>
     </div>
 
-    <div id="leftPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'left', splitter:true">
-        <div data-dojo-type="dijit/layout/ContentPane">
+    <div id="leftPane" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="region:'left', splitter:true, design:'headline', gutters:false">
+        <!-- nest a BorderContainer here to force layout. required to get a "fixed panel" on top of TabContainer -->
+        <div id="filterPane" data-dojo-type="dijit/layout/ContentPane" style="height:150px" data-dojo-props="region: 'top'">
             <div id="filterPanel" data-dojo-type="app/FilterPanel"></div>
         </div>
-        <hr>
-        <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" title="Layers">
-        </div>
-        <!-- <div id="legendPanel" data-dojo-type="dijit/layout/ContentPane" title="Legend"> -->
-            <!-- <div id="legend"> -->
-                
-            <!-- </div>  -->
-        <!-- </div> -->
-        <!-- <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information"> -->
-            <!-- <div id="credits" data-dojo-type="app/CreditsPanel"></div> -->
-        <!-- </div> -->
-        <!-- <div id="helpPanel" data-dojo-type="dijit/layout/ContentPane" title="Help"> -->
-            <!-- <div id="help" data-dojo-type="app/HelpPanel"></div> -->
-        <!-- </div> -->
 
+        <div id="tabContainer" data-dojo-type="dijit/layout/TabContainer" style="height:100%" data-dojo-props="region: 'center'">
+            <div data-dojo-type="dijit/layout/ContentPane" title="Layers">
+                <div id="layersPanel" data-dojo-type="app/LayersPanel"></div>
+            </div>
+            <div data-dojo-type="dijit/layout/ContentPane" title="Legend">
+                <div id="dynamicLegend"></div>
+            </div>
+        </div>
     </div> <!-- end leftPane -->
 
     <!-- mapContainer nested inside ContentPane because it seems to force map to initially fill pane -->

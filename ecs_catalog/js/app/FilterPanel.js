@@ -48,7 +48,7 @@ define([
                 }));
 
                 this.selectPhaseHandler = on.pausable(this.phaseSelect, 'change', lang.hitch(this, function() {
-                    var phase = parseInt(this.phaseSelect.get('value'));                    
+                    var phase = this.phaseSelect.get('value');
                     this.selectPhase(phase);                    
                 }));
 
@@ -70,10 +70,8 @@ define([
                 var ajaxArgs = {
                     preventCache: true,
                     handleAs: 'json'
-                    //jsonp: 'callback'
                 };
 
-                //var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/region.json';
                 var url = window.location.protocol + '//' + window.location.host + '/ecs-catalog/rest/region?max=100';
 
                 xhr(url, ajaxArgs).then(lang.hitch(this, function(regionData) {
@@ -119,10 +117,8 @@ define([
                 var ajaxArgs = {
                     preventCache: true,
                     handleAs: 'json'
-                    //jsonp: 'callback'
                 };
 
-                //var url = 'https://www.ngdc.noaa.gov/ecs-catalog/rest/bosScenario.json';
                 var url = window.location.protocol + '//' + window.location.host + '/ecs-catalog/rest/bosScenario?max=100';
 
                 xhr(url, ajaxArgs).then(lang.hitch(this, function(jsonData) {
@@ -138,7 +134,8 @@ define([
                         scenarioData.items.push({
                             name: jsonData[i].title,
                             id: String(jsonData[i].id), //needs to be string to allow set('value', id) on the widget
-                            region: jsonData[i].region.id
+                            region: jsonData[i].region.id,
+                            phase: jsonData[i].phase
                         });
                     }
 
@@ -193,8 +190,18 @@ define([
             },
 
             selectPhase: function(phase) {
-                //Filter the scenario FilteringSelect by phase                
-                this.scenarioSelect.query.phase = phase;
+                //Filter the scenario FilteringSelect by phase
+                if (phase == 'ONE') {
+                    this.scenarioSelect.query.phase = 1;
+                } else if (phase == 'TWO') {
+                    this.scenarioSelect.query.phase = 2;
+                } else if (phase == 'THREE') {
+                    this.scenarioSelect.query.phase = 3;
+                } else if (phase == 'FOUR') {
+                    this.scenarioSelect.query.phase = 4;
+                }
+                //Select "None Selected" scenario by default
+                this.scenarioSelect.set('value', 0);          
 
                 topic.publish('/ecs_catalog/selectPhase', phase); //Publish to AppLoader.js which will do the filtering
             },
