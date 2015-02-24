@@ -15,6 +15,7 @@ define([
     'esri/geometry/Extent',
     'esri/SpatialReference',
     'esri/geometry/webMercatorUtils',
+    'esri/dijit/Legend',
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'app/arctic/MapConfig',
@@ -45,6 +46,7 @@ define([
         Extent,
         SpatialReference,
         webMercatorUtils,
+        Legend,
         Logger,
         MercatorMapConfig,
         ArcticMapConfig,
@@ -86,7 +88,7 @@ define([
 
                 //Use the proxy for only the 'ecs_catalog' map service.
                 urlUtils.addProxyRule({
-                     urlPrefix: 'http://maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog',
+                     urlPrefix: 'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog',
                      proxyUrl: window.location.protocol + '//' + window.location.host + "/ecs-catalog/rest/map/proxy"
                 });
 
@@ -112,8 +114,6 @@ define([
 
                 this.setupBanner();
 
-                this.setupLayersPanel();
-
                 this.setupMapViews();
 
                 //Subscribe to messages passed by the MapToolbar
@@ -136,7 +136,27 @@ define([
                     }   
                 }));
 
+                topic.subscribe('/ngdc/sublayerByName/visibility', lang.hitch(this, function(phase) {
+                    if (this.legend) {
+                        this.legend.refresh();
+                    }
+                }));
+                topic.subscribe('/ngdc/sublayer/visibility', lang.hitch(this, function(phase) {
+                    if (this.legend) {
+                        this.legend.refresh();
+                    }
+                }));
+                topic.subscribe('/ngdc/layer/visibility', lang.hitch(this, function(phase) {
+                    if (this.legend) {
+                        this.legend.refresh();
+                    }
+                }));
+
                 this.allLayerDefs = [];
+
+                //Select default phase and scenario on startup
+                this.selectPhase('ONE');
+                this.selectScenario(0);
             },
 
             setupBanner: function() {
@@ -230,6 +250,16 @@ define([
                         }, 100);
                     }
                 }));
+
+                aspect.after(this.mercatorMapConfig, 'mapReady', lang.hitch(this, function() {
+                    this.legend = new Legend({
+                        map: this.mercatorMapConfig.map,
+                        layerInfos: [
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog'), title: "ECS Catalog"}
+                        ]
+                    }, 'dynamicLegend');
+                    this.legend.startup();
+                }));
             },
 
             setupArcticView: function() {
@@ -318,11 +348,6 @@ define([
                 //Get the 'Global' region id
                 var globalRegionId = regionStore.query({name: 'Global'})[0].objectid;
 
-                //Don't apply any filter if region is 'Global'
-                //if (region === globalRegionId) {
-                //    return;
-                //}
-
                 //Get the current region's parent
                 var regionItems = regionStore.query({objectid: region})
                 if (regionItems && regionItems.length > 0) {
@@ -335,12 +360,13 @@ define([
                 }
 
                 if (region === globalRegionId) {
-                    this.regionLayerDef = null;
+                    this.regionLayerDef = null; //Don't apply any filter if region is 'Global'
                 }
                 else {
                     this.regionLayerDef = 'REGION_ID IN (' + regionIds.join(',') + ')';
                 }
 
+                //Apply the filter to the Boundaries, Data Product, and Source Data layers
                 array.forEach(this.boundaryLayerIds, lang.hitch(this, function(layerId) {
                     this.allLayerDefs[layerId] = this.getRegionAndPhaseLayerDef();
                 }));
@@ -351,28 +377,17 @@ define([
                     this.allLayerDefs[layerId] = this.regionLayerDef;
                 }));
 
-                // for ( var i = 0; i < sourceDataAndDataProductsLayers.length; i++ ) {
-                //     if (region === globalRegionId) {
-                //         this.allLayerDefs[sourceDataAndDataProductsLayers[i]] = null;
-                //     }
-                //     else {
-                //         this.allLayerDefs[sourceDataAndDataProductsLayers[i]] = 'REGION_ID IN (' + regionIds.join(',') + ')';
-                //     }
-                // }
                 mercatorService.setLayerDefinitions(this.allLayerDefs);
                 arcticService.setLayerDefinitions(this.allLayerDefs);
             },
 
             selectPhase: function(phase) {
-                console.log('Inside selectPhase ' + phase);
-
-                //var allLayerDefs = [];
                 var mercatorService = this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
                 var arcticService = this.arcticMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
 
-                //this.phaseLayerDef = 'PHASE=' + phase;
-                this.phaseLayerDef = '1=1';
+                this.phaseLayerDef = "PHASE='" + phase + "'";
 
+                //Apply the filter to the Boundaries and Data Product layers
                 array.forEach(this.boundaryLayerIds, lang.hitch(this, function(layerId) {
                     this.allLayerDefs[layerId] = this.getRegionAndPhaseLayerDef();
                 }));
@@ -395,6 +410,7 @@ define([
                 var mercatorService = this.mercatorMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
                 var arcticService = this.arcticMapConfig.mapLayerCollection.getLayerById('ECS Catalog');
 
+                //Apply the filter to the Scenario Product layers
                 array.forEach(this.scenarioProductLayerIds, lang.hitch(this, function(layerId) {
                     this.allLayerDefs[layerId] = 'BOSS_ID=' + scenario;
                 }));
