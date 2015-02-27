@@ -106,7 +106,7 @@ define([
                         {url: 'http://maps.ngdc.noaa.gov', label: 'Maps'},
                         {url: 'http://www.ngdc.noaa.gov/mgg/bathymetry/multibeam.html', label: 'Multibeam Bathymetry'}
                     ],
-                    dataUrl: 'http://www.ngdc.noaa.gov/autogird',
+                    dataUrl: 'http://www.ngdc.noaa.gov/autogrid',
                     image: '/images/autogrid_logo.png'
                 });
                 this.banner.placeAt('banner');
