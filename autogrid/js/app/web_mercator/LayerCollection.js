@@ -43,6 +43,10 @@ define([
                         id: 'Light Gray',
                         visible: false
                     }),
+                    new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer', {
+                        id: 'Dark Gray',
+                        visible: false
+                    }),
                     new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer', {
                         id: 'World Imagery',
                         visible: false
@@ -59,13 +63,26 @@ define([
                         id: 'GEBCO_08 Contours',
                         visible: false,
                         opacity: 0.5
-                    }),   
+                    }),
+                    new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer', {
+                        id: 'Multibeam (tiled)',
+                        visible: true
+                    }),
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
+                        id: 'Multibeam (dynamic)',
+                        imageParameters: this.imageParameters.png32,
+                        visible: true
+                    }),
                     new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer', {
                         id: 'World Boundaries and Places',
                         visible: false
                     }),
                     new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer', {
                         id: 'Light Gray Reference',
+                        visible: false
+                    }),
+                    new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer', {
+                        id: 'Dark Gray Reference',
                         visible: false
                     }),
                     new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer', {
@@ -82,15 +99,20 @@ define([
                         id: 'Poles Mask',
                         visible: true,
                         imageParameters: this.imageParameters.png32
-                    }),
-                    new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer', {
-                        id: 'Multibeam (tiled)',
-                        visible: false
                     })
                 ];
             },  //end defineMapServices
 
-            definePairedMapServices: function() {                
+            definePairedMapServices: function() {
+                this.pairedMapServices = [
+                    {
+                        id: 'Multibeam',
+                        tiledService: this.getLayerById('Multibeam (tiled)'),
+                        dynamicService: this.getLayerById('Multibeam (dynamic)'),
+                        cutoffZoom: 9,
+                        visible: true
+                    }                 
+                ];               
             },
 
             setSubLayerVisibility: function() {
