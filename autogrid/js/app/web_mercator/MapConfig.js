@@ -31,8 +31,12 @@ define([
 
                 console.log('inside custom Web Mercator mapReady...');   
 
-                var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, 'mercatorMapToolbar');
-                mapToolbar.startup();
+                this.mapToolbar = new MapToolbar({
+                    map: this.map, 
+                    layerCollection: this.mapLayerCollection,
+                    bboxDialogTitle: 'Enter Coordinates to Define Area of Interest'
+                }, 'mercatorMapToolbar');
+                this.mapToolbar.startup();
 
                 /*
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});

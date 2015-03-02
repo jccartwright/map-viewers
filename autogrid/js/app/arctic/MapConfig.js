@@ -29,8 +29,14 @@ define([
 
                 console.log('inside custom Arctic mapReady...');   
 
-                var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, 'arcticMapToolbar');
-                mapToolbar.startup();
+                this.mapToolbar = new MapToolbar({
+                    map: this.map, 
+                    layerCollection: this.mapLayerCollection, 
+                    maxLat: 90, 
+                    minLat: 50,
+                    bboxDialogTitle: 'Enter Coordinates to Define Area of Interest'
+                }, 'arcticMapToolbar');
+                this.mapToolbar.startup();
 
                 /*
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
