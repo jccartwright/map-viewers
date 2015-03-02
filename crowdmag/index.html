@@ -92,13 +92,13 @@
             //var yLayer, zLayer, intensityLayer;
 
             ready(function () {
-                console.log('ready handler fired...');
+                //console.log('ready handler fired...');
                 $(document).ready(jQueryReady);
             });
 
 
             function mapLoadHandler(map) {
-                console.log('inside mapLoadHandler...');
+                //console.log('inside mapLoadHandler...');
                 //zoom to user's position if possible
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
@@ -257,7 +257,7 @@
 
         function calcStartEndDates(queryObject) {
             if (validateDateString(queryObject.startDate) && validateDateString(queryObject.endDate)) {
-                return ("OBSTIME >= timestamp '"+queryObject.start+" 00:00:00' && OBSTIME <= timestamp '"+queryObject.end+" 23:59:59'");
+                return ("OBSTIME >= timestamp '"+queryObject.startDate+" 00:00:00' AND OBSTIME <= timestamp '"+queryObject.endDate+" 23:59:59'");
 
             } else {
                 //calculate yesterday's date
