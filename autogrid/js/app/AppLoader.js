@@ -126,7 +126,6 @@ define([
                 registry.byId('mapContainer').watch('selectedChildWidget', lang.hitch(this, function(name, oval, nval){
                     var mapId = nval.id;
                     console.debug(mapId + ' map view selected');
-                    topic.publish('/ngdc/mapViewActivated', mapId);
                     this.enableMapView(mapId);
                 }));
 
