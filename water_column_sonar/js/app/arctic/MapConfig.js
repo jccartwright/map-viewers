@@ -27,8 +27,13 @@ define([
             mapReady: function() {
                 this.inherited(arguments);
 
-                var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, 'arcticMapToolbar');
-                mapToolbar.startup();
+                this.mapToolbar = new MapToolbar({
+                    map: this.map, 
+                    layerCollection: this.mapLayerCollection, 
+                    maxLat: 90, 
+                    minLat: 50
+                }, 'arcticMapToolbar');
+                this.mapToolbar.startup();
                 
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
                 this.identify.enabled = false;
@@ -44,6 +49,11 @@ define([
                 }, dom.byId('arcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
                 this.identifyPane.enabled = false;
+
+                //Whenever the layer mode changes between 'cruise' and 'file', close the IdentifyPane to reduce confusion
+                topic.subscribe('/water_column_sonar/layerMode', lang.hitch(this, function() {
+                    this.identifyPane.close();
+                }));
             }
          
             
