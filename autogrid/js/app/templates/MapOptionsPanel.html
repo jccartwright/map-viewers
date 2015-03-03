@@ -2,7 +2,7 @@
     <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'cntrIntLabel',position:['above']">
         Contour interval of map in meters
     </div>
-    <label for="cntrInt">Contour Interval</label>
+    <label for="cntrInt">Contour Interval (m)</label>
     <input type="text" data-dojo-attach-point="contourIntervalText" id="cntrInt" name="cntrInt" size="10" value="100"/>
     <br>
     <div data-dojo-attach-point="zRangeMessage"></div>
@@ -22,9 +22,9 @@
         gebco     : Colors for GEBCO bathymetric charts [-7000/0]
     </div>
     <label for="colorTable">Color Table</label>
-    <select data-dojo-attach-point="colorTableSelect" name="colorTable" id="colorTable">
-        <option value="rainbow" selected="selected">rainbow</option>
-        <option value="sealand">sealand</option>
-        <option value="gebco">gebco</option>
-    </select>
+    <div data-dojo-type="dijit/form/Select" data-dojo-attach-point="colorTableSelect" name="colorTable" id="colorTable">
+        <span value="rainbow" selected="selected"><img src="images/GMT_rainbow.png"></img></span>
+        <span value="sealand"><img src="images/GMT_sealand.png"></img></span>
+        <span value="gebco"><img src="images/GMT_gebco.png"></img></span>
+    </div>
 </div>

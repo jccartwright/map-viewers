@@ -35,6 +35,11 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),
+                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
+                        id: 'Multibeam',
+                        imageParameters: this.imageParameters.png32,
+                        visible: true
+                    }),
                     new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/graticule/MapServer', {
                         id: 'Graticule',
                         visible: true,

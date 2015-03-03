@@ -106,7 +106,7 @@ define([
                         {url: 'http://maps.ngdc.noaa.gov', label: 'Maps'},
                         {url: 'http://www.ngdc.noaa.gov/mgg/bathymetry/multibeam.html', label: 'Multibeam Bathymetry'}
                     ],
-                    dataUrl: 'http://www.ngdc.noaa.gov/autogird',
+                    dataUrl: 'http://www.ngdc.noaa.gov/autogrid',
                     image: '/images/autogrid_logo.png'
                 });
                 this.banner.placeAt('banner');
@@ -126,7 +126,6 @@ define([
                 registry.byId('mapContainer').watch('selectedChildWidget', lang.hitch(this, function(name, oval, nval){
                     var mapId = nval.id;
                     console.debug(mapId + ' map view selected');
-                    topic.publish('/ngdc/mapViewActivated', mapId);
                     this.enableMapView(mapId);
                 }));
 
