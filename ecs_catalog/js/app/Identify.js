@@ -62,7 +62,7 @@ define([
                     type = type[0].toLowerCase() + type.substring(1);
                 }
 
-                return 'http://sparrow.ngdc.noaa.gov/ecs-catalog/#/' + type + '/' + objectId;
+                return window.location.protocol + '//' + window.location.host + '/ecs-catalog/#/' + type + '/' + objectId;
             },
 
             internationalEcsFormatter: function(feature) {
