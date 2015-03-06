@@ -1,0 +1,30 @@
+<div>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'cntrIntLabel',position:['above']">
+        Contour interval of map in meters
+    </div>
+    <label for="cntrInt">Contour Interval (m)</label>
+    <input type="text" data-dojo-attach-point="contourIntervalText" id="cntrInt" name="cntrInt" size="10" value="100"/>
+    <br>
+    <div data-dojo-attach-point="zRangeMessage"></div>
+    <br>
+    <br>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mapTitleLabel',position:['above']">
+        Map title
+    </div>
+    <label for="mapTitle">Map Title</label>
+    <input type="text" data-dojo-attach-point="mapTitleText" name="mapTitle" size="40" value="Autochart" id="mapTitle"/>
+    <br>
+    <br>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'colorTableIntLabel',position:['above']">
+        Applies color based on depth. choices:<br/>
+        rainbow   : Rainbow colors: magenta-blue-cyan-green-yellow-red [0/300]<br/>
+        sealand   : Smith bathymetry/topography scale [-6000/+3000]<br/>
+        gebco     : Colors for GEBCO bathymetric charts [-7000/0]
+    </div>
+    <label for="colorTable">Color Table</label>
+    <div data-dojo-type="dijit/form/Select" data-dojo-attach-point="colorTableSelect" name="colorTable" id="colorTable">
+        <span value="rainbow" selected="selected"><img src="images/GMT_rainbow.png"></img></span>
+        <span value="sealand"><img src="images/GMT_sealand.png"></img></span>
+        <span value="gebco"><img src="images/GMT_gebco.png"></img></span>
+    </div>
+</div>

@@ -658,11 +658,11 @@ define([
                     <i><b>Current DART Station</b></i><br>\
                     <table class="idTable">\
                         <tr colspan="2">\
-                            <td><a href="http://www.ndbc.noaa.gov/station_page.php?station=${station}" target="_blank">Additional Info</a>\
+                            <td><a href="${dataUrl}" target="_blank">Additional Info</a>\
                         </tr>\
                         <tr class="idTr">\
-                            <td><b>Station:</b></td>\
-                            <td>${station}</td>\
+                            <td><b>Station ID:</b></td>\
+                            <td>${stationId}</td>\
                         </tr>\
                         <tr class="idTr">\
                             <td><b>Description:</b></td>\
@@ -685,13 +685,14 @@ define([
                             <td>${type}</td>\
                         </tr>\
                     </table>', {
-                        station: a['Station'],
+                        stationId: a['Station ID'],
                         description: a['Description'],
                         latitude: a['Latitude'],
                         longitude: a['Longitude'],
                         depth: a['Depth'],
                         deploymentDate: a['Deployment Date'],
-                        type: a['Type']
+                        type: a['Type'],
+                        dataUrl: a['Data URL']
                     });                
                 return html;
             },
@@ -702,7 +703,7 @@ define([
                     <i><b>Retrospective DART Station</b></i><br>\
                     <table class="idTable">\
                         <tr colspan="2">\
-                            <td><a href="http://www.ngdc.noaa.gov/docucomp/page?xml=NOAA/NESDIS/NGDC/MGG/DART/iso/xml/${stationId}.xml&view=iso2faq/FAQ_ISO" target="_blank">Metadata Link</a>\
+                            <td><a href="${metadataUrl}" target="_blank">Metadata Link</a>\
                         </tr>\
                         <tr colspan="2">\
                             <td><a href="${dataUrl}" target="_blank">Data URL</a>\
@@ -749,7 +750,8 @@ define([
                         recoveryDate: a['Recovery Date'],
                         dataStartDate: this.formatIsoDate(a['Data Start Date']),
                         dataEndDate: this.formatIsoDate(a['Data End Date']),
-                        sampleRate: a['Sample Rate']
+                        sampleRate: a['Sample Rate'],
+                        metadataUrl: a['Metadata URL']
                     });                
                 return html;
             },
@@ -874,7 +876,7 @@ define([
             },
 
             dartSort: function(a, b) {
-                return a.feature.attributes['Station'] > b.feature.attributes['Station'] ? 1 : -1;
+                return a.feature.attributes['Station ID'] > b.feature.attributes['Station ID'] ? 1 : -1;
             },
 
             retrospectiveBprSort: function(a, b) {

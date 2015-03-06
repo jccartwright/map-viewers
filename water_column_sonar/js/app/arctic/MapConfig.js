@@ -2,6 +2,8 @@ define([
     'dojo/_base/declare', 
     'dojo/_base/lang',
     'dojo/dom',
+    'dojo/_base/Color',
+    'esri/symbols/SimpleLineSymbol',
     'ngdc/arctic/MapConfig',
     'app/arctic/MapToolbar',
     'app/Identify',
@@ -11,6 +13,8 @@ define([
         declare, 
         lang, 
         dom,
+        Color,
+        SimpleLineSymbol,
         MapConfig,
         MapToolbar,
         Identify,
@@ -23,10 +27,13 @@ define([
             mapReady: function() {
                 this.inherited(arguments);
 
-                console.log('inside custom Arctic mapReady...');   
-
-                var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, 'arcticMapToolbar');
-                mapToolbar.startup();
+                this.mapToolbar = new MapToolbar({
+                    map: this.map, 
+                    layerCollection: this.mapLayerCollection, 
+                    maxLat: 90, 
+                    minLat: 50
+                }, 'arcticMapToolbar');
+                this.mapToolbar.startup();
                 
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
                 this.identify.enabled = false;
@@ -37,10 +44,16 @@ define([
                     map: this.map,
                     identify: this.identify,
                     class: 'identifyPane',
-                    autoExpandTree: false
+                    autoExpandTree: false,
+                    lineSymbol: new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0, 255, 255]), 3)
                 }, dom.byId('arcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
                 this.identifyPane.enabled = false;
+
+                //Whenever the layer mode changes between 'cruise' and 'file', close the IdentifyPane to reduce confusion
+                topic.subscribe('/water_column_sonar/layerMode', lang.hitch(this, function() {
+                    this.identifyPane.close();
+                }));
             }
          
             

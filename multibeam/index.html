@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
+	<title>Multibeam</title>		
+	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.2/js/dojo/dijit/themes/tundra/tundra.css" />
+ 	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.0/themes/SimpleBasemapToolbar.css" />
+	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/banner/1.0/themes/banner.css">
+	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/identify/1.04/css/identify.css">
+	 <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.2/js/dojo/dojox/widget/Toaster/Toaster.css" />
+
+
+
+	<link rel="stylesheet" type="text/css" href="css/local.css">
+	<style type="text/css">
+		.claro .dojoxGridMasterHeader { display:none !important; }
+
+		.claro .dijitContentPane {
+			text-align: left;
+		}
+
+	
+	</style>
+	<script type="text/javascript">
+		var djConfig = {
+			parseOnLoad: true,
+			baseUrl: './',
+			modulePaths: {
+				'survey_select': './dijits/survey_select',
+				'help_panel': 'http://maps.ngdc.noaa.gov/viewers/dijits/help_panel/1.0',
+				'simple_basemap_toolbar': 'http://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.0',
+				'banner': 'http://maps.ngdc.noaa.gov/viewers/dijits/banner/1.0',
+				'identify':	'http://maps.ngdc.noaa.gov/viewers/dijits/identify/1.04',
+				//'layers': 'http://maps.ngdc.noaa.gov/viewers/dijits/layers/1.0'
+				'layers': './dijits/layers',
+				'multibeam': './dijits/multibeam',
+				'bboxDialog': 'http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.0'
+
+			}
+		};
+	</script>
+	<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.2"></script>
+	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/viewers/dijits/mapServicePair/1.0/MapServicePair.xd.js"></script>		
+
+	<!-- TODO MapServicePair not loading via the modulePaths like all the other dijits -->
+<!--	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/viewers/common/1.0/MapServicePair.js"></script> -->
+ 	<script type="text/javascript" src="src/mapConfig.js"></script>
+<!--	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/viewers/common/2.0/src/map.js"></script> -->
+	<script type="text/javascript" src="src/map.js"></script>
+	<script type="text/javascript">
+		dojo.require("esri.map");
+		dojo.require("esri.dijit.OverviewMap");
+		dojo.require("dijit.layout.ContentPane");
+		dojo.require("dijit.layout.AccordionContainer");
+		dojo.require("dijit.layout.BorderContainer");
+		dojo.require("dijit.Toolbar");
+		dojo.require("dijit.form.Button");
+		dojo.require("esri.dijit.OverviewMap");
+		//dojo.require("esri.dijit.Scalebar");
+		dojo.require("esri.dijit.Legend");
+		dojo.require("help_panel.HelpPanel");
+		dojo.require("simple_basemap_toolbar.SimpleBasemapToolbar");
+		dojo.require("banner.Banner");
+		dojo.require("identify.Identify");
+		//dojo.require("mapServicePair.MapServicePair");
+		dojo.require('dojo.io.script');
+		dojo.require("dijit.form.FilteringSelect");
+		dojo.require("dijit.ToolbarSeparator");
+		dojo.require('layers.PairedMapServiceLayer');
+		dojo.require("survey_select.SurveySelectDialog");
+		dojo.require("multibeam.SurveySelectDialog");
+		//TODO define w/in the dialog
+		dojo.require("dijit.form.DateTextBox");
+		//dojo.require('multibeam.ResourcesPanel');
+		dojo.require("dojo.string");
+		dojo.require('bboxDialog.BoundingBoxDialog');
+		dojo.require('multibeam.GetDataDialog');
+		dojo.require('multibeam.AboutPanel');
+		dojo.require('multibeam.SelectSetExtent');
+		dojo.require("dojox.widget.Toaster");
+		</script>
+	</head>
+
+	<body class="tundra">
+		<div id="mainWindow" dojoType="dijit.layout.BorderContainer" gutters="true" design="headline">
+			<!--HEADER SECTION-->
+			<div id="header" dojoType="dijit.layout.ContentPane" region="top" >
+				<div dojoType="banner.Banner"></div>
+			</div>
+	
+			<!--CENTER CONTAINER-->
+			<div id="mapDiv" dojoType="dijit.layout.ContentPane" region="center">
+				<div dojoType="dojox.widget.Toaster" id="toaster" messageTopic="toaster" positionDirection="tr-left"></div>
+		
+				<div id="mapToolbar" dojoType="dijit.Toolbar" layoutAlign="left">
+					<div dojoType="dijit.form.Button" id="selectByRectBtn" iconClass="selectByRectIcon" showLabel="false">Select with Rectangle</div>
+					<div dojoType="dijit.form.Button" id="selectByCoordsBtn" iconClass="selectByCoordsIcon" showLabel="false" onClick="globals.coordDialog.show();">Select with Coordinates</div>
+					<div dojoType="dijit.form.Button" id="filterBtn" iconClass="queryIcon" showLabel="false">Select by Attributes</div>
+					<div dojoType="dijit.form.Button" id="clearBtn" iconClass="clearSelectionIcon" showLabel="false" onClick="clearSelection();">Clear Selection</div>
+					<div id="filterDiv" dojoType="dijit.layout.ContentPane">All Surveys</div>
+				</div>
+				<img id="loadingImg" src="http://maps.ngdc.noaa.gov/viewers/common/2.0/images/loading.gif" alt="refreshing map"/>
+				
+				<div id="basemapToolbar"></div>
+				
+				<div id="bottomBar" dojoType="dijit.layout.ContentPane">
+					<span id="coordsDiv">Position: not available</span>
+					<span id="scalebar"></span>
+				</div>
+		
+			</div>
+			<!--RIGHT CONTAINER-->
+			<div id="accordionContainer" dojoType="dijit.layout.AccordionContainer" region="right">
+				<div id="legendPane" dojoType="dijit.layout.AccordionPane" title="Legend">
+					<div id="legend">
+						<img src="images/legend_multibeam.png"></img>
+					</div>	
+				</div>
+				<div id="aboutPane" dojoType="dijit.layout.AccordionPane" title="About Multibeam data">
+					<div id="aboutPanel" dojoType="multibeam.AboutPanel"></div>
+				</div>
+				<div id="helpPane" dojoType="dijit.layout.AccordionPane" title="Help">
+					<div id="helpPanel" dojoType="help_panel.HelpPanel"></div>
+				</div>			
+			</div>
+			
+			<div id="footer"  dojoType="dijit.layout.ContentPane" region="bottom">
+			</div>
+		</div>
+		<div id="identifyDiv" dojoType="dijit.layout.ContentPane"></div>
+	</body>
+</html>

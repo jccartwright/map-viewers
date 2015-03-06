@@ -63,6 +63,10 @@ define([
                         id: 'Light Gray',
                         visible: false
                     }),
+                    new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer', {
+                        id: 'Dark Gray',
+                        visible: false
+                    }),
                     new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer', {
                         id: 'World Imagery',
                         visible: false
@@ -145,6 +149,10 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer', {
                         id: 'Light Gray Reference',
+                        visible: false
+                    }),
+                    new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer', {
+                        id: 'Dark Gray Reference',
                         visible: false
                     }),
                     new ArcGISTiledMapServiceLayer('http://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer', {

@@ -1,0 +1,15 @@
+<div class="dijitDialog" tabindex="-1" waiRole="dialog" waiState="labelledby-${id}_title">
+	<div dojoAttachPoint="titleBar" class="dijitDialogTitleBar">
+		<span dojoAttachPoint="titleNode" class="dijitDialogTitle" id="${id}_title"></span>
+		<span dojoAttachPoint="closeButtonNode" class="dijitDialogCloseIcon" dojoAttachEvent="onclick: onCancel, onmouseenter: _onCloseEnter, onmouseleave: _onCloseLeave" title="${buttonCancel}">
+			<span dojoAttachPoint="closeText" class="closeText" title="${buttonCancel}">x</span>
+		</span>
+	</div>
+	<div dojoAttachPoint="containerNode" class="dijitDialogPaneContent">
+		<h4>Choose a Number ${foo}</h4>
+		<div dojoType="dijit.form.NumberSpinner" dojoAttachPoint="spinner1" value="1000" smallDelta="10" constraints="{min:9,max:1550,places:0}" name="someNumber"></div>
+	</div>
+	
+	<div dojoAttachPoint='closeButton' dojoType='dijit.form.Button'>Close</div>
+
+</div>

@@ -1,0 +1,213 @@
+<div class="layersPanel_class">
+
+    <h3>ECS Scenario Products</h3>
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Formula Line Products', open: false">
+        <input type="checkbox" data-dojo-attach-point="chkFosProfile" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkFosProfile">FOS Profile</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkFosPoint" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkFosPoint">FOS Point</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chk60mFormula" data-dojo-type="dijit/form/CheckBox">
+        <label for="chk60mFormula">60 M Formula</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkSedimentThicknessFormula" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSedimentThicknessFormula">Sediment Thickness Formula</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkFinalFormulaLine" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkFinalFormulaLine">Final Formula Line</label><br>
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Constraint Line Products', open: false">
+        <input type="checkbox" data-dojo-attach-point="chkDistanceConstraintLine" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkDistanceConstraintLine">Distance Constraint</label><br>
+        
+        <input type="checkbox" data-dojo-attach-point="chkEnvelopeFosPoints" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkEnvelopeFosPoints">Envelope of FOS Points</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkClipped2500mIsobath" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkClipped2500mIsobath">Clipped 2500 m Isobath</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkDepthConstraint" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkDepthConstraint">Depth Constraint</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkFinalConstraintLine" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkFinalConstraintLine">Final Constraint Line</label><br>
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Outer Limit Products', open: false">
+        <input type="checkbox" data-dojo-attach-point="chkOuterLimit" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkOuterLimit">Outer Limit</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkEcsArea" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkEcsArea">ECS Area</label><br>
+    </div><br>
+    <hr>
+
+    <h3>Supporting Data and Products</h3>
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Boundaries', open: false">
+        <input type="checkbox" data-dojo-attach-point="chkBaselinePoints" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBaselinePoints">Baseline Points</label><br>
+
+        <input checked type="checkbox" data-dojo-attach-point="chkEEZ" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkEEZ">U.S. EEZ</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkInternational" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkInternational">International</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chk2500mIsobath" data-dojo-type="dijit/form/CheckBox">
+        <label for="chk2500mIsobath">2500 m Isobath</label><br>
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Data Products', open: false">
+        <b>Bathymetric Product:</b><br>
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBathymetricProduct" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBathymetricProduct">Bathymetry</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBathymetricSlopeProduct" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBathymetricSlopeProduct">Slope</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBathymetricCurvatureProduct" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBathymetricCurvatureProduct">Curvature</label><br><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkBackscatterProduct" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBackscatterProduct">Backscatter</label><br><br>
+
+        <b>Seismic Products:</b><br>
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicProductMCS" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicProductMCS">MCS</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicProductMCS3D" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicProductMCS3D">MCS-3D</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicProductSCS" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicProductSCS">SCS</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicProduct35kHz" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicProduct35kHz">3.5 kHz</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicProductOBS" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicProductOBS">OBS</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicProductSonobuoy" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicProductSonobuoy">Sonobuoy</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicProductOther" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicProductOther">Other</label><br><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkSedimentThickness" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSedimentThickness">Sediment Thickness</label><br><br>
+
+        <b>Basement Geology Geophysics:</b><br>
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBasementGeologyProductMagnetic" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBasementGeologyProductMagnetic">Magnetic</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBasementGeologyProductGravity" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBasementGeologyProductGravity">Gravity</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBasementGeologyProductGeology" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBasementGeologyProductGeology">Geology</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBasementGeologyProductComposite" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBasementGeologyProductComposite">Composite</label><br>
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Source Data', open: false">        
+        <b>Bathymetry:</b><br>
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBathymetryDataMultibeam" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBathymetryDataMultibeam">Multibeam</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBathymetryDataSingleBeam" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBathymetryDataSingleBeam">Single-Beam</label><br><br>
+
+        <b>Backscatter:</b><br>
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBackscatterDataMultibeam" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBackscatterDataMultibeam">Multibeam</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkBackscatterDataSideScanSonar" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBackscatterDataSideScanSonar">Side-scan Sonar</label><br><br>
+
+        <b>Seismic:</b><br>
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicDataMCS" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicDataMCS">MCS</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicDataMCS3D" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicDataMCS3D">MCS-3D</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicDataSCS" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicDataSCS">SCS</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicData35kHz" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicData35kHz">3.5 kHz</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicDataOBS" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicDataOBS">OBS</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicDataSonobuoy" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicDataSonobuoy">Sonobuoy</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkSeismicDataOther" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeismicDataOther">Other</label><br><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkCombinedData" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkCombinedData">Combined</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkGravityData" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGravityData">Gravity</label><br><br>
+
+        <b>Magnetics:</b><br>
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkMagneticsDataMarine" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkMagneticsDataMarine">Shipborne Marine</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkMagneticsDataAirborne" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkMagneticsDataAirborne">Airborne</label><br><br>
+
+        <b>Geologic:</b><br>
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkGeologicDataSeafloorPhoto" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGeologicDataSeafloorPhoto">Seafloor Photo</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkGeologicDataRockDredge" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGeologicDataRockDredge">Rock Dredge</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkGeologicDataCoreDescription" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGeologicDataCoreDescription">Core Description</label><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkGeologicDataBoreholeDescription" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGeologicDataBoreholeDescription">Borehole Description</label><br>
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Pre-2012 Source Data', open: false">
+        <input type="checkbox" data-dojo-attach-point="chkMultibeam" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkMultibeam">Multibeam</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkTracklineBathymetry" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTracklineBathymetry">Trackline Bathymetry</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkTracklineGravity" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTracklineGravity">Trackline Gravity</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkTracklineMagnetics" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTracklineMagnetics">Trackline Magnetics</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkTracklineMultiChannelSeismics" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTracklineMultiChannelSeismics">Trackline Multi-Channel Seismics</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkTracklineSeismicRefraction" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTracklineSeismicRefraction">Trackline Seismic Refraction</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkTracklineShotPointNavigation" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTracklineShotPointNavigation">Trackline Shot-Point Navigation</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkTracklineSideScanSonar" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTracklineSideScanSonar">Trackline Side Scan Sonar</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkTracklineSingleChannelSeismics" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTracklineSingleChannelSeismics">Trackline Single Channel Seismics</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkTracklineSubbottomProfile" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTracklineSubbottomProfile">Trackline Subbottom Profile</label><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkGeologicSamples" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGeologicSamples">Geologic Samples</label><br>
+    </div>
+</div>

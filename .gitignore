@@ -9,6 +9,7 @@ target-eclipse/
 cobertura.ser
 
 ## ide/os metadata
+projectFilesBackup
 *.iws
 *.iml
 *.ipr

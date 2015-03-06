@@ -9,6 +9,7 @@ define([
     'dojo/string',
     'dijit/form/CheckBox',
     'dijit/form/Button',
+    'dijit/form/RadioButton',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
@@ -25,6 +26,7 @@ define([
         string,
         CheckBox,
         Button,
+        RadioButton,
         _WidgetBase, 
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
@@ -42,29 +44,124 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
+                this.layerMode = 'cruise';
+
+                this.searchDialog = new SearchDialog({title: 'Water Column Sonar Data Search'});
+
                 on(this.chkNMFS, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [1], this.chkNMFS.checked);
+                    if (this.layerMode === 'cruise') {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [8], this.chkNMFS.checked);
+                    } else {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [1], this.chkNMFS.checked);
+                    }
                 }));
                 on(this.chkOER, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [2], this.chkOER.checked);
+                    if (this.layerMode === 'cruise') {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [9], this.chkOER.checked);
+                    } else {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [2], this.chkOER.checked);
+                    }
                 }));
                 on(this.chkUNOLS, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [3], this.chkUNOLS.checked);                    
+                    if (this.layerMode === 'cruise') {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [10], this.chkUNOLS.checked);
+                    } else {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [3], this.chkUNOLS.checked);
+                    }
+                }));
+                on(this.chkOtherNoaa, 'change', lang.hitch(this, function() {
+                    if (this.layerMode === 'cruise') {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [11], this.chkOtherNoaa.checked);
+                    } else {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkOtherNoaa.checked);
+                    }
                 }));
                 on(this.chkOther, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkOther.checked);                    
+                    if (this.layerMode === 'cruise') {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [12], this.chkOther.checked);
+                    } else {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [5], this.chkOther.checked);
+                    }
+                }));
+                on(this.chkNonUs, 'change', lang.hitch(this, function() {
+                    if (this.layerMode === 'cruise') {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [13], this.chkNonUs.checked);
+                    } else {
+                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [6], this.chkNonUs.checked);
+                    }
+                }));
+
+                on(this.radioCruiseView, 'click', lang.hitch(this, function() {
+                    this.activateCruiseMode();
+                }));
+
+                on(this.radioFileView, 'click', lang.hitch(this, function() {
+                    this.activateFileMode();
                 }));
                 
-                on(this.searchButton, 'click', lang.hitch(this, function() {
-                    if (!this.searchDialog) {
-                        this.searchDialog = new SearchDialog({title: 'Water Column Sonar Data Search'});
-                    }
+                on(this.searchButton, 'click', lang.hitch(this, function() {                    
                     this.searchDialog.show();
                 }));
 
                 on(this.resetButton, 'click', lang.hitch(this, function() {
                     topic.publish('/wcd/ResetSearch');
                 }));
+            },
+
+            activateCruiseMode: function() {
+                this.layerMode = 'cruise';
+                var visibleLayers = [];
+                if (this.chkNMFS.checked) {
+                    visibleLayers.push(8);
+                }
+                if (this.chkOER.checked) {
+                    visibleLayers.push(9);
+                }
+                if (this.chkUNOLS.checked) {
+                    visibleLayers.push(10);
+                }
+                if (this.chkOtherNoaa.checked) {
+                    visibleLayers.push(11);
+                }
+                if (this.chkOther.checked) {
+                    visibleLayers.push(12);
+                }
+                if (this.chkNonUs.checked) {
+                    visibleLayers.push(13);
+                }
+
+                topic.publish('/ngdc/setVisibleLayers', 'Water Column Sonar', visibleLayers);
+                topic.publish('/water_column_sonar/layerMode', 'cruise');
+
+                this.searchDialog.setFileCriteriaDisabled(true);
+            },
+
+            activateFileMode: function() {
+                this.layerMode = 'file';
+                var visibleLayers = [];
+                if (this.chkNMFS.checked) {
+                    visibleLayers.push(1);
+                }
+                if (this.chkOER.checked) {
+                    visibleLayers.push(2);
+                }
+                if (this.chkUNOLS.checked) {
+                    visibleLayers.push(3);
+                }
+                if (this.chkOtherNoaa.checked) {
+                    visibleLayers.push(4);
+                }
+                if (this.chkOther.checked) {
+                    visibleLayers.push(5);
+                }
+                if (this.chkNonUs.checked) {
+                    visibleLayers.push(6);
+                }
+
+                topic.publish('/ngdc/setVisibleLayers', 'Water Column Sonar', visibleLayers);
+                topic.publish('/water_column_sonar/layerMode', 'file');
+
+                this.searchDialog.setFileCriteriaDisabled(false);
             },
 
             disableResetButton: function() {
@@ -94,8 +191,14 @@ define([
                     s += 'Ending date: ' + this.toDateString(values.endDate) + '<br>';
                 }
 
-                if (values.cruiseId) {
-                    s += 'Survey ID: ' + values.cruiseId + '<br>';
+                if (values.ships && values.ships.length > 0) {
+                    s += 'Ship: ' + values.ships.join(',') + '<br>';
+                }
+                if (values.institutions && values.institutions.length > 0) {
+                    s += 'Institution: ' + values.institutions.join(',') + '<br>';
+                }
+                if (values.surveyIds && values.surveyIds.length > 0) {
+                    s += 'Survey ID: ' + values.surveyIds.join(',') + '<br>';
                 }
                 if (values.instruments && values.instruments.length > 0) {
                     s += 'Instrument: ' + values.instruments.join(',') + '<br>';
@@ -111,16 +214,6 @@ define([
                     s += 'Number of beams: less than ' + values.maxNumBeams + '<br>';
                 }
 
-                if (values.minRecordingRange && values.maxRecordingRange) {
-                    s += 'Recording range: ' + values.minRecordingRange + ' to ' + values.maxRecordingRange + ' m<br>';
-                }
-                else if (values.minRecordingRange) {
-                    s += 'Recording range: greater than ' + values.minRecordingRange + ' m<br>';
-                }
-                else if (values.maxRecordingRange) {
-                    s += 'Recording range: less than ' + values.maxRecordingRange + ' m<br>';
-                }
-
                 if (values.minSwathWidth && values.maxSwathWidth) {
                     s += 'Swath width: ' + values.minSwathWidth + ' to ' + values.maxSwathWidth + ' degrees<br>';
                 }
@@ -129,6 +222,14 @@ define([
                 }
                 else if (values.maxSwathWidth) {
                     s += 'Swath width: less than ' + values.maxSwathWidth + ' degrees<br>';
+                }
+
+                if (values.bottomSoundingsOnly) {
+                    s += 'Bottom soundings only';
+                }
+
+                if (values.frequency) {
+                    s += 'Frequency: ' + values.frequency + 'kHz';
                 }
                 filterDiv.innerHTML = s;
             },

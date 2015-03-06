@@ -1,0 +1,18 @@
+<div>
+    <form data-dojo-type="dijit/form/Form" method="post">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'emailLabel',position:['above']">
+            A message is sent to this address when the request is complete
+        </div>
+    <label id="emailLabel" for="email" style="font-size: large">Email:</label>
+    <span style="font-size: small; color: red">(required)</span>
+    <br>
+    <input type="text" id="email" name="email" required="true" data-dojo-type="dijit/form/ValidationTextBox"
+           style="font-size: medium; width: 328px;"
+           data-dojo-props="validator:dojox.validate.isEmailAddress, missingMessage: 'email address is required', invalidMessage:'invalid email address'"/>
+    <br>
+    <br>
+    <div align="center">
+        <input type="button" data-dojo-attach-point="submitButton" label="Submit Request" data-dojo-type="dijit/form/Button"/>
+    </div>
+    </form>
+</div>

@@ -9,86 +9,99 @@
     </div>
     <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
         <table cellpadding="6" cellspacing="3">
-        <tr>
-            <td>
-                Instrument:<br>
-                <select multiple="true" data-dojo-type="dojox/form/CheckedMultiSelect" data-dojo-attach-point="instrumentSelect" name="instruments">
-                    <option value="EM122">EM122</option>
-                    <option value="EM302">EM302</option>
-                    <option value="EK60">EK60</option>
-                    <option value="ME70">ME70</option>
-                </select>
-            </td>
-            <td style="horizontal-align:right;">
-                <table border="0">
-                    <tr>
-                        <td>Collection Date:<br></td>
-                    </tr>
-                    <tr>
-                        <td><label for="startDate">Start:</label>
-                        <input type="text" data-dojo-attach-point='startDate' name="startDate" id="startDate" value="" data-dojo-type="dijit/form/DateTextBox" style="width: 90px;"/><br></td>
-                    </tr>
-                    <tr>
-                        <td><label for="startDate">End:</label>
-                        <input type="text" data-dojo-attach-point='endDate' name="endDate" id="endDate" value="" data-dojo-type="dijit/form/DateTextBox" style="width: 90px;"/></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <table>
-                    <td><label for="cruiseIdText">Cruise ID:<br><span style="font-size:10px;">(wildcards accepted: *)</span></label></td>
-                    <td><input data-dojo-type="dijit/form/TextBox" type="text" name="cruiseId" data-dojo-attach-point="cruiseIdText" style="width: 150px;"></td>
-                </table>
-            </td>
-        </tr>        
-        <tr>
-            <td colspan="2">
-                Number of Beams:
-                <label for="minNumBeamsSpinner">Min:</label>
-                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minNumBeamsSpinner" 
-                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:450,places:0}" name="minNumBeams" style="width: 55px"></div>
-                <label for="maxNumBeamsSpinner">Max:</label>
-                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxNumBeamsSpinner" 
-                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:450,places:0}" name="maxNumBeams" style="width: 55px"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                Recording Range (m):
-                <label for="minRecordingRangeSpinner">Min:</label>
-                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minRecordingRangeSpinner" 
-                    data-dojo-props="intermediateChanges:true, smallDelta:100, constraints:{min:0,max:10000,places:0}" name="minRecordingRange" style="width: 55px"></div>
-                <label for="maxRecordingRangeSpinner">Max:</label>
-                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxRecordingRangeSpinner" 
-                    data-dojo-props="intermediateChanges:true, smallDelta:100, constraints:{min:0,max:10000,places:0}" name="maxRecordingRange" style="width: 55px"></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                Swath Width (degrees):
-                <label for="minSwathWidthSpinner">Min:</label>
-                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minSwathWidthSpinner" 
-                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:180,places:0}" name="minSwathWidth" style="width: 55px"></div>
-                <label for="maxSwathWidthSpinner">Max:</label>
-                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxSwathWidthSpinner" 
-                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:180,places:0}" name="maxSwathWidth" style="width: 55px"></div>
-            </td>
-        </tr>
-        <!--
-        <tr>
-            <td>
-                Frequency (kHz):
-                <label for="minFrequencySpinner">Min:</label>
-                <div disabled data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minFrequencySpinner" 
-                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:710,places:0}" name="minFrequency" style="width: 55px"></div>
-                <label for="maxFrequencySpinner">Max:</label>
-                <div disabled data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxFrequencySpinner" 
-                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:710,places:0}" name="maxFrequency" style="width: 55px"></div>
-            </td>            
-        </tr>
-        -->
+            <tr>
+                <td colspan="2">
+                    Collection Date:<br>
+                    <label for="startDate">Start:</label>
+                    <input type="text" data-dojo-attach-point='startDate' name="startDate" id="startDate" value="" data-dojo-type="dijit/form/DateTextBox" style="width: 90px;"/>
+                    <label for="startDate">End:</label>
+                    <input type="text" data-dojo-attach-point='endDate' name="endDate" id="endDate" value="" data-dojo-type="dijit/form/DateTextBox" style="width: 90px;"/>
+                </td>   
+            </tr>
+            <tr>
+                <td>
+                    Survey Ship:&nbsp;&nbsp;&nbsp;
+                    <input data-dojo-attach-point="chkAllShips" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllShips"/>
+                    <label>All Ships</label><br>
+                    <select multiple="true" data-dojo-attach-point="shipSelect" class="surveySelect-multiSelect" name="ships" data-dojo-type="dojox/form/CheckedMultiSelect"/>
+                </td>
+                <td>
+                    Institution:&nbsp;&nbsp;&nbsp;
+                    <input data-dojo-attach-point="chkAllInstitutions" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllInstitutions"/>
+                    <label>All Institutions</label><br>
+                    <select multiple="true" data-dojo-attach-point="sourceInstSelect" class="surveySelect-multiSelect" name="institutions" data-dojo-type="dojox/form/CheckedMultiSelect"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Instrument:&nbsp;&nbsp;&nbsp;
+                    <input data-dojo-attach-point="chkAllInstruments" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllInstruments"/>
+                    <label>All Instruments</label><br>
+                    <select disabled multiple="true" data-dojo-type="dojox/form/CheckedMultiSelect" data-dojo-attach-point="instrumentSelect" name="instruments">
+                        <option value="EM122">EM122</option>
+                        <option value="EM302">EM302</option>
+                        <option value="EM2040">EM2040</option>
+                        <option value="EK60">EK60</option>
+                        <option value="ME70">ME70</option>
+                    </select>
+                </td>
+                <td>
+                    Survey ID:&nbsp;&nbsp;&nbsp;
+                    <input data-dojo-attach-point="chkAllSurveys" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllSurveys"/>
+                    <label>All Surveys</label><br>
+                    <select multiple="true" data-dojo-attach-point="surveyIdSelect" class="surveySelect-multiSelect" name="surveyIds" data-dojo-type="dojox/form/CheckedMultiSelect"/>
+                </td>
+            </tr>            
+        </table>
+        Available for File View Only:
+        <table style="border:1px solid #b3b3b3">
+            <tr>
+                <td>
+                    Frequency includes:
+                    <input id="frequencyText" data-dojo-attach-point="frequencyText" class="frequencyText" type="text" data-dojo-type="dijit/form/NumberTextBox" name="frequency" 
+                    data-dojo-props="constraints:{min:0,max:800,places:0},
+                        invalidMessage:'Please enter a numeric value.',
+                        rangeMessage:'Frequency out of range (0-800kHz).'" /> kHz
+                    <!--TODO min and max frequency-->
+                    <!-- <label for="minFrequencySpinner">Min:</label> -->
+                    <!-- <div disabled data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minFrequencySpinner"  -->
+                        <!-- data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:710,places:0}" name="minFrequency" style="width: 55px"></div> -->
+                    <!-- <label for="maxFrequencySpinner">Max:</label> -->
+                    <!-- <div disabled data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxFrequencySpinner"  -->
+                        <!-- data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:710,places:0}" name="maxFrequency" style="width: 55px"></div><br> -->
+                    <!-- <input data-dojo-attach-point="chkAllFrequencies" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllFrequencies"/> -->
+                    <!-- <label for="chkAllFrequencies">All Frequencies</label> -->
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Number of Beams:
+                    <label for="minNumBeamsSpinner">Min:</label>
+                    <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minNumBeamsSpinner" 
+                        data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:450,places:0}" name="minNumBeams" style="width: 55px"></div>
+                    <label for="maxNumBeamsSpinner">Max:</label>
+                    <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxNumBeamsSpinner" 
+                        data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:450,places:0}" name="maxNumBeams" style="width: 55px"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Swath Width (degrees):
+                    <label for="minSwathWidthSpinner">Min:</label>
+                    <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minSwathWidthSpinner" 
+                        data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:180,places:0}" name="minSwathWidth" style="width: 55px"></div>
+                    <label for="maxSwathWidthSpinner">Max:</label>
+                    <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxSwathWidthSpinner" 
+                        data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:180,places:0}" name="maxSwathWidth" style="width: 55px"></div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Limit to Files with Bottom Soundings:
+                    <input data-dojo-attach-point="chkBottomSoundings" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkBottomSoundings"/>
+                </td>
+            </tr>
         </table>
         <div class="dijitDialogPaneActionBar right-align">
             <button class="left-align" data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton">Reset</button>
