@@ -36,7 +36,7 @@ define([
                     layerCollection: this.mapLayerCollection, 
                     maxLat: 85, 
                     minLat: -85
-                }, 'arcticMapToolbar');
+                }, 'mercatorMapToolbar');
                 this.mapToolbar.startup();
 
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
