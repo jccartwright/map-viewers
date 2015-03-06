@@ -147,8 +147,8 @@
                         title = 'CrowdMag';
                 }
 		var scale =   $('#color_scale');
-                scale.attr('title',image_title);
-                scale.attr('src',"images/"+color_scale);
+                $('#color_scale').attr('title',image_title);
+                $('#color_scale').attr('src',"images/"+color_scale);
 		$('#color_scale_title').innerHTML = title; 
 			});
                     }
