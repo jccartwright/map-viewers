@@ -97,8 +97,8 @@ define([
 
                 //Apply layer definitions to the CSC Lidar layer to only show bathymetric lidar
                 var layerDefinitions = [];
-                //layerDefinitions[4] = "Data_Classes_Available LIKE '%Bathymetric Lidar Points%'";
-                layerDefinitions[4] = 'Year >= 2012';
+                layerDefinitions[4] = "Data_Classes_Available LIKE '%Bathymetric Lidar Points%'";
+                //layerDefinitions[4] = 'Year >= 2012';
                 this.mapLayerCollection.getLayerById('CSC Lidar').setLayerDefinitions(layerDefinitions);    
 
                 this.setupHurricaneLayer();                           
