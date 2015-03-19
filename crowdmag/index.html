@@ -1,372 +1,395 @@
 <!DOCTYPE html>
 <!--<html manifest="mobile.manifest">-->
 <html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <!-- Sets whether a web application runs in full-screen mode. -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <!-- Sets the style of the status bar for a web application. -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <!-- Sets whether a web application runs in full-screen mode. -->
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+      <!-- Sets the style of the status bar for a web application. -->
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <title>Crowd-Sourced Geomagnetic Measurements</title>
 
-    <title>Crowd-Sourced Geomagnetic Measurements</title>
-
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.css" />
-    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css" />
-
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0px;
-            padding: 0px;
-            width: 100%;
-        }
-
-        .ui-content {
-            padding: 0 !important;
-        }
-
-        #map {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            z-index: 0;
-        }
-
-     #legend {
-	border-style: solid;
-    border-width: 2px;
-    border-radius: 25px;
-    border-color: rgba(81, 181, 229,1) ;
- background-color: rgba(255, 255, 255,0.4) ;
-      }
-
-    </style>
 
     <script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>
-    <script src="http://js.arcgis.com/3.10compact"></script>
+   <script src="datepicker/moment.min.js"></script>
+   <script  src="datepicker/daterangepicker.js"></script>
+   <link rel="stylesheet" type="text/css" href="datepicker/daterangepicker-bs3.css" />
+   <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.css" />
+      <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css" />
+  <script src="http://js.arcgis.com/3.10compact"></script>
+<script  src="jQueryRotate.js"></script>
+   
+      <style>
+         html, body {
+         height: 100%;
+         margin: 0px;
+         padding: 0px;
+         width: 100%;
+         }
+         .ui-content {
+         padding: 0 !important;
+         }
+input[type="radio"] {
+display: none;
+}
 
-    <script>
-        require([
-//                    "dojo/_base/array",
-//                    "esri/Color",
-//                    "dojo/dom",
-            "dojo/on",
-            "dojo/parser",
-            "dojo/ready",
-            "dojo/io-query",
-            "esri/map",
-            "esri/geometry/Point",
-            "esri/graphic",
-            "esri/layers/ArcGISDynamicMapServiceLayer",
-//                    "esri/layers/FeatureLayer",
-//                    "esri/layers/ImageParameters",
-//                    "esri/dijit/Legend",
-            "esri/symbols/PictureMarkerSymbol",
-            "esri/symbols/SimpleFillSymbol"
-//                    "esri/tasks/query"
-        ],
-        function (
-//                        array,
-//                        Color,
-//                        dom,
-            on,
-            parser,
-            ready,
-            ioQuery,
-            Map,
-            Point,
-            Graphic,
-            ArcGISDynamicMapServiceLayer,
-//                        FeatureLayer,
-//                        ImageParameters,
-//                        Legend,
-            PictureMarkerSymbol,
-            SimpleFillSymbol
-//                        Query
-        ) {
-            parser.parse();
+	.ui-radio .ui-btn{height: 30px; width: 40px;}
+	.ui-page-theme-c .ui-focus,
+html .ui-bar-c .ui-focus,
+html .ui-body-c .ui-focus,
+html body .ui-group-theme-c .ui-focus,
+html head + body .ui-btn-c.ui-focus,
+html head + body .ui-body-c.ui-focus {
+    -webkit-box-shadow: 0 0 0px #3388cc /*{c-active-background-color}*/;
+    -moz-box-shadow: 0 0 0px #3388cc /*{c-active-background-color}*/;
+    box-shadow: 0 0 0px #3388cc /*{c-active-background-color}*/;
+} 
+         #map {
+         height: 100%;
+         width: 100%;
+         position: absolute;
+         z-index: 0;
+         }
+	  #legend{
+	    display: none;
+	    border-style: solid;
+         border-width: 2px;
+         border-radius: 25px;
+         border-color: rgba(81, 181, 229,1) ;
+         background-color: rgba(255, 255, 255,0.8) ;
+	  padding: 10px;
+	   }	
+  input[type=radio] {
+    border: 0px;
+    width: 100%;
+    height: 2em;
+}
+      </style>
 
-            var map, query, crowdmagService;
-            //var yLayer, zLayer, intensityLayer;
-
-            ready(function () {
-                //console.log('ready handler fired...');
-                $(document).ready(jQueryReady);
-            });
-
-
-            function mapLoadHandler(map) {
-                //console.log('inside mapLoadHandler...');
-                //zoom to user's position if possible
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
-                }
-            }
+  
 
 
-			function adjustStyle(){
-				var popup = document.getElementById('aboutDialog');
-				if(detectmob())
-					popup.style.width = '100%';
+    
+   </head>
+   <body>
+      <div data-role="page" id="page" style="position: relative">
+      <!-- header -->
+      <!-- content -->
+      <div data-role="content">
+         <div id="map">
+         </div>
+         <div  style="position:absolute; 
+            bottom: 5%; left: 3%; text-align: center;">
+            <h5 id="color_scale_title" style= " position: relative; top: 10px; left:4px;"> Vertical Intensity</h5>
+            <img id="color_scale" src="images/z_scale.png" title="values from 15,000nT to 75,000nT">
+         </div>
+	<div style="position: absolute; 
+            top: 5%; right: 3%; padding: 5px 10px; "   >
+		<button id="togglebutton"  data-mini=true >+</button>
+	</div>
+         <div style="position: absolute; 
+            top: 5%; right: 3%;" align="center">
+            <fieldset  id="legend"  >
+               <a href="#aboutDialog" data-rel="popup" data-theme=“f” data-position-to="window" data-role="button"
+                  data-inline="true" data-transition="pop" data-icon="info" data-iconpos="notext">About</a> <br>
+               <label style="align:middle;">Channels</label>
+		<br>
+               <fieldset data-role="controlgroup"   data-type="horizontal" style="text-align: center">
+  
+                   <!-- f_elem -->
+		  <input type="radio" name="radio-mini" id="radio-mini-1" value="0"  class="layerSelect"  data-theme="f" data-mini="true" class="nostyle" />
+                  <label for="radio-mini-1" style="padding: -5px">F</label>
+                  <!-- y_elem -->
+                  <input type="radio" name="radio-mini" id="radio-mini-2" value="2"  class="layerSelect"     data-theme=“f” data-mini="true" class="nostyle"/>
+                  <label for="radio-mini-2">H</label>
+                  <!-- z_elem -->
+                  <input type="radio" name="radio-mini" id="radio-mini-3" value="1"  class="layerSelect"  data-theme=“f”  class="nostyle"  data-mini="true" checked />
+                   <label for="radio-mini-3">Z</label>
+               </fieldset>
+		<br>
+		<label> DateRange </label>
+		<br>
+	<div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+   		 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+    		<span></span> <b class="caret"></b>
+	</div>
+          
+            </fieldset> 
+         </div>
+         <div data-role="popup" id="aboutDialog" data-theme="a" style="width:100%;   margin: 0 auto;">
+            <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext"
+               class="ui-btn-right">Close</a>
+            <div data-role="header" data-theme="a" >
+               <h1>Information</h1>
+            </div>
+            <div data-role="content" data-theme="a">
+               This map shows data collected from phones around the world!  Displayed are the Crowdsourced magnetic data within a tolerance level of prediction by
+               <a href="http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml" target="_blank">
+               World Magnetic Model 
+               </a>
+               . We have added some uncertainty to each data point shown to ensure the privacy of our contributors. This map is updated every hour. F channel represents Total Strength, H channel represents Horizontal Component, and Z channel represents Vertical Component.
+            </div>
+         </div>
+      </div>
+
+   </body>
+  <script>
+	var crowdmagService;
+         require([
+               //                    "dojo/_base/array",
+               //                    "esri/Color",
+               //                    "dojo/dom",
+               "dojo/on",
+               "dojo/parser",
+               "dojo/ready",
+               "dojo/io-query",
+               "esri/map",
+               "esri/geometry/Point",
+               "esri/graphic",
+               "esri/layers/ArcGISDynamicMapServiceLayer",
+               //                    "esri/layers/FeatureLayer",
+               //                    "esri/layers/ImageParameters",
+               //                    "esri/dijit/Legend",
+               "esri/symbols/PictureMarkerSymbol",
+               "esri/symbols/SimpleFillSymbol"
+               //                    "esri/tasks/query"
+           ],
+           function(
+               //                        array,
+               //                        Color,
+               //                        dom,
+               on,
+               parser,
+               ready,
+               ioQuery,
+               Map,
+               Point,
+               Graphic,
+               ArcGISDynamicMapServiceLayer,
+               //                        FeatureLayer,
+               //                        ImageParameters,
+               //                        Legend,
+               PictureMarkerSymbol,
+               SimpleFillSymbol
+               //                        Query
+           ) {
+               parser.parse();
+
+               var map, query;
+               //var yLayer, zLayer, intensityLayer;
+
+               ready(function() {
+                   //console.log('ready handler fired...');
+                   $(document).ready(jQueryReady);
+               });
+
+
+               function mapLoadHandler(map) {
+                   //console.log('inside mapLoadHandler...');
+                   //zoom to user's position if possible
+                   if (navigator.geolocation) {
+                       navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
+                   }
+               }
+
+
+               function adjustStyle() {
+                   var popup = document.getElementById('aboutDialog');
+                   if (detectmob())
+                       popup.style.width = '100%';
+                   else
+                       popup.style.width = '50%';
+
+               }
+
+               function jQueryReady() {
+                   console.log('inside jQueryReady...');
+                   initMap();
+                   setupDatepicker();
+
+                   window.addEventListener('load', adjustStyle);
+                   //setup handler to change map layers
+                   $('.layerSelect').click(function(e) {
+                       //only one layer visible at a time
+                       crowdmagService.setVisibleLayers([e.currentTarget.value]);
+
+                       var title;
+                       var color_scale;
+                       var image_title;
+                       switch (e.currentTarget.value) {
+                           case '0':
+                               title = 'Total Intensity';
+                               color_scale = 'f_scale.png';
+                               image_title = 'values from 15,000nT to 75,000nT';
+                               break;
+                           case '1':
+                               title = 'Vertical Intensity';
+                               color_scale = 'z_scale.png';
+                               image_title = 'values from -65,000nT to 65,000nT';
+                               break;
+                           case '2':
+                               title = 'Horizontal Intensity';
+                               color_scale = 'h_scale.png';
+                               image_title = 'values from 0nT to 65,000nT';
+                               break;
+                           default:
+                               title = 'CrowdMag';
+                       }
+                       var scale = $('#color_scale');
+                       scale.attr('title', image_title);
+                       scale.attr('src', "images/" + color_scale);
+
+                       $('#color_scale_title').html(title);
+
+                   });
+		
+		$('#togglebutton').click(function(e){
+				if($('#togglebutton').text() === '+')
+					$('#togglebutton').text('-').button('refresh');
+	
 				else
-					popup.style.width = '50%';
-
-				var label = document.getElementById('radio-mini-1');
-				 label.style.fontSize = "1"
-			}
-
-                    function jQueryReady() {
-                        console.log('inside jQueryReady...');
-                        initMap();
-			adjustStyle();
-			window.addEventListener('load', adjustStyle); 
-			//setup handler to change map layers
-			$('.layerSelect').click(function(e) {
-				//only one layer visible at a time
-                crowdmagService.setVisibleLayers([e.currentTarget.value]);
-
-                var title;
-                var color_scale;
-                var image_title;
-                switch (e.currentTarget.value) {
-                    case '0':
-                        title = 'Total Intensity';
-                        color_scale = 'f_scale.png';
-                        image_title = 'values from 15,000nT to 75,000nT';
-                        break;
-                    case '1':
-                        title = 'Vertical Intensity';
-                        color_scale = 'z_scale.png';
-                        image_title = 'values from -65,000nT to 65,000nT';
-                        break;
-                    case '2':
-                        title = 'Horizontal Intensity';
-                        color_scale = 'h_scale.png';
-                        image_title = 'values from 0nT to 65,000nT';
-                        break;
-                    default:
-                        title = 'CrowdMag';
-                }
-		var scale =   $('#color_scale');
-                scale.attr('title',image_title);
-                scale.attr('src',"images/"+color_scale);
-		$('#color_scale_title').innerHTML = title; 
-			});
-
-           }
-
-            function initMap() {
-                //console.log('inside initMap...');
-
-                // create the map
-                map = new Map("map", {
-                    center :[-105.292778, 40.019444],
-                    zoom   :5,
-			   	    slider: !detectmob(),
-                    basemap:"streets"
-                });
-
-                on(map, "load", mapLoadHandler);
-
-                crowdmagService = new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crowdmag/MapServer");
-
-                //calc layerdefinition. defaults to last last 24 hours
-                var uri = window.location.href;
-                var query = uri.substring(uri.indexOf("?") + 1, uri.length);
-                var queryObject = ioQuery.queryToObject(query);
-
-                var layerDefString = calcStartEndDates(queryObject);
-
-                var layerDefinitions = [];
-                layerDefinitions[0] = layerDefString;
-                layerDefinitions[1] = layerDefString;
-                layerDefinitions[2] = layerDefString;
-
-                crowdmagService.setLayerDefinitions(layerDefinitions);
-                console.log(crowdmagService.layerDefinitions);
-
-                //TODO currently limited to intensity
-                crowdmagService.setVisibleLayers([1]);
-                map.addLayer(crowdmagService);
-
-                    //TODO switch to FeatureLayers?
-//                        var imageParameters = new ImageParameters();
-//                        imageParameters.layerIds = [0];
-//                        imageParameters.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-
-//                        var yLayer = new FeatureLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crowdmag/MapServer/0", {
-//                            mode     :esri.layers.FeatureLayer.MODE_SELECTION,
-//                            outFields:["*"]
-//                        });
-//
-//                        var zLayer = new FeatureLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crowdmag/MapServer/1", {
-//                            mode     :esri.layers.FeatureLayer.MODE_SELECTION,
-//                            outFields:["*"]
-//                        });
-//
-//                        var intensityLayer = new FeatureLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crowdmag/MapServer/2", {
-//                            mode     :esri.layers.FeatureLayer.MODE_SELECTION,
-//                            outFields:["*"]
-//                        });
-//                      map.addLayers(yLayer, zLayer, intensityLayer);
-
-                map.infoWindow.resize(200, 250);
-            }
-
-
-            function locationError(error) {
-                switch (error.code) {
-                    case error.PERMISSION_DENIED:
-                        console.log("Location not provided");
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        console.log("Current location not available");
-                        break;
-                    case error.TIMEOUT:
-                        console.log("Timeout");
-                        break;
-                    default:
-                        console.log("unknown error");
-                        break;
-                }
-            }
-
-
-            function zoomToLocation(position) {
-                $.mobile.hidePageLoadingMsg(); //true hides the dialog
-                var pt = esri.geometry.geographicToWebMercator(new Point(position.coords.longitude, position.coords.latitude));
-                map.centerAndZoom(pt, 11);
-                //uncomment to add a graphic at the current location
-               // var symbol = new PictureMarkerSymbol("images/bluedot.png", 40, 40);
-                //map.graphics.add(new Graphic(pt, symbol));
-            }
+					$('#togglebutton').text('+').button('refresh');
+			$('#legend').finish();
+  			  $('#legend').fadeToggle();
+   		
 		});
 
-
-		function detectmob() {
-  			 if(window.innerWidth <= 800 && window.innerHeight <= 600) {
-    		 	return true;
-  		 	} else {
-  			   return false;
-   		    }
-		}
+               }
 
 
-        function calcStartEndDates(queryObject) {
-            if (validateDateString(queryObject.startDate) && validateDateString(queryObject.endDate)) {
-                return ("OBSTIME >= timestamp '"+queryObject.startDate+" 00:00:00' AND OBSTIME <= timestamp '"+queryObject.endDate+" 23:59:59'");
 
-            } else {
-                //calculate yesterday's date
-                var now = new Date();
-                var yesterday = new Date(now - (24*60*60*1000))
+               function initMap() {
+                   //console.log('inside initMap...');
 
-                //return the previous day or the previous 24 hours?
-                //return ("OBSTIME >= timestamp '"+yesterday+" 00:00:00'");
-                return ("OBSTIME >= timestamp '"+formateDate(yesterday)+"'");
-            }
-        }
+                   // create the map
+                   map = new Map("map", {
+                       center: [-105.292778, 40.019444],
+                       zoom: 5,
+                       slider: !detectmob(),
+                       basemap: "streets"
+                   });
 
+                   on(map, "load", mapLoadHandler);
 
-        function formateDate(date) {
-            //format a date according to requirement of layerDefinition query, i.e. 'YYYY-MM-DD HH:MM:SS'
-            return (date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()+' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds());
-        }
+                   crowdmagService = new ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crowdmag/MapServer");
 
 
-        function validateDateString(dateString) {
-            //minimal validation on string expected to be YYYY-MM-DD
-
-            if (! dateString) {
-                return (false);
-            }
-            var parts = dateString.split('-');
-            if (parts.length != 3) {
-                return (false);
-            }
-            if (parts[0].length != 4) {
-                return (false);
-            }
-
-            if (parts[1] < 1 || parts[1] > 12) {
-                return (false);
-            }
-
-            if (parts[2] < 1 || parts[2] > 31) {
-                return false;
-            }
-
-            return (true);
-        }
-    </script>
-</head>
-
-<body>
-<div data-role="page" id="page" style="position: relative">
-    <!-- header -->
-    <!--<div data-theme="a" data-role="navbar"  data-position="fixed">
-        <h3 id="pageTitle">Total Intensity</h3>
-        <a href="#aboutDialog" data-rel="popup" data-theme="a" data-position-to="window" data-role="button"
-           data-inline="true" data-transition="pop" data-icon="info" data-iconpos="notext">About</a>
-        <a href="#legendDialog" data-rel="popup" data-theme="a" data-position-to="window" data-role="button"
-           data-inline="true" data-transition="pop" data-icon="grid" data-iconpos="notext">Legend</a>
-    </div>-->
+                   crowdmagService.setVisibleLayers([1]);
+                   map.addLayer(crowdmagService);
 
 
-    <!-- content -->
-    <div data-role="content">
-        <div id="map">
-    </div>
-	<div align="center" style="position:absolute; 
-	      bottom: 5%; left: 3%;">
-		    <h5 id="color_scale_title"> </h5> 
-                    <img id="color_scale" src="images/z_scale.png" title="values from 15,000nT to 75,000nT">
-                </div>
+                   map.infoWindow.resize(200, 250);
+               }
+
+
+
+               function locationError(error) {
+                   switch (error.code) {
+                       case error.PERMISSION_DENIED:
+                           console.log("Location not provided");
+                           break;
+                       case error.POSITION_UNAVAILABLE:
+                           console.log("Current location not available");
+                           break;
+                       case error.TIMEOUT:
+                           console.log("Timeout");
+                           break;
+                       default:
+                           console.log("unknown error");
+                           break;
+                   }
+               }
+
+
+               function zoomToLocation(position) {
+                   $.mobile.hidePageLoadingMsg(); //true hides the dialog
+                   var pt = esri.geometry.geographicToWebMercator(new Point(position.coords.longitude, position.coords.latitude));
+                   map.centerAndZoom(pt, 11);
+                   //uncomment to add a graphic at the current location
+                   // var symbol = new PictureMarkerSymbol("images/bluedot.png", 40, 40);
+                   //map.graphics.add(new Graphic(pt, symbol));
+               }
+           });
+
+
+       function detectmob() {
+           if (window.innerWidth <= 800 && window.innerHeight <= 600) {
+               return true;
+           } else {
+               return false;
+           }
+       }
+
+
+
+
+       function setupDatepicker() {
+
+           //Sets up date range for today initially
+           var start = moment();
+	//This is just so end is ahead of start
+           var end = moment().add(1, 'seconds');
 	
-	<div style="position: absolute; 
-	      top: 5%; right: 3%;">
+           $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+           changeDate(start, end);
 
+           $('#reportrange').daterangepicker({
+               format: 'MM/DD/YYYY',
+               startDate: start,
+               endDate: end,
+               minDate: '06/06/2014',
+               maxDate: end,
+               dateLimit: {
+                   days: 60
+               },
+               showDropdowns: true,
+               showWeekNumbers: true,
+               timePicker: false,
+               timePickerIncrement: 1,
+               timePicker12Hour: true,
+               ranges: {
+                   'Today': [moment(), moment()],
+                   'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                   'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                   'Last 30 Days': [moment().subtract(29, 'days'), moment()]
+               },
+               opens: 'left',
+               buttonClasses: ['btn', 'btn-sm'],
+               applyClass: 'btn-primary',
+               cancelClass: 'btn-default',
+               separator: ' to ',
+               locale: {
+                   applyLabel: 'Submit',
+                   cancelLabel: 'Cancel',
+                   fromLabel: 'From',
+                   toLabel: 'To',
+                   customRangeLabel: 'Custom',
+                   daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                   monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                   firstDay: 1
+               }
+           }, function(start, end, label) {
+               changeDate(start, end);
+               $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+           });
+       }
 
+       function changeDate(start, end) {
+           var layerDefString = "OBSTIME >= timestamp '" + start.format('YYYY-MM-DD') + " 00:00:00' AND OBSTIME <= timestamp '" + end.format('YYYY-MM-DD') + " 23:59:59'";
+		console.log(layerDefString);
+           var layerDefinitions = [];
+           layerDefinitions[0] = layerDefString;
+           layerDefinitions[1] = layerDefString;
+           layerDefinitions[2] = layerDefString;
+           crowdmagService.setLayerDefinitions(layerDefinitions);
 
-	      <fieldset  id="legend" data-mini="true" >
-			<div align="center">  <a href="#aboutDialog" data-rel="popup" data-theme=“f” data-position-to="window" data-role="button"
-           data-inline="true" data-transition="pop" data-icon="info" data-iconpos="notext">About</a></div>
+       }
+
       
-                        <input type="radio" name="radio-mini" id="radio-mini-1" value="0"  class="layerSelect"  data-theme="f" style="display:none;"/>
-    			        <label for="radio-mini-1"> F</font></label>
 
-                        <!-- y_elem -->
-                        <input type="radio" name="radio-mini" id="radio-mini-2" value="2"  class="layerSelect"     data-theme=“f” style="display:none;"/>
-                        <label for="radio-mini-2">H</font> </label>
-
-                        <!-- z_elem -->
-                        <input type="radio" name="radio-mini" id="radio-mini-3" value="1" checked="checked"  class="layerSelect"  data-theme=“f” style="display:none;" />
-                        <label for="radio-mini-3">Z</font> </label>
-                    </fieldset>
-  
-            </div>
-
-    <div data-role="popup" id="aboutDialog" data-theme="a" style="width:100%;   margin: 0 auto;">
-        <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext"
-           class="ui-btn-right">Close</a>
-
-        <div data-role="header" data-theme="a" >
-            <h1>Information</h1>
-        </div>
-        <div data-role="content" data-theme="a">
-          This map shows data collected from phones around the world!  Displayed are the Crowdsourced magnetic data within a tolerance level of prediction by
-                        <a href="http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml" target="_blank">
-                        World Magnetic Model 
-                        </a>
-                    . We have added some uncertainty to each data point shown to ensure the privacy of our contributors. This map is updated every hour. F channel represents Total Strength, H channel represents Horizontal Component, and Z channel represents Vertical Component.
-        </div>
-    </div>
-
-  
-</div>
-</body>
+   
+      </script>
 </html>
-
-
