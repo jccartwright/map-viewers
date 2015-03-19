@@ -188,3 +188,17 @@ html,body {
   z-index: 9999;
   box-shadow: 3px 3px 8px #888888;
 } 
+
+.layersPanel_class {
+    font: 12px arial,helvetica,verdana,sans-serif;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.legendGraphic {
+    vertical-align: bottom;
+}
+
+.legendText {
+    font-size: 11px;
+}
