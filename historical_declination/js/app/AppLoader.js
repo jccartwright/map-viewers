@@ -101,10 +101,29 @@ define([
 
                 this.setupMapViews();
 
-                topic.subscribe('/declination/year', lang.hitch(this, function(year) {
-                    this.setYear(year);
+                topic.subscribe('/declination/year', lang.hitch(this, function(year, mapName) {
+                    this.year = year;
+                    if (mapName == 'mercator') {
+                        this.mercatorMapConfig.setYear(year); 
+                    } else if (mapName == 'arctic') {
+                        this.arcticMapConfig.setYear(year);
+                    } else if (mapName == 'antarctic') {
+                        this.antarcticMapConfig.setYear(year);
+                    }
                 }));
 
+                topic.subscribe('/isogonicLines/visibility', lang.hitch(this, function(visible) {
+                    this.setIsogonicLinesVisibile(visible);
+                }));
+                topic.subscribe('/poles/visibility', lang.hitch(this, function(visible) {
+                    this.setPolesVisibile(visible);
+                }));
+                topic.subscribe('/polesTrack/visibility', lang.hitch(this, function(visible) {
+                    this.setPolesTrackVisible(visible);
+                }));
+                topic.subscribe('/observedPoles/visibility', lang.hitch(this, function(visible) {
+                    this.setObservedPolesVisible(visible);
+                }));
             },
 
             setupBanner: function() {
@@ -140,6 +159,15 @@ define([
                     var mapId = nval.id;
                     console.debug(mapId + ' map view selected');
                     topic.publish('/ngdc/mapViewActivated', mapId);
+
+                    //When switching to a map tab, set the year on the featureLayers for that map.
+                    if (mapId == 'mercator') {
+                        this.mercatorMapConfig.setYear(this.year);
+                    } else if (mapId == 'arctic') {
+                        this.arcticMapConfig.setYear(this.year);
+                    } else if (mapId == 'antarctic') {
+                        this.antarcticMapConfig.setYear(this.year);
+                    }
                 }));
 
             },
@@ -169,6 +197,7 @@ define([
                 }, new MercatorLayerCollection());
 
                 this.mercatorMapConfig.timeSlider = registry.byId('mercatorTimeSlider');
+                this.mercatorMapConfig.timeSlider.mapName = 'mercator';
 
                 var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
 
@@ -214,6 +243,7 @@ define([
                 }, new ArcticLayerCollection());
 
                 this.arcticMapConfig.timeSlider = registry.byId('arcticTimeSlider');
+                this.arcticMapConfig.timeSlider.mapName = 'arctic';
 
                 new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
@@ -243,14 +273,33 @@ define([
                 }, new AntarcticLayerCollection());
 
                 this.antarcticMapConfig.timeSlider = registry.byId('antarcticTimeSlider');
+                this.antarcticMapConfig.timeSlider.mapName = 'antarctic';
 
                 new CoordinatesToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
             },
 
-            setYear: function(year) {
-                this.mercatorMapConfig.setYear(year);
-                this.arcticMapConfig.setYear(year);
-                this.antarcticMapConfig.setYear(year);
+            setIsogonicLinesVisibile: function(visible) {
+                this.mercatorMapConfig.setIsogonicLinesVisibile(visible);
+                this.arcticMapConfig.setIsogonicLinesVisibile(visible);
+                this.antarcticMapConfig.setIsogonicLinesVisibile(visible);
+            },
+
+            setPolesVisibile: function(visible) {
+                this.mercatorMapConfig.setPolesVisibile(visible);
+                this.arcticMapConfig.setPolesVisibile(visible);
+                this.antarcticMapConfig.setPolesVisibile(visible);
+            },
+
+            setPolesTrackVisible: function(visible) {
+                this.mercatorMapConfig.setPolesTrackVisible(visible);
+                this.arcticMapConfig.setPolesTrackVisible(visible);
+                this.antarcticMapConfig.setPolesTrackVisible(visible);
+            },
+
+            setObservedPolesVisible: function(visible) {
+                this.mercatorMapConfig.setObservedPolesVisible(visible);
+                this.arcticMapConfig.setObservedPolesVisible(visible);
+                this.antarcticMapConfig.setObservedPolesVisible(visible);
             }
         });
     }
