@@ -37,7 +37,9 @@ display: none;
 }
 
 	.ui-radio .ui-btn{height: 30px; width: 40px;}
-	.ui-page-theme-c .ui-focus,
+	
+ /* This will remove shading from the expand button  */
+.ui-page-theme-c .ui-focus,
 html .ui-bar-c .ui-focus,
 html .ui-body-c .ui-focus,
 html body .ui-group-theme-c .ui-focus,
@@ -62,6 +64,8 @@ html head + body .ui-body-c.ui-focus {
          background-color: rgba(255, 255, 255,0.8) ;
 	  padding: 10px;
 	   }	
+ /* This will remove the custom option for date range picker in mobile devices  */
+@media only screen and (max-device-width: 480px){
 .ranges li:last-child { display: none; }
 }
       </style>
