@@ -31,7 +31,7 @@ define([
         
         return declare(null, {
 
-            setupClickListeners: function() {
+            setupListeners: function() {
                 //Listen for the mouse-up event to identify a line at the click point.
                 //We are not using map.click, since there is a ~500ms delay after clicking before the event is fired.
                 //Using this method, the line is highlighted immediately.
@@ -61,21 +61,26 @@ define([
             },
 
             setYear: function(year) {
-                if (year != this.year) {
-                    this.year = year;
+                this.year = year;
+
+                //Only refresh a layer if the year has changed
+                if (this.linesLayer.year != year) {
                     this.map.graphics.clear();
-
+                    this.linesLayer.year = year;
                     this.linesLayer.setDefinitionExpression(this.appendMod('YEAR=' + year, 2, false));
-                    this.linesLayer2.setDefinitionExpression(this.appendMod('YEAR=' + year, 2, true));
-                    if (this.npLayer) {
-                        this.npLayer.setDefinitionExpression('Year=' + year);
-                    }
-                    if (this.spLayer) {
-                        this.spLayer.setDefinitionExpression('Year=' + year);
-                    }
-
-                    this.timeSlider.setYear(year);
                 }
+                if (this.linesLayer2.year != year) {
+                    this.map.graphics.clear();
+                    this.linesLayer2.year = year;
+                    this.linesLayer2.setDefinitionExpression(this.appendMod('YEAR=' + year, 2, true));
+                }
+                if (this.polesLayer.year != year) {
+                    this.map.graphics.clear();
+                    this.polesLayer.year = year;
+                    this.polesLayer.setDefinitionExpression(this.northSouthClause + 'Year=' + year);
+                }                    
+
+                this.timeSlider.setYear(year);
             },
 
             onMapClick: function(evt) {                
@@ -132,7 +137,7 @@ define([
                         //Feature intersects the map click box, highlight the feature and update text.
                         
                         logger.debug(i + ' intersects');
-                        value = graphic.attributes.CONTOUR;
+                        value = graphic.attributes.Contour;
                         
                         if (value == 0) {
                             declinationStr = declinationStr + value + ' degrees'; 
@@ -152,6 +157,23 @@ define([
                 //No line was found. Update the text and return.
                 this.timeSlider.declinationValue.innerHTML = 'Click on the map to highlight a line';
                 return false;
+            },
+
+            setIsogonicLinesVisibile: function(visible) {
+                this.linesLayer.setVisibility(visible);
+                this.linesLayer2.setVisibility(visible);
+            },
+
+            setPolesVisibile: function(visible) {
+                this.polesLayer.setVisibility(visible);
+            },
+
+            setPolesTrackVisible: function(visible) {
+                this.historicPolesLayer.setVisibility(visible);
+            },
+
+            setObservedPolesVisible: function(visible) {
+                this.observedPolesLayer.setVisibility(visible);
             }
         });
     }
