@@ -41,12 +41,7 @@ define([
                         id: 'Reference',
                         visible: false,
                         imageParameters: this.imageParameters.png32
-                    })//,                    
-                    // new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/clipping_donut/MapServer', {
-                    //     id: 'Clipping Donut',
-                    //     visible: true,
-                    //     imageParameters: this.imageParameters.png32
-                    // })
+                    })
                 ];
 
             }, //end defineMapServices

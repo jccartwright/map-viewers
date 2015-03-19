@@ -3,13 +3,13 @@
 <head>
     <!-- Version: @application.version@, Last update: @application.buildDate@ -->
     <title>Historical Declination Viewer | ngdc.noaa.gov</title>
-    <link rel="stylesheet" href="http://js.arcgis.com/3.12/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
+    <link rel="stylesheet" href="http://js.arcgis.com/3.13/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
 
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/MapToolbar.css">
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/themes/tundra/BoundingBoxDialog.css">
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/Banner.css">
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/CoordinatesToolbar.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc/css/MapToolbar.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc/css/CoordinatesToolbar.css">
 
     <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css"> -->
     <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css"> -->
@@ -31,7 +31,7 @@
             packages: [
             {
                 name: "ngdc",
-                location: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc'
+                location: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
             },
             {
@@ -42,13 +42,13 @@
 
             //app-specific config values
             app: {
-                loglevel: 2,
-                ngdcDijitsUrl: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc'
+                loglevel: 5,
+                ngdcDijitsUrl: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc'
                 //ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
     </script>
-    <script src="http://js.arcgis.com/3.12/"></script>
+    <script src="http://js.arcgis.com/3.13/"></script>
     <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
     <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3995.js"></script>
     <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3031.js"></script>
@@ -68,11 +68,24 @@
         <div id="banner"></div>
     </div>
 
-    <div id="leftPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'left', splitter:true">
+    <div id="leftPane" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="region:'left', splitter:true, design:'headline', gutters:false">
+        <!-- nest a BorderContainer here to force layout. required to get a "fixed panel" on top of TabContainer -->
+        <div data-dojo-type="dijit/layout/ContentPane" style="height:220px" data-dojo-props="region: 'top'">
+            <div id="layersPanel" data-dojo-type="app/LayersPanel"></div>
+        </div>
+
+        <div data-dojo-type="dijit/layout/ContentPane" style="height:100%" data-dojo-props="region: 'center'">
+            <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
+                <div id="credits" data-dojo-type="app/CreditsPanel"></div>
+            </div>  
+        </div>
+    </div> <!-- end leftPane -->
+
+    <!-- <div id="leftPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'left', splitter:true">
         <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
             <div id="credits" data-dojo-type="app/CreditsPanel"></div>
         </div>        
-    </div> <!-- end leftPane -->
+    </div> --> <!-- end leftPane -->
 
     <!-- mapContainer nested inside ContentPane because it seems to force map to initially fill pane -->
     <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
@@ -103,7 +116,7 @@
     require([
         "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "dojo/dom", "dojo/dom-style", "app/AppLoader",
         "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/TabContainer",
-        "app/CreditsPanel", "app/TimeSlider", "dojo/domReady!" ],
+        "app/CreditsPanel", "app/TimeSlider", "app/LayersPanel", "dojo/domReady!" ],
             function(LoadingOverlay, registry, parser, dom, domStyle, AppLoader) {
                 var loadingOverlay = new LoadingOverlay();
                 var appLoader = new AppLoader();

@@ -53,7 +53,7 @@ define([
             publishYear: function(year) {
                 this.declinationValue.innerHTML = 'Click on the map to highlight a line';
                 this.currentYear.innerHTML = 'Year: ' + year;
-                topic.publish('/declination/year', year);
+                topic.publish('/declination/year', year, this.mapName);
             },
 
             setYear: function(year) { 

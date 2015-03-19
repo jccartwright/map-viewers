@@ -14,12 +14,20 @@ define([
 
             constructor: function() {
                 this._basemaps = [
-                    {base: 'Arctic Basemap', overlays: ['Reference'], label: 'Arctic Basemap (IBCAO/GEBCO_08)'}
+                    {base: 'Arctic Basemap', overlays: [{id: 'Reference'}], label: 'Arctic Basemap (IBCAO/GEBCO_08)'}
                 ];
 
                 this._overlays = [
-                    {services: ['Reference'], label: 'Boundaries/Labels'},
-                    {services: ['Graticule'], label: 'Graticule'}
+                    {
+                        label: 'Boundaries/Labels',
+                        services: [{id: 'Reference'}],
+                        visible: false
+                    },
+                    {
+                        label: 'Graticule',
+                        services: [{id: 'Graticule'}],
+                        visible: true
+                    }
                 ];
 
                 //define the default base
