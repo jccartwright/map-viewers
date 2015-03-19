@@ -62,10 +62,7 @@ html head + body .ui-body-c.ui-focus {
          background-color: rgba(255, 255, 255,0.8) ;
 	  padding: 10px;
 	   }	
-  input[type=radio] {
-    border: 0px;
-    width: 100%;
-    height: 2em;
+.ranges li:last-child { display: none; }
 }
       </style>
 
@@ -82,7 +79,7 @@ html head + body .ui-body-c.ui-focus {
          <div id="map">
          </div>
          <div  style="position:absolute; 
-            bottom: 5%; left: 3%;" text-align="center">
+            bottom: 5%; left: 3%; text-align: center;">
             <h5 id="color_scale_title" style= " position: relative; top: 10px; left:4px;"> Vertical Intensity</h5>
             <img id="color_scale" src="images/z_scale.png" title="values from 15,000nT to 75,000nT">
          </div>
