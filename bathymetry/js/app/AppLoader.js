@@ -354,10 +354,10 @@ define([
                     sql.push("START_YR <= " + values.endYear);
                 }
                 if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) = '" + values.survey.toUpperCase() + "'");
+                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase() + "%'");
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);
@@ -378,10 +378,10 @@ define([
                     sql.push("SURVEY_YEAR <= " + values.endYear);
                 }
                 if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) = '" + values.survey.toUpperCase() + "'");
+                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '%" + values.platform.toUpperCase() + "%'");
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 layerDefinitions = sql.join(' and ');
                 //console.log(layerDefinitions);
