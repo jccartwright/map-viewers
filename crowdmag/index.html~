@@ -23,51 +23,66 @@
 <script  src="jQueryRotate.js"></script>
    
       <style>
-         html, body {
-         height: 100%;
-         margin: 0px;
-         padding: 0px;
-         width: 100%;
-         }
-         .ui-content {
-         padding: 0 !important;
-         }
-input[type="radio"] {
-display: none;
-}
-
-	.ui-radio .ui-btn{height: 30px; width: 40px;}
-	
- /* This will remove shading from the expand button  */
-.ui-page-theme-c .ui-focus,
-html .ui-bar-c .ui-focus,
-html .ui-body-c .ui-focus,
-html body .ui-group-theme-c .ui-focus,
-html head + body .ui-btn-c.ui-focus,
-html head + body .ui-body-c.ui-focus {
-    -webkit-box-shadow: 0 0 0px #3388cc /*{c-active-background-color}*/;
-    -moz-box-shadow: 0 0 0px #3388cc /*{c-active-background-color}*/;
-    box-shadow: 0 0 0px #3388cc /*{c-active-background-color}*/;
-} 
-         #map {
-         height: 100%;
-         width: 100%;
-         position: absolute;
-         z-index: 0;
-         }
-	  #legend{
-	    display: none;
-	    border-style: solid;
-         border-width: 2px;
-         border-radius: 25px;
-         border-color: rgba(81, 181, 229,1) ;
-         background-color: rgba(255, 255, 255,0.8) ;
-	  padding: 10px;
-	   }	
- /* This will remove the custom option for date range picker in mobile devices  */
-@media only screen and (max-device-width: 480px){
-.ranges li:last-child { display: none; }
-}
+    html,
+   body {
+       height: 100%;
+       margin: 0px;
+       padding: 0px;
+       width: 100%;
+   }
+   .ui-content {
+       padding: 0 !important;
+   }
+   input[type="radio"] {
+       display: none;
+   }
+   .ui-radio .ui-btn {
+       height: 30px;
+       width: 40px;
+   }
+   /* This will remove shading from the expand button  */
+   
+   .ui-page-theme-c .ui-focus,
+   html .ui-bar-c .ui-focus,
+   html .ui-body-c .ui-focus,
+   html body .ui-group-theme-c .ui-focus,
+   html head + body .ui-btn-c.ui-focus,
+   html head + body .ui-body-c.ui-focus {
+       -webkit-box-shadow: 0 0 0px #3388cc
+       /*{c-active-background-color}*/
+       
+       ;
+       -moz-box-shadow: 0 0 0px #3388cc
+       /*{c-active-background-color}*/
+       
+       ;
+       box-shadow: 0 0 0px #3388cc
+       /*{c-active-background-color}*/
+       
+       ;
+   }
+   #map {
+       height: 100%;
+       width: 100%;
+       position: absolute;
+       z-index: 0;
+   }
+   #legend {
+       display: none;
+       border-style: solid;
+       border-width: 2px;
+       border-radius: 25px;
+       border-color: rgba(81, 181, 229, 1);
+       background-color: rgba(255, 255, 255, 0.8);
+       padding: 10px;
+   }
+   /* This will remove the custom option for date range picker in mobile devices  */
+   
+   @media only screen and (max-device-width: 480px) {
+       .ranges li:last-child {
+           display: none;
+       }
+   }
       </style>
 
   
@@ -210,6 +225,7 @@ html head + body .ui-body-c.ui-focus {
                    console.log('inside jQueryReady...');
                    initMap();
                    setupDatepicker();
+
 
                    window.addEventListener('load', adjustStyle);
                    //setup handler to change map layers
