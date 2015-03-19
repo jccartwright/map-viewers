@@ -159,7 +159,7 @@ define([
                         project: a['Project'],
                         year: a['Year'],
                         metalink: a['Metalink'],
-                        prefix: 'http://www.csc.noaa.gov/dataviewer/index.html?action=advsearch&qType=in&qFld=ID&qVal='
+                        prefix: 'http://www.coast.noaa.gov/dataviewer/index.html?action=advsearch&qType=in&qFld=ID&qVal='
                     });                
                 return html;
             },
