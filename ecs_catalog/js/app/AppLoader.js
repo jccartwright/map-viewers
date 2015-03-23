@@ -81,6 +81,7 @@ define([
             init: function() {
                 esriConfig.defaults.io.corsEnabledServers = [
                     'http://maps.ngdc.noaa.gov/arcgis/rest/services',
+                    'https://maps.ngdc.noaa.gov/arcgis/rest/services',
                     'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services',
                     'http://sparrow.ngdc.noaa.gov'
                 ];
@@ -88,7 +89,7 @@ define([
 
                 //Use the proxy for only the 'ecs_catalog' map service.
                 urlUtils.addProxyRule({
-                     urlPrefix: 'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog',
+                     urlPrefix: 'http://maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog',
                      proxyUrl: window.location.protocol + '//' + window.location.host + "/ecs-catalog/rest/map/proxy"
                 });
                 urlUtils.addProxyRule({
