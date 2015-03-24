@@ -31,9 +31,9 @@ define([
                 this.mapServices = [
                     new ArcGISTiledMapServiceLayer('http://maps8.arcgisonline.com/arcgis/rest/services/Arctic_Polar_Ocean_Base/MapServer', {
                         id: 'Arctic Basemap',
-                        visible: true,
+                        visible: true
                     }),
-                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic/gshhs/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/arctic/gshhs/MapServer', {
                         id: 'Gray Continents',
                         visible: false,
                         imageParameters: this.imageParameters.png8
@@ -42,22 +42,22 @@ define([
                     //     id: 'Gray Continents',
                     //     visible: false,
                     // }),  
-                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog/MapServer', {
                         id: 'ECS Catalog',
                         visible: true,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
                         id: 'Multibeam',
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer', {
                         id: 'Trackline',
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer', {
                         id: 'Sample Index',
                         visible: false,
                         imageParameters: this.imageParameters.png32
@@ -66,7 +66,7 @@ define([
                         id: 'Reference',
                         visible: false
                     }),                                      
-                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic/graticule/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/arctic/graticule/MapServer', {
                         id: 'Graticule',
                         visible: false,
                         opacity: 0.7,

@@ -167,10 +167,10 @@ define([
             setupBanner: function() {
                 var banner = new Banner({
                     breadcrumbs: [
-                        {url: 'http://www.noaa.gov', label: 'NOAA'},
-                        {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
-                        {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
-                        {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
+                        {url: '//www.noaa.gov', label: 'NOAA'},
+                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS'},
+                        {url: '//www.ngdc.noaa.gov', label: 'NGDC'},
+                        {url: '//maps.ngdc.noaa.gov/viewers', label: 'Maps'},
                         {url: window.location.protocol + '//' + window.location.host + '/ecs-catalog/', label: 'ECS Catalog'}
                     ],
                     dataUrl: window.location.protocol + '//' + window.location.host + '/ecs-catalog/',
