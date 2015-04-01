@@ -1,13 +1,41 @@
-define(["dojo/_base/declare", "dojo/_base/lang", "ngdc/web_mercator/MapConfig",
-        "dojo/_base/lang", "dojo/dom", "dojo/_base/fx", "dijit/registry", "esri/dijit/HomeButton",
-        "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol", "dojo/_base/Color", "esri/renderers/SimpleRenderer",
-        "dojo/dom-construct", "dojo/dom",
-        "dojo/topic", "dojo/on", "esri/config"],
-    function(declare, lang, MapConfig,  
-        lang, dom, baseFx, registry, HomeButton,
-        SimpleFillSymbol, SimpleLineSymbol, Color, SimpleRenderer,
-        domConstruct, dom,
-        topic, on, esriConfig){
+define([
+    "dojo/_base/declare",
+    "dojo/_base/lang",
+    "ngdc/web_mercator/MapConfig",
+    "dojo/_base/lang",
+    "dojo/dom",
+    "dojo/_base/fx",
+    "dijit/registry",
+    "esri/dijit/HomeButton",
+    "esri/symbols/SimpleFillSymbol",
+    "esri/symbols/SimpleLineSymbol",
+    "dojo/_base/Color",
+    "esri/renderers/SimpleRenderer",
+    "dojo/dom-construct",
+    "dojo/dom",
+    "dojo/topic",
+    "dojo/on",
+    "esri/config"
+    ],
+    function(
+        declare,
+        lang,
+        MapConfig,  
+        lang,
+        dom,
+        baseFx,
+        registry,
+        HomeButton,
+        SimpleFillSymbol,
+        SimpleLineSymbol,
+        Color,
+        SimpleRenderer,
+        domConstruct,
+        dom,
+        topic,
+        on,
+        esriConfig
+        ){
         
         return declare([MapConfig], {
 

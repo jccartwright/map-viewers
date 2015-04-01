@@ -764,7 +764,8 @@ function openGetDataWindow(geometry) {
 				});
 				urlParams.push('surveyIds=' + surveyIds.join(','));
 				
-				var url = 'http://www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
+				var url = 'http://sparrow.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
+				//var url = 'http://www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
 				//var url = 'http://agile.ngdc.noaa.gov/sparrow/next-clients/geodas/index.html?' + urlParams.join('&');
 				
 				if (geometry.type == 'polygon' && (globals.srid == 3995 || globals.srid == 3031)) {
@@ -813,7 +814,8 @@ function openGetDataWindow(geometry) {
 					Math.round(extent.xmax*100000)/100000 + ',' + 
 					Math.round(extent.ymax*100000)/100000);
 		}
-		var url = 'http://www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
+		var url = 'http://sparrow.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');		
+		//var url = 'http://www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
 		//var url = 'http://agile.ngdc.noaa.gov/sparrow/next-clients/geodas/index.html?' + urlParams.join('&');
 		if (url.length > 2000) {
 			alert('Warning: request URL is greater than 2000 characters. Problems may be encountered in some web browsers.');
