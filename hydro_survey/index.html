@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>NOS Hydrographic Survey Preview | ngdc.noaa.gov</title>
-    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/dojo/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+    <link rel="stylesheet" href="http://js.arcgis.com/3.13/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
     <link rel="stylesheet" href="css/local.css">
     <script>
         var dojoConfig = {
@@ -15,7 +15,7 @@
             packages: [
             {
                 name: "ngdc",
-                location: location.pathname.replace(/\/[^/]*$/, '') + '/js/ngdc'
+                location: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc'
             },
             {
                 name: "app",
@@ -25,21 +25,24 @@
 
             //app-specific config values
             app: {
-                loglevel: 4  //DEBUG
+                loglevel: 5,
+                ngdcDijitsUrl: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc'
             }
         };
     </script>
-    <script src="http://js.arcgis.com/3.8/"></script>
-    <script src="js/app/mapLoader.js"></script>
+    <script src="http://js.arcgis.com/3.13/"></script>
 </head>
 <body class="tundra">
-<div id="loader"><div id="loaderInner"></div></div>
+<div id="loadingOverlay" class="loadingOverlay pageOverlay">
+    <div id="loaderInner"></div>
+</div>
+
 <div id="busy"></div>
 
-<div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false" >
+<div id="mainWindow" class="noBorder" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false" >
         
     <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
-        <div id="mapDiv" data-dojo-type="dijit/layout/ContentPane" class="mercatorMap">          
+        <div id="mercator" data-dojo-type="dijit/layout/ContentPane" title="Mercator" class="map">
             <div id="homeButton"></div>
             <div id="toggleRnc" class="toggleRnc" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:false">
                 Show RNCs
@@ -48,5 +51,26 @@
     </div> <!-- end centerPane -->
     
 </div> <!-- end mainWindow BorderContainer -->
+<script>
+    //unless the Dijit is listed in the require list, it cannot be addressed via the registry
+    require([
+        "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "dojo/dom", "dojo/dom-style", "app/AppLoader",
+        "dijit/layout/BorderContainer", "dijit/layout/ContentPane",
+        "dojo/domReady!" ],
+            function(LoadingOverlay, registry, parser, dom, domStyle, AppLoader) {
+                var loadingOverlay = new LoadingOverlay();
+                var appLoader = new AppLoader();
+
+                parser.parse();
+
+                //hide the overlay now that parsing is complete
+                loadingOverlay.endLoading();
+
+                //initialize the application
+                appLoader.init();
+            }
+    );
+
+</script>
 </body>
 </html>
