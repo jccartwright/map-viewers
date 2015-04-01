@@ -764,9 +764,7 @@ function openGetDataWindow(geometry) {
 				});
 				urlParams.push('surveyIds=' + surveyIds.join(','));
 				
-				var url = 'http://sparrow.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
-				//var url = 'http://www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
-				//var url = 'http://agile.ngdc.noaa.gov/sparrow/next-clients/geodas/index.html?' + urlParams.join('&');
+				var url = 'http://www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
 				
 				if (geometry.type == 'polygon' && (globals.srid == 3995 || globals.srid == 3031)) {
 					alert('Warning: bounding boxes in Arctic/Antarctic projections are currently unsupported for data extraction. The geometry parameter will be excluded.');
