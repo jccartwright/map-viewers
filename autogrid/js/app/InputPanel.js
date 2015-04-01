@@ -56,7 +56,7 @@ define([
 
             /*
              {
-             "email": "john.c.cartwright@noaa.gov",
+             "email": "user@example.com",
              "items": [{
              "dataset": "Autochart",
              "geometry": "-145.15625, 40.80315, -136.54297, 46.27649",
@@ -67,7 +67,7 @@ define([
              */
 
             submitNextOrder: function(evt) {
-//                console.log('inside submitNextOrder...',evt);
+                console.log('inside submitNextOrder...',evt);
 
                 var data = {
                     "email": registry.byId('email').value,
@@ -79,6 +79,7 @@ define([
 
                  if (! data.email || ! gridOptionsDijit.validate() || ! mapOptionsDijit.validate()) {
                     console.warn("missing or invalid data - cannot submit NEXT request");
+                    alert("ERROR: Your request cannot be submitted because it has missing or invalid data.");
                     return;
                  }
 

@@ -32,8 +32,10 @@ define([
             baseClass: 'gridOptionsPanel',
             extent: null,
             cellSize: 1000,
-            maxGridCells: 1000000,  //maximum number of grid cells (rows * cols) allowed in request
-            maxSurveyCount: 3000,   //maximum number of surveys allowed in a request
+            maxGridCells: 2500000,  //maximum number of grid cells (rows * cols) allowed in request
+            maxSurveyCount: 5000,   //maximum number of surveys allowed in a request,
+            gridSize: null,         //gridSize based on the current geographic extent and cellSize
+            surveyCount: null,      //number of surveys found w/in the current geographic extent
 
             constructor: function() {
                 //listen for events from the maptoolbar containing envelope
@@ -62,7 +64,6 @@ define([
 
             //called when area of interest changes
             updateGridOptions: function(geom) {
-                console.log('inside updateGridOptions...');
                 var convertToGeographic = lang.hitch(this, 'convertToGeographic');
                 var extentToString = lang.hitch(this, 'extentToString');
                 var calculateGridSize = lang.hitch(this, 'calculateGridSize');
@@ -70,7 +71,9 @@ define([
                 var updateGridSizeMessage = lang.hitch(this, 'updateGridSizeMessage');
 
                 this.extent = convertToGeographic(geom);
-
+                if (this.extent.xmin > this.extent.xmax) {
+                    alert("WARNING: the Area of Interest cannot cross the antimeridian");
+                }
                 this.aoiSpan.innerHTML = extentToString(this.extent, 2);
 
                 //suggest a grid cell size based on the current extent and max number of allowable grid cells
@@ -78,8 +81,8 @@ define([
                 this.gridSizeText.value = suggestedGridCellSize;
 
                 //calc the number of rows and columns based on the gridCellSize and extent
-                var gridSize = calculateGridSize(this.extent, suggestedGridCellSize);
-                updateGridSizeMessage(gridSize);
+                this.gridSize = calculateGridSize(this.extent, suggestedGridCellSize);
+                updateGridSizeMessage(this.gridSize);
 
                 //find the number of surveys w/in the area of interest
                 xhr("http://www.ngdc.noaa.gov/next-catalogs/rest/autogrid/catalog/extents", {
@@ -90,13 +93,15 @@ define([
                     }
                 }).then(lang.hitch(this, function (data) {
                     topic.publish("/ngdc/surveyStats", data);
+                    this.surveyCount = data.surveyCount;
 
                     var msg = number.format(data.surveyCount)+' survey lines';
-                    if (data.surveyCount >= this.maxSurveyCount) {
+                    if (this.isSurveyCountValid()) {
+                        domStyle.set(this.aoiMessage,'color','green');
+                    } else {
+                        //add warning message and change text color
                         msg += "<br/>This exceeds the maximum of "+number.format(this.maxSurveyCount)+" - please reduce your area of interest";
                         domStyle.set(this.aoiMessage,'color','red');
-                    } else {
-                        domStyle.set(this.aoiMessage,'color','green');
                     }
                     this.aoiMessage.innerHTML = msg;
                 }), function (err) {
@@ -115,32 +120,40 @@ define([
             },
 
             gridCellSizeChanged: function(evt) {
-                console.log('inside gridCellSizeChanged with: ', evt);
                 var calculateGridSize = lang.hitch(this, 'calculateGridSize');
                 var updateGridSizeMessage = lang.hitch(this, 'updateGridSizeMessage');
 
                 this.cellSize = parseInt(evt.target.value);
-                var gridSize = calculateGridSize(this.extent, this.cellSize);
-                updateGridSizeMessage(gridSize);
+                this.gridSize = calculateGridSize(this.extent, this.cellSize);
+                updateGridSizeMessage(this.gridSize);
             },
 
 
             updateGridSizeMessage: function(gridSize) {
-                console.log('inside updateGridSizeMessage with ',gridSize);
-
                 //compare grid size vs. max number of total columns and update message
                 var msg = "output grid will have approximately "+number.format(gridSize.totalCells)+" cells ("+
                     number.format(gridSize.rows)+" rows, "+number.format(gridSize.cols)+" columns)";
-                if (gridSize.totalCells >= this.maxGridCells) {
+
+                if (this.isGridSizeValid()) {
+                    domStyle.set(this.gridSizeMessage,'color','green');
+
+                } else {
+                    //add warning and change text color
                     msg += "<br/>This exceeds the maximum of "+number.format(this.maxGridCells)+
                     " - please reduce your area of interest or increase the cell size";
                     domStyle.set(this.gridSizeMessage,'color','red');
-                } else {
-                    domStyle.set(this.gridSizeMessage,'color','green');
                 }
                 this.gridSizeMessage.innerHTML = msg;
             },
 
+
+            isGridSizeValid: function() {
+                return (this.gridSize.totalCells <= this.maxGridCells);
+            },
+
+            isSurveyCountValid: function() {
+                return (this.surveyCount <= this.maxSurveyCount);
+            },
 
             //TODO add support for arctic coords
             convertToGeographic: function(geom) {
@@ -158,11 +171,11 @@ define([
 
 
             validate: function() {
-                console.log('inside validate...');
-                console.log(this.extent);
-
-                //only mandatory options
-                if (this.extent && this.gridSizeText.value) {
+                if (this.extent &&
+                    this.gridSizeText.value &&
+                    this.isGridSizeValid() &&
+                    this.isSurveyCountValid() &&
+                    this.extent.xmin < this.extent.xmax) {
                     return true;
                 } else {
                     return false;
@@ -179,8 +192,6 @@ define([
 
 
             estimateGridCellSize: function(extent) {
-                console.log('inside estimateGridCellSize: ',extent);
-
                 var calcHaversineDistance = lang.hitch(this, 'calcHaversineDistance');
 
                 //calculate the x,y dimensions in meters using the mid-latitude as a reference
@@ -201,8 +212,6 @@ define([
 
 
             calculateGridSize: function(extent, cellSize) {
-                console.log('inside calculateGridSize: ',extent, cellSize);
-
                 //reset the message
                 this.gridSizeMessage.innerHTML = '';
 
@@ -233,7 +242,6 @@ define([
              * taken from http://www.opensourceconnections.com/2009/02/13/client-side-javascript-implementation-of-the-haversine-formula/
              */
             calcHaversineDistance: function (long1, lat1, long2, lat2) {
-                console.log('inside calcHaversineDistance with ',long1, lat1, long2, lat2);
                 var toRadians = lang.hitch(this, 'toRadians');
 
                 var radius = 6378100;  //radius of earth (meters)
