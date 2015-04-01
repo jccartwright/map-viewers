@@ -91,11 +91,11 @@ define([
                         visible: this.sampleIndexVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_seabed/MapServer', {
+                    new ArcGISTiledMapServiceLayer('http://mapdevel.ngdc.noaa.gov:6080/arcgis/rest/services/web_mercator/nos_seabed/MapServer', {
                         id: 'NOS Seabed (tiled)',
                         visible: this.nosSeabedVisible
                     }),
-                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_seabed_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('http://mapdevel.ngdc.noaa.gov:6080/arcgis/rest/services/web_mercator/nos_seabed_dynamic/MapServer', {
                         id: 'NOS Seabed (dynamic)',
                         visible: this.nosSeabedVisible,
                         imageParameters: this.imageParameters.png32
