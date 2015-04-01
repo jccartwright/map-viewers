@@ -110,7 +110,7 @@ define([
                 else if (item.layerName == 'Surveys without Digital Sounding Data') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
                 } 
-                else if (item.layerName == 'All NGDC Bathymetry DEMs') {
+                else if (item.layerName == 'All NGDC Bathymetric DEMs') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
                 }
                 else if (item.layerName == 'Lidar') {

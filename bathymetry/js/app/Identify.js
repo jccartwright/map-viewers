@@ -226,7 +226,7 @@ define([
                 }
                 
                 if (results['DEM Extents']) {    
-                    if ((features = results['DEM Extents']['All NGDC Bathymetry DEMs'])) {
+                    if ((features = results['DEM Extents']['All NGDC Bathymetric DEMs'])) {
                         features.sort(this.demSort);
                     }                    
                 }
