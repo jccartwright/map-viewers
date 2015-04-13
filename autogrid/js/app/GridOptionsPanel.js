@@ -40,6 +40,9 @@ define([
             constructor: function() {
                 //listen for events from the maptoolbar containing envelope
                 topic.subscribe('/ngdc/geometry', lang.hitch(this, 'updateGridOptions'));
+
+                //used by BoundingBoxDialog
+                topic.subscribe('/ngdc/BoundingBoxDialog/extent', lang.hitch(this, 'updateGridOptions'));
             },
 
             postCreate: function() {
