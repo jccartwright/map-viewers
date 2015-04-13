@@ -89,6 +89,17 @@ define([
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
                 lang.mixin(config.app, queryParams);
 
+                this.initialExtent = null;
+                if (queryParams.minx && queryParams.maxx && queryParams.miny && queryParams.maxy) {
+                    this.initialExtent = new Extent({
+                        xmin: queryParams.minx,
+                        ymin: queryParams.miny,
+                        xmax: queryParams.maxx,
+                        ymax: queryParams.maxy,
+                        spatialReference: new SpatialReference({wkid: 4326})
+                    });
+                }
+
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
 
@@ -125,7 +136,6 @@ define([
 
                 registry.byId('mapContainer').watch('selectedChildWidget', lang.hitch(this, function(name, oval, nval){
                     var mapId = nval.id;
-                    console.debug(mapId + ' map view selected');
                     this.enableMapView(mapId);
                 }));
 
@@ -147,16 +157,24 @@ define([
 
                 var zoomLevels = new MercatorZoomLevels();
 
-                this.mercatorMapConfig = new MercatorMapConfig('mercator', {
-                    center:[-110, 40], //centered over US
-                    zoom: 1, //relative zoom level; equivalent to absolute zoom level 3
+                var mapOptions = {
+                    extent: this.initialExtent,
                     logo: false,
                     showAttribution: false,
                     overview: true,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
-                }, new MercatorLayerCollection());  
+                };
+
+                if (this.initialExtent) {
+                    mapOptions.extent = this.initialExtent;
+                } else {
+                    mapOptions.center = [-110, 40]; //centered over US
+                    mapOptions.zoom = 1;            //relative zoom level; equivalent to absolute zoom level 3
+                }
+
+                this.mercatorMapConfig = new MercatorMapConfig('mercator', mapOptions, new MercatorLayerCollection());
 
                 var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
 
