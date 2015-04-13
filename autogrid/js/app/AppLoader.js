@@ -16,6 +16,7 @@ define([
     'esri/tasks/QueryTask',
     'esri/tasks/query',
     'esri/tasks/StatisticDefinition',
+    'esri/geometry/webMercatorUtils',
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'app/arctic/MapConfig',
@@ -51,6 +52,7 @@ define([
         QueryTask,
         Query,
         StatisticDefinition,
+        webMercatorUtils,
         Logger,
         MercatorMapConfig,
         ArcticMapConfig,
@@ -98,6 +100,7 @@ define([
                         ymax: queryParams.maxy,
                         spatialReference: new SpatialReference({wkid: 4326})
                     });
+                    topic.publish('/ngdc/geometry', webMercatorUtils.geographicToWebMercator(this.initialExtent));
                 }
 
                 //put the logger into global so all modules have access
