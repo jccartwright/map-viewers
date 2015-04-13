@@ -50,7 +50,7 @@ dojo.declare( 'multibeam.GetDataDialog',dijit.Dialog, {
 	},
 	
 	openAutoChart: function() {
-		var url = "http://www.ngdc.noaa.gov/autochart/?MinLng=${minx}&MinLat=${miny}&MaxLng=${maxx}&MaxLat=${maxy}";
+		var url = "http://maps.ngdc.noaa.gov/viewers/autogrid/?minx=${minx}&miny=${miny}&maxx=${maxx}&maxy=${maxy}";
 		var win = window.open(dojo.string.substitute(url,this.getValues()));			
 		this.hide();
 	},
