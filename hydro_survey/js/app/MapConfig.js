@@ -107,7 +107,7 @@ define([
                         map: this.map,
                         extent: this.map.extent
                     }, "homeButton");
-                    home.startup();
+                    homeButton.startup();
                 }));
                                       
                 var imageryLayer = this.mapLayerCollection.getLayerById('World Imagery');

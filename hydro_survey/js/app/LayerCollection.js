@@ -45,7 +45,7 @@ define([
                         imageServiceParameters: params,
                         visible: false
                     }),
-                    new ArcGISImageServiceLayer("http://egisws02.nos.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
+                    new ArcGISImageServiceLayer("http://seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
                         id: "RNC",
                         imageServiceParameters: params,
                         visible: false,
