@@ -234,7 +234,8 @@ function preInit() {
 	
 	function updateUrl() {
 		//var urlTemplate = "http://mapserver.ngdc.noaa.gov/cgi-bin/public/wcs/${coverage}.${extension}?request=getcoverage&version=1.0.0&service=wcs&coverage=${coverage}&CRS=EPSG:4326&format=${format}&resx=${resolution}&resy=${resolution}&bbox=${extent.xmin},${extent.ymin},${extent.xmax},${extent.ymax}";
-		var urlTemplate = "http://mapserver.ngdc.noaa.gov/wcs-proxy/wcs.groovy?filename=${coverage}.${extension}&request=getcoverage&version=1.0.0&service=wcs&coverage=${coverage}&CRS=EPSG:4326&format=${format}&resx=${resolution}&resy=${resolution}&bbox=${extent.xmin},${extent.ymin},${extent.xmax},${extent.ymax}";
+		//var urlTemplate = "http://mapserver.ngdc.noaa.gov/wcs-proxy/wcs.groovy?filename=${coverage}.${extension}&request=getcoverage&version=1.0.0&service=wcs&coverage=${coverage}&CRS=EPSG:4326&format=${format}&resx=${resolution}&resy=${resolution}&bbox=${extent.xmin},${extent.ymin},${extent.xmax},${extent.ymax}";
+		var urlTemplate = "http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/wcs.groovy?filename=${coverage}.${extension}&request=getcoverage&version=1.0.0&service=wcs&coverage=${coverage}&CRS=EPSG:4326&format=${format}&resx=${resolution}&resy=${resolution}&bbox=${extent.xmin},${extent.ymin},${extent.xmax},${extent.ymax}";
 		
 		if (globals.selectedExtent != null && dijit.byId('layerSelect').isValid() && dijit.byId('formatSelect').isValid()) {
 			var cellCount = calculateCellCount();
@@ -261,7 +262,14 @@ function preInit() {
 	dojo.subscribe('/ngdc/drawRectangle', this, function(graphic) {
 		globals.selectedExtent = esri.geometry.webMercatorToGeographic(graphic.geometry);
 		dijit.byId('aoiDiv').set('content', formatExtent(globals.selectedExtent));
-		updateUrl();
+		if (globals.selectedExtent.xmin > globals.selectedExtent.xmax) {
+			dijit.byId('aoiDiv').domNode.style.color = 'red';
+			alert('WARNING: the area of interest may not cross the antimeridian');
+			dijit.byId('downloadDiv').set('content','');
+		} else {
+			dijit.byId('aoiDiv').domNode.style.color = 'black';
+			updateUrl();
+		}
 	});
 
 	function formatExtent(extent) {
@@ -285,8 +293,8 @@ function preInit() {
 	//create the dialog
 	globals.coordDialog = new bboxDialog.BoundingBoxDialog({title:'Specify an Area of Interest', style: 'width:300px;'});
 
-	//esri.config.defaults.io.proxyUrl = "http://maps.ngdc.noaa.gov/proxy.jsp";
-	esri.config.defaults.io.proxyUrl = "http://agsdevel.ngdc.noaa.gov/proxy.php";
+	esri.config.defaults.io.proxyUrl = "http://maps.ngdc.noaa.gov/proxy.jsp";
+	//esri.config.defaults.io.proxyUrl = "http://agsdevel.ngdc.noaa.gov/proxy.php";
 }
 
 //called after common initialization
