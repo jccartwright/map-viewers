@@ -1,0 +1,97 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color:white;
+	overflow:hidden;
+	font-family: "Trebuchet MS";
+}
+
+#mainWindow {
+	/* required for BorderContainer to layout */
+	width:100%;
+	height:100%;
+}
+
+#header {
+	height: 55px;
+	border:0px;
+	margin:0;
+	padding:0;
+	overflow:hidden;
+}
+
+#bottom {
+	height: 160px;
+	border: 0;
+	width: 100%;
+}
+
+#controlsDiv {
+	height: 110px;
+	border: 2px solid gray;
+	margin: 0;
+	padding: 0;
+}
+
+#footer {
+	height: 120px;
+	border: 0px;
+}
+
+#mapDiv {
+	/* don't set size for Center */
+	padding: 0px;
+	border: 2px solid gray;
+}
+
+#loadingImg {
+	position:absolute;
+	left:50%;
+	top:50%;
+	z-index:100;
+}
+
+#coordsDiv {
+	margin-left:5px;
+	font-family: Arial,sans-serif;
+	font-size: 12px;
+	color:#FFFFFF;
+	vertical-align:middle;
+}
+
+#bottomBar {
+	height:15px;
+	width:150px;
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	margin:0px;
+	padding:2px;
+	border:none;
+	z-index:100;
+	background: rgb(119,119,119);
+	background:rgba(119,119,119,0.8);
+}
+#accordionContainer {
+	width:250px;
+	border:0px;
+}
+
+#layoutTable {
+	width: 100%;
+}
+
+#mapToolbar {
+	position:absolute;
+	left:5px;
+	top:5px;
+	z-index:100;
+	border:solid 1px gray;
+}
+.selectByCoordsIcon { background-image:url(../images/select_rect_xy.png); width:16px; height:16px; }
+.selectByRectIcon { background-image:url(../images/identify_rect.png); width:16px; height:16px; }
