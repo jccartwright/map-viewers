@@ -12,6 +12,15 @@ html,body {
 
 .map {
     padding: 0px !important;
+    border: 0px !important;
+}
+
+.noBorder .dijitBorderContainer-child {
+    border: 0px !important;
+}
+
+.noBorder .dijitBorderContainer-dijitContentPane {
+    padding: 0px !important;
 }
 
 #mercator, #arctic, #antarctic {

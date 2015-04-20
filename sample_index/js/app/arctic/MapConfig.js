@@ -25,13 +25,16 @@ define([
 
                 //console.log('inside custom Arctic mapReady...');   
 
-                var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, 'arcticMapToolbar');
-                mapToolbar.startup();
+                this.mapToolbar = new MapToolbar({
+                    map: this.map, 
+                    layerCollection: this.mapLayerCollection, 
+                    maxLat: 90, 
+                    minLat: 50
+                }, 'arcticMapToolbar');
+                this.mapToolbar.startup();
                 
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
                 this.identify.enabled = false;
-
-                //this.mapLayerCollection.suspend();
 
                 this.identifyPane = new IdentifyPane({
                     map: this.map,

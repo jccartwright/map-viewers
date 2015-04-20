@@ -136,9 +136,9 @@ define([
                         {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
                         {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
                         {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
-                        {url: 'http://www.ngdc.noaa.gov/mgg/curator/curator.html', label: 'Sample Index'}
+                        {url: 'http://dx.doi.org/doi:10.7289/V5H41PB8', label: 'Sample Index'}
                     ],
-                    dataUrl: 'http://www.ngdc.noaa.gov/mgg/curator',
+                    dataUrl: 'http://dx.doi.org/doi:10.7289/V5H41PB8',
                     image: 'images/sample_index_viewer_logo.gif'
                 });
                 banner.placeAt('banner');

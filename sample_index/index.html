@@ -3,17 +3,15 @@
 <head>
     <!-- Version: @application.version@, Last update: @application.buildDate@ -->
     <title>Index to Marine and Lacustrine Geological Samples Viewer | ngdc.noaa.gov</title>
-    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
-    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/FloatingPane.css"/>
-    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.9/js/dojo/dojox/layout/resources/ResizeHandle.css"/>
+    <link rel="shortcut icon" href="http://ngdc.noaa.gov/mgg/favicon.ico">
+    <link rel="stylesheet" href="http://js.arcgis.com/3.13/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
 
-
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/MapToolbar.css">
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/identify/IdentifyPane.css">
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/themes/tundra/BoundingBoxDialog.css">
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/Banner.css">
-    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc/css/CoordinatesToolbar.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc/css/MapToolbar.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc/identify/IdentifyPane.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc/css/CoordinatesToolbar.css">
 
     <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css">-->
     <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css"> -->
@@ -22,6 +20,11 @@
     <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/CoordinatesToolbar.css">-->
 
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
+
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.13/dojox/layout/resources/FloatingPane.css"/>
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.13/dojox/layout/resources/ResizeHandle.css"/>
+    <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.13/dojox/form/resources/CheckedMultiSelect.css"/>
+
     <link rel="stylesheet" href="css/local.css">
 
     <script>
@@ -34,7 +37,7 @@
             packages: [
             {
                 name: "ngdc",
-                location: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc'
+                location: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
             },
             {
@@ -45,13 +48,13 @@
 
             //app-specific config values
             app: {
-                loglevel: 2,
-                ngdcDijitsUrl: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.0/js/ngdc'
+                loglevel: 5,
+                ngdcDijitsUrl: 'http://maps.ngdc.noaa.gov/viewers/dijits-2.3/js/ngdc'
                 //ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
     </script>
-    <script src="http://js.arcgis.com/3.9/"></script>
+    <script src="http://js.arcgis.com/3.13/"></script>
     <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
     <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3995.js"></script>
     <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3031.js"></script>
@@ -63,7 +66,7 @@
 
 <div id="busy"></div>
 
-<div id="mainWindow" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false">
+<div id="mainWindow" class="noBorder" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false">
 
     <div id="header" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'">
         <div id="banner"></div>

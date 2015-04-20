@@ -25,13 +25,16 @@ define([
 
                 //console.log('inside custom Antarctic mapReady...');   
 
-                var mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, 'antarcticMapToolbar');
-                mapToolbar.startup();
+                this.mapToolbar = new MapToolbar({
+                    map: this.map, 
+                    layerCollection: this.mapLayerCollection, 
+                    maxLat: -50, 
+                    minLat: -90
+                }, 'antarcticMapToolbar');
+                this.mapToolbar.startup();
                 
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
                 this.identify.enabled = false;
-
-                //this.mapLayerCollection.suspend();
 
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
