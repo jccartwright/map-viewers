@@ -54,6 +54,8 @@ define([
                 topic.subscribe('/water_column_sonar/layerMode', lang.hitch(this, function() {
                     this.identifyPane.close();
                 }));
+
+                this.setEnabled(true);
             }
          
             
