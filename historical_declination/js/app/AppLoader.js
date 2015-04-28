@@ -72,8 +72,8 @@ define([
 
             init: function() {
                 esriConfig.defaults.io.corsEnabledServers = [
-                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
+                    '//maps.ngdc.noaa.gov/arcgis/rest/services',
+                    '//mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
 
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
@@ -129,13 +129,13 @@ define([
             setupBanner: function() {
                 var banner = new Banner({
                     breadcrumbs: [
-                        {url: 'http://www.noaa.gov', label: 'NOAA'},
-                        {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
-                        {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
-                        {url: 'http://maps.ngdc.noaa.gov', label: 'Maps'},
-                        {url: 'http://www.ngdc.noaa.gov/geomag/geomag.shtml', label: 'Geomagnetism'}
+                        {url: '//www.noaa.gov', label: 'NOAA'},
+                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS'},
+                        {url: '//www.ngdc.noaa.gov', label: 'NGDC'},
+                        {url: '//maps.ngdc.noaa.gov', label: 'Maps'},
+                        {url: '//www.ngdc.noaa.gov/geomag/geomag.shtml', label: 'Geomagnetism'}
                     ],
-                    dataUrl: 'http://www.ngdc.noaa.gov/geomag/geomag.shtml',
+                    dataUrl: '//www.ngdc.noaa.gov/geomag/geomag.shtml',
                     image: 'images/historical_declination_viewer_logo.png'
                 });
                 banner.placeAt('banner');
