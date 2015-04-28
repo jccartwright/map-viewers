@@ -15,7 +15,7 @@
                     Name:
                 </td>
                 <td>
-                    <input id="name" name="name" data-dojo-type="dijit/form/TextBox"/>
+                    <input name="name" data-dojo-type="dijit/form/TextBox"/>
                 </td>
             </tr>
             <tr>
@@ -23,19 +23,20 @@
                     Organization:
                 </td>
                 <td>
-                    <input id="organization" name="organization" data-dojo-type="dijit/form/TextBox"/>
+                    <input name="organization" data-dojo-type="dijit/form/TextBox"/>
                 </td>
             </tr>
             <tr>
                 <td>
                     Email:
                 </td>
-                <td><input id="email" name="email" data-dojo-type="dijit/form/ValidationTextBox" required="true"
+                <td><input name="email" data-dojo-type="dijit/form/ValidationTextBox" required="true"
                         data-dojo-props="validator:dojox.validate.isEmailAddress, invalidMessage:'invalid email address'"/>
                 </td>
             </tr>
-
         </table>
+        <input data-dojo-attach-point="chkPassGeometry" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox"/>
+        <label data-dojo-attach-point="passGeometryText">Request data only within area selected</label><br>
         <div class="dijitDialogPaneActionBar right-align">
             <button disabled data-dojo-type="dijit.form.Button" data-dojo-attach-point="submitButton" type="submit">OK</button>
             <button data-dojo-type="dijit.form.Button" data-dojo-attach-point="cancelButton">Cancel</button>
