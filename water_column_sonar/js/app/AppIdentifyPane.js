@@ -129,6 +129,8 @@ define([
                     this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
                 }
                 this.requestDataDialog.fileInfos = fileInfos;
+                this.requestDataDialog.geometry = null;
+                this.requestDataDialog.hideGeometryCheckBox();
                 this.requestDataDialog.show();
             },
 
@@ -144,6 +146,8 @@ define([
                     this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
                 }
                 this.requestDataDialog.fileInfos = [fileInfo];
+                this.requestDataDialog.geometry = null;
+                this.requestDataDialog.hideGeometryCheckBox();
                 this.requestDataDialog.show();
             },
 
@@ -158,6 +162,14 @@ define([
                     this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
                 }
                 this.requestDataDialog.cruiseInfos = cruiseInfos;
+                this.requestDataDialog.geometry = this.identify.searchGeometry;
+                if (this.identify.searchGeometry.type == 'point') {
+                    this.requestDataDialog.setGeometryText('Request data only near point selected');
+                }
+                else {
+                    this.requestDataDialog.setGeometryText('Request data only within area selected');
+                }
+                this.requestDataDialog.showGeometryCheckBox();
                 this.requestDataDialog.show();
             },
 
@@ -171,6 +183,14 @@ define([
                     this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
                 }
                 this.requestDataDialog.cruiseInfos = [cruiseInfo];
+                this.requestDataDialog.geometry = this.identify.searchGeometry;
+                if (this.identify.searchGeometry.type == 'point') {
+                    this.requestDataDialog.setGeometryText('Request data only near point selected');
+                }
+                else {
+                    this.requestDataDialog.setGeometryText('Request data only within area selected');
+                }
+                this.requestDataDialog.showGeometryCheckBox();
                 this.requestDataDialog.show();
             },
 

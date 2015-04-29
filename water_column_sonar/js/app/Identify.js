@@ -33,7 +33,7 @@ define([
                     <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
                     <div class="fileHeader">Instrument Details:</div>\
                     <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
-                if (a['Instrument Name'] == 'EK60') {
+                if (a['Instrument Name'] == 'EK60' || a['Instrument Name'] == 'EK500') {
                     template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
                 }
                 else {
@@ -45,7 +45,7 @@ define([
                 }
                 template += '\
                     <div class="valueName">Recording Range (m): <span class="parameterValue">${recordingRange}</span></div>\
-                    <div class="valueName">Hit Bottom?: <span class="parameterValue">${hitBottom}</span></div>\
+                    <div class="valueName">Recorded Bottom?: <span class="parameterValue">${recordedBottom}</span></div>\
                     <div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>\
                     <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>';
                 var html = string.substitute(template, {
@@ -65,7 +65,7 @@ define([
                         swathWidth: a['Swath Width (degrees)'],
                         recordingRange: a['Recording Range (m)'],
                         frequency: a['Frequency'],
-                        hitBottom: a['Hit Bottom?'] == 'Y' ? 'Yes' : 'No'
+                        recordedBottom: a['Recorded Bottom?'] == 'Y' ? 'Yes' : 'No'
                     });                
                 return html;
             },
