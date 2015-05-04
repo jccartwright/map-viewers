@@ -103,12 +103,11 @@ define([
                         visible: this.nosHydroVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISImageServiceLayer('http://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
+                    new ArcGISTiledMapServiceLayer('http://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
                         id: 'BAG Hillshades',
-                        visible: false,
-                        imageServiceParameters: this.imageServiceParameters
-                    }),
-                        new ArcGISImageServiceLayer("http://seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
+                        visible: false
+                    }),                    
+                    new ArcGISImageServiceLayer("http://seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
                         id: 'RNC',
                         visible: false,
                         opacity: 0.5,
