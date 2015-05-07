@@ -276,3 +276,12 @@ html,body {
 .frequencyText {
     width: 50px !important;
 }
+
+.dojoxCheckedMultiSelect .dojoxCheckedMultiSelectWrapper { 
+    border: solid black 1px; 
+    margin: 1px 0; 
+    overflow: scroll; 
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: 120px; 
+} 
