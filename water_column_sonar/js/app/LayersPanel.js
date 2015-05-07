@@ -9,7 +9,6 @@ define([
     'dojo/string',
     'dijit/form/CheckBox',
     'dijit/form/Button',
-    'dijit/form/RadioButton',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
@@ -26,7 +25,6 @@ define([
         string,
         CheckBox,
         Button,
-        RadioButton,
         _WidgetBase, 
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
@@ -91,14 +89,6 @@ define([
                     }
                 }));
 
-                on(this.radioCruiseView, 'click', lang.hitch(this, function() {
-                    this.activateCruiseMode();
-                }));
-
-                on(this.radioFileView, 'click', lang.hitch(this, function() {
-                    this.activateFileMode();
-                }));
-                
                 on(this.searchButton, 'click', lang.hitch(this, function() {                    
                     this.searchDialog.show();
                 }));
@@ -228,9 +218,20 @@ define([
                     s += 'Bottom soundings only';
                 }
 
-                if (values.frequency) {
-                    s += 'Frequency: ' + values.frequency + 'kHz';
+                if (values.frequencies) {
+                    s += 'Frequency: ' + values.frequencies.join(',') + '<br>';
                 }
+                
+                if (values.minFrequency && values.maxFrequency) {
+                    s += 'Frequency: ' + values.minFrequency + ' to ' + values.maxFrequency + '<br>';
+                }
+                else if (values.minFrequency) {
+                    s += 'Frequency: greater than ' + values.minFrequency + '<br>';
+                }
+                else if (values.maxFrequency) {
+                    s += 'Frequency: less than ' + values.maxFrequency + '<br>';
+                }
+
                 filterDiv.innerHTML = s;
             },
 

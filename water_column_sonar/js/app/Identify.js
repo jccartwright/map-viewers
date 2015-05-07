@@ -1,23 +1,50 @@
 define([
     'dojo/_base/declare',
+    'dojo/promise/all', 
+    'dojo/Deferred',
     'dojo/_base/array',
+    'dojo/on',
     'dojo/string',
     'ngdc/identify/AbstractIdentify',
     'dojo/topic',
+    'dojo/aspect',
     'esri/dijit/Popup',
-    'dojo/_base/lang'
+    'esri/tasks/IdentifyTask',
+    'esri/tasks/IdentifyParameters', 
+    'esri/tasks/IdentifyResult', 
+    'dojo/_base/lang',
+    'ngdc/identify/IdentifyResultCollection'
     ],
     function(
         declare,
+        all,
+        Deferred,
         array,
+        on,
         string,
         AbstractIdentify,
         topic,
+        aspect,
         Popup,
-        lang
+        IdentifyTask,
+        IdentifyParameters,
+        IdentifyResult,
+        lang,
+        IdentifyResultCollection
         ){
 
         return declare([AbstractIdentify], {
+
+            init: function(params) {
+                logger.debug('Inside custom Identify.init');
+                this.inherited(arguments);
+
+                var layerCollection = params[0].layerCollection;
+
+                this.fileTaskInfo = this.createFileTaskInfo(this.layerIds, layerCollection);
+
+                topic.subscribe('/water_column_sonar/identifyForFiles', lang.hitch(this, 'identifyForFiles'));
+            },
 
             wcdFileFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
@@ -191,6 +218,130 @@ define([
                         features.sort(this.wcdCruiseSort);
                     }
                 }
+            },
+
+            createFileTaskInfo: function(layerIds, layerCollection) {
+                logger.debug('inside createFileTaskInfo...');
+
+                var layerId = layerIds[0];
+                var layer = layerCollection.getLayerById(layerId);
+
+                logger.debug('creating IdentifyTask for URL '+layer.url);
+                taskInfo = {
+                    layer: layer,
+                    task: new IdentifyTask(layer.url),
+                    enabled: layer.visible,
+                    params: this.createFileIdentifyParams(layer)
+                };
+                return (taskInfo);
+            },
+
+            createFileIdentifyParams: function(layer) {
+                logger.debug('inside createFileIdentifyParams...');
+
+                var identifyParams = new IdentifyParameters();
+                identifyParams.tolerance = 3;
+                identifyParams.returnGeometry = false;
+                identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_ALL; //Identify on all specified sublayers even if not visible
+                identifyParams.width  = this._map.width;
+                identifyParams.height = this._map.height;
+                identifyParams.mapExtent = this._map.extent;
+
+                identifyParams.layerIds = [1, 2, 3, 4, 5, 6]; //Sublayers for file-level geometries
+                identifyParams.layerDefinitions = layer.layerDefinitions;
+                return(identifyParams);
+            },
+
+            identifyForFiles: function(geometry, cruiseId, instrument) {
+                logger.debug('inside identifyForFiles...');
+
+                if (!this.enabled) {
+                    return;
+                }
+
+                //TODO still necessary since IdentifyResultCollection storing it?
+                this.searchGeometry = geometry;
+
+                //Use isFulfilled() instead of isResolved() to prevent getting into a state where it's stuck at isResolved()==false if an identify failed.
+                if (this.promises && this.promises.isFulfilled() === false) {
+                    logger.debug('cancelling an active promise...');
+                    //this.cancelPromise();                    
+                    this.promises.cancel('cancelled due to new request', true);
+                }
+
+                this.deferreds = {};
+
+                this.fileTaskInfo.params.geometry = geometry;
+                
+                var previousLayerDefs = this.fileTaskInfo.params.layerDefinitions; //Keep the existing layer definitions
+                //Add the cruise id to the layer definitions before identifying
+                this.fileTaskInfo.params.layerDefinitions = this.addCruiseAndInstrumentToFileLayerDefs(cruiseId, instrument);
+
+                if (this.fileTaskInfo.enabled) {
+                    topic.publish('/ngdc/showLoading');
+
+                    this.deferreds[this.fileTaskInfo.layer.id] = taskInfo.task.execute(this.fileTaskInfo.params);
+                } else {
+                    logger.debug('task not enabled: '+ this.fileTaskInfo.layer.url);
+                }
+
+                this.promises = new all(this.deferreds, true);
+
+                this.promises.then(lang.hitch(this, function(results) {
+                    topic.publish('/ngdc/hideLoading');
+                    //produces an map of arrays where each key/value pair represents a mapservice. The keys are the Layer
+                    // names, the values are an array of IdentifyResult instances.
+
+                    //TODO necessary? reference the resultCollection instead?
+                    //keep a reference to the last result
+                    this.fileResults = results;
+
+                    //create a list of service URLs for each layer to be used in IdentifyResultCollection
+                    var serviceUrls = {};
+                    serviceUrls[this.fileTaskInfo.layer.id] = taskInfo.layer.url;
+
+                    var resultCollection = new IdentifyResultCollection(serviceUrls);
+                    resultCollection.setResultSet(results);
+                    resultCollection.setSearchGeometry(geometry);
+
+                    //Sort the results (customized per viewer)
+                    this.sortResults(resultCollection.results);
+
+                    //publish message w/ results
+                    topic.publish('/identify/file/results', resultCollection);
+                }));
+
+                //Reset the task info to the previous layer definitions, without the cruiseId appended.
+                this.fileTaskInfo.params.layerDefinitions = previousLayerDefs;
+            },
+
+            addCruiseAndInstrumentToFileLayerDefs: function(cruiseId, instrument) {
+                var newLayerDefs = [];
+                array.forEach(this.fileTaskInfo.params.layerIds, lang.hitch(this, function(layerId) {
+                    var layerDef = this.fileTaskInfo.params.layerDefinitions[layerId];
+                    if (layerDef) {
+                        newLayerDefs[layerId] = layerDef + " AND CRUISE_NAME = '" + cruiseId + "' AND INSTRUMENT_NAME = '" + instrument + "'";
+                    } else {
+                        newLayerDefs[layerId] = "CRUISE_NAME = '" + cruiseId + "' AND INSTRUMENT_NAME = '" + instrument + "'";
+                    }
+                }));
+                return newLayerDefs;
+            },
+
+            updateLayerDefinitions: function(layer, layerDefinitions) {
+                this.inherited(arguments);
+
+                if (this.fileTaskInfo.layer.id == layer.id) {
+                    this.fileTaskInfo.params.layerDefinitions = layerDefinitions;
+                }
+            },
+
+            updateMapExtent: function() {
+                this.inherited(arguments);
+
+                this.fileTaskInfo.params.width  = this._map.width;
+                this.fileTaskInfo.params.height = this._map.height;
+                this.fileTaskInfo.params.mapExtent = this._map.extent;                
             }
 
         });

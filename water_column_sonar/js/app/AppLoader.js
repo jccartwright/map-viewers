@@ -274,6 +274,25 @@ define([
                     fileCond.push("INSTRUMENT_NAME in (" + quoted.join(',') + ")");
                     cruiseCond.push("INSTR_NAME in (" + quoted.join(',') + ")");
                 }
+
+                if (values.frequencies && values.frequencies.length > 0) {
+                    var clauses = [];
+                    var clause = 'FREQUENCY LIKE '
+                    for (i = 0; i < values.frequencies.length; i++) {
+                        clauses.push("FREQUENCY LIKE '%" + values.frequencies[i] + "kHz%'");
+                    }
+                    var frequencyClause = '(' + clauses.join(' AND ') + ')';
+                    fileCond.push(frequencyClause);
+                }
+
+                //TODO
+                // if (values.minFrequency) {
+                //     fileCond.push("FREQUENCY LIKE '%" + values.frequency + "kHz%'");
+                // }
+                // if (values.maxFrequency) {
+                //     fileCond.push("FREQUENCY LIKE '%" + values.frequency + "kHz%'");
+                // }
+
                 if (values.minNumBeams) {
                     fileCond.push("NUMBEROFBEAMS >= " + values.minNumBeams);
                 }
@@ -289,11 +308,7 @@ define([
                 if (values.bottomSoundingsOnly) {
                     fileCond.push("BOTTOM_HIT = 'Y'");
                 }   
-                if (values.frequency) {
-                    fileCond.push("FREQUENCY LIKE '%" + values.frequency + "kHz%'");
-                }
-                //TODO: Add frequency select
-
+                
                 var fileLayerDefinition = fileCond.join(' AND ');
                 var cruiseLayerDefinition = cruiseCond.join(' AND ');
                 

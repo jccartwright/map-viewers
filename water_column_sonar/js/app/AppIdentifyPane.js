@@ -5,9 +5,16 @@ define([
     'dojo/string', 
     'ngdc/identify/IdentifyPane', 
     'dojo/topic', 
-    'esri/dijit/Popup',
+    'dojo/on',
+    'esri/dijit/Popup',    
     'dojo/_base/lang', 
+    'dojo/store/Memory',
+    'dojo/store/Observable',
+    'dijit/tree/ObjectStoreModel',
+    'dijit/layout/BorderContainer',
+    'dijit/layout/ContentPane',
     'dijit/form/Button',
+    'dijit/Tree',
     'dojo/dom-style', 
     'app/RequestDataDialog'
     ],
@@ -18,9 +25,16 @@ define([
         string, 
         IdentifyPane, 
         topic, 
+        on,
         Popup, 
         lang, 
+        Memory,
+        Observable,
+        ObjectStoreModel,
+        BorderContainer,
+        ContentPane,
         Button,
+        Tree,
         domStyle, 
         RequestDataDialog
         ){
@@ -29,6 +43,18 @@ define([
 
             constructor: function() {
                 this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl + '/identify/images/magnifier.png';
+
+                topic.subscribe('/identify/file/results', lang.hitch(this, function (results) {
+                    //console.log('identify results: ', results);
+                    if (this.enabled) {
+                        this.fileFeaturesStale = false;
+                        this.fileResults = results;
+                        this.showFileResults(results);
+                    }
+                }));
+
+                this.fileFeaturesStale = true;
+                this.isFileFeatures = false;
             },
 
             postCreate: function() {
@@ -37,26 +63,95 @@ define([
                 domStyle.set(this.domNode, 'width', '450px');
 
                 domStyle.set(this.featurePageBottomBar.domNode, 'height', '30px');
-                //this.featurePageBottomBar.style = 'height: 50px;';
 
-                this.requestDataFilesOrSurveysButton = new Button({
+                this.fileFeaturePage = new ContentPane({
+                    style: 'height: 100%; width: 100%; padding: 0px;',
+                    class: 'identifyPane-featurePage'
+                }).placeAt(this.containerNode);
+                this.stackContainer.addChild(this.fileFeaturePage);
+
+                //Create a BorderContainer for the fileFeaturePage.
+                //The top part (featurePane) contains the tree; the bottom part is a spacer for the resize handle and buttons
+                var bc = new BorderContainer({
+                    style: 'height: 100%; width: 100%; padding: 0px;',
+                    gutters: false
+                });
+
+                this.fileFeaturePane = new ContentPane({
+                    region: 'center',
+                    style: 'background: #EEE; border: 1px solid #BFBFBF; padding: 2px;'
+                });
+                bc.addChild(this.fileFeaturePane);
+
+                this.fileFeaturePageBottomBar = new ContentPane({
+                    region: 'bottom',
+                    style: 'height: 30px; border: 0px !important; padding: 2px !important;'
+                });
+                bc.addChild(this.fileFeaturePageBottomBar);
+                bc.placeAt(this.fileFeaturePage);
+
+                //Initialize the fileFeaturePage with a back button
+                this.fileFeaturePageBackButton = new Button({
+                    label: 'Back',
+                    style: 'bottom: 5px; left: 5px;',
+                    onClick: lang.hitch(this, function(){
+                        this.isFileFeatures = false;
+                        this.showInfo(this.currentCruiseItem);
+                        //this.setTitle(this.infoPag);
+                        //this.stackContainer.selectChild(this.infoPage);
+                        //domStyle.set(this.requestDataFilesOrSurveysButton.domNode, 'display', ''); //Display the button
+                    })
+                }).placeAt(this.fileFeaturePageBottomBar);
+
+                //Override the onClick method of the existing infoPage backButton to go back to either the main cruise featurePage or the fileFeaturePage.
+                this.backButton.onClick = lang.hitch(this, function(){
+                    if (this.isFileFeatures) {
+                        this.setTitle(this.fileFeaturePageTitle);
+                        this.stackContainer.selectChild(this.fileFeaturePage);
+                    } else {
+                        this.setTitle(this.featurePageTitle);
+                        this.stackContainer.selectChild(this.featurePage);    
+                    }
+                });
+
+                //Add a button to the main cruise feature page to request cruises
+                this.requestCruisesButton = new Button({
                     label: 'Request These Cruises',
-                    style: 'bottom: 5px; left: 15px;',
+                    style: 'bottom: 5px; left: 5px;',
                     onClick: lang.hitch(this, function(){    
-                        if (this.layerMode == 'file') {
-                            this.requestDataFiles();
-                        }
-                        else {
-                            this.requestCruises();
-                        }
+                        this.requestCruises();
                     })
                 }).placeAt(this.featurePageBottomBar);
 
-                this.requestDataFileOrSurveyButton = new Button({
+                //Add a button to the files page to request cruises
+                this.requestFilesButton = new Button({
+                    label: 'Request These Files',
+                    style: 'bottom: 5px; left: 5px;',
+                    onClick: lang.hitch(this, function(){    
+                        this.requestFiles();
+                    })
+                }).placeAt(this.fileFeaturePageBottomBar);
+
+                //Button to identify the files for the current identify geometry
+                this.showFileFeaturesButton = new Button({
+                    label: 'Show Files',
+                    style: 'bottom: 5px;',
+                    onClick: lang.hitch(this, function(){
+                        this.isFileFeatures = true;
+                        this.currentCruiseItem = this.currentItem;
+
+                        //Pass message to identify.js to identify for files
+                        this.cruiseId = this.currentItem.attributes['Cruise ID'];
+                        this.instrument = this.currentItem.attributes['Instrument Name'];
+                        topic.publish('/water_column_sonar/identifyForFiles', this.identify.searchGeometry, this.cruiseId, this.instrument);                     
+                    })
+                }).placeAt(this.infoPageBottomBar);
+
+                this.requestFileOrCruiseButton = new Button({
                     label: 'Request This Cruise',
                     style: 'bottom: 25px; left: 15px;',
                     onClick: lang.hitch(this, function(){
-                        if (this.layerMode == 'file') {
+                        if (this.isFileFeatures) {
                             this.requestDataFile();
                         }
                         else {
@@ -65,43 +160,376 @@ define([
                     })
                 }).placeAt(this.infoPageBottomBar);
 
-                //Subscribe to message passed by the LayersPanel to toggle between cruise/file mode
-                topic.subscribe('/water_column_sonar/layerMode', lang.hitch(this, function(layerMode) {
-                    this.setLayerMode(layerMode);
+                //Initialize a Memory store with a root only
+                this.fileFeatureStore = new Observable(Memory({
+                    data: [
+                        {id: 'root', label: 'root'}
+                    ],
+                    getChildren: function(object){
+                        return this.query({parent: object.id});
+                    }
                 }));
+
+                //Create the store model used by the file Tree
+                this.fileStoreModel = new ObjectStoreModel({
+                    store: this.fileFeatureStore,
+                    query: {id: 'root'},
+                    labelAttr: 'label',
+                    mayHaveChildren: function(item) {
+                        //items of type 'item' never have children.
+                        return (item.type != 'item');
+                    }
+                });
             },
 
             showResults: function() {
                 this.featurePane.domNode.innerHTML = '';
 
+                this.fileFeaturesStale = true;
+                this.isFileFeatures = false;
+
                 this.inherited(arguments);
 
-                if (this.numFeatures >= 1000) {
+                this.featurePageTitle = 'Identified Cruises (' + this.numFeatures + ')';
+                this.setTitle(this.featurePageTitle);
+                //domStyle.set(this.requestDataFilesOrSurveysButton.domNode, 'display', ''); //Display the request data button
+            },
+
+            showFileResults: function(resultCollection) {
+                logger.debug('inside showFileResults...');
+
+                this.fileFeaturePane.domNode.innerHTML = '';
+                this.showFileFeaturePage();
+
+                //Destroy the existing tree and clear the feature store
+                if (this.fileFeatureTree) {
+                    this.fileFeatureTree.destroyRecursive();
+                }
+                this.clearFileFeatureStore();
+
+                //Populate the store used by the tree
+                this.numFileFeatures = this.populateFileFeatureStore(resultCollection.results);
+
+                //Construct a new tree and place it in the feature pane.
+                this.constructFileFeatureTree();
+
+                if (this.identify.searchGeometry.type == 'point') {
+                    this.fileFeaturePageTitle = 'Files for ' + this.cruiseId + ' near clicked point (' + this.numFileFeatures + ')';
+                } else {
+                    this.fileFeaturePageTitle = 'Files for ' + this.cruiseId + ' inside polygon (' + this.numFileFeatures + ')'; 
+                }
+                this.setTitle(this.fileFeaturePageTitle);
+
+                if (this.numFileFeatures >= 1000) {
 
                     //Destroy the existing tree and clear the feature store
-                    if (this.tree) {
-                        this.tree.destroyRecursive();
+                    if (this.fileFeatureTree) {
+                        this.fileFeatureTree.destroyRecursive();
                     }
-                    this.clearFeatureStore();
+                    this.clearFileFeatureStore();
 
-                    this.featurePageTitle = 'Too Many Features Identified';
-                    //this.featurePageTitle = 'More than 1000 files have been selected. Please select a smaller area or change to Cruise View.';
-                    this.setTitle(this.featurePageTitle);
-                    this.featurePane.domNode.innerHTML = '<b>More than 1000 files have been selected. Please select a smaller area or change to Cruise View.</b>';
+                    this.fileFeaturePageTitle = 'Too Many Files Identified';
+                    this.setTitle(this.fileFeaturePageTitle);
+                    this.fileFeaturePane.domNode.innerHTML = '<b>More than 1000 files have been identified. Unable to display all results. Please select a smaller area.</b>';
 
-                    domStyle.set(this.requestDataFilesOrSurveysButton.domNode, 'display', 'none');
+                    domStyle.set(this.requestFileOrCruiseButton.domNode, 'display', 'none');
                 }
                 else {
-                    domStyle.set(this.requestDataFilesOrSurveysButton.domNode, 'display', 'block');
+                    domStyle.set(this.requestFileOrCruiseButton.domNode, 'display', 'inline');
                 }
             },
 
-            getLayerDisplayLabel: function(item) {
-                return '<i><b>' + item.layerName + '</b></i>';
+            clearFileFeatureStore: function() {
+                //console.log("inside clearFeatureStore...");
+                //Remove all items except for the root
+                var allItems = this.fileFeatureStore.query();
+                array.forEach(allItems, lang.hitch(this, function(item) {
+                    if (item.id != 'root') {
+                        this.fileFeatureStore.remove(item.id);
+                    }
+                }));
+            },
+
+            showFileFeaturePage: function() {
+                this.stackContainer.selectChild(this.fileFeaturePage);
+            },
+
+            populateFeatureStore: function(results) {
+                var totalFeatures = 0;
+                var numFeaturesForLayer = 0;
+
+                this.expandedNodePaths = [];
+                for (var svcName in results) {
+                    for (var layerName in results[svcName]) {
+
+                        numFeaturesForLayer = results[svcName][layerName].length;
+                        totalFeatures += numFeaturesForLayer;
+
+                        //numFeatures += results[svcName][layerName].length;
+                        for (var i = 0; i < results[svcName][layerName].length; i++) {
+                            var item = results[svcName][layerName][i];
+                            var layerKey = svcName + '/' + layerName;
+                            var layerUrl = results[svcName][layerName][i].layerUrl;
+                            //Create a layer "folder" node if it doesn't already exist
+                            if (this.featureStore.query({id: layerName}).length === 0) {
+                                this.featureStore.put({
+                                    uid: ++this.uid,
+                                    id: layerName,
+                                    label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
+                                    type: 'folder',
+                                    parent: 'root'
+                                });
+                            }
+                            //Create a cruise "folder" node if it doesn't already exist
+                            var surveyId = item.feature.attributes['Cruise ID'];
+                            var surveyKey = layerName + '/' + surveyId;
+                            if (this.featureStore.query({id: surveyKey}).length === 0) {
+                                this.featureStore.put({
+                                    uid: ++this.uid,
+                                    id: surveyKey,
+                                    label: '<b>Cruise ID: ' + surveyId + '</b>',
+                                    type: 'folder',
+                                    parent: layerName
+                                });
+                            }
+
+                            //Add the current item to the store
+                            this.featureStore.put({
+                                uid: ++this.uid,
+                                id: this.uid,
+                                //TODO: point to the magnifying glass image using a module path
+                                displayLabel: this.getItemDisplayLabel(item, this.uid),
+                                label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + 
+                                    "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "' title='Zoom to this feature'></a>",
+                                layerUrl: layerUrl,
+                                layerKey: layerKey,
+                                attributes: item.feature.attributes,
+                                parent: surveyKey,
+                                type: 'item'
+                            });
+                        }
+                    }
+                }
+                return totalFeatures;
+            },
+
+            populateFileFeatureStore: function(results) {
+                var totalFeatures = 0;
+                var numFeaturesForLayer = 0;
+                this.fileExpandedNodePaths = [];
+
+                for (var svcName in results) {
+                    for (var layerName in results[svcName]) {
+
+                        numFeaturesForLayer = results[svcName][layerName].length;
+                        totalFeatures += numFeaturesForLayer;
+
+                        //numFeatures += results[svcName][layerName].length;
+                        for (var i = 0; i < results[svcName][layerName].length; i++) {
+                            var item = results[svcName][layerName][i];
+                            var layerKey = svcName + '/' + layerName;
+                            var layerUrl = results[svcName][layerName][i].layerUrl;
+                            //Create a layer "folder" node if it doesn't already exist
+                            // if (this.fileFeatureStore.query({id: layerName}).length === 0) {
+                            //     this.fileFeatureStore.put({
+                            //         uid: ++this.uid,
+                            //         id: layerName,
+                            //         label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
+                            //         type: 'folder',
+                            //         parent: 'root'
+                            //     });
+                            // }
+                            //Create a cruise "folder" node if it doesn't already exist
+                            var surveyId = item.feature.attributes['Cruise ID'];
+                            var surveyKey = layerName + '/' + surveyId;
+                            // if (this.fileFeatureStore.query({id: surveyKey}).length === 0) {
+                            //     this.fileFeatureStore.put({
+                            //         uid: ++this.uid,
+                            //         id: surveyKey,
+                            //         label: '<b>Cruise ID: ' + surveyId + '</b>',
+                            //         type: 'folder',
+                            //         parent: layerName
+                            //     });
+                            // }
+
+                            var instrumentKey;
+
+                            //Create an instrument "folder" node if it doesn't already exist
+                            var instrument = item.feature.attributes['Instrument Name'];
+                            instrumentKey = layerName + '/' + surveyId + '/' + instrument;
+                            if (this.fileFeatureStore.query({id: instrumentKey}).length === 0) {
+                                this.fileFeatureStore.put({
+                                    uid: ++this.uid,
+                                    id: instrumentKey,
+                                    label: '<b>Instrument: ' + instrument + '</b>',
+                                    type: 'folder',
+                                    parent: 'root'
+                                });
+
+                                //Add this node to the list of nodes to be expanded to in constructFeatureTree
+                                //this.fileExpandedNodePaths.push(['root', layerName, surveyKey, instrumentKey]);
+                            }
+                            
+
+                            //Add the current item to the store
+                            this.fileFeatureStore.put({
+                                uid: ++this.uid,
+                                id: this.uid,
+                                //TODO: point to the magnifying glass image using a module path
+                                displayLabel: this.getItemDisplayLabel(item, this.uid),
+                                label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + 
+                                    "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "' title='Zoom to this feature'></a>",
+                                layerUrl: layerUrl,
+                                layerKey: layerKey,
+                                attributes: item.feature.attributes,
+                                parent: instrumentKey,
+                                type: 'item'
+                            });
+                        }
+                    }
+                }
+                return totalFeatures;
+            },
+
+            constructFeatureTree: function() {
+                //Construct a new Tree
+                this.tree = new Tree({
+                    model: this.storeModel,
+                    showRoot: false,
+                    persist: false,
+                    autoExpand: false, //seems to be more efficient to call expandAll() later.
+                    openOnClick: true,
+                    onClick: lang.hitch(this, function(item) {
+                        this.requestFileOrCruiseButton.set('label', 'Request This Cruise');
+                        domStyle.set(this.showFileFeaturesButton.domNode, 'display', ''); //Show the "Show Files" button
+                        this.showInfo(item);
+                    }),
+                    getIconClass: function(item, opened) {
+                        if (item.type == 'item') {
+                            return 'iconBlank';
+                        }
+                        else if (item.type == 'folder') {
+                            return (opened ? 'dijitFolderOpened' : 'dijitFolderClosed');
+                        }
+                        else {
+                            return 'dijitLeaf';
+                        }
+                    },
+                    _createTreeNode: lang.hitch(this, function(args){
+                        return new this.CustomTreeNode(args);
+                    })
+                });
+
+                //Attach the onMouseOver handler for highlighting features.
+                //It's pausable so we can pause it when hiding the dijit to avoid extraneous mouseovers firing
+                this.onMouseOverHandler = on.pausable(this.tree, 'mouseOver', lang.hitch(this, function(item) {
+                    this.onMouseOverNode(item);
+                }));
+                this.tree.placeAt(this.featurePane);
+                this.tree.startup();
+
+                this.tree.expandAll();
+            },
+
+            constructFileFeatureTree: function() {
+                //Construct a new Tree
+                this.fileFeatureTree = new Tree({
+                    model: this.fileStoreModel,
+                    showRoot: false,
+                    persist: false,
+                    autoExpand: false, //seems to be more efficient to call expandAll() later.
+                    openOnClick: true,
+                    onClick: lang.hitch(this, function(item) {
+                        this.requestFileOrCruiseButton.set('label', 'Request This Data File');
+                        domStyle.set(this.showFileFeaturesButton.domNode, 'display', 'none'); //Hide the "Show Files" button
+                        this.showInfo(item);
+                    }),
+                    getIconClass: function(item, opened) {
+                        if (item.type == 'item') {
+                            return 'iconBlank';
+                        }
+                        else if (item.type == 'folder') {
+                            return (opened ? 'dijitFolderOpened' : 'dijitFolderClosed');
+                        }
+                        else {
+                            return 'dijitLeaf';
+                        }
+                    },
+                    _createTreeNode: lang.hitch(this, function(args){
+                        return new this.CustomTreeNode(args);
+                    })
+                });
+
+                //Attach the onMouseOver handler for highlighting features.
+                //It's pausable so we can pause it when hiding the dijit to avoid extraneous mouseovers firing
+                this.onMouseOverHandler = on.pausable(this.fileFeatureTree, 'mouseOver', lang.hitch(this, function(item) {
+                    this.onMouseOverNode(item);
+                }));
+                this.fileFeatureTree.placeAt(this.fileFeaturePane);
+                this.fileFeatureTree.startup();
+
+                this.fileFeatureTree.expandAll();
+                //this.fileFeatureTree.set('paths', this.fileExpandedNodePaths); //Expand the tree to the instrument level. All nodes will be opened except for these.
+            },
+
+            getLayerDisplayLabel: function(item, count) {
+
+                if (item.layerName == 'File-Level: NMFS') {
+                    return '<i><b>NMFS (' + this.formatCount(count, 'file') + ')</b></i>';
+                }
+                else if (item.layerName == 'File-Level: OER') {
+                    return '<i><b>OER (' + this.formatCount(count, 'file') + ')</b></i>';
+                }
+                else if (item.layerName == 'File-Level: UNOLS') {
+                    return '<i><b>UNOLS (' + this.formatCount(count, 'file') + ')</b></i>';
+                }
+                else if (item.layerName == 'File-Level: Other NOAA') {
+                    return '<i><b>Other NOAA (' + this.formatCount(count, 'file') + ')</b></i>';
+                }
+                else if (item.layerName == 'File-Level: Other') {
+                    return '<i><b>Other (' + this.formatCount(count, 'file') + ')</b></i>';
+                }
+                else if (item.layerName == 'File-Level: Non-U.S.') {
+                    return '<i><b>Non-U.S. (' + this.formatCount(count, 'file') + ')</b></i>';
+                }
+                else if (item.layerName == 'Cruise-Level: NMFS') {
+                    return '<i><b>NMFS (' + this.formatCount(count, 'cruise') + ')</b></i>';
+                }
+                else if (item.layerName == 'Cruise-Level: OER') {
+                    return '<i><b>OER (' + this.formatCount(count, 'cruise') + ')</b></i>';
+                }
+                else if (item.layerName == 'Cruise-Level: UNOLS') {
+                    return '<i><b>UNOLS (' + this.formatCount(count, 'cruise') + ')</b></i>';
+                }
+                else if (item.layerName == 'Cruise-Level: Other NOAA') {
+                    return '<i><b>Other NOAA (' + this.formatCount(count, 'cruise') + ')</b></i>';
+                }
+                else if (item.layerName == 'Cruise-Level: Other') {
+                    return '<i><b>Other (' + this.formatCount(count, 'cruise') + ')</b></i>';
+                }
+                else if (item.layerName == 'Cruise-Level: Non-U.S.') {
+                    return '<i><b>Non-U.S. (' + this.formatCount(count, 'cruise') + ')</b></i>';
+                }
+            },
+
+            formatCount: function(count, noun) {
+                if (count > 1) {
+                    if (noun == 'cruise') {
+                        return count + ' cruises';
+                    } else {
+                        return count + ' files';
+                    }
+                } else {
+                    if (noun == 'cruise') {
+                        return count + ' cruise';
+                    } else {
+                        return count + ' file';
+                    }
+                }
             },
 
             getItemDisplayLabel: function(item, uid) {
-                if (this.layerMode == 'file') {
+                if (this.isFileFeatures) {
                     return this.getItemLabelSpan(item.value, uid);
                 }
                 else {
@@ -192,103 +620,6 @@ define([
                 }
                 this.requestDataDialog.showGeometryCheckBox();
                 this.requestDataDialog.show();
-            },
-
-            populateFeatureStore: function(results) {
-                var numFeatures = 0;
-                this.expandedNodePaths = [];
-                for (var svcName in results) {
-                    for (var layerName in results[svcName]) {
-
-                        numFeatures += results[svcName][layerName].length;
-                        for (var i = 0; i < results[svcName][layerName].length; i++) {
-                            var item = results[svcName][layerName][i];
-                            var layerKey = svcName + '/' + layerName;
-                            var layerUrl = results[svcName][layerName][i].layerUrl;
-                            //Create a layer "folder" node if it doesn't already exist
-                            if (this.featureStore.query({id: layerName}).length === 0) {
-                                this.featureStore.put({
-                                    uid: ++this.uid,
-                                    id: layerName,
-                                    label: this.getLayerDisplayLabel(item),
-                                    type: 'folder',
-                                    parent: 'root'
-                                });
-                            }
-                            //Create a cruise "folder" node if it doesn't already exist
-                            var surveyId = item.feature.attributes['Cruise ID'];
-                            var surveyKey = layerName + '/' + surveyId;
-                            if (this.featureStore.query({id: surveyKey}).length === 0) {
-                                this.featureStore.put({
-                                    uid: ++this.uid,
-                                    id: surveyKey,
-                                    label: '<b>Cruise ID: ' + surveyId + '</b>',
-                                    type: 'folder',
-                                    parent: layerName
-                                });
-                            }
-
-                            var instrumentKey;
-                            if (this.layerMode == 'file') {
-                                //Create an instrument "folder" node if it doesn't already exist
-                                var instrument = item.feature.attributes['Instrument Name'];
-                                instrumentKey = layerName + '/' + surveyId + '/' + instrument;
-                                if (this.featureStore.query({id: instrumentKey}).length === 0) {
-                                    this.featureStore.put({
-                                        uid: ++this.uid,
-                                        id: instrumentKey,
-                                        label: '<b>Instrument: ' + instrument + '</b>',
-                                        type: 'folder',
-                                        parent: surveyKey
-                                    });
-
-                                    //Add this node to the list of nodes to be expanded to in constructFeatureTree
-                                    this.expandedNodePaths.push(['root', layerName, surveyKey, instrumentKey]);
-                                }
-                            }
-
-                            //Add the current item to the store
-                            this.featureStore.put({
-                                uid: ++this.uid,
-                                id: this.uid,
-                                //TODO: point to the magnifying glass image using a module path
-                                displayLabel: this.getItemDisplayLabel(item, this.uid),
-                                label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + 
-                                    "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "' title='Zoom to this feature'></a>",
-                                layerUrl: layerUrl,
-                                layerKey: layerKey,
-                                attributes: item.feature.attributes,
-                                parent: this.layerMode == 'file' ? instrumentKey : surveyKey,
-                                type: 'item'
-                            });
-                        }
-                    }
-                }
-                return numFeatures;
-            },
-
-            constructFeatureTree: function() {
-                this.inherited(arguments);
-
-                if (this.layerMode == 'file') {
-                    //Expand the tree to the instrument level. All nodes will be opened except for these.
-                    this.tree.set('paths', this.expandedNodePaths);
-                }
-                else {
-                    this.tree.expandAll();
-                }
-            },
-
-            setLayerMode: function(layerMode) {
-                this.layerMode = layerMode;
-                if (layerMode == 'cruise') {
-                    this.requestDataFilesOrSurveysButton.set('label', 'Request These Cruises');
-                    this.requestDataFileOrSurveyButton.set('label', 'Request This Cruise');
-                }
-                else {
-                    this.requestDataFilesOrSurveysButton.set('label', 'Request These Data Files');
-                    this.requestDataFileOrSurveyButton.set('label', 'Request This Data File');
-                }
             }
         });
     }
