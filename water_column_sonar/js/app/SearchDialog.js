@@ -83,6 +83,9 @@ define([
                 on(this.chkAllInstruments, 'click', lang.hitch(this, function() {
                     this.instrumentSelect.set('disabled', this.chkAllInstruments.checked);
                 }));
+                on(this.chkAllFrequencies, 'click', lang.hitch(this, function() {
+                    this.frequencySelect.set('disabled', this.chkAllFrequencies.checked);
+                }));
 
                 script.get("http://maps.ngdc.noaa.gov/mapviewer-support/wcd/ships.groovy", {
                         preventCache: true,
@@ -119,8 +122,6 @@ define([
                 }), function(err){
                     logger.error('Error retrieving ships JSON: ' + err);
                 });
-
-                this.setFileCriteriaDisabled(true);
             },
 
             populateShipSelect: function(items) {
@@ -166,7 +167,8 @@ define([
                     (this.chkAllInstitutions.checked || values.institutions.length === 0) &&
                     (this.chkAllSurveys.checked || values.surveyIds.length === 0) &&
                     (this.chkAllInstruments.checked || values.instruments.length === 0) &&
-                    !values.frequency &&
+                    (this.chkAllFrequencies.checked || values.frequencies.length === 0) &&
+                    isNaN(values.minFrequency) && isNaN(values.maxFrequency) &&
                     isNaN(values.minNumBeams) && isNaN(values.maxNumBeams) &&
                     isNaN(values.minSwathWidth) && isNaN(values.maxSwathWidth)) &&
                     !this.chkBottomSoundings.checked;
@@ -197,10 +199,13 @@ define([
                 this.instrumentSelect.set('disabled', true);
                 this.chkAllInstruments.set('checked', true);
 
-                this.frequencyText.set('value', '');
-                //this.minFrequencySpinner.set('value', '');
-                //this.maxFrequencySpinner.set('value', '');
-                //this.chkAllFrequencies.set('checked', true);
+                this.frequencySelect.reset();
+                this.frequencySelect._updateSelection();
+                this.frequencySelect.set('disabled', true);
+                this.chkAllFrequencies.set('checked', true);
+
+                this.minFrequencyText.set('value', '');
+                this.maxFrequencyText.set('value', '');
                              
                 this.minNumBeamsSpinner.set('value', '');
                 this.maxNumBeamsSpinner.set('value', '');
@@ -214,24 +219,6 @@ define([
             reset: function() {
                 this.clearForm();
                 topic.publish('/wcd/ResetSearch');
-            },
-
-            setFileCriteriaDisabled: function(disabled) {
-                this.frequencyText.set('disabled', disabled);
-                this.minNumBeamsSpinner.set('disabled', disabled);
-                this.maxNumBeamsSpinner.set('disabled', disabled);
-                this.minSwathWidthSpinner.set('disabled', disabled);
-                this.maxSwathWidthSpinner.set('disabled', disabled);
-                this.chkBottomSoundings.set('disabled', disabled);
-
-                if (disabled) { 
-                    this.frequencyText.set('value', '');
-                    this.minNumBeamsSpinner.set('value', '');
-                    this.maxNumBeamsSpinner.set('value', '');
-                    this.minSwathWidthSpinner.set('value', '');
-                    this.maxSwathWidthSpinner.set('value', '');
-                    this.chkBottomSoundings.set('checked', false);
-                }
             }
     });
 });
