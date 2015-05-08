@@ -94,6 +94,14 @@ define([
                     });
                 }
 
+                var layersPanel = registry.byId('layersPanel');
+                if (config.app.historicalPoles && config.app.historicalPoles == 'true') {
+                    layersPanel.chkPolesTrack.set('checked', true);
+                }
+                if (config.app.observedPoles && config.app.observedPoles == 'true') {
+                    layersPanel.chkObservedPoles.set('checked', true);
+                }
+
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
 
@@ -129,14 +137,15 @@ define([
             setupBanner: function() {
                 var banner = new Banner({
                     breadcrumbs: [
-                        {url: '//www.noaa.gov', label: 'NOAA'},
-                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS'},
-                        {url: '//www.ngdc.noaa.gov', label: 'NGDC'},
-                        {url: '//maps.ngdc.noaa.gov', label: 'Maps'},
-                        {url: '//www.ngdc.noaa.gov/geomag/geomag.shtml', label: 'Geomagnetism'}
+                        {url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
+                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
+                        {url: '//www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
+                        {url: '//maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
+                        {url: '//www.ngdc.noaa.gov/geomag/geomag.shtml',  label: 'Geomagnetism', title: 'Go to NCEI Geomagnetism home'}
                     ],
                     dataUrl: '//www.ngdc.noaa.gov/geomag/geomag.shtml',
-                    image: 'images/historical_declination_viewer_logo.png'
+                    image: 'images/historical_declination_viewer_logo.png',
+                    imageAlt: 'NCEI Historical Magnetic Declination Viewer - go to Geomagnetism home'
                 });
                 banner.placeAt('banner');
             },
