@@ -1,6 +1,7 @@
 define([
     'dojo/_base/declare', 
     'dojo/_base/lang',
+    'dojo/_base/config',
     'dojo/dom',
     'dojo/on',
     'esri/layers/FeatureLayer',
@@ -20,6 +21,7 @@ define([
     function(
         declare, 
         lang, 
+        config,
         dom,
         on,
         FeatureLayer,
@@ -121,6 +123,13 @@ define([
                 
                 this.linesLayer.show();
                 this.linesLayer2.show();
+
+                if (config.app.historicalPoles && config.app.historicalPoles == 'true') {
+                    this.historicPolesLayer.show();
+                }
+                if (config.app.observedPoles && config.app.observedPoles == 'true') {
+                    this.observedPolesLayer.show();
+                }
             }
         });
     }
