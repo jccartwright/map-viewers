@@ -160,20 +160,30 @@ define([
             },
 
             setIsogonicLinesVisibile: function(visible) {
-                this.linesLayer.setVisibility(visible);
-                this.linesLayer2.setVisibility(visible);
+                if (this.linesLayer) {
+                    this.linesLayer.setVisibility(visible);
+                }
+                if (this.linesLayer2) {
+                    this.linesLayer2.setVisibility(visible);
+                }
             },
 
             setPolesVisibile: function(visible) {
-                this.polesLayer.setVisibility(visible);
+                if (this.polesLayer) {
+                    this.polesLayer.setVisibility(visible);
+                }
             },
 
             setPolesTrackVisible: function(visible) {
-                this.historicPolesLayer.setVisibility(visible);
+                if (this.historicPolesLayer) {
+                    this.historicPolesLayer.setVisibility(visible);
+                }
             },
 
             setObservedPolesVisible: function(visible) {
-                this.observedPolesLayer.setVisibility(visible);
+                if (this.observedPolesLayer) {
+                    this.observedPolesLayer.setVisibility(visible);
+                }
             }
         });
     }
