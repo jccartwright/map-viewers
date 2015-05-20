@@ -197,7 +197,7 @@ define([
                 }).placeAt(okDialog.containerNode);
 
                 xhr.post(
-                    'http://maps.ngdc.noaa.gov/mapviewer-support/wcd/generateOrder.groovy', {
+                    '//maps.ngdc.noaa.gov/mapviewer-support/wcd/generateOrder.groovy', {
                         data: jsonString,
                         handleAs: 'json',
                         headers: {'Content-Type':'application/json'}
