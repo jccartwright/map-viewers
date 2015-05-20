@@ -8,11 +8,14 @@ define([
     'dojo/topic',
     'dojo/on',
     'dojo/aspect',
+    'dojo/request/xhr',
     'dijit/form/CheckBox',
     'esri/config',
     'esri/geometry/Extent',
+    'esri/geometry/geometryEngine',
     'esri/SpatialReference',
     'esri/tasks/GeometryService',
+    'esri/tasks/ProjectParameters',
     'esri/tasks/QueryTask',
     'esri/tasks/query',
     'esri/tasks/StatisticDefinition',
@@ -41,11 +44,14 @@ define([
         topic,
         on,
         aspect,
+        xhr,
         CheckBox,
         esriConfig,
         Extent,
+        geometryEngine,
         SpatialReference,
         GeometryService,
+        ProjectParameters,
         QueryTask,
         Query,
         StatisticDefinition,
@@ -145,7 +151,8 @@ define([
             },
 
             enableMapView: function(/*String*/ mapId) {
-                if (mapId == 'mercator') {
+                this.mapId = mapId;
+                if (mapId == 'mercator') {                    
                     this.mercatorMapConfig.setEnabled(true);
                     this.arcticMapConfig.setEnabled(false);                    
                 } else { //Arctic
@@ -272,7 +279,7 @@ define([
                         quoted.push("'" + values.instruments[i] + "'");
                     }
                     fileCond.push("INSTRUMENT_NAME in (" + quoted.join(',') + ")");
-                    cruiseCond.push("INSTR_NAME in (" + quoted.join(',') + ")");
+                    cruiseCond.push("INSTRUMENT_NAME in (" + quoted.join(',') + ")");
                 }
 
                 if (values.frequencies && values.frequencies.length > 0) {
@@ -283,15 +290,17 @@ define([
                     }
                     var frequencyClause = '(' + clauses.join(' AND ') + ')';
                     fileCond.push(frequencyClause);
+                    cruiseCond.push(frequencyClause);
                 }
 
-                //TODO
-                // if (values.minFrequency) {
-                //     fileCond.push("FREQUENCY LIKE '%" + values.frequency + "kHz%'");
-                // }
-                // if (values.maxFrequency) {
-                //     fileCond.push("FREQUENCY LIKE '%" + values.frequency + "kHz%'");
-                // }
+                if (values.minFrequency) {
+                    fileCond.push("MIN_FREQ >= " + values.minFrequency);
+                    cruiseCond.push("MIN_FREQ >= " + values.minFrequency);
+                }
+                if (values.maxFrequency) {
+                    fileCond.push("MAX_FREQ <= " + values.maxFrequency);
+                    cruiseCond.push("MAX_FREQ <= " + values.maxFrequency);
+                }
 
                 if (values.minNumBeams) {
                     fileCond.push("NUMBEROFBEAMS >= " + values.minNumBeams);
@@ -335,6 +344,10 @@ define([
 
                 this.layersPanel.enableResetButton();
                 this.layersPanel.setCurrentFilterString(values);
+
+                if (values.zoomToResults) {
+                    this.zoomToResults(layerDefinitions);
+                }
             },
 
             resetWcd: function() {            
@@ -344,6 +357,74 @@ define([
                 this.layersPanel.disableResetButton();
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
+            },
+
+            zoomToResults: function(layerDefs) {
+                var layerDefsStr = '';
+
+                //Only operate on cruise-level geometries (sublayers 8-13)
+                for (var i = 8; i <= 13; i++) {
+                    layerDefsStr += i + ':' + layerDefs[i];
+                    if (i < 13) {
+                        layerDefsStr += ';';
+                    }
+                }
+
+                var params = {};
+                params.layerDefs = layerDefsStr;
+
+                var url = 'http://mapdevel.ngdc.noaa.gov/geoextents/water_column_sonar/';
+
+                xhr.post(
+                    url, {
+                        data: params,
+                        handleAs: 'json'
+                    }).then(lang.hitch(this, function(response){
+                        logger.debug(response);
+                        this.zoomToBbox(response.bbox);
+                    }), function(error) {
+                        logger.error('Error: ' + error);
+                    });                
+            },
+
+            //Zooms to bbox in geographic coordinates
+            zoomToBbox: function(bboxWkt) {
+                var wkt = new Wkt.Wkt();
+
+                wkt.read(bboxWkt);
+                var config = {
+                    spatialReference: { wkid: 4326 },
+                    editable: false
+                };
+                var polygon = wkt.toObject(config);
+
+                if (this.mapId == 'mercator') {
+                    this.mercatorMapConfig.map.setExtent(polygon.getExtent(), true);
+                } else {
+                    this.zoomToArcticBbox(polygon.getExtent());
+                }
+            },
+
+            //Input: Extent in geographic coords. Densifies the geometry, projects it to epsg:3995, then zooms to that geometry.
+            zoomToArcticBbox: function(extent) {
+                var geometryService = esriConfig.defaults.geometryService;
+                var extentWidth = Math.abs(extent.xmax - extent.xmin);
+                
+                //Densify the geometry with ~20 vertices along the longest edge
+                var maxSegmentLength = extentWidth / 20;
+                var densifiedGeometry = geometryEngine.densify(extent, maxSegmentLength);
+
+                var projectParams = new ProjectParameters();   
+                projectParams.outSR = new SpatialReference(3995);
+                projectParams.transformForward = true; 
+                projectParams.geometries = [densifiedGeometry];
+                
+                //Project the densififed geometry, then zoom to the polygon's extent
+                geometryService.project(projectParams, lang.hitch(this, function(geometries) {                            
+                    this.arcticMapConfig.map.setExtent(geometries[0].getExtent(), true);
+                }), function(error) {
+                    logger.error(error);
+                });
             },
 
             //Format a date in the form yyyy-mm-dd
