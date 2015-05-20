@@ -219,17 +219,17 @@ define([
                 }
 
                 if (values.frequencies) {
-                    s += 'Frequency: ' + values.frequencies.join(',') + '<br>';
+                    s += 'Frequency: ' + values.frequencies.join(',') + ' kHz<br>';
                 }
                 
                 if (values.minFrequency && values.maxFrequency) {
-                    s += 'Frequency: ' + values.minFrequency + ' to ' + values.maxFrequency + '<br>';
+                    s += 'Frequency: ' + values.minFrequency + ' to ' + values.maxFrequency + ' kHz<br>';
                 }
                 else if (values.minFrequency) {
-                    s += 'Frequency: greater than ' + values.minFrequency + '<br>';
+                    s += 'Frequency: greater than ' + values.minFrequency + ' kHz<br>';
                 }
                 else if (values.maxFrequency) {
-                    s += 'Frequency: less than ' + values.maxFrequency + '<br>';
+                    s += 'Frequency: less than ' + values.maxFrequency + ' kHz<br>';
                 }
 
                 filterDiv.innerHTML = s;

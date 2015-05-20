@@ -141,28 +141,23 @@ define([
                                                                                     
                             //Set the densify max segment length to be 1/20th of the width of the polygon in meters
                             var extent = this.geometry.getExtent();
-                            var extentWidth = Math.abs(extent.xmax - extent.xmin);
-                            var densifyParams = new DensifyParameters();
-                            densifyParams.maxSegmentLength = extentWidth / 20;
+                            
+                            //Densify the geometry with ~20 vertices along the longest edge
+                            var maxSegmentLength = extentWidth / 20;
+                            var densifiedGeometry = geometryEngine.densify(extent, maxSegmentLength);
 
-                            densifyParams.geodesic = false;
-                            densifyParams.geometries = [this.geometry];
-                            //Densify the geometry
-                            geometryService.densify(densifyParams, lang.hitch(this, function(geometries) {
-                                projectParams.geometries = geometries;
-                                
-                                //Project the densififed geometry, then submit the order
-                                geometryService.project(projectParams, lang.hitch(this, function(geometries) {                            
-                                    wkt.fromObject(geometries[0]);
-                                    orderParams.geometry = wkt.write();
-                                    this.submitOrder(orderParams);
-                                }), function(error) {
-                                    logger.error(error);
-                                });
-
+                            projectParams.geometries = [densifiedGeometry];
+                            
+                            //Project the densififed geometry, then submit the order
+                            geometryService.project(projectParams, lang.hitch(this, function(geometries) {                            
+                                wkt.fromObject(geometries[0]);
+                                orderParams.geometry = wkt.write();
+                                this.submitOrder(orderParams);
                             }), function(error) {
                                 logger.error(error);
                             });
+
+
                         }
                         else { 
                             //Geometry is a Point in Arctic coords
@@ -202,7 +197,7 @@ define([
                 }).placeAt(okDialog.containerNode);
 
                 xhr.post(
-                    'http://maps.ngdc.noaa.gov/mapviewer-support/wcd/generateOrder.groovy', {
+                    '//maps.ngdc.noaa.gov/mapviewer-support/wcd/generateOrder.groovy', {
                         data: jsonString,
                         handleAs: 'json',
                         headers: {'Content-Type':'application/json'}

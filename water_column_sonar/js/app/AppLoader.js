@@ -8,11 +8,14 @@ define([
     'dojo/topic',
     'dojo/on',
     'dojo/aspect',
+    'dojo/request/xhr',
     'dijit/form/CheckBox',
     'esri/config',
     'esri/geometry/Extent',
+    'esri/geometry/geometryEngine',
     'esri/SpatialReference',
     'esri/tasks/GeometryService',
+    'esri/tasks/ProjectParameters',
     'esri/tasks/QueryTask',
     'esri/tasks/query',
     'esri/tasks/StatisticDefinition',
@@ -41,11 +44,14 @@ define([
         topic,
         on,
         aspect,
+        xhr,
         CheckBox,
         esriConfig,
         Extent,
+        geometryEngine,
         SpatialReference,
         GeometryService,
+        ProjectParameters,
         QueryTask,
         Query,
         StatisticDefinition,
@@ -76,10 +82,10 @@ define([
 
             init: function() {                
                 esriConfig.defaults.io.corsEnabledServers = [
-                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
+                    '//maps.ngdc.noaa.gov/arcgis/rest/services',
+                    '//mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
 
-                esriConfig.defaults.geometryService = new GeometryService('http://maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
+                esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
@@ -106,14 +112,15 @@ define([
             setupBanner: function() {
                 this.banner = new Banner({
                     breadcrumbs: [
-                        {url: 'http://www.noaa.gov', label: 'NOAA'},
-                        {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
-                        {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
-                        {url: 'http://maps.ngdc.noaa.gov', label: 'Maps'},
-                        {url: 'http://www.ngdc.noaa.gov/mgg/wcd/', label: 'Water Column Sonar Data'}           
+                        {url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
+                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
+                        {url: '//www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
+                        {url: '//maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
+                        {url: '//www.ngdc.noaa.gov/mgg/wcd/', label: 'Water Column Sonar Data'}           
                     ],
-                    dataUrl: 'http://www.ngdc.noaa.gov/mgg/wcd/',
-                    image: '/images/water_column_sonar_data_viewer_logo.png'
+                    dataUrl: '//www.ngdc.noaa.gov/mgg/wcd/',
+                    image: '/images/water_column_sonar_data_viewer_logo.png',
+                    imageAlt: 'NCEI Water Column Sonar Data Viewer - go to data home'
                 });
                 this.banner.placeAt('banner');
             },
@@ -145,7 +152,8 @@ define([
             },
 
             enableMapView: function(/*String*/ mapId) {
-                if (mapId == 'mercator') {
+                this.mapId = mapId;
+                if (mapId == 'mercator') {                    
                     this.mercatorMapConfig.setEnabled(true);
                     this.arcticMapConfig.setEnabled(false);                    
                 } else { //Arctic
@@ -272,7 +280,7 @@ define([
                         quoted.push("'" + values.instruments[i] + "'");
                     }
                     fileCond.push("INSTRUMENT_NAME in (" + quoted.join(',') + ")");
-                    cruiseCond.push("INSTR_NAME in (" + quoted.join(',') + ")");
+                    cruiseCond.push("INSTRUMENT_NAME in (" + quoted.join(',') + ")");
                 }
 
                 if (values.frequencies && values.frequencies.length > 0) {
@@ -283,15 +291,17 @@ define([
                     }
                     var frequencyClause = '(' + clauses.join(' AND ') + ')';
                     fileCond.push(frequencyClause);
+                    cruiseCond.push(frequencyClause);
                 }
 
-                //TODO
-                // if (values.minFrequency) {
-                //     fileCond.push("FREQUENCY LIKE '%" + values.frequency + "kHz%'");
-                // }
-                // if (values.maxFrequency) {
-                //     fileCond.push("FREQUENCY LIKE '%" + values.frequency + "kHz%'");
-                // }
+                if (values.minFrequency) {
+                    fileCond.push("MIN_FREQ >= " + values.minFrequency);
+                    cruiseCond.push("MIN_FREQ >= " + values.minFrequency);
+                }
+                if (values.maxFrequency) {
+                    fileCond.push("MAX_FREQ <= " + values.maxFrequency);
+                    cruiseCond.push("MAX_FREQ <= " + values.maxFrequency);
+                }
 
                 if (values.minNumBeams) {
                     fileCond.push("NUMBEROFBEAMS >= " + values.minNumBeams);
@@ -335,6 +345,10 @@ define([
 
                 this.layersPanel.enableResetButton();
                 this.layersPanel.setCurrentFilterString(values);
+
+                if (values.zoomToResults) {
+                    this.zoomToResults(layerDefinitions);
+                }
             },
 
             resetWcd: function() {            
@@ -344,6 +358,74 @@ define([
                 this.layersPanel.disableResetButton();
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
+            },
+
+            zoomToResults: function(layerDefs) {
+                var layerDefsStr = '';
+
+                //Only operate on cruise-level geometries (sublayers 8-13)
+                for (var i = 8; i <= 13; i++) {
+                    layerDefsStr += i + ':' + layerDefs[i];
+                    if (i < 13) {
+                        layerDefsStr += ';';
+                    }
+                }
+
+                var params = {};
+                params.layerDefs = layerDefsStr;
+
+                var url = '//mapdevel.ngdc.noaa.gov/geoextents/water_column_sonar/';
+
+                xhr.post(
+                    url, {
+                        data: params,
+                        handleAs: 'json'
+                    }).then(lang.hitch(this, function(response){
+                        logger.debug(response);
+                        this.zoomToBbox(response.bbox);
+                    }), function(error) {
+                        logger.error('Error: ' + error);
+                    });                
+            },
+
+            //Zooms to bbox in geographic coordinates
+            zoomToBbox: function(bboxWkt) {
+                var wkt = new Wkt.Wkt();
+
+                wkt.read(bboxWkt);
+                var config = {
+                    spatialReference: { wkid: 4326 },
+                    editable: false
+                };
+                var polygon = wkt.toObject(config);
+
+                if (this.mapId == 'mercator') {
+                    this.mercatorMapConfig.map.setExtent(polygon.getExtent(), true);
+                } else {
+                    this.zoomToArcticBbox(polygon.getExtent());
+                }
+            },
+
+            //Input: Extent in geographic coords. Densifies the geometry, projects it to epsg:3995, then zooms to that geometry.
+            zoomToArcticBbox: function(extent) {
+                var geometryService = esriConfig.defaults.geometryService;
+                var extentWidth = Math.abs(extent.xmax - extent.xmin);
+                
+                //Densify the geometry with ~20 vertices along the longest edge
+                var maxSegmentLength = extentWidth / 20;
+                var densifiedGeometry = geometryEngine.densify(extent, maxSegmentLength);
+
+                var projectParams = new ProjectParameters();   
+                projectParams.outSR = new SpatialReference(3995);
+                projectParams.transformForward = true; 
+                projectParams.geometries = [densifiedGeometry];
+                
+                //Project the densififed geometry, then zoom to the polygon's extent
+                geometryService.project(projectParams, lang.hitch(this, function(geometries) {                            
+                    this.arcticMapConfig.map.setExtent(geometries[0].getExtent(), true);
+                }), function(error) {
+                    logger.error(error);
+                });
             },
 
             //Format a date in the form yyyy-mm-dd

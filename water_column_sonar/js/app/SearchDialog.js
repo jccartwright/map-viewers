@@ -157,6 +157,7 @@ define([
                 }
                 else {
                     values.bottomSoundingsOnly = this.chkBottomSoundings.checked;
+                    values.zoomToResults = this.chkZoomToResults.checked;
                     topic.publish('/wcd/Search', values);
                 }                
             },
@@ -214,6 +215,7 @@ define([
                 this.maxSwathWidthSpinner.set('value', '');
 
                 this.chkBottomSoundings.set('checked', false);
+                this.chkZoomToResults.set('checked', false);
             },
 
             reset: function() {
