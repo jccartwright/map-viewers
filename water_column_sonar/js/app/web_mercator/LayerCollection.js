@@ -64,7 +64,7 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),   
-                    new ArcGISDynamicMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer', {
                         id: 'Water Column Sonar',
                         visible: true,
                         imageParameters: this.imageParameters.png32
