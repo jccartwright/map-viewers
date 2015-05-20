@@ -67,8 +67,8 @@ define([
                     template += '\
                         <div class="valueName">Beam Type: <span class="parameterValue">${beamType}</span></div>\
                         <div class="valueName">Number of Beams: <span class="parameterValue">${numBeams}</span></div>\
-                        <div class="valueName">Swath Width (degrees): <span class="parameterValue">${swathWidth}</span></div>';
-                        
+                        <div class="valueName">Swath Width (degrees): <span class="parameterValue">${swathWidth}</span></div>';   
+                        //TODO: min/max frequency     
                 }
                 template += '\
                     <div class="valueName">Recording Range (m): <span class="parameterValue">${recordingRange}</span></div>\
@@ -112,8 +112,21 @@ define([
                     <div class="valueName">Source Group: <span class="parameterValue">${sourceGroup}</span></div>\
                     <div class="valueName">Institution(s): <span class="parameterValue">${sourceName}</span></div>\
                     <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
-                    <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>\
-                    <div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>';                
+                    <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
+                    if (a['Instrument Name'] == 'EK60' || a['Instrument Name'] == 'EK500') {
+                        template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
+                    }
+                    else {
+                        template += '\
+                            <div class="valueName">Min Frequency (kHz): <span class="parameterValue">${minFrequency}</span></div>\
+                            <div class="valueName">Max Frequency (kHz): <span class="parameterValue">${maxFrequency}</span></div>';
+                    }
+                    template += '\
+                        <div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>\
+                        <div class="valueName">Citation Text: <span class="parameterValue">${citationText}</span></div>';
+                    if (a['Citation Link'] != '') {
+                        template += '<div class="valueName">Citation Link: <span class="parameterValue"><a href="${citationLink}" target="_blank">${citationLink}</a></span></div>';
+                    }
                 var html = string.substitute(template, {
                         surveyID: a['Cruise ID'],
                         shipName: a['Ship Name'],
@@ -126,7 +139,12 @@ define([
                         sourceName: a['Source Name'],
                         scientistName: a['Scientist Name'],
                         instrumentName: a['Instrument Name'],
-                        calibrationState: a['Calibration State']
+                        frequency: a['Frequency'],
+                        minFrequency: a['Min Frequency'],
+                        maxFrequency: a['Max Frequency'],
+                        calibrationState: a['Calibration State'],
+                        citationText: a['Citation Text'],
+                        citationLink: a['Citation Link']
                     });                
                 return html;
             },
