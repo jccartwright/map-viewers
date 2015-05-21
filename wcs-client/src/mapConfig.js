@@ -104,6 +104,7 @@ function preInit() {
 				previewUrl: "http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
 				description: "Southern California Coastal Relief Model Hillshade (1 arc-second resolution)"
 			},
+/*
 			{
 				name: 'alaska_crm',
 				label: 'Southern Alaska CRM',
@@ -111,6 +112,7 @@ function preInit() {
 				previewUrl: "http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
 				description: "Southern Alaska Coastal Relief Model (24-second resolution)"
 			},
+*/
 /*
 			{
 				name: 'globe',
