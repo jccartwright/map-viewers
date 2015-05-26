@@ -123,12 +123,12 @@ define([
                     })
                 }).placeAt(this.featurePageBottomBar);
 
-                //Add a button to the files page to request cruises
+                //Add a button to the files page to request files
                 this.requestFilesButton = new Button({
                     label: 'Request These Files',
                     style: 'bottom: 5px; left: 5px;',
                     onClick: lang.hitch(this, function(){    
-                        this.requestFiles();
+                        this.requestDataFiles();
                     })
                 }).placeAt(this.fileFeaturePageBottomBar);
 
@@ -542,7 +542,7 @@ define([
             },
 
             requestDataFiles: function() {
-                var items = this.storeModel.store.query({type: 'item'});
+                var items = this.fileStoreModel.store.query({type: 'item'});
                 var fileInfos = [];
                 for (var i = 0; i < items.length; i++) {
                     fileInfos.push({
@@ -557,6 +557,7 @@ define([
                     this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
                 }
                 this.requestDataDialog.fileInfos = fileInfos;
+                this.requestDataDialog.cruiseInfos = null;
                 this.requestDataDialog.geometry = null;
                 this.requestDataDialog.hideGeometryCheckBox();
                 this.requestDataDialog.show();
@@ -574,6 +575,7 @@ define([
                     this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
                 }
                 this.requestDataDialog.fileInfos = [fileInfo];
+                this.requestDataDialog.cruiseInfos = null;
                 this.requestDataDialog.geometry = null;
                 this.requestDataDialog.hideGeometryCheckBox();
                 this.requestDataDialog.show();
@@ -590,6 +592,7 @@ define([
                     this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
                 }
                 this.requestDataDialog.cruiseInfos = cruiseInfos;
+                this.requestDataDialog.fileInfos = null;
                 this.requestDataDialog.geometry = this.identify.searchGeometry;
                 if (this.identify.searchGeometry.type == 'point') {
                     this.requestDataDialog.setGeometryText('Request data only near point selected');
@@ -611,6 +614,7 @@ define([
                     this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
                 }
                 this.requestDataDialog.cruiseInfos = [cruiseInfo];
+                this.requestDataDialog.fileInfos = null;
                 this.requestDataDialog.geometry = this.identify.searchGeometry;
                 if (this.identify.searchGeometry.type == 'point') {
                     this.requestDataDialog.setGeometryText('Request data only near point selected');
