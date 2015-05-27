@@ -156,18 +156,19 @@ define([
             },
 
             setupBanner: function() {
-                var banner = new Banner({
+                this.banner = new Banner({
                     breadcrumbs: [
-                        {url: 'http://www.noaa.gov', label: 'NOAA'},
-                        {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
-                        {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
-                        {url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
-                        {url: 'http://ngdc.noaa.gov/hazard/hazards.shtml', label: 'Hazards'}
+                        {url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
+                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
+                        {url: '//www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
+                        {url: '//maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
+                        {url: '//ngdc.noaa.gov/hazard/hazards.shtml', label: 'Hazards'}           
                     ],
-                    dataUrl: 'http://ngdc.noaa.gov/hazard/hazards.shtml',
-                    image: 'images/viewer_logo.png'
+                    dataUrl: '//ngdc.noaa.gov/hazard/hazards.shtml',
+                    image: 'images/viewer_logo.png',
+                    imageAlt: 'NCEI Natural Hazards Viewer - go to data home'
                 });
-                banner.placeAt('banner');
+                this.banner.placeAt('banner');
             },
 
             setupLayersPanel: function() {

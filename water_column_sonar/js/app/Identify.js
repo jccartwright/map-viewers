@@ -5,6 +5,7 @@ define([
     'dojo/_base/array',
     'dojo/on',
     'dojo/string',
+    'dojo/json',
     'ngdc/identify/AbstractIdentify',
     'dojo/topic',
     'dojo/aspect',
@@ -22,6 +23,7 @@ define([
         array,
         on,
         string,
+        JSON,
         AbstractIdentify,
         topic,
         aspect,
@@ -34,6 +36,43 @@ define([
         ){
 
         return declare([AbstractIdentify], {
+
+            //called after parent class constructor
+            constructor: function() {
+                logger.debug('inside constructor for app/Identify');
+
+                //configure for specific viewer
+                arguments[0].layerIds = ['Water Column Sonar'];
+
+                //pass along reference to Map, LayerCollection, list of LayerIds
+                this.init(arguments);
+
+                topic.subscribe('identifyPane/showInfo', lang.hitch(this, function(item) {
+                    console.log('identifyPane/showInfo received ' + item);
+
+                    var identifyPane = this._map.identifyPane;
+                    if (identifyPane) {
+                        var layerKey = item.layerKey;
+                        identifyPane.setInfoPaneContent(this.formatters[layerKey](item));
+                    }
+                }));
+
+                //formatter specific to each sublayer, keyed by Layer/sublayer name.
+                this.formatters = {
+                    'Water Column Sonar/File-Level: NMFS': lang.hitch(this, this.wcdFileFormatter),
+                    'Water Column Sonar/File-Level: OER': lang.hitch(this, this.wcdFileFormatter), 
+                    'Water Column Sonar/File-Level: UNOLS': lang.hitch(this, this.wcdFileFormatter), 
+                    'Water Column Sonar/File-Level: Other NOAA': lang.hitch(this, this.wcdFileFormatter),
+                    'Water Column Sonar/File-Level: Other': lang.hitch(this, this.wcdFileFormatter),
+                    'Water Column Sonar/File-Level: Non-U.S.': lang.hitch(this, this.wcdFileFormatter),
+                    'Water Column Sonar/Cruise-Level: NMFS': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Cruise-Level: OER': lang.hitch(this, this.wcdCruiseFormatter), 
+                    'Water Column Sonar/Cruise-Level: UNOLS': lang.hitch(this, this.wcdCruiseFormatter), 
+                    'Water Column Sonar/Cruise-Level: Other NOAA': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Cruise-Level: Other': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Cruise-Level: Non-U.S.': lang.hitch(this, this.wcdCruiseFormatter)
+                };
+            }, //end constructor
 
             init: function(params) {
                 logger.debug('Inside custom Identify.init');
@@ -113,20 +152,34 @@ define([
                     <div class="valueName">Institution(s): <span class="parameterValue">${sourceName}</span></div>\
                     <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
                     <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
-                    if (a['Instrument Name'] == 'EK60' || a['Instrument Name'] == 'EK500') {
-                        template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
-                    }
-                    else {
-                        template += '\
-                            <div class="valueName">Min Frequency (kHz): <span class="parameterValue">${minFrequency}</span></div>\
-                            <div class="valueName">Max Frequency (kHz): <span class="parameterValue">${maxFrequency}</span></div>';
-                    }
+
+                if (a['Instrument Name'] == 'EK60' || a['Instrument Name'] == 'EK500') {
+                    template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
+                } else {
                     template += '\
-                        <div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>\
-                        <div class="valueName">Citation Text: <span class="parameterValue">${citationText}</span></div>';
-                    if (a['Citation Link'] != '') {
-                        template += '<div class="valueName">Citation Link: <span class="parameterValue"><a href="${citationLink}" target="_blank">${citationLink}</a></span></div>';
+                        <div class="valueName">Min Frequency (kHz): <span class="parameterValue">${minFrequency}</span></div>\
+                        <div class="valueName">Max Frequency (kHz): <span class="parameterValue">${maxFrequency}</span></div>';
+                }
+
+                template += '<div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>';
+
+                if (a['Citation Link'] != '') {
+                    template += '<div class="valueName">Citation: <span class="parameterValue">${citationText}</span></div>';
+                    template += '<div class="valueName"><span class="parameterValue"><a href="${citationLink}" target="_blank">${citationLink}</a></span></div>';
+                }
+
+                //Parse the variable number of key-value pairs from the ANCILLARY field, and display them as URLs.
+                var ancillaryString = a['ANCILLARY'];
+                var ancillaryObject = {};
+                if (ancillaryString != '') {
+                    template += '<br>';
+                    ancillaryObject = JSON.parse(ancillaryString);
+                    for (var key in ancillaryObject) {
+                        console.log(key + ': ' + ancillaryObject[key]);
+                        template += '<div class="valueName"><span class="parameterValue"><a href="' + ancillaryObject[key] + '" target="_blank">' + key + '</a></span></div>';
                     }
+                }
+
                 var html = string.substitute(template, {
                         surveyID: a['Cruise ID'],
                         shipName: a['Ship Name'],
@@ -134,10 +187,10 @@ define([
                         arrivalDate: a['End Date'],
                         departurePort: a['Departure Port'],
                         arrivalPort: a['Arrival Port'],
-                        projectName: a['Project Name'],
-                        sourceGroup: a['Source Group'],
-                        sourceName: a['Source Name'],
-                        scientistName: a['Scientist Name'],
+                        projectName: this.replacePipesWithCommas(a['Project Name']),
+                        sourceGroup: this.replacePipesWithCommas(a['Source Group']),
+                        sourceName: this.replacePipesWithCommas(a['Source Name']),
+                        scientistName: this.replacePipesWithCommas(a['Scientist Name']),
                         instrumentName: a['Instrument Name'],
                         frequency: a['Frequency'],
                         minFrequency: a['Min Frequency'],
@@ -149,42 +202,14 @@ define([
                 return html;
             },
 
-            //called after parent class constructor
-            constructor: function() {
-                logger.debug('inside constructor for app/Identify');
-
-                //configure for specific viewer
-                arguments[0].layerIds = ['Water Column Sonar'];
-
-                //pass along reference to Map, LayerCollection, list of LayerIds
-                this.init(arguments);
-
-                topic.subscribe('identifyPane/showInfo', lang.hitch(this, function(item) {
-                    console.log('identifyPane/showInfo received ' + item);
-
-                    var identifyPane = this._map.identifyPane;
-                    if (identifyPane) {
-                        var layerKey = item.layerKey;
-                        identifyPane.setInfoPaneContent(this.formatters[layerKey](item));
-                    }
-                }));
-
-                //formatter specific to each sublayer, keyed by Layer/sublayer name.
-                this.formatters = {
-                    'Water Column Sonar/File-Level: NMFS': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/File-Level: OER': lang.hitch(this, this.wcdFileFormatter), 
-                    'Water Column Sonar/File-Level: UNOLS': lang.hitch(this, this.wcdFileFormatter), 
-                    'Water Column Sonar/File-Level: Other NOAA': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/File-Level: Other': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/File-Level: Non-U.S.': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/Cruise-Level: NMFS': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Cruise-Level: OER': lang.hitch(this, this.wcdCruiseFormatter), 
-                    'Water Column Sonar/Cruise-Level: UNOLS': lang.hitch(this, this.wcdCruiseFormatter), 
-                    'Water Column Sonar/Cruise-Level: Other NOAA': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Cruise-Level: Other': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Cruise-Level: Non-U.S.': lang.hitch(this, this.wcdCruiseFormatter)
-                };
-            }, //end constructor
+            //Strip leading and trailing pipe characters and replace the others with commas
+            replacePipesWithCommas: function(str) {
+                if (str.length >= 2) {
+                    return str.slice(1, -1).replace(/\|/g, ',');
+                } else {
+                    return str;
+                }
+            },
 
             wcdFileSort: function(a, b) {
                 //Sort alphabetically on File Name

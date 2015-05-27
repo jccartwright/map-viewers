@@ -251,7 +251,7 @@ define([
                     var conditionals = [];
                     for (i = 0; i < values.institutions.length; i++) {
                         //Surround each string with wildcard characters and single quotes
-                        conditionals.push("SOURCE_NAME LIKE '%" + values.institutions[i] + "%'");
+                        conditionals.push("SOURCE_NAME LIKE '%|" + values.institutions[i] + "|%'");
                     }
                     //sql.push("SOURCE_NAME in (" + quoted.join(',') + ")");  //TODO comma-separated
                     if (conditionals.length > 1) {
@@ -295,28 +295,28 @@ define([
                 }
 
                 if (values.minFrequency) {
-                    fileCond.push("MIN_FREQ >= " + values.minFrequency);
-                    cruiseCond.push("MIN_FREQ >= " + values.minFrequency);
+                    fileCond.push("MIN_FREQ>=" + values.minFrequency);
+                    cruiseCond.push("MIN_FREQ>=" + values.minFrequency);
                 }
                 if (values.maxFrequency) {
-                    fileCond.push("MAX_FREQ <= " + values.maxFrequency);
-                    cruiseCond.push("MAX_FREQ <= " + values.maxFrequency);
+                    fileCond.push("MAX_FREQ<=" + values.maxFrequency);
+                    cruiseCond.push("MAX_FREQ<=" + values.maxFrequency);
                 }
 
                 if (values.minNumBeams) {
-                    fileCond.push("NUMBEROFBEAMS >= " + values.minNumBeams);
+                    fileCond.push("NUMBEROFBEAMS>=" + values.minNumBeams);
                 }
                 if (values.maxNumBeams) {
-                    fileCond.push("NUMBEROFBEAMS <= " + values.maxNumBeams);
+                    fileCond.push("NUMBEROFBEAMS<=" + values.maxNumBeams);
                 }                
                 if (values.minSwathWidth) {
-                    fileCond.push("SWATHWIDTH >= " + values.minSwathWidth);
+                    fileCond.push("SWATHWIDTH>=" + values.minSwathWidth);
                 }
                 if (values.maxSwathWidth) {
-                    fileCond.push("SWATHWIDTH <= " + values.maxSwathWidth);
+                    fileCond.push("SWATHWIDTH<=" + values.maxSwathWidth);
                 }
                 if (values.bottomSoundingsOnly) {
-                    fileCond.push("BOTTOM_HIT = 'Y'");
+                    fileCond.push("BOTTOM_HIT='Y'");
                 }   
                 
                 var fileLayerDefinition = fileCond.join(' AND ');

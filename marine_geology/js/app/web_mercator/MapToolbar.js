@@ -20,15 +20,16 @@ define([
                 ];
 
                 this._overlays = [
-                    {services: ['Ocean Reference'], label: 'Boundaries/Labels'}, //Ocean Basemap/Reference is the default combo
-                    {services: ['Graticule'], label: 'Graticule'}
-                ];
-
-                this._identifyTools = [
-                    {label: 'Point (Single-Click)', id: 'point', iconClass: 'identifyByPointIcon'},
-                    {label: 'Draw Rectangle', id: 'rect', iconClass: 'identifyByRectIcon'},
-                    {label: 'Draw Polygon', id: 'polygon', iconClass: 'identifyByPolygonIcon'},
-                    {label: 'Define Bounding Box', id: 'coords', iconClass: 'identifyByCoordsIcon'}
+                    {
+                        label: 'Boundaries/Labels',
+                        services: [{id: 'Ocean Reference'}],
+                        visible: true
+                    }, 
+                    {
+                        label: 'Graticule',
+                        services: [{id: 'Graticule'}],
+                        visible: false
+                    }
                 ];
 
                 //define the default base

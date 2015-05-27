@@ -60,8 +60,8 @@ define([
 
             init: function() {
                 esriConfig.defaults.io.corsEnabledServers = [
-                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
+                    '//maps.ngdc.noaa.gov/arcgis/rest/services',
+                    '//mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
 
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
@@ -97,14 +97,15 @@ define([
             setupBanner: function() {
                 var banner = new Banner({
                     breadcrumbs: [
-                        {url: 'http://www.noaa.gov', label: 'NOAA'},
-                        {url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
-                        {url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
-                        {url: 'http://maps.ngdc.noaa.gov', label: 'Maps'},
-                        {url: 'http://www.ngdc.noaa.gov/mgg/geology/geology.html', label: 'Marine Geology'}
+                        {url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
+                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
+                        {url: '//www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
+                        {url: '//maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
+                        {url: '//www.ngdc.noaa.gov/mgg/geology/geology.html', label: 'Marine Geology', title: 'Go to NCEI Marine Geology home'}
                     ],
-                    dataUrl: 'http://www.ngdc.noaa.gov/mgg/geology/geology.html',
-                    image: 'images/MarineGeologyRight.gif'
+                    dataUrl: '//www.ngdc.noaa.gov/mgg/geology/geology.html',
+                    image: 'images/marine_geology_viewer_logo.png',
+                    imageAlt: 'NCEI Marine Geology Data Viewer - go to data home'
                 });
                 banner.placeAt('banner');
             },

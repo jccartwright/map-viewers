@@ -6,8 +6,8 @@
         <li>Mouse scroll backward or use - key to zoom out</li>
     </ul>
 
-    <b>Identifying features</b><br>
-    You have several options to identify features 
+    <b>Identifying cruises and files</b><br>
+    You have several options to identify cruises 
     within visible layers:
     <ul>
         <li>Single-click on the map</li>
@@ -16,29 +16,36 @@
         <li>Click on <img src="${identifyPolyIconUrl}" alt="Identify with rectangle icon"> to draw a polygon</li>
         <li>Click on <img src="${identifyCoordsIconUrl}" alt="Identify with coordinates icon"> to enter coordinates for a bounding box</li>
     </ul>
-    A popup will appear with a list of the selected features.
-    Mouse-over the list of files within an instrument 
-    folder to highlight features on the map (blue line).
-    Click the magnifying glass icon <img src="${magnifyingGlassIconUrl}" alt="Magnifying glass icon"> to zoom to that feature.
-    Click on a row to view attributes for that feature.<br><br>
+    A popup will appear with a list of the identified cruises.
+    Mouse-over the list of cruises within an instrument folder to highlight features on the map (blue line).
+    Click the magnifying glass icon <img src="${magnifyingGlassIconUrl}" alt="Magnifying glass icon"> to zoom to that cruise.
+    Click on the cruise name to view the attributes for that cruise.<br><br>
+
+    The cruise's corresponding data files can be displayed by clicking the "Show Files" button.
+    Data files will be displayed within your specified search area (or near the point clicked), 
+    and the current filter ("Filter Data") will be used to identify files.
+    Mouse-over the list of files to highlight features on the map.
+    Click the magnifying glass icon <img src="${magnifyingGlassIconUrl}" alt="Magnifying glass icon"> to zoom to that file.
+    Click on a file name to view the attributes for that file.<br><br>
 
     <b>Searching for data</b><br>
     <b><i>Filter Data:</i></b> opens a dialog where you can specify 
-    a desired date range, cruise ID, instrument, 
-    number of beams, recording range, or swath 
-    width. The lines visible on the map will be 
-    filtered based on these input criteria.<br>
-    <b><i>Reset:</i></b> clears the current filter<br><br>
+    a desired date range, ship name, institution, instrument, cruise ID, 
+    list of discrete frequencies (for single-beam), 
+    or frequency range, number of beams, and swath 
+    width (for multibeam). The cruises visible on the map will be 
+    filtered based on these input criteria, and the files displayed after clicking "Show Files" will also be filtered.<br>
+    <b><i>Reset:</i></b> clears the current filter.<br><br>
 
     <b>Requesting data</b><br>
-    Data requests can be made for a group of
-    selected files in the Identified Features box
-    by clicking "Request These Data Files" or for 
-    individual files in the file attributes table by
-    clicking "Request This Data File"
-    Enter your name and email in the Request Data 
-    popup box and a request will be sent directly to 
-    NGDC.<br><br>
+    Data requests can be made for a group of cruises by clicking "Request These Cruises", or for an individual cruise with "Request This Cruise".
+    To request only the cruise data files in your specified area, choose "Request data only within area selected" or "near point selected".<br><br>
+
+    Data requests can be made for a group of files by clicking "Request These Data Files", or for an individual file in the file attributes table by
+    clicking "Request This Data File".<br><br>
+
+    Enter your name and email in the "Request Data" popup box and 
+    a request will be sent directly to data managers at NCEI.<br><br>
 
     Please send questions or comments about the 
     map to:
