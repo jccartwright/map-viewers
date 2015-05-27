@@ -31,7 +31,7 @@ define([
                     <tr><td class="valueName">Collection Date:</td><td class="parameterValue">${collectionDate}</td></tr>\
                     <tr><td class="valueName">Latitude:</td><td class="parameterValue">${latitude}</td></tr>\
                     <tr><td class="valueName">Longitude:</td><td class="parameterValue">${longitude}</td></tr>\
-                    <tr><td class="valueName">Metadata gov.noaa.ngdc.mgg:</td><td class="parameterValue"><a href="http://www.ngdc.noaa.gov/geosamples/metadata.jsp?g=${metadata}" target="_blank">${metadata}</a></td></tr>\
+                    <tr><td class="valueName">Metadata gov.noaa.ngdc.mgg:</td><td class="parameterValue"><a href="http://www.ngdc.noaa.gov/docucomp/page?xml=NOAA/NESDIS/NGDC/MGG/Geology/iso/xml/${metadata}.xml&amp;view=getDataView&amp;header=none" target="_blank">${metadata}</a></td></tr>\
                     </table>';
 
                 var html = string.substitute(template, {
