@@ -28,9 +28,9 @@ var globals = {}; //container for global variables
 globals.debug = false;
 globals.mapConfigLoaded = true;
 
-globals.publicAgsHost = "http://maps.ngdc.noaa.gov/arcgis";
-globals.privateAgsHost = "http://mapdevel.ngdc.noaa.gov:6080/arcgis";
-globals.arcgisOnlineHost = "http://server.arcgisonline.com/ArcGIS";
+globals.publicAgsHost = "//maps.ngdc.noaa.gov/arcgis";
+globals.privateAgsHost = "//mapdevel.ngdc.noaa.gov:6080/arcgis";
+globals.arcgisOnlineHost = "//server.arcgisonline.com/ArcGIS";
 
 //mandatory lifecycle methods
 //called just before common initialization
@@ -43,13 +43,13 @@ function preInit() {
 	
 	var mybanner = new banner.Banner({
 		breadcrumbs: [
-			{url: 'http://www.noaa.gov', label: 'NOAA'},
-			{url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
-			{url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
-			{url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
-			{url: 'http://ngdc.noaa.gov/mgg/geodas/trackline.html', label: 'Trackline Geophysical Data'}			
+			{url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
+            {url: '//www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
+            {url: '//www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
+            {url: '//maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
+			{url: '//ngdc.noaa.gov/mgg/geodas/trackline.html', label: 'Trackline Geophysical Data', title: 'Go to NCEI Trackline Geophysical Data home'}
 		],
-		dataUrl: "http://ngdc.noaa.gov/mgg/geodas/trackline.html",
+		dataUrl: "//ngdc.noaa.gov/mgg/geodas/trackline.html",
 		image: "/images/trackline_geophysical_viewer_logo.png"
 	});
 	mybanner.placeAt('banner');
@@ -57,8 +57,8 @@ function preInit() {
 	//create the dialog
 	globals.coordDialog = new bboxDialog.BoundingBoxDialog({title:'Specify an Area of Interest', style: 'width:300px;'});
 	
-	esri.config.defaults.io.proxyUrl = "http://maps.ngdc.noaa.gov/proxy.jsp";
-	//esri.config.defaults.io.proxyUrl = "http://agsdevel.ngdc.noaa.gov/viewers/proxy.php"; 
+	esri.config.defaults.io.proxyUrl = "//maps.ngdc.noaa.gov/proxy.jsp";
+	//esri.config.defaults.io.proxyUrl = "//agsdevel.ngdc.noaa.gov/viewers/proxy.php"; 
 		
 	var shipsStore = new dojo.data.ItemFileReadStore({
 		url: "ships.json",
@@ -81,7 +81,7 @@ function preInit() {
 	}
 		
 	var jsonpArgs = {
-		url : 'http://maps.ngdc.noaa.gov/mapviewer-support/aeromag/projects.groovy',	
+		url : '//maps.ngdc.noaa.gov/mapviewer-support/aeromag/projects.groovy',	
 		preventCache: true,
 		callbackParamName: 'callback',
 		handleAs: 'json',
@@ -92,7 +92,7 @@ function preInit() {
 	var d1 = dojo.io.script.get(jsonpArgs);
 		
 	jsonpArgs = {
-		url : 'http://maps.ngdc.noaa.gov/mapviewer-support/aeromag/surveys.groovy',	
+		url : '//maps.ngdc.noaa.gov/mapviewer-support/aeromag/surveys.groovy',	
 		preventCache: true,
 		callbackParamName: 'callback',
 		handleAs: 'json',
@@ -148,8 +148,8 @@ function postInit() {
 		}
 	});
 
-	//globals.geometryService = new esri.tasks.GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");	
-	globals.geometryService = new esri.tasks.GeometryService("http://maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer");	
+	//globals.geometryService = new esri.tasks.GeometryService("//tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");	
+	globals.geometryService = new esri.tasks.GeometryService("//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer");	
 	
 	globals.visibleGeodasLayers = [
 		{name: "All Parameters", visible: false},
@@ -764,7 +764,7 @@ function openGetDataWindow(geometry) {
 				});
 				urlParams.push('surveyIds=' + surveyIds.join(','));
 				
-				var url = 'http://www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
+				var url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
 				
 				if (geometry.type == 'polygon' && (globals.srid == 3995 || globals.srid == 3031)) {
 					alert('Warning: bounding boxes in Arctic/Antarctic projections are currently unsupported for data extraction. The geometry parameter will be excluded.');
@@ -812,9 +812,9 @@ function openGetDataWindow(geometry) {
 					Math.round(extent.xmax*100000)/100000 + ',' + 
 					Math.round(extent.ymax*100000)/100000);
 		}
-		var url = 'http://sparrow.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');		
-		//var url = 'http://www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
-		//var url = 'http://agile.ngdc.noaa.gov/sparrow/next-clients/geodas/index.html?' + urlParams.join('&');
+		var url = '//sparrow.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');		
+		//var url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
+		//var url = '//agile.ngdc.noaa.gov/sparrow/next-clients/geodas/index.html?' + urlParams.join('&');
 		if (url.length > 2000) {
 			alert('Warning: request URL is greater than 2000 characters. Problems may be encountered in some web browsers.');
 		}
