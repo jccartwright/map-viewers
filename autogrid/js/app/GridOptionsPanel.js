@@ -88,7 +88,7 @@ define([
                 updateGridSizeMessage(this.gridSize);
 
                 //find the number of surveys w/in the area of interest
-                xhr("http://www.ngdc.noaa.gov/next-catalogs/rest/autogrid/catalog/extents", {
+                xhr("//www.ngdc.noaa.gov/next-catalogs/rest/autogrid/catalog/extents", {
                     handleAs: "json",
                     query: {
                         geometry: extentToString(this.extent, 5),
@@ -242,7 +242,7 @@ define([
             },
 
             /*
-             * taken from http://www.opensourceconnections.com/2009/02/13/client-side-javascript-implementation-of-the-haversine-formula/
+             * taken from //www.opensourceconnections.com/2009/02/13/client-side-javascript-implementation-of-the-haversine-formula/
              */
             calcHaversineDistance: function (long1, lat1, long2, lat2) {
                 var toRadians = lang.hitch(this, 'toRadians');

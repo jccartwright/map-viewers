@@ -106,7 +106,7 @@ define([
                 }).placeAt(okDialog.containerNode);
 
                 xhr.post(
-                    'http://www.ngdc.noaa.gov/next-web/rest/orders', {
+                    '//www.ngdc.noaa.gov/next-web/rest/orders', {
                         data: JSON.stringify(data),
                         handleAs: 'json',
                         headers: {'Content-Type':'application/json'}
