@@ -8,6 +8,8 @@ define([
     'dojo/number',
     'dojo/dom-style',
     'esri/geometry/webMercatorUtils',
+    'dijit/Tooltip',
+    'dijit/form/Select',
     'dojo/text!./templates/MapOptionsPanel.html'
     ],
     function(
@@ -20,6 +22,8 @@ define([
         number,
         domStyle,
         webMercatorUtils,
+        ToolTip,
+        Select,
         template
         ){
         return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {

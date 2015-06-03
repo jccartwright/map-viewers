@@ -113,24 +113,37 @@
     
 </div> <!-- end mainWindow BorderContainer -->
 
+
 <script>
     //unless the Dijit is listed in the require list, it cannot be addressed via the registry
     require([
-        "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "app/AppLoader",
-        "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer", "dijit/layout/TabContainer",
-        "app/HelpPanel", "app/CreditsPanel", "dojo/domReady!" ],
-            function(LoadingOverlay, registry, parser, AppLoader) {
-                var loadingOverlay = new LoadingOverlay();
-                var appLoader = new AppLoader();
+        "ngdc/LoadingOverlay",
+        "dijit/registry",
+        "dojo/parser",
+        "app/AppLoader",
+        "dijit/layout/BorderContainer",
+        "dijit/layout/ContentPane",
+        "dijit/layout/AccordionContainer",
+        "dijit/layout/TabContainer",
+        "app/HelpPanel",
+        "app/CreditsPanel",
+        "app/GridOptionsPanel",
+        "app/MapOptionsPanel",
+        "app/InputPanel",
+        "dojo/domReady!" ],
+        function(
+            LoadingOverlay, registry, parser, AppLoader) {
+            var loadingOverlay = new LoadingOverlay();
+            var appLoader = new AppLoader();
 
-                parser.parse();
+            parser.parse();
 
-                //hide the overlay now that parsing is complete
-                loadingOverlay.endLoading();
+            //hide the overlay now that parsing is complete
+            loadingOverlay.endLoading();
 
-                //initialize the application
-                appLoader.init();
-            }
+            //initialize the application
+            appLoader.init();
+        }
     );
 
 </script>

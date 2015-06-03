@@ -15,6 +15,8 @@ define([
     'dijit/form/Button',
     'dijit/form/Form',
     'dijit/form/ValidationTextBox',
+    'dijit/Tooltip',
+    'dojox/validate/web',
     'dojo/text!./templates/InputPanel.html'
     ],
     function(
@@ -34,6 +36,8 @@ define([
         Button,
         Form,
         ValidationTextBox,
+        Tooltip,
+        validate,
         template
         ){
         return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -54,17 +58,17 @@ define([
                 on(this.submitButton, 'click', lang.hitch(this,'submitNextOrder'));
             },
 
-            /*
-             {
-             "email": "user@example.com",
-             "items": [{
-             "dataset": "Autochart",
-             "geometry": "-145.15625, 40.80315, -136.54297, 46.27649",
-             "gridCellSize": 1060,
-             "backgroundFill": true
-             }]
-             }
-             */
+
+             //{
+             //"email": "user@example.com",
+             //"items": [{
+             //"dataset": "Autochart",
+             //"geometry": "-145.15625, 40.80315, -136.54297, 46.27649",
+             //"gridCellSize": 1060,
+             //"backgroundFill": true
+             //}]
+             //}
+
 
             submitNextOrder: function(evt) {
                 console.log('inside submitNextOrder...',evt);
@@ -85,7 +89,8 @@ define([
 
                 var jobOptions = {
                     "dataset": "Autochart"
-                }
+                };
+
                 lang.mixin(jobOptions, gridOptionsDijit.getData());
                 lang.mixin(jobOptions, mapOptionsDijit.getData());
                 data.items[0] = jobOptions;
