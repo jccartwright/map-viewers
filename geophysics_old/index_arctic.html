@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
+	<title>Trackline Geophysical Data Viewer - Arctic View</title>
+	<link rel="shortcut icon" href="//www.ngdc.noaa.gov/image/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dijit/themes/tundra/tundra.css" />
+ 	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.2/themes/SimpleBasemapToolbar.css" />
+	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/banner/1.2/themes/banner.css" />
+	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/identify/1.11/css/identify.css" />
+	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.1/themes/BoundingBoxDialog.css" />
+	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dojox/widget/Toaster/Toaster.css" />
+	<link rel="stylesheet" type="text/css" href="./dijits/help_panel/themes/HelpPanel.css" />		
+	<link rel="stylesheet" type="text/css" href="css/local.css">
+
+	<script type="text/javascript">
+		var djConfig = {
+			debugAtAllCosts: false,
+			parseOnLoad: true,
+			baseUrl: './',
+			modulePaths: {
+				'help_panel': './dijits/help_panel',
+				'simple_basemap_toolbar': 'http://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.2',
+				'banner': 'http://maps.ngdc.noaa.gov/viewers/dijits/banner/1.2',
+				'identify':	'http://maps.ngdc.noaa.gov/viewers/dijits/identify/1.12',
+				'geophysics_identify': 'dijits/geophysics_identify',
+				'layers': 'http://maps.ngdc.noaa.gov/viewers/dijits/layers/1.7',
+				'bboxDialog': 'http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.1',
+				'survey_select': 'dijits/survey_select'
+			}
+		};
+	</script>
+	<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
+	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
+	<!-- <script type="text/javascript" src="http://maps.ngdc.noaa.gov/proj4js/defs/EPSG3572.js"></script>-->
+	<script type="text/javascript" src="epsg3995.js"></script>
+	<script type="text/javascript" src="src/mapConfig.js"></script>
+ 	<script type="text/javascript" src="src/mapConfig_arctic.js"></script>
+	<script type="text/javascript" src="src/map.js"></script>
+	<!-- <script type="text/javascript" src="http://maps.ngdc.noaa.gov/viewers/common/2.7.2/src/map.js"></script>-->
+	</head>
+
+	<body class="tundra">
+		<!--TOPMOST LAYOUT CONTAINER-->	
+		<div id="mainWindow" dojoType="dijit.layout.BorderContainer" gutters="false" design="headline">
+			<!--HEADER SECTION-->
+			<div id="header" dojoType="dijit.layout.ContentPane" region="top" >
+				<div id="banner"></div>
+			</div>
+	
+			<!--CENTER CONTAINER-->
+			<div id="mapDiv" dojoType="dijit.layout.ContentPane" region="center">
+				<div dojoType="dojox.widget.Toaster" id="toaster" messageTopic="toaster" positionDirection="tr-left"></div>
+		
+				<div id="mapToolbar" dojoType="dijit.Toolbar" layoutAlign="left">
+					<div dojoType="dijit.form.Button" id="selectByRectBtn" iconClass="selectByRectIcon" showLabel="false">Identify with Rectangle</div>
+				</div>
+				<img id="loadingImg" src="http://maps.ngdc.noaa.gov/viewers/common/2.7.1/images/loading.gif" alt="refreshing map"/>
+				
+				<div id="basemapToolbar"></div>
+				<div id="switchProjectionDiv">
+					<div title="Show map in Global Mercator Projection (opens in new window)" dojoType="dijit.form.Button" onClick="launchViewer('Mercator');">Switch to Global Mercator View</div>
+					<div title="Show map in Antarctic Projection (opens in new window)" dojoType="dijit.form.Button" onClick="launchViewer('Antarctic');">Switch to Antarctic View</div>
+				</div>
+				<div id="bottomBar" dojoType="dijit.layout.ContentPane">
+					<span id="coordsDiv">Position: not available</span>
+					<span id="scalebar"></span>
+				</div>
+			</div>
+			<!--RIGHT CONTAINER-->
+			<div id="accordionContainer" dojoType="dijit.layout.AccordionContainer" region="right" splitter="true">
+				<div id="tocPane" dojoType="dijit.layout.AccordionPane" title="Layers">
+					Welcome to the new version of the Trackline Geophysical Data Viewer. Please send any questions or comments to <a href="mailto:trackline.info@noaa.gov" target="_blank">trackline.info@noaa.gov.</a>
+					<hr/>				
+					<b>Marine Surveys:</b>							
+					<table>
+						<tr>
+							<td>
+								<input id="chkLayer0" dojoType="dijit.form.CheckBox" onChange="toggleLayer(0);">
+							</td>
+							<td>
+								<label for="chkLayer0">All Survey Types</label>
+								<span class="countSpan" id="countLayer0"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer1" dojoType="dijit.form.CheckBox" onChange="toggleLayer(1);">
+							</td>
+							<td>
+								<label for="chkLayer1">Single-Beam Bathymetry</label>
+								<span class="countSpan" id="countLayer1"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer2" dojoType="dijit.form.CheckBox" onChange="toggleLayer(2);">
+							</td>
+							<td>
+								<label for="chkLayer2">Gravity</label>
+								<span class="countSpan" id="countLayer2"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer3" dojoType="dijit.form.CheckBox" onChange="toggleLayer(3);">
+							</td>
+							<td>
+								<label for="chkLayer3">Magnetics</label>
+								<span class="countSpan" id="countLayer3"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer4" dojoType="dijit.form.CheckBox" onChange="toggleLayer(4);">
+							</td>
+							<td>
+								<label for="chkLayer4">Multi-Channel Seismics</label>
+								<span class="countSpan" id="countLayer4"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer5" dojoType="dijit.form.CheckBox" onChange="toggleLayer(5);">
+							</td>
+							<td>
+								<label for="chkLayer5">Seismic Refraction</label>
+								<span class="countSpan" id="countLayer5"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer6" dojoType="dijit.form.CheckBox" onChange="toggleLayer(6);">
+							</td>
+							<td>
+								<label for="chkLayer6">Shot-Point Navigation</label>
+								<span class="countSpan" id="countLayer6"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer7" dojoType="dijit.form.CheckBox" onChange="toggleLayer(7);">
+							</td>
+							<td>
+								<label for="chkLayer7">Side Scan Sonar</label>
+								<span class="countSpan" id="countLayer7"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer8" dojoType="dijit.form.CheckBox" onChange="toggleLayer(8);">
+							</td>
+							<td>
+								<label for="chkLayer8">Single-Channel Seismics</label>
+								<span class="countSpan" id="countLayer8"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input id="chkLayer9" dojoType="dijit.form.CheckBox" onChange="toggleLayer(9);">
+							</td>
+							<td>
+								<label for="chkLayer9">Subbottom Profile</label>
+								<span class="countSpan" id="countLayer9"></span>
+							</td>
+						</tr>						
+					</table>
+					<div dojoType="dijit.form.Button" id="filterMarineBtn" iconClass="queryIcon" showLabel="true" onClick="showMarineSurveySelectDialog();">Search Marine Surveys</div>
+					<div dojoType="dijit.form.Button" id="getMarineDataBtn" showLabel="true" onClick="openGetDataWindow();" disabled>Get Marine Data</div>
+					<div id="marineFilterDiv" class="filterText" dojoType="dijit.layout.ContentPane"></div>						
+					<hr/>
+					<table>
+						<b>Airborne Surveys:</b>
+						<tr>
+							<td>
+								<input id="chkLayer10" dojoType="dijit.form.CheckBox" onChange="toggleLayer(10);">
+							</td>
+							<td>
+								<label for="chkLayer10">Aeromagnetics</label>
+								<span class="countSpan" id="countLayer10"></span>
+							</td>
+						</tr>
+					</table>
+					<div dojoType="dijit.form.Button" id="filterAeroBtn" iconClass="queryIcon" showLabel="true" onClick="showAeroSurveySelectDialog();">Search Airborne Surveys</div>
+					<div id="aeroFilterDiv" class="filterText" dojoType="dijit.layout.ContentPane"></div>	
+					<hr/>
+					<div dojoType="dijit.form.Button" id="clearBtn" iconClass="clearSelectionIcon" showLabel="true" onClick="clearSelection();">Reset Searches</div>			
+				</div>
+				<div id="legendPane" dojoType="dijit.layout.AccordionPane" title="Legend">
+					<div id="legend"></div>
+				</div>
+				<div id="aboutPane" dojoType="dijit.layout.AccordionPane" title="More Information">
+					<p>
+						For more information about Marine Trackline Geophysical Data at NCEI, see <a href="http://ngdc.noaa.gov/mgg/geodas/trackline.html" target="_blank">http://ngdc.noaa.gov/mgg/geodas/trackline.html</a>.
+					<p>
+					<p>
+						Geomagnetic data at NCEI: <a href="http://ngdc.noaa.gov/geomag/data.shtml" target="_blank">http://ngdc.noaa.gov/geomag/data.shtml</a>
+					</p>
+					<b>Basemap and reference layers:</b>
+					<ul>
+						<li>
+							Shaded Relief (Arctic view): Composite of <a href="http://www.ibcao.org/" target="_blank">IBCAO version 3.0</a> and <a href="http://www.gebco.net/data_and_products/gridded_bathymetry_data" target="_blank">GEBCO_08</a>.							
+						</li>
+						<li>Boundaries/Labels: from <a href="http://www.naturalearthdata.com/" target="_blank">Natural Earth Data</a></li>						
+					</ul>	
+					</p>
+					<p><b>Map projection:</b> WGS84 Arctic Polar Stereographic; EPSG:3995.</p>
+					<p>
+						<b>Disclaimer:</b> All international boundaries, maritime boundaries, and placenames are shown for general orientation and reference only; they do not necessarily represent official U.S. policy.
+					</p>
+					<p><b>Version:</b> 1.7.6, last updated May 2015</p>
+					<h4>Please send questions or comments to:</h4>
+					<a href="mailto:trackline.info@noaa.gov">trackline.info@noaa.gov</a> or
+					<a href="mailto:ngdc.maps@noaa.gov">ngdc.maps@noaa.gov</a>	
+				</div>
+				<div id="helpPane" dojoType="dijit.layout.AccordionPane" title="Help">
+					<div id="helpPanel" dojoType="help_panel.HelpPanel"></div>
+				</div>			
+			</div>
+		</div>
+        <script src="//maps.ngdc.noaa.gov/js/ga.js"></script>
+	</body>
+</html>
