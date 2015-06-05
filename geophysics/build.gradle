@@ -1,7 +1,7 @@
 import org.apache.tools.ant.filters.*
 
 ext.buildDate = new Date().format('YYYY-MM-dd')
-version = '1.7'
+version = '2.0'
 
 repositories {
     mavenCentral()
@@ -49,10 +49,10 @@ jar {
     exclude '.gradle'
 
     eachFile {
-    if (it.name.endsWith('.html')) {
-      filter(ReplaceTokens, tokens: [
-        'application.version': version,
-        'application.buildDate': buildDate])
-    }
+	  if (it.name.endsWith('.html')) {
+    	filter(ReplaceTokens, tokens: [
+    		'application.version': version,
+    		'application.buildDate': buildDate])
+	  }
     }
 }
