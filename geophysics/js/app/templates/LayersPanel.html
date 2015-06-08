@@ -1,0 +1,105 @@
+<div class="layersPanel_class">
+    <h3>Marine Surveys:</h3>
+    <table>
+        <tr>
+            <td>
+                <input checked type="checkbox" data-dojo-attach-point="chkAllParameters" data-dojo-type="dijit/form/CheckBox">
+            </td>
+            <td>
+                <label for="chkAllParameters">All Survey Types</label>&nbsp;&nbsp;<span class="countSpan" id="countLayer0"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" data-dojo-attach-point="chkBathymetry" data-dojo-type="dijit/form/CheckBox">
+            </td>
+            <td>
+                <label for="chkBathymetry">Single-Beam Bathymetry</label>&nbsp;&nbsp;<span class="countSpan" id="countLayer1"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" data-dojo-attach-point="chkGravity" data-dojo-type="dijit/form/CheckBox">
+            </td>
+            <td>
+                <label for="chkGravity">Gravity</label>&nbsp;&nbsp;<span class="countSpan" id="countLayer2"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" data-dojo-attach-point="chkMagnetics" data-dojo-type="dijit/form/CheckBox">
+            </td>
+            <td>
+                <label for="chkMagnetics">Magnetics</label>&nbsp;&nbsp;<span class="countSpan" id="countLayer3"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" data-dojo-attach-point="chkMultiChannelSeismics" data-dojo-type="dijit/form/CheckBox">
+            </td>
+            <td>
+                <label for="chkMultiChannelSeismics">Multi-Channel Seismics</label>&nbsp;&nbsp;<span class="countSpan" id="countLayer4"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" data-dojo-attach-point="chkSeismicRefraction" data-dojo-type="dijit/form/CheckBox">
+            </td>
+            <td>
+                <label for="chkSeismicRefraction">Seismic Refraction</label>&nbsp;&nbsp;<span class="countSpan" id="countLayer5"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" data-dojo-attach-point="chkShotPointNavigation" data-dojo-type="dijit/form/CheckBox">
+            </td>
+            <td>
+                <label for="chkShotPointNavigation">Shot-Point Navigation</label>&nbsp;&nbsp;<span class="countSpan" id="countLayer6"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" data-dojo-attach-point="chkSideScanSonar" data-dojo-type="dijit/form/CheckBox">
+            </td>
+            <td>
+                <label for="chkSideScanSonar">Side Scan Sonar</label>&nbsp;&nbsp;<span class="countSpan" id="countLayer7"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" data-dojo-attach-point="chkSingleChannelSeismics" data-dojo-type="dijit/form/CheckBox">
+            </td>
+            <td>
+                <label for="chkSingleChannelSeismics">Single-Channel Seismics</label>&nbsp;&nbsp;<span class="countSpan" id="countLayer8"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" data-dojo-attach-point="chkSubbottomProfile" data-dojo-type="dijit/form/CheckBox">
+            </td>
+            <td>
+                <label for="chkSubbottomProfile">Subbottom Profile</label>&nbsp;&nbsp;<span class="countSpan" id="countLayer9"></span>
+            </td>
+        </tr>
+    </table>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="filterMarineButton" data-dojo-props="iconClass:'queryIcon', showLabel:true">Search Marine Surveys</div>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="getMarineDataButton" data-dojo-props="showLabel:true" disabled>Get Marine Data</div>
+    <div dojoType="dijit/layout/ContentPane" data-dojo-attach-point="marineFilterDiv" class="filterText"></div>
+    <hr>
+    <h3>Airborne Surveys:</h3>
+    <table>
+        <tr>
+            <td>
+                <input type="checkbox" data-dojo-attach-point="chkAeromag" data-dojo-type="dijit/form/CheckBox">
+            </td>
+            <td>
+                <label for="chkLayer10">Aeromagnetics</label>
+                <span class="countSpan" id="countLayer10"></span>
+            </td>
+        </tr>
+    </table>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="filterAeroButton" data-dojo-props="iconClass:'queryIcon', showLabel:true">Search Airborne Surveys</div>
+    <div dojoType="dijit/layout/ContentPane" data-dojo-attach-point="aeroFilterDiv" class="filterText"></div>   
+    <hr/>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" disabled>Reset Searches</div>   
+</div>
