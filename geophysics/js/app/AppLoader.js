@@ -667,7 +667,7 @@ define([
                 var params = {};
                 params.layerDefs = layerDefsStr;
 
-                var url = '//mapdevel.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
+                var url = '//maps.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
 
                 xhr.post(
                     url, {
@@ -687,7 +687,7 @@ define([
                 var params = {};
                 params.layerDefs = layerDefsStr;
 
-                var url = '//mapdevel.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
+                var url = '//maps.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
 
                 xhr.post(
                     url, {
