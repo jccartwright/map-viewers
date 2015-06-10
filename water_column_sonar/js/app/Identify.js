@@ -174,7 +174,7 @@ define([
                 //Parse the variable number of key-value pairs from the ANCILLARY field, and display them as URLs.
                 var ancillaryString = a['ANCILLARY'];
                 var ancillaryObject = {};
-                if (ancillaryString != '') {
+                if (ancillaryString && ancillaryString != '') {
                     template += '<br>';
                     ancillaryObject = JSON.parse(ancillaryString);
                     for (var key in ancillaryObject) {
