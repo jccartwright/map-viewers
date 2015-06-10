@@ -373,7 +373,7 @@ define([
                 var params = {};
                 params.layerDefs = layerDefsStr;
 
-                var url = '//mapdevel.ngdc.noaa.gov/geoextents/water_column_sonar/';
+                var url = '//maps.ngdc.noaa.gov/geoextents/water_column_sonar/';
 
                 xhr.post(
                     url, {
