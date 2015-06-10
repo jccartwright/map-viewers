@@ -526,12 +526,7 @@ define([
                     }
                     sql.push("SURVEY_ID IN (" + ids + ")");
                 }
-                
-                //When in Arctic projection, exclude the projects that exist near the South Pole. Prevents erroneous lines from being drawn across the map.
-                // if (globals.srid === 3572) {
-                //     sql.push(globals.arcticExcludedProjects);
-                // }
-                
+                                
                 layerDefinition = sql.join(' and ');
                 
                 //Setup the layer definition for sublayer 10 (aeromag surveys)
@@ -591,22 +586,35 @@ define([
                 var surveyTypes = [];
 
                 //Get the list of survey types currently visible on the map
-                for (visibleTracklineLayer in visibleTracklineLayers) {
-                    surveyTypes.push(visibleTracklineLayer);
+                for (var visibleTracklineLayer in visibleTracklineLayers) {
+                    if (visibleTracklineLayers[visibleTracklineLayer]) {
+                        surveyTypes.push(visibleTracklineLayer);
+                    }
                 }
-                urlParams.push('surveyTypes=' + surveyTypes.join(','));
+                urlParams.push('surveyTypes=' + surveyTypes.join(',')); //Always include the surveyTypes param
                 
-                if (geometry && (geometry.type == 'point' || geometry.type == 'polygon')) {     
-
+                if (geometry && geometry.type == 'point') {     
+                    //Case when using single-click to identify, then clicking "Get Marine Data for these Surveys" or "This Survey".
+                    
+                    //Pass the survey ID(s) from the IdentifyPane.
                     urlParams.push('surveyIds=' + surveyIds.join(','));        
                     var url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
-                            
-                    if (geometry.type == 'polygon' && (globals.srid == 3995 || globals.srid == 3031)) {
-                        alert('Warning: bounding boxes in Arctic/Antarctic projections are currently unsupported for data extraction. The geometry parameter will be excluded.');
-                    }
                     window.open(url);
                 }
+                else if (geometry && geometry.type == 'extent' && (this.mapId == 'arctic' || this.mapId == 'antarctic')) {
+                    //Handles Arctic/Antarctic identify with extent (not supported), which will act like single-click.
+
+                    //Pass the survey ID(s) from the IdentifyPane.
+                    urlParams.push('surveyIds=' + surveyIds.join(','));        
+                    var url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&'); 
+                    alert('Warning: "Draw Rectangle" for Arctic/Antarctic projections are currently unsupported for data extraction. The geometry parameter will be excluded.');
+                    window.open(url);    
+                }
                 else {
+                    //Case when applying a filter, then clicking "Get Marine Data" in the left panel.
+                    //Or, identify with extent, and click "Get Marine Data for These Surveys" or "This Survey".
+
+                    //Pass the filter if available.
                     if (filter && !this.isCleared) {
                         if (filter.startYear) {
                             urlParams.push('startYear=' + filter.startYear);
@@ -635,9 +643,18 @@ define([
                             var date = filter.endDateAdded
                             urlParams.push('lastDateAdded=' + date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2));
                         }
+                    } 
+                    else {
+                        //If no filter, pass the survey ID(s) from the IdentifyPane.
+                        urlParams.push('surveyIds=' + surveyIds.join(','));        
                     }
+
+                    //Pass the extent in geographic coords.
                     if (geometry && geometry.type == 'extent') {
-                        var extent = webMercatorUtils.webMercatorToGeographic(geometry);
+                        var extent = geometry;
+                        if (geometry.spatialReference.isWebMercator()) {
+                            extent = webMercatorUtils.webMercatorToGeographic(geometry);
+                        }
                         //Round lat/lon values to 5 decimal places
                         urlParams.push('geometry=' + 
                                 Math.round(extent.xmin*100000)/100000 + ',' + 
@@ -667,7 +684,7 @@ define([
                 var params = {};
                 params.layerDefs = layerDefsStr;
 
-                var url = '//mapdevel.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
+                var url = '//maps.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
 
                 xhr.post(
                     url, {
@@ -687,7 +704,7 @@ define([
                 var params = {};
                 params.layerDefs = layerDefsStr;
 
-                var url = '//mapdevel.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
+                var url = '//maps.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
 
                 xhr.post(
                     url, {

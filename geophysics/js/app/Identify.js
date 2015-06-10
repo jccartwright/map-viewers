@@ -22,7 +22,6 @@ define([
 
                 var template = '\
                     <h3>Trackline Geophysical Survey: ${surveyId}</h3>\
-                    <div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>\
                     <div class="valueName">Survey ID: <span class="parameterValue">${surveyId}</span></div>\
                     <div class="valueName">Survey Type: <span class="parameterValue">${surveyType}</span></div>\
                     <div class="valueName">Platform Name: <span class="parameterValue">${platformName}</span></div>\
@@ -52,27 +51,6 @@ define([
 
             aeromagFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
-
-                // attributes: ['Survey ID',
-                //                  'Survey URL',
-                //                  'Project URL',                              
-                //                  'Source Institution', 
-                //                  'Project ID',
-                //                  'Full Project Name',
-                //                  'Departure Date', 
-                //                  'Departure Airport', 
-                //                  'Arrival Date', 
-                //                  'Arrival Airport', 
-                //                  'Total Field (T)',
-                //                  'Residual Field (R)',
-                //                  'North Vector Component (X)',
-                //                  'East Vector Component (Y)',
-                //                  'Vertical Component (Z)',
-                //                  'Magnetic Declination (D)',
-                //                  'Horizontal Intensity (H)',
-                //                  'Magnetic Inclination (I)',
-                //                  'Electromagnetics (E)',
-                //                  'Other (e.g. Radiometrics)'], 
 
                 var template = '\
                     <h3>Aeromagnetic Survey: ${surveyId}</h3>\

@@ -108,7 +108,7 @@ define([
                         this.populateInstitutionSelect(data.items);
                     }
                 }), function(err){
-                    logger.error('Error retrieving ships JSON: ' + err);
+                    logger.error('Error retrieving institutions JSON: ' + err);
                 });
 
                 script.get("http://maps.ngdc.noaa.gov/mapviewer-support/wcd/surveys.groovy", {
@@ -120,7 +120,7 @@ define([
                         this.populateSurveySelect(data.items);
                     }
                 }), function(err){
-                    logger.error('Error retrieving ships JSON: ' + err);
+                    logger.error('Error retrieving surveys JSON: ' + err);
                 });
             },
 
@@ -215,7 +215,7 @@ define([
                 this.maxSwathWidthSpinner.set('value', '');
 
                 this.chkBottomSoundings.set('checked', false);
-                this.chkZoomToResults.set('checked', false);
+                this.chkZoomToResults.set('checked', true);
             },
 
             reset: function() {

@@ -42,51 +42,25 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                this.layerMode = 'cruise';
-
                 this.searchDialog = new SearchDialog({title: 'Water Column Sonar Data Search'});
 
                 on(this.chkNMFS, 'change', lang.hitch(this, function() {
-                    if (this.layerMode === 'cruise') {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [8], this.chkNMFS.checked);
-                    } else {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [1], this.chkNMFS.checked);
-                    }
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [8], this.chkNMFS.checked);                    
                 }));
                 on(this.chkOER, 'change', lang.hitch(this, function() {
-                    if (this.layerMode === 'cruise') {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [9], this.chkOER.checked);
-                    } else {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [2], this.chkOER.checked);
-                    }
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [9], this.chkOER.checked);                    
                 }));
                 on(this.chkUNOLS, 'change', lang.hitch(this, function() {
-                    if (this.layerMode === 'cruise') {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [10], this.chkUNOLS.checked);
-                    } else {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [3], this.chkUNOLS.checked);
-                    }
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [10], this.chkUNOLS.checked);                   
                 }));
                 on(this.chkOtherNoaa, 'change', lang.hitch(this, function() {
-                    if (this.layerMode === 'cruise') {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [11], this.chkOtherNoaa.checked);
-                    } else {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkOtherNoaa.checked);
-                    }
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [11], this.chkOtherNoaa.checked);                    
                 }));
                 on(this.chkOther, 'change', lang.hitch(this, function() {
-                    if (this.layerMode === 'cruise') {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [12], this.chkOther.checked);
-                    } else {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [5], this.chkOther.checked);
-                    }
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [12], this.chkOther.checked);                    
                 }));
-                on(this.chkNonUs, 'change', lang.hitch(this, function() {
-                    if (this.layerMode === 'cruise') {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [13], this.chkNonUs.checked);
-                    } else {
-                        topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [6], this.chkNonUs.checked);
-                    }
+                on(this.chkNonUs, 'change', lang.hitch(this, function() {                    
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [13], this.chkNonUs.checked);                    
                 }));
 
                 on(this.searchButton, 'click', lang.hitch(this, function() {                    
@@ -96,62 +70,6 @@ define([
                 on(this.resetButton, 'click', lang.hitch(this, function() {
                     topic.publish('/wcd/ResetSearch');
                 }));
-            },
-
-            activateCruiseMode: function() {
-                this.layerMode = 'cruise';
-                var visibleLayers = [];
-                if (this.chkNMFS.checked) {
-                    visibleLayers.push(8);
-                }
-                if (this.chkOER.checked) {
-                    visibleLayers.push(9);
-                }
-                if (this.chkUNOLS.checked) {
-                    visibleLayers.push(10);
-                }
-                if (this.chkOtherNoaa.checked) {
-                    visibleLayers.push(11);
-                }
-                if (this.chkOther.checked) {
-                    visibleLayers.push(12);
-                }
-                if (this.chkNonUs.checked) {
-                    visibleLayers.push(13);
-                }
-
-                topic.publish('/ngdc/setVisibleLayers', 'Water Column Sonar', visibleLayers);
-                topic.publish('/water_column_sonar/layerMode', 'cruise');
-
-                this.searchDialog.setFileCriteriaDisabled(true);
-            },
-
-            activateFileMode: function() {
-                this.layerMode = 'file';
-                var visibleLayers = [];
-                if (this.chkNMFS.checked) {
-                    visibleLayers.push(1);
-                }
-                if (this.chkOER.checked) {
-                    visibleLayers.push(2);
-                }
-                if (this.chkUNOLS.checked) {
-                    visibleLayers.push(3);
-                }
-                if (this.chkOtherNoaa.checked) {
-                    visibleLayers.push(4);
-                }
-                if (this.chkOther.checked) {
-                    visibleLayers.push(5);
-                }
-                if (this.chkNonUs.checked) {
-                    visibleLayers.push(6);
-                }
-
-                topic.publish('/ngdc/setVisibleLayers', 'Water Column Sonar', visibleLayers);
-                topic.publish('/water_column_sonar/layerMode', 'file');
-
-                this.searchDialog.setFileCriteriaDisabled(false);
             },
 
             disableResetButton: function() {

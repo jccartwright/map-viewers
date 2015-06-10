@@ -139,7 +139,9 @@ define([
             },
 
             enableGetMarineDataButton: function() {
-                this.getMarineDataButton.set('disabled', false);
+                if (!this.marineSearchDialog.isDefault()) {
+                    this.getMarineDataButton.set('disabled', false);
+                }
             },
 
             setCurrentMarineFilterString: function(values) {

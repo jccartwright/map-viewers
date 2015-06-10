@@ -262,7 +262,6 @@ define([
                         fileCond.push(conditionals[0]);
                         cruiseCond.push(conditionals[0]);
                     }
-
                 }
                 if (values.surveyIds && values.surveyIds.length > 0) {
                     quoted = [];
@@ -374,7 +373,7 @@ define([
                 var params = {};
                 params.layerDefs = layerDefsStr;
 
-                var url = '//mapdevel.ngdc.noaa.gov/geoextents/water_column_sonar/';
+                var url = '//maps.ngdc.noaa.gov/geoextents/water_column_sonar/';
 
                 xhr.post(
                     url, {
@@ -382,7 +381,9 @@ define([
                         handleAs: 'json'
                     }).then(lang.hitch(this, function(response){
                         logger.debug(response);
-                        this.zoomToBbox(response.bbox);
+                        if (response && response.bbox !== 'null') {
+                            this.zoomToBbox(response.bbox);
+                        }
                     }), function(error) {
                         logger.error('Error: ' + error);
                     });                
@@ -399,11 +400,29 @@ define([
                 };
                 var polygon = wkt.toObject(config);
 
+                var extent = polygon.getExtent();
                 if (this.mapId == 'mercator') {
-                    this.mercatorMapConfig.map.setExtent(polygon.getExtent(), true);
+                    this.mercatorMapConfig.map.setExtent(this.clampExtentTo85(extent), true);
                 } else {
-                    this.zoomToArcticBbox(polygon.getExtent());
+                    this.zoomToArcticBbox(extent);
                 }
+            },
+
+            //Ensure the extent doesn't go beyond the bounds of the Mercator map (85 N/S)
+            clampExtentTo85: function(extent) {
+                if (extent.ymax > 85) {
+                    extent.ymax = 85;
+                }
+                if (extent.ymin > 85) {
+                    extent.ymin = 85;
+                }
+                if (extent.ymax < -85) {
+                    extent.ymax = -85;
+                }
+                if (extent.ymin < -85) {
+                    extent.ymin = -85;
+                }
+                return extent;
             },
 
             //Input: Extent in geographic coords. Densifies the geometry, projects it to epsg:3995, then zooms to that geometry.

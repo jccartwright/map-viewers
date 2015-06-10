@@ -99,16 +99,17 @@ define([
                     <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
                     <div class="fileHeader">Instrument Details:</div>\
                     <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
+
                 if (a['Instrument Name'] == 'EK60' || a['Instrument Name'] == 'EK500') {
                     template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
-                }
-                else {
+                } else {
                     template += '\
+                        <div class="valueName">Min Frequency (kHz): <span class="parameterValue">${minFrequency}</span></div>\
+                        <div class="valueName">Max Frequency (kHz): <span class="parameterValue">${maxFrequency}</span></div>\
                         <div class="valueName">Beam Type: <span class="parameterValue">${beamType}</span></div>\
                         <div class="valueName">Number of Beams: <span class="parameterValue">${numBeams}</span></div>\
                         <div class="valueName">Swath Width (degrees): <span class="parameterValue">${swathWidth}</span></div>';   
-                        //TODO: min/max frequency     
-                }
+                } 
                 template += '\
                     <div class="valueName">Recording Range (m): <span class="parameterValue">${recordingRange}</span></div>\
                     <div class="valueName">Recorded Bottom?: <span class="parameterValue">${recordedBottom}</span></div>\
@@ -119,10 +120,10 @@ define([
                         surveyID: a['Cruise ID'],
                         shipName: a['Ship Name'],
                         instrumentName: a['Instrument Name'],
-                        scientistName: a['Scientist Name'],
-                        sourceName: a['Source Name'],
-                        sourceGroup: a['Source Group'],
-                        projectName: a['Project Name'],
+                        projectName: this.replacePipesWithCommas(a['Project Name']),
+                        sourceGroup: this.replacePipesWithCommas(a['Source Group']),
+                        sourceName: this.replacePipesWithCommas(a['Source Name']),
+                        scientistName: this.replacePipesWithCommas(a['Scientist Name']),
                         collectionDate: a['Collection Date'],
                         publishDate: a['Publish Date'],
                         beamType: a['Beam Type'],
@@ -131,6 +132,8 @@ define([
                         swathWidth: a['Swath Width (degrees)'],
                         recordingRange: a['Recording Range (m)'],
                         frequency: a['Frequency'],
+                        minFrequency: a['Min Frequency (kHz)'],
+                        maxFrequency: a['Max Frequency (kHz)'],
                         recordedBottom: a['Recorded Bottom?'] == 'Y' ? 'Yes' : 'No'
                     });                
                 return html;
@@ -171,7 +174,7 @@ define([
                 //Parse the variable number of key-value pairs from the ANCILLARY field, and display them as URLs.
                 var ancillaryString = a['ANCILLARY'];
                 var ancillaryObject = {};
-                if (ancillaryString != '') {
+                if (ancillaryString && ancillaryString != '') {
                     template += '<br>';
                     ancillaryObject = JSON.parse(ancillaryString);
                     for (var key in ancillaryObject) {
@@ -193,8 +196,8 @@ define([
                         scientistName: this.replacePipesWithCommas(a['Scientist Name']),
                         instrumentName: a['Instrument Name'],
                         frequency: a['Frequency'],
-                        minFrequency: a['Min Frequency'],
-                        maxFrequency: a['Max Frequency'],
+                        minFrequency: a['Min Frequency (kHz)'],
+                        maxFrequency: a['Max Frequency (kHz)'],
                         calibrationState: a['Calibration State'],
                         citationText: a['Citation Text'],
                         citationLink: a['Citation Link']
