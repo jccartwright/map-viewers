@@ -33,7 +33,6 @@ define([
                 this._identifyTools = [
                     {label: 'Point (Single-Click)', id: 'point', iconClass: 'identifyByPointIcon'},
                     {label: 'Draw Rectangle', id: 'rect', iconClass: 'identifyByRectIcon'},
-                    {label: 'Draw Polygon', id: 'polygon', iconClass: 'identifyByPolygonIcon'},
                     {label: 'Define Bounding Box', id: 'coords', iconClass: 'identifyByCoordsIcon'}
                 ];
 
