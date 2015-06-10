@@ -241,7 +241,7 @@ define([
             },
             
             execute: function(values) { 
-                if (this.isDefault(values)) {
+                if (this.isDefault()) {
                     this.reset();
                 }
                 else {
@@ -271,12 +271,12 @@ define([
                 } 
             },
 
-            isDefault: function(values) {
-                return (!values.startYear && !values.endYear &&
-                    (this.chkAllProjects.checked || values.projects.length === 0) && 
-                    (this.chkAllAeroParams.checked || values.aeroParams.length === 0) &&
+            isDefault: function() {
+                return (isNaN(this.startYearSpinner.get('value')) && isNaN(this.endYearSpinner.get('value')) &&
+                    (this.chkAllProjects.checked || this.projectSelect.get('value').length === 0) && 
+                    (this.chkAllAeroParams.checked || this.aeroParamSelect.get('value').length === 0) &&
                     this.surveyList.length === 0 &&
-                    !values.startDateAdded && !values.endDateAdded)
+                    !this.startDateAddedInput.get('value') && !this.endDateAddedInput.get('value'));
             },
                    
             clearForm: function() {

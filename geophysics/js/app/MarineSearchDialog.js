@@ -277,7 +277,7 @@ define([
             },
 
             execute: function(values) { 
-                if (this.isDefault(values)) {
+                if (this.isDefault()) {
                     this.reset();
                 }
                 else {
@@ -306,12 +306,12 @@ define([
                 } 
             },
 
-            isDefault: function(values) {
-                return (!values.startYear && !values.endYear &&
-                    (this.chkAllShips.checked || values.ships.length === 0) && 
-                    (this.chkAllInstitutions.checked || values.institutions.length === 0) &&
+            isDefault: function() {
+                return (isNaN(this.startYearSpinner.get('value')) && isNaN(this.endYearSpinner.get('value')) &&
+                    (this.chkAllShips.checked || this.shipSelect.get('value').length === 0) && 
+                    (this.chkAllInstitutions.checked || this.sourceInstSelect.get('value').length === 0) &&
                     this.surveyList.length === 0 &&
-                    !values.startDateAdded && !values.endDateAdded)
+                    !this.startDateAddedInput.get('value') && !this.endDateAddedInput.get('value'));
             },
                    
             clearForm: function() {
