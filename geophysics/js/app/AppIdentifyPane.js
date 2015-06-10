@@ -212,7 +212,7 @@ define([
 
             getMarineDataSingleSurvey: function() {
                 var surveyId = this.currentItem.attributes['Survey ID'];
-                topic.publish('/geophysics/GetMarineData', null, [surveyId]);
+                topic.publish('/geophysics/GetMarineData', this.identify.searchGeometry, [surveyId]);
             }
         });
     }
