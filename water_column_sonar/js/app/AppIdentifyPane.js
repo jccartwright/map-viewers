@@ -192,7 +192,21 @@ define([
 
                 this.featurePageTitle = 'Identified Cruises (' + this.numFeatures + ')';
                 this.setTitle(this.featurePageTitle);
-                //domStyle.set(this.requestDataFilesOrSurveysButton.domNode, 'display', ''); //Display the request data button
+
+                if (this.numFeatures > 0) {
+                    this.showRequestCruisesButton();
+                }
+                else {
+                    this.hideRequestCruisesButton();
+                }
+            },
+
+            showRequestCruisesButton: function() {
+                domStyle.set(this.requestCruisesButton.domNode, 'display', ''); //Display the request data button
+            },
+
+            hideRequestCruisesButton: function() {
+                domStyle.set(this.requestCruisesButton.domNode, 'display', 'none'); //Display the request data button
             },
 
             showFileResults: function(resultCollection) {
