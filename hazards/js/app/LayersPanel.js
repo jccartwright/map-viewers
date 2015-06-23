@@ -6,6 +6,7 @@ define([
     'dojo/aspect',
     'dojo/dom',
     'dojo/dom-attr',
+    'dojo/dom-style',
     'app/TsEventSearchDialog',
     'app/TsObsSearchDialog',
     'app/SignifEqSearchDialog',
@@ -28,6 +29,7 @@ define([
         aspect,
         dom,
         domAttr,
+        domStyle,
         TsEventSearchDialog,
         TsObsSearchDialog,
         SignifEqSearchDialog,
@@ -141,7 +143,27 @@ define([
                 on(registry.byId("dartResetButton"), "click", lang.hitch(this, function() {
                     topic.publish('/hazards/ResetDartSearch');
                     this.setDartFilterActive(false);
-                }));                       
+                }));
+
+                //Override the close() method on the legend dojox.layout.FloatingPanes so that they don't get destroyed when clicking their close icons
+                registry.byId('tsEventLegendPane').close = registry.byId('tsEventLegendPane').minimize;
+                registry.byId('tsObsLegendPane1').close = registry.byId('tsObsLegendPane1').minimize;
+                registry.byId('tsObsLegendPane2').close = registry.byId('tsObsLegendPane2').minimize;
+                registry.byId('signifEqLegendPane').close = registry.byId('signifEqLegendPane').minimize;
+                registry.byId('volEventLegendPane').close = registry.byId('dartLegendPane').minimize;
+                registry.byId('dartLegendPane').close = registry.byId('dartLegendPane').minimize;
+                registry.byId('plateBoundariesLegendPane').close = registry.byId('plateBoundariesLegendPane').minimize;
+                
+                //Reposition the legend FloatingPanes on browser resize.
+                aspect.after(registry.byId('mercator'), 'resize', function() {
+                    domStyle.set(dom.byId('tsEventLegendPane'), {left: '50%', top: '50%'});
+                    domStyle.set(dom.byId('tsObsLegendPane1'), {left: '50%', top: '50%'});
+                    domStyle.set(dom.byId('tsObsLegendPane2'), {left: '50%', top: '50%'});
+                    domStyle.set(dom.byId('signifEqLegendPane'), {left: '50%', top: '50%'});
+                    domStyle.set(dom.byId('volEventLegendPane'), {left: '50%', top: '50%'});
+                    domStyle.set(dom.byId('dartLegendPane'), {left: '50%', top: '50%'});
+                    domStyle.set(dom.byId('plateBoundariesLegendPane'), {left: '70%', top: '20%'});
+                });               
             },
 
             startup: function() {
