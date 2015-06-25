@@ -23,7 +23,6 @@
 
     <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.13/dojox/layout/resources/FloatingPane.css"/>
     <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.13/dojox/layout/resources/ResizeHandle.css"/>
-    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.13/dojox/form/resources/CheckedMultiSelect.css"/>
 
     <link rel="stylesheet" href="css/local.css">
 
@@ -37,8 +36,8 @@
             packages: [
             {
                 name: "ngdc",
-                //location: '//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc'
-                location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
+                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc'
+                //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
             },
             {
                 name: "app",
@@ -49,15 +48,12 @@
             //app-specific config values
             app: {
                 loglevel: 2,
-                //ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc'
-                ngdcDijitsUrl: '../../dijits/js/ngdc'
+                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc'
+                //ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
     </script>
     <script src="//js.arcgis.com/3.13/"></script>
-    <script type="text/javascript" src="//maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
-    <script type="text/javascript" src="//maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3995.js"></script>
-    <script type="text/javascript" src="//maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3031.js"></script>
 </head>
 <body class="tundra">
 <div id="loadingOverlay" class="loadingOverlay pageOverlay">
