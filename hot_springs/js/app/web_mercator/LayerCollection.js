@@ -61,7 +61,7 @@ define([
                         id: 'Ocean Base',
                         visible: true,
                     }),                  
-                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/hot_springs/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/hot_springs/MapServer', {
                         id: 'Hot Springs',
                         visible: true,
                         imageParameters: this.imageParameters.png32
