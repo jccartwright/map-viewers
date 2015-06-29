@@ -1,109 +1,123 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-	<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
-	<title>Thermal Springs</title>		
-	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.1/js/dojo/dijit/themes/claro/claro.css" />
- 	<link rel="stylesheet" type="text/css" href="./shared/dijits/simple_basemap_toolbar/1.2/themes/SimpleBasemapToolbar.css" />
-	<link rel="stylesheet" type="text/css" href="./shared/dijits/banner/1.2/themes/banner.css">
+    <!-- Version: @application.version@, Last update: @application.buildDate@ -->
+    <title>Thermal Springs Viewer</title>
+    <link rel="shortcut icon" href="//www.ngdc.noaa.gov/image/favicon.ico">
+    <link rel="stylesheet" href="//js.arcgis.com/3.13/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="//js.arcgis.com/3.13/esri/css/esri.css">
 
-<!--
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/themes/BoundingBoxDialog.css">
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/identify/1.01/css/identify.css">
--->
-	<link rel="stylesheet" type="text/css" href="css/local.css">
-	<style type="text/css">
-/*
-		.selectByCoordsIcon { background-image:url(images/select_rect_xy.png); width:16px; height:16px; }
-		.selectByRectIcon { background-image:url(images/select_rect_1.gif); width:16px; height:16px; }
-*/
-	</style>
-	<script type="text/javascript">
-		var djConfig = {
-			parseOnLoad: true,
-			baseUrl: './',
-			modulePaths: {
-				'references_panel': 'src/dijits/references_panel',
-				'banner': 'src/dijits/banner',
-				'help_panel': './shared/dijits/help_panel/1.1',
-				'simple_basemap_toolbar': './shared/dijits/simple_basemap_toolbar/1.2',
-				'banner': './shared/dijits/banner/1.2'
-				//'bboxDialog': 'http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog',
-				//'identify': 'http://maps.ngdc.noaa.gov/viewers/dijits/identify'
-			}
-		};
-	</script>
-	<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.1"></script>
-	<!-- TODO MapServicePair not loading via the modulePaths like all the other dijits -->
-<!--	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/viewers/common/1.0/MapServicePair.js"></script> -->
- 	<script type="text/javascript" src="src/mapConfig.js"></script>
-	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/viewers/common/2.0/src/map.js"></script>
-<!--	<script type="text/javascript" src="src/map.js"></script> -->
-	<script type="text/javascript">
-		dojo.require("esri.map");
-		dojo.require("esri.dijit.OverviewMap");
-		dojo.require("dijit.layout.ContentPane");
-		dojo.require("dijit.layout.AccordionContainer");
-		dojo.require("dijit.layout.BorderContainer");
-		dojo.require("dijit.Toolbar");
-		dojo.require("dijit.form.Button");
-		dojo.require("esri.dijit.OverviewMap");
-		//dojo.require("esri.dijit.Scalebar");
-		dojo.require("esri.dijit.Legend");
-		
-		dojo.require("help_panel.HelpPanel");
-		dojo.require("references_panel.ReferencesPanel");
-		dojo.require("simple_basemap_toolbar.SimpleBasemapToolbar");
-		//dojo.require('bboxDialog.BoundingBoxDialog');
-		dojo.require("banner.Banner");
-		//dojo.require("identify.Identify");
-		//dojo.require("mapServicePair.MapServicePair");
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/css/MapToolbar.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/identify/IdentifyPane.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/css/CoordinatesToolbar.css">
 
-		</script>
-	</head>
+    <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css"> -->
+    <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css"> -->
+    <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/themes/tundra/BoundingBoxDialog.css"> -->
+    <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/css/Banner.css"> -->
+    <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/css/CoordinatesToolbar.css"> -->
 
-	<body class="claro">
-		<div id="mainWindow" dojoType="dijit.layout.BorderContainer" gutters="true" design="headline">
-			<!--HEADER SECTION-->
-			<div id="header" dojoType="dijit.layout.ContentPane" region="top" >
-				<!-- TODO replace w/ XD dijit passing reference to local image -->
-				<div dojoType="banner.Banner"></div>
-			</div>
-	
-			<!--CENTER CONTAINER-->
-			<div id="mapDiv" dojoType="dijit.layout.ContentPane" region="center">
-<!--				
-				<div id="mapToolbar" dojoType="dijit.Toolbar" layoutAlign="left">
-					<div dojoType="dijit.form.Button" id="selectByRectBtn" iconClass="selectByRectIcon" showLabel="false">Select with Rectangle</div>
-					<div dojoType="dijit.form.Button" id="selectByCoordsBtn" iconClass="selectByCoordsIcon" showLabel="false">Select with Coordinates</div>
-				</div>
--->
-				<img id="loadingImg" src="images/loading.gif" alt="refreshing map"/>
-				<div id="basemapToolbar"></div>
-				<div id="bottomBar" dojoType="dijit.layout.ContentPane">
-					<span id="coordsDiv">Position: not available</span>
-					<span id="scalebar"></span>
-				</div>
+    <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
 
-			</div>
-			<!--RIGHT CONTAINER-->
-			<div id="accordionContainer" dojoType="dijit.layout.AccordionContainer" region="right">
-				<div id="legendPane" dojoType="dijit.layout.AccordionPane" title="Legend">
-					<div id="legend"></div>	
-				</div>		
-				<div dojotype="dijit.layout.ContentPane"  title="References" >
-					<div id="referencesPanel" dojoType="references_panel.ReferencesPanel"></div>
-				</div>
-				
-				<div id="helpPane" dojoType="dijit.layout.AccordionPane" title="Help">
-					<div id="helpPanel" dojoType="help_panel.HelpPanel"></div>
-				</div>			
-			</div>
-			
-			<div id="footer"  dojoType="dijit.layout.ContentPane" region="bottom">
-			</div>
-		</div>
-		<div id="identifyDiv" dojoType="dijit.layout.ContentPane"></div>
-        <script src="//maps.ngdc.noaa.gov/js/ga.js"></script>
-	</body>
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.13/dojox/layout/resources/FloatingPane.css"/>
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.13/dojox/layout/resources/ResizeHandle.css"/>
+
+    <link rel="stylesheet" href="css/local.css">
+
+    <script>
+        var dojoConfig = {
+            waitSeconds: 5,
+            async: true,
+            parseOnLoad: false,
+
+            //list local packages
+            packages: [
+            {
+                name: "ngdc",
+                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc'
+                //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
+            },
+            {
+                name: "app",
+                location: location.pathname.replace(/\/[^/]*$/, '') + '/js/app'
+            }
+            ],
+
+            //app-specific config values
+            app: {
+                loglevel: 2,
+                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc'
+                //ngdcDijitsUrl: '../../dijits/js/ngdc'
+            }
+        };
+    </script>
+    <script src="//js.arcgis.com/3.13/"></script>
+</head>
+<body class="tundra">
+<div id="loadingOverlay" class="loadingOverlay pageOverlay">
+    <div id="loaderInner"></div>
+</div>
+
+<div id="busy"></div>
+
+<div id="mainWindow" class="noBorder" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false">
+
+    <div id="header" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'">
+        <div id="banner"></div>
+    </div>
+
+    <div id="leftPane" data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true">
+        <div id="legendPanel" data-dojo-type="dijit/layout/ContentPane" title="Legend">
+            <div id="legend">
+                <img src="images/legend.png"></img><hr/>                
+            </div> 
+        </div>
+        <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
+            <div id="credits" data-dojo-type="app/CreditsPanel"></div>
+        </div>
+        <div id="helpPanel" data-dojo-type="dijit/layout/ContentPane" title="Help">
+            <div id="help" data-dojo-type="app/HelpPanel"></div>
+        </div>
+
+    </div> <!-- end leftPane -->
+
+    <!-- mapContainer nested inside ContentPane because it seems to force map to initially fill pane -->
+    <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
+        <div id="mercator" data-dojo-type="dijit/layout/ContentPane" class="map">
+            <div id="mercatorMapToolbar"></div>
+            <div id="mercatorCoordinatesToolbar"></div>
+        </div>
+    </div> <!-- end centerPane -->
+
+</div> <!-- end mainWindow BorderContainer -->
+<div id="mercatorIdentifyPaneDiv"></div>
+
+<script>
+    //unless the Dijit is listed in the require list, it cannot be addressed via the registry
+    require([
+        "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "dojo/dom", "dojo/dom-style", "app/AppLoader",
+        "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer", "dijit/layout/TabContainer",
+        "app/HelpPanel", "app/CreditsPanel", "dojo/domReady!" ],
+            function(LoadingOverlay, registry, parser, dom, domStyle, AppLoader) {
+                var loadingOverlay = new LoadingOverlay();
+                var appLoader = new AppLoader();
+
+                parser.parse();
+
+                //hide the overlay now that parsing is complete
+                loadingOverlay.endLoading();
+
+                //Show the legend graphic, which was hidden on startup
+                domStyle.set(dom.byId('legend'), 'display', 'block');
+
+                //initialize the application
+                appLoader.init();
+            }
+    );
+
+</script>
+<script src="//maps.ngdc.noaa.gov/js/ga.js"></script>
+</body>
 </html>
