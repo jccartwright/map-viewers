@@ -620,8 +620,8 @@ define([
 
             requestCruise: function() {
                 var cruiseInfo = [
-                    [this.currentItem.attributes['Cruise ID']],
-                    [this.currentItem.attributes['Instrument Name']]
+                    this.currentItem.attributes['Cruise ID'],
+                    this.currentItem.attributes['Instrument Name']
                 ];
 
                 if (!this.requestDataDialog) {
