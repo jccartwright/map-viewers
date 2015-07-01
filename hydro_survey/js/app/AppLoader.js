@@ -54,8 +54,8 @@ define([
 
             init: function() {
                 esriConfig.defaults.io.corsEnabledServers = [
-                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
+                    '//maps.ngdc.noaa.gov/arcgis/rest/services',
+                    '//mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
 
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
@@ -88,7 +88,7 @@ define([
 
                 var rncTooltip = new TooltipDialog({
                     id: 'rncTooltip',
-                    content: '<a href="http://www.nauticalcharts.noaa.gov/mcd/Raster" target="_blank">NOAA Raster Navigational Charts</a>',
+                    content: '<a href="//www.nauticalcharts.noaa.gov/mcd/Raster" target="_blank">NOAA Raster Navigational Charts</a>',
                     onMouseLeave: function(){
                         popup.close(rncTooltip);
                     }
