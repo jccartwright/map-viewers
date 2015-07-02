@@ -36,32 +36,32 @@ define([
 
                 //all are invisible by default to hide the initial zoom to extent
                 this.mapServices = [
-                    new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", {
+                    new esri.layers.ArcGISTiledMapServiceLayer("//services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", {
                         id: "World Imagery",
                         visible: false
                     }),                                  
-                    new ArcGISImageServiceLayer("http://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades_subsets/ImageServer", {
+                    new ArcGISImageServiceLayer("//mapdevel.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades_subsets/ImageServer", {
                         id: "BAG Hillshades",
                         imageServiceParameters: params,
                         visible: false
                     }),
-                    new ArcGISImageServiceLayer("http://seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
+                    new ArcGISImageServiceLayer("//seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
                         id: "RNC",
                         imageServiceParameters: params,
                         visible: false,
                         opacity: 0.5
                     }),
-                    new FeatureLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1", {
+                    new FeatureLayer("//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1", {
                         id: "NOS Hydro Digital",
                         mode: FeatureLayer.MODE_ONDEMAND,
                         visible: false
                     }),
-                    new FeatureLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/2", {
+                    new FeatureLayer("//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/2", {
                         id: "NOS Hydro Non-Digital",
                         mode: FeatureLayer.MODE_ONDEMAND,
                         visible: false
                     }),
-                    new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer", {
+                    new esri.layers.ArcGISTiledMapServiceLayer("//services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer", {
                         id: "Boundaries/Labels",
                         visible: false
                     })

@@ -2,16 +2,16 @@
 <html>
 <head>
     <!-- Version: @application.version@, Last update: @application.buildDate@ -->
-    <title>ECS Catalog Viewer | ngdc.noaa.gov</title>
-    <link rel="shortcut icon" href="//ngdc.noaa.gov/image/favicon.ico"/>
-    <link rel="stylesheet" href="//js.arcgis.com/3.12/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="//js.arcgis.com/3.12/esri/css/esri.css">
+    <title>ECS Catalog Viewer</title>
+    <link rel="shortcut icon" href="//www.ngdc.noaa.gov/image/favicon.ico">
+    <link rel="stylesheet" href="//js.arcgis.com/3.13/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="//js.arcgis.com/3.13/esri/css/esri.css">
 
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.2/js/ngdc/css/MapToolbar.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.2/js/ngdc/identify/IdentifyPane.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.2/js/ngdc/themes/tundra/BoundingBoxDialog.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.2/js/ngdc/css/Banner.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.2/js/ngdc/css/CoordinatesToolbar.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/css/MapToolbar.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/identify/IdentifyPane.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/css/CoordinatesToolbar.css">
 
     <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css">
     <link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css">
@@ -21,9 +21,9 @@
 
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
 
-    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.12/dojox/layout/resources/FloatingPane.css"/>
-    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.12/dojox/layout/resources/ResizeHandle.css"/>
-    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.12/dojox/form/resources/CheckedMultiSelect.css"/>
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.13/dojox/layout/resources/FloatingPane.css"/>
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.13/dojox/layout/resources/ResizeHandle.css"/>
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.13/dojox/form/resources/CheckedMultiSelect.css"/>
 
     <link rel="stylesheet" href="css/local.css">
 
@@ -37,7 +37,7 @@
             packages: [
             {
                 name: "ngdc",
-                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.2/js/ngdc'
+                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
             },
             {
@@ -49,13 +49,13 @@
             //app-specific config values
             app: {
                 loglevel: 2,
-                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.2/js/ngdc'
+                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc'
                 //ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
     </script>
     <script src="//maps.ngdc.noaa.gov/proj4js-2.3.3/proj4.js"></script>
-    <script src="//js.arcgis.com/3.12/"></script>
+    <script src="//js.arcgis.com/3.13/"></script>
 </head>
 <body class="tundra">
 <div id="loadingOverlay" class="loadingOverlay pageOverlay">

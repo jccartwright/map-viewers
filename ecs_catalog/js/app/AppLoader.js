@@ -167,14 +167,15 @@ define([
             setupBanner: function() {
                 var banner = new Banner({
                     breadcrumbs: [
-                        {url: '//www.noaa.gov', label: 'NOAA'},
-                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS'},
-                        {url: '//www.ngdc.noaa.gov', label: 'NGDC'},
-                        {url: '//maps.ngdc.noaa.gov/viewers', label: 'Maps'},
+                        {url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
+                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
+                        {url: '//www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
+                        {url: '//maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
                         {url: window.location.protocol + '//' + window.location.host + '/ecs-catalog/', label: 'ECS Catalog'}
                     ],
                     dataUrl: window.location.protocol + '//' + window.location.host + '/ecs-catalog/',
-                    image: 'images/ecs-logo.gif'
+                    image: 'images/ecs-logo.gif',
+                    imageAlt: 'ECS Catalog Viewer - go to ECS Catalog Home'
                 });
                 banner.placeAt('banner');
             },
