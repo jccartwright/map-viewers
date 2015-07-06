@@ -1,0 +1,25 @@
+<div class="layersPanel_class">          
+    <h3>Estimated Tsunami Travel Times to Coastal Locations</h3>
+    <span id="descriptionText">This map displays estimated pre-computed tsunami travel times <b><i>to</i></b> select coastal locations <b><i>from</i></b> any point in the ocean.
+    Travel times (in hours),
+    were calculated with TTT Software (P. Wessel, Geoware) 
+    using bathymetry derived from the 2 arc-minute <a href="http://www.ngdc.noaa.gov/mgg/fliers/01mgg04.html" target="_blank">ETOPO2</a> grid.<br>
+    <a href="http://ngdc.noaa.gov/hazard/tsu_travel_time.shtml" target="_blank">More information about tsunami travel time maps</a>.<br><br>
+    <b>Important:</b> this map is for general information only, and is not to be used in the event of an actual tsunami. 
+    There may be significant sources of error in the travel time calculations. 
+    Please visit <a href="http://www.tsunami.gov/" target="_blank">tsunami.gov</a> for real-time tsunami information.
+    </span>
+    <hr>
+                        
+    Select Region:<br>
+    <select data-dojo-attach-point="regionSelect" data-dojo-type="dijit/form/FilteringSelect">
+        <option value="Pacific" selected="selected">Pacific Ocean</option>
+        <option value="Indian">Indian Ocean</option>
+        <option value="Carib">Caribbean Sea</option>
+    </select>
+    <br><br>
+    Select Coastal Location:<br>
+    <input id="stationSelectInput"/>                 
+    <br>
+    <button data-dojo-attach-point="resetExtentButton" data-dojo-type="dijit/form/Button">Re-center map to current region</button>
+</div>
