@@ -10,12 +10,12 @@ define([
         return declare([MapToolbar], {
             constructor: function() {
                 this._basemaps = [
-                    {base: 'Ocean Base', overlays: ['Ocean Reference'], label: 'Ocean Basemap (Esri)'},
-                    {base: 'GEBCO_08', overlays: ['World Boundaries and Places'], label: 'Shaded Relief (GEBCO_08)'},
-                    {base: 'ETOPO1', overlays: ['World Boundaries and Places'], label: 'Shaded Relief (ETOPO1)'},
-                    {base: 'Light Gray', overlays: ['Light Gray Reference'], label: 'Light Gray (Esri)'},
-                    {base: 'Dark Gray', overlays: ['Dark Gray Reference'], label: 'Dark Gray (Esri)'},
-                    {base: 'World Imagery', overlays: ['World Boundaries and Places'], label: 'World Imagery (Esri)'},
+                    {base: 'Ocean Base', overlays: [{id: 'Ocean Reference'}], label: 'Ocean Basemap (Esri)'},
+                    {base: 'GEBCO_08', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (GEBCO_08)'},
+                    {base: 'ETOPO1', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (ETOPO1)'},
+                    {base: 'Light Gray', overlays: [{id: 'Light Gray Reference'}], label: 'Light Gray (Esri)'},
+                    {base: 'Dark Gray', overlays: [{id: 'Dark Gray Reference'}], label: 'Dark Gray (Esri)'},
+                    {base: 'World Imagery', overlays: [{id: 'World Boundaries and Places'}], label: 'World Imagery (Esri)'},
                     {base: 'NatGeo', label: 'National Geographic (Esri)'} //NatGeo has no boundaries overlay
                 ];
 
