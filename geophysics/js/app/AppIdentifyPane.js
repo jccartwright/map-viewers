@@ -207,12 +207,12 @@ define([
                     surveyIds.push(item.attributes['Survey ID']);
                 });
 
-                topic.publish('/geophysics/GetMarineData', this.identify.searchGeometry, surveyIds);
+                topic.publish('/geophysics/GetMarineDataMultipleSurveys', this.identify.searchGeometry, surveyIds);
             },
 
             getMarineDataSingleSurvey: function() {
                 var surveyId = this.currentItem.attributes['Survey ID'];
-                topic.publish('/geophysics/GetMarineData', this.identify.searchGeometry, [surveyId]);
+                topic.publish('/geophysics/GetMarineDataSingleSurvey', this.identify.searchGeometry, [surveyId]);
             }
         });
     }

@@ -114,7 +114,7 @@ define([
                 })); 
 
                 on(this.getMarineDataButton, 'click', lang.hitch(this, function() {
-                    topic.publish('/geophysics/GetMarineData')
+                    topic.publish('/geophysics/GetMarineDataMultipleSurveys')
                 }));
 
                 //Subscribe to messages from the IdentifyPane to enable/disable the "Get Marine Data" button

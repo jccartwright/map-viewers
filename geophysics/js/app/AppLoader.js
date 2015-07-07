@@ -121,8 +121,6 @@ define([
 
                 this.setupLayersPanel();
 
-                //this.setStartupLayers(startupLayers);
-
                 this.setupMapViews();
 
                 //Subscribe to messages passed by the search dialogs
@@ -136,8 +134,11 @@ define([
                     this.resetSurveyFilter();
                 }));
 
-                topic.subscribe('/geophysics/GetMarineData', lang.hitch(this, function(geometry, surveyIds) {
-                    this.openGetMarineDataWindow(geometry, surveyIds);
+                topic.subscribe('/geophysics/GetMarineDataMultipleSurveys', lang.hitch(this, function(geometry, surveyIds) {
+                    this.openGetMarineDataWindow(geometry, surveyIds, false);
+                }));
+                topic.subscribe('/geophysics/GetMarineDataSingleSurvey', lang.hitch(this, function(geometry, surveyIds) {
+                    this.openGetMarineDataWindow(geometry, surveyIds, true);
                 }));
 
                 this.tracklineLayerDefinitions = []; //object containing the current layer definitions for all sublayers of the "Trackline Combined" service. 
@@ -302,39 +303,6 @@ define([
                 }, new AntarcticLayerCollection());
 
                 new CoordinatesToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
-            },
-
-            //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'
-            setStartupLayers: function(/*String[]*/ startupLayers) {                
-                // if (startupLayers.length === 0) {
-                //     this.layersPanel.chkMultibeam.set('checked', true);
-                //     this.multibeamVisible = true;
-                //     return;    
-                // }
-
-                // for (var i = 0; i < startupLayers.length; i++) {
-                //     if (startupLayers[i].toLowerCase() === 'multibeam') {
-                //         this.layersPanel.chkMultibeam.set('checked', true);
-                //         this.multibeamVisible = true;
-                //     } 
-                //     else if (startupLayers[i].toLowerCase() === 'nos_hydro') {
-                //         //Startup with "Surveys with Digital Sounding Data" and "Surveys with BAGs" visible
-                //         this.layersPanel.chkNosHydroBags.set('checked', true);
-                //         this.layersPanel.chkNosHydroDigital.set('checked', true);
-                //         //this.layersPanel.chkBagHillshades.set('checked', true);
-                //         this.nosHydroVisible = true;
-                //     } 
-                //     else if (startupLayers[i].toLowerCase() === 'trackline') {
-                //         this.layersPanel.chkTrackline.set('checked', true);
-                //         this.tracklineVisible = true;
-                //     } 
-                //     else if (startupLayers[i].toLowerCase() === 'dem') {
-                //         //Startup with DEM Footprints and DEM Hillshades visible
-                //         this.layersPanel.chkDems.set('checked', true);
-                //         this.layersPanel.chkDemHillshades.set('checked', true);
-                //         this.demVisible = true;
-                //     }
-                // }
             },
 
             filterMarineSurveys: function(values) {
@@ -578,7 +546,7 @@ define([
                 this.layersPanel.disableGetMarineDataButton();
             },
 
-            openGetMarineDataWindow: function(geometry, surveyIds) {
+            openGetMarineDataWindow: function(geometry, surveyIds, isSingleSurvey) {
                 var filter = this.filterValues;
                 var urlParams = [];
                 var visibleTracklineLayers = this.layersPanel.visibleTracklineLayers;
@@ -593,26 +561,37 @@ define([
                 }
                 urlParams.push('surveyTypes=' + surveyTypes.join(',')); //Always include the surveyTypes param
                 
-                if (geometry && geometry.type == 'point') {     
-                    //Case when using single-click to identify, then clicking "Get Marine Data for these Surveys" or "This Survey".
+                if (isSingleSurvey || (geometry && geometry.type == 'point')) {
+                    //Case when using single-click to identify, then clicking "Get Marine Data for these Surveys" 
+                    //Or, when clicking "Get Marine Data for This Survey".
                     
                     //Pass the survey ID(s) from the IdentifyPane.
                     urlParams.push('surveyIds=' + surveyIds.join(','));        
+
+                    //If geometry is an extent, pass it in geographic coords.
+                    if (geometry && geometry.type == 'extent') {
+                        var extent = geometry;
+                        if (geometry.spatialReference.isWebMercator()) {
+                            extent = webMercatorUtils.webMercatorToGeographic(geometry);
+                        }
+                        //Round lat/lon values to 5 decimal places
+                        urlParams.push('geometry=' + 
+                                Math.round(extent.xmin*100000)/100000 + ',' + 
+                                Math.round(extent.ymin*100000)/100000 + ',' + 
+                                Math.round(extent.xmax*100000)/100000 + ',' + 
+                                Math.round(extent.ymax*100000)/100000);
+                    }
+
+                    if (this.mapId == 'arctic' || this.mapId == 'antarctic') {
+                        alert('Warning: "Draw Rectangle" for Arctic/Antarctic projections are currently unsupported for data extraction. The geometry parameter will be excluded.');
+                    }
+
                     var url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
                     window.open(url);
                 }
-                else if (geometry && geometry.type == 'extent' && (this.mapId == 'arctic' || this.mapId == 'antarctic')) {
-                    //Handles Arctic/Antarctic identify with extent (not supported), which will act like single-click.
-
-                    //Pass the survey ID(s) from the IdentifyPane.
-                    urlParams.push('surveyIds=' + surveyIds.join(','));        
-                    var url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&'); 
-                    alert('Warning: "Draw Rectangle" for Arctic/Antarctic projections are currently unsupported for data extraction. The geometry parameter will be excluded.');
-                    window.open(url);    
-                }
                 else {
                     //Case when applying a filter, then clicking "Get Marine Data" in the left panel.
-                    //Or, identify with extent, and click "Get Marine Data for These Surveys" or "This Survey".
+                    //Or, identify with extent, and click "Get Marine Data for These Surveys"
 
                     //Pass the filter if available.
                     if (filter && !this.isCleared) {
@@ -684,7 +663,7 @@ define([
                 var params = {};
                 params.layerDefs = layerDefsStr;
 
-                var url = '//maps.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
+                var url = '//gis.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
 
                 xhr.post(
                     url, {
@@ -704,7 +683,7 @@ define([
                 var params = {};
                 params.layerDefs = layerDefsStr;
 
-                var url = '//maps.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
+                var url = '//gis.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
 
                 xhr.post(
                     url, {
