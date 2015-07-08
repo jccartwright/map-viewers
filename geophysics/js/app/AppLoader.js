@@ -17,6 +17,7 @@ define([
     'esri/geometry/geometryEngine',
     'esri/geometry/webMercatorUtils',
     'esri/SpatialReference',
+    'esri/dijit/Legend',
     'esri/tasks/GeometryService',
     'esri/tasks/ProjectParameters',
     'ngdc/Logger',
@@ -57,6 +58,7 @@ define([
         geometryEngine,
         webMercatorUtils,
         SpatialReference,
+        Legend,
         GeometryService,
         ProjectParameters,
         Logger,
@@ -232,6 +234,34 @@ define([
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
                 }, new MercatorLayerCollection());  
+
+                aspect.after(this.mercatorMapConfig, 'mapReady', lang.hitch(this, function() {
+                    this.legend = new Legend({
+                        map: this.mercatorMapConfig.map,
+                        layerInfos: [            
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('All Parameters')._tiledService, title: " "},
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('All Parameters')._dynamicService, title: " "},
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Bathymetry')._tiledService, title: " "},
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Bathymetry')._dynamicService, title: " "},
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Gravity')._tiledService, title: " "},
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Gravity')._dynamicService, title: " "},
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Magnetics')._tiledService, title: " "},
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Magnetics')._dynamicService, title: " "},
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Single-Channel Seismics')._tiledService, title: " "},    
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Single-Channel Seismics')._dynamicService, title: " "},                          
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Combined'), title: " "}
+                        ],
+                        respectCurrentMapScale: false
+                    }, "legend");
+                    this.legend.startup();
+
+                    topic.subscribe('/ngdc/layer/visibility', lang.hitch(this, function() {
+                        this.legend.refresh();
+                    }));
+                    topic.subscribe('/ngdc/sublayer/visibility', lang.hitch(this, function() {
+                        this.legend.refresh();
+                    }));
+                }));
 
                 var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
 
