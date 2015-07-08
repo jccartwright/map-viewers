@@ -101,6 +101,10 @@ define([
                     var msg = number.format(data.surveyCount)+' survey lines';
                     if (this.isSurveyCountValid()) {
                         domStyle.set(this.aoiMessage,'color','green');
+                    } else if (this.surveyCount == 0) {
+                        //add warning message and change text color
+                        msg += "<br/>No surveys are available in your specified area of interest. Please choose an area containing at least one survey";
+                        domStyle.set(this.aoiMessage,'color','red');
                     } else {
                         //add warning message and change text color
                         msg += "<br/>This exceeds the maximum of "+number.format(this.maxSurveyCount)+" - please reduce your area of interest";
@@ -155,7 +159,7 @@ define([
             },
 
             isSurveyCountValid: function() {
-                return (this.surveyCount <= this.maxSurveyCount);
+                return (this.surveyCount > 0 && this.surveyCount <= this.maxSurveyCount);
             },
 
             //TODO add support for arctic coords
