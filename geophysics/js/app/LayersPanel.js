@@ -41,7 +41,7 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                this.marineSearchDialog = new MarineSearchDialog({title: 'Sear Marine Surveys'});
+                this.marineSearchDialog = new MarineSearchDialog({title: 'Search Marine Surveys'});
                 this.aeroSearchDialog = new AeroSearchDialog({title: 'Search Airborne Surveys'});
 
                 this.visibleTracklineLayers = {
