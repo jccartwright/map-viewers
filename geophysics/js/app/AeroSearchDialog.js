@@ -117,6 +117,7 @@ define([
                     var option = domConstruct.create('option');
                     option.value = item.id; 
                     option.label = item.id;
+                    option.text = item.id;
                     option.selected = false;
                     this.projectSelect.domNode.appendChild(option);
                 }));
