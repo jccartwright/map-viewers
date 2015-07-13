@@ -131,6 +131,7 @@ define([
                     var option = domConstruct.create('option');
                     option.value = item.name; 
                     option.label = item.name;
+                    option.text = item.name;
                     option.selected = false;
                     this.shipSelect.domNode.appendChild(option);
                 }));
@@ -143,6 +144,7 @@ define([
                     var option = domConstruct.create('option');
                     option.value = item.id;
                     option.label = item.id;
+                    option.text = item.id;
                     option.selected = false;
                     this.sourceInstSelect.domNode.appendChild(option);
                 }));
