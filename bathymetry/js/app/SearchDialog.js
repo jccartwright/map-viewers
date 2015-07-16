@@ -60,6 +60,8 @@ define([
             },
 
             execute: function(values) {  
+                values.zoomToResults = this.chkZoomToResults.get('value');
+
                 if (this.isDefault(values)) {
                     this.reset();
                 } else {       
@@ -75,7 +77,8 @@ define([
                 this.surveyNameText.set('value', '');
                 this.platformNameText.set('value', '');                                            
                 this.startYearSpinner.set('value', '');
-                this.endYearSpinner.set('value', '');                             
+                this.endYearSpinner.set('value', '');
+                this.chkZoomToResults.set('checked', true);                             
             },
 
             reset: function() {
