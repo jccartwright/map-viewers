@@ -84,10 +84,10 @@ define([
                         visible: this.demVisible,
                         imageServiceParameters: this.imageServiceParameters
                     }),                    
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_contours/MapServer', {
-                        id: 'GEBCO_08 Contours',
+                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
+                        id: 'GEBCO_2014 Contours',
                         visible: false,
-                        opacity: 0.5
+                        opacity: 0.7
                     }),                    
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (non-digital)',
