@@ -26,8 +26,8 @@ define([
                         visible: true
                     }, 
                     {
-                        label: 'Bathymetry Contours (from GEBCO_08)',
-                        services: [{id: 'GEBCO_08 Contours'}],
+                        label: 'Bathymetry Contours (from GEBCO_2014)',
+                        services: [{id: 'GEBCO_2014 Contours'}],
                         visible: false
                     },
                     {
