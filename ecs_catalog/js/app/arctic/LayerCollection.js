@@ -29,7 +29,7 @@ define([
             defineMapServices: function() {
                 //TODO check to ensure unique id
                 this.mapServices = [
-                    new ArcGISTiledMapServiceLayer('http://maps8.arcgisonline.com/arcgis/rest/services/Arctic_Polar_Ocean_Base/MapServer', {
+                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/arcgis/rest/services/Polar/Arctic_Ocean_Base/MapServer', {
                         id: 'Arctic Basemap',
                         visible: true
                     }),
@@ -62,7 +62,7 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISTiledMapServiceLayer('http://maps8.arcgisonline.com/arcgis/rest/services/Arctic_Polar_Ocean_Reference/MapServer', {
+                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/arcgis/rest/services/Polar/Arctic_Ocean_Reference/MapServer', {
                         id: 'Reference',
                         visible: false
                     }),                                      
