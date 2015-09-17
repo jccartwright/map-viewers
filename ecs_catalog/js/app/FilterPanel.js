@@ -145,6 +145,7 @@ define([
                     this.scenarioSelect.store = this.scenarioStore;
                     
                     this.scenarioSelect.set('value', 0); //Select the "None Selected" option by default.
+                    this.selectPhase('ONE'); //Select Phase 1 by default.
                 }), function(error) {
                     console.log('Error retrieving scenarios json');
                     //alert('Error retrieving BOS scenarios. Are you logged into the ecs-catalog application?');
