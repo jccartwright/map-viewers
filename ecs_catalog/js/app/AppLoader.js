@@ -326,7 +326,6 @@ define([
                     registry.byId('mapContainer').selectChild('mercator');
                 } else if ( regionName === 'Arctic' ) { //Arctic region selected, open the Arctic viewer in a new window
                     registry.byId('mapContainer').selectChild('arctic');
-                    return;
                 } else {
                     registry.byId('mapContainer').selectChild('mercator');
                 }
