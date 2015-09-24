@@ -71,7 +71,7 @@ define([
                         visible: false,
                         opacity: 0.7,
                         imageParameters: this.imageParameters.png32
-                    }),                    
+                    })
                     // new ArcGISTiledMapServiceLayer('http://maps.ngdc.noaa.gov/arcgis/rest/services/arctic/clipping_donut/MapServer', {
                     //     id: 'Clipping Donut',
                     //     visible: true
