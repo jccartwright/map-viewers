@@ -26,6 +26,7 @@ define([
                     <div class="valueName">Survey ID: <span class="parameterValue">${surveyId}</span></div>\
                     <div class="valueName">Platform Name: <span class="parameterValue">${platformName}</span></div>\
                     <div class="valueName">Survey Year: <span class="parameterValue">${surveyYear}</span></div>\
+                    <div class="valueName">Source Organization: <span class="parameterValue">${source}</span></div>\
                     <div class="valueName">Chief Scientist: <span class="parameterValue">${chiefScientist}</span></div>\
                     <div class="valueName">Instrument: <span class="parameterValue">${instrument}</span></div>\
                     <div class="valueName">File Count: <span class="parameterValue">${fileCount}</span></div>\
@@ -40,6 +41,7 @@ define([
                         ngdcId: a['NGDC ID'],
                         surveyId: a['Survey ID'],
                         surveyYear: a['Survey Year'],
+                        source: a['Source'],
                         platformName: a['Platform Name'],
                         chiefScientist: a['Chief Scientist'],
                         instrument: a['Instrument'],
