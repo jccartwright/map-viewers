@@ -4,7 +4,6 @@ define([
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISImageServiceLayer',
-    'ngdc/layers/GMRTTiledLayer',
     'app/TiledWMSLayer'
     ],
     function(
@@ -13,7 +12,6 @@ define([
         ArcGISTiledMapServiceLayer, 
         ArcGISDynamicMapServiceLayer,
         ArcGISImageServiceLayer,
-        GMRTTiledLayer,
         TiledWMSLayer
         ){
 
