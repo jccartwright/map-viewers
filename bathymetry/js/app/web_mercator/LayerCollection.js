@@ -4,7 +4,7 @@ define([
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISImageServiceLayer',
-    'app/TiledWMSLayer'
+    'ngdc/layers/TiledWMSLayer'
     ],
     function(
         declare, 
