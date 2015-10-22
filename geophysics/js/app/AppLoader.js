@@ -599,7 +599,7 @@ define([
                     urlParams.push('surveyIds=' + surveyIds.join(','));        
 
                     //If geometry is an extent, pass it in geographic coords.
-                    if (geometry && geometry.type == 'extent') {
+                    if (this.mapId == 'mercator' && geometry && geometry.type == 'extent') {
                         var extent = geometry;
                         if (geometry.spatialReference.isWebMercator()) {
                             extent = webMercatorUtils.webMercatorToGeographic(geometry);
@@ -613,7 +613,7 @@ define([
                     }
 
                     if (this.mapId == 'arctic' || this.mapId == 'antarctic') {
-                        alert('Warning: "Draw Rectangle" for Arctic/Antarctic projections are currently unsupported for data extraction. The geometry parameter will be excluded.');
+                        alert('Warning: The "Draw Rectangle" tool for Arctic/Antarctic projections is currently unsupported for data extraction. The full cruises will be requested.');
                     }
 
                     var url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
@@ -659,7 +659,7 @@ define([
                     }
 
                     //Pass the extent in geographic coords.
-                    if (geometry && geometry.type == 'extent') {
+                    if (this.mapId == 'mercator' && geometry && geometry.type == 'extent') {
                         var extent = geometry;
                         if (geometry.spatialReference.isWebMercator()) {
                             extent = webMercatorUtils.webMercatorToGeographic(geometry);
@@ -671,6 +671,11 @@ define([
                                 Math.round(extent.xmax*100000)/100000 + ',' + 
                                 Math.round(extent.ymax*100000)/100000);
                     }
+
+                    if (this.mapId == 'arctic' || this.mapId == 'antarctic') {
+                        alert('Warning: The "Draw Rectangle" tool for Arctic/Antarctic projections is currently unsupported for data extraction. The full cruises will be requested.');
+                    }
+
                     var url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
                     if (url.length > 2000) {
                         alert('Warning: request URL is greater than 2000 characters. Problems may be encountered in some web browsers.');
