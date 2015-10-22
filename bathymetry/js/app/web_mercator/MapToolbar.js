@@ -11,7 +11,9 @@ define([
             constructor: function() {
                 this._basemaps = [
                     {base: 'Ocean Base', overlays: [{id: 'Ocean Reference'}], label: 'Ocean Basemap (Esri)'},
-                    {base: 'GEBCO_08', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (GEBCO_08)'},
+                    {base: 'GEBCO_2014', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (GEBCO_2014)'},
+                    {base: 'GMRT Unmasked', overlays: [{id: 'Ocean Reference'}], label: 'Global Multi-Resolution Topography (GMRT)'},
+                    {base: 'GMRT Masked', overlays: [{id: 'Ocean Reference'}], label: 'Global Multi-Resolution Topography (GMRT), <i>High-Resolution Areas Highlighted</i>'},
                     {base: 'ETOPO1', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (ETOPO1)'},
                     {base: 'Light Gray', overlays: [{id: 'Light Gray Reference'}], label: 'Light Gray (Esri)'},
                     {base: 'Dark Gray', overlays: [{id: 'Dark Gray Reference'}], label: 'Dark Gray (Esri)'},
@@ -26,7 +28,7 @@ define([
                         visible: true
                     }, 
                     {
-                        label: 'Bathymetry Contours (from GEBCO_2014)',
+                        label: 'Bathymetric Contours (from GEBCO_2014)',
                         services: [{id: 'GEBCO_2014 Contours'}],
                         visible: false
                     },
@@ -39,7 +41,14 @@ define([
                         label: 'Graticule',
                         services: [{id: 'Graticule'}],
                         visible: false
+                    }//,
+                    /*
+                    {
+                        label: 'EMODNet Survey Tracks/Polygons',
+                        services: [{id: 'EMODNet'}],
+                        visible: true
                     }
+                    */
                 ];
 
                 this._identifyTools = [

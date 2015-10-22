@@ -3,14 +3,16 @@ define([
     'ngdc/layers/AbstractLayerCollection', 
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
-    'esri/layers/ArcGISImageServiceLayer'
+    'esri/layers/ArcGISImageServiceLayer',
+    'app/TiledWMSLayer'
     ],
     function(
         declare, 
         AbstractLayerCollection, 
         ArcGISTiledMapServiceLayer, 
         ArcGISDynamicMapServiceLayer,
-        ArcGISImageServiceLayer
+        ArcGISImageServiceLayer,
+        TiledWMSLayer
         ){
 
         return declare([AbstractLayerCollection], {
@@ -51,8 +53,8 @@ define([
                         id: 'NatGeo',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_hillshade/MapServer', {
-                        id: 'GEBCO_08',
+                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_hillshade/MapServer', {
+                        id: 'GEBCO_2014',
                         visible: false
                     }),                    
                     new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer', {
@@ -77,7 +79,23 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer', {
                         id: 'Ocean Base',
-                        visible: true,
+                        visible: true
+                    }),
+                    new TiledWMSLayer('//gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
+                        id: 'GMRT Masked',
+                        visible: false,
+                        format: 'jpeg',
+                        wmsVersion: '1.1.1',
+                        epsgCode: '3857',
+                        layerNames: ['topo-mask']
+                    }),
+                    new TiledWMSLayer('//gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
+                        id: 'GMRT Unmasked',
+                        visible: false,
+                        format: 'jpeg',
+                        wmsVersion: '1.1.1',
+                        epsgCode: '3857',
+                        layerNames: ['topo']
                     }),
                     new ArcGISImageServiceLayer('//gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer', {
                         id: 'DEM Hillshades',
@@ -88,7 +106,15 @@ define([
                         id: 'GEBCO_2014 Contours',
                         visible: false,
                         opacity: 0.7
-                    }),                    
+                    }),
+                    new TiledWMSLayer('//geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
+                        id: 'EMODNet',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '900913',
+                        layerNames: ['points', 'lines', 'polygons']
+                    }),                 
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (non-digital)',
                         visible: false,
