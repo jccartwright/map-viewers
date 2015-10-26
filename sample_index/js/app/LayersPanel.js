@@ -38,13 +38,15 @@ define([
                 on(registry.byId('AllInst'), 'click', lang.hitch(this, function() { this.selectInst('AllInst'); }));
                 on(registry.byId('None'), 'click', lang.hitch(this, function() { this.selectInst('None'); }));
                 on(registry.byId('AOML'), 'click', lang.hitch(this, function() { this.selectInst('AOML'); }));
+                on(registry.byId('ARFFSU'), 'click', lang.hitch(this, function() { this.selectInst('ARFFSU'); }));
                 on(registry.byId('AWI'), 'click', lang.hitch(this, function() { this.selectInst('AWI'); }));
                 on(registry.byId('BOSCORF'), 'click', lang.hitch(this, function() { this.selectInst('BOSCORF'); }));
-                on(registry.byId('BPRC'), 'click', lang.hitch(this, function() { this.selectInst('BPRC'); }));
+                on(registry.byId('BPCRC'), 'click', lang.hitch(this, function() { this.selectInst('BPCRC'); }));
+                on(registry.byId('BPCRR'), 'click', lang.hitch(this, function() { this.selectInst('BPCRR'); }));
                 on(registry.byId('Canada'), 'click', lang.hitch(this, function() { this.selectInst('Canada'); }));
                 on(registry.byId('DSDP'), 'click', lang.hitch(this, function() { this.selectInst('DSDP'); }));
                 on(registry.byId('ECS'), 'click', lang.hitch(this, function() { this.selectInst('ECS'); }));
-                on(registry.byId('FSU'), 'click', lang.hitch(this, function() { this.selectInst('FSU'); }));
+                on(registry.byId('EDYTEM'), 'click', lang.hitch(this, function() { this.selectInst('EDYTEM'); }));
                 on(registry.byId('GEOMAR'), 'click', lang.hitch(this, function() { this.selectInst('GEOMAR'); }));
                 on(registry.byId('IODP'), 'click', lang.hitch(this, function() { this.selectInst('IODP'); }));
                 on(registry.byId('LDEO'), 'click', lang.hitch(this, function() { this.selectInst('LDEO'); }));
@@ -55,6 +57,7 @@ define([
                 on(registry.byId('RSMAS'), 'click', lang.hitch(this, function() { this.selectInst('RSMAS'); }));
                 on(registry.byId('SIO'), 'click', lang.hitch(this, function() { this.selectInst('SIO'); }));
                 on(registry.byId('SOEST'), 'click', lang.hitch(this, function() { this.selectInst('SOEST'); }));
+                on(registry.byId('UWISC'), 'click', lang.hitch(this, function() { this.selectInst('U WISC'); }));
                 on(registry.byId('URI'), 'click', lang.hitch(this, function() { this.selectInst('URI'); }));
                 on(registry.byId('USC'), 'click', lang.hitch(this, function() { this.selectInst('USC'); }));
                 on(registry.byId('USGSMP'), 'click', lang.hitch(this, function() { this.selectInst('USGSMP'); }));
@@ -62,7 +65,6 @@ define([
                 on(registry.byId('USGSSP'), 'click', lang.hitch(this, function() { this.selectInst('USGSSP'); }));
                 on(registry.byId('UT'), 'click', lang.hitch(this, function() { this.selectInst('UT'); }));
                 on(registry.byId('WHOI'), 'click', lang.hitch(this, function() { this.selectInst('WHOI'); }));
-                on(registry.byId('WISC'), 'click', lang.hitch(this, function() { this.selectInst('WISC'); }));
                 on(registry.byId('NMNH'), 'click', lang.hitch(this, function() { this.selectInst('NMNH'); }));
 
                 on(this.searchButton, 'click', lang.hitch(this, function() {
