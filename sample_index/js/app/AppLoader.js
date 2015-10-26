@@ -312,14 +312,7 @@ define([
                         svc.hide();
                     } else {
                         svc.hide();
-                        
-                        if (inst === 'FSU') {
-                            inst = 'ARFFSU';
-                        }
-                        if (inst === 'WISC') {
-                            inst = 'U WISC';
-                        }
-                        
+                                                
                         if (this.currentFilter) {
                             layerDefinitions = [this.currentFilter + " AND FACILITY_CODE in ('" + inst + "')"];
                         } else {
