@@ -26,7 +26,7 @@ define([
     'ngdc/arctic/ZoomLevels',
     'ngdc/antarctic/ZoomLevels',
     'ngdc/Banner',
-    'ngdc/CoordinatesToolbar',
+    'app/CoordinatesToolbar',
     'app/web_mercator/LayerCollection',
     'app/arctic/LayerCollection',
     'app/antarctic/LayerCollection',
@@ -89,7 +89,8 @@ define([
             init: function() {
                 esriConfig.defaults.io.corsEnabledServers = [
                     'http://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
+                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'
+                ];
 
                 esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
@@ -222,9 +223,14 @@ define([
                     nosHydroVisible: this.nosHydroVisible,
                     tracklineVisible: this.tracklineVisible,
                     demVisible: this.demVisible
-                }));  
+                }));
 
                 var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
+
+                //hack to handle common case where initial zoom level is <= 4
+                if (this.mercatorMapConfig.map.getAbsoluteLevel() <= 4) {
+                    coordinatesToolbar.hideScalebar();
+                }
 
                 //Hide the scalebar at small scales <= 4
                 on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
