@@ -136,11 +136,11 @@ define([
                         source: a['Source'],
                         project: a['Project'],
                         verticalDatum: a['Vertical Datum'],
-                        status: a['STATUS'],
+                        status: a['Status'],
                         type: a['Type'],
                         coverage: a['Coverage'],
                         completionDate: a['Completion Date']
-                    });                
+                    });               
                 return html;
             },
 
@@ -228,7 +228,7 @@ define([
                 }
                 
                 if (results['DEM Extents']) {    
-                    if ((features = results['DEM Extents']['All NGDC Bathymetric DEMs'])) {
+                    if ((features = results['DEM Extents']['All NCEI Bathymetric DEMs'])) {
                         features.sort(this.demSort);
                     }                    
                 }
