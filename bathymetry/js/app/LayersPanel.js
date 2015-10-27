@@ -71,9 +71,9 @@ define([
                     }                                     
                 }));
 
-                on(this.chkEmodNet, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'EMODNet', this.chkEmodNet.checked);
-                }));
+                // on(this.chkEmodNet, 'change', lang.hitch(this, function() {
+                //     topic.publish('/ngdc/layer/visibility', 'EMODNet', this.chkEmodNet.checked);
+                // }));
 
                 on(this.chkDems, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'DEM Extents', this.chkDems.checked);

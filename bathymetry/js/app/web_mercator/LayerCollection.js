@@ -107,14 +107,14 @@ define([
                         visible: false,
                         opacity: 0.7
                     }),
-                    new TiledWMSLayer('//geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
-                        id: 'EMODNet',
-                        visible: false,
-                        format: 'png',
-                        wmsVersion: '1.3.0',
-                        epsgCode: '900913',
-                        layerNames: ['points', 'lines', 'polygons']
-                    }),                 
+                    // new TiledWMSLayer('//geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
+                    //     id: 'EMODNet',
+                    //     visible: false,
+                    //     format: 'png',
+                    //     wmsVersion: '1.3.0',
+                    //     epsgCode: '900913',
+                    //     layerNames: ['points', 'lines', 'polygons']
+                    // }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (non-digital)',
                         visible: false,
