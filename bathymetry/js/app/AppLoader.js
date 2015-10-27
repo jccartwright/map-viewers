@@ -26,7 +26,7 @@ define([
     'ngdc/arctic/ZoomLevels',
     'ngdc/antarctic/ZoomLevels',
     'ngdc/Banner',
-    'app/CoordinatesToolbar',
+    'ngdc/CoordinatesToolbar',
     'app/web_mercator/LayerCollection',
     'app/arctic/LayerCollection',
     'app/antarctic/LayerCollection',
