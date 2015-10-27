@@ -34,7 +34,7 @@ define([
                     'NOS Hydrographic Surveys/Surveys with BAGs': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydrographic Surveys/Surveys with Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydro (non-digital)/Surveys without Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
-                    'DEM Extents/All NGDC Bathymetric DEMs': lang.hitch(this, this.demFormatter),
+                    'DEM Extents/All NCEI Bathymetric DEMs': lang.hitch(this, this.demFormatter),
                     'CSC Lidar/Lidar': lang.hitch(this, this.lidarFormatter)
                 };
             } //end constructor
