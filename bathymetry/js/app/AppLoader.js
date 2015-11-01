@@ -27,6 +27,7 @@ define([
     'ngdc/antarctic/ZoomLevels',
     'ngdc/Banner',
     'ngdc/CoordinatesToolbar',
+    'ngdc/CoordinatesWithElevationToolbar',
     'app/web_mercator/LayerCollection',
     'app/arctic/LayerCollection',
     'app/antarctic/LayerCollection',
@@ -66,6 +67,7 @@ define([
         AntarcticZoomLevels,
         Banner,
         CoordinatesToolbar,
+        CoordinatesWithElevationToolbar,
         MercatorLayerCollection,
         ArcticLayerCollection,
         AntarcticLayerCollection,
@@ -225,27 +227,7 @@ define([
                     demVisible: this.demVisible
                 }));
 
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
-
-                //hack to handle common case where initial zoom level is <= 4
-                if (this.mercatorMapConfig.map.getAbsoluteLevel() <= 4) {
-                    coordinatesToolbar.hideScalebar();
-                }
-
-                //Hide the scalebar at small scales <= 4
-                on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
-                    var level = this.mercatorMapConfig.map.getAbsoluteLevel();
-                    if (level <= 4) {
-                        //These need to be on a short timer due to unexpected errors during the zoom animation
-                        setTimeout(function() {
-                            coordinatesToolbar.hideScalebar();
-                        }, 100);
-                    } else {
-                        setTimeout(function() {
-                            coordinatesToolbar.showScalebar();
-                        }, 100);
-                    }
-                }));
+                new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
             },
 
             setupArcticView: function() {
@@ -277,7 +259,7 @@ define([
                     demVisible: this.demVisible
                 }));
 
-                new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
 
             setupAntarcticView: function() {
@@ -308,7 +290,7 @@ define([
                     demVisible: this.demVisible
                 }));
 
-                new CoordinatesToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
             },
 
             //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'

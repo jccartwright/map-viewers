@@ -58,6 +58,12 @@ html,body {
     z-index: 9999;
 }
 
+.coordinatesWithElevationToolbar {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 9999;
+}
 
 
 .esriScalebar {
