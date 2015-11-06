@@ -22,14 +22,14 @@ define([
                 logger.debug('inside constructor for app/web_mercator/Identify');
 
                 //augment arguments object with list of layers to identify.
-                arguments[0].layerIds = ['Datasets/Reports', 'Sample Index', 'NOS Seabed'];
+                arguments[0].layerIds = ['Marine Geology', 'Sample Index', 'NOS Seabed'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
 
                 //formatter specific to each sublayer, keyed by Layer/sublayer name.
                 this.formatters = {
-                    'Datasets/Reports/Geology_Datasets/Reports_NGDC_Archive': lang.hitch(this, this.datasetsReportsFormatter),
+                    'Marine Geology/Marine Geology Data Sets/Reports': lang.hitch(this, this.marineGeologyFormatter),
                     'Sample Index/All Samples by Institution': lang.hitch(this, this.sampleIndexFormatter),
                     'NOS Seabed/NOS Seabed Type': lang.hitch(this, this.nosSeabedFormatter)
                 };

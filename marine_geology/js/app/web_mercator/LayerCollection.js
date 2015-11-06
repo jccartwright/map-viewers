@@ -45,8 +45,8 @@ define([
                         id: 'NatGeo',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_hillshade/MapServer', {
-                        id: 'GEBCO_08',
+                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_hillshade/MapServer', {
+                        id: 'GEBCO_2014',
                         visible: false
                     }),                    
                     new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer', {
@@ -73,12 +73,17 @@ define([
                         id: 'Ocean Base',
                         visible: true,
                     }),
+                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
+                        id: 'GEBCO_2014 Contours',
+                        visible: false,
+                        opacity: 0.7
+                    }),
                     new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/marine_geology/MapServer', {
-                        id: 'Datasets/Reports (tiled)',
+                        id: 'Marine Geology (tiled)',
                         visible: this.datasetsReportsVisible
                     }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/marine_geology_dynamic/MapServer', {
-                        id: 'Datasets/Reports (dynamic)',
+                        id: 'Marine Geology (dynamic)',
                         visible: this.datasetsReportsVisible,
                         imageParameters: this.imageParameters.png32
                     }),
@@ -133,9 +138,9 @@ define([
             definePairedMapServices: function() {
                 this.pairedMapServices = [
                     {
-                        id: 'Datasets/Reports',
-                        tiledService: this.getLayerById('Datasets/Reports (tiled)'),
-                        dynamicService: this.getLayerById('Datasets/Reports (dynamic)'),
+                        id: 'Marine Geology',
+                        tiledService: this.getLayerById('Marine Geology (tiled)'),
+                        dynamicService: this.getLayerById('Marine Geology (dynamic)'),
                         visible: this.multibeamVisible,
                         cutoffZoom: 10
                     },

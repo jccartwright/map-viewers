@@ -153,8 +153,8 @@ define([
                     var legend = new Legend({
                         map: this.mercatorMapConfig.map,
                         layerInfos: [
-                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Datasets/Reports')._tiledService, title: "Datasets/Reports"},
-                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Datasets/Reports')._dynamicService, title: "Datasets/Reports"},
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Marine Geology')._tiledService, title: "Marine Geology Data Sets/Reports"},
+                            {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Marine Geology')._dynamicService, title: "Marine Geology Data Sets/Reports"},
                             {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index')._tiledService, title: "Sample Index"},
                             {layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index')._dynamicService, title: "Sample Index"}
                         ]

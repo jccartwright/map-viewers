@@ -33,8 +33,8 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                on(this.chkDatasetsReports, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'Datasets/Reports', this.chkDatasetsReports.checked);
+                on(this.chkMarineGeology, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'Marine Geology', this.chkMarineGeology.checked);
                 }));
                 on(this.chkSampleIndex, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Sample Index', this.chkSampleIndex.checked);
