@@ -17,26 +17,30 @@ define([
 
         return declare([AbstractIdentify], {
 
-            datasetsReportsFormatter: function(feature) {
+            marineGeologyFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template = '\
                     <table>\
-                    <tr><td class="valueName">Dataset Title:</td><td class="parameterValue"><a href="http://www.ngdc.noaa.gov/nndc/struts/results?op_28=eq&t=101477&s=1&d=2&v_28=${mggId}" target="_blank">${datasetTitle}</a></td></tr>\
+                    <tr><td class="valueName">Dataset Title:</td><td class="parameterValue"><a href="${url}" target="_blank">${datasetTitle}</a></td></tr>\
                     <tr><td class="valueName">MGGID:</td><td class="parameterValue">${mggId}</td></tr>\
+                    <tr><td class="valueName">Institution:</td><td class="parameterValue">${institution}</td></tr>\
                     <tr><td class="valueName">Cruise:</td><td class="parameterValue">${cruise}</td></tr>\
                     <tr><td class="valueName">Platform:</td><td class="parameterValue">${platform}</td></tr>\
                     <tr><td class="valueName">Hole/Sample ID:</td><td class="parameterValue">${holeSampleId}</td></tr>\
                     <tr><td class="valueName">Device:</td><td class="parameterValue">${device}</td></tr>\
                     <tr><td class="valueName">Collection Date:</td><td class="parameterValue">${collectionDate}</td></tr>\
                     <tr><td class="valueName">Latitude:</td><td class="parameterValue">${latitude}</td></tr>\
-                    <tr><td class="valueName">Longitude:</td><td class="parameterValue">${longitude}</td></tr>\
-                    <tr><td class="valueName">Metadata gov.noaa.ngdc.mgg:</td><td class="parameterValue"><a href="http://www.ngdc.noaa.gov/docucomp/page?xml=NOAA/NESDIS/NGDC/MGG/Geology/iso/xml/${metadata}.xml&amp;view=getDataView&amp;header=none" target="_blank">${metadata}</a></td></tr>\
-                    </table>';
+                    <tr><td class="valueName">Longitude:</td><td class="parameterValue">${longitude}</td></tr>';
+                    if (a['Metadata URL'] !== '') {
+                        template += '<tr><td colspan="2" class="parameterValue"><b><a href="${metadataUrl}" target="_blank">Metadata Link</a></b></td></tr>';
+                    }
+                    template += '</table>';
 
                 var html = string.substitute(template, {
                     datasetTitle: a['Dataset Title'],
                     mggId: a['MGGID'],
+                    institution: a['Institution'],
                     cruise: a['Cruise'],
                     platform: a['Platform'],
                     holeSampleId: a['Hole/Sample ID'],
@@ -44,7 +48,9 @@ define([
                     collectionDate: a['Collection Date'],
                     latitude: a['Latitude'],
                     longitude: a['Longitude'],
-                    metadata: a['Metadata gov.noaa.ngdc.mgg:']
+                    metadata: a['Metadata gov.noaa.ngdc.mgg:'],
+                    url: a['URL'],
+                    metadataUrl: a['Metadata URL']
                 });                
                 return html;
             },
@@ -137,8 +143,14 @@ define([
                 return html;
             },
 
-            datasetsReportsSort: function(a, b) {
-                return a.feature.attributes['MGGID'] <= b.feature.attributes['MGGID'] ? -1 : 1;     
+            marineGeologySort: function(a, b) {
+                //Sort by NOS Survey ID, then Sample ID within surveys
+                var attr1 = a.feature.attributes;
+                var attr2 = b.feature.attributes;
+                if (attr1['MGGID'] == attr2['MGGID']) {                   
+                    return attr1['Hole/Sample ID'] <= attr2['Hole/Sample ID'] ? -1 : 1;
+                }
+                return attr1['MGGID'] <= attr2['MGGID'] ? -1 : 1;
             },
 
             sampleIndexSort: function(a, b) {
@@ -166,7 +178,7 @@ define([
                 if (attr1['NOS Survey ID'] == attr2['NOS Survey ID']) {                   
                     return attr1['Sample ID'] <= attr2['Sample ID'] ? -1 : 1;
                 }
-                return attr1['NOS Survey ID'] <= attr2['NOS Survey ID'] ? -1 : 1;     
+                return attr1['NOS Survey ID'] <= attr2['NOS Survey ID'] ? -1 : 1;
             },
 
             sortResults: function(results) {
@@ -175,9 +187,9 @@ define([
                     features = results['Sample Index']['All Samples by Institution'];
                     features.sort(this.sampleIndexSort);                
                 }
-                else if (results['Datasets/Reports']) {
-                    features = results['Datasets/Reports']['Geology_Datasets/Reports_NGDC_Archive'];
-                    features.sort(this.datasetsReportsSort);
+                else if (results['Marine Geology']) {
+                    features = results['Marine Geology']['Marine Geology Data Sets/Reports'];
+                    features.sort(this.marineGeologySort);
                 }
                 else if (results['NOS Seabed']) {
                     features = results['NOS Seabed']['NOS Seabed Type'];
