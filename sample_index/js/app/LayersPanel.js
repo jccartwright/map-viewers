@@ -46,7 +46,7 @@ define([
                 on(registry.byId('Canada'), 'click', lang.hitch(this, function() { this.selectInst('Canada'); }));
                 on(registry.byId('DSDP'), 'click', lang.hitch(this, function() { this.selectInst('DSDP'); }));
                 on(registry.byId('ECS'), 'click', lang.hitch(this, function() { this.selectInst('ECS'); }));
-                on(registry.byId('EDYTEM'), 'click', lang.hitch(this, function() { this.selectInst('EDYTEM'); }));
+                on(registry.byId('France'), 'click', lang.hitch(this, function() { this.selectInst('France'); }));
                 on(registry.byId('GEOMAR'), 'click', lang.hitch(this, function() { this.selectInst('GEOMAR'); }));
                 on(registry.byId('IODP'), 'click', lang.hitch(this, function() { this.selectInst('IODP'); }));
                 on(registry.byId('LDEO'), 'click', lang.hitch(this, function() { this.selectInst('LDEO'); }));
