@@ -17,7 +17,7 @@ define([
     'app/web_mercator/MapConfig',
     'ngdc/web_mercator/ZoomLevels',
     'ngdc/Banner',
-    'ngdc/CoordinatesToolbar',
+    'ngdc/CoordinatesWithElevationToolbar',
     'app/web_mercator/LayerCollection',
     'app/web_mercator/MapToolbar',
     'app/web_mercator/Identify',
@@ -43,7 +43,7 @@ define([
         MercatorMapConfig,
         MercatorZoomLevels,
         Banner,
-        CoordinatesToolbar,
+        CoordinatesWithElevationToolbar,
         MercatorLayerCollection,
         MapToolbar,
         WebMercatorIdentify,
@@ -162,23 +162,7 @@ define([
                     legend.startup();
                 }));
 
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
-
-                //Hide the scalebar on startup and at small scales <= 4
-                coordinatesToolbar.hideScalebar();
-                on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
-                    var level = this.mercatorMapConfig.map.getAbsoluteLevel();
-                    if (level <= 4) {
-                        //These need to be on a short timer due to unexpected errors during the zoom animation
-                        setTimeout(function() {
-                            coordinatesToolbar.hideScalebar();
-                        }, 100);
-                    } else {
-                        setTimeout(function() {
-                            coordinatesToolbar.showScalebar();
-                        }, 100);
-                    }
-                }));
+                new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
             },
 
             //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'

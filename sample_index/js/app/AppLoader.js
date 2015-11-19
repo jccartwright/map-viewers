@@ -21,7 +21,7 @@ define([
     'ngdc/arctic/ZoomLevels',
     'ngdc/antarctic/ZoomLevels',
     'ngdc/Banner',
-    'ngdc/CoordinatesToolbar',
+    'ngdc/CoordinatesWithElevationToolbar',
     'app/web_mercator/LayerCollection',
     'app/arctic/LayerCollection',
     'app/antarctic/LayerCollection',
@@ -55,7 +55,7 @@ define([
         ArcticZoomLevels,
         AntarcticZoomLevels,
         Banner,
-        CoordinatesToolbar,
+        CoordinatesWithElevationToolbar,
         MercatorLayerCollection,
         ArcticLayerCollection,
         AntarcticLayerCollection,
@@ -215,22 +215,7 @@ define([
                     selectedInstitution: this.selectedInstitution
                 }, new MercatorLayerCollection());  
 
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
-
-                //Hide the scalebar at small scales <= 4
-                on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
-                    var level = this.mercatorMapConfig.map.getAbsoluteLevel();
-                    if (level <= 4) {
-                        //These need to be on a short timer due to unexpected errors during the zoom animation
-                        setTimeout(function() {
-                            coordinatesToolbar.hideScalebar();
-                        }, 100);
-                    } else {
-                        setTimeout(function() {
-                            coordinatesToolbar.showScalebar();
-                        }, 100);
-                    }
-                }));
+                new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
             },
 
             setupArcticView: function() {
@@ -258,7 +243,7 @@ define([
                     selectedInstitution: this.selectedInstitution
                 }, new ArcticLayerCollection());
 
-                new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
 
             setupAntarcticView: function() {
@@ -286,7 +271,7 @@ define([
                     selectedInstitution: this.selectedInstitution
                 }, new AntarcticLayerCollection());
 
-                new CoordinatesToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
             },
 
             selectInstitution: function(/*String*/ inst) {
