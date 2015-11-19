@@ -142,7 +142,8 @@ define([
                     overview: true,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
-                    lods: zoomLevels.lods
+                    lods: zoomLevels.lods,
+                    noElevation: true
                 }, new MercatorLayerCollection({
                     sampleIndexVisible: this.sampleIndexVisible,
                     datasetsReportsVisible: this.datasetsReportsVisible,
