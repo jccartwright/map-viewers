@@ -93,7 +93,7 @@ define([
                         id: 'Sample Index (tiled)',
                         visible: true
                     }),
-                    new ArcGISDynamicMapServiceLayer('//mapds.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer', {
                         id: 'Sample Index (dynamic)',
                         visible: true,
                         imageParameters: this.imageParameters.png32
