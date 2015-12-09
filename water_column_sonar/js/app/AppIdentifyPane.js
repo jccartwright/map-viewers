@@ -6,15 +6,19 @@ define([
     'ngdc/identify/IdentifyPane', 
     'dojo/topic', 
     'dojo/on',
+    'dojo/dom',
     'esri/dijit/Popup',    
     'dojo/_base/lang', 
     'dojo/store/Memory',
     'dojo/store/Observable',
+    'dijit/registry',
     'dijit/tree/ObjectStoreModel',
     'dijit/layout/BorderContainer',
     'dijit/layout/ContentPane',
     'dijit/form/Button',
     'dijit/Tree',
+    'dijit/TooltipDialog',
+    'dijit/popup',
     'dojo/dom-style', 
     'app/RequestDataDialog'
     ],
@@ -26,15 +30,19 @@ define([
         IdentifyPane, 
         topic, 
         on,
+        dom,
         Popup, 
         lang, 
         Memory,
         Observable,
+        registry,
         ObjectStoreModel,
         BorderContainer,
         ContentPane,
         Button,
         Tree,
+        TooltipDialog,
+        popup,
         domStyle, 
         RequestDataDialog
         ){
@@ -55,6 +63,11 @@ define([
 
                 this.fileFeaturesStale = true;
                 this.isFileFeatures = false;
+            },
+
+            close: function() {
+                this.inherited(arguments);
+                this.hideImagePreview();
             },
 
             postCreate: function() {
@@ -90,16 +103,20 @@ define([
                 bc.addChild(this.fileFeaturePageBottomBar);
                 bc.placeAt(this.fileFeaturePage);
 
+                this.imageThumbnailDialog = new TooltipDialog({
+                    content: 'No image available',
+                });
+
                 //Initialize the fileFeaturePage with a back button
                 this.fileFeaturePageBackButton = new Button({
                     label: 'Back',
                     style: 'bottom: 5px; left: 5px;',
                     onClick: lang.hitch(this, function(){
                         this.isFileFeatures = false;
+                        this.requestFileOrCruiseButton.set('label', 'Request This Cruise');
+                        domStyle.set(this.showFileFeaturesButton.domNode, 'display', ''); //Show the "Show Files" button
                         this.showInfo(this.currentCruiseItem);
-                        //this.setTitle(this.infoPag);
-                        //this.stackContainer.selectChild(this.infoPage);
-                        //domStyle.set(this.requestDataFilesOrSurveysButton.domNode, 'display', ''); //Display the button
+                        this.hideImagePreview();
                     })
                 }).placeAt(this.fileFeaturePageBottomBar);
 
@@ -108,6 +125,7 @@ define([
                     if (this.isFileFeatures) {
                         this.setTitle(this.fileFeaturePageTitle);
                         this.stackContainer.selectChild(this.fileFeaturePage);
+                        this.showImagePreview();
                     } else {
                         this.setTitle(this.featurePageTitle);
                         this.stackContainer.selectChild(this.featurePage);    
@@ -143,7 +161,9 @@ define([
                         //Pass message to identify.js to identify for files
                         this.cruiseId = this.currentItem.attributes['Cruise ID'];
                         this.instrument = this.currentItem.attributes['Instrument Name'];
-                        topic.publish('/water_column_sonar/identifyForFiles', this.identify.searchGeometry, this.cruiseId, this.instrument);                     
+                        topic.publish('/water_column_sonar/identifyForFiles', this.identify.searchGeometry, this.cruiseId, this.instrument);   
+
+                        this.showImagePreview();             
                     })
                 }).placeAt(this.infoPageBottomBar);
 
@@ -199,6 +219,8 @@ define([
                 else {
                     this.hideRequestCruisesButton();
                 }
+
+                this.imageThumbnailDialog.set('content', 'No image available');
             },
 
             showRequestCruisesButton: function() {
@@ -477,13 +499,48 @@ define([
                 //Attach the onMouseOver handler for highlighting features.
                 //It's pausable so we can pause it when hiding the dijit to avoid extraneous mouseovers firing
                 this.onMouseOverHandler = on.pausable(this.fileFeatureTree, 'mouseOver', lang.hitch(this, function(item) {
-                    this.onMouseOverNode(item);
+                    this.onMouseOverFileNode(item);
                 }));
                 this.fileFeatureTree.placeAt(this.fileFeaturePane);
                 this.fileFeatureTree.startup();
 
                 this.fileFeatureTree.expandAll();
                 //this.fileFeatureTree.set('paths', this.fileExpandedNodePaths); //Expand the tree to the instrument level. All nodes will be opened except for these.
+            },
+
+            onMouseOverFileNode: function(evt) {
+                this.onMouseOverNode(evt); //Call the main onMouseOverNode function
+
+                //The event references the TreeRow. Get the enclosing TreeNode widget.
+                var treeNode = registry.getEnclosingWidget(evt.target);
+                var item = treeNode.item;
+
+                //Display the current image thumbnail in the popup dialog
+                if (item && item.type == 'item') {
+                    if (item.attributes['Image Thumbnail'] === 'Null') {
+                        this.imageThumbnailDialog.set('content', 'No image available');
+                    } else {
+                        this.imageThumbnailDialog.set('content', '<a href="' + item.attributes['Image Full Size'] + '" target="_blank"><img src="' + item.attributes['Image Thumbnail'] + '" width="300"></img></a>')
+                    }
+                }
+            },
+
+            showImagePreview: function() {
+                //Show the image thumbnail dialog   
+                popup.open({
+                    popup: this.imageThumbnailDialog,
+                    around: this.domNode,
+                    orient: ['below']
+                });    
+            },
+
+            hideImagePreview: function() {
+                popup.close(this.imageThumbnailDialog);
+            },
+            
+            showInfoPage: function() {
+                this.inherited(arguments);
+                this.hideImagePreview();
             },
 
             getLayerDisplayLabel: function(item, count) {
