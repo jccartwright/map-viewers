@@ -88,8 +88,13 @@ define([
             wcdFileFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
-                var template = '\
-                    <div class="fileName">Attributes for ${fileName}</div>\
+                var template = '<div class="fileName">Attributes for ${fileName}</div>';
+
+                if (a['Image Thumbnail'] !== '') {
+                    template += '<div class="valueName">Image Preview:</div><a href="${imageFullsize}" target="_blank"><img src="${imageThumbnail}" width="300"></img></a>';
+                }
+
+                template += '\
                     <div class="fileHeader">Cruise Details:</div>\
                     <div class="valueName">Survey: <span class="parameterValue">${surveyID}</span></div>\
                     <div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>\
@@ -100,7 +105,7 @@ define([
                     <div class="fileHeader">Instrument Details:</div>\
                     <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
 
-                if (a['Instrument Name'] == 'EK60' || a['Instrument Name'] == 'EK500') {
+                if (a['Instrument Name'] == 'EK60' || a['Instrument Name'] == 'EK500' || a['Instrument Name'] == 'ES60') {
                     template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
                 } else {
                     template += '\
@@ -115,6 +120,7 @@ define([
                     <div class="valueName">Recorded Bottom?: <span class="parameterValue">${recordedBottom}</span></div>\
                     <div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>\
                     <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>';
+
                 var html = string.substitute(template, {
                         fileName: a['File Name'],
                         surveyID: a['Cruise ID'],
@@ -134,7 +140,9 @@ define([
                         frequency: a['Frequency'],
                         minFrequency: a['Min Frequency (kHz)'],
                         maxFrequency: a['Max Frequency (kHz)'],
-                        recordedBottom: a['Recorded Bottom?'] == 'Y' ? 'Yes' : 'No'
+                        recordedBottom: a['Recorded Bottom?'] == 'Y' ? 'Yes' : 'No',
+                        imageThumbnail: a['Image Thumbnail'],
+                        imageFullsize: a['Image Full Size']
                     });                
                 return html;
             },
@@ -178,7 +186,6 @@ define([
                     template += '<br>';
                     ancillaryObject = JSON.parse(ancillaryString);
                     for (var key in ancillaryObject) {
-                        console.log(key + ': ' + ancillaryObject[key]);
                         template += '<div class="valueName"><span class="parameterValue"><a href="' + ancillaryObject[key] + '" target="_blank">' + key + '</a></span></div>';
                     }
                 }
