@@ -81,9 +81,12 @@ define([
             },
 
             init: function() {                
-                esriConfig.defaults.io.corsEnabledServers = [
-                    '//maps.ngdc.noaa.gov/arcgis/rest/services',
-                    '//mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
+                esri.config.defaults.io.corsEnabledServers = [
+                    'http://gis.ngdc.noaa.gov/arcgis/rest/services',
+                    'https://gis.ngdc.noaa.gov/arcgis/rest/services',
+                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
+                    'https://maps.ngdc.noaa.gov/arcgis/rest/services',
+                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
 
                 esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
