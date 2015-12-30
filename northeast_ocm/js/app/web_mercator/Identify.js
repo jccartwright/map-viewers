@@ -22,7 +22,7 @@ define([
                 logger.debug('inside constructor for app/web_mercator/Identify');
 
                 //augment arguments object with list of layers to identify.
-                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'NOS Hydro (non-digital)', 'DEM Extents', 'CSC Lidar'];
+                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'NOS Hydro (non-digital)', 'DEM Extents', 'DEM Tiles', 'CSC Lidar'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
@@ -35,6 +35,7 @@ define([
                     'NOS Hydrographic Surveys/Surveys with Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydro (non-digital)/Surveys without Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
                     'DEM Extents/All NGDC Bathymetric DEMs': lang.hitch(this, this.demFormatter),
+                    'DEM Tiles/DEM Tiles': lang.hitch(this, this.demTilesFormatter),
                     'CSC Lidar/Lidar': lang.hitch(this, this.lidarFormatter)
                 };
             } //end constructor
