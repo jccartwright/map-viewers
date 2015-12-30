@@ -82,8 +82,11 @@ define([
                 else if (item.layerName == 'Surveys without Digital Sounding Data') {
                     return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
                 } 
-                else if (item.layerName == 'All NGDC Bathymetric DEMs') {
+                else if (item.layerName == 'All NCEI Bathymetric DEMs') {
                     return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
+                }
+                else if (item.layerName == 'DEM Tiles') {
+                    return '<i><b>DEM Tiles (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT"></img>';
                 }
                 else if (item.layerName == 'Lidar') {
                     return '<i><b>Bathymetric Lidar (' + this.formatCountString(count) + ')</b></i>';
@@ -115,8 +118,11 @@ define([
                 else if (item.layerName == 'Surveys without Digital Sounding Data') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
                 } 
-                else if (item.layerName == 'All NGDC Bathymetric DEMs') {
+                else if (item.layerName == 'All NCEI Bathymetric DEMs') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
+                }
+                else if (item.layerName == 'DEM Tiles') {
+                    return this.getItemLabelSpan(item.feature.attributes['NAME'] + ' <i>(' + item.feature.attributes['CELL_SIZE'] + ')</i>', uid);
                 }
                 else if (item.layerName == 'Lidar') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'], uid);
@@ -133,6 +139,7 @@ define([
                 this.expandedNodePaths = [];
                 this.isNosHydro = false;
                 this.isMultibeam = false;
+                this.isDemTiles = false;
                 this.identifyResults = results;
 
                 for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
@@ -177,6 +184,10 @@ define([
 
                             if (svcName == 'Multibeam') {
                                 this.isMultibeam = true;
+                            }
+
+                            if (svcName =='DEM Tiles') {
+                                this.isDemTiles = true;
                             }
                             
                             //Add the current item to the store, with the layerName folder as parent
@@ -361,6 +372,7 @@ define([
                 }
                 if (this.isNosHydro) {
                     var datasetInfo = {dataset: 'Sounding'};
+                    var nosDatasetInfo = {dataset: 'nos', grouped: true};
                     
                     if (this.identify.searchGeometry.type == 'extent') {
                         if (this.identify.searchGeometry.spatialReference.wkid == 4326) {
@@ -370,6 +382,7 @@ define([
                             latLonExtent = webMercatorUtils.webMercatorToGeographic(this.identify.searchGeometry);
                         }
                         datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
+                        nosDatasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
                     }
                     
                     if (this.identify.searchGeometry.type == 'point') {
@@ -396,6 +409,7 @@ define([
                             }));
                         }
                         datasetInfo.surveys = surveyIds.join(',');
+                        nosDatasetInfo.groupNames = surveyIds.join(',');
                     }
                     else if (this.identify.currentFilter) {
                         var filter = this.identify.currentFilter;
@@ -413,6 +427,28 @@ define([
                         }
                     }
 
+                    filterCriteria.items.push(datasetInfo);
+                    filterCriteria.items.push(nosDatasetInfo);
+                }
+                if (this.isDemTiles) {
+                    var datasetInfo = {dataset: 'DEM'};
+                    if (this.identify.searchGeometry.type == 'extent') {
+                        if (this.identify.searchGeometry.spatialReference.wkid == 4326) {
+                            latLonExtent = this.identify.searchGeometry;
+                        }
+                        else if (this.identify.searchGeometry.spatialReference.wkid == 102100 || this.identify.searchGeometry.spatialReference.wkid == 3857) {
+                            latLonExtent = webMercatorUtils.webMercatorToGeographic(this.identify.searchGeometry);
+                        }
+                        datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
+                    }
+                    
+                    if (this.identify.searchGeometry.type == 'point') {
+                        var itemIds = [];
+                        array.forEach(this.identifyResults['DEM Tiles']['DEM Tiles'], lang.hitch(this, function(identifyResult) {
+                            itemIds.push(identifyResult.feature.attributes['ITEM_ID']);
+                        }));
+                        datasetInfo.itemIds = itemIds.join(',');
+                    }
                     filterCriteria.items.push(datasetInfo);
                 }
                 return filterCriteria;
@@ -445,7 +481,9 @@ define([
             submitFormToNext: function(postBody) {
                 console.log("sending order via form submission to NEXT: ", postBody);
                 
-                var url = "http://www.ngdc.noaa.gov/next-web/orders/create";
+                //var url = "http://www.ngdc.noaa.gov/next-web/orders/create";
+                var url = "http://acceptance.ngdc.noaa.gov/next-web/orders/create";
+
 
                 //create a new form element and submit it.
                 var form = document.createElement("form");
