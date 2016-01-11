@@ -80,7 +80,7 @@ define([
                         id: 'Ocean Base',
                         visible: true,
                     }),
-                    new ArcGISImageServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/DEM_SeaLevel_hillshade/ImageServer', {
+                    new ArcGISImageServiceLayer('//gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer', {
                     //new ArcGISImageServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/DEM_SeaLevel_source/ImageServer', {
                         id: 'DEM Hillshades',
                         visible: this.demVisible,
@@ -128,6 +128,12 @@ define([
                     //     opacity: 0.5,
                     //     imageServiceParameters: this.imageServiceParameters
                     // }),
+                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_tiles/MapServer', {
+                        id: 'DEM Tiles',
+                        //visible: this.demVisible,
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (BAGs)',
                         visible: false,
@@ -189,12 +195,7 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_tiles/MapServer', {
-                        id: 'DEM Tiles',
-                        //visible: this.demVisible,
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
+                    
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
                         id: 'Poles Mask',
                         visible: true,
