@@ -41,8 +41,8 @@ define([
                     'Hazards/Significant Earthquakes': lang.hitch(this, this.signifEqFormatter),
                     'Hazards/Significant Volcanic Eruptions': lang.hitch(this, this.volEventFormatter),
                     'Hazards/Volcano Locations _from Smithsonian_': lang.hitch(this, this.volcanoFormatter),
-                    'Hazards/Current DART Stations': lang.hitch(this, this.dartFormatter),
-                    'Hazards/Retrospective BPR Stations': lang.hitch(this, this.retrospectiveBprFormatter),
+                    'Hazards/Current DART® Deployments': lang.hitch(this, this.dartFormatter),
+                    'Hazards/Retrospective BPR Deployments': lang.hitch(this, this.retrospectiveBprFormatter),
                     'Hazards/NOS/COOPS Tsunami Tide Gauges': lang.hitch(this, this.tideGaugeFormatter),
                     'Hazards/Plate Boundaries _from UTIG_': lang.hitch(this, this.plateBoundariesFormatter)
                 };
@@ -655,14 +655,14 @@ define([
             dartFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
                 var html = string.substitute('\
-                    <i><b>Current DART Station</b></i><br>\
+                    <i><b>Current DART® Deployment</b></i><br>\
                     <table class="idTable">\
                         <tr colspan="2">\
                             <td><a href="${dataUrl}" target="_blank">Additional Info</a>\
                         </tr>\
                         <tr class="idTr">\
-                            <td><b>Station ID:</b></td>\
-                            <td>${stationId}</td>\
+                            <td><b>Deployment ID:</b></td>\
+                            <td>${deploymentId}</td>\
                         </tr>\
                         <tr class="idTr">\
                             <td><b>Description:</b></td>\
@@ -685,7 +685,7 @@ define([
                             <td>${type}</td>\
                         </tr>\
                     </table>', {
-                        stationId: a['Station ID'],
+                        deploymentId: a['Deployment ID'],
                         description: a['Description'],
                         latitude: a['Latitude'],
                         longitude: a['Longitude'],
@@ -700,7 +700,7 @@ define([
             retrospectiveBprFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
                 var html = string.substitute('\
-                    <i><b>Retrospective DART Station</b></i><br>\
+                    <i><b>Retrospective BPR Deployment</b></i><br>\
                     <table class="idTable">\
                         <tr colspan="2">\
                             <td><a href="${metadataUrl}" target="_blank">Metadata Link</a>\
@@ -709,8 +709,8 @@ define([
                             <td><a href="${dataUrl}" target="_blank">Data URL</a>\
                         </tr>\
                         <tr class="idTr">\
-                            <td><b>Station ID:</b></td>\
-                            <td>${stationId}</td>\
+                            <td><b>Deployment ID:</b></td>\
+                            <td>${deploymentId}</td>\
                         </tr>\
                         <tr class="idTr">\
                             <td><b>Latitude/Longitude</b></td>\
@@ -741,7 +741,7 @@ define([
                             <td>${sampleRate}</td>\
                         </tr>\
                     </table>', {
-                        stationId: a['Station ID'],
+                        deploymentId: a['Deployment ID'],
                         dataUrl: a['Data URL'],
                         latitude: a['Latitude'],
                         longitude: a['Longitude'],
@@ -876,12 +876,12 @@ define([
             },
 
             dartSort: function(a, b) {
-                return a.feature.attributes['Station ID'] > b.feature.attributes['Station ID'] ? 1 : -1;
+                return a.feature.attributes['Deployment ID'] > b.feature.attributes['Deployment ID'] ? 1 : -1;
             },
 
             retrospectiveBprSort: function(a, b) {
-                var stationPrefixA = a.feature.attributes['Station ID'].split('_')[0];
-                var stationPrefixB = b.feature.attributes['Station ID'].split('_')[0];
+                var stationPrefixA = a.feature.attributes['Deployment ID'].split('_')[0];
+                var stationPrefixB = b.feature.attributes['Deployment ID'].split('_')[0];
                 if (stationPrefixA == stationPrefixB) {
                     var dateA = new Date(a.feature.attributes['Data Start Date']);
                     var dateB = new Date(b.feature.attributes['Data Start Date']);
@@ -921,10 +921,10 @@ define([
                     if ((features = results['Hazards']['Volcano Locations _from Smithsonian_'])) {
                         features.sort(this.volLocSort);
                     }
-                    if ((features = results['Hazards']['Current DART Stations'])) {
+                    if ((features = results['Hazards']['Current DART® Deployment'])) {
                         features.sort(this.dartSort);
                     }
-                    if ((features = results['Hazards']['Retrospective BPR Stations'])) {
+                    if ((features = results['Hazards']['Retrospective BPR Deployments'])) {
                         features.sort(this.retrospectiveBprSort);
                     }
                     if ((features = results['Hazards']['NOS/COOPS Tsunami Tide Gauges'])) {
