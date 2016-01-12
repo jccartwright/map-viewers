@@ -73,6 +73,9 @@ define([
 
                 on(this.chkDems, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'DEM Extents', this.chkDems.checked);
+                }));
+                on(this.chkDemTiles, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'DEM Tiles', this.chkDemTiles.checked);
                 })); 
                 on(this.chkDemHillshades, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'DEM Hillshades', this.chkDemHillshades.checked);

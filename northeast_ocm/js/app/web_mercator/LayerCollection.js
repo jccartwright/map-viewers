@@ -45,14 +45,15 @@ define([
             },
 
             defineMapServices: function() {
+
                 //TODO check to ensure unique id
                 this.mapServices = [
                     new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer', {
                         id: 'NatGeo',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_hillshade/MapServer', {
-                        id: 'GEBCO_08',
+                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_hillshade/MapServer', {
+                        id: 'GEBCO_2014',
                         visible: false
                     }),                    
                     new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer', {
@@ -80,12 +81,13 @@ define([
                         visible: true,
                     }),
                     new ArcGISImageServiceLayer('//gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer', {
+                    //new ArcGISImageServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/DEM_SeaLevel_source/ImageServer', {
                         id: 'DEM Hillshades',
                         visible: this.demVisible,
-                        imageServiceParameters: this.imageServiceParameters
+                        imageServiceParameters: this.imageParameters.jpg
                     }),                    
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_contours/MapServer', {
-                        id: 'GEBCO_08 Contours',
+                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
+                        id: 'GEBCO_2014 Contours',
                         visible: false,
                         opacity: 0.5
                     }),                    
@@ -126,6 +128,12 @@ define([
                     //     opacity: 0.5,
                     //     imageServiceParameters: this.imageServiceParameters
                     // }),
+                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_tiles/MapServer', {
+                        id: 'DEM Tiles',
+                        //visible: this.demVisible,
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (BAGs)',
                         visible: false,
@@ -187,6 +195,7 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
+                    
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
                         id: 'Poles Mask',
                         visible: true,

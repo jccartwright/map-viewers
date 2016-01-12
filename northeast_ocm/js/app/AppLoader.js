@@ -217,6 +217,8 @@ define([
                     this.nosHydroVisible = true;
 
                     this.layersPanel.chkDems.set('checked', true);
+
+                    this.layersPanel.chkDemTiles.set('checked', true);
                     //this.demVisible = true;
                     return;    
                 }

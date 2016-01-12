@@ -114,11 +114,11 @@ define([
                 else if (item.layerName == 'Significant Volcanic Eruptions') {
                     return this.getItemLabelSpan(attr['YEAR'] + ': ' + attr['NAME'], uid);
                 }
-                else if (item.layerName == 'Current DART Stations') {
-                    return this.getItemLabelSpan(attr['Station ID'] + ': ' + attr['Description'], uid);
+                else if (item.layerName == 'Current DART® Deployments') {
+                    return this.getItemLabelSpan(attr['Deployment ID'] + ': ' + attr['Description'], uid);
                 }
-                else if (item.layerName == 'Retrospective BPR Stations') {
-                    return this.getItemLabelSpan(attr['Station ID'] + ': ' + attr['Location'], uid);
+                else if (item.layerName == 'Retrospective BPR Deployments') {
+                    return this.getItemLabelSpan(attr['Deployment ID'], uid);
                 }
                 else if (item.layerName == 'NOS/COOPS Tsunami Tide Gauges') {
                     return this.getItemLabelSpan(attr['Station'] + ': ' + attr['Name'] + ', ' + attr['State'], uid);

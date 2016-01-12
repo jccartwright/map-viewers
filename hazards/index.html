@@ -4,19 +4,19 @@
     <!-- Version: @application.version@, Last update: @application.buildDate@ -->
     <title>Natural Hazards Viewer</title>
     <link rel="shortcut icon" href="//www.ngdc.noaa.gov/image/favicon.ico">
-    <link rel="stylesheet" href="//js.arcgis.com/3.13/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="//js.arcgis.com/3.13/esri/css/esri.css">
+    <link rel="stylesheet" href="//js.arcgis.com/3.15/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="//js.arcgis.com/3.15/esri/css/esri.css">
 
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/css/MapToolbar.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/identify/IdentifyPane.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/themes/tundra/BoundingBoxDialog.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/css/Banner.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc/css/CoordinatesToolbar.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.6/js/ngdc/css/MapToolbar.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.6/js/ngdc/identify/IdentifyPane.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.6/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.6/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.6/js/ngdc/css/CoordinatesToolbar.css">
 
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
 
-    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.13/dojox/layout/resources/FloatingPane.css"/>
-    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.13/dojox/layout/resources/ResizeHandle.css"/>
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.15/dojox/layout/resources/FloatingPane.css"/>
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.15/dojox/layout/resources/ResizeHandle.css"/>
 
     <link rel="stylesheet" href="css/local.css">
 
@@ -30,7 +30,7 @@
             packages: [
             {
                 name: "ngdc",
-                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc'
+                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.6/js/ngdc'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
             },
             {
@@ -42,12 +42,12 @@
             //app-specific config values
             app: {
                 loglevel: 2,
-                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.4/js/ngdc'
+                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.6/js/ngdc'
                 //ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
     </script>
-    <script src="//js.arcgis.com/3.13/"></script>
+    <script src="//js.arcgis.com/3.15/"></script>
 </head>
 <body class="tundra">
 <div id="loadingOverlay" class="loadingOverlay pageOverlay">
@@ -71,7 +71,7 @@
 <div data-dojo-type="dojox/layout/FloatingPane" id="volEventLegendPane" title="Significant Volcanic Eruptions" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
     <img src="images/volevent_legend.png"/>
 </div>
-<div data-dojo-type="dojox/layout/FloatingPane" id="dartLegendPane" title="DART Stations" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
+<div data-dojo-type="dojox/layout/FloatingPane" id="dartLegendPane" title="DART® Deployments" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
     <img src="images/dart_legend.png"/>
 </div>
 <div data-dojo-type="dojox/layout/FloatingPane" id="plateBoundariesLegendPane" title="Plate Boundaries" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:20%;left:70%;visibility:hidden;">

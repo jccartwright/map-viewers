@@ -136,7 +136,7 @@ define([
                 }));
                 on(registry.byId("dartSearchButton"), "click", lang.hitch(this, function() {
                     if (!this.dartSearchDialog) {
-                        this.dartSearchDialog = new DartSearchDialog({title: 'DART Stations Search'});
+                        this.dartSearchDialog = new DartSearchDialog({title: 'DART® Deployments Search'});
                     }
                     this.dartSearchDialog.show();
                 }));
