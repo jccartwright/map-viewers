@@ -41,7 +41,7 @@ define([
                     'Hazards/Significant Earthquakes': lang.hitch(this, this.signifEqFormatter),
                     'Hazards/Significant Volcanic Eruptions': lang.hitch(this, this.volEventFormatter),
                     'Hazards/Volcano Locations _from Smithsonian_': lang.hitch(this, this.volcanoFormatter),
-                    'Hazards/Current DART® Deployments': lang.hitch(this, this.dartFormatter),
+                    'Hazards/Current DART Deployments': lang.hitch(this, this.dartFormatter),
                     'Hazards/Retrospective BPR Deployments': lang.hitch(this, this.retrospectiveBprFormatter),
                     'Hazards/NOS/COOPS Tsunami Tide Gauges': lang.hitch(this, this.tideGaugeFormatter),
                     'Hazards/Plate Boundaries _from UTIG_': lang.hitch(this, this.plateBoundariesFormatter)
