@@ -68,7 +68,7 @@ define([
             getLayerDisplayLabel: function(item, count) {
 
                 if (item.layerName == 'Multibeam Bathymetric Surveys') {
-                    return '<i><b>Multibeam Bathymetry Surveys (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT"></img>';
+                    return '<i><b>Multibeam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT"></img>';
                 } 
                 else if (item.layerName == 'Marine Trackline Surveys: Bathymetry') {
                     return '<i><b>Single-Beam Bathymetry Surveys (' + this.formatCountString(count) + ')</b></i>';
