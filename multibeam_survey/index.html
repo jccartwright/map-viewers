@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NOS Hydrographic Survey Preview</title>
+    <link rel="stylesheet" href="//js.arcgis.com/3.15/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="//js.arcgis.com/3.15/esri/css/esri.css">
+    <link rel="stylesheet" href="css/local.css">
+    <script>
+        var dojoConfig = {
+            waitSeconds: 5,
+            async: true,
+            parseOnLoad: false,
+
+            //list local packages
+            packages: [
+            {
+                name: "ngdc",
+                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.6/js/ngdc'
+            },
+            {
+                name: "app",
+                location: location.pathname.replace(/\/[^/]*$/, '') + '/js/app'
+            }
+            ],
+
+            //app-specific config values
+            app: {
+                loglevel: 2,
+                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.6/js/ngdc'
+            }
+        };
+    </script>
+    <script src="//js.arcgis.com/3.15/"></script>
+</head>
+<body class="tundra">
+<div id="loadingOverlay" class="loadingOverlay pageOverlay">
+    <div id="loaderInner"></div>
+</div>
+
+<div id="busy"></div>
+
+<div id="mainWindow" class="noBorder" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false" >
+        
+    <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
+        <div id="mapDiv" data-dojo-type="dijit/layout/ContentPane" title="Mercator" class="map">
+            <div id="homeButton"></div>
+            <div id="toggleGmrt" class="toggleGmrt" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:false">
+                Show GMRT
+            </div>
+        </div>
+    </div> <!-- end centerPane -->
+    
+</div> <!-- end mainWindow BorderContainer -->
+<script>
+    //unless the Dijit is listed in the require list, it cannot be addressed via the registry
+    require([
+        "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "dojo/dom", "dojo/dom-style", "app/AppLoader",
+        "dijit/layout/BorderContainer", "dijit/layout/ContentPane",
+        "dojo/domReady!" ],
+            function(LoadingOverlay, registry, parser, dom, domStyle, AppLoader) {
+                var loadingOverlay = new LoadingOverlay();
+                var appLoader = new AppLoader();
+
+                parser.parse();
+
+                //hide the overlay now that parsing is complete
+                loadingOverlay.endLoading();
+
+                //initialize the application
+                appLoader.init();
+            }
+    );
+
+</script>
+<script src="//maps.ngdc.noaa.gov/js/ga.js"></script>
+</body>
+</html>

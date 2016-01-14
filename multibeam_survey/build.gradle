@@ -1,0 +1,21 @@
+version = '1.0'
+
+task installNgdcDijits(type: Copy) {
+    doFirst {
+        uninstallNgdcDijits
+    }
+   from ("../common/js/ngdc") {
+      exclude "build.gradle", "README.md"
+   }
+   into "js/ngdc"
+}
+
+task uninstallNgdcDijits() {
+    delete 'js/ngdc'
+}
+
+jar {
+    dependsOn installNgdcDijits
+    from "."
+    exclude 'build*'
+}
