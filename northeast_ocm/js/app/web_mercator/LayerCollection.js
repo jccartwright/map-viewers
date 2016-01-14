@@ -111,7 +111,7 @@ define([
                         //visible: this.nosHydroVisible
                         visible: false,
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/acceptance/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (dynamic)',
                         //visible: this.nosHydroVisible,
                         visible: false,
@@ -128,13 +128,13 @@ define([
                     //     opacity: 0.5,
                     //     imageServiceParameters: this.imageServiceParameters
                     // }),
-                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_tiles/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/acceptance/dem_tiles/MapServer', {
                         id: 'DEM Tiles',
                         //visible: this.demVisible,
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/acceptance/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (BAGs)',
                         visible: false,
                         imageParameters: this.imageParameters.png32
@@ -161,7 +161,7 @@ define([
                         //visible: this.multibeamVisible
                         visible: false
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/acceptance/multibeam_dynamic/MapServer', {
                         id: 'Multibeam (dynamic)',
                         //visible: this.multibeamVisible,
                         visible: false,
