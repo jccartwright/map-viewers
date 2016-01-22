@@ -344,29 +344,12 @@ define([
                         datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
                     }
                     
-                    if (this.identify.searchGeometry.type == 'point') {
-                        //Pass the list of survey IDs from the identifyResults
-                        var surveyIds = [];
-                        array.forEach(this.identifyResults['Multibeam']['Multibeam Bathymetric Surveys'], lang.hitch(this, function(identifyResult) {
-                            surveyIds.push(identifyResult.feature.attributes['Survey ID']);
-                        }));
-                        datasetInfo.surveys = surveyIds.join(',');
-                    }
-                    else if (this.identify.currentFilter) {
-                        var filter = this.identify.currentFilter;
-                        if (filter.startYear) {
-                            datasetInfo.startYear = filter.startYear;
-                        }
-                        if (filter.endYear) {
-                            datasetInfo.endYear = filter.endYear;
-                        }
-                        if (filter.platform) {
-                            datasetInfo.platforms = filter.platform;
-                        }
-                        if (filter.survey) {
-                            datasetInfo.surveys = filter.survey;
-                        }
-                    }
+                    //Pass the list of survey IDs from the identifyResults
+                    var surveyIds = [];
+                    array.forEach(this.identifyResults['Multibeam']['Multibeam Bathymetric Surveys'], lang.hitch(this, function(identifyResult) {
+                        surveyIds.push(identifyResult.feature.attributes['Survey ID']);
+                    }));
+                    datasetInfo.surveys = surveyIds.join(',');
 
                     filterCriteria.items.push(datasetInfo);
                 }
@@ -385,47 +368,30 @@ define([
                         nosDatasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
                     }
                     
-                    if (this.identify.searchGeometry.type == 'point') {
-                        //Pass the list of survey IDs from the identifyResults
-                        var surveyIds = [];
+                    //Pass the list of survey IDs from the identifyResults
+                    var surveyIds = [];
 
-                        if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data']) {
-                            var identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data'];
-                            array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
-                                var surveyId = identifyResult.feature.attributes['Survey ID'];
-                                if (array.indexOf(identifyResults, surveyId) == -1) {
-                                    surveyIds.push(surveyId);
-                                }
-                            }));
-                        }
+                    if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data']) {
+                        var identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data'];
+                        array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
+                            var surveyId = identifyResult.feature.attributes['Survey ID'];
+                            if (array.indexOf(identifyResults, surveyId) == -1) {
+                                surveyIds.push(surveyId);
+                            }
+                        }));
+                    }
 
-                        if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs']) {
-                            var identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs'];
-                            array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
-                                var surveyId = identifyResult.feature.attributes['Survey ID'];
-                                if (array.indexOf(identifyResults, surveyId) == -1) {
-                                    surveyIds.push(surveyId);
-                                }
-                            }));
-                        }
-                        datasetInfo.surveys = surveyIds.join(',');
-                        nosDatasetInfo.groupNames = surveyIds.join(',');
+                    if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs']) {
+                        var identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs'];
+                        array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
+                            var surveyId = identifyResult.feature.attributes['Survey ID'];
+                            if (array.indexOf(identifyResults, surveyId) == -1) {
+                                surveyIds.push(surveyId);
+                            }
+                        }));
                     }
-                    else if (this.identify.currentFilter) {
-                        var filter = this.identify.currentFilter;
-                        if (filter.startYear) {
-                            datasetInfo.startYear = filter.startYear;
-                        }
-                        if (filter.endYear) {
-                            datasetInfo.endYear = filter.endYear;
-                        }
-                        if (filter.platform) {
-                            datasetInfo.platforms = filter.platform;
-                        }
-                        if (filter.survey) {
-                            datasetInfo.surveys = filter.survey;
-                        }
-                    }
+                    datasetInfo.surveys = surveyIds.join(',');
+                    nosDatasetInfo.groupNames = surveyIds.join(',');
 
                     filterCriteria.items.push(datasetInfo);
                     filterCriteria.items.push(nosDatasetInfo);
