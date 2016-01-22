@@ -139,7 +139,7 @@ define([
                 }));
 
 
-                var renderer = new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbol.STYLE_DOT, new Color([216,4,4]), 3));
+                var renderer = new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbol.STYLE_SHORTDOT, new Color([216,4,4]), 3));
 
                 //Add hurricanes feature layer, set definition to be SANDY 2012
                 this.hurricaneLayer = new FeatureLayer('http://maps.coast.noaa.gov/arcgis/rest/services/Hurricanes/AllStorms/MapServer/0', {
