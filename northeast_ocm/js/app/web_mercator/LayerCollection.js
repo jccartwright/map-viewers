@@ -127,13 +127,7 @@ define([
                     //     visible: false,
                     //     opacity: 0.5,
                     //     imageServiceParameters: this.imageServiceParameters
-                    // }),
-                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/acceptance/dem_tiles/MapServer', {
-                        id: 'DEM Tiles',
-                        //visible: this.demVisible,
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
+                    // }),                    
                     new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/acceptance/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (BAGs)',
                         visible: false,
@@ -166,7 +160,13 @@ define([
                         //visible: this.multibeamVisible,
                         visible: false,
                         imageParameters: this.imageParameters.png32
-                    }),                    
+                    }),
+                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/acceptance/dem_tiles/MapServer', {
+                        id: 'DEM Tiles',
+                        //visible: this.demVisible,
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),               
                     new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer', {
                         id: 'World Boundaries and Places',
                         visible: false
