@@ -47,14 +47,12 @@ html,body {
     z-index: 100;
 }
 
-.coordinatesToolbar {
+.coordinatesWithElevationToolbar {
     position: absolute;
     bottom: 10px;
     left: 10px;
     z-index: 9999;
 }
-
-
 
 .esriScalebar {
     margin-top: 5px;
