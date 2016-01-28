@@ -69,8 +69,11 @@ define([
                 if (item.svcId == 'Multibeam' || item.svcId == 'Trackline') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
                 }
-                if (item.layerName == 'International ECS Polygons (UNEP GRID-Arendal)') {
+                else if (item.layerName == 'International ECS Polygons (UNEP GRID-Arendal)') {
                     return this.getItemLabelSpan(item.feature.attributes['STATE'], uid);
+                }
+                else if (item.layerName == 'World_Maritime_Boundaries_v8_20140228') {
+                    return this.getItemLabelSpan(item.feature.attributes['Boundary'], uid);
                 }
                 else if (item.svcId == 'ECS Catalog') {
                     return this.getItemLabelSpan(item.feature.attributes['TITLE'], uid);
