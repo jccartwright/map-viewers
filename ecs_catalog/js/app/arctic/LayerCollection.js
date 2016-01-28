@@ -42,7 +42,7 @@ define([
                     //     id: 'Gray Continents',
                     //     visible: false,
                     // }),  
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog/MapServer', {
                         id: 'ECS Catalog',
                         visible: true,
                         imageParameters: this.imageParameters.png32

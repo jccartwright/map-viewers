@@ -35,8 +35,8 @@ define([
                         id: 'NatGeo',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_hillshade/MapServer', {
-                        id: 'GEBCO_08',
+                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_hillshade/MapServer', {
+                        id: 'GEBCO_2014',
                         visible: false
                     }),                    
                     new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer', {
@@ -63,12 +63,12 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),                                    
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_contours/MapServer', {
-                        id: 'GEBCO_08 Contours',
+                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
+                        id: 'GEBCO_2014 Contours',
                         visible: false,
                         opacity: 0.5
                     }),                      
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/intranet/ecs_catalog/MapServer', {
                         id: 'ECS Catalog',
                         visible: true,
                         imageParameters: this.imageParameters.png32
