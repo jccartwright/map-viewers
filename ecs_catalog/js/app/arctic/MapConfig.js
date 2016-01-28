@@ -2,6 +2,9 @@ define([
     'dojo/_base/declare', 
     'dojo/_base/lang',
     'dojo/dom',
+    'dojo/on',
+    'dojo/request',
+    'dojo/topic',
     'ngdc/MapConfig',
     'app/arctic/MapToolbar',
     'app/Identify',
@@ -11,6 +14,9 @@ define([
         declare, 
         lang, 
         dom,
+        on,
+        request,
+        topic,
         MapConfig,
         MapToolbar,
         Identify,
@@ -93,6 +99,8 @@ define([
                         console.error("error checking ECS authentication:",err);
                     });
                 });
+
+                topic.publish('/ecs_catalog/mapReady', 'arctic');
             }
         });
     }
