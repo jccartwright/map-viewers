@@ -4,6 +4,7 @@ define([
     'dojo/dom',
     'dojo/on',
     'dojo/request',
+    'dojo/topic',
     'ngdc/web_mercator/MapConfig',
     'app/web_mercator/MapToolbar',
     'app/Identify',
@@ -15,6 +16,7 @@ define([
         dom,
         on,
         request,
+        topic,
         MapConfig,
         MapToolbar,
         Identify,
@@ -67,6 +69,8 @@ define([
                         console.error("error checking ECS authentication:",err);
                     });
                 });
+
+                topic.publish('/ecs_catalog/mapReady', 'mercator');
             }
         });
     }

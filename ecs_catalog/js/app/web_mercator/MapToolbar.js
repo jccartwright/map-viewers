@@ -22,7 +22,7 @@ define([
             constructor: function() {
                 this._basemaps = [
                     {base: 'Ocean Base', overlays: [{id: 'Ocean Reference'}], label: 'Ocean Basemap (Esri)'},
-                    {base: 'GEBCO_08', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (GEBCO_08)'},
+                    {base: 'GEBCO_2014', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (GEBCO_2014)'},
                     {base: 'ETOPO1', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (ETOPO1)'},
                     {base: 'Light Gray', overlays: [{id: 'Light Gray Reference'}], label: 'Light Gray (Esri)'},
                     {base: 'Dark Gray', overlays: [{id: 'Dark Gray Reference'}], label: 'Dark Gray (Esri)'},
@@ -37,8 +37,8 @@ define([
                         visible: true
                     }, 
                     {
-                        label: 'Bathymetry Contours (from GEBCO_08)',
-                        services: [{id: 'GEBCO_08 Contours'}],
+                        label: 'Bathymetric Contours (from GEBCO_2014)',
+                        services: [{id: 'GEBCO_2014 Contours'}],
                         visible: false
                     },
                     {

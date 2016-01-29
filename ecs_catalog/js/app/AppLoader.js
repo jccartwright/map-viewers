@@ -22,7 +22,7 @@ define([
     'ngdc/web_mercator/ZoomLevels',
     'ngdc/arctic/ZoomLevels',
     'ngdc/Banner',
-    'ngdc/CoordinatesToolbar',
+    'ngdc/CoordinatesWithElevationToolbar',
     'app/web_mercator/LayerCollection',
     'app/arctic/LayerCollection',
     'app/web_mercator/MapToolbar',
@@ -53,7 +53,7 @@ define([
         MercatorZoomLevels,
         ArcticZoomLevels,
         Banner,
-        CoordinatesToolbar,
+        CoordinatesWithElevationToolbar,
         MercatorLayerCollection,
         ArcticLayerCollection,
         MapToolbar,
@@ -124,14 +124,26 @@ define([
                 topic.subscribe('/ecs_catalog/selectScenario', lang.hitch(this, function(scenario) {
                     this.selectScenario(scenario);
                 }));
+
+                //Keep track of when both the Mercator and Arctic maps are ready. Only then should current region be selected. 
+                //This ensures the identify and identifyPane are enabled/disabled as expected.
+                //Messaged passed from MapConfig.mapReady().
+                this.mapReadyCount = 0;
+                this.regionsPopulated = false;
+                this.isRegionSelectInitialized = false;
+
+                topic.subscribe('/ecs_catalog/mapReady', lang.hitch(this, function() {
+                    this.mapReadyCount++;
+                    if (!this.isRegionSelectInitialized && this.regionsPopulated && this.mapReadyCount == 2) {
+                        this.initializeRegionSelect(queryParams);
+                    }
+                }));
+
                 topic.subscribe('/ecs_catalog/regionsPopulated', lang.hitch(this, function() {
-                    //Get the optional region parameter from the URL. Set the regionSelect widget accordingly.
-                    if (queryParams.region !== undefined) {
-                        var region = parseInt(queryParams.region);
-                        if (!isNaN(region)) {
-                            this.filterPanel.setRegion(region);
-                        }
-                    }   
+                    this.regionsPopulated = true;
+                    if (!this.isRegionSelectInitialized && this.mapReadyCount == 2) {
+                        this.initializeRegionSelect(queryParams);
+                    }
                 }));
 
                 topic.subscribe('/ngdc/sublayerByName/visibility', lang.hitch(this, function(phase) {
@@ -155,6 +167,17 @@ define([
                 //Select default phase and scenario on startup
                 this.selectPhase('ONE');
                 this.selectScenario(0);
+            },
+
+            initializeRegionSelect: function(queryParams) {
+                //Get the optional region parameter from the URL. Set the regionSelect widget accordingly.
+                if (queryParams.region !== undefined) {
+                    var region = parseInt(queryParams.region);
+                    if (!isNaN(region)) {
+                        this.filterPanel.setRegion(region);
+                    }
+                } 
+                this.isRegionSelectInitialized = true; 
             },
 
             setupBanner: function() {
@@ -233,7 +256,7 @@ define([
                     lods: zoomLevels.lods
                 }, new MercatorLayerCollection());  
 
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
 
                 //Hide the scalebar at small scales <= 4
                 on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
@@ -285,7 +308,7 @@ define([
                     //lods: zoomLevels.lods
                 }, new ArcticLayerCollection());
 
-                new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
 
             /*
@@ -317,13 +340,13 @@ define([
                     //Zoom to a Pacific-centered global view
                     extent = webMercatorUtils.geographicToWebMercator(new Extent(30, -70, 390, 70, new SpatialReference({ wkid: 4326 })));
                     registry.byId('mapContainer').selectChild('mercator');
+                    this.mercatorMapConfig.map.setExtent(extent, true);
                 } else if ( regionName === 'Arctic' ) { //Arctic region selected, open the Arctic viewer in a new window
                     registry.byId('mapContainer').selectChild('arctic');
                 } else {
                     registry.byId('mapContainer').selectChild('mercator');
+                    this.mercatorMapConfig.map.setExtent(extent, true);
                 }
-
-                this.mercatorMapConfig.map.setExtent(extent, true);
 
                 this.applyRegionFilter(region);
             },

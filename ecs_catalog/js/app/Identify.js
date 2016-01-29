@@ -37,6 +37,9 @@ define([
                     this.formatters[key] = lang.hitch(this, this.ecsCatalogFormatter);
                 }));
 
+                this.formatters['ECS Catalog/International ECS Polygons (UNEP GRID-Arendal)'] = lang.hitch(this, this.internationalEcsFormatter);
+                this.formatters['ECS Catalog/World_Maritime_Boundaries_v8_20140228'] = lang.hitch(this, this.maritimeBoundaryFormatter);
+
                 //formatters for Pre-2012 Source Data layers
                 this.formatters['Sample Index/All Samples by Institution'] = lang.hitch(this, this.sampleIndexFormatter);
                 this.formatters['Multibeam/Multibeam Bathymetric Surveys'] = lang.hitch(this, this.multibeamFormatter);
@@ -77,6 +80,24 @@ define([
                         state: a['STATE'],
                         status: a['STATUS'],
                         date: a['DATE']
+                    });                
+                return html;
+            },
+
+            maritimeBoundaryFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <h3>Maritime Boundary: ${boundary}</h3>\
+                    <div class="valueName">Type: <span class="parameterValue">${type}</span></div>\
+                    <div class="valueName">Source: <span class="parameterValue">${source}</span></div>\
+                    <div class="valueName">Treaty Date: <span class="parameterValue">${treatyDate}</span></div>';                 
+
+                var html = string.substitute(template, {
+                        boundary: a['Boundary'],
+                        type: a['TYPE'],
+                        source: a['Source'],
+                        treatyDate: a['TreatyDate']
                     });                
                 return html;
             },
