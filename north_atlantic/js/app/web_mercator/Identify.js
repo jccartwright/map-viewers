@@ -37,7 +37,7 @@ define([
                     'DEM Extents/All NCEI Bathymetric DEMs': lang.hitch(this, this.demFormatter),
                     'CSC Lidar/Lidar': lang.hitch(this, this.lidarFormatter),
                     'NRCan Multibeam/Multibeam Bathymetry Index Map - Bathymétrie Multifaisceaux Couches Index ': lang.hitch(this, this.nrCanFormatter),
-                    'Portugal/Portugal Bathymetric Surveys': lang.hitch(this, this.portugalFormatter)
+                    'Portugal/Proprietary Bathymetric Surveys (Portugal)': lang.hitch(this, this.portugalFormatter)
                 };
             } //end constructor
         });

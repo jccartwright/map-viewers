@@ -86,8 +86,8 @@ define([
                 else if (item.layerName == 'Multibeam Bathymetry Index Map - Bathymétrie Multifaisceaux Couches Index ') {
                     return '<i><b>NRCan Multibeam Datasets (' + this.formatCountString(count) + ')</b></i>';
                 }
-                else if (item.layerName == 'Portugal Bathymetric Surveys') {
-                    return '<i><b>Portugal Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i>';
+                else if (item.layerName == 'Proprietary Bathymetric Surveys (Portugal)') {
+                    return '<i><b>Proprietary Bathymetric Surveys (Portugal)  (' + this.formatCountString(count) + ')</b></i>';
                 }
             },
 
@@ -125,8 +125,8 @@ define([
                 else if (item.layerName == 'Multibeam Bathymetry Index Map - Bathymétrie Multifaisceaux Couches Index ') {
                     return this.getItemLabelSpan(item.feature.attributes['TITLE_EN'], uid);
                 }
-                else if (item.layerName == 'Portugal Bathymetric Surveys') {
-                    return this.getItemLabelSpan(item.feature.attributes['AREA'], uid);
+                else if (item.layerName == 'Proprietary Bathymetric Surveys (Portugal)') {
+                    return this.getItemLabelSpan(item.feature.attributes['AREA'] + ' ' + item.feature.attributes['P_START'] + '-' + item.feature.attributes['P_END'], uid);
                 }
                 
             },
