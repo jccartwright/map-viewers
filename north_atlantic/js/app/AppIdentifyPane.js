@@ -87,7 +87,7 @@ define([
                     return '<i><b>NRCan Multibeam Datasets (' + this.formatCountString(count) + ')</b></i>';
                 }
                 else if (item.layerName == 'Portugal Bathymetric Surveys') {
-                    return '<i><b>Portugal Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i>';
+                    return '<i><b>Proprietary Bathymetric Surveys (Portugal)  (' + this.formatCountString(count) + ')</b></i>';
                 }
             },
 
@@ -126,7 +126,7 @@ define([
                     return this.getItemLabelSpan(item.feature.attributes['TITLE_EN'], uid);
                 }
                 else if (item.layerName == 'Portugal Bathymetric Surveys') {
-                    return this.getItemLabelSpan(item.feature.attributes['AREA'], uid);
+                    return this.getItemLabelSpan(item.feature.attributes['AREA'] + ' ' + item.feature.attributes['P_START'] + '-' + item.feature.attributes['P_END'], uid);
                 }
                 
             },
