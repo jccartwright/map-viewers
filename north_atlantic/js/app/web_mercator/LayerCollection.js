@@ -144,7 +144,7 @@ define([
                         format: 'png',
                         visible: false,
                     }),
-                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/portugal_bathymetric_surveys/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/proprietary_bathymetric_surveys/MapServer', {
                         id: 'Portugal',
                         visible: false,
                         imageParameters: this.imageParameters.png32
