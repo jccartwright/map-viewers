@@ -144,6 +144,11 @@ define([
                         format: 'png',
                         visible: false,
                     }),
+                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/portugal_bathymetric_surveys/MapServer', {
+                        id: 'Portugal',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),
                     new ArcGISDynamicMapServiceLayer('//geoappext.nrcan.gc.ca/arcgis/rest/services/GSCA/multibeam_multifaisceaux_index/MapServer', {
                         id: 'NRCan Multibeam',
                         visible: false,

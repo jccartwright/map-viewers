@@ -186,6 +186,25 @@ define([
                 return html;
             },
 
+            portugalFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <h3>Portugal Bathymetric Survey</h3>\
+                    <div class="valueName">Start Date: <span class="parameterValue">${startDate}</span></div>\
+                    <div class="valueName">End Date: <span class="parameterValue">${endDate}</span></div>\
+                    <div class="valueName">Area: <span class="parameterValue">${area}</span></div>\
+                    <div class="valueName">Platform: <span class="parameterValue">${platform}</span></div>';
+
+                var html = string.substitute(template, {
+                        startDate: a['P_START'],
+                        endDate: a['P_END'],
+                        area: a['AREA'],
+                        platform: a['PLATFORM']
+                    });                
+                return html;
+            },
+
             multibeamSort: function(a, b) {
                 //Sort by year descending, then alphabetical by survey ID
                 if (a.feature.attributes['Survey Year'] == b.feature.attributes['Survey Year']) {

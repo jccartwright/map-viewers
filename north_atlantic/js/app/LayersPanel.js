@@ -87,6 +87,10 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'Norway', this.chkNorway.checked);
                 }));
 
+                on(this.chkPortugal, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'Portugal', this.chkPortugal.checked);
+                }));
+
                 on(this.chkDems, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'DEM Extents', this.chkDems.checked);
                 })); 

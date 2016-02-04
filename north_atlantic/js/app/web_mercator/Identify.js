@@ -22,7 +22,7 @@ define([
                 logger.debug('inside constructor for app/web_mercator/Identify');
 
                 //augment arguments object with list of layers to identify.
-                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'NOS Hydro (non-digital)', 'DEM Extents', 'CSC Lidar', 'NRCan Multibeam'];
+                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'NOS Hydro (non-digital)', 'DEM Extents', 'CSC Lidar', 'NRCan Multibeam', 'Portugal'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
@@ -36,7 +36,8 @@ define([
                     'NOS Hydro (non-digital)/Surveys without Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
                     'DEM Extents/All NCEI Bathymetric DEMs': lang.hitch(this, this.demFormatter),
                     'CSC Lidar/Lidar': lang.hitch(this, this.lidarFormatter),
-                    'NRCan Multibeam/Multibeam Bathymetry Index Map - Bathymétrie Multifaisceaux Couches Index ': lang.hitch(this, this.nrCanFormatter)
+                    'NRCan Multibeam/Multibeam Bathymetry Index Map - Bathymétrie Multifaisceaux Couches Index ': lang.hitch(this, this.nrCanFormatter),
+                    'Portugal/Portugal Bathymetric Surveys': lang.hitch(this, this.portugalFormatter)
                 };
             } //end constructor
         });
