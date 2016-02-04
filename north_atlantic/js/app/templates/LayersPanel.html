@@ -1,0 +1,58 @@
+<div class="layersPanel_class">
+    <h3>Bathymetric Surveys</h3>
+    <input type="checkbox" data-dojo-attach-point="chkMultibeam" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkMultibeam">Multibeam Bathymetric Surveys</label><br>
+
+    <input type="checkbox" id="chkTrackline" data-dojo-attach-point="chkTrackline" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkTrackline">Single-Beam (Trackline) Bathymetric Surveys</label><br><br>
+
+    <b><i>NOS Hydrographic Surveys:</i></b><br>
+    <input type="checkbox" id="chkNosHydroBags" data-dojo-attach-point="chkNosHydroBags" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblNosHydroBags" for="chkNosHydroBags">Surveys with BAGs (Bathymetric Attributed Grids)</label><br>
+
+    <input type="checkbox" id="chkNosHydroDigital" data-dojo-attach-point="chkNosHydroDigital" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblNosHydroDigital"for="chkNosHydroDigital">Surveys with Digital Sounding Data</label><br>
+
+    <input type="checkbox" id="chkNosHydroNonDigital" data-dojo-attach-point="chkNosHydroNonDigital" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblNosHydroNonDigital"for="chkNosHydroNonDigital">Surveys without Digital Sounding Data</label><br><br>
+
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" id="searchButton">Filter Surveys</div>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" id="resetButton" disabled>Reset</div><br>
+    <div id="currentFilter" class="filterText"></div><br>
+
+    <input type="checkbox" id="chkBagHillshades" data-dojo-attach-point="chkBagHillshades" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblBagHillshades"for="chkBagHillshades">BAG Color Shaded Relief Imagery</label><br><br>
+
+    <input type="checkbox" id="chkEmodNet" data-dojo-attach-point="chkEmodNet" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblEmodNet" for="chkEmodNet"><a href="http://www.emodnet-bathymetry.eu/" target="_blank">EMODNet</a> (European Marine Observation and Data Network) Survey Tracks/Polygons</label><br><br>
+
+    <input type="checkbox" id="chkEmodNetDTM" data-dojo-attach-point="chkEmodNetDTM" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblEmodNetDTM" for="chkEmodNetDTM">EMODNet DTM</label><br><br>
+
+    <input type="checkbox" id="chkNRCan" data-dojo-attach-point="chkNRCan" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblNRCan" for="chkNRCan">NRCan (Natural Resources Canada) Multibeam Coverage</label><br><br>
+
+    <input type="checkbox" id="chkNorway" data-dojo-attach-point="chkNorway" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblNorway" for="chkNorway">Norway Hydrographic Survey Data</label><br><br>
+
+    <input type="checkbox" id="chkPortugal" data-dojo-attach-point="chkPortugal" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblPortugal" for="chkPortugal">Portugal Bathymetric Surveys</label><br>
+
+    <hr>
+
+    <h3>Digital Elevation Models (DEMs)</h3>
+
+    <input type="checkbox" id="chkDems" data-dojo-attach-point="chkDems" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkDems">DEM Footprints</label><br>
+
+    <input type="checkbox" id="chkDemHillshades" data-dojo-attach-point="chkDemHillshades" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkDemHillshades">DEM Color Shaded Relief Imagery</label>
+    <hr>
+
+    <h3>Bathymetric Lidar</h3>
+
+    <input type="checkbox" id="chkCscLidar" data-dojo-attach-point="chkCscLidar" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkCscLidar">Coastal Lidar Datasets available from <a href="http://www.coast.noaa.gov/digitalcoast/data/coastallidar" target="_blank">NOAA's Office for Coastal Management</a></label>
+
+    
+</div>
