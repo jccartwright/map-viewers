@@ -354,8 +354,7 @@ define([
                     filterCriteria.items.push(datasetInfo);
                 }
                 if (this.isNosHydro) {
-                    var datasetInfo = {dataset: 'Sounding'};
-                    var nosDatasetInfo = {dataset: 'nos', grouped: true};
+                    var datasetInfo = {dataset: 'nos', grouped: true};
                     
                     if (this.identify.searchGeometry.type == 'extent') {
                         if (this.identify.searchGeometry.spatialReference.wkid == 4326) {
@@ -364,8 +363,7 @@ define([
                         else if (this.identify.searchGeometry.spatialReference.wkid == 102100 || this.identify.searchGeometry.spatialReference.wkid == 3857) {
                             latLonExtent = webMercatorUtils.webMercatorToGeographic(this.identify.searchGeometry);
                         }
-                        datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
-                        nosDatasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
+                        nosDdetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
                     }
                     
                     //Pass the list of survey IDs from the identifyResults
@@ -390,11 +388,9 @@ define([
                             }
                         }));
                     }
-                    datasetInfo.surveys = surveyIds.join(',');
-                    nosDatasetInfo.groupNames = surveyIds.join(',');
+                    nosDdetInfo.groupNames = surveyIds.join(',');
 
-                    filterCriteria.items.push(datasetInfo);
-                    filterCriteria.items.push(nosDatasetInfo);
+                    filtditeria.items.push(nosDatasetInfo);
                 }
                 if (this.isDemTiles) {
                     var datasetInfo = {dataset: 'DEM'};
