@@ -71,8 +71,12 @@ define([
                     }                                     
                 }));
 
-                on(this.chkEmodNet, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'EMODNet', this.chkEmodNet.checked);
+                on(this.chkEmodNetMultibeam, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'EMODNetMultibeam', this.chkEmodNetMultibeam.checked);
+                }));
+
+                on(this.chkEmodNetSinglebeam, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'EMODNetSinglebeam', this.chkEmodNetSinglebeam.checked);
                 }));
 
                 on(this.chkEmodNetDTM, 'change', lang.hitch(this, function() {

@@ -47,4 +47,65 @@
         </UserStyle>
     </NamedLayer>
 
+
+    <NamedLayer>
+        <Name>EMODnet_Bathymetry_multi_beams_lines</Name>
+        <UserStyle>
+            <FeatureTypeStyle>
+                <Rule>
+                    <LineSymbolizer>
+                        <Stroke>
+                            <CssParameter name="stroke">#009933</CssParameter>
+                        </Stroke>
+                    </LineSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+    <NamedLayer>
+        <Name>EMODnet_Bathymetry_multi_beams_polygons</Name>
+        <UserStyle>
+            <FeatureTypeStyle>
+                <Rule>
+                    <PolygonSymbolizer>
+                        <Fill>
+                            <CssParameter name="fill">#009933</CssParameter>
+                            <CssParameter name="fill-opacity">0.5</CssParameter>
+                        </Fill>
+                    </PolygonSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+
+    <NamedLayer>
+        <Name>EMODnet_Bathymetry_single_beams_lines</Name>
+        <UserStyle>
+            <FeatureTypeStyle>
+                <Rule>
+                    <LineSymbolizer>
+                        <Stroke>
+                            <CssParameter name="stroke">#ff9900</CssParameter>
+                        </Stroke>
+                    </LineSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+    <NamedLayer>
+        <Name>EMODnet_Bathymetry_single_beams_polygons</Name>
+        <UserStyle>
+            <FeatureTypeStyle>
+                <Rule>
+                    <PolygonSymbolizer>
+                        <Fill>
+                            <CssParameter name="fill">#ff9900</CssParameter>
+                            <CssParameter name="fill-opacity">0.5</CssParameter>
+                        </Fill>
+                    </PolygonSymbolizer>
+                </Rule>
+            </FeatureTypeStyle>
+        </UserStyle>
+    </NamedLayer>
+
 </StyledLayerDescriptor>
