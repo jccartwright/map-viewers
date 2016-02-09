@@ -160,6 +160,7 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
+                        sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
                         layerNames: ['points', 'lines', 'polygons']
                     }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
