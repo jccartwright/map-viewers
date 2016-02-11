@@ -94,6 +94,10 @@ define([
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
                 lang.mixin(config.app, queryParams);
 
+                if (queryParams.survey) {
+                    this.startupSurvey = queryParams.survey;
+                }
+
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
 
@@ -109,6 +113,20 @@ define([
                 }));
                 topic.subscribe('/wcd/ResetSearch', lang.hitch(this, function() {
                     this.resetWcd();
+                }));
+
+                //Keep track of when both the Mercator and Arctic maps are ready. Only then should current region be selected. 
+                //Messaged passed from MapConfig.mapReady().
+                this.mapReadyCount = 0;
+                topic.subscribe('/wcd/MapReady', lang.hitch(this, function() {
+                    this.mapReadyCount++;
+                    
+                    if (this.mapReadyCount == 2 && this.startupSurvey) {
+                        var filterValues = {};
+                        filterValues.surveyIds = [this.startupSurvey];
+                        filterValues.zoomToResults = true;
+                        this.filterWcd(filterValues);
+                    }
                 }));
             },
 
