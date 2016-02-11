@@ -18,6 +18,7 @@ define([
     'dojo/dom-style',
     'esri/geometry/Polygon',
     'esri/geometry/webMercatorUtils',
+    'esri/geometry/geometryEngine',
     'esri/SpatialReference',
     'esri/config',
     'esri/tasks/GeometryService',
@@ -45,6 +46,7 @@ define([
         domStyle,
         Polygon,
         webMercatorUtils,
+        geometryEngine,
         SpatialReference,
         esriConfig,
         GeometryService,
@@ -141,6 +143,8 @@ define([
                                                                                     
                             //Set the densify max segment length to be 1/20th of the width of the polygon in meters
                             var extent = this.geometry.getExtent();
+
+                            var extentWidth = Math.abs(extent.xmax - extent.xmin);
                             
                             //Densify the geometry with ~20 vertices along the longest edge
                             var maxSegmentLength = extentWidth / 20;

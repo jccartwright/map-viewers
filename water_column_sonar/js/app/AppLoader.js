@@ -25,7 +25,7 @@ define([
     'ngdc/web_mercator/ZoomLevels',
     'ngdc/arctic/ZoomLevels',
     'ngdc/Banner',
-    'ngdc/CoordinatesToolbar',
+    'ngdc/CoordinatesWithElevationToolbar',
     'app/web_mercator/LayerCollection',
     'app/arctic/LayerCollection',
     'app/web_mercator/MapToolbar',
@@ -61,7 +61,7 @@ define([
         MercatorZoomLevels,
         ArcticZoomLevels,
         Banner,
-        CoordinatesToolbar,
+        CoordinatesWithElevationToolbar,
         MercatorLayerCollection,
         ArcticLayerCollection,
         MercatorMapToolbar,
@@ -94,6 +94,11 @@ define([
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
                 lang.mixin(config.app, queryParams);
 
+                this.startupSurveys = [];
+                if (queryParams.surveys) {
+                    this.startupSurveys = queryParams.surveys.split(',');
+                }
+
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
 
@@ -109,6 +114,20 @@ define([
                 }));
                 topic.subscribe('/wcd/ResetSearch', lang.hitch(this, function() {
                     this.resetWcd();
+                }));
+
+                //Keep track of when both the Mercator and Arctic maps are ready. Only then should current region be selected. 
+                //Messaged passed from MapConfig.mapReady().
+                this.mapReadyCount = 0;
+                topic.subscribe('/wcd/MapReady', lang.hitch(this, function() {
+                    this.mapReadyCount++;
+                    
+                    if (this.mapReadyCount == 2 && this.startupSurveys.length > 0) {
+                        var filterValues = {};
+                        filterValues.surveyIds = this.startupSurveys;
+                        filterValues.zoomToResults = true;
+                        this.filterWcd(filterValues);
+                    }
                 }));
             },
 
@@ -181,23 +200,7 @@ define([
                     lods: zoomLevels.lods
                 }, new MercatorLayerCollection());  
 
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
-
-                //Hide the scalebar at small scales <= 4
-                on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
-                    var level = this.mercatorMapConfig.map.getAbsoluteLevel();
-                    if (level <= 4) {
-                        //These need to be on a short timer due to unexpected errors during the zoom animation
-                        setTimeout(function() {
-                            coordinatesToolbar.hideScalebar();
-                        }, 100);
-                    } else {
-                        setTimeout(function() {
-                            coordinatesToolbar.showScalebar();
-                        }, 100);
-                    }
-                }));
-
+                new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
             },
 
             setupArcticView: function() {
@@ -224,7 +227,7 @@ define([
                     lods: zoomLevels.lods
                 }, new ArcticLayerCollection());
 
-                new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map}, 'arcticCoordinatesToolbar');
             },
 
             filterWcd: function(values) {                

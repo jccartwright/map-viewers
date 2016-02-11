@@ -3,6 +3,7 @@ define([
     'dojo/_base/lang',
     'dojo/dom',
     'dojo/_base/Color',
+    'dojo/topic',
     'esri/symbols/SimpleLineSymbol',
     'ngdc/arctic/MapConfig',
     'app/arctic/MapToolbar',
@@ -14,6 +15,7 @@ define([
         lang, 
         dom,
         Color,
+        topic,
         SimpleLineSymbol,
         MapConfig,
         MapToolbar,
@@ -54,6 +56,7 @@ define([
                 topic.subscribe('/water_column_sonar/layerMode', lang.hitch(this, function() {
                     this.identifyPane.close();
                 }));
+                topic.publish('/wcd/MapReady', 'arctic');
             }
          
             

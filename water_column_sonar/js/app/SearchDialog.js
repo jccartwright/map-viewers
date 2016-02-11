@@ -56,7 +56,6 @@ define([
             baseClass: 'searchDialog',
 
             constructor: function(/*Object*/ kwArgs) {
-                console.log('inside SearchDialog constructor...');
                 lang.mixin(this, kwArgs); 
             },
             

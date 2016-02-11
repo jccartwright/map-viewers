@@ -29,8 +29,6 @@ define([
             mapReady: function() {
                 this.inherited(arguments);
 
-                console.log('inside custom Web Mercator mapReady...');   
-
                 this.mapToolbar = new MapToolbar({
                     map: this.map, 
                     layerCollection: this.mapLayerCollection, 
@@ -56,6 +54,7 @@ define([
                 }));
 
                 this.setEnabled(true);
+                topic.publish('/wcd/MapReady', 'mercator');
             }
          
             
