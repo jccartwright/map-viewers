@@ -94,8 +94,9 @@ define([
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
                 lang.mixin(config.app, queryParams);
 
-                if (queryParams.survey) {
-                    this.startupSurvey = queryParams.survey;
+                this.startupSurveys = [];
+                if (queryParams.surveys) {
+                    this.startupSurveys = queryParams.surveys.split(',');
                 }
 
                 //put the logger into global so all modules have access
@@ -121,9 +122,9 @@ define([
                 topic.subscribe('/wcd/MapReady', lang.hitch(this, function() {
                     this.mapReadyCount++;
                     
-                    if (this.mapReadyCount == 2 && this.startupSurvey) {
+                    if (this.mapReadyCount == 2 && this.startupSurveys.length > 0) {
                         var filterValues = {};
-                        filterValues.surveyIds = [this.startupSurvey];
+                        filterValues.surveyIds = this.startupSurveys;
                         filterValues.zoomToResults = true;
                         this.filterWcd(filterValues);
                     }
