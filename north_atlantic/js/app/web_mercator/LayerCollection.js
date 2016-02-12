@@ -155,22 +155,42 @@ define([
                         imageParameters: this.imageParameters.png32
                     }),
                     new TiledWMSLayer('//geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
-                        id: 'EMODNetSinglebeam',
+                        id: 'EMODNet Singlebeam Polygons',
                         visible: false,
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
                         sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
-                        layerNames: ['EMODnet_Bathymetry_single_beams_points', 'EMODnet_Bathymetry_single_beams_lines', 'EMODnet_Bathymetry_single_beams_polygons']
+                        layerNames: ['EMODnet_Bathymetry_single_beams_polygons'],
+                        opacity: 0.5
                     }),
                     new TiledWMSLayer('//geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
-                        id: 'EMODNetMultibeam',
+                        id: 'EMODNet Multibeam Polygons',
                         visible: false,
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
                         sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
-                        layerNames: ['EMODnet_Bathymetry_multi_beams_points', 'EMODnet_Bathymetry_multi_beams_lines', 'EMODnet_Bathymetry_multi_beams_polygons']
+                        layerNames: ['EMODnet_Bathymetry_multi_beams_polygons'],
+                        opacity: 0.5
+                    }),
+                    new TiledWMSLayer('//geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
+                        id: 'EMODNet Singlebeam Lines',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '900913',
+                        sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
+                        layerNames: ['EMODnet_Bathymetry_single_beams_points', 'EMODnet_Bathymetry_single_beams_lines']
+                    }),
+                    new TiledWMSLayer('//geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
+                        id: 'EMODNet Multibeam Lines',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '900913',
+                        sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
+                        layerNames: ['EMODnet_Bathymetry_multi_beams_points', 'EMODnet_Bathymetry_multi_beams_lines']
                     }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (non-digital)',

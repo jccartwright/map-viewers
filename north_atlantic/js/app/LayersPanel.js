@@ -72,11 +72,13 @@ define([
                 }));
 
                 on(this.chkEmodNetMultibeam, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'EMODNetMultibeam', this.chkEmodNetMultibeam.checked);
+                    topic.publish('/ngdc/layer/visibility', 'EMODNet Multibeam Polygons', this.chkEmodNetMultibeam.checked);
+                    topic.publish('/ngdc/layer/visibility', 'EMODNet Multibeam Lines', this.chkEmodNetMultibeam.checked);
                 }));
 
                 on(this.chkEmodNetSinglebeam, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'EMODNetSinglebeam', this.chkEmodNetSinglebeam.checked);
+                    topic.publish('/ngdc/layer/visibility', 'EMODNet Singlebeam Polygons', this.chkEmodNetSinglebeam.checked);
+                    topic.publish('/ngdc/layer/visibility', 'EMODNet Singlebeam Lines', this.chkEmodNetSinglebeam.checked);
                 }));
 
                 on(this.chkEmodNetDTM, 'change', lang.hitch(this, function() {
