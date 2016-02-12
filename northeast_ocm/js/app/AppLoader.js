@@ -178,6 +178,7 @@ define([
                     var legend = new Legend({
                         map: this.mercatorMapConfig.map,
                         layerInfos: [
+                            {title: 'DEM Tiles', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')},
                             {title: 'Hurricane Sandy Track (NOAA)', layer: this.mercatorMapConfig.hurricaneLayer},
                             {title: 'Peak Wind Gusts (FEMA)', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('FEMA Peak Wind Gusts')},
                             {title: 'Storm Surge Area (FEMA)', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('FEMA Storm Surge Area')}
