@@ -4,6 +4,7 @@ define([
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISImageServiceLayer',
+    'esri/layers/WebTiledLayer',
     'ngdc/layers/TiledWMSLayer'
     ],
     function(
@@ -12,6 +13,7 @@ define([
         ArcGISTiledMapServiceLayer, 
         ArcGISDynamicMapServiceLayer,
         ArcGISImageServiceLayer,
+        WebTiledLayer,
         TiledWMSLayer
         ){
 
@@ -133,11 +135,16 @@ define([
                         id: 'BAG Hillshades',
                         visible: false
                     }),                    
-                    new ArcGISImageServiceLayer("//seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
+                    // new ArcGISImageServiceLayer("//seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
+                    //     id: 'RNC',
+                    //     visible: false,
+                    //     opacity: 0.5,
+                    //     imageServiceParameters: this.imageServiceParameters
+                    // }),
+                    new WebTiledLayer('http://tileservice.charts.noaa.gov/tiles/50000_1/{level}/{col}/{row}.png', {
                         id: 'RNC',
                         visible: false,
-                        opacity: 0.5,
-                        imageServiceParameters: this.imageServiceParameters
+                        opacity: 0.5
                     }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (BAGs)',
