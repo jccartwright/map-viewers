@@ -40,7 +40,7 @@ define([
                         id: "World Imagery",
                         visible: false
                     }),                                  
-                    new ArcGISImageServiceLayer("//mapdevel.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades_subsets/ImageServer", {
+                    new ArcGISImageServiceLayer("//gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades_subsets/ImageServer", {
                         id: "BAG Hillshades",
                         imageServiceParameters: params,
                         visible: false
