@@ -66,22 +66,16 @@ define([
 
                 //Get the survey ID and extent in lat/lon from the URL params
                 if (queryParams.survey && queryParams.xmin && queryParams.ymin && queryParams.xmax && queryParams.ymax) { 
-                    var surveyExtent = new this.clampExtentTo85(Extent(queryParams.xmin, queryParams.ymin, queryParams.xmax, queryParams.ymax, {
+                    var surveyExtent = new Extent(queryParams.xmin, queryParams.ymin, queryParams.xmax, queryParams.ymax, {
                         spatialReference:{wkid:4326}
-                    }));
-
-                    var webMercatorExtent = webMercatorUtils.geographicToWebMercator(surveyExtent);
-                    if (webMercatorExtent.xmax < webMercatorExtent.xmin) {
-                        var worldWidth = 40075014.13432359; //Width of the map in Web Mercator
-                        webMercatorExtent.xmin -= worldWidth;
-                    }
+                    });
 
                     //create Map and add layers
                     var mapConfig = new MapConfig("mapDiv", {
                         //extent/fitExtent properties don't work properly (sometimes zooms out too far). Give it a dummy extent and call setExtent later
                         center: [0,0],
                         zoom: 3,
-                        surveyExtent: webMercatorExtent,
+                        initialExtent: surveyExtent,
                         logo: false,
                         showAttribution: false,
                         survey: queryParams.survey,
@@ -134,24 +128,7 @@ define([
                         clearTimeout(mouseLeaveTimeout);
                     }, 50);
                 }));   
-            },
-
-            //Ensure the extent doesn't go beyond the bounds of the Mercator map (85 N/S)
-            clampExtentTo85: function(extent) {
-                if (extent.ymax > 85) {
-                    extent.ymax = 85;
-                }
-                if (extent.ymin > 85) {
-                    extent.ymin = 85;
-                }
-                if (extent.ymax < -85) {
-                    extent.ymax = -85;
-                }
-                if (extent.ymin < -85) {
-                    extent.ymin = -85;
-                }
-                return extent;
-            },
+            }
         });
     }
 );
