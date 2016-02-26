@@ -75,7 +75,7 @@ define([
                         //extent/fitExtent properties don't work properly (sometimes zooms out too far). Give it a dummy extent and call setExtent later
                         center: [0,0],
                         zoom: 3,
-                        surveyExtent: webMercatorUtils.geographicToWebMercator(surveyExtent),
+                        initialExtent: surveyExtent,
                         logo: false,
                         showAttribution: false,
                         survey: queryParams.survey

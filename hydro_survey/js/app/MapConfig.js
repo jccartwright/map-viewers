@@ -99,16 +99,11 @@ define([
                 //Be aware that this can cause problems if we need to be able to click on the graphics layer.
                 domConstruct.place(dom.byId('mapDiv_Boundaries/Labels'), dom.byId('mapDiv_gc'), "after");
 
-                var homeButton;
-                //Set the map extent to the survey extent.
-                //When the zoom-to is finished, initialize the home button.
-                this.map.setExtent(this.surveyExtent, true).then(lang.hitch(this, function() {                    
-                    homeButton = new HomeButton({
-                        map: this.map,
-                        extent: this.map.extent
-                    }, "homeButton");
-                    homeButton.startup();
-                }));
+                var homeButton = new HomeButton({
+                    map: this.map,
+                    extent: this.webMercatorExtent
+                }, "homeButton");
+                homeButton.startup();
                                       
                 var imageryLayer = this.mapLayerCollection.getLayerById('World Imagery');
                 var boundariesLayer = this.mapLayerCollection.getLayerById('Boundaries/Labels');
