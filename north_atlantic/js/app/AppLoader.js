@@ -160,7 +160,7 @@ define([
                 this.mercatorMapConfig = new MercatorMapConfig('mercator', {
                     center: center,
                     zoom: zoom,
-                    extent: this.initialExtent,
+                    initialExtent: this.initialExtent,
                     logo: false,
                     showAttribution: false,
                     overview: true,

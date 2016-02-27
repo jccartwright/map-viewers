@@ -47,7 +47,6 @@ define([
             },
 
             constructor: function(/*Object*/ kwArgs) {
-                console.log("inside TsObsSearchDialog constructor...");
                 lang.mixin(this, kwArgs); 
             },
                       

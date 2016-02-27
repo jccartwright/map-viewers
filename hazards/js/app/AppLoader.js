@@ -21,7 +21,7 @@ define([
     'ngdc/web_mercator/MapConfig',
     'ngdc/web_mercator/ZoomLevels',
     'ngdc/Banner',
-    'ngdc/CoordinatesToolbar',
+    'ngdc/CoordinatesWithElevationToolbar',
     'app/web_mercator/LayerCollection',
     'app/web_mercator/MapToolbar',
     'app/Identify',
@@ -48,10 +48,10 @@ define([
         QueryTask,
         Query,
         Logger,
-        mapConfig,        
+        MercatorMapConfig,        
         MercatorZoomLevels,        
         Banner,
-        CoordinatesToolbar,
+        CoordinatesWithElevationToolbar,
         MercatorLayerCollection,        
         MapToolbar,        
         Identify,
@@ -192,10 +192,10 @@ define([
                     zoom = 1; //relative zoom level; equivalent to absolute zoom level 3
                 }
 
-                this.mapConfig = new mapConfig('mercator', {
+                this.mapConfig = new MercatorMapConfig('mercator', {
                     center: center,
                     zoom: zoom,
-                    extent: this.initialExtent,
+                    initialExtent: this.initialExtent,
                     logo: false,
                     showAttribution: false,
                     overview: true,
@@ -204,22 +204,7 @@ define([
                     lods: zoomLevels.lods
                 }, new MercatorLayerCollection());                 
 
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.mapConfig.map}, 'mercatorCoordinatesToolbar');
-
-                //Hide the scalebar at small scales <= 4
-                on(this.mapConfig.map, 'zoom-end', lang.hitch(this, function() {
-                    var level = this.mapConfig.map.getAbsoluteLevel();
-                    if (level <= 4) {
-                        //These need to be on a short timer due to unexpected errors during the zoom animation
-                        setTimeout(function() {
-                            coordinatesToolbar.hideScalebar();
-                        }, 100);
-                    } else {
-                        setTimeout(function() {
-                            coordinatesToolbar.showScalebar();
-                        }, 100);
-                    }
-                }));
+                new CoordinatesWithElevationToolbar({map: this.mapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
 
                 aspect.after(this.mapConfig, 'mapReady', lang.hitch(this, function() {
                     var mapToolbar = new MapToolbar({map: this.mapConfig.map, layerCollection: this.mapConfig.mapLayerCollection}, 'mercatorMapToolbar');

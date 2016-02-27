@@ -78,7 +78,8 @@ define([
                         initialExtent: surveyExtent,
                         logo: false,
                         showAttribution: false,
-                        survey: queryParams.survey
+                        survey: queryParams.survey,
+                        noElevation: true
                     }, new LayerCollection());
                 }
                 else {

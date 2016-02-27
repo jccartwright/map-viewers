@@ -121,14 +121,14 @@ define([
                     if (this.geometry.spatialReference.wkid == 4326) {
                         //Geometry is in geographic
                         wkt.fromObject(this.geometry);
-                        orderParams.geometry = wkt.write();
+                        orderParams.wktGeometry = wkt.write();
                         this.submitOrder(orderParams);
                     }
                     else if (webMercatorUtils.canProject(this.geometry, geographicSR)) {
                         //Geometry is is Web Mercator - convert to geographic and submit order
                         geographicGeometry = webMercatorUtils.webMercatorToGeographic(this.geometry);
                         wkt.fromObject(geographicGeometry);
-                        orderParams.geometry = wkt.write();
+                        orderParams.wktGeometry = wkt.write();
                         this.submitOrder(orderParams);
                     }
                     else { 
@@ -155,7 +155,7 @@ define([
                             //Project the densififed geometry, then submit the order
                             geometryService.project(projectParams, lang.hitch(this, function(geometries) {                            
                                 wkt.fromObject(geometries[0]);
-                                orderParams.geometry = wkt.write();
+                                orderParams.wktGeometry = wkt.write();
                                 this.submitOrder(orderParams);
                             }), function(error) {
                                 logger.error(error);
@@ -169,7 +169,7 @@ define([
                             projectParams.geometries = [this.geometry];
                             geometryService.project(projectParams, lang.hitch(this, function(geometries) {                            
                                 wkt.fromObject(geometries[0]);
-                                orderParams.geometry = wkt.write();
+                                orderParams.wktGeometry = wkt.write();
                                 this.submitOrder(orderParams);
                                 
                             }), function(error) {
@@ -188,7 +188,7 @@ define([
 
                 var okDialog = new Dialog({
                     title: 'Request Submitted',
-                    content: 'Your order has been received. We will contact you when your order is ready for pickup. Please contact the water column sonar data manager at <a href="mailto:wcd.info@noaa.gov">wcd.info@noaa.gov</a> if you have any questions.',
+                    //content: 'Your order has been received. ',
                     class: 'requestDataDialog',
                     style: 'width:300px'
                 });
@@ -201,16 +201,38 @@ define([
                 }).placeAt(okDialog.containerNode);
 
                 xhr.post(
-                    '//maps.ngdc.noaa.gov/mapviewer-support/wcd/generateOrder.groovy', {
+                    'http://acceptance.ngdc.noaa.gov/wcs-order/order', {
+                    //'//maps.ngdc.noaa.gov/mapviewer-support/wcd/generateOrder.groovy', {
                         data: jsonString,
                         handleAs: 'json',
                         headers: {'Content-Type':'application/json'}
-                    }).then(function(response){
+                    }).then(lang.hitch(this, function(response){
                         logger.debug(response);
-                        okDialog.show();
-                    }, function(error) {
+                        this.showOrderConfirmationDialog(response);
+                    }), function(error) {
                         alert('Error: ' + error);
                     });
+            },
+
+            showOrderConfirmationDialog: function(response) {
+                var megabytes = Math.round(response.totalFileSizeInBytes / 1048576.0 * 100) / 100;
+                var okDialog = new Dialog({
+                    title: 'Request Submitted',
+                    content: 'Your order has been received. Please check your email for an order confirmation.<br><br>' +
+                            'Total files in order: ' + response.totalFilesOrder + '<br>' +
+                            'Total file size: ' + megabytes + ' MB<br>',
+                    class: 'requestDataDialog',
+                    style: 'width:300px'
+                });
+                new Button({
+                    label: 'OK',
+                    type: 'submit',
+                    onClick: lang.hitch(this, function(){
+                        okDialog.destroy();
+                    })
+                }).placeAt(okDialog.containerNode); 
+
+                okDialog.show();   
             }
         });
     });
