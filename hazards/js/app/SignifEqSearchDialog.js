@@ -34,7 +34,6 @@ define([
             baseClass: "SearchDialog",            
 
             constructor: function(/*Object*/ kwArgs) {
-                console.log("inside SignifEqSearchDialog constructor...");
                 lang.mixin(this, kwArgs); 
             },
             

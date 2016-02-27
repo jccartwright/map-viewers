@@ -43,7 +43,6 @@ define([
                 this.showTsObservationsButton.startup(); //necessary?
                 this.showTsObservationsButton.placeAt(this.zoomToButton.domNode, 'after');
                 on(this.showTsObservationsButton, 'click', lang.hitch(this, function() {
-                    console.log('ShowTsObsForEvent');
                     topic.publish('/hazards/ShowTsObsForEvent', this.currentItem.attributes['ID'], this.highlightGraphic.geometry);
                 }));
                 
@@ -56,7 +55,6 @@ define([
                 this.showTsEventButton.startup();
                 this.showTsEventButton.placeAt(this.showTsObservationsButton.domNode, 'after');
                 on(this.showTsEventButton, 'click', lang.hitch(this, function() {
-                    console.log('ShowTsEventForObs');
                     topic.publish('/hazards/ShowTsEventForObs', this.currentItem.attributes['Tsunami Event ID'], this.highlightGraphic.geometry);
                 }));
             },
