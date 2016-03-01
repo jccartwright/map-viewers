@@ -363,7 +363,7 @@ define([
                         else if (this.identify.searchGeometry.spatialReference.wkid == 102100 || this.identify.searchGeometry.spatialReference.wkid == 3857) {
                             latLonExtent = webMercatorUtils.webMercatorToGeographic(this.identify.searchGeometry);
                         }
-                        nosDdetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
+                        datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
                     }
                     
                     //Pass the list of survey IDs from the identifyResults
@@ -388,9 +388,9 @@ define([
                             }
                         }));
                     }
-                    nosDdetInfo.groupNames = surveyIds.join(',');
+                    datasetInfo.groupNames = surveyIds.join(',');
 
-                    filtditeria.items.push(nosDatasetInfo);
+                    filterCriteria.items.push(datasetInfo);
                 }
                 if (this.isDemTiles) {
                     var datasetInfo = {dataset: 'DEM'};
