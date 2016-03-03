@@ -16,6 +16,7 @@ define([
     'dojo/request/xhr',
     'dojo/json',
     'dojo/dom-style',
+    'dojo/topic',
     'esri/geometry/Polygon',
     'esri/geometry/webMercatorUtils',
     'esri/geometry/geometryEngine',
@@ -44,6 +45,7 @@ define([
         xhr,
         JSON,
         domStyle,
+        topic,
         Polygon,
         webMercatorUtils,
         geometryEngine,
@@ -83,6 +85,19 @@ define([
                         this.submitButton.set('disabled', true);
                     }
                 });
+
+                on(this.chkPassGeometry, 'click', lang.hitch(this, function() {
+                    if (this.chkPassGeometry.checked) {
+                        this.hideFullCruiseWarning();
+                    } else {
+                        this.showFullCruiseWarning();
+                    }
+                }));
+
+                //Subscribe to message sent by main SearchDialog to keep track of the current filter criteria
+                topic.subscribe('/wcd/Search', lang.hitch(this, function(values) {
+                    this.filterValues = values;
+                }));
             },
 
             setGeometryText: function(text) {
@@ -99,6 +114,14 @@ define([
                 domStyle.set(this.passGeometryText, 'display', 'none');
             },
 
+            showFullCruiseWarning: function() {
+                domStyle.set(this.fullCruiseWarning, 'display', '');
+            },
+
+            hideFullCruiseWarning: function() {
+                domStyle.set(this.fullCruiseWarning, 'display', 'none');
+            },
+
             execute: function(formContents) {
 
                 var orderParams = {
@@ -109,7 +132,32 @@ define([
                     cruiseAndInstrumentPairs: this.cruiseInfos
                 };
 
-                if (this.geometry && this.chkPassGeometry.checked) {
+                //Append file-level filter criteria to the payload if we're passing cruise/instrument pairs
+                if (this.filterValues && this.cruiseInfos) {
+                    if (this.filterValues.bottomSoundingsOnly) {
+                        orderParams.bottomSoundingsOnly = true;
+                    }
+                    if (this.filterValues.minNumBeams) {
+                        orderParams.minNumBeams = this.filterValues.minNumBeams;
+                    }
+                    if (this.filterValues.maxNumBeams) {
+                        orderParams.maxNumBeams = this.filterValues.maxNumBeams;
+                    }
+                    if (this.filterValues.minFrequency) {
+                        orderParams.minFrequency = this.filterValues.minFrequency;
+                    }
+                    if (this.filterValues.maxFrequency) {
+                        orderParams.maxFrequency = this.filterValues.maxFrequency;
+                    }
+                    if (this.filterValues.minSwathWidth) {
+                        orderParams.minSwathWidth = this.filterValues.minSwathWidth;
+                    }
+                    if (this.filterValues.maxSwathWidth) {
+                        orderParams.maxSwathWidth = this.filterValues.maxSwathWidth;
+                    }
+                }
+
+                if (this.geometry && this.chkPassGeometry.checked && this.geometry.type !== 'point') {
                     var wkt = new Wkt.Wkt();
 
                     //Convert an extent to a polygon
@@ -200,14 +248,17 @@ define([
                     })
                 }).placeAt(okDialog.containerNode);
 
+                topic.publish('/ngdc/showLoading');
                 xhr.post(
                     'http://acceptance.ngdc.noaa.gov/wcs-order/order', {
                     //'//maps.ngdc.noaa.gov/mapviewer-support/wcd/generateOrder.groovy', {
                         data: jsonString,
                         handleAs: 'json',
-                        headers: {'Content-Type':'application/json'}
+                        headers: {'Content-Type':'application/json'},
+                        timeout: 120000 //2 minute timeout
                     }).then(lang.hitch(this, function(response){
                         logger.debug(response);
+                        topic.publish('/ngdc/hideLoading');
                         this.showOrderConfirmationDialog(response);
                     }), function(error) {
                         alert('Error: ' + error);
@@ -216,11 +267,13 @@ define([
 
             showOrderConfirmationDialog: function(response) {
                 var megabytes = Math.round(response.totalFileSizeInBytes / 1048576.0 * 100) / 100;
+                var gigabytes = Math.round(response.totalFileSizeInBytes / 1073741824.0 * 100) / 100;
                 var okDialog = new Dialog({
                     title: 'Request Submitted',
-                    content: 'Your order has been received. Please check your email for an order confirmation.<br><br>' +
+                    content: 'Your order has been received. Check your email for an order confirmation.<br>Please contact <a href="mailto:wcd.info@noaa.gov">wcd.info@noaa.gov</a> with any questions.<br><br>' +
                             'Total files in order: ' + response.totalFilesOrder + '<br>' +
-                            'Total file size: ' + megabytes + ' MB<br>',
+                            'Total file size: ' + (megabytes < 1024 ? megabytes + ' MB' : gigabytes + ' GB') + '<br>' +
+                            (response.fulfillmentType == 'ManualOrder' ? '<br>Because the request is very large, you will be contacted by a data manager for manual delivery.<br>' : ''),
                     class: 'requestDataDialog',
                     style: 'width:300px'
                 });
