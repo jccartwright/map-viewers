@@ -200,6 +200,9 @@ define([
                         return (item.type != 'item');
                     }
                 });
+
+                //Create the Request Data Dialog
+                this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
             },
 
             showResults: function() {
@@ -624,13 +627,11 @@ define([
                     });
                 }
 
-                if (!this.requestDataDialog) {
-                    this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
-                }
                 this.requestDataDialog.fileInfos = fileInfos;
                 this.requestDataDialog.cruiseInfos = null;
                 this.requestDataDialog.geometry = null;
                 this.requestDataDialog.hideGeometryCheckBox();
+                this.requestDataDialog.hideFullCruiseWarning();
                 this.requestDataDialog.show();
             },
 
@@ -642,13 +643,11 @@ define([
                     instrument: this.currentItem.attributes['Instrument Name']
                 };
 
-                if (!this.requestDataDialog) {
-                    this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
-                }
                 this.requestDataDialog.fileInfos = [fileInfo];
                 this.requestDataDialog.cruiseInfos = null;
                 this.requestDataDialog.geometry = null;
                 this.requestDataDialog.hideGeometryCheckBox();
+                this.requestDataDialog.hideFullCruiseWarning();
                 this.requestDataDialog.show();
             },
 
@@ -659,19 +658,21 @@ define([
                     cruiseInfos.push([items[i].attributes['Cruise ID'], items[i].attributes['Instrument Name']]);
                 }
 
-                if (!this.requestDataDialog) {
-                    this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
-                }
                 this.requestDataDialog.cruiseInfos = cruiseInfos;
                 this.requestDataDialog.fileInfos = null;
                 this.requestDataDialog.geometry = this.identify.searchGeometry;
                 if (this.identify.searchGeometry.type == 'point') {
-                    this.requestDataDialog.setGeometryText('Request data only near point selected');
+                    this.requestDataDialog.showFullCruiseWarning();
+                    this.requestDataDialog.hideGeometryCheckBox();
                 }
                 else {
-                    this.requestDataDialog.setGeometryText('Request data only within area selected');
+                    if (this.requestDataDialog.chkPassGeometry.checked) {
+                        this.requestDataDialog.hideFullCruiseWarning();
+                    } else {
+                        this.requestDataDialog.showFullCruiseWarning();
+                    }
+                    this.requestDataDialog.showGeometryCheckBox();
                 }
-                this.requestDataDialog.showGeometryCheckBox();
                 this.requestDataDialog.show();
             },
 
@@ -681,19 +682,20 @@ define([
                     this.currentItem.attributes['Instrument Name']
                 ];
 
-                if (!this.requestDataDialog) {
-                    this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
-                }
                 this.requestDataDialog.cruiseInfos = [cruiseInfo];
                 this.requestDataDialog.fileInfos = null;
                 this.requestDataDialog.geometry = this.identify.searchGeometry;
                 if (this.identify.searchGeometry.type == 'point') {
-                    this.requestDataDialog.setGeometryText('Request data only near point selected');
+                    this.requestDataDialog.hideGeometryCheckBox();
                 }
                 else {
-                    this.requestDataDialog.setGeometryText('Request data only within area selected');
+                    if (this.requestDataDialog.chkPassGeometry.checked) {
+                        this.requestDataDialog.hideFullCruiseWarning();
+                    } else {
+                        this.requestDataDialog.showFullCruiseWarning();
+                    }
+                    this.requestDataDialog.showGeometryCheckBox();
                 }
-                this.requestDataDialog.showGeometryCheckBox();
                 this.requestDataDialog.show();
             }
         });

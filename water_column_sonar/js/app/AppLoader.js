@@ -370,29 +370,33 @@ define([
 
                 //Only operate on cruise-level geometries (sublayers 8-13)
                 for (var i = 8; i <= 13; i++) {
-                    layerDefsStr += i + ':' + layerDefs[i];
-                    if (i < 13) {
-                        layerDefsStr += ';';
+                    if (layerDefs[i] !== '') {
+                        layerDefsStr += i + ':' + layerDefs[i];
+                        if (i < 13) {
+                            layerDefsStr += ';';
+                        }
                     }
                 }
 
-                var params = {};
-                params.layerDefs = layerDefsStr;
+                if (layerDefsStr !== '') {
+                    var params = {};
+                    params.layerDefs = layerDefsStr;
 
-                var url = '//gis.ngdc.noaa.gov/geoextents/water_column_sonar/';
+                    var url = '//gis.ngdc.noaa.gov/geoextents/water_column_sonar/';
 
-                xhr.post(
-                    url, {
-                        data: params,
-                        handleAs: 'json'
-                    }).then(lang.hitch(this, function(response){
-                        logger.debug(response);
-                        if (response && response.bbox !== 'null') {
-                            this.zoomToBbox(response.bbox);
-                        }
-                    }), function(error) {
-                        logger.error('Error: ' + error);
-                    });                
+                    xhr.post(
+                        url, {
+                            data: params,
+                            handleAs: 'json'
+                        }).then(lang.hitch(this, function(response){
+                            logger.debug(response);
+                            if (response && response.bbox !== 'null') {
+                                this.zoomToBbox(response.bbox);
+                            }
+                        }), function(error) {
+                            logger.error('Error: ' + error);
+                        });                
+                }
             },
 
             //Zooms to bbox in geographic coordinates
