@@ -164,7 +164,7 @@ define([
                     <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
                     <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
 
-                if (a['Instrument Name'] == 'EK60' || a['Instrument Name'] == 'EK500') {
+                if (a['Instrument Name'] == 'EK60' || a['Instrument Name'] == 'EK500' || a['Instrument Name'] == 'ES60') {
                     template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
                 } else {
                     template += '\
@@ -174,9 +174,11 @@ define([
 
                 template += '<div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>';
 
-                if (a['Citation Link'] != '') {
+                if (a['Citation Text'] != '') {
                     template += '<div class="valueName">Citation: <span class="parameterValue">${citationText}</span></div>';
-                    template += '<div class="valueName"><span class="parameterValue"><a href="${citationLink}" target="_blank">${citationLink}</a></span></div>';
+                }
+                if (a['Citation Link'] != '') {
+                    template += '<div class="valueName">Citation Link: <span class="parameterValue"><a href="${citationLink}" target="_blank">${citationLink}</a></span></div>';
                 }
 
                 //Parse the variable number of key-value pairs from the ANCILLARY field, and display them as URLs.
