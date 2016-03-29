@@ -91,15 +91,15 @@ define([
 
                 this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
 
-                this.mapLayerCollection.getLayerById('CSC Lidar').setVisibleLayers([-1]);
+                this.mapLayerCollection.getLayerById('OCM Lidar').setVisibleLayers([-1]);
 
                 this.mapLayerCollection.getLayerById('FEMA Peak Wind Gusts').setVisibleLayers([3]);
 
-                //Apply layer definitions to the CSC Lidar layer to only show bathymetric lidar
+                //Apply layer definitions to the OCM Lidar layer to only show bathymetric lidar
                 var layerDefinitions = [];
                 layerDefinitions[4] = "Data_Classes_Available LIKE '%Bathymetric Lidar Points%'";
                 //layerDefinitions[4] = 'Year >= 2012';
-                this.mapLayerCollection.getLayerById('CSC Lidar').setLayerDefinitions(layerDefinitions);    
+                this.mapLayerCollection.getLayerById('OCM Lidar').setLayerDefinitions(layerDefinitions);    
 
                 this.setupHurricaneLayer();                           
             },
