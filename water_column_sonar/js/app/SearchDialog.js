@@ -86,7 +86,7 @@ define([
                     this.frequencySelect.set('disabled', this.chkAllFrequencies.checked);
                 }));
 
-                script.get("http://maps.ngdc.noaa.gov/mapviewer-support/wcd/ships.groovy", {
+                script.get("//maps.ngdc.noaa.gov/mapviewer-support/wcd/ships.groovy", {
                         preventCache: true,
                         jsonp: 'callback',
                         handleAs: 'json',
@@ -98,7 +98,7 @@ define([
                     logger.error('Error retrieving ships JSON: ' + err);
                 });
 
-                script.get("http://maps.ngdc.noaa.gov/mapviewer-support/wcd/institutions.groovy", {
+                script.get("//maps.ngdc.noaa.gov/mapviewer-support/wcd/institutions.groovy", {
                         preventCache: true,
                         jsonp: 'callback',
                         handleAs: 'json',
@@ -110,7 +110,7 @@ define([
                     logger.error('Error retrieving institutions JSON: ' + err);
                 });
 
-                script.get("http://maps.ngdc.noaa.gov/mapviewer-support/wcd/surveys.groovy", {
+                script.get("//maps.ngdc.noaa.gov/mapviewer-support/wcd/surveys.groovy", {
                         preventCache: true,
                         jsonp: 'callback',
                         handleAs: 'json',
