@@ -81,8 +81,8 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'DEM Hillshades', this.chkDemHillshades.checked);
                 }));  
 
-                on(this.chkCscLidar, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'CSC Lidar', [4], this.chkCscLidar.checked);                    
+                on(this.chkOcmLidar, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'OCM Lidar', [4], this.chkOcmLidar.checked);                    
                 }));
 
                 on(this.chkSandyTrack, 'change', lang.hitch(this, function() {
