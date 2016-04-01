@@ -1,16 +1,24 @@
 define([
-    "dojo/_base/declare",
-    "dijit/Dialog",
-    "dijit/_Widget",
-    "dijit/_TemplatedMixin",
-    "dijit/_WidgetsInTemplateMixin",
-    "dijit/form/Button", "dijit/form/NumberSpinner", "dijit/form/Select", "dijit/form/CheckBox", "dijit/form/MultiSelect", "dijit/form/FilteringSelect", "dijit/form/TextBox",
-    "dojo/_base/lang",
-    "dojo/_base/array",
-    "dojo/dom-attr",
-    "dojo/on",
-    "dojo/topic",
-    "dojo/text!./templates/TsObsSearchDialog.html"
+    'dojo/_base/declare',
+    'dijit/Dialog',
+    'dijit/_Widget',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dijit/form/Button', 
+    'dijit/form/NumberSpinner', 
+    'dijit/form/Select', 
+    'dijit/form/CheckBox', 
+    'dijit/form/MultiSelect', 
+    'dijit/form/FilteringSelect', 
+    'dijit/form/TextBox',
+    'dojo/_base/lang',
+    'dojo/_base/array',
+    'dojo/dom-attr',
+    'dojo/on',
+    'dojo/topic',
+    'dojo/request/xhr',
+    'dojo/store/Memory', 
+    'dojo/text!./templates/TsObsSearchDialog.html'
     ],
     function(
         declare,
@@ -18,12 +26,20 @@ define([
         _Widget,
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
-        Button, NumberSpinner, Select, CheckBox, MultiSelect, FilteringSelect, TextBox,
+        Button, 
+        NumberSpinner, 
+        Select, 
+        CheckBox, 
+        MultiSelect, 
+        FilteringSelect, 
+        TextBox,
         lang,
         array,
         domAttr,
         on,
         topic,
+        xhr,
+        Memory,
         template 
     ){
         return declare([Dialog, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -36,14 +52,30 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                on(this.cancelButton, "click", lang.hitch(this, function(evt){
+                on(this.cancelButton, 'click', lang.hitch(this, function(evt){
                     this.onCancel();
                 }));
-                on(this.resetButton, "click", lang.hitch(this, function(evt){
+                on(this.resetButton, 'click', lang.hitch(this, function(evt){
                     this.reset();
-                }));    
+                })); 
 
-                this.measurementTypeSelect.set('value', '');            
+                on(this.countrySelect, 'change', lang.hitch(this, function(evt){
+                    this.areaSelect.set('value', '');
+                    this.areaSelect.query.country = this.countrySelect.get('value') || /.*/;
+                }));     
+
+                this.measurementTypeSelect.set('value', '');
+
+                xhr.get('tsrunupAreas.json', {
+                    preventCache: true,
+                    handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data.items) {
+                        this.populateAreaSelect(data.items);
+                    }
+                }), function(err){
+                    logger.error('Error retrieving tsrunupAreas JSON: ' + err);
+                });            
             },
 
             constructor: function(/*Object*/ kwArgs) {
@@ -57,7 +89,7 @@ define([
                 values.observationLocationName = this.observationLocationText.get('value');         
                 values.observationRegion = this.observationRegionSelect.get('value');
                 values.country = this.countrySelect.get('value');
-                values.area = this.areaSelect.get('value');
+                values.area = this.areaSelect.get('displayedValue');
                 values.measurementType = this.measurementTypeSelect.get('value');
                 values.minWaterHeight = this.minWaterHeightText.get('value');
                 values.maxWaterHeight = this.maxWaterHeightText.get('value');
@@ -83,6 +115,7 @@ define([
                 this.observationRegionSelect.set('value', '');
                 this.countrySelect.set('value', '');
                 this.areaSelect.set('value', '');
+                this.areaSelect.query = /.*/;
                 this.measurementTypeSelect.set('value', '');
                 this.minWaterHeightText.set('value', '');
                 this.maxWaterHeightText.set('value', '');
@@ -94,9 +127,13 @@ define([
                 this.minDamageSelect.set('value', '');
             },
 
+            populateAreaSelect: function(items) {
+                this.areaSelect.store = new Memory({data: items});
+            },
+
             reset: function() {
                 this.clearForm();
-                topic.publish("/hazards/ResetTsObsSearch");
+                topic.publish('/hazards/ResetTsObsSearch');
             },
 
             isDefault: function(values) {
