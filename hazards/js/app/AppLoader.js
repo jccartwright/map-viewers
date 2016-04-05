@@ -82,6 +82,8 @@ define([
 
             init: function() {
                 esriConfig.defaults.io.corsEnabledServers = [
+                    'https://gis.ngdc.noaa.gov/arcgis/rest/services',
+                    'http://gis.ngdc.noaa.gov/arcgis/rest/services',
                     'http://maps.ngdc.noaa.gov/arcgis/rest/services',
                     'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
 
