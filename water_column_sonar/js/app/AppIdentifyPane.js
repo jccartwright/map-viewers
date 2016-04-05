@@ -686,6 +686,7 @@ define([
                 this.requestDataDialog.fileInfos = null;
                 this.requestDataDialog.geometry = this.identify.searchGeometry;
                 if (this.identify.searchGeometry.type == 'point') {
+                    this.requestDataDialog.showFullCruiseWarning();
                     this.requestDataDialog.hideGeometryCheckBox();
                 }
                 else {
