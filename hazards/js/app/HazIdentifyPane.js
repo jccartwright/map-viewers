@@ -112,7 +112,7 @@ define([
                 else if (item.layerName == 'Significant Volcanic Eruptions') {
                     return this.getItemLabelSpan(attr['YEAR'] + ': ' + attr['NAME'], uid);
                 }
-                else if (item.layerName == 'Current DART® Deployments') {
+                else if (item.layerName == 'Current DART Deployments') {
                     return this.getItemLabelSpan(attr['Deployment ID'] + ': ' + attr['Description'], uid);
                 }
                 else if (item.layerName == 'Retrospective BPR Deployments') {
