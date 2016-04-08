@@ -54,17 +54,21 @@ define([
 
             defineMapServices: function() {
 
-                var norwayLayer1 = new WMSLayerInfo({
+                var mareanoMultibeamLayerInfo = new WMSLayerInfo({
                     name: 'Flerstraale',
                     title: 'Flerstråle'
                 });
-                var norwayLayer2 = new WMSLayerInfo({
+                var mareanoSinglebeamLayerInfo = new WMSLayerInfo({
                     name: 'Enkeltstraale',
                     title: 'Enkeltstråle'
                 });
-                var resourceInfo = {
+                var mareanoMultibeamResourceInfo = {
                     extent: new Extent(-180, -90, 180, 90, {wkid: 4326}),
-                    layerInfos: [norwayLayer1, norwayLayer2]
+                    layerInfos: [mareanoMultibeamLayerInfo]
+                };
+                var mareanoSinglebeamResourceInfo = {
+                    extent: new Extent(-180, -90, 180, 90, {wkid: 4326}),
+                    layerInfos: [mareanoSinglebeamLayerInfo]
                 };
 
                 //TODO check to ensure unique id
@@ -124,21 +128,25 @@ define([
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
                         layerNames: ['mean_atlas_land']
-                    }),
-                    new ArcGISImageServiceLayer('//gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer', {
-                        id: 'DEM Hillshades',
-                        visible: this.demVisible,
-                        imageServiceParameters: this.imageServiceParameters
-                    }),                    
+                    }),                                    
                     new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
                         visible: false,
                         opacity: 0.7
                     }),
                     new WMSLayer('http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling', {
-                        id: 'Norway',
-                        resourceInfo: resourceInfo,
-                        visibleLayers: ['Flerstraale', 'Enkeltstraale'],
+                        id: 'MAREANO Multibeam',
+                        resourceInfo: mareanoMultibeamResourceInfo,
+                        visibleLayers: ['Flerstraale'],
+                        version: '1.3.0',
+                        transparent: true,
+                        format: 'png',
+                        visible: false,
+                    }),
+                    new WMSLayer('http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling', {
+                        id: 'MAREANO Single-Beam',
+                        resourceInfo: mareanoSinglebeamResourceInfo,
+                        visibleLayers: ['Enkeltstraale'],
                         version: '1.3.0',
                         transparent: true,
                         format: 'png',
@@ -191,42 +199,7 @@ define([
                         epsgCode: '900913',
                         sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
                         layerNames: ['EMODnet_Bathymetry_multi_beams_points', 'EMODnet_Bathymetry_multi_beams_lines']
-                    }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
-                        id: 'NOS Hydro (non-digital)',
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro/MapServer', {
-                        id: 'NOS Hydro (tiled)',
-                        visible: this.nosHydroVisible
-                    }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
-                        id: 'NOS Hydro (dynamic)',
-                        visible: this.nosHydroVisible,
-                        imageParameters: this.imageParameters.png32
-                    }),
-                    new ArcGISTiledMapServiceLayer('//gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
-                        id: 'BAG Hillshades',
-                        visible: false
                     }),                    
-                    new ArcGISImageServiceLayer("//seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
-                        id: 'RNC',
-                        visible: false,
-                        opacity: 0.5,
-                        imageServiceParameters: this.imageServiceParameters
-                    }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
-                        id: 'NOS Hydro (BAGs)',
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
-                    new ArcGISDynamicMapServiceLayer('//maps.coast.noaa.gov/arcgis/rest/services/DAV/DAV/MapServer', {
-                        id: 'CSC Lidar',
-                        visible: false,
-                        imageParameters: this.imageParameters.png32,
-                        opacity: 1
-                    }),
                     new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer', {
                         id: 'Trackline Bathymetry (tiled)',
                         visible: this.tracklineVisible,
@@ -266,12 +239,7 @@ define([
                         visible: false,
                         opacity: 0.7,
                         imageParameters: this.imageParameters.png32
-                    }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer', {
-                        id: 'DEM Extents',
-                        visible: this.demVisible,
-                        imageParameters: this.imageParameters.png32
-                    }),
+                    }),                    
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
                         id: 'Poles Mask',
                         visible: true,
@@ -281,7 +249,8 @@ define([
 
                 //Force the WMS layer to use epsg:900913 instead of 102100, which is unsupported by the remote server.
                 //See: http://gis.stackexchange.com/questions/86301/force-an-arcgis-api-for-javascript-wmslayer-to-use-epsg-900913-instead-of-1021
-                this.getLayerById('Norway').spatialReferences[0] = 900913;
+                this.getLayerById('MAREANO Multibeam').spatialReferences[0] = 900913;
+                this.getLayerById('MAREANO Single-Beam').spatialReferences[0] = 900913;
 
             },  //end defineMapServices
 
@@ -301,31 +270,12 @@ define([
                         visible: this.tracklineVisible,
                         cutoffZoom: 9,
                         defaultVisibleLayers: [1]
-                     },
-                     {
-                         id: 'NOS Hydrographic Surveys',
-                         tiledService: this.getLayerById('NOS Hydro (tiled)'),
-                         dynamicService: this.getLayerById('NOS Hydro (dynamic)'),
-                         visible: this.nosHydroVisible,
-                         cutoffZoom: 9
-                     }                     
+                     }                    
                 ];
             },
 
             setSubLayerVisibility: function() {
                 //logger.debug('setting subLayer visibility...');
-                //this.getLayerById('Water Column Sonar').setVisibleLayers([0,1,2,3]);
-                //this.getLayerById('DEM Extents').setVisibleLayers([9999]); //Manually set all the sublayers to invisible for 'DEM Extents'
-                //set on PairedService or dynamic service?
-                //this.getLayerById('NOS Hydro (dynamic)').setVisibleLayers([9999]);
-                //this.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([9999]); //Manually set all the sublayers to invisible for 'NOS Hydro'
-                //this.getLayerById('NOS Hydro Non-Digital').setVisibleLayers([9999]);
-
-                this.getLayerById('DEM Extents').setVisibleLayers([12]);
-
-                //this.getLayerById('DAV').setVisibleLayers([-1]);
-
-                //this.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0])
             }
         });
     }

@@ -42,35 +42,6 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'Trackline Bathymetry', this.chkTrackline.checked);                    
                 }));
 
-                on(this.chkNosHydroBags, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0], this.chkNosHydroBags.checked);
-
-                    //If the BAG Hillshades are visible, toggle the extra "Surveys with BAGs" overlay on top of the hillshades.
-                    if (this.chkBagHillshades.checked) {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', this.chkNosHydroBags.checked);
-                    }
-                    else {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', false);
-                    }
-                }));
-                on(this.chkNosHydroDigital, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [1], this.chkNosHydroDigital.checked);
-                }));
-                on(this.chkNosHydroNonDigital, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'NOS Hydro (non-digital)', this.chkNosHydroNonDigital.checked);                    
-                }));
-                on(this.chkBagHillshades, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.chkBagHillshades.checked);   
-
-                    //If the "Surveys with BAGs" are visible, toggle the extra overlay on top of the hillshades.
-                    if (this.chkBagHillshades.checked && this.chkNosHydroBags.checked) {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', true);
-                    }
-                    else {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', false);
-                    }                                     
-                }));
-
                 on(this.chkEmodNetMultibeam, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'EMODNet Multibeam Polygons', this.chkEmodNetMultibeam.checked);
                     topic.publish('/ngdc/layer/visibility', 'EMODNet Multibeam Lines', this.chkEmodNetMultibeam.checked);
@@ -81,43 +52,38 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'EMODNet Singlebeam Lines', this.chkEmodNetSinglebeam.checked);
                 }));
 
-                on(this.chkEmodNetDTM, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'EMODNet DTM', this.chkEmodNetDTM.checked);
+                on(this.chkNRCanMultibeam, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'NRCan Multibeam', this.chkNRCanMultibeam.checked);
                 }));
+                // on(this.chkNRCanSinglebeam, 'change', lang.hitch(this, function() {
+                //     topic.publish('/ngdc/layer/visibility', 'NRCan Single-Beam', this.chkNRCanSinglebeam.checked);
+                // }));
 
-                on(this.chkNRCan, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'NRCan Multibeam', this.chkNRCan.checked);
+                on(this.chkMareanoMultibeam, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'MAREANO Multibeam', this.chkMareanoMultibeam.checked);
                 }));
-
-                on(this.chkNorway, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'Norway', this.chkNorway.checked);
+                on(this.chkMareanoSinglebeam, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'MAREANO Single-Beam', this.chkMareanoSinglebeam.checked);
                 }));
 
                 on(this.chkPortugal, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Portugal', this.chkPortugal.checked);
                 }));
 
-                on(this.chkDems, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'DEM Extents', this.chkDems.checked);
-                })); 
-                on(this.chkDemHillshades, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'DEM Hillshades', this.chkDemHillshades.checked);
-                }));  
+                // on(this.chkEmodNetDTM, 'change', lang.hitch(this, function() {
+                //     topic.publish('/ngdc/layer/visibility', 'EMODNet DTM', this.chkEmodNetDTM.checked);
+                // }));
 
-                on(this.chkCscLidar, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'CSC Lidar', [4], this.chkCscLidar.checked);                    
-                }));
+                // on(this.searchButton, 'click', lang.hitch(this, function() {
+                //     if (!this.searchDialog) {
+                //         this.searchDialog = new SearchDialog({title: 'Bathymetry Survey Search'});
+                //     }
+                //     this.searchDialog.show();
+                // }));  
 
-                on(this.searchButton, 'click', lang.hitch(this, function() {
-                    if (!this.searchDialog) {
-                        this.searchDialog = new SearchDialog({title: 'Bathymetry Survey Search'});
-                    }
-                    this.searchDialog.show();
-                }));  
-
-                on(this.resetButton, 'click', lang.hitch(this, function() {
-                    topic.publish('/bathymetry/ResetSearch');
-                })); 
+                // on(this.resetButton, 'click', lang.hitch(this, function() {
+                //     topic.publish('/bathymetry/ResetSearch');
+                // })); 
             },
 
             setNosHydroDisabled: function(disabled) {
