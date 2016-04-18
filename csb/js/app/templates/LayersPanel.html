@@ -1,0 +1,41 @@
+<div class="layersPanel_class">
+    <br>
+    <input checked type="checkbox" data-dojo-attach-point="chkCsb" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkCsb"><b>Crowdsourced Bathymetry</b></label><br>
+
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" id="searchButton">Filter Surveys</div>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" id="resetButton" disabled>Reset</div><br>
+    <div id="currentFilter" class="filterText"></div><br>
+    
+    <hr>
+
+    <h4>NOAA/NCEI Bathymetric Surveys</h4>
+    <input type="checkbox" data-dojo-attach-point="chkMultibeam" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkMultibeam">Multibeam Bathymetric Surveys</label><br>
+
+    <input type="checkbox" id="chkTrackline" data-dojo-attach-point="chkTrackline" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkTrackline">Single-Beam (Trackline) Bathymetric Surveys</label><br><br>
+
+    <input type="checkbox" id="chkNosHydro" data-dojo-attach-point="chkNosHydro" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblNosHydro" for="chkNosHydro">NOS Hydrographic Surveys</label><br>
+
+    <input type="checkbox" id="chkBagHillshades" data-dojo-attach-point="chkBagHillshades" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblBagHillshades"for="chkBagHillshades">BAG Color Shaded Relief Imagery</label><br>
+
+    <h4>EMODNet Bathymetric Surveys</h4>
+    <input type="checkbox" id="chkEmodNetMultibeam" data-dojo-attach-point="chkEmodNetMultibeam" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblEmodNetMultibeam" for="chkEmodNetMultibeam"><a href="http://www.emodnet-bathymetry.eu/" target="_blank">EMODNet Multibeam</a></label><br>
+
+    <input type="checkbox" id="chkEmodNetSinglebeam" data-dojo-attach-point="chkEmodNetSinglebeam" data-dojo-type="dijit/form/CheckBox">
+    <label id="lblEmodNetSinglebeam" for="chkEmodNetSinglebeam"><a href="http://www.emodnet-bathymetry.eu/" target="_blank">EMODNet Single-Beam</a> </label><br>
+
+    <hr>
+
+    <h4>NOAA/NCEI Digital Elevation Models (DEMs)</h4>
+
+    <input type="checkbox" id="chkDems" data-dojo-attach-point="chkDems" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkDems">DEM Footprints</label><br>
+
+    <input type="checkbox" id="chkDemHillshades" data-dojo-attach-point="chkDemHillshades" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkDemHillshades">DEM Color Shaded Relief Imagery</label>    
+</div>
