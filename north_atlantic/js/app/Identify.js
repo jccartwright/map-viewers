@@ -4,6 +4,11 @@ define([
     'dojo/string', 
     'dojo/topic', 
     'dojo/_base/lang',
+    'dojo/on',
+    'esri/graphic',
+    'ncei/tasks/WMSIdentifyParameters',
+    'ncei/tasks/WMSIdentifyTask',
+    'ncei/tasks/WMSIdentifyResult',
     'ngdc/identify/AbstractIdentify'
     ],
     function(
@@ -12,10 +17,72 @@ define([
         string, 
         topic,
         lang,
+        on,
+        Graphic,
+        WMSIdentifyParameters,
+        WMSIdentifyTask,
+        WMSIdentifyResult,
         AbstractIdentify 
         ){
 
         return declare([AbstractIdentify], {
+
+            //override method from AbstractIdentify
+            identifyWithPoint: function(mapPoint) {
+                console.log('inside custom identifyWithPoint...');
+
+                //console.log(this._map);
+                var wmsLayer = this._map.getLayer('EMODNet Multibeam Lines');
+
+                var wmsUrl = "http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?REQUEST=GetMap&SERVICE=WMS&BGCOLOR=0xFFFFFF&TRANSPARENT=TRUE&reaspect=false&WIDTH=512&HEIGHT=512&CRS=EPSG:900913&LAYERS=EMODnet_Bathymetry_multi_beams_polygons&VERSION=1.3.0&FORMAT=image/png&SLD=http://maps.ngdc.noaa.gov/viewers/emodnet.sld&BBOX=-5009377.085697226,0,0,5009377.085697209"
+
+                var wmsIdentifyParameters = new WMSIdentifyParameters({map: this._map});
+                wmsIdentifyParameters.crs = 'EPSG:900913';
+                wmsIdentifyParameters.layers = 'EMODnet_Bathymetry_multi_beams_lines,EMODnet_Bathymetry_multi_beams_polygons';
+                wmsIdentifyParameters.mapPoint = mapPoint;
+
+                var wmsIdentifyTask = new WMSIdentifyTask(this._map.getLayer('EMODNet Multibeam Lines').url);
+
+                var wmsIdentifyPromise = wmsIdentifyTask.execute(wmsIdentifyParameters);
+
+                //two ways of getting results:
+                //1) via the returned promise
+                wmsIdentifyPromise.then(
+                    function(result) {
+                        console.log('execute completed', result);
+                    },
+
+                    function(error) {
+                        console.error(error);
+                    }
+                );
+
+                //2) listen for events from Task
+                on(wmsIdentifyTask, 'complete', function(evt) {
+                    console.log("WMSIdentifyTask completed successfully", evt);
+                });
+                on(wmsIdentifyTask, 'error', function(evt) {
+                    console.log("WMSIdentifyTask failed", evt);
+                });
+
+
+                if (!this.enabled) {
+                    return;
+                }
+
+                this.identify(mapPoint);
+
+                //TODO factor out to better support alternate Identify styles, e.g. Popup
+                //Remove any identify graphic from the map
+                var graphic = Graphic(mapPoint, this.clickSymbol);
+                if (this._map.identifyGraphic) {
+                    this._map.graphics.remove(this._map.identifyGraphic);
+                }
+                this._map.identifyGraphic = graphic;
+
+                //Add the click graphic to the map
+                this._map.graphics.add(graphic);
+            },
 
             multibeamFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
