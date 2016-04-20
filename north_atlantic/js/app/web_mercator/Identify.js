@@ -22,7 +22,16 @@ define([
                 logger.debug('inside constructor for app/web_mercator/Identify');
 
                 //augment arguments object with list of layers to identify.
-                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NRCan Multibeam', 'Portugal'];
+                arguments[0].layerIds = [
+                    'Multibeam',
+                    'Trackline Bathymetry',
+                    'NRCan Multibeam',
+                    'Portugal',
+                    'EMODNet Singlebeam Polygons',
+                    'EMODNet Multibeam Polygons',
+                    'EMODNet Singlebeam Lines',
+                    'EMODNet Multibeam Lines'
+                ];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
