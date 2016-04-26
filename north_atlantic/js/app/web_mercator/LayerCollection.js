@@ -134,24 +134,59 @@ define([
                         visible: false,
                         opacity: 0.7
                     }),
-                    new WMSLayer('http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling', {
+
+                    new ArcGISDynamicMapServiceLayer('//atlas.marine.ie/arcgis/rest/services/AdministrativeUnits/MapServer', {
+                        id: 'OSPAR Boundaries',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),
+                    new ArcGISDynamicMapServiceLayer('//atlas.marine.ie/arcgis/rest/services/ProtectedSites/MapServer', {
+                        id: 'Protected Sites',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),
+
+                    new ArcGISDynamicMapServiceLayer('//service.ncddc.noaa.gov/arcgis/rest/services/OceanExploration/OE_IOCM_Planned/MapServer', {
+                        id: 'OER Planned Expeditions',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),
+                    
+                    new TiledWMSLayer('http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling?', {
                         id: 'MAREANO Multibeam',
-                        resourceInfo: mareanoMultibeamResourceInfo,
-                        visibleLayers: ['Flerstraale'],
-                        version: '1.3.0',
-                        transparent: true,
-                        format: 'png',
                         visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '900913',
+                        layerNames: ['Flerstraale']
                     }),
-                    new WMSLayer('http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling', {
+                    new TiledWMSLayer('http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling?', {
                         id: 'MAREANO Single-Beam',
-                        resourceInfo: mareanoSinglebeamResourceInfo,
-                        visibleLayers: ['Enkeltstraale'],
-                        version: '1.3.0',
-                        transparent: true,
-                        format: 'png',
                         visible: false,
-                    }),
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '900913',
+                        //sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
+                        layerNames: ['Enkeltstraale']
+                    }),                    
+                    // new WMSLayer('http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling', {
+                    //     id: 'MAREANO Multibeam',
+                    //     resourceInfo: mareanoMultibeamResourceInfo,
+                    //     visibleLayers: ['Flerstraale'],
+                    //     version: '1.3.0',
+                    //     transparent: true,
+                    //     format: 'png',
+                    //     visible: false,
+                    // }),
+                    // new WMSLayer('http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling', {
+                    //     id: 'MAREANO Single-Beam',
+                    //     resourceInfo: mareanoSinglebeamResourceInfo,
+                    //     visibleLayers: ['Enkeltstraale'],
+                    //     version: '1.3.0',
+                    //     transparent: true,
+                    //     format: 'png',
+                    //     visible: false,
+                    // }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/proprietary_bathymetric_surveys/MapServer', {
                         id: 'Portugal',
                         visible: false,
@@ -249,8 +284,8 @@ define([
 
                 //Force the WMS layer to use epsg:900913 instead of 102100, which is unsupported by the remote server.
                 //See: http://gis.stackexchange.com/questions/86301/force-an-arcgis-api-for-javascript-wmslayer-to-use-epsg-900913-instead-of-1021
-                this.getLayerById('MAREANO Multibeam').spatialReferences[0] = 900913;
-                this.getLayerById('MAREANO Single-Beam').spatialReferences[0] = 900913;
+                //this.getLayerById('MAREANO Multibeam').spatialReferences[0] = 900913;
+                //this.getLayerById('MAREANO Single-Beam').spatialReferences[0] = 900913;
 
             },  //end defineMapServices
 

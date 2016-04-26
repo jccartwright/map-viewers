@@ -70,6 +70,19 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'Portugal', this.chkPortugal.checked);
                 }));
 
+                on(this.chkOsparBoundaries, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'OSPAR Boundaries', [19], this.chkOsparBoundaries.checked);
+                }));
+                on(this.chkOsparMpas, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'Protected Sites', [61], this.chkOsparMpas.checked);
+                }));
+                on(this.chkNeafcFisheriesClosures, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'Protected Sites', [56], this.chkNeafcFisheriesClosures.checked);
+                }));
+                on(this.chkPlannedOer, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'OER Planned Expeditions', this.chkPlannedOer.checked);
+                }));
+
                 // on(this.chkEmodNetDTM, 'change', lang.hitch(this, function() {
                 //     topic.publish('/ngdc/layer/visibility', 'EMODNet DTM', this.chkEmodNetDTM.checked);
                 // }));

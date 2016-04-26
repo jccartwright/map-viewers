@@ -97,84 +97,6 @@ define([
                 return html;
             },
 
-            nosHydroFormatter: function(feature) {
-                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
-
-                var template = '\
-                    <h3>NOS Hydrographic Survey: ${surveyId}</h3>\
-                    <div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>\
-                    <div class="valueName">Survey ID: <span class="parameterValue">${surveyId}</span></div>\
-                    <div class="valueName">Survey Year: <span class="parameterValue">${surveyYear}</span></div>\
-                    <div class="valueName">Locality: <span class="parameterValue">${locality}</span></div>\
-                    <div class="valueName">Sublocality: <span class="parameterValue">${sublocality}</span></div>\
-                    <div class="valueName">Platform Name: <span class="parameterValue">${platformName}</span></div>';
-
-                var html = string.substitute(template, {
-                        url: a['Download URL'],
-                        surveyId: a['Survey ID'],
-                        surveyYear: a['Survey Year'],
-                        locality: a['Locality'],
-                        sublocality: a['Sublocality'],
-                        platformName: a['Platform Name']
-                    });                
-                return html;
-            },
-
-            demFormatter: function(feature) {
-                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
-
-                var template = '\
-                    <h3>Digital Elevation Model: ${name}</h3>\
-                    <div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>\
-                    <div class="valueName">Name: <span class="parameterValue">${name}</span></div>\
-                    <div class="valueName">Cell Size: <span class="parameterValue">${cellSize}</span></div>\
-                    <div class="valueName">Category: <span class="parameterValue">${category}</span></div>\
-                    <div class="valueName">Source: <span class="parameterValue">${source}</span></div>\
-                    <div class="valueName">Project: <span class="parameterValue">${project}</span></div>\
-                    <div class="valueName">Vertical Datum: <span class="parameterValue">${verticalDatum}</span></div>\
-                    <div class="valueName">Status: <span class="parameterValue">${status}</span></div>\
-                    <div class="valueName">Type: <span class="parameterValue">${type}</span></div>\
-                    <div class="valueName">Coverage: <span class="parameterValue">${coverage}</span></div>\
-                    <div class="valueName">Completion Date: <span class="parameterValue">${completionDate}</span></div>';
-
-                var html = string.substitute(template, {
-                        url: a['DEMURL'],
-                        name: a['Name'],
-                        cellSize: a['Cell Size'],
-                        category: a['Category'],
-                        source: a['Source'],
-                        project: a['Project'],
-                        verticalDatum: a['Vertical Datum'],
-                        status: a['Status'],
-                        type: a['Type'],
-                        coverage: a['Coverage'],
-                        completionDate: a['Completion Date']
-                    });               
-                return html;
-            },
-
-            lidarFormatter: function(feature) {
-                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
-
-                var template = '\
-                    <h3>Bathymetric Lidar: ${name}</h3>\
-                    <div class="valueName">Name: <span class="parameterValue">${name}</span></div>\
-                    <div class="valueName">Project: <span class="parameterValue">${project}</span></div>\
-                    <div class="valueName">Year: <span class="parameterValue">${year}</span></div>\
-                    <div class="valueName"><span class="parameterValue"><a href="${prefix}${id}" target="_blank">Link to Data</a></span></div>\
-                    <div class="valueName"><span class="parameterValue"><a href="${metalink}" target="_blank">Metadata Link</a></span></div>';
-
-                var html = string.substitute(template, {
-                        id: a['ID'],
-                        name: a['Name'],
-                        project: a['Project'],
-                        year: a['Year'],
-                        metalink: a['Metalink'],
-                        prefix: 'http://www.coast.noaa.gov/dataviewer/index.html?action=advsearch&qType=in&qFld=ID&qVal='
-                    });                
-                return html;
-            },
-
             nrCanFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
@@ -210,6 +132,87 @@ define([
                         endDate: a['P_END'],
                         area: a['AREA'],
                         platform: a['PLATFORM']
+                    });                
+                return html;
+            },
+
+            emodnetMultibeamFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <h3>EMODNet Multibeam Bathymetric Survey</h3>\
+                    <div class="valueName">CDI Partner: <span class="parameterValue">${cdiPartner}</span></div>\
+                    <div class="valueName">CDI Record ID: <span class="parameterValue">${cdiRecordId}</span></div>\
+                    <div class="valueName">Dataset Name: <span class="parameterValue">${datasetName}</span></div>\
+                    <div class="valueName">Details: <span class="parameterValue"><a href="${details}" target="_blank">${details}</a></span></div>';
+
+                var html = string.substitute(template, {
+                        cdiPartner: a['CDI-partner'],
+                        cdiRecordId: a['CDI-record id'],
+                        datasetName: a['Data set name'],
+                        details: a['Details']
+                    });                
+                return html;
+            },
+
+            emodnetSinglebeamFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <h3>EMODNet Single-Beam Bathymetric Survey</h3>\
+                    <div class="valueName">CDI Partner: <span class="parameterValue">${cdiPartner}</span></div>\
+                    <div class="valueName">CDI Record ID: <span class="parameterValue">${cdiRecordId}</span></div>\
+                    <div class="valueName">Dataset Name: <span class="parameterValue">${datasetName}</span></div>\
+                    <div class="valueName">Details: <span class="parameterValue"><a href="${details}" target="_blank">${details}</a></span></div>';
+
+                var html = string.substitute(template, {
+                        cdiPartner: a['CDI-partner'],
+                        cdiRecordId: a['CDI-record id'],
+                        datasetName: a['Data set name'],
+                        details: a['Details']
+                    });                
+                return html;
+            },
+
+            protectedSitesFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <h3>Protected Site:</h3>\
+                    <div class="valueName">Site Name: <span class="parameterValue">${siteName}</span></div>\
+                    <div class="valueName">Site Protection Classification: <span class="parameterValue">${siteProtectionClassificationDefinition}</span></div>\
+                    <div class="valueName">Details: <span class="parameterValue"><a href="${dataSourceUrl}" target="_blank">${dataSource}</a></span></div>';
+
+                var html = string.substitute(template, {
+                        siteName: a['siteName'],
+                        siteProtectionClassificationDefinition: a['siteProtectionClassificationDefinition'],
+                        dataSource: a['dataSource'],
+                        dataSourceUrl: a['dataSourceURL']
+                    });                
+                return html;
+            },
+
+            oerPlannedFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <h3>OER Planned Expedition:</h3>\
+                    <div class="valueName">Cruise ID: <span class="parameterValue">${cruiseId}</span></div>\
+                    <div class="valueName">Data Type: <span class="parameterValue">${datatype}</span></div>\
+                    <div class="valueName">Collection Year: <span class="parameterValue">${collectionYear}</span></div>\
+                    <div class="valueName">Project Status: <span class="parameterValue">${projectStatus}</span></div>\
+                    <div class="valueName">Point of Contact: <span class="parameterValue">${pointofContact}</span></div>\
+                    <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>\
+                    <div class="valueName">Owner: <span class="parameterValue">${owner}</span></div>';
+
+                var html = string.substitute(template, {
+                        cruiseId: a['Cruise ID'],
+                        datatype: a['Data Type'],
+                        collectionYear: a['Collection Year'],
+                        projectStatus: a['Project Status'],
+                        pointofContact: a['Point of Contact'],
+                        collectionDate: a['Collection Date'],
+                        owner: a['Owner']
                     });                
                 return html;
             },
