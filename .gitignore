@@ -25,3 +25,5 @@ projectFilesBackup
 /xrun.sh
 /log
 /etc
+
+node_modules/
