@@ -109,14 +109,6 @@ define([
                         visible: false,
                         opacity: 0.7
                     }),
-                    // new TiledWMSLayer('//geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
-                    //     id: 'EMODNet',
-                    //     visible: false,
-                    //     format: 'png',
-                    //     wmsVersion: '1.3.0',
-                    //     epsgCode: '900913',
-                    //     layerNames: ['points', 'lines', 'polygons']
-                    // }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (non-digital)',
                         visible: false,
@@ -152,7 +144,7 @@ define([
                         imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISDynamicMapServiceLayer('//maps.coast.noaa.gov/arcgis/rest/services/DAV/DAV/MapServer', {
-                        id: 'CSC Lidar',
+                        id: 'OCM Lidar',
                         visible: false,
                         imageParameters: this.imageParameters.png32,
                         opacity: 1
@@ -174,7 +166,12 @@ define([
                         id: 'Multibeam (dynamic)',
                         visible: this.multibeamVisible,
                         imageParameters: this.imageParameters.png32
-                    }),                    
+                    }),   
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/dem_tiles/MapServer', {
+                        id: 'DEM Tiles',
+                        visible: this.demVisible,
+                        imageParameters: this.imageParameters.png32
+                    }),                 
                     new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer', {
                         id: 'World Boundaries and Places',
                         visible: false
