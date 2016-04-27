@@ -18,6 +18,7 @@ define([
     'esri/SpatialReference',
     'esri/tasks/GeometryService',
     'esri/tasks/ProjectParameters',
+    'esri/dijit/Legend',
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'app/arctic/MapConfig',
@@ -57,6 +58,7 @@ define([
         SpatialReference,
         GeometryService,
         ProjectParameters,
+        Legend,
         Logger,
         MercatorMapConfig,
         ArcticMapConfig,
@@ -223,6 +225,16 @@ define([
                     nosHydroVisible: this.nosHydroVisible,
                     tracklineVisible: this.tracklineVisible,
                     demVisible: this.demVisible
+                }));
+
+                aspect.after(this.mercatorMapConfig, 'mapReady', lang.hitch(this, function() {
+                    var legend = new Legend({
+                        map: this.mercatorMapConfig.map,
+                        layerInfos: [
+                            {title: 'DEM Tiles', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')}
+                        ]
+                    }, 'dynamicLegend');
+                    legend.startup();
                 }));
 
                 new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
