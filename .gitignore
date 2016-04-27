@@ -27,3 +27,4 @@ projectFilesBackup
 /etc
 
 node_modules/
+bower_components/
