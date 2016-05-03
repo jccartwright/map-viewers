@@ -10,29 +10,28 @@
     <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
         <table cellpadding="6" cellspacing="3">
         <tr>
+            <i><div data-dojo-attach-point="activeLayersText">Active Layers: None</div></i>
+        </tr>
+        <tr>
             <td align="left">                       
                 <label>Min Year:</label>
-                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="startYearSpinner" class="surveySelect-yearSpinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1835,max:2015,places:0,pattern:'0000'}" name="startYear"></div>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="startYearSpinner" class="surveySelect-yearSpinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1835,max:2020,places:0,pattern:'0000'}" name="startYear"></div>
                 <label>Max Year:</label>
-                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="endYearSpinner" class="surveySelect-yearSpinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1835,max:2015,places:0,pattern:'0000'}" name="endYear"></div>                
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="endYearSpinner" class="surveySelect-yearSpinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1835,max:2020,places:0,pattern:'0000'}" name="endYear"></div>                
             </td>           
         </tr>
         <tr>
             <td align="left" colspan="2">               
-                <label>Survey ID <span class="wildcardLabel">(wildcards accepted: *)</span>:</label><br/>
-                <div data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="surveyNameText" name="survey" 
-                     style="width: 200px;" required="false">                 
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td align="left" colspan="2">               
                 <label>Platform Name <span class="wildcardLabel">(wildcards accepted: *)</span></label><br/>
-                <div data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="platformNameText" name="platform" 
-                     style="width: 200px;" required="false">                 
-                </div>
+                <div data-dojo-attach-point="platformSelectDiv"></div>
             </td>
         </tr> 
+        <tr>
+            <td align="left" colspan="2">               
+                <label>Survey ID <span class="wildcardLabel">(wildcards accepted: *)</span>:</label><br/>
+                <div data-dojo-attach-point="surveySelectDiv"></div>
+            </td>
+        </tr>
         <tr>
             <td>
                 <input data-dojo-attach-point="chkZoomToResults" data-dojo-type="dijit/form/CheckBox" checked="true" value="false" type="checkbox" name="chkZoomToResults"/>
