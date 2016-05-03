@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="//js.arcgis.com/3.16/dijit/themes/tundra/tundra.css" />
     <link rel="stylesheet" href="//js.arcgis.com/3.16/esri/css/esri.css">
 
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.8/js/ngdc/css/MapToolbar.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.8/js/ngdc/identify/IdentifyPane.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.8/js/ngdc/themes/tundra/BoundingBoxDialog.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.8/js/ngdc/css/Banner.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.8/js/ngdc/css/CoordinatesWithElevationToolbar.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ngdc/css/MapToolbar.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ngdc/identify/IdentifyPane.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ngdc/css/CoordinatesWithElevationToolbar.css">
 
      <!--<link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css">-->
      <!--<link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css">-->
@@ -37,8 +37,8 @@
             packages: [
             {
                 name: "ngdc",
-//                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ngdc'
-                location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
+                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ngdc'
+//              location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
             },
             {
                 name: "app",
@@ -46,16 +46,16 @@
             },
             {
                 name: "ncei",
-//                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ncei'
-                location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ncei'
+                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ncei'
+//              location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ncei'
             }
             ],
 
             //app-specific config values
             app: {
                 loglevel: 2,
-                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.8/js/ngdc'
-//                ngdcDijitsUrl: '../../dijits/js/ngdc'
+                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ngdc'
+//              ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
     </script>
@@ -149,6 +149,5 @@
     );
 
 </script>
-<script src="//maps.ngdc.noaa.gov/js/ga.js"></script>
 </body>
 </html>
