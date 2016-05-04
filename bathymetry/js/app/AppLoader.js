@@ -183,11 +183,11 @@ define([
 
             enableMapView: function(/*String*/ mapId) {
                 this.mapId = mapId;
-                if (mapId == 'mercator') {
+                if (mapId === 'mercator') {
                     this.mercatorMapConfig.setEnabled(true);
                     this.arcticMapConfig.setEnabled(false);
                     this.antarcticMapConfig.setEnabled(false);
-                } else if (mapId == 'arctic') {
+                } else if (mapId === 'arctic') {
                     this.mercatorMapConfig.setEnabled(false);
                     this.arcticMapConfig.setEnabled(true);
                     this.antarcticMapConfig.setEnabled(false);
@@ -439,13 +439,13 @@ define([
             },
 
             zoomToResults: function(serviceLayerDefs) {
-                var layerDefsStr = '';
-
                 var deferreds = [];
+                var url;
+                var params;
 
                 if (this.layersPanel.chkMultibeam.checked) {
-                    var url = '//gis.ngdc.noaa.gov/geoextents/multibeam_dynamic/';
-                    var params = {layerDefs: '0:' + serviceLayerDefs.multibeam};
+                    url = '//gis.ngdc.noaa.gov/geoextents/multibeam_dynamic/';
+                    params = {layerDefs: '0:' + serviceLayerDefs.multibeam};
                     deferreds.push(xhr.post(
                         url, {
                             data: params,
@@ -455,8 +455,8 @@ define([
                 }
 
                 if (this.layersPanel.chkTrackline.checked) {
-                    var url = '//gis.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
-                    var params = {layerDefs: '1:' + serviceLayerDefs.trackline};
+                    url = '//gis.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
+                    params = {layerDefs: '1:' + serviceLayerDefs.trackline};
                     deferreds.push(xhr.post(
                         url, {
                             data: params,
@@ -466,9 +466,9 @@ define([
                 }
 
                 if (this.layersPanel.chkNosHydroBags.checked || this.layersPanel.chkNosHydroDigital.checked || this.layersPanel.chkNosHydroNonDigital.checked) {
-                    var url = '//gis.ngdc.noaa.gov/geoextents/nos_hydro_dynamic/';
+                    url = '//gis.ngdc.noaa.gov/geoextents/nos_hydro_dynamic/';
                     var layerDef = serviceLayerDefs.nosHydro;
-                    var params = {layerDefs: '0:' + layerDef + ';1:' + layerDef + ';2:' + layerDef};
+                    params = {layerDefs: '0:' + layerDef + ';1:' + layerDef + ';2:' + layerDef};
                     deferreds.push(xhr.post(
                         url, {
                             data: params,
