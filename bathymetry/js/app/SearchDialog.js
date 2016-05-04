@@ -95,9 +95,9 @@ define([
 
                 //Subscribe to message to show/hide an entire service
                 topic.subscribe('/ngdc/layer/visibility', lang.hitch(this, function (svcId, visible) {
-                    if (svcId == 'Multibeam') {
+                    if (svcId === 'Multibeam') {
                         this.multibeamVisible = visible;                    
-                    } else if (svcId == 'Trackline Bathymetry') {
+                    } else if (svcId === 'Trackline Bathymetry') {
                         this.tracklineVisible = visible;
                     }
                     this.filterPlatformsAndSurveys();
@@ -164,11 +164,11 @@ define([
                     this.platformSelect.set('query', {                    
                         d: {
                             test: function(itemDatasets) {                            
-                                if (multibeamVisible && (array.indexOf(itemDatasets, 'm') != -1)) {
+                                if (multibeamVisible && (array.indexOf(itemDatasets, 'm') !== -1)) {
                                     return true;
-                                } else if (nosHydroVisible && (array.indexOf(itemDatasets, 'n') != -1)) {
+                                } else if (nosHydroVisible && (array.indexOf(itemDatasets, 'n') !== -1)) {
                                     return true;
-                                } else if (tracklineVisible && (array.indexOf(itemDatasets, 't') != -1)) {
+                                } else if (tracklineVisible && (array.indexOf(itemDatasets, 't') !== -1)) {
                                     return true;
                                 } else {
                                     return false;
@@ -184,7 +184,7 @@ define([
                         p: {
                             test: function(itemPlatform) {
                                 //null platforms only get returned when there is no platform filter applied
-                                return selectedPlatform == '' || (itemPlatform && (selectedPlatform == itemPlatform));
+                                return selectedPlatform === '' || (itemPlatform && (selectedPlatform === itemPlatform));
                             }
                         },
                         y: {
@@ -201,11 +201,11 @@ define([
                         },
                         d: {
                             test: function(itemDatasets) {                            
-                                if (multibeamVisible && (array.indexOf(itemDatasets, 'm') != -1)) {
+                                if (multibeamVisible && (array.indexOf(itemDatasets, 'm') !== -1)) {
                                     return true;
-                                } else if (nosHydroVisible && (array.indexOf(itemDatasets, 'n') != -1)) {
+                                } else if (nosHydroVisible && (array.indexOf(itemDatasets, 'n') !== -1)) {
                                     return true;
-                                } else if (tracklineVisible && (array.indexOf(itemDatasets, 't') != -1)) {
+                                } else if (tracklineVisible && (array.indexOf(itemDatasets, 't') !== -1)) {
                                     return true;
                                 } else {
                                     return false;
