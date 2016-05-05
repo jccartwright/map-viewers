@@ -52,15 +52,12 @@ define([
                     else {
                         topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', false);
                     }
-                    topic.publish('/bathymetry/nosHydroVisible', this.chkNosHydroBags.checked || this.chkNosHydroDigital.checked || this.chkNosHydroNonDigital.checked);
                 }));
                 on(this.chkNosHydroDigital, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [1], this.chkNosHydroDigital.checked);
-                    topic.publish('/bathymetry/nosHydroVisible', this.chkNosHydroBags.checked || this.chkNosHydroDigital.checked || this.chkNosHydroNonDigital.checked);
                 }));
                 on(this.chkNosHydroNonDigital, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'NOS Hydro (non-digital)', this.chkNosHydroNonDigital.checked);
-                    topic.publish('/bathymetry/nosHydroVisible', this.chkNosHydroBags.checked || this.chkNosHydroDigital.checked || this.chkNosHydroNonDigital.checked);               
                 }));
                 on(this.chkBagHillshades, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.chkBagHillshades.checked);   
