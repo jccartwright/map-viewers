@@ -51,7 +51,9 @@ define([
                 lang.mixin(this, kwArgs); 
 
                 this.multibeamVisible = true;
-                this.nosHydroVisible = false;                
+                this.nosBagsVisible = false;
+                this.nosDigitalVisible = false;
+                this.nonNonDigitalVisible = false;
                 this.tracklineVisible = false;
             },
                 
@@ -93,20 +95,28 @@ define([
                     this.filterPlatformsAndSurveys();
                 }));
 
-                //Subscribe to message to show/hide an entire service
+                //Subscribe to message to show/hide an entire service. Handles the Multibeam, Trackline, and NOS non-digital layers.
                 topic.subscribe('/ngdc/layer/visibility', lang.hitch(this, function (svcId, visible) {
                     if (svcId === 'Multibeam') {
                         this.multibeamVisible = visible;                    
                     } else if (svcId === 'Trackline Bathymetry') {
                         this.tracklineVisible = visible;
+                    } else if (svcId === 'NOS Hydro (non-digital)') {
+                        this.nonNonDigitalVisible = visible;
                     }
                     this.filterPlatformsAndSurveys();
                     this.setActiveLayersText();
                 }));
 
-                //Subscribe to message toggling NOS Hydro layer visiblity
-                topic.subscribe('/bathymetry/nosHydroVisible', lang.hitch(this, function (visible) {
-                    this.nosHydroVisible = visible;                                        
+                //Subscribe to message to show/hide sublayers from a service. Handles the NOS Hydro BAGs and Digital layers.
+                topic.subscribe('/ngdc/sublayer/visibility', lang.hitch(this, function (svcId, sublayers, visible) {
+                    if (svcId === 'NOS Hydrographic Surveys') {
+                        if (sublayers[0] === 0) {
+                            this.nosBagsVisible = visible;
+                        } else if (sublayers[0] === 1) {
+                            this.nosDigitalVisible = visible;
+                        }
+                    }
                     this.filterPlatformsAndSurveys();
                     this.setActiveLayersText();
                 }));
@@ -156,7 +166,9 @@ define([
                 var maxYear = this.endYearSpinner.get('value') || null;
                 var selectedPlatform = this.platformSelect.get('value');
                 var multibeamVisible = this.multibeamVisible;
-                var nosHydroVisible = this.nosHydroVisible;
+                var nosBagsVisible = this.nosBagsVisible;
+                var nosDigitalVisible = this.nosDigitalVisible;
+                var nonNonDigitalVisible = this.nonNonDigitalVisible;
                 var tracklineVisible = this.tracklineVisible;
 
                 if (this.platformSelect) {
@@ -166,9 +178,13 @@ define([
                             test: function(itemDatasets) {                            
                                 if (multibeamVisible && (array.indexOf(itemDatasets, 'm') !== -1)) {
                                     return true;
-                                } else if (nosHydroVisible && (array.indexOf(itemDatasets, 'n') !== -1)) {
-                                    return true;
                                 } else if (tracklineVisible && (array.indexOf(itemDatasets, 't') !== -1)) {
+                                    return true;
+                                } else if (nosBagsVisible && (array.indexOf(itemDatasets, 'b') !== -1)) {
+                                    return true;
+                                } else if (nosDigitalVisible && (array.indexOf(itemDatasets, 'd') !== -1)) {
+                                    return true;
+                                } else if (nonNonDigitalVisible && (array.indexOf(itemDatasets, 'a') !== -1)) {
                                     return true;
                                 } else {
                                     return false;
@@ -203,9 +219,13 @@ define([
                             test: function(itemDatasets) {                            
                                 if (multibeamVisible && (array.indexOf(itemDatasets, 'm') !== -1)) {
                                     return true;
-                                } else if (nosHydroVisible && (array.indexOf(itemDatasets, 'n') !== -1)) {
-                                    return true;
                                 } else if (tracklineVisible && (array.indexOf(itemDatasets, 't') !== -1)) {
+                                    return true;
+                                } else if (nosBagsVisible && (array.indexOf(itemDatasets, 'b') !== -1)) {
+                                    return true;
+                                } else if (nosDigitalVisible && (array.indexOf(itemDatasets, 'd') !== -1)) {
+                                    return true;
+                                } else if (nonNonDigitalVisible && (array.indexOf(itemDatasets, 'a') !== -1)) {
                                     return true;
                                 } else {
                                     return false;
