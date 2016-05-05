@@ -245,15 +245,30 @@ define([
                     if (text.length > 0) {
                         text += ', ';
                     }
-                    text += 'Trackline';
+                    text += 'Single-Beam';
                 }
-                if (this.nosHydroVisible) {
+                if (this.nosBagsVisible) {
                     if (text.length > 0) {
                         text += ', ';
                     }
-                    text += 'NOS';
+                    text += 'NOS BAGs';
                 }
-                this.activeLayersText.innerHTML = 'Active Layers: ' + text;
+                if (this.nosDigitalVisible) {
+                    if (text.length > 0) {
+                        text += ', ';
+                    }
+                    text += 'NOS Digital';
+                }
+                if (this.nonNonDigitalVisible) {
+                    if (text.length > 0) {
+                        text += ', ';
+                    }
+                    text += 'NOS Non-Digital';
+                }
+                if (text.length === 0) {
+                    text += 'None'
+                }
+                this.activeLayersText.innerHTML = 'Visible Layers: ' + text;
             },
 
             execute: function(values) {  
