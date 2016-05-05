@@ -283,8 +283,12 @@ html,body {
     font: 12px arial,helvetica,verdana,sans-serif;
 }
 
-.wildcardLabel {
-    font-size: 11px;
+.tooltipButton {
+    vertical-align: bottom;
+}
+
+.tooltipText {
+    width: 200px;
 }
 
 #legend {
