@@ -57,7 +57,7 @@ define([
                     topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [1], this.chkNosHydroDigital.checked);
                 }));
                 on(this.chkNosHydroNonDigital, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'NOS Hydro (non-digital)', this.chkNosHydroNonDigital.checked);                    
+                    topic.publish('/ngdc/layer/visibility', 'NOS Hydro (non-digital)', this.chkNosHydroNonDigital.checked);
                 }));
                 on(this.chkBagHillshades, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.chkBagHillshades.checked);   
@@ -87,10 +87,8 @@ define([
                     topic.publish('/ngdc/sublayer/visibility', 'OCM Lidar', [4], this.chkOcmLidar.checked);                    
                 }));
 
+                this.searchDialog = new SearchDialog({title: 'Search Bathymetric Surveys'});
                 on(this.searchButton, 'click', lang.hitch(this, function() {
-                    if (!this.searchDialog) {
-                        this.searchDialog = new SearchDialog({title: 'Bathymetry Survey Search'});
-                    }
                     this.searchDialog.show();
                 }));  
 

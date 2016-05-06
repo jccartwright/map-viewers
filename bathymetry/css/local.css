@@ -283,11 +283,27 @@ html,body {
     font: 12px arial,helvetica,verdana,sans-serif;
 }
 
-.wildcardLabel {
-    font-size: 11px;
+.tooltipButton {
+    vertical-align: bottom;
+}
+
+.tooltipText {
+    width: 200px;
 }
 
 #legend {
     /*legend is hidden on startup to prevent premature display*/
     display: none;
+}
+
+.queryIcon {
+    background-image: url(../images/magnifyingglass.png);
+    width: 20px;
+    height: 20px;
+}
+
+.clearSelectionIcon {
+    background-image: url(../images/x.png);
+    width: 16px;
+    height: 16px;
 }

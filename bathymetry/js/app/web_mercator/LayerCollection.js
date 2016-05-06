@@ -109,6 +109,8 @@ define([
                         visible: false,
                         opacity: 0.7
                     }),
+
+                    //NOS Non-Digital is separate from the tiled/dynamic pair, which only displays BAGs and Digital.
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
                         id: 'NOS Hydro (non-digital)',
                         visible: false,
@@ -123,6 +125,7 @@ define([
                         visible: this.nosHydroVisible,
                         imageParameters: this.imageParameters.png32
                     }),
+
                     new ArcGISTiledMapServiceLayer('//gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
                         id: 'BAG Hillshades',
                         visible: false
