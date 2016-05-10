@@ -287,6 +287,10 @@ html,body {
     vertical-align: bottom;
 }
 
+.tooltipButtonMiddle {
+    vertical-align: middle;
+}
+
 .tooltipText {
     width: 200px;
 }

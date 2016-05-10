@@ -24,19 +24,27 @@
         </tr>
         <tr>
             <td align="left" colspan="2">               
-                <!-- <label>Platform Name <span class="wildcardLabel">(wildcards accepted: *)</span></label><br/> -->
-                <label>Platform Name: <img id="platformHelp" class="tooltipButton" src="images/question-button.png"></img></label><br/>
+                <label>Platform Name: <img id="platformHelp" class="tooltipButton" src="images/question-button.png"></label><br/>
                 <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'platformHelp'">
-                    <div class="tooltipText">Select the platform name for the survey. Platforms are shown for the currently-visible layers. You can enter a wildcard (*) to find multiple matches, for example typing Atlantis* would find both Atlantis and Atlantis II.</div>
+                    <div class="tooltipText">Select the platform name for the survey. Platforms are shown for the currently-visible layers. You can enter a wildcard (*) to find multiple matches. For example, typing Atlantis* would find both Atlantis and Atlantis II.</div>
                 </div>
                 <div data-dojo-attach-point="platformSelectDiv"></div>
             </td>
-        </tr> 
+        </tr>
         <tr>
             <td align="left" colspan="2">               
-                <label>Survey ID: <img id="surveyIdHelp" class="tooltipButton" src="images/question-button.png"></img></label><br/>
+                <label>Source Institution: <img id="institutionHelp" class="tooltipButton" src="images/question-button.png"></label><br/>
+                <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'institutionHelp'">
+                    <div class="tooltipText">Select the source institution for the survey. Institutions are shown for the currently-visible layers. You can enter a wildcard (*) to find multiple matches.Note: this field currently does not apply to NOS Hydrographic Surveys.</div>
+                </div>
+                <div data-dojo-attach-point="institutionSelectDiv"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" colspan="2">               
+                <label>Survey ID: <img id="surveyIdHelp" class="tooltipButton" src="images/question-button.png"></label><br/>
                 <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'surveyIdHelp'">
-                    <div class="tooltipText">Select the survey ID for the survey. Survey IDs are shown for the currently-visible layers. The list is filtered by the selected min/max year and platform. You can enter a wildcard (*) to find multiple matches, for example typing EX* would find EX0801, EX0802, EX0901, etc.</div>
+                    <div class="tooltipText">Select the survey ID for the survey. Survey IDs are shown for the currently-visible layers. The list is filtered by the selected min/max year and platform. You can enter a wildcard (*) to find multiple matches. For example, typing EX* would find EX0801, EX0802, EX0901, etc.</div>
                 </div>
                 <div data-dojo-attach-point="surveySelectDiv"></div>
             </td>

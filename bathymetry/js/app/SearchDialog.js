@@ -15,6 +15,7 @@ define([
     'dojo/dom-attr',
     'dojo/on',
     'dojo/topic',
+    'dojo/dom-style',
     'dojo/request/xhr',
     'dojo/store/Memory', 
     'dojo/text!./templates/SearchDialog.html'
@@ -36,6 +37,7 @@ define([
         domAttr,
         on,
         topic,
+        domStyle,
         xhr,
         Memory,
         template 
@@ -67,9 +69,22 @@ define([
                     if (data.items) {
                         this.populatePlatformSelect(data.items);
                     }
-                }), function(err){
+                }), lang.hitch(this, function(err){
                     logger.error('Error retrieving platforms JSON: ' + err);
-                });
+                    this.populatePlatformSelect(null);
+                }));
+
+                xhr('institutions.json', {
+                    preventCache: true,
+                    handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data.items) {
+                        this.populateInstitutionSelect(data.items);
+                    }
+                }), lang.hitch(this, function(err){
+                    logger.error('Error retrieving institutions JSON: ' + err);
+                    this.populateInstitutionSelect(null);
+                }));
 
                 xhr('surveys.json', {
                     preventCache: true,
@@ -78,9 +93,10 @@ define([
                     if (data.items) {
                         this.populateSurveySelect(data.items);
                     }
-                }), function(err){
+                }), lang.hitch(this, function(err){
                     logger.error('Error retrieving surveys JSON: ' + err);
-                });
+                    this.populateSurveySelect(null);
+                }));
 
                 on(this.cancelButton, 'click', lang.hitch(this, function(){
                     this.onCancel();
@@ -89,10 +105,10 @@ define([
                     this.reset();
                 })); 
                 on(this.startYearSpinner, 'change', lang.hitch(this, function(){
-                    this.filterPlatformsAndSurveys();
+                    this.filterSelects();
                 }));
                 on(this.endYearSpinner, 'change', lang.hitch(this, function(){
-                    this.filterPlatformsAndSurveys();
+                    this.filterSelects();
                 }));
 
                 //Subscribe to message to show/hide an entire service. Handles the Multibeam, Trackline, and NOS non-digital layers.
@@ -104,7 +120,7 @@ define([
                     } else if (svcId === 'NOS Hydro (non-digital)') {
                         this.nonNonDigitalVisible = visible;
                     }
-                    this.filterPlatformsAndSurveys();
+                    this.filterSelects();
                     this.setActiveLayersText();
                 }));
 
@@ -117,7 +133,7 @@ define([
                             this.nosDigitalVisible = visible;
                         }
                     }
-                    this.filterPlatformsAndSurveys();
+                    this.filterSelects();
                     this.setActiveLayersText();
                 }));
             },
@@ -129,10 +145,11 @@ define([
                     name: "id",
                     store: this.surveysStore,
                     searchAttr: "id",
-                    required: false
+                    required: false,
+                    style: "width:220px;"
                 });
 
-                //Disable the validator so we can type any value into the box.
+                //Disable the validator so we can type any value into the box (e.g. wildcards).
                 this.surveySelect.validate = function() { 
                     return true; 
                 };
@@ -146,10 +163,11 @@ define([
                     name: "id",
                     store: this.platformsStore,
                     searchAttr: "id",
-                    required: false
+                    required: false,
+                    style: "width:220px;"
                 }); 
 
-                //Disable the validator so we can type any value into the box.
+                //Disable the validator so we can type any value into the box (e.g. wildcards).
                 this.platformSelect.validate = function() { 
                     return true; 
                 };
@@ -157,40 +175,50 @@ define([
 
                 on(this.platformSelect, 'change', lang.hitch(this, function(){
                     this.surveySelect.set('value', '');
-                    this.filterPlatformsAndSurveys();
+                    this.filterSelects();
                 }));  
             },
 
-            filterPlatformsAndSurveys: function() {
+            populateInstitutionSelect: function(items) {                
+                this.institutionsStore = new Memory({data: {identifier: 'id', items: items}});
+
+                this.institutionSelect = new FilteringSelect({
+                    name: "id",
+                    store: this.institutionsStore,
+                    searchAttr: "id",
+                    required: false,
+                    style: "width:220px;"
+                }); 
+
+                //Disable the validator so we can type any value into the box (e.g. wildcards).
+                this.institutionSelect.validate = function() { 
+                    return true; 
+                };
+                this.institutionSelect.placeAt(this.institutionSelectDiv);
+
+                on(this.institutionSelect, 'change', lang.hitch(this, function(){
+                    this.surveySelect.set('value', '');
+                    this.filterSelects();
+                }));  
+            },
+
+            filterSelects: function() {
                 var minYear = this.startYearSpinner.get('value') || null;
                 var maxYear = this.endYearSpinner.get('value') || null;
                 var selectedPlatform = this.platformSelect.get('value');
-                var multibeamVisible = this.multibeamVisible;
-                var nosBagsVisible = this.nosBagsVisible;
-                var nosDigitalVisible = this.nosDigitalVisible;
-                var nonNonDigitalVisible = this.nonNonDigitalVisible;
-                var tracklineVisible = this.tracklineVisible;
+                var selectedInstitution = this.institutionSelect.get('value');
 
                 if (this.platformSelect) {
                     //Query the platformSelect's store with a custom test function to filter on the currently-visible datasets.
                     this.platformSelect.set('query', {                    
-                        d: {
-                            test: function(itemDatasets) {                            
-                                if (multibeamVisible && (array.indexOf(itemDatasets, 'm') !== -1)) {
-                                    return true;
-                                } else if (tracklineVisible && (array.indexOf(itemDatasets, 't') !== -1)) {
-                                    return true;
-                                } else if (nosBagsVisible && (array.indexOf(itemDatasets, 'b') !== -1)) {
-                                    return true;
-                                } else if (nosDigitalVisible && (array.indexOf(itemDatasets, 'd') !== -1)) {
-                                    return true;
-                                } else if (nonNonDigitalVisible && (array.indexOf(itemDatasets, 'a') !== -1)) {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
-                        }
+                        d: {test: lang.hitch(this, this.datasetTest)}
+                    });
+                }
+
+                if (this.institutionSelect) {
+                    //Query the platformSelect's store with a custom test function to filter on the currently-visible datasets.
+                    this.institutionSelect.set('query', {                    
+                        d: {test: lang.hitch(this, this.datasetTest)}
                     });
                 }
 
@@ -201,6 +229,12 @@ define([
                             test: function(itemPlatform) {
                                 //null platforms only get returned when there is no platform filter applied
                                 return selectedPlatform === '' || (itemPlatform && (selectedPlatform === itemPlatform));
+                            }
+                        },
+                        s: {
+                            test: function(itemInstitution) {
+                                //null institutions only get returned when there is no institution filter applied
+                                return selectedInstitution === '' || (itemInstitution && (selectedInstitution === itemInstitution));
                             }
                         },
                         y: {
@@ -214,25 +248,25 @@ define([
                                     return false; //null years only get returned when there is no year filter applied
                                 }
                             }
-                        },
-                        d: {
-                            test: function(itemDatasets) {                            
-                                if (multibeamVisible && (array.indexOf(itemDatasets, 'm') !== -1)) {
-                                    return true;
-                                } else if (tracklineVisible && (array.indexOf(itemDatasets, 't') !== -1)) {
-                                    return true;
-                                } else if (nosBagsVisible && (array.indexOf(itemDatasets, 'b') !== -1)) {
-                                    return true;
-                                } else if (nosDigitalVisible && (array.indexOf(itemDatasets, 'd') !== -1)) {
-                                    return true;
-                                } else if (nonNonDigitalVisible && (array.indexOf(itemDatasets, 'a') !== -1)) {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
-                        }
+                        },                        
+                        d: {test: lang.hitch(this, this.datasetTest)}
                     });
+                }
+            },
+
+            datasetTest: function(itemDatasets) {
+                if (this.multibeamVisible && (array.indexOf(itemDatasets, 'm') !== -1)) {
+                    return true;
+                } else if (this.tracklineVisible && (array.indexOf(itemDatasets, 't') !== -1)) {
+                    return true;
+                } else if (this.nosBagsVisible && (array.indexOf(itemDatasets, 'b') !== -1)) {
+                    return true;
+                } else if (this.nosDigitalVisible && (array.indexOf(itemDatasets, 'd') !== -1)) {
+                    return true;
+                } else if (this.nonNonDigitalVisible && (array.indexOf(itemDatasets, 'a') !== -1)) {
+                    return true;
+                } else {
+                    return false;
                 }
             },
 
@@ -266,14 +300,15 @@ define([
                     text += 'NOS Non-Digital';
                 }
                 if (text.length === 0) {
-                    text += 'None'
+                    text += 'None';
                 }
                 this.activeLayersText.innerHTML = 'Visible Layers: ' + text;
             },
 
             execute: function(values) {  
                 //Use _lastDisplayedValue instead of value to handle if a user typed in a string (i.e. with wildcard) that doesn't match anything in the store. Otherwise value is empty.
-                values.platform = this.platformSelect.get('_lastDisplayedValue'); 
+                values.platform = this.platformSelect.get('_lastDisplayedValue');
+                values.institution = this.institutionSelect.get('_lastDisplayedValue');
                 values.survey = this.surveySelect.get('_lastDisplayedValue');
                 values.zoomToResults = this.chkZoomToResults.get('value');
 
@@ -285,19 +320,33 @@ define([
             },
                 
             isDefault: function(values) {
-                return (!values.startYear && !values.endYear && this.platformSelect.get('_lastDisplayedValue') === '' && this.surveySelect.get('_lastDisplayedValue') === '');
+                return (!values.startYear && !values.endYear && 
+                    this.platformSelect.get('_lastDisplayedValue') === '' && 
+                    this.institutionSelect.get('_lastDisplayedValue') === '' && 
+                    this.surveySelect.get('_lastDisplayedValue') === '');
             },
                    
             clearForm: function() {                
                 this.surveySelect.set('value', '');
-                this.platformSelect.set('value', '');                                            
+                this.platformSelect.set('value', '');
+                this.institutionSelect.set('value', '');
                 this.startYearSpinner.set('value', '');
                 this.endYearSpinner.set('value', '');
-                this.chkZoomToResults.set('checked', true);                             
+                this.chkZoomToResults.set('checked', true);
             },
 
             reset: function() {
                 this.clearForm();
-            }    
+            },
+
+            show: function() {
+                this.inherited(arguments);
+
+                if (this.multibeamVisible || this.tracklineVisible) {
+                    this.institutionSelect.set('disabled', false);
+                } else {
+                    this.institutionSelect.set('disabled', true);
+                }
+            }  
     });
 });
