@@ -8,6 +8,7 @@ define([
     'dojo/dom-style',
     'dojo/json',
     'dijit/form/Button',
+    'dijit/Tooltip',
     'esri/geometry/webMercatorUtils', 
     'ngdc/identify/IdentifyPane' 
     ],
@@ -21,6 +22,7 @@ define([
         domStyle,
         JSON,
         Button,
+        Tooltip,
         webMercatorUtils,
         IdentifyPane
         ){
@@ -47,29 +49,52 @@ define([
                         this.extractData();
                     })
                 }).placeAt(this.featurePageBottomBar);
+
+                new Tooltip({
+                    connectId: [this.extractDataButton.domNode],
+                    label: 'Extract data via NEXT (NCEI Extract System).<br><img src="images/drive-download.png">: Data for this layer can be extracted.'
+                });
+
+                //Add a button to the main cruise feature page to request cruises
+                this.extractSingleDatasetButton = new Button({
+                    label: 'Extract This Survey',
+                    style: 'bottom: 5px; left: 5px;',
+                    iconClass: 'downloadIcon',
+                    onClick: lang.hitch(this, function() {
+                        var itemId;
+                        if (this.currentItem.attributes['Survey ID']) {
+                            itemId = this.currentItem.attributes['Survey ID'];
+                        } else if (itemId = this.currentItem.attributes['ITEM_ID']) {
+                            itemId = this.currentItem.attributes['ITEM_ID'];
+                        }
+                        this.extractData(itemId);
+                    })
+                }).placeAt(this.infoPageBottomBar);
             },
 
             showResults: function() {
                 this.inherited(arguments);
-                // if (this.numFeatures >= 1000) {
-                //     this.featurePageTitle = "Identified Features (" + this.numFeatures + "+, results limited to 1000)";
-                //     this.setTitle(this.featurePageTitle);
-                // }
+                
+                if (this.isMultibeam || this.isNosHydro || this.isDemTiles) {
+                    domStyle.set(this.extractDataButton.domNode, 'display', '');
+                } else {
+                    domStyle.set(this.extractDataButton.domNode, 'display', 'none');
+                }
             },
 
             getLayerDisplayLabel: function(item, count) {
 
                 if (item.layerName === 'Multibeam Bathymetric Surveys') {
-                    return '<i><b>Multibeam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT"></img>';
+                    return '<i><b>Multibeam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
                 } 
                 else if (item.layerName === 'Marine Trackline Surveys: Bathymetry') {
                     return '<i><b>Single-Beam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i>';
                 } 
                 else if (item.layerName === 'Surveys with BAGs') {
-                    return '<i>Surveys wth BAGs (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT"></img>';
+                    return '<i>Surveys wth BAGs (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
                 } 
                 else if (item.layerName === 'Surveys with Digital Sounding Data') {
-                    return '<i>Surveys with Digital Sounding Data (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT"></img>';
+                    return '<i>Surveys with Digital Sounding Data (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
                 } 
                 else if (item.layerName === 'Surveys without Digital Sounding Data') {
                     return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
@@ -78,7 +103,7 @@ define([
                     return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
                 }
                 else if (item.layerName === 'DEM Tiles') {
-                    return '<i><b>Digital Elevation Models (New Tiles) (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT"></img>';
+                    return '<i><b>Digital Elevation Models (New Tiles) (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
                 }
                 else if (item.layerName === 'Lidar') {
                     return '<i><b>OCM Bathymetric Lidar (' + this.formatCountString(count) + ')</b></i>';
@@ -188,7 +213,7 @@ define([
                                     uid: ++this.uid,
                                     id: this.uid,                                
                                     displayLabel: this.getItemDisplayLabel(item, this.uid),
-                                    label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
+                                    label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "' title='Zoom to extent of feature'></a>",
                                     layerUrl: layerUrl,
                                     layerKey: layerKey,
                                     attributes: item.feature.attributes,
@@ -202,8 +227,6 @@ define([
                 return totalFeatures;
             },
 
-
-
             constructFeatureTree: function() {
                 this.inherited(arguments);
 
@@ -215,8 +238,24 @@ define([
                 this.tree.set('paths', this.expandedNodePaths);
             },
 
-            extractData: function() {                
-                var filterCriteria = this.constructFilterCriteria();
+            showInfo: function() {
+                this.inherited(arguments);
+
+                var layerName = this.currentItem.layerKey.split('/')[0];
+
+                if (layerName === 'Multibeam' || layerName === 'NOS Hydrographic Surveys' || layerName === 'NOS Hydro (non-digital)') {
+                    this.extractSingleDatasetButton.set('label', 'Extract this Survey');
+                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', '');
+                } else if (layerName === 'DEM Tiles') {
+                    this.extractSingleDatasetButton.set('label', 'Extract this DEM');
+                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', '');
+                } else {
+                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', 'none');
+                }
+            },
+
+            extractData: function(itemId /*Optional survey/DEM id*/) {                
+                var filterCriteria = this.constructFilterCriteria(itemId);
                 if (filterCriteria.items.length > 0) {
                     this.submitFormToNext(filterCriteria);
                 }
@@ -264,7 +303,7 @@ define([
 
             //Construct an object containing the filter criteria, adhering to the format the NEXT API is expecting, 
             //i.e.: {items: [{dataset: 'Multibeam', platforms: 'Knorr,Okeanos Explorer'}, {dataset: 'Sounding', startYear: 2000}]}
-            constructFilterCriteria: function() {
+            constructFilterCriteria: function(itemId /*optional survey/DEM id*/) {
                 var filterCriteria = {items: []};
                 var datasetInfo;
                 var latLonExtent;
@@ -286,11 +325,14 @@ define([
                     
                     //Pass the list of survey IDs from the identifyResults
                     surveyIds = [];
-                    array.forEach(this.identifyResults['Multibeam']['Multibeam Bathymetric Surveys'], lang.hitch(this, function(identifyResult) {
-                        surveyIds.push(identifyResult.feature.attributes['Survey ID']);
-                    }));
+                    if (itemId) {
+                        surveyIds.push(itemId);
+                    } else {
+                        array.forEach(this.identifyResults['Multibeam']['Multibeam Bathymetric Surveys'], lang.hitch(this, function(identifyResult) {
+                            surveyIds.push(identifyResult.feature.attributes['Survey ID']);
+                        }));                        
+                    }
                     datasetInfo.surveys = surveyIds.join(',');
-
                     filterCriteria.items.push(datasetInfo);
                 }
                 if (this.isNosHydro) {
@@ -308,28 +350,31 @@ define([
                     
                     //Pass the list of survey IDs from the identifyResults
                     surveyIds = [];
-
-                    if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data']) {
-                        identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data'];
-                        array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
-                            var surveyId = identifyResult.feature.attributes['Survey ID'];
-                            if (array.indexOf(identifyResults, surveyId) === -1) {
-                                surveyIds.push(surveyId);
-                            }
-                        }));
+                    if (itemId) {
+                        surveyIds.push(itemId);
                     }
+                    else {
+                        if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data']) {
+                            identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data'];
+                            array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
+                                var surveyId = identifyResult.feature.attributes['Survey ID'];
+                                if (array.indexOf(identifyResults, surveyId) === -1) {
+                                    surveyIds.push(surveyId);
+                                }
+                            }));
+                        }
 
-                    if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs']) {
-                        identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs'];
-                        array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
-                            var surveyId = identifyResult.feature.attributes['Survey ID'];
-                            if (array.indexOf(identifyResults, surveyId) === -1) {
-                                surveyIds.push(surveyId);
-                            }
-                        }));
+                        if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs']) {
+                            identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs'];
+                            array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
+                                var surveyId = identifyResult.feature.attributes['Survey ID'];
+                                if (array.indexOf(identifyResults, surveyId) === -1) {
+                                    surveyIds.push(surveyId);
+                                }
+                            }));
+                        }
                     }
                     datasetInfo.groupNames = surveyIds.join(',');
-
                     filterCriteria.items.push(datasetInfo);
                 }
                 if (this.isDemTiles) {
@@ -350,6 +395,10 @@ define([
                             itemIds.push(identifyResult.feature.attributes['ITEM_ID']);
                         }));
                         datasetInfo.itemIds = itemIds.join(',');
+                    }
+
+                    if (itemId) {
+                        datasetInfo.itemIds = itemId;
                     }
                     filterCriteria.items.push(datasetInfo);
                 }
