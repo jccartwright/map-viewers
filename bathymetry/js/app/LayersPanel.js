@@ -138,7 +138,10 @@ define([
                 }
                 if (values.platform) {
                     s += 'Platform Name: ' + values.platform + '<br>';
-                }                
+                }
+                if (values.institution) {
+                    s += 'Source Institution: ' + values.institution + '<br>';
+                }
                 filterDiv.innerHTML = s;
             }
         });

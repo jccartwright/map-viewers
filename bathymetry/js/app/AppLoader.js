@@ -231,7 +231,7 @@ define([
                     var legend = new Legend({
                         map: this.mercatorMapConfig.map,
                         layerInfos: [
-                            {title: 'DEM Tiles', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')}
+                            {title: 'DEM Tiles (new)', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')}
                         ]
                     }, 'dynamicLegend');
                     legend.startup();
@@ -352,7 +352,10 @@ define([
                     sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");                    
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
+                }
+                if (values.institution) {
+                    sql.push("UPPER(SOURCE) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 layerDefinition = sql.join(' and ');
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
@@ -373,6 +376,9 @@ define([
                 }
                 if (values.platform) {
                     sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
+                }
+                if (values.institution) {
+                    sql.push("UPPER(INST_SHORT) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 layerDefinition = sql.join(' and ');
                 var allLayerDefinitions = [];
