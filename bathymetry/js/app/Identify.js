@@ -59,7 +59,7 @@ define([
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template = 
-                    '<h3>Single-Beam Bathymetry Survey: ${surveyId}</h3>' +
+                    '<h3>Single-Beam Bathymetric Survey: ${surveyId}</h3>' +
                     '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>' +
                     '<div class="valueName">Survey ID: <span class="parameterValue">${surveyId}</span></div>' +
                     '<div class="valueName">Survey Type: <span class="parameterValue">${surveyType}</span></div>' +
