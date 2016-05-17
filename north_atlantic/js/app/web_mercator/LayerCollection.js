@@ -135,16 +135,16 @@ define([
                         opacity: 0.7
                     }),
 
-                    new ArcGISDynamicMapServiceLayer('//atlas.marine.ie/arcgis/rest/services/AdministrativeUnits/MapServer', {
-                        id: 'OSPAR Boundaries',
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
-                    new ArcGISDynamicMapServiceLayer('//atlas.marine.ie/arcgis/rest/services/ProtectedSites/MapServer', {
-                        id: 'Protected Sites',
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
+                    // new ArcGISDynamicMapServiceLayer('//atlas.marine.ie/arcgis/rest/services/AdministrativeUnits/MapServer', {
+                    //     id: 'OSPAR Boundaries',
+                    //     visible: false,
+                    //     imageParameters: this.imageParameters.png32
+                    // }),
+                    // new ArcGISDynamicMapServiceLayer('//atlas.marine.ie/arcgis/rest/services/ProtectedSites/MapServer', {
+                    //     id: 'Protected Sites',
+                    //     visible: false,
+                    //     imageParameters: this.imageParameters.png32
+                    // }),
 
                     new ArcGISDynamicMapServiceLayer('//service.ncddc.noaa.gov/arcgis/rest/services/OceanExploration/OE_IOCM_Planned/MapServer', {
                         id: 'OER Planned Expeditions',

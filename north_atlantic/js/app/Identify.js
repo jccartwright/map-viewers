@@ -144,7 +144,7 @@ define([
                     <div class="valueName">CDI Partner: <span class="parameterValue">${cdiPartner}</span></div>\
                     <div class="valueName">CDI Record ID: <span class="parameterValue">${cdiRecordId}</span></div>\
                     <div class="valueName">Dataset Name: <span class="parameterValue">${datasetName}</span></div>\
-                    <div class="valueName">Details: <span class="parameterValue"><a href="${details}" target="_blank">${details}</a></span></div>';
+                    <div class="valueName"><span class="parameterValue"><a href="${details}" target="_blank">More Details from EMODNet</a></span></div>';
 
                 var html = string.substitute(template, {
                         cdiPartner: a['CDI-partner'],
@@ -163,7 +163,7 @@ define([
                     <div class="valueName">CDI Partner: <span class="parameterValue">${cdiPartner}</span></div>\
                     <div class="valueName">CDI Record ID: <span class="parameterValue">${cdiRecordId}</span></div>\
                     <div class="valueName">Dataset Name: <span class="parameterValue">${datasetName}</span></div>\
-                    <div class="valueName">Details: <span class="parameterValue"><a href="${details}" target="_blank">${details}</a></span></div>';
+                    <div class="valueName"><span class="parameterValue"><a href="${details}" target="_blank">More Details from EMODNet</a></span></div>';
 
                 var html = string.substitute(template, {
                         cdiPartner: a['CDI-partner'],
