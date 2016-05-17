@@ -179,7 +179,7 @@ define([
                         imageParameters: this.imageParameters.png32
                     }),  
 
-                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/acceptance/csb/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/csb/MapServer', {
                         id: 'CSB',
                         visible: true,
                         imageParameters: this.imageParameters.png32

@@ -86,7 +86,7 @@ define([
                 }));  
 
                 on(this.resetButton, 'click', lang.hitch(this, function() {
-                    topic.publish('/bathymetry/ResetSearch');
+                    topic.publish('/csb/ResetSearch');
                 })); 
             },
 
@@ -106,24 +106,22 @@ define([
                 }
 
                 var s = '<b>Current filter:</b><br>';
-                
-                if (values.startYear && values.endYear) {
-                    s += 'Year: ' + values.startYear + ' to ' + values.endYear + '<br>';
-                }
-                else if (values.startYear) {
-                    s += 'Starting year: ' + values.startYear + '<br>';
-                }
-                else if (values.endYear) {
-                    s += 'Ending year: ' + values.endYear + '<br>';
-                }
-
-                if (values.survey) {
-                    s += 'Survey ID: ' + values.survey + '<br>';
-                }
+                  
+                if (values.startDate) {
+                    s += '<br>Start Date: ' + this.toDateString(values.startDate);
+                } 
+                if (values.endDate) {
+                    s += '<br>End Date: ' + this.toDateString(values.endDate);
+                }                                    
                 if (values.platform) {
                     s += 'Platform Name: ' + values.platform + '<br>';
                 }                
                 filterDiv.innerHTML = s;
+            },
+
+            //Format a date in the form mm/dd/yyyy
+            toDateString: function(date) {
+                return date.getMonth()+1 + '/' + date.getDate() + '/' + date.getFullYear();
             }
         });
     }

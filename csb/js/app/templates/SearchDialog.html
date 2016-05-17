@@ -18,22 +18,15 @@
                 <input data-dojo-type="dijit/form/DateTextBox" class="surveySelect-dateTextBox" data-dojo-attach-point="endDateInput" name="endDate" type="text">                
             </td>           
         </tr>
-        <!-- <tr>
-            <td align="left" colspan="2">               
-                <label>Survey ID <span class="wildcardLabel">(wildcards accepted: *)</span>:</label><br/>
-                <div data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="surveyNameText" name="survey" 
-                     style="width: 200px;" required="false">                 
-                </div>
-            </td>
-        </tr> -->
         <tr>
             <td align="left" colspan="2">               
-                <label>Platform Name <span class="wildcardLabel">(wildcards accepted: *)</span></label><br/>
-                <div data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="platformNameText" name="platform" 
-                     style="width: 200px;" required="false">                 
-                </div>
+                <label>Platform Name: <img id="platformHelp" class="tooltipButton" src="images/question-button.png"></label><br/>
+                <!-- <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'platformHelp'">
+                    <div class="tooltipText">Select the platform name for the survey. Platforms are shown for the currently-visible layers. You can enter a wildcard (*) to find multiple matches. For example, typing Atlantis* would find both Atlantis and Atlantis II.</div>
+                </div> -->
+                <div data-dojo-attach-point="platformSelectDiv"></div>
             </td>
-        </tr> 
+        </tr>
         <tr>
             <td>
                 <input data-dojo-attach-point="chkZoomToResults" data-dojo-type="dijit/form/CheckBox" checked="true" value="false" type="checkbox" name="chkZoomToResults"/>
