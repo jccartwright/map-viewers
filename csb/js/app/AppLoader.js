@@ -179,11 +179,11 @@ define([
 
             enableMapView: function(/*String*/ mapId) {
                 this.mapId = mapId;
-                if (mapId == 'mercator') {
+                if (mapId === 'mercator') {
                     this.mercatorMapConfig.setEnabled(true);
                     this.arcticMapConfig.setEnabled(false);
                     this.antarcticMapConfig.setEnabled(false);
-                } else if (mapId == 'arctic') {
+                } else if (mapId === 'arctic') {
                     this.mercatorMapConfig.setEnabled(false);
                     this.arcticMapConfig.setEnabled(true);
                     this.antarcticMapConfig.setEnabled(false);
@@ -278,136 +278,44 @@ define([
             filterSurveys: function(values) {
                 var layerDefinition;
                 var sql = [];
-                var serviceLayerDefs = {};
-                                                    
-                //Multibeam
-                if (values.startYear) {
-                    sql.push("SURVEY_YEAR >= " + values.startYear);
-                }   
-                if (values.endYear) {
-                    sql.push("SURVEY_YEAR <= " + values.endYear);
-                }
-                if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
-                }
+                                                                    
+                if (values.startDate) {
+                    sql.push("END_DATE >= date '" + this.toDateString(values.startDate) + "'");          
+                }  
+                if (values.endDate) {
+                    sql.push("START_DATE <= date '" + this.toDateString(values.endDate) + "'");                
+                }  
                 if (values.platform) {
                     sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");                    
                 }
                 layerDefinition = sql.join(' and ');
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
-                this.antarcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
-                serviceLayerDefs.multibeam = layerDefinition;
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('CSB').setLayerDefinitions([layerDefinition, layerDefinition]);
+                //this.arcticMapConfig.mapLayerCollection.getLayerById('CSB').setLayerDefinitions([layerDefinition]);
 
-                //Trackline Bathymetry
-                sql = [];
-                if (values.startYear) {
-                    sql.push("END_YR >= " + values.startYear);
-                }       
-                if (values.endYear) {
-                    sql.push("START_YR <= " + values.endYear);
-                }
-                if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                layerDefinition = sql.join(' and ');
-                var allLayerDefinitions = [];
-                allLayerDefinitions[1] = layerDefinition;
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
-                this.antarcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
-                serviceLayerDefs.trackline = layerDefinition;
-
-                //NOS Hydro 
-                sql = [];
-                if (values.startYear) {
-                    sql.push("SURVEY_YEAR >= " + values.startYear);
-                }       
-                if (values.endYear) {
-                    sql.push("SURVEY_YEAR <= " + values.endYear);
-                }
-                if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                layerDefinition = sql.join(' and ');
-                allLayerDefinitions = [];
-                allLayerDefinitions[0] = layerDefinition;
-                allLayerDefinitions[1] = layerDefinition;
-                allLayerDefinitions[2] = layerDefinition;      
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions(allLayerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions(allLayerDefinitions);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions(allLayerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions(allLayerDefinitions);
-                serviceLayerDefs.nosHydro = layerDefinition;
-                        
                 this.layersPanel.enableResetButton();
                 this.layersPanel.setCurrentFilterString(values);
 
-                if (values.zoomToResults) {
-                    this.zoomToResults(serviceLayerDefs);
-                }
+                // if (values.zoomToResults) {
+                //     this.zoomToResults(serviceLayerDefs);
+                // }
             },
 
             resetSurveyFilter: function() {            
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions([]);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions([]);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions([]);
-
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions([]);
-
-                this.antarcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
-                this.antarcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
-
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('CSB').setLayerDefinitions([]);
+                //this.arcticMapConfig.mapLayerCollection.getLayerById('CSB').setLayerDefinitions([]);
+                //this.antarcticMapConfig.mapLayerCollection.getLayerById('CSB').setLayerDefinitions([]);
+                
                 this.layersPanel.disableResetButton();
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
             },
 
             zoomToResults: function(serviceLayerDefs) {
-                var layerDefsStr = '';
-
                 var deferreds = [];
 
                 if (this.layersPanel.chkMultibeam.checked) {
                     var url = '//gis.ngdc.noaa.gov/geoextents/multibeam_dynamic/';
                     var params = {layerDefs: '0:' + serviceLayerDefs.multibeam};
-                    deferreds.push(xhr.post(
-                        url, {
-                            data: params,
-                            handleAs: 'json'
-                        })
-                    );
-                }
-
-                if (this.layersPanel.chkTrackline.checked) {
-                    var url = '//gis.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
-                    var params = {layerDefs: '1:' + serviceLayerDefs.trackline};
-                    deferreds.push(xhr.post(
-                        url, {
-                            data: params,
-                            handleAs: 'json'
-                        })
-                    );
-                }
-
-                if (this.layersPanel.chkNosHydroBags.checked || this.layersPanel.chkNosHydroDigital.checked || this.layersPanel.chkNosHydroNonDigital.checked) {
-                    var url = '//gis.ngdc.noaa.gov/geoextents/nos_hydro_dynamic/';
-                    var layerDef = serviceLayerDefs.nosHydro;
-                    var params = {layerDefs: '0:' + layerDef + ';1:' + layerDef + ';2:' + layerDef};
                     deferreds.push(xhr.post(
                         url, {
                             data: params,
@@ -504,6 +412,22 @@ define([
                     logger.error(error);
                 });
             },
+
+            //Format a date in the form yyyy-mm-dd
+            toDateString: function(date) {  
+                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
+            },
+
+            padDigits: function(n, totalDigits){
+                n = n.toString();
+                var pd = '';
+                if (totalDigits > n.length) {
+                    for (var i = 0; i < (totalDigits - n.length); i++) {
+                        pd += '0';
+                    }
+                }
+                return pd + n.toString();
+            }
         });
     }
 );
