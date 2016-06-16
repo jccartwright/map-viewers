@@ -21,7 +21,7 @@ define([
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template =
-                    '<h3>Passive Acoustic Data: ${name}</h3>' +
+                    //'<h3>Passive Acoustic Data: ${name}</h3>' +
                     '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
                     '<div class="valueName">Start Date: <span class="parameterValue">${startDate}</span></div>' +
                     '<div class="valueName">End Date: <span class="parameterValue">${endDate}</span></div>' + 
