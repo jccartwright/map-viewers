@@ -1,0 +1,13 @@
+<div class="layersPanel_class">
+    <br>
+    <input checked type="checkbox" data-dojo-attach-point="chkPad" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkPad"><b>Passive Acoustic Data</b></label><br>
+
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="searchButton">Search</div>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetButton" disabled>Reset</div>
+    <img id="searchHelp" class="tooltipButtonMiddle" src="images/question-button.png"><br>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'searchHelp'">
+        <div class="tooltipText">Help text goes here.</div>
+    </div>
+    <div id="currentFilter" class="filterText"></div><br>    
+</div>
