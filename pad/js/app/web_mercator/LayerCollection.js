@@ -66,7 +66,7 @@ define([
                         visible: false,
                         opacity: 0.7
                     }),
-                    new ArcGISDynamicMapServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/pad/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/pad/MapServer', {
                         id: 'PAD',
                         visible: true,
                         imageParameters: this.imageParameters.png32
