@@ -28,8 +28,8 @@ define([
                     '<div class="valueName">Source Organization: <span class="parameterValue">${sourceOrganization}</span></div>' + 
                     '<div class="valueName">Instrument Name: <span class="parameterValue">${instrumentName}</span></div>' + 
                     '<div class="valueName">Platform Type: <span class="parameterValue">${platformType}</span></div>' + 
-                    '<div class="valueName">Min Sample Rate: <span class="parameterValue">${minSampleRate}</span></div>' + 
-                    '<div class="valueName">Max Sample Rate: <span class="parameterValue">${maxSampleRate}</span></div>' + 
+                    '<div class="valueName">Min Sample Rate: <span class="parameterValue">${minSampleRate} kHz</span></div>' + 
+                    '<div class="valueName">Max Sample Rate: <span class="parameterValue">${maxSampleRate} kHz</span></div>' + 
                     '<div class="valueName">Sensor Depth: <span class="parameterValue">${sensorDepth}</span></div>';
 
                 var html = string.substitute(template, {                        
