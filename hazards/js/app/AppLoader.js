@@ -255,8 +255,8 @@ define([
                 if (values.sourceCountry !== '') {
                     sql.push("COUNTRY='" + values.sourceCountry + "'"); 
                 }
-                if (values.sourceCause !== '') {
-                    sql.push("CAUSE_CODE IN (" + values.sourceCause + ")");
+                if (values.sourceCause.length > 0) {
+                    sql.push("CAUSE_CODE IN (" + values.sourceCause.join(',') + ")");
                 }
                 if (!isNaN(values.minEqMagnitude)) {
                     sql.push("EQ_MAGNITUDE>=" + values.minEqMagnitude);
@@ -284,7 +284,7 @@ define([
                 }
 
                 //If runup criteria is entered, first query the runup layer to get a list of TSEVENT_IDs. Append those to the tsevent layer defs.
-                if (values.runupRegion || values.runupCountry || values.minRunupHeight || values.maxRunupHeight || values.minRunupDeaths || values.maxRunupDeaths ||
+                if (values.runupRegion || values.runupCountry || values.runupArea || values.minRunupHeight || values.maxRunupHeight || values.minRunupDeaths || values.maxRunupDeaths ||
                     values.minRunupDamage || values.maxRunupDamage || values.minRunupDistance || values.maxRunupDistance) {
                     var queryTask = new QueryTask("//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/hazards/MapServer/4");
                     var query = new Query();
