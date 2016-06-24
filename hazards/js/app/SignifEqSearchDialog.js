@@ -1,16 +1,21 @@
 define([
-    "dojo/_base/declare",
-    "dijit/Dialog",
-    "dijit/_Widget",
-    "dijit/_TemplatedMixin",
-    "dijit/_WidgetsInTemplateMixin",
-    "dijit/form/Button", "dijit/form/NumberSpinner", "dijit/form/Select", "dijit/form/CheckBox", "dijit/form/MultiSelect", "dijit/form/FilteringSelect",
-    "dojo/_base/lang",
-    "dojo/_base/array",
-    "dojo/dom-attr",
-    "dojo/on",
-    "dojo/topic",
-    "dojo/text!./templates/SignifEqSearchDialog.html"
+    'dojo/_base/declare',
+    'dijit/Dialog',
+    'dijit/_Widget',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dijit/form/Button', 
+    'dijit/form/NumberSpinner', 
+    'dijit/form/Select', 
+    'dijit/form/CheckBox', 
+    'dijit/form/MultiSelect', 
+    'dijit/form/FilteringSelect',
+    'dojo/_base/lang',
+    'dojo/_base/array',
+    'dojo/dom-attr',
+    'dojo/on',
+    'dojo/topic',
+    'dojo/text!./templates/SignifEqSearchDialog.html'
     ],
     function(
         declare,
@@ -18,7 +23,12 @@ define([
         _Widget,
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
-        Button, NumberSpinner, Select, CheckBox, MultiSelect, FilteringSelect,   
+        Button, 
+        NumberSpinner, 
+        Select, 
+        CheckBox, 
+        MultiSelect, 
+        FilteringSelect,   
         lang,
         array,
         domAttr,
@@ -40,10 +50,10 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                on(this.cancelButton, "click", lang.hitch(this, function(evt){
+                on(this.cancelButton, "click", lang.hitch(this, function(){
                     this.onCancel();
                 }));
-                on(this.resetButton, "click", lang.hitch(this, function(evt){
+                on(this.resetButton, "click", lang.hitch(this, function(){
                     this.reset();
                 }));
                 //this.reset();

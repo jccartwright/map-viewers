@@ -1,16 +1,19 @@
 define([
-    "dojo/_base/declare",
-    "dijit/Dialog",
-    "dijit/_Widget",
-    "dijit/_TemplatedMixin",
-    "dijit/_WidgetsInTemplateMixin",
-    "dijit/form/Button", "dijit/form/Select", "dijit/form/CheckBox", "dijit/form/DateTextBox",
-    "dojo/_base/lang",
-    "dojo/_base/array",
-    "dojo/dom-attr",
-    "dojo/on",
-    "dojo/topic",
-    "dojo/text!./templates/DartSearchDialog.html"
+    'dojo/_base/declare',
+    'dijit/Dialog',
+    'dijit/_Widget',
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dijit/form/Button', 
+    'dijit/form/Select', 
+    'dijit/form/CheckBox', 
+    'dijit/form/DateTextBox',
+    'dojo/_base/lang',
+    'dojo/_base/array',
+    'dojo/dom-attr',
+    'dojo/on',
+    'dojo/topic',
+    'dojo/text!./templates/DartSearchDialog.html'
     ],
     function(
         declare,
@@ -18,7 +21,10 @@ define([
         _Widget,
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
-        Button, Select, CheckBox, DateTextBox,   
+        Button, 
+        Select, 
+        CheckBox, 
+        DateTextBox,   
         lang,
         array,
         domAttr,
@@ -40,13 +46,13 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                on(this.cancelButton, "click", lang.hitch(this, function(evt){
+                on(this.cancelButton, "click", lang.hitch(this, function(){
                     this.onCancel();
                 }));
-                on(this.resetButton, "click", lang.hitch(this, function(evt){
+                on(this.resetButton, "click", lang.hitch(this, function(){
                     this.reset();
                 }));
-                on(this.checkShowRetrospectiveDarts, "click", lang.hitch(this, function(evt){
+                on(this.checkShowRetrospectiveDarts, "click", lang.hitch(this, function(){
                     this.toggleShowRetrospectiveDarts();
                 }));
                
