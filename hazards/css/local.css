@@ -303,3 +303,12 @@ html,body {
     font-size: 12px;
     background-color:#EFECCA;
 }
+
+.dojoxCheckedMultiSelect .dojoxCheckedMultiSelectWrapper { 
+    /*border: solid black 1px; */
+    margin: 1px 0; 
+    /*overflow: scroll; */
+    /*overflow-y: hidden;*/
+    /*overflow-x: hidden;*/
+    height: 100px; 
+} 
