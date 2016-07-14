@@ -1,0 +1,38 @@
+<div>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="contactUsButton" id="contactUsButton">Contact Us</div>
+    <br><br>
+    <b>Navigating the Map</b><br>
+    <ul>
+        <li>Click and drag or use arrow keys to pan</li>
+        <li>Mouse scroll forward or use + key to zoom in</li>
+        <li>Mouse scroll backward or use - key to zoom out</li>
+    </ul>
+
+    <b>Identifying Features</b><br>
+    You have several options to identify features 
+    within visible layers:
+    <ul>
+        <li>Single-click on the map</li>
+        <li>Or, choose another tool from the "Identify" menu:
+        <li>Click on <img src="${identifyRectIconUrl}" alt="Identify with rectangle icon"> to draw a rectangle</li>
+        <li>Click on <img src="${identifyPolyIconUrl}" alt="Identify with rectangle icon"> to draw a polygon</li>
+        <li>Click on <img src="${identifyCoordsIconUrl}" alt="Identify with coordinates icon"> to enter coordinates for a bounding box</li>
+    </ul>
+    A popup will appear with a list of the selected features.
+    Mouse-over the list of files within an instrument 
+    folder to highlight features on the map (blue line).
+    Click the magnifying glass icon <img src="${magnifyingGlassIconUrl}" alt="Magnifying glass icon"> to zoom to that feature.
+    Click on a row to view attributes for that feature.<br><br>
+
+    <b>Searching for Data</b><br>
+    <b><i>Search Surveys:</i></b> opens a dialog where you can specify 
+    a desired range of survey years, platform name, source institution, and survey ID.
+    After clicking "OK", a filter will be applied to the Multibeam, Single-Beam, and NOS Hydrographic Surveys layers, displaying only data of interest.
+    The current filter is displayed below the "Filter Surveys" button. Note: the filter does not apply to the BAG Color Shaded Relief, DEMs, or OCM Bathymetric Lidar layers.<br>
+    <b><i>Reset:</i></b> clears the current filter.<br><br>
+
+    <b>Extracting Data</b><br>
+    In the "Identified Features" popup, the <b><i>Extract Data</i></b> button will be available when there are layers visible that can be extracted via the new NCEI Extract system (NEXT).
+    After pressing the <b><i>Extract Data</i></b> button, a summary of your request will be shown in a new browser tab, where you can further refine your request. 
+    Please view the help on that page for more information.
+</div>
