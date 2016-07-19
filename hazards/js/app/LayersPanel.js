@@ -82,16 +82,16 @@ define([
                     this.togglePlateBoundaries(checked);
                 })); 
 
-                on(registry.byId("radioTsEvents1"), "click", lang.hitch(this, function(checked) {
+                on(registry.byId("radioTsEvents1"), "click", lang.hitch(this, function() {
                     this.setTsEventSymbol('cause/deaths');
                 })); 
-                on(registry.byId("radioTsEvents2"), "click", lang.hitch(this, function(checked) {
+                on(registry.byId("radioTsEvents2"), "click", lang.hitch(this, function() {
                     this.setTsEventSymbol('squares');
                 }));
-                on(registry.byId("radioTsObs1"), "click", lang.hitch(this, function(checked) {
+                on(registry.byId("radioTsObs1"), "click", lang.hitch(this, function() {
                     this.setTsObsSymbol('bars');
                 })); 
-                on(registry.byId("radioTsObs2"), "click", lang.hitch(this, function(checked) {
+                on(registry.byId("radioTsObs2"), "click", lang.hitch(this, function() {
                     this.setTsObsSymbol('crosses');
                 }));
                 on(registry.byId("tsEventSearchButton"), "click", lang.hitch(this, function() {
@@ -200,7 +200,7 @@ define([
                 registry.byId('radioTsEvents2').set('disabled', !visible);
 
                 if (visible) {
-                    if (this.tsEventSymbol == 'cause/deaths') {
+                    if (this.tsEventSymbol === 'cause/deaths') {
                         topic.publish('/ngdc/sublayer/visibility', 'Hazards', [0], false);
                         topic.publish('/ngdc/sublayer/visibility', 'Hazards', [1], true);
                     }
@@ -223,7 +223,7 @@ define([
                 registry.byId('radioTsObs2').set('disabled', !visible);
 
                 if (visible) {
-                    if (this.tsObsSymbol == 'bars') {
+                    if (this.tsObsSymbol === 'bars') {
                         topic.publish('/ngdc/sublayer/visibility', 'Hazards', [2], true);
                         topic.publish('/ngdc/sublayer/visibility', 'Hazards', [3], true);
                         topic.publish('/ngdc/sublayer/visibility', 'Hazards', [4], false);

@@ -1,7 +1,6 @@
 define([
     'dojo/_base/declare', 
-    'ngdc/MapToolbar'
-    ],
+    'ngdc/MapToolbar'],
     function(
         declare, 
         MapToolbar
@@ -10,30 +9,24 @@ define([
         return declare([MapToolbar], {
             constructor: function() {
                 this._basemaps = [
-                    {base: 'Ocean Base', overlays: [{id: 'Ocean Reference'}], label: 'Ocean Basemap (Esri)'},
-                    {base: 'GEBCO_2014', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (GEBCO_2014)'},
-                    {base: 'ETOPO1', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (ETOPO1)'},
-                    {base: 'Light Gray', overlays: [{id: 'Light Gray Reference'}], label: 'Light Gray (Esri)'},
-                    {base: 'Dark Gray', overlays: [{id: 'Dark Gray Reference'}], label: 'Dark Gray (Esri)'},
-                    {base: 'World Imagery', overlays: [{id: 'World Boundaries and Places'}], label: 'World Imagery (Esri)'},
-                    {base: 'NatGeo', label: 'National Geographic (Esri)'} //NatGeo has no boundaries overlay
+                    {base: 'Arctic Basemap', overlays: [{id: 'Reference'}], label: 'Arctic Basemap (IBCAO/GEBCO_08)'}
                 ];
 
                 this._overlays = [
                     {
                         label: 'Boundaries/Labels',
-                        services: [{id: 'Ocean Reference'}],
-                        visible: true
+                        services: [{id: 'Reference'}],
+                        visible: false
                     }, 
                     {
-                        label: 'Regional Bathymetric Contours (from GEBCO_2014)',
-                        services: [{id: 'GEBCO_2014 Contours'}],
+                        label: 'Bathymetric Contours (IBCAO/GEBCO_08)',
+                        services: [{id: 'IBCAO Contours'}],
                         visible: false
                     },
                     {
                         label: 'Graticule',
                         services: [{id: 'Graticule'}],
-                        visible: false
+                        visible: true
                     }
                 ];
 
@@ -45,7 +38,7 @@ define([
                 ];
 
                 //define the default base
-                this.defaultBasemapIndex = 6;
+                this.defaultBasemapIndex = 0;
 
                 this._validateLayerIds();
 

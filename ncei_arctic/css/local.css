@@ -58,6 +58,7 @@ html,body {
     z-index: 9999;
 }
 
+
 .esriScalebar {
     margin-top: 5px;
 }
@@ -91,6 +92,14 @@ html,body {
     background-position: center center;
     width: 20px;
     height: 100px;
+}
+
+.downloadIcon {
+    background-image:  url('../images/drive-download.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 16px;
+    height: 16px;   
 }
 
 /*** Loader ***/
@@ -167,7 +176,7 @@ html,body {
 }
 
 #leftPane {
-    width: 280px;
+    width: 250px;
 }
 
 /*#centerPane {*/
@@ -274,8 +283,16 @@ html,body {
     font: 12px arial,helvetica,verdana,sans-serif;
 }
 
-.wildcardLabel {
-    font-size: 11px;
+.tooltipButton {
+    vertical-align: bottom;
+}
+
+.tooltipButtonMiddle {
+    vertical-align: middle;
+}
+
+.tooltipText {
+    width: 200px;
 }
 
 #legend {
@@ -283,32 +300,14 @@ html,body {
     display: none;
 }
 
-.idTr td {
-    border: 1px solid black;
-    vertical-align: top;
+.queryIcon {
+    background-image: url(../images/magnifyingglass.png);
+    width: 20px;
+    height: 20px;
 }
 
-.idTable {
-    border-collapse: collapse;
+.clearSelectionIcon {
+    background-image: url(../images/x.png);
+    width: 16px;
+    height: 16px;
 }
-
-.searchDialog {
-    box-shadow:0px 8px 20px #525252;
-    -moz-box-shadow:0px 8px 20px #525252;
-    -webkit-box-shadow:0px 8px 20px #525252;
-    border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; -o-border-radius: 8px;
-    /*border: 2px solid #046380;*/
-    border: none !important;
-    font-family: sans-serif;
-    font-size: 12px;
-    background-color:#EFECCA;
-}
-
-.dojoxCheckedMultiSelect .dojoxCheckedMultiSelectWrapper { 
-    /*border: solid black 1px; */
-    margin: 1px 0; 
-    /*overflow: scroll; */
-    /*overflow-y: hidden;*/
-    /*overflow-x: hidden;*/
-    height: 100px; 
-} 

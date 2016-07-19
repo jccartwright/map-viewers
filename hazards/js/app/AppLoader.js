@@ -238,7 +238,6 @@ define([
             },
 
             filterTsEvents: function(values) {
-                var layerDefinitions;
                 var sql = [];
                 
                 if (!isNaN(values.startYear)) {
@@ -247,17 +246,23 @@ define([
                 if (!isNaN(values.endYear)) {
                     sql.push("YEAR<=" + values.endYear);
                 }
-                if (values.sourceLocationName != '') {
+                if (values.sourceLocationName !== '') {
                     sql.push("UPPER(LOCATION_NAME) LIKE '%" + values.sourceLocationName.toUpperCase() + "%'");  
                 }
-                if (values.sourceRegion != '') {
+                if (values.sourceRegion !== '') {
                     sql.push("REGION_CODE=" + values.sourceRegion); 
                 }
-                if (values.sourceCountry != '') {
+                if (values.sourceCountry !== '') {
                     sql.push("COUNTRY='" + values.sourceCountry + "'"); 
                 }
-                if (values.sourceCause != '') {
-                    sql.push("CAUSE_CODE IN (" + values.sourceCause + ")");
+                if (values.sourceCause.length > 0) {
+                    sql.push("CAUSE_CODE IN (" + values.sourceCause.join(',') + ")");
+                }
+                if (!isNaN(values.minEqMagnitude)) {
+                    sql.push("EQ_MAGNITUDE>=" + values.minEqMagnitude);
+                }
+                if (!isNaN(values.maxEqMagnitude)) {
+                    sql.push("EQ_MAGNITUDE<=" + values.minEqMagnitude);     
                 }
                 if (values.minDeaths) {
                     sql.push("DEATHS_AMOUNT_ORDER>=" + values.minDeaths);
@@ -277,15 +282,77 @@ define([
                 if (values.maxEventValidity) {
                     sql.push("EVENT_VALIDITY_CODE<=" + values.maxEventValidity);
                 }
+
+                //If runup criteria is entered, first query the runup layer to get a list of TSEVENT_IDs. Append those to the tsevent layer defs.
+                if (values.runupRegion || values.runupCountry || values.runupArea || values.minRunupHeight || values.maxRunupHeight || values.minRunupDeaths || values.maxRunupDeaths ||
+                    values.minRunupDamage || values.maxRunupDamage || values.minRunupDistance || values.maxRunupDistance) {
+                    var queryTask = new QueryTask("//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/hazards/MapServer/4");
+                    var query = new Query();
+                    query.returnDistinctValues = true;
+                    query.outFields = ['TSEVENT_ID'];
+                    query.orderByFields = ['TSEVENT_ID'];
+
+                    var runupCriteria = [];
+                    if (values.runupRegion) {
+                        runupCriteria.push("REGION_CODE=" + values.runupRegion);
+                    }
+                    if (values.runupCountry) {
+                        runupCriteria.push("COUNTRY='" + values.runupCountry + "'");
+                    }
+                    if (values.runupArea) {
+                        runupCriteria.push("AREA='" + values.runupArea + "'");
+                    }
+                    if (values.minRunupHeight) {
+                        runupCriteria.push("RUNUP_HT>=" + values.minRunupHeight);
+                    }
+                    if (values.maxRunupHeight) {
+                        runupCriteria.push("RUNUP_HT<=" + values.maxRunupHeight);
+                    }
+                    if (values.minRunupDeaths) {
+                        runupCriteria.push("DEATHS_AMOUNT_ORDER>=" + values.minRunupDeaths);
+                    }
+                    if (values.maxRunupDeaths) {
+                        runupCriteria.push("DEATHS_AMOUNT_ORDER<=" + values.maxRunupDeaths);
+                    }
+                    if (values.minRunupDamage) {
+                        runupCriteria.push("DAMAGE_AMOUNT_ORDER>=" + values.minRunupDamage);
+                    }
+                    if (values.maxRunupDamage) {
+                        runupCriteria.push("DAMAGE_AMOUNT_ORDER<=" + values.maxRunupDamage);
+                    }
+                    if (values.minRunupDistance) {
+                        runupCriteria.push("DIST_FROM_SOURCE>=" + values.minRunupDistance);
+                    }
+                    if (values.maxRunupDistance) {
+                        runupCriteria.push("DIST_FROM_SOURCE<=" + values.maxRunupDistance);
+                    }
+
+                    query.where = runupCriteria.join(' and ');
+
+                    queryTask.execute(query).then(lang.hitch(this, function(fset) {
+                        console.log(fset);
+                        var tseventIds = [];
+                        array.forEach(fset.features, function(feature) {
+                            tseventIds.push(feature.attributes['TSEVENT_ID']);
+                        });
+                        sql.push('ID IN (' + tseventIds.join(',') + ')');
+                        this.setTsEventFilter(sql);
+                    }));
+                }
                 
-                //console.log(sql);
-                layerDefinitions = sql.join(' and ');
+                else {
+                    this.setTsEventFilter(sql);
+                }
+            },
+
+            setTsEventFilter: function(sql) {
+                var layerDefinitions = sql.join(' and ');
                 this.hazLayerDefinitions[this.tsEventLayerID1] = layerDefinitions;
                 this.hazLayerDefinitions[this.tsEventLayerID2] = layerDefinitions;
                 
                 this.hazMapService.setLayerDefinitions(this.hazLayerDefinitions);
                 
-                this.layersPanel.setTsEventFilterActive(true);                
+                this.layersPanel.setTsEventFilterActive(true);    
             },
 
             resetTsEvents: function() {
@@ -297,8 +364,8 @@ define([
                 this.layersPanel.setTsEventFilterActive(false);                
             },
 
-            showTsEventOnStartup: function(tsEventId) {
-                var tsEvent = config.app.tsEvent
+            showTsEventOnStartup: function() {
+                var tsEvent = config.app.tsEvent;
                 var queryTask = new QueryTask(this.hazMapService.url + "/" + this.tsEventLayerID1);
                 var query = new Query();
                 query.returnGeometry = true;
@@ -353,22 +420,22 @@ define([
                 if (!isNaN(values.endYear)) {
                     sql.push("YEAR<=" + values.endYear);
                 }
-                if (values.sourceRegion != '') {
+                if (values.sourceRegion !== '') {
                     sql.push("EVENT_REGION_CODE=" + values.sourceRegion);
                 }       
-                if (values.observationRegion != '') {
+                if (values.observationRegion !== '') {
                     sql.push("REGION_CODE=" + values.observationRegion);
                 }
-                if (values.observationLocationName != '') {
+                if (values.observationLocationName !== '') {
                     sql.push("UPPER(LOCATION_NAME) LIKE '%" + values.observationLocationName.toUpperCase() + "%'");
                 }           
-                if (values.country != '') {
+                if (values.country !== '') {
                     sql.push("COUNTRY='" + values.country + "'");
                 }
-                if (values.area != '') {
+                if (values.area !== '') {
                     sql.push("AREA='" + values.area + "'");
                 }
-                if (values.measurementType != '') {
+                if (values.measurementType !== '') {
                     sql.push("TYPE_MEASUREMENT_ID IN(" + values.measurementType + ")");
                 }   
                 if (values.minWaterHeight) {
@@ -419,38 +486,54 @@ define([
                 var layerDefinitions;
                 var sql = [];
                 
-                if (!isNaN(values.startYear))
+                if (!isNaN(values.startYear)) {
                     sql.push("YEAR>=" + values.startYear);
-                if (!isNaN(values.endYear))
+                }
+                if (!isNaN(values.endYear)) {
                     sql.push("YEAR<=" + values.endYear);
-                if (values.region != '') 
+                }
+                if (values.region !== '') {
                     sql.push("REGION_CODE=" + values.region);   
-                if (values.country != '') 
+                }
+                if (values.country !== '') {
                     sql.push("COUNTRY='" + values.country + "'");   
-                if (values.minMagnitude)
+                }
+                if (values.minMagnitude) {
                     sql.push("EQ_MAGNITUDE>=" + values.minMagnitude);
-                if (values.maxMagnitude)
+                }
+                if (values.maxMagnitude) {
                     sql.push("EQ_MAGNITUDE<=" + values.maxMagnitude);
-                if (values.minIntensity)
+                }
+                if (values.minIntensity) {
                     sql.push("INTENSITY>=" + values.minIntensity);
-                if (values.maxIntensity)
+                }
+                if (values.maxIntensity) {
                     sql.push("INTENSITY<=" + values.maxIntensity);
-                if (values.minDepth)
+                }
+                if (values.minDepth) {
                     sql.push("EQ_DEPTH>=" + values.minDepth);
-                if (values.maxDepth)
+                }
+                if (values.maxDepth) {
                     sql.push("EQ_DEPTH<=" + values.maxDepth);
-                if (values.minDeaths)
+                }
+                if (values.minDeaths) {
                     sql.push("DEATHS_AMOUNT_ORDER>=" + values.minDeaths);
-                if (values.maxDeaths)
+                }
+                if (values.maxDeaths) {
                     sql.push("DEATHS_AMOUNT_ORDER<=" + values.maxDeaths);
-                if (values.minDamage)
+                }
+                if (values.minDamage) {
                     sql.push("DAMAGE_AMOUNT_ORDER>=" + values.minDamage);
-                if (values.maxDamage)
+                }
+                if (values.maxDamage) {
                     sql.push("DAMAGE_AMOUNT_ORDER<=" + values.maxDamage);
-                if (values.tsunamiAssoc)
+                }
+                if (values.tsunamiAssoc) {
                     sql.push("FLAG_TSUNAMI=1");
-                if (values.volEventAssoc)
+                }
+                if (values.volEventAssoc) {
                     sql.push("FLAG_VOL_EVENT=1");
+                }
                 
                 //console.log(sql);
                 layerDefinitions = sql.join(' and ');
@@ -472,32 +555,45 @@ define([
             filterVolEvents: function(values) {
                 var sql = [];
         
-                if (values.volcanoName)
+                if (values.volcanoName) {
                     sql.push("UPPER(NAME) LIKE '%" + values.volcanoName.toUpperCase() + "%'");
-                if (values.country)
+                }
+                if (values.country) {
                     sql.push("COUNTRY='" + values.country + "'");
-                if (values.morphology)
+                }
+                if (values.morphology) {
                     sql.push("MORPHOLOGY='" + values.morphology + "'");
-                if (values.timeOfEruption)
+                }
+                if (values.timeOfEruption) {
                     sql.push("TIME_ERUPT='" + values.timeOfEruption + "'");
-                if (!isNaN(values.startYear))
+                }
+                if (!isNaN(values.startYear)) {
                     sql.push("YEAR>=" + values.startYear);
-                if (!isNaN(values.endYear))
+                }
+                if (!isNaN(values.endYear)) {
                     sql.push("YEAR<=" + values.endYear);
-                if (values.minVei)
+                }
+                if (values.minVei) {
                     sql.push("VEI>=" + values.minVei);
-                if (values.maxVei)
+                }
+                if (values.maxVei) {
                     sql.push("VEI<=" + values.maxVei); 
-                if (values.minDeaths)
+                }
+                if (values.minDeaths) {
                     sql.push("DEATHS_AMOUNT_ORDER>=" + values.minDeaths);
-                if (values.maxDeaths)
+                }
+                if (values.maxDeaths) {
                     sql.push("DEATHS_AMOUNT_ORDER<=" + values.maxDeaths); 
-                if (values.minDamage)
+                }
+                if (values.minDamage) {
                     sql.push("DAMAGE_AMOUNT_ORDER>=" + values.minDamage);
-                if (values.maxDamage)
+                }
+                if (values.maxDamage) {
                     sql.push("DAMAGE_AMOUNT_ORDER<=" + values.maxDamage); 
-                if (values.tsunamiAssoc)
+                }
+                if (values.tsunamiAssoc) {
                     sql.push("TSU_ID IS NOT NULL");
+                }
                     
                 var layerDefinitions = sql.join(' and ');
                 this.hazLayerDefinitions[this.volEventLayerID] = layerDefinitions;    
@@ -612,27 +708,30 @@ define([
                 var multipoint = new Multipoint(new SpatialReference({ wkid:102100 })); //Multipoint in Web Mercator projection
                 var multipoint2 = new Multipoint(pacProj); //Multipoint in 180-centered Mercator projection
 
-                if (fset.features.length == 0) {
+                if (fset.features.length === 0) {
                     return;
                 }
                 dojo.forEach(fset.features, function(feature) {
                     multipoint.addPoint(feature.geometry);
                     var x = feature.geometry.x + 20037507.067161795;
-                    if (x > 20037507.067161795)
+                    if (x > 20037507.067161795) {
                         x -= 40075014.13432359;
+                    }
                     multipoint2.addPoint(new Point(x, feature.geometry.y, pacProj));
                 });
                 multipoint.addPoint(currentPoint);
                 var x = currentPoint.x + 20037507.067161795;
-                if (x > 20037507.067161795)
+                if (x > 20037507.067161795) {
                     x -= 40075014.13432359;
+                }
                 multipoint2.addPoint(new Point(x, currentPoint.y, pacProj));
                 
                 var extent = multipoint.getExtent();
                 var extent2 = multipoint2.getExtent();  
                 
-                if (extent.getWidth() * extent.getHeight() < extent2.getWidth() * extent2.getHeight()) 
+                if (extent.getWidth() * extent.getHeight() < extent2.getWidth() * extent2.getHeight()) {
                     this.mapConfig.map.setExtent(extent, true);
+                }
                 else {
                     var webMercExtent = new Extent(extent2.xmin - 20037507.067161795, extent2.ymin, extent2.xmax - 20037507.067161795, extent2.ymax, new SpatialReference({wkid: 3857}));
                     this.mapConfig.map.setExtent(webMercExtent, true);
@@ -645,36 +744,36 @@ define([
 
                 this.layersPanel.toggleTsEventVisibility(false);
 
-                if (array.indexOf(visibleLayers, '0') != -1) {
+                if (array.indexOf(visibleLayers, '0') !== -1) {
                     this.layersPanel.toggleTsEventVisibility(true);
                 }
-                if (array.indexOf(visibleLayers, '1') != -1) {
+                if (array.indexOf(visibleLayers, '1') !== -1) {
                     this.layersPanel.toggleTsObsVisibility(true);
                 }
-                if (array.indexOf(visibleLayers, '2') != -1) {
+                if (array.indexOf(visibleLayers, '2') !== -1) {
                     this.layersPanel.toggleSignifEqVisibility(true);
                 }
-                if (array.indexOf(visibleLayers, '3') != -1) {
+                if (array.indexOf(visibleLayers, '3') !== -1) {
                     this.layersPanel.toggleVolEventVisibility(true);
                 }
-                if (array.indexOf(visibleLayers, '4') != -1) {
+                if (array.indexOf(visibleLayers, '4') !== -1) {
                     this.layersPanel.toggleDartVisibility(true);
                 }
-                if (array.indexOf(visibleLayers, '5') != -1) {
+                if (array.indexOf(visibleLayers, '5') !== -1) {
                     this.layersPanel.toggleTideGaugeVisibility(true);
                 }
             },
 
             //Format a date in the form yyyy-mm-dd
             toDateString: function(date) {  
-                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2)
+                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
             },
 
             padDigits: function(n, totalDigits){
                 n = n.toString();
                 var pd = '';
                 if (totalDigits > n.length) {
-                    for (i = 0; i < (totalDigits - n.length); i++) {
+                    for (var i = 0; i < (totalDigits - n.length); i++) {
                         pd += '0';
                     }
                 }

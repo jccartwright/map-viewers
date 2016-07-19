@@ -52,14 +52,14 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                on(this.cancelButton, 'click', lang.hitch(this, function(evt){
+                on(this.cancelButton, 'click', lang.hitch(this, function(){
                     this.onCancel();
                 }));
-                on(this.resetButton, 'click', lang.hitch(this, function(evt){
+                on(this.resetButton, 'click', lang.hitch(this, function(){
                     this.reset();
                 })); 
 
-                on(this.countrySelect, 'change', lang.hitch(this, function(evt){
+                on(this.countrySelect, 'change', lang.hitch(this, function(){
                     this.areaSelect.set('value', '');
                     this.areaSelect.query.country = this.countrySelect.get('value') || /.*/;
                 }));     
@@ -101,7 +101,7 @@ define([
                 values.maxDamage = this.maxDamageSelect.get('value');
                 
                 if (this.isDefault(values)) {
-                    this.reset();
+                    topic.publish('/hazards/ResetTsObsSearch');
                 } else {
                     topic.publish("/hazards/TsObsSearch", values);
                 }
@@ -133,13 +133,12 @@ define([
 
             reset: function() {
                 this.clearForm();
-                topic.publish('/hazards/ResetTsObsSearch');
             },
 
             isDefault: function(values) {
                 return (!values.startYear && !values.endYear && values.sourceRegion === '' && values.observationLocationName === '' &&
                     values.observationRegion === '' && values.country === '' && values.area === '' &&
-                    values.measurementType.length == 0 && !values.minWaterHeight && !values.maxWaterHeight && !values.minDist && !values.maxDist &&
+                    values.measurementType.length === 0 && !values.minWaterHeight && !values.maxWaterHeight && !values.minDist && !values.maxDist &&
                     values.minDeaths === '' && values.maxDeaths === '' && values.minDamage === '' && values.maxDamage === '');
             }  
     });
