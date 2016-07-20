@@ -65,9 +65,35 @@ define([
 
                 this.tsEventCauseSelect.set('value', ''); 
 
+                on(this.sourceRegionSelect, 'change', lang.hitch(this, function(){
+                    var regionCode = parseInt(this.sourceRegionSelect.get('value'));
+                    this.sourceCountrySelect.set('query', {
+                        r: {
+                            test: function(itemRegions) {
+                                if (isNaN(regionCode) || array.indexOf(itemRegions, regionCode) !== -1) {
+                                    return true;
+                                }
+                            }
+                        }
+                    });
+                }));
+
+                on(this.runupRegionSelect, 'change', lang.hitch(this, function(){
+                    var regionCode = parseInt(this.runupRegionSelect.get('value'));
+                    this.runupCountrySelect.set('query', {
+                        r: {
+                            test: function(itemRegions) {
+                                if (isNaN(regionCode) || array.indexOf(itemRegions, regionCode) !== -1) {
+                                    return true;
+                                }
+                            }
+                        }
+                    });
+                }));
+
                 on(this.runupCountrySelect, 'change', lang.hitch(this, function(){
                     this.runupAreaSelect.set('value', '');
-                    this.runupAreaSelect.query.country = this.runupCountrySelect.get('value') || /.*/;
+                    this.runupAreaSelect.query.c = this.runupCountrySelect.get('displayedValue') || /.*/;
                 }));
 
                 xhr.get('tseventCountries.json', {
@@ -121,7 +147,7 @@ define([
                 values.endYear = this.endYearSpinner.get('value');
                 values.sourceLocationName = this.sourceLocationText.get('value');       
                 values.sourceRegion = this.sourceRegionSelect.get('value');
-                values.sourceCountry = this.sourceCountrySelect.get('value');
+                values.sourceCountry = this.sourceCountrySelect.get('displayedValue');
                 values.sourceCause = this.tsEventCauseSelect.get('value');
                 values.minEqMagnitude = this.minEqMagnitudeSpinner.get('value');
                 values.maxEqMagnitude = this.maxEqMagnitudeSpinner.get('value');
@@ -133,7 +159,7 @@ define([
                 values.maxEventValidity = this.maxEventValiditySelect.get('value');
 
                 values.runupRegion = this.runupRegionSelect.get('value');
-                values.runupCountry = this.runupCountrySelect.get('value');
+                values.runupCountry = this.runupCountrySelect.get('displayedValue');
                 values.runupArea = this.runupAreaSelect.get('displayedValue');
                 values.minRunupHeight = this.minRunupHeightSpinner.get('value');
                 values.maxRunupHeight = this.maxRunupHeightSpinner.get('value');

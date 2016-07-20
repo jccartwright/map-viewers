@@ -15,6 +15,8 @@ define([
     'dojo/dom-attr',
     'dojo/on',
     'dojo/topic',
+    'dojo/request/xhr',
+    'dojo/store/Memory',
     'dojo/text!./templates/SignifEqSearchDialog.html'
     ],
     function(
@@ -34,6 +36,8 @@ define([
         domAttr,
         on,
         topic,
+        xhr,
+        Memory,
         template 
     ){
         return declare([Dialog, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -56,6 +60,41 @@ define([
                 on(this.resetButton, "click", lang.hitch(this, function(){
                     this.reset();
                 }));
+
+                on(this.regionSelect, 'change', lang.hitch(this, function(){
+                    var regionCode = parseInt(this.regionSelect.get('value'));
+                    this.countrySelect.set('query', {
+                        r: {
+                            test: function(itemRegions) {
+                                if (isNaN(regionCode) || array.indexOf(itemRegions, regionCode) !== -1) {
+                                    return true;
+                                }
+                            }
+                        }
+                    });
+                }));
+
+                xhr.get('signifEqCountries.json', {
+                    preventCache: true,
+                    handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data.items) {
+                        this.populateCountrySelect(data.items);
+                    }
+                }), function(err){
+                    logger.error('Error retrieving signifEqCountries JSON: ' + err);
+                });
+
+                xhr.get('signifEqRegions.json', {
+                    preventCache: true,
+                    handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data.items) {
+                        this.populateRegionSelect(data.items);
+                    }
+                }), function(err){
+                    logger.error('Error retrieving signifEqRegions JSON: ' + err);
+                });
                 //this.reset();
             },
 
@@ -63,7 +102,7 @@ define([
                 values.startYear = this.startYearSpinner.get('value');
                 values.endYear = this.endYearSpinner.get('value');
                 values.region = this.regionSelect.get('value');
-                values.country = this.countrySelect.get('value');
+                values.country = this.countrySelect.get('displayedValue');
                 values.minMagnitude = this.minMagnitudeSpinner.get('value');
                 values.maxMagnitude = this.maxMagnitudeSpinner.get('value');
                 values.minIntensity = this.minIntensitySpinner.get('value');
@@ -80,7 +119,7 @@ define([
                 values.volEventAssoc = this.checkVolEventAssoc.get('value');
                 
                 if (this.isDefault(values)) {
-                    this.reset();
+                    topic.publish("/hazards/ResetSignifEqSearch");
                 } else {
                     topic.publish("/hazards/SignifEqSearch", values);
                 }
@@ -105,9 +144,16 @@ define([
                 this.checkVolEventAssoc.set('checked', false);
             },
 
+            populateRegionSelect: function(items) {
+                this.regionSelect.store = new Memory({data: items});
+            },
+
+            populateCountrySelect: function(items) {
+                this.countrySelect.store = new Memory({data: items});
+            },
+
             reset: function() {
                 this.clearForm();
-                topic.publish("/hazards/ResetSignifEqSearch");
             },
 
             isDefault: function(values) {

@@ -423,11 +423,11 @@ define([
                 if (values.sourceRegion !== '') {
                     sql.push("EVENT_REGION_CODE=" + values.sourceRegion);
                 }       
-                if (values.observationRegion !== '') {
-                    sql.push("REGION_CODE=" + values.observationRegion);
+                if (values.runupRegion !== '') {
+                    sql.push("REGION_CODE=" + values.runupRegion);
                 }
-                if (values.observationLocationName !== '') {
-                    sql.push("UPPER(LOCATION_NAME) LIKE '%" + values.observationLocationName.toUpperCase() + "%'");
+                if (values.locationName !== '') {
+                    sql.push("UPPER(LOCATION_NAME) LIKE '%" + values.locationName.toUpperCase() + "%'");
                 }           
                 if (values.country !== '') {
                     sql.push("COUNTRY='" + values.country + "'");
@@ -435,8 +435,8 @@ define([
                 if (values.area !== '') {
                     sql.push("AREA='" + values.area + "'");
                 }
-                if (values.measurementType !== '') {
-                    sql.push("TYPE_MEASUREMENT_ID IN(" + values.measurementType + ")");
+                if (values.measurementType.length > 0) {
+                    sql.push("TYPE_MEASUREMENT_ID IN(" + values.measurementType.join(',') + ")");
                 }   
                 if (values.minWaterHeight) {
                     sql.push("RUNUP_HT>=" + values.minWaterHeight);
