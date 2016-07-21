@@ -147,7 +147,7 @@ define([
 
                 if (this.isTsEvent(item.layerKey)) {
                     this.tsEventId = attr["ID"];
-                    var numRunups = attr['Number of Observations'];
+                    var numRunups = parseInt(attr['Number of Observations']);
                     if (numRunups > 1) {
                         this.showTsObservationsButton.set('label', "Show This Tsunami Event and " + numRunups + " Observations");
                     } 
