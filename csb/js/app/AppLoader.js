@@ -116,7 +116,7 @@ define([
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
 
-                this.setupBanner();
+                //this.setupBanner();
 
                 this.setupLayersPanel();
 
