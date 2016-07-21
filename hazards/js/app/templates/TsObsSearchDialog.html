@@ -23,7 +23,7 @@
         <tr>
             <td>
                 <label for="sourceRegionSelect"><b>Source</b> Region Name:</label>
-                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="sourceRegionSelect" data-dojo-props="maxHeight:200" name="sourceRegion" style="width: 250px;">
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="sourceRegionSelect" data-dojo-props="maxHeight:200, required:false" name="sourceRegion" style="width: 250px;">
                 </select>                               
             </td>
         </tr>
@@ -36,14 +36,14 @@
         <tr>
             <td>
                 <label for="runupRegionSelect"><b>Observation</b> Region Name:</label>
-                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="runupRegionSelect" data-dojo-props="maxHeight:200" name="runupRegion" style="width: 350px;">
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="runupRegionSelect" data-dojo-props="maxHeight:200, required:false" name="runupRegion" style="width: 350px;">
                 </select>                               
             </td>
         </tr>   
         <tr>
         <td>
             <label for="countrySelect"><b>Observation</b> Country:</label>
-            <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="countrySelect" data-dojo-props="maxHeight:200" name="country" style="width: 350px;">
+            <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="countrySelect" data-dojo-props="maxHeight:200, required:false" name="country" style="width: 350px;">
             </select>
         </td>
         </tr> 
@@ -95,7 +95,7 @@
             <td>
                 Number of Deaths at Observation Location:<br>
                 <label for="minDeathsSelect">Min:</label>
-                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="minDeathsSelect" data-dojo-props="maxHeight:200" name="minDeaths" style="width: 250px;">
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="minDeathsSelect" data-dojo-props="maxHeight:200, required:false" name="minDeaths" style="width: 250px;">
                     <option value=""></option>
                     <option value="1">Few (~1 to 50 deaths)</option>
                     <option value="2">Some (~51 to 100 deaths)</option>
@@ -103,7 +103,7 @@
                     <option value="4">Very Many (~1001 or more deaths)</option>
                 </select>
                 <label for="maxDeathsSelect">Max:</label>
-                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="maxDeathsSelect" data-dojo-props="maxHeight:200" name="maxDeaths" style="width: 250px;">
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="maxDeathsSelect" data-dojo-props="maxHeight:200, required:false" name="maxDeaths" style="width: 250px;">
                     <option value=""></option>
                     <option value="1">Few (~1 to 50 deaths)</option>
                     <option value="2">Some (~51 to 100 deaths)</option>
@@ -116,7 +116,7 @@
             <td>
                 Damage in Millions of Dollars at Observation Location:<br>
                 <label for="minDamageSelect">Min:</label>
-                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="minDamageSelect" data-dojo-props="maxHeight:200" name="minDamage" style="width: 250px;">
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="minDamageSelect" data-dojo-props="maxHeight:200, required:false" name="minDamage" style="width: 250px;">
                     <option value=""></option>
                     <option value="1">Limited (less than about $1 million) </option>
                     <option value="2">Moderate (~$1 to $5 million)</option>
@@ -124,7 +124,7 @@
                     <option value="4">Extreme (~$25 million or more)</option>
                 </select>
                 <label for="maxDamageSelect">Max:</label>
-                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="maxDamageSelect" data-dojo-props="maxHeight:200" name="maxDamage" style="width: 250px;">
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="maxDamageSelect" data-dojo-props="maxHeight:200, required:false" name="maxDamage" style="width: 250px;">
                     <option value=""></option>
                     <option value="1">Limited (less than about $1 million) </option>
                     <option value="2">Moderate (~$1 to $5 million)</option>
