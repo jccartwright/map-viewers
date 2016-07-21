@@ -330,7 +330,6 @@ define([
                     query.where = runupCriteria.join(' and ');
 
                     queryTask.execute(query).then(lang.hitch(this, function(fset) {
-                        console.log(fset);
                         var tseventIds = [];
                         array.forEach(fset.features, function(feature) {
                             tseventIds.push(feature.attributes['TSEVENT_ID']);
