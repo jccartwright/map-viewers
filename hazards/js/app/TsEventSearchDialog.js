@@ -237,7 +237,7 @@ define([
                     !values.minEqMagnitude && !values.maxEqMagnitude &&
                     values.minDamage === '' && values.maxDamage === '' && values.minEventValidity === '1' && values.maxEventValidity === '' &&
                     values.runupRegion === '' && values.runupCountry === '' && values.runupArea === '' && !values.minRunupDistance && !values.maxRunupDistance &&
-                    values.minRunupHeight === '' && values.maxRunupHeight === '' && values.minRunupDeaths === '' && values.maxRunupDeaths === '' &&
+                    !values.minRunupHeight && !values.maxRunupHeight && values.minRunupDeaths === '' && values.maxRunupDeaths === '' &&
                     values.minRunupDamage === '' && values.maxRunupDamage === '');
             }
     });
