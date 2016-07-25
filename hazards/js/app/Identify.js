@@ -896,19 +896,19 @@ define([
             sortResults: function(results) {
                 var features;
                 if (results['Hazards']) {    
-                    if ((features = results['Hazards']['Tsunami Events _green squares_'])) {
+                    if ((features = results['Hazards']['Tsunami Events [green squares]'])) {
                         features.sort(this.tsEventSort);
                     }   
-                    if ((features = results['Hazards']['Tsunami Events by Cause_Fatalities'])) {
+                    if ((features = results['Hazards']['Tsunami Events by Cause/Fatalities'])) {
                         features.sort(this.tsEventSort);
                     }
-                    if ((features = results['Hazards']['Tide Gauges_Deep Ocean Gauges'])) {
+                    if ((features = results['Hazards']['Tide Gauge/Deep Ocean Gauge Tsunami Observations'])) {
                         features.sort(this.tsEventSort);
                     }
-                    if ((features = results['Hazards']['Eyewitness_Post-Tsunami Surveys'])) {
+                    if ((features = results['Hazards']['Eyewitness Tsunami Observations/Post-Tsunami Surveys'])) {
                         features.sort(this.tsEventSort);
                     }
-                    if ((features = results['Hazards']['Tsunami Observations _cross symbols_'])) {
+                    if ((features = results['Hazards']['Tsunami Observations [by measurement type]'])) {
                         features.sort(this.tsEventSort);
                     }
                     if ((features = results['Hazards']['Significant Earthquakes'])) {
@@ -917,10 +917,10 @@ define([
                     if ((features = results['Hazards']['Significant Volcanic Eruptions'])) {
                         features.sort(this.volEventSort);
                     }
-                    if ((features = results['Hazards']['Volcano Locations _from Smithsonian_'])) {
+                    if ((features = results['Hazards']['Volcano Locations [from Smithsonian]'])) {
                         features.sort(this.volLocSort);
                     }
-                    if ((features = results['Hazards']['Current DART® Deployment'])) {
+                    if ((features = results['Hazards']['Current DART Deployments'])) {
                         features.sort(this.dartSort);
                     }
                     if ((features = results['Hazards']['Retrospective BPR Deployments'])) {
