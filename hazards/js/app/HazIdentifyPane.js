@@ -108,7 +108,7 @@ define([
                         return this.getItemLabelSpan(attr['Location Name'] + ': ' + attr['Date String'], uid);
                     }
                     else {
-                        return this.getItemLabelSpan(attr['Location Name'] + ': ' + attr['Date String'] + ' ' + attr['Water Height'] + 'm', uid);
+                        return this.getItemLabelSpan(attr['Location Name'] + ': ' + attr['Date String'] + ', ' + attr['Water Height'] + 'm', uid);
                     }
                 }
                 else if (item.layerName === 'Significant Volcanic Eruptions') {
