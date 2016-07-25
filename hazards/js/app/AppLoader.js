@@ -337,7 +337,11 @@ define([
                         array.forEach(fset.features, function(feature) {
                             tseventIds.push(feature.attributes['TSEVENT_ID']);
                         });
-                        sql.push('ID IN (' + tseventIds.join(',') + ')');
+                        if (tseventIds.length > 0) {
+                            sql.push('ID IN (' + tseventIds.join(',') + ')');
+                        } else {
+                            sql.push('ID IN (-1)'); //Query for a bogus id if the set is empty
+                        }
                         this.setTsEventFilter(sql);
                     }));
                 }
