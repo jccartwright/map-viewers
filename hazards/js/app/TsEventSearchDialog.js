@@ -101,6 +101,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateSourceCountrySelect(data.items);
                     }
                 }), function(err){
@@ -112,6 +113,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateRunupCountrySelect(data.items);
                     }
                 }), function(err){
@@ -123,6 +125,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateSourceRegionSelect(data.items);
                         this.populateRunupRegionSelect(data.items);
                     }
@@ -135,6 +138,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateRunupAreaSelect(data.items);
                     }
                 }), function(err){

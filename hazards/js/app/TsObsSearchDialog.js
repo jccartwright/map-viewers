@@ -84,6 +84,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateCountrySelect(data.items);
                     }
                 }), function(err){
@@ -95,6 +96,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateSourceRegionSelect(data.items);
                         this.populateRunupRegionSelect(data.items);
                     }
@@ -107,6 +109,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateAreaSelect(data.items);
                     }
                 }), function(err){
