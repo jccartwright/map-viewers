@@ -228,6 +228,9 @@ define([
                     if (config.app.tsEvent) {
                         this.showTsEventOnStartup(config.app.tsEvent);
                     }
+                    else {
+                        this.resetTsEvents(); //Set default EVENT_VALIDITY filter on tsevents (exclude seiches)
+                    }
 
                     //The 'layers' URL param can contain a comma-separated list of numbers
                     if (config.app.layers) {
@@ -355,6 +358,7 @@ define([
             },
 
             resetTsEvents: function() {
+                //By default, exclude seiches
                 this.hazLayerDefinitions[this.tsEventLayerID1] = 'EVENT_VALIDITY_CODE>0';
                 this.hazLayerDefinitions[this.tsEventLayerID2] = 'EVENT_VALIDITY_CODE>0';
                 
