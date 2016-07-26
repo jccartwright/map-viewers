@@ -8,7 +8,7 @@ define([
     'dijit/form/NumberSpinner', 
     'dijit/form/Select', 
     'dijit/form/CheckBox', 
-    'dijit/form/MultiSelect', 
+    'dojox/form/CheckedMultiSelect',
     'dijit/form/FilteringSelect', 
     'dijit/form/TextBox',
     'dojo/_base/lang',
@@ -30,7 +30,7 @@ define([
         NumberSpinner, 
         Select, 
         CheckBox, 
-        MultiSelect, 
+        CheckedMultiSelect, 
         FilteringSelect, 
         TextBox,
         lang,
@@ -59,18 +59,57 @@ define([
                     this.reset();
                 })); 
 
+                on(this.runupRegionSelect, 'change', lang.hitch(this, function(){
+                    var regionCode = parseInt(this.runupRegionSelect.get('value'));
+                    this.countrySelect.set('query', {
+                        r: {
+                            test: function(itemRegions) {
+                                if (isNaN(regionCode) || array.indexOf(itemRegions, regionCode) !== -1) {
+                                    return true;
+                                }
+                            }
+                        }
+                    });
+                }));
+
                 on(this.countrySelect, 'change', lang.hitch(this, function(){
                     this.areaSelect.set('value', '');
-                    this.areaSelect.query.country = this.countrySelect.get('value') || /.*/;
-                }));     
+                    this.areaSelect.query.c = this.countrySelect.get('displayedValue') || /.*/;
+                }));
 
                 this.measurementTypeSelect.set('value', '');
+
+                xhr.get('tsrunupCountries.json', {
+                    preventCache: true,
+                    handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data.items) {
+                        data.items.unshift({id: '', name: ''});
+                        this.populateCountrySelect(data.items);
+                    }
+                }), function(err){
+                    logger.error('Error retrieving tsrunupCountries JSON: ' + err);
+                });
+
+                xhr.get('tsunamiRegions.json', {
+                    preventCache: true,
+                    handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data.items) {
+                        data.items.unshift({id: '', name: ''});
+                        this.populateSourceRegionSelect(data.items);
+                        this.populateRunupRegionSelect(data.items);
+                    }
+                }), function(err){
+                    logger.error('Error retrieving tsunamiRegions JSON: ' + err);
+                });
 
                 xhr.get('tsrunupAreas.json', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateAreaSelect(data.items);
                     }
                 }), function(err){
@@ -86,9 +125,9 @@ define([
                 values.startYear = this.startYearSpinner.get('value');
                 values.endYear = this.endYearSpinner.get('value');
                 values.sourceRegion = this.sourceRegionSelect.get('value'); 
-                values.observationLocationName = this.observationLocationText.get('value');         
-                values.observationRegion = this.observationRegionSelect.get('value');
-                values.country = this.countrySelect.get('value');
+                values.locationName = this.locationText.get('value');         
+                values.runupRegion = this.runupRegionSelect.get('value');
+                values.country = this.countrySelect.get('displayedValue');
                 values.area = this.areaSelect.get('displayedValue');
                 values.measurementType = this.measurementTypeSelect.get('value');
                 values.minWaterHeight = this.minWaterHeightText.get('value');
@@ -111,12 +150,13 @@ define([
                 this.startYearSpinner.set('value', '');
                 this.endYearSpinner.set('value', '');
                 this.sourceRegionSelect.set('value', '');
-                this.observationLocationText.set('value', '');
-                this.observationRegionSelect.set('value', '');
+                this.locationText.set('value', '');
+                this.runupRegionSelect.set('value', '');
                 this.countrySelect.set('value', '');
                 this.areaSelect.set('value', '');
                 this.areaSelect.query = /.*/;
-                this.measurementTypeSelect.set('value', '');
+                this.measurementTypeSelect.reset();
+                this.measurementTypeSelect._updateSelection();
                 this.minWaterHeightText.set('value', '');
                 this.maxWaterHeightText.set('value', '');
                 this.minDistText.set('value', '');
@@ -125,6 +165,18 @@ define([
                 this.minDeathsSelect.set('value', '');
                 this.minDamageSelect.set('value', '');
                 this.minDamageSelect.set('value', '');
+            },
+
+            populateSourceRegionSelect: function(items) {
+                this.sourceRegionSelect.store = new Memory({data: items});
+            },
+
+            populateRunupRegionSelect: function(items) {
+                this.runupRegionSelect.store = new Memory({data: items});
+            },
+
+            populateCountrySelect: function(items) {
+                this.countrySelect.store = new Memory({data: items});                
             },
 
             populateAreaSelect: function(items) {
@@ -136,8 +188,8 @@ define([
             },
 
             isDefault: function(values) {
-                return (!values.startYear && !values.endYear && values.sourceRegion === '' && values.observationLocationName === '' &&
-                    values.observationRegion === '' && values.country === '' && values.area === '' &&
+                return (!values.startYear && !values.endYear && values.sourceRegion === '' && values.locationName === '' &&
+                    values.runupRegion === '' && values.country === '' && values.area === '' &&
                     values.measurementType.length === 0 && !values.minWaterHeight && !values.maxWaterHeight && !values.minDist && !values.maxDist &&
                     values.minDeaths === '' && values.maxDeaths === '' && values.minDamage === '' && values.maxDamage === '');
             }  

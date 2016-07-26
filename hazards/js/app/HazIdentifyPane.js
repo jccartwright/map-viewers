@@ -7,6 +7,7 @@ define([
     'ngdc/identify/IdentifyPane', 
     'dojo/topic', 
     'dojo/on',
+    'dojo/dom-style',
     'esri/dijit/Popup', 
     'dojo/_base/lang', 
     'dijit/form/Button'
@@ -19,7 +20,8 @@ define([
         domClass, 
         IdentifyPane, 
         topic,
-        on, 
+        on,
+        domStyle,
         Popup, 
         lang, 
         Button
@@ -38,7 +40,7 @@ define([
                     label: "Show Tsunami Observations",
                     showLabel: true
                 });
-                this.showTsObservationsButton.domNode.style.display = "none";
+                domStyle.set(this.showTsObservationsButton.domNode, 'display', 'none');
                 domClass.add(this.showTsObservationsButton.domNode, 'genid-button');
                 this.showTsObservationsButton.startup(); //necessary?
                 this.showTsObservationsButton.placeAt(this.zoomToButton.domNode, 'after');
@@ -50,7 +52,7 @@ define([
                     label: "Show Tsunami Event",
                     showLabel: true
                 });
-                this.showTsEventButton.domNode.style.display = "none";
+                domStyle.set(this.showTsEventButton.domNode, 'display', 'none');
                 domClass.add(this.showTsEventButton.domNode, 'genid-button');
                 this.showTsEventButton.startup();
                 this.showTsEventButton.placeAt(this.showTsObservationsButton.domNode, 'after');
@@ -106,7 +108,7 @@ define([
                         return this.getItemLabelSpan(attr['Location Name'] + ': ' + attr['Date String'], uid);
                     }
                     else {
-                        return this.getItemLabelSpan(attr['Location Name'] + ': ' + attr['Date String'] + ' ' + attr['Water Height'] + 'm', uid);
+                        return this.getItemLabelSpan(attr['Location Name'] + ': ' + attr['Date String'] + ', ' + attr['Water Height'] + 'm', uid);
                     }
                 }
                 else if (item.layerName === 'Significant Volcanic Eruptions') {
@@ -133,8 +135,8 @@ define([
             showResults: function() {
                 this.inherited(arguments);
                 
-                this.showTsObservationsButton.domNode.style.display = "none";  //Hide the "Show Tsunami Observations" button
-                this.showTsEventButton.domNode.style.display = "none";  //Hide the "Show Tsunami Event" button
+                domStyle.set(this.showTsObservationsButton.domNode, 'display', 'none'); //Hide the "Show Tsunami Observations" button
+                domStyle.set(this.showTsEventButton.domNode, 'display', 'none'); //Hide the "Show Tsunami Event" button
             },
 
             showInfo: function() {
@@ -145,7 +147,7 @@ define([
 
                 if (this.isTsEvent(item.layerKey)) {
                     this.tsEventId = attr["ID"];
-                    var numRunups = attr['Number of Observations'];
+                    var numRunups = parseInt(attr['Number of Observations']);
                     if (numRunups > 1) {
                         this.showTsObservationsButton.set('label', "Show This Tsunami Event and " + numRunups + " Observations");
                     } 
@@ -155,19 +157,19 @@ define([
                     else if (numRunups === 0) {
                         //No tsunami observations - hide the button
                         this.showTsObservationsButton.set('label', '');
-                        this.showTsObservationsButton.domNode.style.display = 'none';
+                        domStyle.set(this.showTsObservationsButton.domNode, 'display', 'none'); //Hide the "Show Tsunami Observations" button
                     }
 
                     if (numRunups > 0) {
-                        this.showTsObservationsButton.domNode.style.display = ""; //Show the "Show Tsunami Observations" button
-                        this.showTsEventButton.domNode.style.display = "none";  //Hide the "Show Tsunami Event" button
+                        domStyle.set(this.showTsObservationsButton.domNode, 'display', ''); //Show the "Show Tsunami Observations" button
+                        domStyle.set(this.showTsEventButton.domNode, 'display', 'none'); //Hide the "Show Tsunami Event" button
                     }
                 }
                 else if (this.isTsRunup(item.layerKey)) {
                     this.tsEventId = attr["Tsunami Event ID"];
                     this.showTsEventButton.set('label', "Show Associated Tsunami Event");
-                    this.showTsEventButton.domNode.style.display = ""; //Show the "Show Tsunami Event" button
-                    this.showTsObservationsButton.domNode.style.display = "none";  //Hide the "Show Tsunami Observations" button
+                    domStyle.set(this.showTsEventButton.domNode, 'display', ''); //Show the "Show Tsunami Event" button
+                    domStyle.set(this.showTsObservationsButton.domNode, 'display', 'none'); //Hide the "Show Tsunami Observations" button
                 }
 
                 this.stackContainer.resize();

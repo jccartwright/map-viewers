@@ -228,6 +228,9 @@ define([
                     if (config.app.tsEvent) {
                         this.showTsEventOnStartup(config.app.tsEvent);
                     }
+                    else {
+                        this.resetTsEvents(); //Set default EVENT_VALIDITY filter on tsevents (exclude seiches)
+                    }
 
                     //The 'layers' URL param can contain a comma-separated list of numbers
                     if (config.app.layers) {
@@ -330,12 +333,15 @@ define([
                     query.where = runupCriteria.join(' and ');
 
                     queryTask.execute(query).then(lang.hitch(this, function(fset) {
-                        console.log(fset);
                         var tseventIds = [];
                         array.forEach(fset.features, function(feature) {
                             tseventIds.push(feature.attributes['TSEVENT_ID']);
                         });
-                        sql.push('ID IN (' + tseventIds.join(',') + ')');
+                        if (tseventIds.length > 0) {
+                            sql.push('ID IN (' + tseventIds.join(',') + ')');
+                        } else {
+                            sql.push('ID IN (-1)'); //Query for a bogus id if the set is empty
+                        }
                         this.setTsEventFilter(sql);
                     }));
                 }
@@ -356,6 +362,7 @@ define([
             },
 
             resetTsEvents: function() {
+                //By default, exclude seiches
                 this.hazLayerDefinitions[this.tsEventLayerID1] = 'EVENT_VALIDITY_CODE>0';
                 this.hazLayerDefinitions[this.tsEventLayerID2] = 'EVENT_VALIDITY_CODE>0';
                 
@@ -423,11 +430,11 @@ define([
                 if (values.sourceRegion !== '') {
                     sql.push("EVENT_REGION_CODE=" + values.sourceRegion);
                 }       
-                if (values.observationRegion !== '') {
-                    sql.push("REGION_CODE=" + values.observationRegion);
+                if (values.runupRegion !== '') {
+                    sql.push("REGION_CODE=" + values.runupRegion);
                 }
-                if (values.observationLocationName !== '') {
-                    sql.push("UPPER(LOCATION_NAME) LIKE '%" + values.observationLocationName.toUpperCase() + "%'");
+                if (values.locationName !== '') {
+                    sql.push("UPPER(LOCATION_NAME) LIKE '%" + values.locationName.toUpperCase() + "%'");
                 }           
                 if (values.country !== '') {
                     sql.push("COUNTRY='" + values.country + "'");
@@ -435,8 +442,8 @@ define([
                 if (values.area !== '') {
                     sql.push("AREA='" + values.area + "'");
                 }
-                if (values.measurementType !== '') {
-                    sql.push("TYPE_MEASUREMENT_ID IN(" + values.measurementType + ")");
+                if (values.measurementType.length > 0) {
+                    sql.push("TYPE_MEASUREMENT_ID IN(" + values.measurementType.join(',') + ")");
                 }   
                 if (values.minWaterHeight) {
                     sql.push("RUNUP_HT>=" + values.minWaterHeight);

@@ -65,9 +65,35 @@ define([
 
                 this.tsEventCauseSelect.set('value', ''); 
 
+                on(this.sourceRegionSelect, 'change', lang.hitch(this, function(){
+                    var regionCode = parseInt(this.sourceRegionSelect.get('value'));
+                    this.sourceCountrySelect.set('query', {
+                        r: {
+                            test: function(itemRegions) {
+                                if (isNaN(regionCode) || array.indexOf(itemRegions, regionCode) !== -1) {
+                                    return true;
+                                }
+                            }
+                        }
+                    });
+                }));
+
+                on(this.runupRegionSelect, 'change', lang.hitch(this, function(){
+                    var regionCode = parseInt(this.runupRegionSelect.get('value'));
+                    this.runupCountrySelect.set('query', {
+                        r: {
+                            test: function(itemRegions) {
+                                if (isNaN(regionCode) || array.indexOf(itemRegions, regionCode) !== -1) {
+                                    return true;
+                                }
+                            }
+                        }
+                    });
+                }));
+
                 on(this.runupCountrySelect, 'change', lang.hitch(this, function(){
                     this.runupAreaSelect.set('value', '');
-                    this.runupAreaSelect.query.country = this.runupCountrySelect.get('value') || /.*/;
+                    this.runupAreaSelect.query.c = this.runupCountrySelect.get('displayedValue') || /.*/;
                 }));
 
                 xhr.get('tseventCountries.json', {
@@ -75,6 +101,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateSourceCountrySelect(data.items);
                     }
                 }), function(err){
@@ -86,6 +113,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateRunupCountrySelect(data.items);
                     }
                 }), function(err){
@@ -97,6 +125,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateSourceRegionSelect(data.items);
                         this.populateRunupRegionSelect(data.items);
                     }
@@ -109,6 +138,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
+                        data.items.unshift({id: '', name: ''});
                         this.populateRunupAreaSelect(data.items);
                     }
                 }), function(err){
@@ -121,7 +151,7 @@ define([
                 values.endYear = this.endYearSpinner.get('value');
                 values.sourceLocationName = this.sourceLocationText.get('value');       
                 values.sourceRegion = this.sourceRegionSelect.get('value');
-                values.sourceCountry = this.sourceCountrySelect.get('value');
+                values.sourceCountry = this.sourceCountrySelect.get('displayedValue');
                 values.sourceCause = this.tsEventCauseSelect.get('value');
                 values.minEqMagnitude = this.minEqMagnitudeSpinner.get('value');
                 values.maxEqMagnitude = this.maxEqMagnitudeSpinner.get('value');
@@ -133,7 +163,7 @@ define([
                 values.maxEventValidity = this.maxEventValiditySelect.get('value');
 
                 values.runupRegion = this.runupRegionSelect.get('value');
-                values.runupCountry = this.runupCountrySelect.get('value');
+                values.runupCountry = this.runupCountrySelect.get('displayedValue');
                 values.runupArea = this.runupAreaSelect.get('displayedValue');
                 values.minRunupHeight = this.minRunupHeightSpinner.get('value');
                 values.maxRunupHeight = this.maxRunupHeightSpinner.get('value');
@@ -211,7 +241,7 @@ define([
                     !values.minEqMagnitude && !values.maxEqMagnitude &&
                     values.minDamage === '' && values.maxDamage === '' && values.minEventValidity === '1' && values.maxEventValidity === '' &&
                     values.runupRegion === '' && values.runupCountry === '' && values.runupArea === '' && !values.minRunupDistance && !values.maxRunupDistance &&
-                    values.minRunupHeight === '' && values.maxRunupHeight === '' && values.minRunupDeaths === '' && values.maxRunupDeaths === '' &&
+                    !values.minRunupHeight && !values.maxRunupHeight && values.minRunupDeaths === '' && values.maxRunupDeaths === '' &&
                     values.minRunupDamage === '' && values.maxRunupDamage === '');
             }
     });
