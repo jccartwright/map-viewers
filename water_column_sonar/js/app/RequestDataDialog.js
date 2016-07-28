@@ -250,8 +250,8 @@ define([
 
                 topic.publish('/ngdc/showLoading');
                 xhr.post(
-                    'http://acceptance.ngdc.noaa.gov/wcs-order/order', {
-                    //'//maps.ngdc.noaa.gov/mapviewer-support/wcd/generateOrder.groovy', {
+                    //'http://acceptance.ngdc.noaa.gov/wcs-order/order', {
+                    '//maps.ngdc.noaa.gov/mapviewer-support/wcd/generateOrder.groovy', {
                         data: jsonString,
                         handleAs: 'json',
                         headers: {'Content-Type':'application/json'},
