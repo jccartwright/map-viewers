@@ -1873,6 +1873,9 @@
        var lyrId = 0;
        var foundIt = 0;
        var inputs = dojo.query(".list_item"), input;
+       var surveyId;
+       var year;
+
        for (var i=0, il=inputs.length; i<il; i++)  {
          if (inputs[i].checked)  {
            foundIt = 1;
@@ -1891,6 +1894,13 @@
              queryTaskURL += inputs[i].value;
              queryTaskURL += "/MapServer/";
              queryTaskURL += lyrId;
+           }
+           if (inputs[i].name == 'Ship Track (ECS)') {
+              console.log('ECS Ship Track Found');
+              lyrId = -9999;
+              surveyId = inputs[i].id; //HACK
+              year = inputs[i].value; //HACK
+              var queryTaskURL = "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0";
            }
          }
          if (lyrId === 0)  {
@@ -1919,25 +1929,77 @@
          query = new esri.tasks.Query();
          query.returnGeometry = true;
          query.outFields = ["*"];
-         query.where = "1=1";
+         
+          if (inputs[0].name == 'Ship Track (ECS)') {
+            query.where = "SURVEY_ID='" + surveyId + "'";
+          }
+          else {
+            query.where = "1=1";
+          }
+
+         query.maxAllowableOffset = 1000;
          queryTask.execute(query, function(fset)  {
-           map.setExtent(esri.graphicsExtent(fset.features),true);
+          if (fset.features.length > 0) {
+            map.setExtent(esri.graphicsExtent(fset.features),true);
+          }
          });
          // draw the datasets
          var inputs = dojo.query(".list_item"), input;
          for (var i=0, il=inputs.length; i<il; i++)  {
            visible = [];
            if (inputs[i].checked)  {
-             visible.push(inputs[i].id); 
-             var mapServiceURL = "http://service.ncddc.noaa.gov/arcgis/rest/services/OceanExploration/";
-             //var mapServiceURL = "http://www.ln.ncddc.noaa.gov/arcgis/rest/services/OceanExploration/";
-             mapServiceURL += inputs[i].value;
-             mapServiceURL += "/MapServer";
+             visible.push(inputs[i].id);
 
-             var imageParameters = new esri.layers.ImageParameters();
-             imageParameters.layerIds = [visible];
-             imageParameters.layerOption = esri.layers.ImageParameters.LAYER_OPTION_SHOW;
-             var GISLayer = new esri.layers.ArcGISDynamicMapServiceLayer(mapServiceURL,{"imageParameters":imageParameters});
+             var mapServiceURL;
+             var imageParameters;
+             var layerDefs;
+             var layerDrawingOptions;
+
+             if (inputs[i].name == 'Ship Track (ECS)') {
+              mapServiceURL = "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/";
+              imageParameters = new esri.layers.ImageParameters();
+              imageParameters.format = 'PNG32';
+              layerDefs = [];
+              layerDefs[0] = "SURVEY_ID='" + surveyId + "'";
+              
+              var symbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new esri.Color([0,0,0]), 2);
+              if (year == "2001")  symbol.setColor(new dojo.Color([0,0,255,1.0]));
+              if (year == "2002")  symbol.setColor(new dojo.Color([0,255,0,1.0]));
+              if (year == "2003")  symbol.setColor(new dojo.Color([255,0,0,1.0]));
+              if (year == "2004")  symbol.setColor(new dojo.Color([0,255,255,1.0]));
+              if (year == "2005")  symbol.setColor(new dojo.Color([255,0,255,1.0]));
+              if (year == "2006")  symbol.setColor(new dojo.Color([255,255,0,1.0]));
+              if (year == "2007")  symbol.setColor(new dojo.Color([255,128,0,1.0]));
+              if (year == "2008")  symbol.setColor(new dojo.Color([128,0,255,1.0]));
+              if (year == "2009")  symbol.setColor(new dojo.Color([236,0,140,1.0]));
+              if (year == "2010")  symbol.setColor(new dojo.Color([249,173,129,1.0]));
+              if (year == "2011")  symbol.setColor(new dojo.Color([255,255,255,1.0]));
+              if (year == "2012")  symbol.setColor(new dojo.Color([0,0,0,1.0,1.0]));
+              if (year == "2013")  symbol.setColor(new dojo.Color([76,187,23,1.0]));
+              if (year == "2014")  symbol.setColor(new dojo.Color([255,215,0],1.0));
+              if (year == "2015")  symbol.setColor(new dojo.Color([158,163,157,1.0]));
+              if (year == "2016")  symbol.setColor(new dojo.Color([137,112,68,1.0]));
+
+              var renderer = new esri.renderer.SimpleRenderer(symbol);
+
+              layerDrawingOptions = new esri.layers.LayerDrawingOptions();
+              layerDrawingOptions.renderer = renderer;
+            }
+             else {
+              mapServiceURL = "http://service.ncddc.noaa.gov/arcgis/rest/services/OceanExploration/";
+              mapServiceURL += inputs[i].value;
+              mapServiceURL += "/MapServer";
+              imageParameters = new esri.layers.ImageParameters();
+              imageParameters.layerIds = [visible];
+              imageParameters.layerOption = esri.layers.ImageParameters.LAYER_OPTION_SHOW;
+            }
+            var GISLayer = new esri.layers.ArcGISDynamicMapServiceLayer(mapServiceURL,{"imageParameters":imageParameters});
+
+            if (layerDefs) {
+              GISLayer.setLayerDefinitions(layerDefs);
+              GISLayer.setLayerDrawingOptions([layerDrawingOptions]);
+            }
+            
              GISLayer.id = inputs[i].name;
              map.addLayer(GISLayer);
            }
