@@ -1896,11 +1896,13 @@
              queryTaskURL += lyrId;
            }
            if (inputs[i].name == 'Ship Track (ECS)') {
-              console.log('ECS Ship Track Found');
-              lyrId = -9999;
-              surveyId = inputs[i].id; //HACK
-              year = inputs[i].value; //HACK
+              //Retrieve the survey ID and year for this cruise specified in the CSV file. 
+              //The format of column AA in the CSV file should be: "Ship Track (ECS);<year>;<survey_id>;<ship_track_thumbnail.jpg>"
+              //These values are stored in the id and value fields in the HTML elements created starting at line 354.
+              surveyId = inputs[i].id; 
+              year = inputs[i].value;
               var queryTaskURL = "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0";
+              lyrId = -9999; //dummy value, not used. Bypasses code below.
            }
          }
          if (lyrId === 0)  {
@@ -1931,13 +1933,14 @@
          query.outFields = ["*"];
          
           if (inputs[0].name == 'Ship Track (ECS)') {
-            query.where = "SURVEY_ID='" + surveyId + "'";
+            query.where = "SURVEY_ID='" + surveyId + "'"; //If an ECS track, filter by the survey ID.
           }
           else {
             query.where = "1=1";
           }
 
-         query.maxAllowableOffset = 1000;
+         query.maxAllowableOffset = 1000; //generalize the returned geometry to 1km for performance
+
          queryTask.execute(query, function(fset)  {
           if (fset.features.length > 0) {
             map.setExtent(esri.graphicsExtent(fset.features),true);
@@ -1956,12 +1959,15 @@
              var layerDrawingOptions;
 
              if (inputs[i].name == 'Ship Track (ECS)') {
+              //If an ECS cruise, point to the multibeam_dynamic service with custom layerDefinitions and layerDrawingOptions.
+
               mapServiceURL = "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/";
               imageParameters = new esri.layers.ImageParameters();
               imageParameters.format = 'PNG32';
               layerDefs = [];
               layerDefs[0] = "SURVEY_ID='" + surveyId + "'";
               
+              //Set the line's color based on the year. Same as in createMarker() above. 
               var symbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new esri.Color([0,0,0]), 2);
               if (year == "2001")  symbol.setColor(new dojo.Color([0,0,255,1.0]));
               if (year == "2002")  symbol.setColor(new dojo.Color([0,255,0,1.0]));
@@ -1996,6 +2002,7 @@
             var GISLayer = new esri.layers.ArcGISDynamicMapServiceLayer(mapServiceURL,{"imageParameters":imageParameters});
 
             if (layerDefs) {
+              //If an ECS cruise, set the layer definitions and custom layer drawing options on the dynamic map service.
               GISLayer.setLayerDefinitions(layerDefs);
               GISLayer.setLayerDrawingOptions([layerDrawingOptions]);
             }
