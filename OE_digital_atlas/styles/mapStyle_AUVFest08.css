@@ -1,0 +1,180 @@
+a, span, div, body {
+	text-decoration: none;
+}
+
+body,html {
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+	font-family: verdana;
+
+}
+
+a:link, a:visited {
+	background: transparent;
+	color: navy;
+	font-weight: normal;
+}
+
+.bubble {
+	font: normal 10px verdana;
+	width: 270px;
+	border: 1px solid #8D8EA3;
+	padding: 3px;
+	text-align:left;
+	color: #B915C3;
+}
+
+.buttons {
+	padding: 2px;
+	margin: 1px;
+	font: normal 10px verdana;
+	width: 110px;
+}
+
+.button  {
+	background: #cc9933;
+	color: black;
+	border: 1px solid black;
+	text-align:center;
+	vertical-align:middle;
+	font: bold 9px verdana;
+	padding: 2px;
+	cursor: pointer;
+	margin: 6px;
+}
+
+.button1  {
+	background: #A6A8CC;
+	color: navy;
+	border: 1px solid navy;
+	text-align:left;
+	vertical-align:middle;
+	font: normal 9px verdana;
+	padding: 3px;
+	cursor: pointer;
+	margin: 3px;
+	width: 170px;
+}
+
+.button2  {
+	background: #A6A8CC;
+	color: navy;
+	border: 1px solid navy;
+	text-align:left;
+	vertical-align:left;
+	font: bold 9px verdana;
+	padding: 1px;
+	cursor: pointer;
+	margin: 1px;
+	width: 155px;
+}
+
+.button:hover, .button1:hover, .button2:hover, .helpButton:hover  {
+	background: #ffffff;
+	color: red;
+	border: 1px solid red;
+}
+
+.mapFrame, .leftCol {
+	margin: 2px;
+	border: 2px solid black;
+}
+
+.statusDiv {
+	padding: 3px;
+	font: normal 12px courier new;
+	text-align:left;
+	color: navy;
+}
+
+.statusBar {
+	margin: 2px;
+}
+
+.titleOE {
+	font: bold 15px verdana;
+	text-align: center;
+	background-color: #cccc99;
+	width: 600px;
+	height: 15px;
+	color: black;
+}
+
+.infoWindowTab  {
+	font: normal 10px verdana;
+	width: 375px;
+	border: 1px solid gray;
+	padding: 3px;
+	text-align: left;
+	color: black;
+}
+
+.tooltip {
+	background-color: #ffffff; 
+	font-weight: bold; 
+	border: 2px #006699 solid;
+}
+
+.largeText {
+	font: bold 13px verdana; 
+	color: #0d0040;
+}
+
+.smallText {
+	font: bold 11px verdana;
+	color: Black;
+} 
+
+.smallText1 {
+	font: bold 11px verdana; 
+	color: Red;
+}
+
+.smallSelectText {
+	font: normal 10px verdana;
+	color: Black; 
+	width: 170px;
+	margin-bottom: 1em;
+}
+
+.plotButton  {
+	background: #0d0040;
+	color: white;
+	border: 1px solid black;
+	text-align: center;
+	vertical-align: middle;
+	font: bold 9px verdana;
+	padding: 1px;
+	cursor: pointer;
+	margin: 1px;
+	width: 80px;
+}
+
+.headerFrame {
+	margin-top: -.15em;
+	padding-top: .2em;
+	padding-bottom: .2em;
+	font: bold 12px verdana;
+	text-align: center;
+	color: #ffffff;
+	background: #0d0040;
+}
+
+.navigationText {
+	padding-top: .1em;
+	padding-bottom: .2em;
+	padding-left: .4em;
+	padding-right: .4em;
+	font: bold 10px verdana;
+	color: #0d0040;
+}
+
+.legendBullets {
+	margin-top: -0.25em;
+	padding-top: 0.25em;
+	padding-left: 1.75em;
+	padding-bottom: 0.25em;
+	font: normal 10px verdana;
+	text-align: left;
+}

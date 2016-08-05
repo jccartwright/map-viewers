@@ -1,0 +1,114 @@
+      a, span, div, body {
+        text-decoration: none;
+      }
+      html, body {
+        height: 100%; width: 100%;
+        margin: 0; padding: 0;
+      }
+      body{
+        background-color:white; overflow:hidden;
+        font-family: Arial, "Kimberley", sans-serif;
+      }
+      #header {
+        background-color:#04092f;
+        color:#421b14;
+        font-size:12pt; text-align:left;font-weight:normal;
+        height:55px;
+      }
+      #subheader {
+        font-size:small;
+        color: #cfcfcf;
+        text-align:right;
+        padding-right:20px;
+      }
+      #footer {
+        margin:2px;
+        padding: 2px;
+        background-color:white; color:#2a3537;
+        font-size:10pt; text-align:center;
+        height: 40px;
+        width: 100%;
+      }
+      #rightPane{
+        margin:5px;
+        padding:2px;
+        background-color:white;
+        color:#3f3f3f;
+        border: solid 2px #224a54;
+        width:15%;
+        font-family: Arial, "Kimberley", sans-serif;
+        font-size: 12px;
+      }
+      #leftPane{
+        margin:5px;
+        padding:2px;
+        background-color:white;
+        color:#3f3f3f;
+        border: solid 2px #224a54;
+        width:15%;
+        font-family: Arial, "Kimberley", sans-serif;
+        font-size: 12px;
+      }
+      #map {
+        margin:5px;
+        border:solid 4px #224a54;
+        -moz-border-radius: 4px;
+      }
+      #itemsDiv { 
+        overflow:auto; 
+        background-color: #FFFFFF; 
+      } 
+      #itemsList { 
+        list-style: none;
+        font: normal 12px Arial, Verdana, Helvetica, sans-serif; 
+        margin: 0; 
+        padding: 3px; 
+        overflow:auto; 
+      } 
+      #itemsList li { 
+        padding: 2px; 
+        padding-bottom: 4px; 
+        cursor: pointer; 
+        border-bottom: 1px solid #FFFFFF;
+      } 
+      #itemsList li:hover { 
+        color: #0000FF; 
+      } 
+      #itemsList li.highlightedItem { 
+        color: #0000FF;
+        -moz-border-radius: 5px; 
+        -webkit-border-radius: 5px;
+        -moz-box-shadow: 0 0 0.5em black; 
+        -webkit-box-shadow: 0 0 0.5em black;
+      }
+      #itemsList li.active {
+        color: #FFFF00;
+        background-color: #FF0000;
+	font: bold 12px Arial, Verdana, Helvetica, sans-serif;
+      }
+      .shadow{
+        -o-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        box-shadow: 4px 4px 8px #323834;
+        -webkit-box-shadow: 4px 4px 8px #323834;
+        -moz-box-shadow: 4px 4px 8px #323834;
+        -o-box-shadow: 4px 4px 8px #323834;
+      }
+      .OEinfoWindow  {
+        font: normal 11px Arial, Verdana, Helvetica, sans-serif;
+        color: black;
+      }
+      .OEinfoWindowButton  {
+	 font: normal 10px Arial, Verdana, Helvetica, sans-serif;
+	 color: black;
+      }
+      .smallText {
+	  font: bold 11px Arial, Verdana, Helvetica, sans-serif;
+	  color: Black;
+      }
+      .smallText3 {
+	  font: normal 11px Arial, Verdana, Helvetica, sans-serif;
+	  color: Black;
+      } 
+ 
