@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--The viewport meta tag is used to improve the presentation and behavior of the samples 
+      on iOS devices-->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Ocean Exploration</title>
+
+    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/dojo/dijit/themes/soria/soria.css">
+    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/dojo/dojox/layout/resources/ExpandoPane.css"/>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/dojo/dojox/layout/resources/ResizeHandle.css"/>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css">
+    <link rel="stylesheet" href="styles/mapStyle.css">
+
+    <style>
+      .soria .dijitReset  {
+		color:black;
+		font-family:Arial,Verdana,Helvetica,sans-serif;
+		font-size:12px;
+		font-weight:normal;
+      }
+      .soria .dijitSelect * {
+		font-size: 12px;
+      }
+      .soria .dijitSelectSelectedOption * {
+		font-weight: bold;
+      }
+      .soria .dijitTitlePaneTitle {
+        font-weight:600;
+        border:solid 1px #000000;
+      }
+      .details {
+        font-size:10pt;
+      }
+      #preloader {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%; 
+	height: 100%; 
+	margin:0; 
+	padding:0;
+	background:#aaa;				
+	z-index:999;
+      }
+      #preloaderContent {
+	position: absolute;
+	border: 2px solid #fff;
+	color: #fff;
+	padding: 25px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+      }
+    </style>
+
+<!--
+    <script>var dojoConfig = { parseOnLoad: true };</script>
+ -->
+    <script src="http://js.arcgis.com/3.10/"></script>
+    <script src="javascripts/chainedselects.js"></script>
+    <script src="javascripts/oer-themes.js"></script>
+    <script src="javascripts/oer-platforms.js"></script>
+    <script src="javascripts/mapFunctions.js"></script>
+    <script>
+      dojo.require("dojo.parser");
+      dojo.require("dijit.form.Button");
+      dojo.require("dijit.form.CheckBox");
+      dojo.require("dijit.form.Form");
+      dojo.require("dijit.form.Select");
+      dojo.require("dijit.form.TextBox");
+      dojo.require("dijit.layout.BorderContainer");
+      dojo.require("dijit.layout.AccordionContainer");
+      dojo.require("dijit.layout.ContentPane");
+      dojo.require("dijit.layout.TabContainer");
+      dojo.require("dijit.Menu");
+      dojo.require("dijit.TitlePane");
+      dojo.require("dojo.fx.easing");
+      dojo.require("dojo.number");
+      dojo.require("dojox.data.CsvStore");
+      dojo.require("dojox.layout.ExpandoPane");
+      dojo.require("esri.dijit.InfoWindow");
+      dojo.require("esri.dijit.Scalebar");
+      dojo.require("esri.graphic");
+      dojo.require("esri.map");
+      dojo.require("esri.arcgis.utils");
+      dojo.require("esri.tasks.query");
+
+      var loading;      
+      var map, mapCenterPoint, startExtent;
+      var basemap;
+      var csvStore, dataLayer, highlightLayer, hoverTextLayer, listHighlightLayer;
+      var firstTime = true;
+      var surveySearch;
+      var textSearch;
+      var missionGroupSearch;
+      var ua = navigator.userAgent;
+      var usingIE = false;
+
+      var hidePreloader = function(){
+      // This really hides the preloader
+        var hide = function(){
+          dojo.fadeOut({
+            node:"preloader",
+            duration:700,
+            onEnd: function(){								
+              dojo.style("preloader", "display", "none");						
+            }
+          }).play();
+        };
+        // Set a timeout to ensure the preloader is visible.
+	// This is only for testing !!!
+        setTimeout(hide, 5000);
+      }; 
+        	
+      function showPreloader() {
+        // Show the preloader centered in the viewport		
+        var ps = dojo.position('preloaderContent');
+        var ws = dojo.window.getBox();
+        dojo.style("preloaderContent", "top" , (ws.h/2-ps.h/2)+"px");
+        dojo.style("preloaderContent", "left", (ws.w/2-ps.w/2)+"px");
+        dojo.style("preloaderContent", "visibility" , "visible");
+      };
+
+      function init() {
+
+        // overlay content until dojo has been parsed ... then display page
+        // code for preloader from http://acuriousanimal.com/blog/2010/12/05/how-to-create-a-preloader-in-dojo/
+        showPreloader();
+        dojo.parser.parse();
+        hidePreloader();
+
+        // determine if information being passed through URL address
+        // three types of searches can be passed throught the URL address:
+        //    survey => http://service.ncddc.noaa.gov/website/google_maps/OE/mapsOE.htm?survey=Submerged New World 2011 
+        //         - will look for a particular survey,
+        //         - open up corresponding infoWindow
+        //         - all other survey points displayed, available from right pane
+        //    textSearch ==> http://service.ncddc.noaa.gov/website/google_maps/OE/mapsOE.htm?textSearch=Okeanos Explorer
+        //         - will highlight only those surveys that have text present in title or summary text
+        //    missionGroup ==> http://service.ncddc.noaa.gov/website/google_maps/OE/mapsOE.htm?missionGroup=Atlantic Methane Seeps
+        //         - will highlight only those surveys that have text present in the mission group
+        urlObject = esri.urlToObject(document.location.href);
+        if (urlObject.query)  {
+          urlObject = esri.urlToObject(window.location.href);
+          urlObject.query = urlObject.query || {};
+          surveySearch = urlObject.query.survey;
+          textSearch = urlObject.query.textSearch;
+          missionGroupSearch = urlObject.query.missionGroup;
+        }
+
+        // determine browswer
+        if (ua.indexOf("MSIE") != -1)  usingIE = true;
+
+        loading = dojo.byId("loadingImg");
+
+        //use the info window instead of the popup 
+        var infoWindow = new esri.dijit.InfoWindow(null, dojo.create("div"));
+        infoWindow.startup();
+
+        startExtent = new esri.geometry.Extent(-27471128,-11652400,4072293,15507815, new esri.SpatialReference({wkid:3857}));
+        map = new esri.Map("map", {
+          extent:startExtent,
+          autoResize: true,
+          wrapAround180: true,
+          sliderStyle: "small",
+          logo: false,
+          infoWindow: infoWindow,
+          zoom: 2
+        });
+
+        dojo.connect(map, "onLoad", mapReady);
+
+        var scalebar = new esri.dijit.Scalebar({map:map, scalebarUnit: "english"}, dojo.byId("scalebar"));
+
+        // add layers to map
+        basemap = new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer");
+        basemap.id = "ocean";
+        map.addLayer(basemap);
+
+        // initialize graphic layers
+        hoverTextLayer = new esri.layers.GraphicsLayer();
+        map.addLayer(hoverTextLayer);
+        highlightLayer = new esri.layers.GraphicsLayer();
+        map.addLayer(highlightLayer);
+        dataLayer = new esri.layers.GraphicsLayer();
+        map.addLayer(dataLayer);
+        listHighlightLayer = new esri.layers.GraphicsLayer();
+        map.addLayer(listHighlightLayer);
+      }
+      dojo.ready(init);
+    </script>
+  </head>
+  <body class="soria" onLoad="initListGroup('topics-themes', document.forms[0].customSearch_topics, document.forms[0].customSearch_themes);initListGroup('oer-platforms', document.forms[0].customSearch_platforms, document.forms[0].customSearch_names);">
+    <div id="preloader">
+      <div id="preloaderContent" style="visibility: hidden;">
+        <strong>Loading Ocean Exploration Digital Atlas</strong>
+        <p/>
+        <center><img src="images/ajax-loader_bar.gif"></center>
+      </div>
+    </div>
+    <div id="mainWindow" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design:'headline', gutters:false" style="width:100%; height:100%;">
+      <div id="header" data-dojo-type="dijit.layout.ContentPane" region="top" >
+        <img src="images/digital_atlas_banner.jpg"">
+      </div>
+      <div data-dojo-type="dojox.layout.ExpandoPane" duration="1000" title="Hide/Collapse" region="left" maxWidth="225px;" easeIn="dojo.fx.easing.linear" easeOut="dojo.fx.easing.linear" style="width:225px;">
+        <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'left'" id="leftPane">
+          <form id="cruiseForm" data-dojo-type="dijit.form.Form" data-dojo-props="">
+          <div data-dojo-type="dijit.layout.AccordionContainer">
+            <div class="element" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Search by Year'" selected="true" onShow="resetAtlas();">
+              <p/>
+              <table colspan="7" align="center">
+                <tr><td><input id="year_2001" name="year_2001" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2001</td><td><img src="images/circle_blue.png" height="10" width="10"></td><td width="25"></td><td><input id="year_2009" name="year_2009" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2009</td><td><img src="images/circle_pink.png" height="10" width="10"></td></tr>
+                <tr><td><input id="year_2002" name="year_2002" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2002</td><td><img src="images/circle_green.png" height="10" width="10"></td><td width="25"></td><td><input id="year_2010" name="year_2010" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2010</td><td><img src="images/circle_flesh.png" height="10" width="10"></td></tr>
+                <tr><td><input id="year_2003" name="year_2003" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2003</td><td><img src="images/circle_red.png" height="10" width="10"></td><td width="25"></td><td><input id="year_2011" name="year_2011" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2011</td><td><img src="images/circle_white.png" height="10" width="10"></td></tr>
+                <tr><td><input id="year_2004" name="year_2004" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2004</td><td><img src="images/circle_cyan.png" height="10" width="10"></td><td width="25"></td><td><input id="year_2012" name="year_2012" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2012</td><td><img src="images/circle_black.png" height="10" width="10"></td></tr>
+                <tr><td><input id="year_2005" name="year_2005" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2005</td><td><img src="images/circle_magenta.png" height="10" width="10"></td><td width="25"></td><td><input id="year_2013" name="year_2013" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2013</td><td><img src="images/circle_kellygreen.png" height="10" width="10"></td></tr>
+                <tr><td><input id="year_2006" name="year_2006" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2006</td><td><img src="images/circle_yellow.png" height="10" width="10"></td><td width="25"></td><td><input id="year_2014" name="year_2014" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2014</td><td><img src="images/circle_gold.png" height="10" width="10"></td></tr>
+                <tr><td><input id="year_2007" name="year_2007" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2007</td><td><img src="images/circle_orange.png" height="10" width="10"></td><td width="25"></td><td><input id="year_2015" name="year_2015" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2015</td><td><img src="images/circle_gray.png" height="10" width="10"></td></tr>
+                <tr><td><input id="year_2008" name="year_2008" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2008</td><td><img src="images/circle_purple.png" height="10" width="10"></td><td width="25"></td><td><input id="year_2016" name="year_2016" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedYears();" checked></td><td>2016</td><td><img src="images/circle_brown.png" height="10" width="10"></td></tr>
+              </table>
+              <p/>
+              <center>
+              <input type="radio" data-dojo-type="dijit.form.RadioButton" name="searchYears" id="yearsNo" value="No" onClick="searchYears(this.value)"/>
+              <label for="yearsNo">No Years</label>
+              <input type="radio" data-dojo-type="dijit.form.RadioButton" name="searchYears" id="yearsYes" checked value="Yes" onClick="searchYears(this.value)"/>
+              <label for="yearsYes">All Years</label>
+              </center>
+              <p/>
+              <center><input type="text" id="yearCounter" readOnly="true" value="" data-dojo-type="dijit.form.TextBox" class="myField"></center>
+              <p/>
+              <center><button data-dojo-type="dijit.form.Button" type="button" name="resetAtlas" onClick="resetAtlas();"><b>Reset Map</b></button></center>
+            </div>
+            <div class="element" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Search by Theme'" onShow="resetAtlas();">
+              <p/>
+              <table colspan="2" align="center">
+                <tr><td><input name="biodiv" id="biodiv" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Biodiversity</td></tr>
+                <tr><td><input name="biolum" id="biolum" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Bioluminescence</td></tr>
+                <tr><td><input name="biotech" id="biotech" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Biotechnology</td></tr>
+                <tr><td><input name="canyon" id="canyon" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Canyons</td></tr>
+                <tr><td><input name="cave" id="cave" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Caves</td></tr>
+                <tr><td><input name="chemo" id="chemo" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Chemosynthetic Communities</td></tr>
+                <tr><td><input name="corals" id="corals" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Deep-Sea Corals</td></tr>
+                <tr><td><input name="fault" id="fault" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Faults</td></tr>
+                <tr><td><input name="habitat" id="habitat" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Habitat Characterizations</td></tr>
+                <tr><td><input name="arch" id="arch" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Marine Archaeology</td></tr>
+                <tr><td><input name="micro" id="micro" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Microbiology</td></tr>
+                <tr><td><input name="sampling" id="sampling" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked</td><td>Sampling Operations</td></tr>
+                <tr><td><input name="diving" id="diving" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>SCUBA and Technical Diving</td></tr>
+                <tr><td><input name="mapping" id="mapping" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Seafloor Mapping</td></tr>
+                <tr><td><input name="seamount" id="seamount" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Seamounts</td></tr>
+                <tr><td><input name="seep" id="seep" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Seeps and Vents</td></tr>
+                <tr><td><input name="sound" id="sound" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Sound and Light</td></tr>
+                <tr><td><input name="subs" id="subs" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Submersibles</td></tr>
+                <tr><td><input name="tele" id="tele" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Telepresence</td></tr>
+                <tr><td><input name="newtech" id="newtech" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Testing New Technologies</td></tr>
+                <tr><td><input name="trench" id="trench" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Trenches</td></tr>
+                <tr><td><input name="volcano" id="volcano" data-dojo-type="dijit.form.CheckBox" value="true" onClick="searchForSelectedThemes();" checked></td><td>Volcanoes</td></tr>
+              </table>
+              <p/>
+              <center>
+              <table colspan="2" align="center">
+              <tr><td>
+                <input type="radio" data-dojo-type="dijit.form.RadioButton" name="searchThemes" id="themesNo" value="No" onClick="searchThemes(this.value);"/>
+                <label for="yearsNo">No Themes</label>
+              </td>
+              <td>
+                <input type="radio" data-dojo-type="dijit.form.RadioButton" name="searchThemes" id="themesYes" checked value="Yes" onClick="searchThemes(this.value);"/>
+                <label for="yearsYes">All Themes</label>
+              </td></tr>
+              </table>
+              </center>
+              <p/>
+              <center><input type="text" id="themeCounter" readOnly="true" value="" data-dojo-type="dijit.form.TextBox" class="myField"></center>
+              <p/>
+              <center><button data-dojo-type="dijit.form.Button" type="button" name="resetAtlas" onClick="resetAtlas();"><b>Reset Map</b></button></center>
+            </div>
+            <div class="element" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Search by Text'" onShow="resetAtlas();">
+              <p/>
+              <center><label for="wordSearchTB"><b>Enter Search Text:</b></label><input type="text" id="wordSearchTB" style="width:100%;" value="" data-dojo-type="dijit.form.TextBox"/></center>
+              <p/>
+              <div align="right">
+                <button data-dojo-type="dijit.form.Button" type="button" name="wordSearch" onClick="searchForText(); "><b>Search</b></button>
+              </div>
+              <p/>
+              <center><input type="text" id="wordCounter" readOnly="true" value="" data-dojo-type="dijit.form.TextBox" class="myField"></center>
+              <p/>
+              <center><button data-dojo-type="dijit.form.Button" type="button" name="resetAtlas" onClick="resetAtlas();"><b>Reset Map</b></button></center>
+            </div>
+            <div class="element" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Custom Search'" selected="true" onShow="resetAtlas();">
+              <p/>
+              <center><b>Use any combination of the provided dropdown lists to define search criteria</b></center>
+              <p/>
+              <b>By Year:</b>
+              <center>
+              <select style="width: 175px;" id="customSearch_Year" data-dojo-id="customSearch_Year" data-dojo-type="dijit.form.Select" maxHeight="200">
+                <option value="None" selected="selected">All</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+                <option value="2010">2010</option>
+                <option value="2009">2009</option>
+                <option value="2008">2008</option>
+                <option value="2007">2007</option>
+                <option value="2006">2006</option>
+                <option value="2005">2005</option>
+                <option value="2004">2004</option>
+                <option value="2003">2003</option>
+                <option value="2002">2002</option>
+                <option value="2001">2001</option>
+              </select>
+              </center>
+              <p/>
+              <b>By Themes:</b>
+              <center>
+              <select style="width: 175px; font-family: Arial; font-size: 12px;" id="customSearch_topics" name="customSearch_topics" size="1">
+              </select>
+              <p/>
+              <select style="width: 175px; font-family: Arial; font-size: 12px;" id="customSearch_themes" name="customSearch_themes" size="1">
+              </select>
+              </center>
+              <p/>
+              <b>By Ocean Places:</b>
+              <center>
+              <select style="width: 175px;" id="customSearch_FocusAreas" data-dojo-id="customSearch_FocusAreas" data-dojo-type="dijit.form.Select" maxHeight="200">
+                <option value="None" selected="selected">All</option>
+                <option value="arctic">Arctic</option>
+                <option value="carib">Caribbean</option>
+                <option value="conshelf">Continental Shelf</option>
+                <option value="fresh">Great Lakes and Rivers</option>
+                <option value="gom">Gulf of Mexico</option>
+                <option value="hawaii">Hawaii</option>
+                <option value="intl">International Waters</option>
+                <option value="mpa">Marine Protected Areas</option>
+                <option value="ridge">Mid-Ocean Ridge</option>
+                <option value="neseamounts">New England Seamounts</option>
+                <option value="necanyons">Northeast U.S. Canyons</option>
+                <option value="sab">South Atlantic Bight</option>
+              </select>
+              </center>
+              <p/>
+              <b>By Mission Groups:</b>
+              <center>
+              <select style="width: 175px;" id="customSearch_MissionGroup" data-dojo-id="customSearch_MissionGroup" data-dojo-type="dijit.form.Select" maxHeight="200">
+                <option value="None" selected="selected">All</option>
+                <option value="acumen">ACUMEN</option>
+                <option value="atlantic methane seeps">Atlantic Methane Seeps</option>
+                <option value="extended continental shelf">Extended Continental Shelf</option>
+                <option value="index-satal">INDEX-SATAL</option>
+                <option value="islands in the stream">Islands in the Stream</option>
+                <option value="life on the edge">Life on the Edge</option>
+                <option value="lophelia">Lophelia</option>
+                <option value="mid-atlantic canyons">Mid-Atlantic Canyons</option>
+                <option value="ocean exploration trust">Ocean Exploration Trust</option>
+                <option value="okeanos mapping cruises">Okeanos Mapping Cruises</option>
+                <option value="okeanos rov cruises">Okeanos ROV Cruises</option>
+                <option value="bioluminescence">Operation Deep Scope</option>
+                <option value="ring of fire">Ring of Fire</option>
+                <option value="rusalca">RUSALCA</option>
+                <option value="sounds in the sea">Sounds in the Sea</option>
+                <option value="submerged new world">Submerged New World</option>
+                <option value="thunder bay">Thunder Bay</option>
+              </select>
+              </center>
+              <p/>
+              <b>By Platforms:</b>
+              <center>
+              <select style="width: 175px; font-family: Arial; font-size: 12px;" id="customSearch_platforms" name="customSearch_platforms" size="1">
+              </select>
+              <p/>
+              <select style="width: 175px; font-family: Arial; font-size: 12px;" id="customSearch_names" name="customSearch_names" size="1">
+              </select>
+              </center>
+              <p/>
+              <div align="right">
+                <button data-dojo-type="dijit.form.Button" type="button" name="customSearch" onClick="customSearch(); "><b>Search</b></button>
+              </div>
+              <p/>
+              <p/>
+              <center><input type="text" id="customCounter" readOnly="true" value="" data-dojo-type="dijit.form.TextBox" class="myField"></center>
+              <p/> 
+              <center><button data-dojo-type="dijit.form.Button" type="button" name="resetAtlas" onClick="resetAtlas();"><b>Reset Map</b></button></center>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+      <div id="map" class="shadow" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center'">
+        <img id="loadingImg" src="images/ajax-loader.gif" style="position:absolute; right:45%; top:45%; z-index:100;" />
+        <div style="position:absolute; right:10px; top:10px; z-index:998;">
+          <div id="titlePane" data-dojo-type="dijit.TitlePane" data-dojo-props="title:'Legend', closable:false, open:false" style="font-family:arial;font-size:12px;">
+            <div class="details">
+              <div id="legendDetails" style="padding:5px;overflow:auto;max-height:350px;">
+              <table colspan="10" align="center">
+                <tr><td>2001</td><td><img src="images/circle_blue.png" height="10" width="10"></td><td width="25"></td><td>2006</td><td><img src="images/circle_yellow.png" height="10" width="10"></td><td width="25"></td><td>2011</td><td><img src="images/circle_white.png" height="10" width="10"></td><td width="25"></td><td>2016</td><td><img src="images/circle_brown.png" height="10" width="10"></td></tr>
+                <tr><td>2002</td><td><img src="images/circle_green.png" height="10" width="10"></td><td width="25"></td><td>2007</td><td><img src="images/circle_orange.png" height="10" width="10"></td><td width="25"></td><td>2012</td><td><img src="images/circle_black.png" height="10" width="10"></td><td width="25"></td><td></td><td></td></tr>
+                <tr><td>2003</td><td><img src="images/circle_red.png" height="10" width="10"></td><td width="25"></td><td>2008</td><td><img src="images/circle_purple.png" height="10" width="10"></td><td width="25"></td><td>2013</td><td><img src="images/circle_kellygreen.png" height="10" width="10"></td><td width="25"></td><td></td><td></td></tr>
+                <tr><td>2004</td><td><img src="images/circle_cyan.png" height="10" width="10"></td><td width="25"></td><td>2009</td><td><img src="images/circle_pink.png" height="10" width="10"></td><td width="25"></td><td>2014</td><td><img src="images/circle_gold.png" height="10" width="10"></td><td width="25"></td><td></td><td></td></tr>
+                <tr><td>2005</td><td><img src="images/circle_magenta.png" height="10" width="10"></td><td width="25"></td><td>2010</td><td><img src="images/circle_flesh.png" height="10" width="10"></td><td width="25"></td><td>2015</td><td><img src="images/circle_gray.png" height="10" width="10"></td><td width="25"></td><td></td><td></td></tr>
+              </table>
+              </div>            
+            </div>
+          </div>
+        </div>
+        <div id="coords" style="position:absolute; right:10px; bottom:30px; color:#000; z-index:50; font-family: arial; font-size: 12px;"></div>
+      </div>
+      <div data-dojo-type="dojox.layout.ExpandoPane" duration="1000" title="Hide/Collapse" region="right" maxWidth="225px;" easeIn="dojo.fx.easing.linear" easeOut="dojo.fx.easing.linear" style="width:225px;">
+        <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'right'" id="rightPane">
+          <div style="background: #CCCCCC;" id="itemsDiv">
+            <ul id="itemsList">
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div id="footer" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'bottom'">
+        <table class="footer" align="center">
+         <tr valign="middle" align="center">
+         <td>
+           <a href="http://www.commerce.gov/" title="U.S. Department of Commerce" target="_self"><font color="black">U.S. Department of Commerce</a> |</font>
+           <a href="http://www.noaa.gov" title="National Oceanic &amp; Atmospheric Administration" target="_self"><font color="black">NOAA</a> |</font>
+           <a href="http://www.nesdis.noaa.gov" title="National Environmental Satellites, Data, and Information Services" target="_self"><font color="black">NESDIS</a> |</font>
+           <a href="http://www.ncei.noaa.gov" title="National Centers for Environmental Information" target="_self"><font color="black">NCEI</a></font>
+           <br/>
+           <a href="http://www.noaa.gov/disclaimer.html" title="Link to National Oceanic &amp; Atmospheric Administration Disclaimer" target="_self"><font color="black">Disclaimer</a> |</font>
+           <a href="http://www.noaa.gov/privacy.html" title="Link to National Oceanic &amp; Atmospheric Administration Privacy Policy"><font color="black">Privacy Policy</a> |</font>
+           <a href="http://www.copyright.gov/title17/92chap4.html#403" title="Copyright Notice"><font color="black">Copyright Notice</a> |</font>
+           <a href="http://www.usa.gov" target="_self" title="The U.S. Government's Official Web Portal"><font color="black">USA.gov</a></font>
+         </td>
+         <td width="20"></td>
+         <td> 
+           <a href="http://www.cio.noaa.gov/services_programs/info_quality.html" title="Link to National Oceanic &amp; Atmospheric Administration Information Quality" target="_self"><font color="black">Information Quality</a> |</font>
+           <a href="http://www.rdc.noaa.gov/~foia/" title="Link to National Oceanic &amp; Atmospheric Administration FOIA"><font color="black">Freedom of Information Act (FOIA)</a></font>
+           <br/>
+           <a href="http://www.ncddc.noaa.gov/about-ncddc" title="Contact NCEI-MS"><font color="black">Customer Service</a> |</font>
+           <a href="mailto:NCEI.Info@noaa.gov?subject=Ocean%20Exploration%20Digital%20Atlas" title="Email NCEI-MS webmaster"><font color="black">NCEI.Info@noaa.gov</a></font>
+         </td>
+         <td></td>
+         </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
