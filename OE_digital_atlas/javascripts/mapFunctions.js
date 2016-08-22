@@ -1899,6 +1899,7 @@
               //Retrieve the survey ID and year for this cruise specified in the CSV file. 
               //The format of column AA in the CSV file should be: "Ship Track (ECS);<year>;<survey_id>;<ship_track_thumbnail.jpg>"
               //These values are stored in the id and value fields in the HTML elements created starting at line 354.
+              //Note: the survey ID can contain a wildcard, i.e. 'DAO301%'
               surveyId = inputs[i].id; 
               year = inputs[i].value;
               var queryTaskURL = "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0";
@@ -1933,7 +1934,7 @@
          query.outFields = ["*"];
          
           if (inputs[0].name == 'Ship Track (ECS)') {
-            query.where = "SURVEY_ID LIKE'" + surveyId + "'"; //If an ECS track, filter by the survey ID.
+            query.where = "SURVEY_ID LIKE'" + surveyId + "'"; //If an ECS track, filter by the survey ID (can contain wildcard: %).
           }
           else {
             query.where = "1=1";
