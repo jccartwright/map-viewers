@@ -1933,7 +1933,7 @@
          query.outFields = ["*"];
          
           if (inputs[0].name == 'Ship Track (ECS)') {
-            query.where = "SURVEY_ID='" + surveyId + "'"; //If an ECS track, filter by the survey ID.
+            query.where = "SURVEY_ID LIKE'" + surveyId + "'"; //If an ECS track, filter by the survey ID.
           }
           else {
             query.where = "1=1";
@@ -1965,7 +1965,7 @@
               imageParameters = new esri.layers.ImageParameters();
               imageParameters.format = 'PNG32';
               layerDefs = [];
-              layerDefs[0] = "SURVEY_ID='" + surveyId + "'";
+              layerDefs[0] = "SURVEY_ID LIKE'" + surveyId + "'";
               
               //Set the line's color based on the year. Same as in createMarker() above. 
               var symbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new esri.Color([0,0,0]), 2);
