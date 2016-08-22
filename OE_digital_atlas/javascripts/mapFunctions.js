@@ -520,6 +520,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -924,6 +925,7 @@
        if (layersOnMap > 1)  {
          map.removeAllLayers();
          map.addLayer(basemap);
+         map.addLayer(basemapReference);
          map.addLayer(hoverTextLayer);
          map.addLayer(highlightLayer);
          map.addLayer(dataLayer);
@@ -1024,6 +1026,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1058,6 +1061,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1119,6 +1123,7 @@
        if (layersOnMap > 1)  {
          map.removeAllLayers();
          map.addLayer(basemap);
+         map.addLayer(basemapReference);
          map.addLayer(hoverTextLayer);
          map.addLayer(highlightLayer);
          map.addLayer(dataLayer);
@@ -1209,6 +1214,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1249,6 +1255,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1317,6 +1324,7 @@
        if (layersOnMap > 1)  {
          map.removeAllLayers();
          map.addLayer(basemap);
+         map.addLayer(basemapReference);
          map.addLayer(hoverTextLayer);
          map.addLayer(highlightLayer);
          map.addLayer(dataLayer);
@@ -1400,6 +1408,7 @@
        if (layersOnMap > 1)  {
          map.removeAllLayers();
          map.addLayer(basemap);
+         map.addLayer(basemapReference);
          map.addLayer(hoverTextLayer);
          map.addLayer(highlightLayer);
          map.addLayer(dataLayer);
@@ -1565,6 +1574,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1718,6 +1728,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1786,6 +1797,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1922,6 +1934,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
