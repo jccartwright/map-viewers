@@ -88,7 +88,7 @@
 
       var loading;      
       var map, mapCenterPoint, startExtent;
-      var basemap;
+      var basemap, basemapReference;
       var csvStore, dataLayer, highlightLayer, hoverTextLayer, listHighlightLayer;
       var firstTime = true;
       var surveySearch;
@@ -174,9 +174,14 @@
         var scalebar = new esri.dijit.Scalebar({map:map, scalebarUnit: "english"}, dojo.byId("scalebar"));
 
         // add layers to map
-        basemap = new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer");
+        //Add Ocean Basemap. Includes two services: base and reference.
+        basemap = new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer");
         basemap.id = "ocean";
         map.addLayer(basemap);
+
+        basemapReference = new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer");
+        basemapReference.id = "oceanReference";
+        map.addLayer(basemapReference);
 
         // initialize graphic layers
         hoverTextLayer = new esri.layers.GraphicsLayer();

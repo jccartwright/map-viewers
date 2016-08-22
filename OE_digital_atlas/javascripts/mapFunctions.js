@@ -520,6 +520,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -924,6 +925,7 @@
        if (layersOnMap > 1)  {
          map.removeAllLayers();
          map.addLayer(basemap);
+         map.addLayer(basemapReference);
          map.addLayer(hoverTextLayer);
          map.addLayer(highlightLayer);
          map.addLayer(dataLayer);
@@ -1024,6 +1026,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1058,6 +1061,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1119,6 +1123,7 @@
        if (layersOnMap > 1)  {
          map.removeAllLayers();
          map.addLayer(basemap);
+         map.addLayer(basemapReference);
          map.addLayer(hoverTextLayer);
          map.addLayer(highlightLayer);
          map.addLayer(dataLayer);
@@ -1209,6 +1214,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1249,6 +1255,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1317,6 +1324,7 @@
        if (layersOnMap > 1)  {
          map.removeAllLayers();
          map.addLayer(basemap);
+         map.addLayer(basemapReference);
          map.addLayer(hoverTextLayer);
          map.addLayer(highlightLayer);
          map.addLayer(dataLayer);
@@ -1400,6 +1408,7 @@
        if (layersOnMap > 1)  {
          map.removeAllLayers();
          map.addLayer(basemap);
+         map.addLayer(basemapReference);
          map.addLayer(hoverTextLayer);
          map.addLayer(highlightLayer);
          map.addLayer(dataLayer);
@@ -1565,6 +1574,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1718,6 +1728,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1786,6 +1797,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1899,6 +1911,7 @@
               //Retrieve the survey ID and year for this cruise specified in the CSV file. 
               //The format of column AA in the CSV file should be: "Ship Track (ECS);<year>;<survey_id>;<ship_track_thumbnail.jpg>"
               //These values are stored in the id and value fields in the HTML elements created starting at line 354.
+              //Note: the survey ID can contain a wildcard, i.e. 'DAO301%'
               surveyId = inputs[i].id; 
               year = inputs[i].value;
               var queryTaskURL = "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0";
@@ -1921,6 +1934,7 @@
          if (layersOnMap > 1)  {
            map.removeAllLayers();
            map.addLayer(basemap);
+           map.addLayer(basemapReference);
            map.addLayer(hoverTextLayer);
            map.addLayer(highlightLayer);
            map.addLayer(dataLayer);
@@ -1933,7 +1947,7 @@
          query.outFields = ["*"];
          
           if (inputs[0].name == 'Ship Track (ECS)') {
-            query.where = "SURVEY_ID='" + surveyId + "'"; //If an ECS track, filter by the survey ID.
+            query.where = "SURVEY_ID LIKE'" + surveyId + "'"; //If an ECS track, filter by the survey ID (can contain wildcard: %).
           }
           else {
             query.where = "1=1";
@@ -1965,7 +1979,7 @@
               imageParameters = new esri.layers.ImageParameters();
               imageParameters.format = 'PNG32';
               layerDefs = [];
-              layerDefs[0] = "SURVEY_ID='" + surveyId + "'";
+              layerDefs[0] = "SURVEY_ID LIKE'" + surveyId + "'";
               
               //Set the line's color based on the year. Same as in createMarker() above. 
               var symbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new esri.Color([0,0,0]), 2);
