@@ -1914,7 +1914,7 @@
               //Note: the survey ID can contain a wildcard, i.e. 'DAO301%'
               surveyId = inputs[i].id; 
               year = inputs[i].value;
-              var queryTaskURL = "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0";
+              var queryTaskURL = "http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0";
               lyrId = -9999; //dummy value, not used. Bypasses code below.
            }
          }
@@ -1975,7 +1975,7 @@
              if (inputs[i].name == 'Ship Track (ECS)') {
               //If an ECS cruise, point to the multibeam_dynamic service with custom layerDefinitions and layerDrawingOptions.
 
-              mapServiceURL = "http://mapdevel.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/";
+              mapServiceURL = "http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/";
               imageParameters = new esri.layers.ImageParameters();
               imageParameters.format = 'PNG32';
               layerDefs = [];
