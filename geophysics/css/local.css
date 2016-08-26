@@ -51,7 +51,7 @@ html,body {
     z-index: 100;
 }
 
-.coordinatesToolbar {
+.coordinatesWithElevationToolbar {
     position: absolute;
     bottom: 10px;
     left: 10px;
