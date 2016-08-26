@@ -290,7 +290,7 @@ define([
                     lods: zoomLevels.lods
                 }, new ArcticLayerCollection());
 
-                new CoordinatesWithElevationToolbar({map: this.arcticMapConfig.map, scalebarThreshold: 4}, 'arcticCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
 
             setupAntarcticView: function() {
@@ -317,7 +317,7 @@ define([
                     lods: zoomLevels.lods
                 }, new AntarcticLayerCollection());
 
-                new CoordinatesWithElevationToolbar({map: this.antarcticMapConfig.map, scalebarThreshold: 4}, 'antarcticCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
             },
 
             filterMarineSurveys: function(values) {
