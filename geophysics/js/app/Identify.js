@@ -116,7 +116,6 @@ define([
             },
 
             sortResults: function(results) {
-                console.log('inside sortResults');
                 var features;
 
                 for (layerId in results) {

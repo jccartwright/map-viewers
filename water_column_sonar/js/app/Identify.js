@@ -351,11 +351,21 @@ define([
                     //keep a reference to the last result
                     this.fileResults = results;
 
-                    //create a list of service URLs for each layer to be used in IdentifyResultCollection
+                    //create a list of service URLs and service types for each layer to be used in IdentifyResultCollection
                     var serviceUrls = {};
-                    serviceUrls[this.fileTaskInfo.layer.id] = taskInfo.layer.url;
+                    var serviceTypes = {};
+                    var objectIdFields = {};
+                    array.forEach(this.taskInfos, function(taskInfo) {
+                        serviceUrls[taskInfo.layer.id] = taskInfo.layer.url;
+                        if (taskInfo.layer.layerType === 'WMS') {
+                            serviceTypes[taskInfo.layer.id] = 'WMS';
+                        } else {
+                            serviceTypes[taskInfo.layer.id] = 'ArcGIS';
+                        }
+                        objectIdFields[taskInfo.layer.id] = taskInfo.layer.objectIdFields;
+                    });
 
-                    var resultCollection = new IdentifyResultCollection(serviceUrls);
+                    var resultCollection = new IdentifyResultCollection(serviceUrls, serviceTypes, objectIdFields);
                     resultCollection.setResultSet(results);
                     resultCollection.setSearchGeometry(geometry);
 
