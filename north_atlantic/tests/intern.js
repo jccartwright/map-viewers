@@ -48,9 +48,19 @@ define({
 	loaderOptions: {
 		// Packages that should be registered with the loader in each testing environment
 		packages: [ 
-	    {
+	        {
                 name: 'app',
                 location: 'js/app'
+            },
+            {
+                name: "ngdc",
+                //location: '//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ngdc'
+                location: '../../dijits/js/ngdc'
+            },
+            {
+                name: "ncei",
+                //location: '//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ncei'
+                location: '../../dijits/js/ncei'
             },
             {
                 name: 'dojo',
@@ -94,7 +104,8 @@ define({
 	// Non-functional test suite(s) to run in each browser
 	suites: [
 	'tests/unit/hello',
-	'tests/unit/extent'
+	'tests/unit/extent',
+    'tests/unit/web_mercator/LayerCollection'
 	 /* 'myPackage/tests/foo', 'myPackage/tests/bar' */ ],
 
 	// Functional test suite(s) to execute against each browser once non-functional tests are completed
