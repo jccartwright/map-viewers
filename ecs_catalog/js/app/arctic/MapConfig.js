@@ -58,7 +58,12 @@ define([
 
                 //console.log('inside custom Arctic mapReady...');   
 
-                this.mapToolbar = new MapToolbar({map: this.map, layerCollection: this.mapLayerCollection}, 'arcticMapToolbar');
+                this.mapToolbar = new MapToolbar({
+                    map: this.map, 
+                    layerCollection: this.mapLayerCollection, 
+                    maxLat: 90, 
+                    minLat: 50
+                }, 'arcticMapToolbar');
                 this.mapToolbar.startup();
 
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
