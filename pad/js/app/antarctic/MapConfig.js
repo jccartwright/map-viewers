@@ -32,6 +32,7 @@ define([
                     minLat: -90
                 }, 'antarcticMapToolbar');
                 this.mapToolbar.startup();
+                this.mapToolbar.enabled = false;
                 
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
                 this.identify.enabled = false;
