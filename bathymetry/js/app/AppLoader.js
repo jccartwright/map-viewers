@@ -570,7 +570,7 @@ define([
                 }), function(error) {
                     logger.error(error);
                 });
-            },
+            }
         });
     }
 );
