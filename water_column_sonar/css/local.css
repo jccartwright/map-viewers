@@ -283,4 +283,28 @@ html,body {
     /*overflow-y: hidden;*/
     /*overflow-x: hidden;*/
     height: 115px; 
-} 
+}
+
+.tooltipButton {
+    vertical-align: bottom;
+}
+
+.tooltipButtonMiddle {
+    vertical-align: middle;
+}
+
+.tooltipText {
+    width: 200px;
+}
+
+.queryIcon {
+    background-image: url(../images/magnifyingglass.png);
+    width: 20px;
+    height: 20px;
+}
+
+.clearSelectionIcon {
+    background-image: url(../images/x.png);
+    width: 16px;
+    height: 16px;
+}
