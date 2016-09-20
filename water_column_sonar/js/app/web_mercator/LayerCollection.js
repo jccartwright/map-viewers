@@ -2,13 +2,15 @@ define([
     'dojo/_base/declare', 
     'ngdc/layers/AbstractLayerCollection', 
     'esri/layers/ArcGISTiledMapServiceLayer',
-    'esri/layers/ArcGISDynamicMapServiceLayer'
+    'esri/layers/ArcGISDynamicMapServiceLayer',
+    'esri/layers/WebTiledLayer'
     ],
     function(
         declare, 
         AbstractLayerCollection, 
         ArcGISTiledMapServiceLayer, 
-        ArcGISDynamicMapServiceLayer
+        ArcGISDynamicMapServiceLayer,
+        WebTiledLayer
         ){
 
         return declare([AbstractLayerCollection], {
@@ -57,13 +59,18 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer', {
                         id: 'Ocean Base',
-                        visible: true,
+                        visible: true
                     }),                    
                     new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
                         visible: false,
                         opacity: 0.5
-                    }),   
+                    }),  
+                    new WebTiledLayer('http://tileservice.charts.noaa.gov/tiles/50000_1/{level}/{col}/{row}.png', {
+                        id: 'RNC',
+                        visible: false,
+                        opacity: 0.5
+                    }), 
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer', {
                         id: 'Water Column Sonar',
                         visible: true,
@@ -83,7 +90,7 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer', {
                         id: 'Ocean Reference',
-                        visible: true,
+                        visible: true
                     }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
                         id: 'Graticule',
