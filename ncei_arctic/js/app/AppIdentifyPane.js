@@ -83,32 +83,62 @@ define([
             },
 
             getLayerDisplayLabel: function(item, count) {
-
-                if (item.layerName === 'Multibeam Bathymetric Surveys') {
-                    return '<i><b>Multibeam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
-                } 
-                else if (item.layerName === 'Marine Trackline Surveys: Bathymetry') {
-                    return '<i><b>Single-Beam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i>';
-                } 
-                else if (item.layerName === 'Surveys with BAGs') {
-                    return '<i>Surveys wth BAGs (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
-                } 
-                else if (item.layerName === 'Surveys with Digital Sounding Data') {
-                    return '<i>Surveys with Digital Sounding Data (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
-                } 
-                else if (item.layerName === 'Surveys without Digital Sounding Data') {
-                    return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
-                } 
-                else if (item.layerName === 'All NCEI Bathymetric DEMs') {
-                    return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
-                }
-                else if (item.layerName === 'DEM Tiles') {
-                    return '<i><b>Digital Elevation Models (New Tiles) (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
-                }
-                else if (item.layerName === 'Lidar') {
-                    return '<i><b>OCM Bathymetric Lidar (' + this.formatCountString(count) + ')</b></i>';
-                }
+                return '<i><b>' + this.getFolderName(item.formatter) + ' (' + this.formatCountString(this.folderCounts[this.getFolderName(item.formatter)]) + ')</b></i>';
             },
+
+            getFolderName: function(layerKey) {
+                if (layerKey === 'Multibeam/Multibeam Bathymetric Surveys') {
+                    return 'NOAA NCEI Multibeam Bathymetric Surveys';
+                } 
+                else if (layerKey === 'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry') {
+                    return 'NOAA NCEI Single-Beam Bathymetric Surveys';
+                }
+
+                else if (layerKey === 'CRN/Climate Reference Network') {
+                    return 'U.S. Climate Reference Network (USCRN)';
+                }
+                else if (layerKey === 'GHCND/GHCN Daily') {
+                    return 'Global Historical Climate Network- Daily (GHCND)';
+                }
+                else if (layerKey === 'GSOM/Global Surface Summary of the Month') {
+                    return 'Global Summary of the Month (GSOM)';
+                }
+                else if (layerKey === 'GSOY/Global Surface Summary of the Year') {
+                    return 'Global Summary of the Year (GSOY)';
+                }
+                else if (layerKey === 'ISD/Hourly Global') {
+                    return 'Integrated Surface Global Hourly Data (ISD)';
+                }
+                            
+            },
+
+            // getLayerDisplayLabel: function(item, count) {
+
+            //     if (item.layerName === 'Multibeam Bathymetric Surveys') {
+            //         return '<i><b>Multibeam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
+            //     } 
+            //     else if (item.layerName === 'Marine Trackline Surveys: Bathymetry') {
+            //         return '<i><b>Single-Beam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i>';
+            //     } 
+            //     else if (item.layerName === 'Surveys with BAGs') {
+            //         return '<i>Surveys wth BAGs (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
+            //     } 
+            //     else if (item.layerName === 'Surveys with Digital Sounding Data') {
+            //         return '<i>Surveys with Digital Sounding Data (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
+            //     } 
+            //     else if (item.layerName === 'Surveys without Digital Sounding Data') {
+            //         return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
+            //     } 
+            //     else if (item.layerName === 'All NCEI Bathymetric DEMs') {
+            //         return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
+            //     }
+            //     else if (item.layerName === 'DEM Tiles') {
+            //         return '<i><b>Digital Elevation Models (New Tiles) (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
+            //     }
+            //     else if (item.layerName === 'Lidar') {
+            //         return '<i><b>OCM Bathymetric Lidar (' + this.formatCountString(count) + ')</b></i>';
+            //     }
+            // },
 
             formatCountString: function(count) {
                 if (count >= 1000) {
@@ -119,32 +149,58 @@ define([
             },
 
             getItemDisplayLabel: function(item, uid) {
-                //return item.value;
-                if (item.layerName === 'Multibeam Bathymetric Surveys') {
+                if (item.formatter === 'Multibeam/Multibeam Bathymetric Surveys') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
                 } 
-                else if (item.layerName === 'Marine Trackline Surveys: Bathymetry') {
+                else if (item.formatter === 'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
-                } 
-                else if (item.layerName === 'Surveys with BAGs') {
-                    return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
-                } 
-                else if (item.layerName === 'Surveys with Digital Sounding Data') {
-                    return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
-                } 
-                else if (item.layerName === 'Surveys without Digital Sounding Data') {
-                    return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
-                } 
-                else if (item.layerName === 'All NCEI Bathymetric DEMs') {
-                    return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
                 }
-                else if (item.layerName === 'DEM Tiles') {
-                    return this.getItemLabelSpan(item.feature.attributes['NAME'] + ' <i>(' + item.feature.attributes['CELL_SIZE'] + ')</i>', uid);
+
+                else if (item.formatter === 'CRN/Climate Reference Network') {
+                    return this.getItemLabelSpan(item.feature.attributes['STATION'] + ' (' + item.feature.attributes['STATE'] + ')', uid);
                 }
-                else if (item.layerName === 'Lidar') {
-                    return this.getItemLabelSpan(item.feature.attributes['Name'], uid);
+                else if (item.formatter === 'GHCND/GHCN Daily') {
+                    return this.getItemLabelSpan(item.feature.attributes['STATION_NAME'], uid);
                 }
+                else if (item.formatter === 'GSOM/Global Surface Summary of the Month') {
+                    return this.getItemLabelSpan(item.feature.attributes['STATION_NAME'], uid);
+                }
+                else if (item.formatter === 'GSOY/Global Surface Summary of the Year') {
+                    return this.getItemLabelSpan(item.feature.attributes['STATION_NAME'], uid);
+                }
+                else if (item.formatter === 'ISD/Hourly Global') {
+                    return this.getItemLabelSpan(item.feature.attributes['STATION'], uid);
+                }
+                
             },
+
+            // getItemDisplayLabel: function(item, uid) {
+            //     //return item.value;
+            //     if (item.layerName === 'Multibeam Bathymetric Surveys') {
+            //         return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
+            //     } 
+            //     else if (item.layerName === 'Marine Trackline Surveys: Bathymetry') {
+            //         return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
+            //     } 
+            //     else if (item.layerName === 'Surveys with BAGs') {
+            //         return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
+            //     } 
+            //     else if (item.layerName === 'Surveys with Digital Sounding Data') {
+            //         return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
+            //     } 
+            //     else if (item.layerName === 'Surveys without Digital Sounding Data') {
+            //         return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
+            //     } 
+            //     else if (item.layerName === 'All NCEI Bathymetric DEMs') {
+            //         return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
+            //     }
+            //     else if (item.layerName === 'DEM Tiles') {
+            //         return this.getItemLabelSpan(item.feature.attributes['NAME'] + ' <i>(' + item.feature.attributes['CELL_SIZE'] + ')</i>', uid);
+            //     }
+            //     else if (item.layerName === 'Lidar') {
+            //         return this.getItemLabelSpan(item.feature.attributes['Name'], uid);
+            //     }
+            // },
 
             getItemLabelSpan: function(text, uid) {
                 return '<span id="itemLabel-' + uid + '">' + text + '</span>';
@@ -159,6 +215,8 @@ define([
                 this.isDemTiles = false;
                 this.identifyResults = results;
 
+                this.computeFolderCounts(results);
+
                 for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
                     var svcName = this.identify.layerIds[i];
                     for (var layerName in results[svcName]) {
@@ -171,6 +229,7 @@ define([
                                 var item = results[svcName][layerName][j];
                                 var layerKey = svcName + '/' + layerName;
                                 var layerUrl = results[svcName][layerName][j].layerUrl;
+                                var layerType = results[svcName][layerName][j].layerType;
                                 
                                 if (svcName === 'NOS Hydrographic Surveys' || svcName === 'NOS Hydro (non-digital)') {
                                     this.isNosHydro = true;
@@ -187,11 +246,11 @@ define([
                                 }
 
                                 //Create a layer "folder" node if it doesn't already exist
-                                if (this.featureStore.query({id: layerName}).length === 0) {
+                                if (this.featureStore.query({id: this.getFolderName(layerKey)}).length === 0) {
                                     this.featureStore.put({
                                         uid: ++this.uid,
-                                        id: layerName,
-                                        label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
+                                        id: this.getFolderName(layerKey),
+                                        label: this.getLayerDisplayLabel(item, this.folderCounts[this.getFolderName(layerKey)]),
                                         type: 'folder',
                                         //If NOS Hydro, parent is the NOS Hydro folder, else parent is root.
                                         parent: svcName === 'NOS Hydrographic Surveys' || svcName === 'NOS Hydro (non-digital)' ? 
@@ -216,8 +275,9 @@ define([
                                     label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "' title='Zoom to extent of feature'></a>",
                                     layerUrl: layerUrl,
                                     layerKey: layerKey,
+                                    layerType: layerType,
                                     attributes: item.feature.attributes,
-                                    parent: layerName,
+                                    parent: this.getFolderName(layerKey),
                                     type: 'item'
                                 });
                             }
@@ -428,6 +488,21 @@ define([
 
                 //once the form is sent, it's useless to keep it.
                 document.body.removeChild(form);
+            },
+
+            computeFolderCounts: function(results) {
+                this.folderCounts = {};
+                for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
+                    var svcName = this.identify.layerIds[i];
+                    for (var layerName in results[svcName]) {
+                        var layerKey = svcName + '/' + layerName;
+                        var folderName = this.getFolderName(layerKey);
+                        if (!this.folderCounts[folderName]) {
+                            this.folderCounts[folderName] = 0;
+                        }
+                        this.folderCounts[folderName] += results[svcName][layerName].length;                        
+                    }
+                }
             }
         });
     }

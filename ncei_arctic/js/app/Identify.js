@@ -188,6 +188,96 @@ define([
                 return html;
             },
 
+            crnFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>Climate Reference Network: ${station} (${state})</h3>' +   
+                    '<div class="valueName">Period of Record: <span class="parameterValue">${begDate} to ${endDate}</span></div>' +                
+                    '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Station Details</a></span></div>';
+
+                var html = string.substitute(template, {
+                        station: a['STATION'],
+                        state: a['STATE'],
+                        begDate: a['BEG_DATE'],
+                        endDate: a['END_DATE'],
+                        url: 'http://www.ncdc.noaa.gov/crn/station.htm?stationId=' + a['STATION_ID']
+                    });                
+                return html;
+            },
+
+            ghcndFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>GCHN Daily: ${stationName}</h3>' +
+                    '<div class="valueName">Period of Record: <span class="parameterValue">${dataBeginDate} to ${dataEndDate}</span></div>' +    
+                    '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Station Details</a></span></div>';
+
+                var html = string.substitute(template, {
+                        stationName: a['STATION_NAME'],
+                        dataBeginDate: a['DATA_BEGIN_DATE'],
+                        dataEndDate: a['DATA_END_DATE'],                        
+                        url: 'http://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/' + a['STATION_ID'] + '/detail'
+                    });                
+                return html;
+            },
+
+            gsomFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>Global Surface Summary of the Month: ${stationName}</h3>' +
+                    '<div class="valueName">Period of Record: <span class="parameterValue">${dataBeginDate} to ${dataEndDate}</span></div>' +    
+                    '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Station Details</a></span></div>';
+
+                var html = string.substitute(template, {
+                        stationName: a['STATION_NAME'],
+                        dataBeginDate: a['DATA_BEGIN_DATE'],
+                        dataEndDate: a['DATA_END_DATE'],
+                        url: 'http://www.ncdc.noaa.gov/cdo-web/datasets/GSOM/stations/' + a['STATION_ID'] + '/detail'
+                    });                
+                return html;
+            },
+
+            gsoyFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>Global Surface Summary of the Month: ${stationName}</h3>' +
+                    '<div class="valueName">Period of Record: <span class="parameterValue">${dataBeginDate} to ${dataEndDate}</span></div>' +    
+                    '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Station Details</a></span></div>';
+
+                var html = string.substitute(template, {
+                        stationName: a['STATION_NAME'],
+                        dataBeginDate: a['DATA_BEGIN_DATE'],
+                        dataEndDate: a['DATA_END_DATE'],
+                        url: 'http://www.ncdc.noaa.gov/cdo-web/datasets/GSOY/stations/' + a['STATION_ID'] + '/detail'
+                    });                
+                return html;
+            },
+
+            isdFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>Integrated Surface Global Hourly Data: ${station}</h3>' +
+                    '<div class="valueName">Period of Record: <span class="parameterValue">${beginDate} to ${endDate}</span></div>' +    
+                    '<div class="valueName"><span class="parameterValue"><a href="${simpleUrl}" target="_blank">Data Access (Simplified)</a></span></div>' +
+                    '<div class="valueName"><span class="parameterValue"><a href="${advancedUrl}" target="_blank">Data Access (Advanced)</a></span></div>';
+
+                var html = string.substitute(template, {
+                        station: a['STATION'],
+                        beginDate: a['BEG_DATE'],
+                        endDate: a['END_DATE'],
+                        advancedUrl: 'http://www7.ncdc.noaa.gov/CDO/cdodataelem.cmd?p_ndatasetid=11&datasetabbv=DS3505&p_cqueryby=ENTIRE&p_ncntryid=&p_nrgnid=' + 
+                            '&p_nstprovid=&p_cfileform=&p_csubqueryby=STATION&resolution=40&poeoption=ADVANCED&p_asubqueryitems=' + a['AWSBAN'],
+                        simpleUrl: 'http://www7.ncdc.noaa.gov/CDO/cdodateoutmod.cmd?p_ndatasetid=11&datasetabbv=DS3505&p_cqueryby=ENTIRE&p_ncntryid=&p_nrgnid=' + 
+                            '&p_nstprovid=&p_cfileform=&p_csubqueryby=STATION&resolution=40&poeoption=SIMPLE&p_asubqueryitems=' + a['AWSBAN']
+                    });                
+                return html;
+            },
+
             multibeamSort: function(a, b) {
                 //Sort by year descending, then alphabetical by survey ID
                 if (a.feature.attributes['Survey Year'] === b.feature.attributes['Survey Year']) {
