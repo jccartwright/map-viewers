@@ -42,17 +42,12 @@ define([
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
                     identify: this.identify,
-                    class: 'identifyPane',
+                    'class': 'identifyPane',
                     autoExpandTree: false,
                     lineSymbol: new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0, 255, 255]), 3)
                 }, dom.byId('mercatorIdentifyPaneDiv'));
                 this.identifyPane.startup();
-
-                //Whenever the layer mode changes between 'cruise' and 'file', close the IdentifyPane to reduce confusion
-                topic.subscribe('/water_column_sonar/layerMode', lang.hitch(this, function() {
-                    this.identifyPane.close();
-                }));
-
+                
                 this.setEnabled(true);
                 topic.publish('/wcd/MapReady', 'mercator');
             }
