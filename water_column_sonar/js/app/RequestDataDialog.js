@@ -166,7 +166,7 @@ define([
                     }
 
                     var geographicSR = new SpatialReference(4326);
-                    if (this.geometry.spatialReference.wkid == 4326) {
+                    if (this.geometry.spatialReference.wkid === 4326) {
                         //Geometry is in geographic
                         wkt.fromObject(this.geometry);
                         orderParams.wktGeometry = wkt.write();
@@ -174,7 +174,7 @@ define([
                     }
                     else if (webMercatorUtils.canProject(this.geometry, geographicSR)) {
                         //Geometry is is Web Mercator - convert to geographic and submit order
-                        geographicGeometry = webMercatorUtils.webMercatorToGeographic(this.geometry);
+                        var geographicGeometry = webMercatorUtils.webMercatorToGeographic(this.geometry);
                         wkt.fromObject(geographicGeometry);
                         orderParams.wktGeometry = wkt.write();
                         this.submitOrder(orderParams);
@@ -237,7 +237,7 @@ define([
                 var okDialog = new Dialog({
                     title: 'Request Submitted',
                     //content: 'Your order has been received. ',
-                    class: 'requestDataDialog',
+                    'class': 'requestDataDialog',
                     style: 'width:300px'
                 });
                 new Button({
@@ -272,8 +272,8 @@ define([
                     content: 'Your order has been received. Check your email for an order confirmation.<br>Please contact <a href="mailto:wcd.info@noaa.gov">wcd.info@noaa.gov</a> with any questions.<br><br>' +
                             'Total files in order: ' + response.totalFilesOrder + '<br>' +
                             'Total file size: ' + (megabytes < 1024 ? megabytes + ' MB' : gigabytes + ' GB') + '<br>' +
-                            (response.fulfillmentType == 'ManualOrder' ? '<br>Because the request is very large, you will be contacted by a data manager for manual delivery.<br>' : ''),
-                    class: 'requestDataDialog',
+                            (response.fulfillmentType === 'ManualOrder' ? '<br>Because the request is very large, you will be contacted by a data manager for manual delivery.<br>' : ''),
+                    'class': 'requestDataDialog',
                     style: 'width:300px'
                 });
                 new Button({

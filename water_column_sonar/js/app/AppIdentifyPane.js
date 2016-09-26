@@ -79,7 +79,7 @@ define([
 
                 this.fileFeaturePage = new ContentPane({
                     style: 'height: 100%; width: 100%; padding: 0px;',
-                    class: 'identifyPane-featurePage'
+                    'class': 'identifyPane-featurePage'
                 }).placeAt(this.containerNode);
                 this.stackContainer.addChild(this.fileFeaturePage);
 
@@ -104,7 +104,7 @@ define([
                 bc.placeAt(this.fileFeaturePage);
 
                 this.imageThumbnailDialog = new TooltipDialog({
-                    content: 'No image available',
+                    content: 'No image available'
                 });
 
                 //Initialize the fileFeaturePage with a back button
@@ -197,7 +197,7 @@ define([
                     labelAttr: 'label',
                     mayHaveChildren: function(item) {
                         //items of type 'item' never have children.
-                        return (item.type != 'item');
+                        return (item.type !== 'item');
                     }
                 });
 
@@ -252,7 +252,7 @@ define([
                 //Construct a new tree and place it in the feature pane.
                 this.constructFileFeatureTree();
 
-                if (this.identify.searchGeometry.type == 'point') {
+                if (this.identify.searchGeometry.type === 'point') {
                     this.fileFeaturePageTitle = 'Files for ' + this.cruiseId + ' near clicked point (' + this.numFileFeatures + ')';
                 } else {
                     this.fileFeaturePageTitle = 'Files for ' + this.cruiseId + ' inside polygon (' + this.numFileFeatures + ')'; 
@@ -283,7 +283,7 @@ define([
                 //Remove all items except for the root
                 var allItems = this.fileFeatureStore.query();
                 array.forEach(allItems, lang.hitch(this, function(item) {
-                    if (item.id != 'root') {
+                    if (item.id !== 'root') {
                         this.fileFeatureStore.remove(item.id);
                     }
                 }));
@@ -299,53 +299,59 @@ define([
 
                 this.expandedNodePaths = [];
                 for (var svcName in results) {
-                    for (var layerName in results[svcName]) {
+                    if (results.hasOwnProperty(svcName)) {
+                        for (var layerName in results[svcName]) {
+                            if (results[svcName].hasOwnProperty(layerName)) {
 
-                        numFeaturesForLayer = results[svcName][layerName].length;
-                        totalFeatures += numFeaturesForLayer;
+                                numFeaturesForLayer = results[svcName][layerName].length;
+                                totalFeatures += numFeaturesForLayer;
 
-                        //numFeatures += results[svcName][layerName].length;
-                        for (var i = 0; i < results[svcName][layerName].length; i++) {
-                            var item = results[svcName][layerName][i];
-                            var layerKey = svcName + '/' + layerName;
-                            var layerUrl = results[svcName][layerName][i].layerUrl;
-                            //Create a layer "folder" node if it doesn't already exist
-                            if (this.featureStore.query({id: layerName}).length === 0) {
-                                this.featureStore.put({
-                                    uid: ++this.uid,
-                                    id: layerName,
-                                    label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
-                                    type: 'folder',
-                                    parent: 'root'
-                                });
+                                //numFeatures += results[svcName][layerName].length;
+                                for (var i = 0; i < results[svcName][layerName].length; i++) {
+                                    var item = results[svcName][layerName][i];
+                                    var layerKey = svcName + '/' + layerName;
+                                    var layerUrl = results[svcName][layerName][i].layerUrl;
+
+                                    //Create a layer "folder" node if it doesn't already exist
+                                    if (this.featureStore.query({id: layerName}).length === 0) {
+                                        this.featureStore.put({
+                                            uid: ++this.uid,
+                                            id: layerName,
+                                            label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
+                                            type: 'folder',
+                                            parent: 'root'
+                                        });
+                                    }
+                                    //Create a cruise "folder" node if it doesn't already exist
+                                    var surveyId = item.feature.attributes['Cruise ID'];
+                                    var surveyYear = this.getYear(item.feature.attributes['End Date']);
+                                    var surveyKey = layerName + '/' + surveyId;
+                                    if (this.featureStore.query({id: surveyKey}).length === 0) {
+                                        this.featureStore.put({
+                                            uid: ++this.uid,
+                                            id: surveyKey,
+                                            label: '<b>Cruise ID: ' + surveyId + ' (' + surveyYear + ')</b>',
+                                            type: 'folder',
+                                            parent: layerName
+                                        });
+                                    }
+
+                                    //Add the current item to the store
+                                    this.featureStore.put({
+                                        uid: ++this.uid,
+                                        id: this.uid,
+                                        //TODO: point to the magnifying glass image using a module path
+                                        displayLabel: this.getItemDisplayLabel(item, this.uid),
+                                        label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + 
+                                            "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "' title='Zoom to this feature'></a>",
+                                        layerUrl: layerUrl,
+                                        layerKey: layerKey,
+                                        attributes: item.feature.attributes,
+                                        parent: surveyKey,
+                                        type: 'item'
+                                    });
+                                }
                             }
-                            //Create a cruise "folder" node if it doesn't already exist
-                            var surveyId = item.feature.attributes['Cruise ID'];
-                            var surveyKey = layerName + '/' + surveyId;
-                            if (this.featureStore.query({id: surveyKey}).length === 0) {
-                                this.featureStore.put({
-                                    uid: ++this.uid,
-                                    id: surveyKey,
-                                    label: '<b>Cruise ID: ' + surveyId + '</b>',
-                                    type: 'folder',
-                                    parent: layerName
-                                });
-                            }
-
-                            //Add the current item to the store
-                            this.featureStore.put({
-                                uid: ++this.uid,
-                                id: this.uid,
-                                //TODO: point to the magnifying glass image using a module path
-                                displayLabel: this.getItemDisplayLabel(item, this.uid),
-                                label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + 
-                                    "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "' title='Zoom to this feature'></a>",
-                                layerUrl: layerUrl,
-                                layerKey: layerKey,
-                                attributes: item.feature.attributes,
-                                parent: surveyKey,
-                                type: 'item'
-                            });
                         }
                     }
                 }
@@ -358,72 +364,75 @@ define([
                 this.fileExpandedNodePaths = [];
 
                 for (var svcName in results) {
-                    for (var layerName in results[svcName]) {
+                    if (results.hasOwnProperty(svcName)) {
+                        for (var layerName in results[svcName]) {
+                            if (results[svcName].hasOwnProperty(layerName)) {
 
-                        numFeaturesForLayer = results[svcName][layerName].length;
-                        totalFeatures += numFeaturesForLayer;
+                                numFeaturesForLayer = results[svcName][layerName].length;
+                                totalFeatures += numFeaturesForLayer;
 
-                        //numFeatures += results[svcName][layerName].length;
-                        for (var i = 0; i < results[svcName][layerName].length; i++) {
-                            var item = results[svcName][layerName][i];
-                            var layerKey = svcName + '/' + layerName;
-                            var layerUrl = results[svcName][layerName][i].layerUrl;
-                            //Create a layer "folder" node if it doesn't already exist
-                            // if (this.fileFeatureStore.query({id: layerName}).length === 0) {
-                            //     this.fileFeatureStore.put({
-                            //         uid: ++this.uid,
-                            //         id: layerName,
-                            //         label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
-                            //         type: 'folder',
-                            //         parent: 'root'
-                            //     });
-                            // }
-                            //Create a cruise "folder" node if it doesn't already exist
-                            var surveyId = item.feature.attributes['Cruise ID'];
-                            var surveyKey = layerName + '/' + surveyId;
-                            // if (this.fileFeatureStore.query({id: surveyKey}).length === 0) {
-                            //     this.fileFeatureStore.put({
-                            //         uid: ++this.uid,
-                            //         id: surveyKey,
-                            //         label: '<b>Cruise ID: ' + surveyId + '</b>',
-                            //         type: 'folder',
-                            //         parent: layerName
-                            //     });
-                            // }
+                                //numFeatures += results[svcName][layerName].length;
+                                for (var i = 0; i < results[svcName][layerName].length; i++) {
+                                    var item = results[svcName][layerName][i];
+                                    var layerKey = svcName + '/' + layerName;
+                                    var layerUrl = results[svcName][layerName][i].layerUrl;
+                                    //Create a layer "folder" node if it doesn't already exist
+                                    // if (this.fileFeatureStore.query({id: layerName}).length === 0) {
+                                    //     this.fileFeatureStore.put({
+                                    //         uid: ++this.uid,
+                                    //         id: layerName,
+                                    //         label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
+                                    //         type: 'folder',
+                                    //         parent: 'root'
+                                    //     });
+                                    // }
+                                    //Create a cruise "folder" node if it doesn't already exist
+                                    var surveyId = item.feature.attributes['Cruise ID'];
+                                    // if (this.fileFeatureStore.query({id: surveyKey}).length === 0) {
+                                    //     this.fileFeatureStore.put({
+                                    //         uid: ++this.uid,
+                                    //         id: surveyKey,
+                                    //         label: '<b>Cruise ID: ' + surveyId + '</b>',
+                                    //         type: 'folder',
+                                    //         parent: layerName
+                                    //     });
+                                    // }
 
-                            var instrumentKey;
+                                    var instrumentKey;
 
-                            //Create an instrument "folder" node if it doesn't already exist
-                            var instrument = item.feature.attributes['Instrument Name'];
-                            instrumentKey = layerName + '/' + surveyId + '/' + instrument;
-                            if (this.fileFeatureStore.query({id: instrumentKey}).length === 0) {
-                                this.fileFeatureStore.put({
-                                    uid: ++this.uid,
-                                    id: instrumentKey,
-                                    label: '<b>Instrument: ' + instrument + '</b>',
-                                    type: 'folder',
-                                    parent: 'root'
-                                });
+                                    //Create an instrument "folder" node if it doesn't already exist
+                                    var instrument = item.feature.attributes['Instrument Name'];
+                                    instrumentKey = layerName + '/' + surveyId + '/' + instrument;
+                                    if (this.fileFeatureStore.query({id: instrumentKey}).length === 0) {
+                                        this.fileFeatureStore.put({
+                                            uid: ++this.uid,
+                                            id: instrumentKey,
+                                            label: '<b>Instrument: ' + instrument + '</b>',
+                                            type: 'folder',
+                                            parent: 'root'
+                                        });
 
-                                //Add this node to the list of nodes to be expanded to in constructFeatureTree
-                                //this.fileExpandedNodePaths.push(['root', layerName, surveyKey, instrumentKey]);
+                                        //Add this node to the list of nodes to be expanded to in constructFeatureTree
+                                        //this.fileExpandedNodePaths.push(['root', layerName, surveyKey, instrumentKey]);
+                                    }
+                                    
+
+                                    //Add the current item to the store
+                                    this.fileFeatureStore.put({
+                                        uid: ++this.uid,
+                                        id: this.uid,
+                                        //TODO: point to the magnifying glass image using a module path
+                                        displayLabel: this.getItemDisplayLabel(item, this.uid),
+                                        label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + 
+                                            "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "' title='Zoom to this feature'></a>",
+                                        layerUrl: layerUrl,
+                                        layerKey: layerKey,
+                                        attributes: item.feature.attributes,
+                                        parent: instrumentKey,
+                                        type: 'item'
+                                    });
+                                }
                             }
-                            
-
-                            //Add the current item to the store
-                            this.fileFeatureStore.put({
-                                uid: ++this.uid,
-                                id: this.uid,
-                                //TODO: point to the magnifying glass image using a module path
-                                displayLabel: this.getItemDisplayLabel(item, this.uid),
-                                label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + 
-                                    "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "' title='Zoom to this feature'></a>",
-                                layerUrl: layerUrl,
-                                layerKey: layerKey,
-                                attributes: item.feature.attributes,
-                                parent: instrumentKey,
-                                type: 'item'
-                            });
                         }
                     }
                 }
@@ -444,10 +453,10 @@ define([
                         this.showInfo(item);
                     }),
                     getIconClass: function(item, opened) {
-                        if (item.type == 'item') {
+                        if (item.type === 'item') {
                             return 'iconBlank';
                         }
-                        else if (item.type == 'folder') {
+                        else if (item.type === 'folder') {
                             return (opened ? 'dijitFolderOpened' : 'dijitFolderClosed');
                         }
                         else {
@@ -484,10 +493,10 @@ define([
                         this.showInfo(item);
                     }),
                     getIconClass: function(item, opened) {
-                        if (item.type == 'item') {
+                        if (item.type === 'item') {
                             return 'iconBlank';
                         }
-                        else if (item.type == 'folder') {
+                        else if (item.type === 'folder') {
                             return (opened ? 'dijitFolderOpened' : 'dijitFolderClosed');
                         }
                         else {
@@ -519,11 +528,12 @@ define([
                 var item = treeNode.item;
 
                 //Display the current image thumbnail in the popup dialog
-                if (item && item.type == 'item') {
+                if (item && item.type === 'item') {
                     if (item.attributes['Image Thumbnail'] === 'Null') {
                         this.imageThumbnailDialog.set('content', 'No image available');
                     } else {
-                        this.imageThumbnailDialog.set('content', '<a href="' + item.attributes['Image Full Size'] + '" target="_blank"><img src="' + item.attributes['Image Thumbnail'] + '" width="300"></img></a>')
+                        this.imageThumbnailDialog.set('content', '<a href="' + item.attributes['Image Full Size'] + '" target="_blank"><img src="' + 
+                            item.attributes['Image Thumbnail'] + '" width="300"></img></a>');
                     }
                 }
             },
@@ -548,53 +558,53 @@ define([
 
             getLayerDisplayLabel: function(item, count) {
 
-                if (item.layerName == 'File-Level: NMFS') {
+                if (item.layerName === 'File-Level: NMFS') {
                     return '<i><b>NMFS (' + this.formatCount(count, 'file') + ')</b></i>';
                 }
-                else if (item.layerName == 'File-Level: OER') {
+                else if (item.layerName === 'File-Level: OER') {
                     return '<i><b>OER (' + this.formatCount(count, 'file') + ')</b></i>';
                 }
-                else if (item.layerName == 'File-Level: UNOLS') {
+                else if (item.layerName === 'File-Level: UNOLS') {
                     return '<i><b>UNOLS (' + this.formatCount(count, 'file') + ')</b></i>';
                 }
-                else if (item.layerName == 'File-Level: Other NOAA') {
+                else if (item.layerName === 'File-Level: Other NOAA') {
                     return '<i><b>Other NOAA (' + this.formatCount(count, 'file') + ')</b></i>';
                 }
-                else if (item.layerName == 'File-Level: Other') {
+                else if (item.layerName === 'File-Level: Other') {
                     return '<i><b>Other (' + this.formatCount(count, 'file') + ')</b></i>';
                 }
-                else if (item.layerName == 'File-Level: Non-U.S.') {
+                else if (item.layerName === 'File-Level: Non-U.S.') {
                     return '<i><b>Non-U.S. (' + this.formatCount(count, 'file') + ')</b></i>';
                 }
-                else if (item.layerName == 'Cruise-Level: NMFS') {
+                else if (item.layerName === 'Cruise-Level: NMFS') {
                     return '<i><b>NMFS (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName == 'Cruise-Level: OER') {
+                else if (item.layerName === 'Cruise-Level: OER') {
                     return '<i><b>OER (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName == 'Cruise-Level: UNOLS') {
+                else if (item.layerName === 'Cruise-Level: UNOLS') {
                     return '<i><b>UNOLS (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName == 'Cruise-Level: Other NOAA') {
+                else if (item.layerName === 'Cruise-Level: Other NOAA') {
                     return '<i><b>Other NOAA (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName == 'Cruise-Level: Other') {
+                else if (item.layerName === 'Cruise-Level: Other') {
                     return '<i><b>Other (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName == 'Cruise-Level: Non-U.S.') {
+                else if (item.layerName === 'Cruise-Level: Non-U.S.') {
                     return '<i><b>Non-U.S. (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
             },
 
             formatCount: function(count, noun) {
                 if (count > 1) {
-                    if (noun == 'cruise') {
+                    if (noun === 'cruise') {
                         return count + ' cruises';
                     } else {
                         return count + ' files';
                     }
                 } else {
-                    if (noun == 'cruise') {
+                    if (noun === 'cruise') {
                         return count + ' cruise';
                     } else {
                         return count + ' file';
@@ -661,7 +671,7 @@ define([
                 this.requestDataDialog.cruiseInfos = cruiseInfos;
                 this.requestDataDialog.fileInfos = null;
                 this.requestDataDialog.geometry = this.identify.searchGeometry;
-                if (this.identify.searchGeometry.type == 'point') {
+                if (this.identify.searchGeometry.type === 'point') {
                     this.requestDataDialog.showFullCruiseWarning();
                     this.requestDataDialog.hideGeometryCheckBox();
                 }
@@ -685,7 +695,7 @@ define([
                 this.requestDataDialog.cruiseInfos = [cruiseInfo];
                 this.requestDataDialog.fileInfos = null;
                 this.requestDataDialog.geometry = this.identify.searchGeometry;
-                if (this.identify.searchGeometry.type == 'point') {
+                if (this.identify.searchGeometry.type === 'point') {
                     this.requestDataDialog.showFullCruiseWarning();
                     this.requestDataDialog.hideGeometryCheckBox();
                 }
@@ -698,6 +708,15 @@ define([
                     this.requestDataDialog.showGeometryCheckBox();
                 }
                 this.requestDataDialog.show();
+            },
+
+            getYear: function(dateStr) {
+                var tokens = dateStr.split('/');
+                if (tokens.length === 3) {
+                    return tokens[2];
+                } else {
+                    return '';
+                }
             }
         });
     }

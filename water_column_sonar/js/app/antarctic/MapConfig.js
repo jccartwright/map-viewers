@@ -5,8 +5,8 @@ define([
     'dojo/_base/Color',
     'dojo/topic',
     'esri/symbols/SimpleLineSymbol',
-    'ngdc/web_mercator/MapConfig',
-    'app/web_mercator/MapToolbar',
+    'ngdc/antarctic/MapConfig',
+    'app/antarctic/MapToolbar',
     'app/Identify',
     'app/AppIdentifyPane'
     ],
@@ -32,12 +32,16 @@ define([
                 this.mapToolbar = new MapToolbar({
                     map: this.map, 
                     layerCollection: this.mapLayerCollection, 
-                    maxLat: 85, 
-                    minLat: -85
-                }, 'mercatorMapToolbar');
+                    maxLat: -50, 
+                    minLat: -90
+                }, 'antarcticMapToolbar');
                 this.mapToolbar.startup();
-
+                this.mapToolbar.enabled = false;
+                
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
+                this.identify.enabled = false;
+
+                //this.mapLayerCollection.suspend();
 
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
@@ -45,11 +49,11 @@ define([
                     'class': 'identifyPane',
                     autoExpandTree: false,
                     lineSymbol: new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0, 255, 255]), 3)
-                }, dom.byId('mercatorIdentifyPaneDiv'));
+                }, dom.byId('antarcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
+                this.identifyPane.enabled = false;
                 
-                this.setEnabled(true);
-                topic.publish('/wcd/MapReady', 'mercator');
+                topic.publish('/wcd/MapReady', 'antarctic');
             }
          
             

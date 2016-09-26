@@ -11,11 +11,17 @@
         <table cellpadding="3" cellspacing="1">
             <tr>
                 <td colspan="2">
-                    Collection Date:<br>
+                    Cruise Date:<br>
                     <label for="startDate">Start:</label>
-                    <input type="text" data-dojo-attach-point='startDate' name="startDate" id="startDate" value="" data-dojo-type="dijit/form/DateTextBox" style="width: 90px;"/>
+                    <input type="text" data-dojo-attach-point='startDate' name="startDate" id="startDate" value="" data-dojo-type="dijit/form/DateTextBox" 
+                        data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}" style="width: 90px;"/>
                     <label for="startDate">End:</label>
-                    <input type="text" data-dojo-attach-point='endDate' name="endDate" id="endDate" value="" data-dojo-type="dijit/form/DateTextBox" style="width: 90px;"/>
+                    <input type="text" data-dojo-attach-point='endDate' name="endDate" id="endDate" value="" data-dojo-type="dijit/form/DateTextBox"
+                        data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}" style="width: 90px;"/>
+                    <img id="dateHelp" class="tooltipButton" src="images/question-button.png">
+                    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'dateHelp'">
+                        <div class="tooltipText">Date format: YYYY-MM-DD</div>
+                    </div>
                 </td>   
             </tr>
             <tr>
@@ -40,6 +46,7 @@
                     <select disabled multiple="true" data-dojo-type="dojox/form/CheckedMultiSelect" data-dojo-attach-point="instrumentSelect" name="instruments">
                         <option value="EK500">EK500 (single-beam)</option>
                         <option value="EK60">EK60 (single-beam)</option>
+                        <option value="EK60">EK80 (single-beam)</option>
                         <option value="ES60">ES60 (single-beam)</option>
                         <option value="EM122">EM122 (multibeam)</option>
                         <option value="EM2040">EM2040 (multibeam)</option>

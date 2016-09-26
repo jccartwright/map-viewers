@@ -46,17 +46,13 @@ define([
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
                     identify: this.identify,
-                    class: 'identifyPane',
+                    'class': 'identifyPane',
                     autoExpandTree: false,
                     lineSymbol: new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0, 255, 255]), 3)
                 }, dom.byId('arcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
                 this.identifyPane.enabled = false;
 
-                //Whenever the layer mode changes between 'cruise' and 'file', close the IdentifyPane to reduce confusion
-                topic.subscribe('/water_column_sonar/layerMode', lang.hitch(this, function() {
-                    this.identifyPane.close();
-                }));
                 topic.publish('/wcd/MapReady', 'arctic');
             }
          

@@ -31,6 +31,11 @@ define([
                         visible: false
                     },
                     {
+                        label: '<a href="http://www.nauticalcharts.noaa.gov/mcd/Raster/" target="_blank">NOAA Raster Navigational Charts (RNC®)</a>',
+                        services: [{id: 'RNC'}],
+                        visible: false
+                    },
+                    {
                         label: 'Graticule',
                         services: [{id: 'Graticule'}],
                         visible: false

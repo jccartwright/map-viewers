@@ -89,7 +89,7 @@ define([
                 script.get("//maps.ngdc.noaa.gov/mapviewer-support/wcd/ships.groovy", {
                         preventCache: true,
                         jsonp: 'callback',
-                        handleAs: 'json',
+                        handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populateShipSelect(data.items);
@@ -101,7 +101,7 @@ define([
                 script.get("//maps.ngdc.noaa.gov/mapviewer-support/wcd/institutions.groovy", {
                         preventCache: true,
                         jsonp: 'callback',
-                        handleAs: 'json',
+                        handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populateInstitutionSelect(data.items);
@@ -113,7 +113,7 @@ define([
                 script.get("//maps.ngdc.noaa.gov/mapviewer-support/wcd/surveys.groovy", {
                         preventCache: true,
                         jsonp: 'callback',
-                        handleAs: 'json',
+                        handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populateSurveySelect(data.items);
