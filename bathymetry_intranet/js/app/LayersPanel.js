@@ -57,7 +57,7 @@ define([
                     topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [1], this.chkNosHydroDigital.checked);
                 }));
                 on(this.chkNosHydroNonDigital, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'NOS Hydro (non-digital)', this.chkNosHydroNonDigital.checked);                    
+                    topic.publish('/ngdc/layer/visibility', 'NOS Hydro (non-digital)', this.chkNosHydroNonDigital.checked);
                 }));
                 on(this.chkBagHillshades, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.chkBagHillshades.checked);   
@@ -71,21 +71,24 @@ define([
                     }                                     
                 }));
 
+                // on(this.chkEmodNet, 'change', lang.hitch(this, function() {
+                //     topic.publish('/ngdc/layer/visibility', 'EMODNet', this.chkEmodNet.checked);
+                // }));
+
                 on(this.chkDems, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'DEM Extents', this.chkDems.checked);
+                    topic.publish('/ngdc/layer/visibility', 'DEM Tiles', this.chkDems.checked);
                 })); 
                 on(this.chkDemHillshades, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'DEM Hillshades', this.chkDemHillshades.checked);
                 }));  
 
-                on(this.chkCscLidar, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'CSC Lidar', [4], this.chkCscLidar.checked);                    
+                on(this.chkOcmLidar, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'OCM Lidar', [4], this.chkOcmLidar.checked);                    
                 }));
 
+                this.searchDialog = new SearchDialog({title: 'Search Bathymetric Surveys'});
                 on(this.searchButton, 'click', lang.hitch(this, function() {
-                    if (!this.searchDialog) {
-                        this.searchDialog = new SearchDialog({title: 'Bathymetry Survey Search'});
-                    }
                     this.searchDialog.show();
                 }));  
 
@@ -135,7 +138,10 @@ define([
                 }
                 if (values.platform) {
                     s += 'Platform Name: ' + values.platform + '<br>';
-                }                
+                }
+                if (values.institution) {
+                    s += 'Source Institution: ' + values.institution + '<br>';
+                }
                 filterDiv.innerHTML = s;
             }
         });
