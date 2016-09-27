@@ -161,15 +161,11 @@ define([
                         visible: this.tracklineVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer', {
-                        id: 'Multibeam (tiled)',
-                        visible: this.multibeamVisible
-                    }),
                     new ArcGISDynamicMapServiceLayer('//gisdev.ngdc.noaa.gov/arcgis/rest/services/intranet/multibeam_dynamic/MapServer', {
-                        id: 'Multibeam (dynamic)',
+                        id: 'Multibeam',
                         visible: this.multibeamVisible,
                         imageParameters: this.imageParameters.png32
-                    }),   
+                    }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/dem_tiles/MapServer', {
                         id: 'DEM Tiles',
                         visible: this.demVisible,
@@ -212,13 +208,6 @@ define([
 
             definePairedMapServices: function() {
                 this.pairedMapServices = [
-                    {
-                        id: 'Multibeam',
-                        tiledService: this.getLayerById('Multibeam (tiled)'),
-                        dynamicService: this.getLayerById('Multibeam (dynamic)'),
-                        visible: this.multibeamVisible,
-                        cutoffZoom: 9
-                    },
                     {
                         id: 'Trackline Bathymetry',
                         tiledService: this.getLayerById('Trackline Bathymetry (tiled)'),
