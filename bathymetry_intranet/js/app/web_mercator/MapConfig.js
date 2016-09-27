@@ -27,7 +27,7 @@ define([
 
                 this.mapToolbar = new MapToolbar({
                     map: this.map, 
-                    layerCollection: this.mapLayerCollection, 
+                    layerCollection: this.mapLayerCollection 
                 }, 'mercatorMapToolbar');
                 this.mapToolbar.startup();
 
@@ -36,7 +36,7 @@ define([
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
                     identify: this.identify,
-                    class: 'identifyPane',
+                    'class': 'identifyPane',
                     autoExpandTree: false
                 }, dom.byId('mercatorIdentifyPaneDiv'));
                 this.identifyPane.startup();
@@ -52,12 +52,12 @@ define([
 
                 this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
 
-                this.mapLayerCollection.getLayerById('CSC Lidar').setVisibleLayers([-1]);
+                this.mapLayerCollection.getLayerById('OCM Lidar').setVisibleLayers([-1]);
 
                 //Apply layer definitions to the CSC Lidar layer to only show bathymetric lidar
                 var layerDefinitions = [];
                 layerDefinitions[4] = "Data_Classes_Available LIKE '%Bathymetric Lidar Points%'";
-                this.mapLayerCollection.getLayerById('CSC Lidar').setLayerDefinitions(layerDefinitions);
+                this.mapLayerCollection.getLayerById('OCM Lidar').setLayerDefinitions(layerDefinitions);
             }
          
             

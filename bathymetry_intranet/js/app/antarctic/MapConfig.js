@@ -32,6 +32,7 @@ define([
                     minLat: -90
                 }, 'antarcticMapToolbar');
                 this.mapToolbar.startup();
+                this.mapToolbar.enabled = false;
                 
                 this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
                 this.identify.enabled = false;
@@ -39,7 +40,7 @@ define([
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
                     identify: this.identify,
-                    class: 'identifyPane',
+                    'class': 'identifyPane',
                     autoExpandTree: false
                 }, dom.byId('antarcticIdentifyPaneDiv'));
                 this.identifyPane.startup();

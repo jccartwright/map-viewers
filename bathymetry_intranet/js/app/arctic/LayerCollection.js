@@ -81,12 +81,12 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/intranet/trackline_combined_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer', {
                         id: 'Trackline Bathymetry',
                         visible: this.tracklineVisible,
                         imageParameters: this.imageParameters.png32
                     }),                    
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/intranet/multibeam_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//gisdev.ngdc.noaa.gov/arcgis/rest/services/intranet/multibeam_dynamic/MapServer', {
                         id: 'Multibeam',
                         visible: this.multibeamVisible,
                         imageParameters: this.imageParameters.png32
@@ -102,7 +102,7 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/intranet/dem_extents/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer', {
                         id: 'DEM Extents',
                         visible: this.demVisible,
                         imageParameters: this.imageParameters.png32
