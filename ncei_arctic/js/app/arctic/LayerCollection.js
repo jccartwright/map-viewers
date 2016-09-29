@@ -116,7 +116,6 @@ define([
                     }),
 
                     new NARRWMSLayer('http://nomads.ncdc.noaa.gov/thredds/wms/narrmonthly', {
-                        //http://nomads.ncdc.noaa.gov/thredds/wms/narrmonthly/YYYYMM/YYYYMM01/narrmonhr-a_221_YYYYMM01_HH00_000.grb
                         id: 'NARR-A Monthly',
                         year: '2014',
                         month: '08',
