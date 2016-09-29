@@ -71,10 +71,9 @@ define([
             },
 
             init: function() {
-                esriConfig.defaults.io.corsEnabledServers = [
-                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'
-                ];
+                esriConfig.defaults.io.corsEnabledServers.push('maps.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('gis.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('gisdev.ngdc.noaa.gov');
 
                 esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
@@ -149,11 +148,11 @@ define([
                 logger.debug('setting up Arctic view...');
                 
                 var initialExtent = new Extent({
-                    xmin: -4000000,
-                    ymin: -4000000,
-                    xmax: 4000000,
-                    ymax: 4000000,
-                    spatialReference: new SpatialReference({wkid: 3995})
+                    xmin: -2000000,
+                    ymin: -2000000,
+                    xmax: 6000000,
+                    ymax: 6000000,
+                    spatialReference: new SpatialReference({wkid: 32661})
                 });   
 
                 var zoomLevels = new ArcticZoomLevels();            

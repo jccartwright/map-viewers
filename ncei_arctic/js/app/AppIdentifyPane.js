@@ -87,13 +87,67 @@ define([
             },
 
             getFolderName: function(layerKey) {
-                if (layerKey === 'Multibeam/Multibeam Bathymetric Surveys') {
-                    return 'NOAA NCEI Multibeam Bathymetric Surveys';
-                } 
-                else if (layerKey === 'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry') {
-                    return 'NOAA NCEI Single-Beam Bathymetric Surveys';
-                }
 
+                if (layerKey === 'Multibeam/Multibeam Bathymetric Surveys') {
+                    return 'Multibeam Bathymetric Surveys';
+                } 
+                else if (layerKey === 'Trackline Combined/Marine Trackline Surveys: Bathymetry') {
+                    return 'Single-Beam Bathymetric Surveys';
+                }
+                else if (layerKey === 'Trackline Combined/Marine Trackline Surveys: Gravity') {
+                    return 'Trackline Gravity';
+                }
+                else if (layerKey === 'Trackline Combined/Marine Trackline Surveys: Magnetics') {
+                    return 'Trackline Magnetics';
+                }
+                else if (layerKey === 'Trackline Combined/Marine Trackline Surveys: Multi-Channel Seismics') {
+                    return 'Trackline Multi-Channel Seismics';
+                }
+                else if (layerKey === 'Trackline Combined/Marine Trackline Surveys: Seismic Refraction') {
+                    return 'Trackline Seismic Refraction';
+                }
+                else if (layerKey === 'Trackline Combined/Marine Trackline Surveys: Shot-Point Navigation') {
+                    return 'Trackline Shot-Point Navigation';
+                }
+                else if (layerKey === 'Trackline Combined/Marine Trackline Surveys: Side Scan Sonar') {
+                    return 'Trackline Side Scan Sonar';
+                }
+                else if (layerKey === 'Trackline Combined/Marine Trackline Surveys: Single-Channel Seismics') {
+                    return 'Trackline Single-Channel Seismics';
+                }
+                else if (layerKey === 'Trackline Combined/Marine Trackline Surveys: Subbottom Profile') {
+                    return 'Trackline Subbottom Profile';
+                }
+                else if (layerKey === 'Trackline Combined/Aeromagnetic Surveys') {
+                    return 'Aeromagnetic Surveys';
+                }
+                else if (layerKey === 'NOS Hydrographic Surveys/Surveys with BAGs') {
+                    return 'Surveys wth BAGs'
+                } 
+                else if (layerKey === 'NOS Hydrographic Surveys/Surveys with Digital Sounding Data') {
+                    return 'Surveys with Digital Sounding Data';
+                } 
+                else if (layerKey === 'NOS Hydrographic Surveys/Surveys without Digital Sounding Data') {
+                    return 'Surveys without Digital Sounding Data';
+                } 
+                else if (layerKey === 'DEM Extents/All NCEI Bathymetric DEMs') {
+                    return 'Digital Elevation Models';
+                }
+                else if (layerKey === 'DEM Tiles/DEM Tiles') {
+                    return 'Digital Elevation Models (New Tiles)';
+                }
+                else if (layerKey == 'Marine Geology/Marine Geology Data Sets/Reports') {
+                    return 'Marine Geology Data Sets/Reports';
+                }
+                else if (layerKey == 'Sample Index/All Samples by Institution') {
+                    return 'Sample Index';
+                }
+                else if (layerKey == 'Sample Index/All Samples by Institution') {
+                    return 'Sample Index';
+                }
+                else if (layerKey === 'Undersea Features/Point Features' || layerKey === 'Undersea Features/Line Features' || layerKey === 'Undersea Features/Polygon Features') {
+                    return 'Undersea Features';
+                }
                 else if (layerKey === 'CRN/Climate Reference Network') {
                     return 'U.S. Climate Reference Network (USCRN)';
                 }
@@ -112,34 +166,6 @@ define([
                             
             },
 
-            // getLayerDisplayLabel: function(item, count) {
-
-            //     if (item.layerName === 'Multibeam Bathymetric Surveys') {
-            //         return '<i><b>Multibeam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
-            //     } 
-            //     else if (item.layerName === 'Marine Trackline Surveys: Bathymetry') {
-            //         return '<i><b>Single-Beam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i>';
-            //     } 
-            //     else if (item.layerName === 'Surveys with BAGs') {
-            //         return '<i>Surveys wth BAGs (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
-            //     } 
-            //     else if (item.layerName === 'Surveys with Digital Sounding Data') {
-            //         return '<i>Surveys with Digital Sounding Data (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
-            //     } 
-            //     else if (item.layerName === 'Surveys without Digital Sounding Data') {
-            //         return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
-            //     } 
-            //     else if (item.layerName === 'All NCEI Bathymetric DEMs') {
-            //         return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
-            //     }
-            //     else if (item.layerName === 'DEM Tiles') {
-            //         return '<i><b>Digital Elevation Models (New Tiles) (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
-            //     }
-            //     else if (item.layerName === 'Lidar') {
-            //         return '<i><b>OCM Bathymetric Lidar (' + this.formatCountString(count) + ')</b></i>';
-            //     }
-            // },
-
             formatCountString: function(count) {
                 if (count >= 1000) {
                     return 'results limited to 1000';
@@ -149,58 +175,106 @@ define([
             },
 
             getItemDisplayLabel: function(item, uid) {
+                var a = item.feature.attributes;
+
                 if (item.formatter === 'Multibeam/Multibeam Bathymetric Surveys') {
-                    return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
+                    return this.getItemLabelSpan(a['Survey ID'] + ' <i>(' + a['Survey Year'] + ')</i>', uid);
                 } 
                 else if (item.formatter === 'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry') {
-                    return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
+                    return this.getItemLabelSpan(a['Survey ID'] + ' <i>(' + a['Survey Year'] + ')</i>', uid);
+                }
+                else if (item.formatter === 'Trackline Combined/Marine Trackline Surveys: Gravity') {
+                    return this.getItemLabelSpan(a['Survey ID'] + ' <i>(' + a['Survey Year'] + ')</i>', uid);
+                }
+                else if (item.formatter === 'Trackline Combined/Marine Trackline Surveys: Magnetics') {
+                    return this.getItemLabelSpan(a['Survey ID'] + ' <i>(' + a['Survey Year'] + ')</i>', uid);
+                }
+                else if (item.formatter === 'Trackline Combined/Marine Trackline Surveys: Multi-Channel Seismics') {
+                    return this.getItemLabelSpan(a['Survey ID'] + ' <i>(' + a['Survey Year'] + ')</i>', uid);
+                }
+                else if (item.formatter === 'Trackline Combined/Marine Trackline Surveys: Seismic Refraction') {
+                    return this.getItemLabelSpan(a['Survey ID'] + ' <i>(' + a['Survey Year'] + ')</i>', uid);
+                }
+                else if (item.formatter === 'Trackline Combined/Marine Trackline Surveys: Shot-Point Navigation') {
+                    return this.getItemLabelSpan(a['Survey ID'] + ' <i>(' + a['Survey Year'] + ')</i>', uid);
+                }
+                else if (item.formatter === 'Trackline Combined/Marine Trackline Surveys: Side Scan Sonar') {
+                    return this.getItemLabelSpan(a['Survey ID'] + ' <i>(' + a['Survey Year'] + ')</i>', uid);
+                }
+                else if (item.formatter === 'Trackline Combined/Marine Trackline Surveys: Single-Channel Seismics') {
+                    return this.getItemLabelSpan(a['Survey ID'] + ' <i>(' + a['Survey Year'] + ')</i>', uid);
+                }
+                else if (item.formatter === 'Trackline Combined/Marine Trackline Surveys: Subbottom Profile') {
+                    return this.getItemLabelSpan(a['Survey ID'] + ' <i>(' + a['Survey Year'] + ')</i>', uid);
+                }
+                else if (item.formatter === 'Trackline Combined/Aeromagnetic Surveys') {
+                    if (item.feature.attributes['Start Year'] && item.feature.attributes['End Year'] && 
+                        item.feature.attributes['Start Year'] !== item.feature.attributes['End Year']) {
+                        return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Start Year'] + '-' + item.feature.attributes['End Year'] + ')</i>', uid);
+                    }
+                    else {
+                        return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Start Year'] + ')</i>', uid);
+                    }
+                }
+                else if (item.formatter === 'NOS Hydrographic Surveys/Surveys with BAGs') {
+                    return this.getItemLabelSpan(a['Survey ID'] + (a['Survey Year'] === 'Null' ? '' : ' <i>(' + a['Survey Year'] + ')</i>'), uid);
+                } 
+                else if (item.formatter === 'NOS Hydrographic Surveys/Surveys with Digital Sounding Data') {
+                    return this.getItemLabelSpan(a['Survey ID'] + (a['Survey Year'] === 'Null' ? '' : ' <i>(' + a['Survey Year'] + ')</i>'), uid);
+                }
+                else if (item.formatter === 'NOS Hydrographic Surveys/Surveys without Digital Sounding Data') {
+                    return this.getItemLabelSpan(a['Survey ID'] + (a['Survey Year'] === 'Null' ? '' : ' <i>(' + a['Survey Year'] + ')</i>'), uid);
+                } 
+                else if (item.formatter === 'DEM Extents/All NCEI Bathymetric DEMs') {
+                    return this.getItemLabelSpan(a['Name'] + ' <i>(' + a['Cell Size'] + ')</i>', uid);
+                }
+                else if (item.formatter === 'DEM Tiles/DEM Tiles') {
+                    return this.getItemLabelSpan(a['NAME'] + ' <i>(' + a['CELL_SIZE'] + ')</i>', uid);
                 }
 
+                else if (item.formatter == 'Marine Geology/Marine Geology Data Sets/Reports') {
+                    if (a['Hole/Sample ID'] != 'Null') {
+                        return this.getItemLabelSpan('Sample: ' + a['Hole/Sample ID'], uid);
+                    } else {
+                        return this.getItemLabelSpan('Sample ID not available', uid);
+                    }
+                }
+                else if (item.formatter == 'Sample Index/All Samples by Institution') {
+                    if (a['Alternate Cruise or Leg'] == 'Null') {
+                        return this.getItemLabelSpan(a['Cruise or Leg'] + ':' + a['Sample ID'] + ':' + a['Device'] + ' (' + a['Repository'] + ')', uid);
+                    }
+                    else {
+                        return this.getItemLabelSpan(a['Cruise or Leg'] + ' (' + a['Alternate Cruise or Leg'] + '):' + a['Sample ID'] + ':' + a['Device'] + ' (' + a['Repository'] + ')', uid);
+                    }
+                }
+
+                else if (item.formatter === 'Undersea Features/Point Features' || item.formatter === 'Undersea Features/Line Features' || item.formatter === 'Undersea Features/Polygon Features') {
+                    return this.getItemLabelSpan(a['NAME'] + ' ' + a['TYPE'], uid);
+                } 
+                else if (item.formatter === 'NOS Hydrographic Surveys/Surveys with Digital Sounding Data') {
+                    return this.getItemLabelSpan(a['Survey ID'] + (a['Survey Year'] === 'Null' ? '' : ' <i>(' + a['Survey Year'] + ')</i>'), uid);
+                } 
+                else if (item.formatter === 'NOS Hydrographic Surveys/Surveys with Digital Sounding Data') {
+                    return this.getItemLabelSpan(a['Survey ID'] + (a['Survey Year'] === 'Null' ? '' : ' <i>(' + a['Survey Year'] + ')</i>'), uid);
+                } 
+
                 else if (item.formatter === 'CRN/Climate Reference Network') {
-                    return this.getItemLabelSpan(item.feature.attributes['STATION'] + ' (' + item.feature.attributes['STATE'] + ')', uid);
+                    return this.getItemLabelSpan(a['STATION'] + ' (' + a['STATE'] + ')', uid);
                 }
                 else if (item.formatter === 'GHCND/GHCN Daily') {
-                    return this.getItemLabelSpan(item.feature.attributes['STATION_NAME'], uid);
+                    return this.getItemLabelSpan(a['STATION_NAME'], uid);
                 }
                 else if (item.formatter === 'GSOM/Global Surface Summary of the Month') {
-                    return this.getItemLabelSpan(item.feature.attributes['STATION_NAME'], uid);
+                    return this.getItemLabelSpan(a['STATION_NAME'], uid);
                 }
                 else if (item.formatter === 'GSOY/Global Surface Summary of the Year') {
-                    return this.getItemLabelSpan(item.feature.attributes['STATION_NAME'], uid);
+                    return this.getItemLabelSpan(a['STATION_NAME'], uid);
                 }
                 else if (item.formatter === 'ISD/Hourly Global') {
-                    return this.getItemLabelSpan(item.feature.attributes['STATION'], uid);
+                    return this.getItemLabelSpan(a['STATION'], uid);
                 }
                 
             },
-
-            // getItemDisplayLabel: function(item, uid) {
-            //     //return item.value;
-            //     if (item.layerName === 'Multibeam Bathymetric Surveys') {
-            //         return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
-            //     } 
-            //     else if (item.layerName === 'Marine Trackline Surveys: Bathymetry') {
-            //         return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
-            //     } 
-            //     else if (item.layerName === 'Surveys with BAGs') {
-            //         return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
-            //     } 
-            //     else if (item.layerName === 'Surveys with Digital Sounding Data') {
-            //         return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
-            //     } 
-            //     else if (item.layerName === 'Surveys without Digital Sounding Data') {
-            //         return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
-            //     } 
-            //     else if (item.layerName === 'All NCEI Bathymetric DEMs') {
-            //         return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
-            //     }
-            //     else if (item.layerName === 'DEM Tiles') {
-            //         return this.getItemLabelSpan(item.feature.attributes['NAME'] + ' <i>(' + item.feature.attributes['CELL_SIZE'] + ')</i>', uid);
-            //     }
-            //     else if (item.layerName === 'Lidar') {
-            //         return this.getItemLabelSpan(item.feature.attributes['Name'], uid);
-            //     }
-            // },
 
             getItemLabelSpan: function(text, uid) {
                 return '<span id="itemLabel-' + uid + '">' + text + '</span>';
@@ -277,6 +351,7 @@ define([
                                     layerKey: layerKey,
                                     layerType: layerType,
                                     attributes: item.feature.attributes,
+                                    objectIdField: item.objectIdField,
                                     parent: this.getFolderName(layerKey),
                                     type: 'item'
                                 });
