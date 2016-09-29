@@ -1,6 +1,7 @@
 define([
     'dojo/_base/declare',
     'dojo/_base/lang',
+    'dojo/_base/array',
     'dojo/topic',
     'dojo/on',
     'dojo/aspect',
@@ -17,6 +18,7 @@ define([
     function(
         declare, 
         lang,
+        array,
         topic,
         on,
         aspect,
@@ -45,22 +47,22 @@ define([
                 this.searchDialog = new SearchDialog({title: 'Water Column Sonar Data Search'});
 
                 on(this.chkNMFS, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [8], this.chkNMFS.checked);                    
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [0], this.chkNMFS.checked);
                 }));
                 on(this.chkOER, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [9], this.chkOER.checked);                    
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [1], this.chkOER.checked);
                 }));
                 on(this.chkUNOLS, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [10], this.chkUNOLS.checked);                   
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [2], this.chkUNOLS.checked);
                 }));
                 on(this.chkOtherNoaa, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [11], this.chkOtherNoaa.checked);                    
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [3], this.chkOtherNoaa.checked);
                 }));
                 on(this.chkOther, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [12], this.chkOther.checked);                    
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkOther.checked);
                 }));
                 on(this.chkNonUs, 'change', lang.hitch(this, function() {                    
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [13], this.chkNonUs.checked);                    
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [5], this.chkNonUs.checked);
                 }));
 
                 on(this.searchButton, 'click', lang.hitch(this, function() {                    
@@ -100,57 +102,51 @@ define([
                 }
 
                 if (values.ships && values.ships.length > 0) {
-                    s += 'Ship: ' + values.ships.join(',') + '<br>';
+                    s += 'Ship: ' + values.ships.join(', ') + '<br>';
                 }
                 if (values.institutions && values.institutions.length > 0) {
-                    s += 'Institution: ' + values.institutions.join(',') + '<br>';
+                    s += 'Institution: ' + values.institutions.join(', ') + '<br>';
                 }
                 if (values.surveyIds && values.surveyIds.length > 0) {
-                    s += 'Survey ID: ' + values.surveyIds.join(',') + '<br>';
+                    s += 'Survey ID: ' + values.surveyIds.join(', ') + '<br>';
                 }
                 if (values.instruments && values.instruments.length > 0) {
-                    s += 'Instrument: ' + values.instruments.join(',') + '<br>';
-                }
-
-                if (values.minNumBeams && values.maxNumBeams) {
-                    s += 'Number of beams: ' + values.minNumBeams + ' to ' + values.maxNumBeams + '<br>';
-                }
-                else if (values.minNumBeams) {
-                    s += 'Number of beams: greater than ' + values.minNumBeams + '<br>';
-                }
-                else if (values.maxNumBeams) {
-                    s += 'Number of beams: less than ' + values.maxNumBeams + '<br>';
-                }
-
-                if (values.minSwathWidth && values.maxSwathWidth) {
-                    s += 'Swath width: ' + values.minSwathWidth + ' to ' + values.maxSwathWidth + ' degrees<br>';
-                }
-                else if (values.minSwathWidth) {
-                    s += 'Swath width: greater than ' + values.minSwathWidth + ' degrees<br>';
-                }
-                else if (values.maxSwathWidth) {
-                    s += 'Swath width: less than ' + values.maxSwathWidth + ' degrees<br>';
+                    s += 'Instrument: ' + values.instruments.join(', ') + '<br>';
                 }
 
                 if (values.bottomSoundingsOnly) {
                     s += 'Bottom soundings only';
                 }
 
-                if (values.frequencies) {
-                    s += 'Frequency: ' + values.frequencies.join(',') + ' kHz<br>';
+                if (this.isFrequencyFilter(values.frequencies)) {
+                    s += 'Frequency (kHz): ';
+                    var frequencyList = [];
+
+                    array.forEach(values.frequencies, function(frequency) {
+                        var subFrequencyList = [];
+                        array.forEach(frequency, function(subFrequency) {
+                            subFrequencyList.push(subFrequency.replace('W', ' broadband'));
+                        });
+
+                        if (subFrequencyList.length > 0) {
+                            frequencyList.push(subFrequencyList.join(' or '));
+                        }
+                    });
+
+                    s += frequencyList.join(', ');
                 }
                 
-                if (values.minFrequency && values.maxFrequency) {
-                    s += 'Frequency: ' + values.minFrequency + ' to ' + values.maxFrequency + ' kHz<br>';
-                }
-                else if (values.minFrequency) {
-                    s += 'Frequency: greater than ' + values.minFrequency + ' kHz<br>';
-                }
-                else if (values.maxFrequency) {
-                    s += 'Frequency: less than ' + values.maxFrequency + ' kHz<br>';
-                }
-
                 filterDiv.innerHTML = s;
+            },
+
+            isFrequencyFilter: function(frequencies) {
+                var isFrequencyFilter = false;
+                array.forEach(frequencies, function(frequency) {
+                    if (frequency.length > 0) {
+                        isFrequencyFilter = true;
+                    }
+                });
+                return isFrequencyFilter;
             },
 
             //Format a date in the form yyyymmdd
