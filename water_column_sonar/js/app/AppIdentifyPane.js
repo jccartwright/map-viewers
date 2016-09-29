@@ -128,7 +128,7 @@ define([
                         this.showImagePreview();
                     } else {
                         this.setTitle(this.featurePageTitle);
-                        this.stackContainer.selectChild(this.featurePage);    
+                        this.stackContainer.selectChild(this.featurePage);
                     }
                 });
 
@@ -274,7 +274,7 @@ define([
                     domStyle.set(this.requestFileOrCruiseButton.domNode, 'display', 'none');
                 }
                 else {
-                    domStyle.set(this.requestFileOrCruiseButton.domNode, 'display', 'inline');
+                    domStyle.set(this.requestFileOrCruiseButton.domNode, 'display', '');
                 }
             },
 
@@ -558,40 +558,25 @@ define([
 
             getLayerDisplayLabel: function(item, count) {
 
-                if (item.layerName === 'File-Level: NMFS') {
-                    return '<i><b>NMFS (' + this.formatCount(count, 'file') + ')</b></i>';
-                }
-                else if (item.layerName === 'File-Level: OER') {
-                    return '<i><b>OER (' + this.formatCount(count, 'file') + ')</b></i>';
-                }
-                else if (item.layerName === 'File-Level: UNOLS') {
-                    return '<i><b>UNOLS (' + this.formatCount(count, 'file') + ')</b></i>';
-                }
-                else if (item.layerName === 'File-Level: Other NOAA') {
-                    return '<i><b>Other NOAA (' + this.formatCount(count, 'file') + ')</b></i>';
-                }
-                else if (item.layerName === 'File-Level: Other') {
-                    return '<i><b>Other (' + this.formatCount(count, 'file') + ')</b></i>';
-                }
-                else if (item.layerName === 'File-Level: Non-U.S.') {
-                    return '<i><b>Non-U.S. (' + this.formatCount(count, 'file') + ')</b></i>';
-                }
-                else if (item.layerName === 'Cruise-Level: NMFS') {
+                if (item.layerName === 'File Geometries') {
+                    return '<i><b>Files (' + this.formatCount(count, 'file') + ')</b></i>';
+                }                
+                else if (item.layerName === 'NMFS Cruises') {
                     return '<i><b>NMFS (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName === 'Cruise-Level: OER') {
+                else if (item.layerName === 'OER Cruises') {
                     return '<i><b>OER (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName === 'Cruise-Level: UNOLS') {
+                else if (item.layerName === 'UNOLS Cruises') {
                     return '<i><b>UNOLS (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName === 'Cruise-Level: Other NOAA') {
+                else if (item.layerName === 'Other NOAA Cruises') {
                     return '<i><b>Other NOAA (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName === 'Cruise-Level: Other') {
+                else if (item.layerName === 'Other Cruises') {
                     return '<i><b>Other (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName === 'Cruise-Level: Non-U.S.') {
+                else if (item.layerName === 'Non-U.S. Cruises') {
                     return '<i><b>Non-U.S. (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
             },
