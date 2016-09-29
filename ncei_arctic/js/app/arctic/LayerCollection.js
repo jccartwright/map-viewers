@@ -27,24 +27,6 @@ define([
             constructor: function(options) {
                 this.name = 'app/arctic/LayerCollection';
 
-                // this.multibeamVisible = false;
-                // this.nosHydroVisible = false;
-                // this.tracklineVisible = false;
-                // this.demVisible = false;
-
-                // if (options && options.multibeamVisible) {
-                //     this.multibeamVisible = options.multibeamVisible;
-                // }
-                // if (options && options.nosHydroVisible) {
-                //     this.nosHydroVisible = options.nosHydroVisible;
-                // }
-                // if (options && options.tracklineVisible) {
-                //     this.tracklineVisible = options.tracklineVisible;
-                // }
-                // if (options && options.demVisible) {
-                //     this.demVisible = options.demVisible;
-                // }
-
                 this.defineMapServices();
 
                 this.setLayerTimeouts();
@@ -75,7 +57,7 @@ define([
 
                 //TODO check to ensure unique id
                 this.mapServices = [
-                    new ArcGISTiledMapServiceLayer('//gisdev.ngdc.noaa.gov/arcgis/rest/services/ups_north/arctic_basemap/MapServer', {
+                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/ups_north/arctic_basemap/MapServer', {
                         id: 'Arctic Basemap',
                         visible: true
                     }),  
@@ -256,6 +238,12 @@ define([
                         imageParameters: this.imageParameters.png32
                     })
                 ];
+
+                this.getLayerById('Undersea Features').objectIdFields = {
+                    0: 'FEATURE_ID',
+                    1: 'FEATURE_ID',
+                    2: 'FEATURE_ID'
+                };
             },  //end defineMapServices
 
             definePairedMapServices: function() {
