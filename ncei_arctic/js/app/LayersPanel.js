@@ -171,10 +171,6 @@ define([
                 on(this.chkNARR, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'NARR-A Monthly', this.chkNARR.checked);                    
                 }));
-
-                // var monthlyElevations = [0.0,-5.0,-10.0,-15.0,-20.0,-25.0,-30.0,-35.0,-40.0,-45.0,-50.0,-55.0,-60.0,-65.0,-70.0,-75.0,-80.0,-85.0,-90.0,-95.0,
-                //     -100.0,-125.0,-150.0,-175.0,-200.0,-225.0,-250.0,-275.0,-300.0,-325.0,-350.0,-375.0,-400.0,-425.0,-450.0,-475.0,-500.0,-550.0,-600.0,-650.0,-700.0,
-                //     -750.0,-800.0,-850.0,-900.0,-950.0,-1000.0,-1050.0,-1100.0,-1150.0,-1200.0,-1250.0,-1300.0,-1350.0,-1400.0,-1450.0,-1500.0];
                 
                 var elevations = [0.0,-5.0,-10.0,-15.0,-20.0,-25.0,-30.0,-35.0,-40.0,-45.0,-50.0,-55.0,-60.0,-65.0,-70.0,-75.0,-80.0,-85.0,-90.0,-95.0,
                     -100.0,-125.0,-150.0,-175.0,-200.0,-225.0,-250.0,-275.0,-300.0,-325.0,-350.0,-375.0,-400.0,-425.0,-450.0,-475.0,-500.0,-550.0,-600.0,-650.0,-700.0,
@@ -265,15 +261,6 @@ define([
                 on(this.narrHourSelect, 'change', lang.hitch(this, function() {
                     topic.publish('/layersPanel/selectNarrHour', this.narrHourSelect.get('value'));
                 }));
-
-                // this.searchDialog = new SearchDialog({title: 'Search Bathymetric Surveys'});
-                // on(this.searchButton, 'click', lang.hitch(this, function() {
-                //     this.searchDialog.show();
-                // }));  
-
-                // on(this.resetButton, 'click', lang.hitch(this, function() {
-                //     topic.publish('/bathymetry/ResetSearch');
-                // })); 
             },
 
             setDeepElevationsDisabled: function(disabled) {
