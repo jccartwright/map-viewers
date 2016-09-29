@@ -250,7 +250,7 @@ define([
 
                 topic.publish('/ngdc/showLoading');
                 xhr.post(
-                    'http://www.ngdc.noaa.gov/wcs-order/order', {
+                    '//www.ngdc.noaa.gov/wcs-order/order', {
                         data: jsonString,
                         handleAs: 'json',
                         headers: {'Content-Type':'application/json'},
