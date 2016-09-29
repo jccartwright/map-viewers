@@ -30,6 +30,12 @@ define([
         ){
         
         return declare([MapConfig], {
+
+            constructor: function() {
+                if (Proj4js) {  
+                    this.sourceProj = new Proj4js.Proj('EPSG:32661');
+                }
+            },
                         
             //handle setup which requires all layers to be loaded
             mapReady: function() {
