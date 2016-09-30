@@ -309,16 +309,23 @@ define([
                 var latLonExtent;
                 var surveyIds;
                 var identifyResults;
+                var extent;
+
+                if (this.identify.searchGeometry.type === 'extent') {
+                    extent = this.identify.searchGeometry;
+                } else if (this.identify.searchGeometry.type === 'polygon') {
+                    extent = this.identify.searchGeometry.getExtent();
+                }
 
                 if (this.isMultibeam) {
                     datasetInfo = {dataset: 'Multibeam'};
                     
-                    if (this.identify.searchGeometry.type === 'extent') {
-                        if (this.identify.searchGeometry.spatialReference.wkid === 4326) {
+                    if (extent) {
+                        if (extent.spatialReference.wkid === 4326) {
                             latLonExtent = this.identify.searchGeometry;
                         }
-                        else if (this.identify.searchGeometry.spatialReference.wkid === 102100 || this.identify.searchGeometry.spatialReference.wkid === 3857) {
-                            latLonExtent = webMercatorUtils.webMercatorToGeographic(this.identify.searchGeometry);
+                        else if (extent.spatialReference.isWebMercator()) {
+                            latLonExtent = webMercatorUtils.webMercatorToGeographic(extent);
                         }
                         datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
                     }
@@ -338,12 +345,12 @@ define([
                 if (this.isNosHydro) {
                     datasetInfo = {dataset: 'nos', grouped: true};
                     
-                    if (this.identify.searchGeometry.type === 'extent') {
-                        if (this.identify.searchGeometry.spatialReference.wkid === 4326) {
+                    if (extent) {
+                        if (extent.spatialReference.wkid === 4326) {
                             latLonExtent = this.identify.searchGeometry;
                         }
-                        else if (this.identify.searchGeometry.spatialReference.wkid === 102100 || this.identify.searchGeometry.spatialReference.wkid === 3857) {
-                            latLonExtent = webMercatorUtils.webMercatorToGeographic(this.identify.searchGeometry);
+                        else if (extent.spatialReference.isWebMercator()) {
+                            latLonExtent = webMercatorUtils.webMercatorToGeographic(extent);
                         }
                         datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
                     }
@@ -379,12 +386,12 @@ define([
                 }
                 if (this.isDemTiles) {
                     datasetInfo = {dataset: 'DEM'};
-                    if (this.identify.searchGeometry.type === 'extent') {
-                        if (this.identify.searchGeometry.spatialReference.wkid === 4326) {
+                    if (extent) {
+                        if (extent.spatialReference.wkid === 4326) {
                             latLonExtent = this.identify.searchGeometry;
                         }
-                        else if (this.identify.searchGeometry.spatialReference.wkid === 102100 || this.identify.searchGeometry.spatialReference.wkid === 3857) {
-                            latLonExtent = webMercatorUtils.webMercatorToGeographic(this.identify.searchGeometry);
+                        else if (extent.spatialReference.isWebMercator()) {
+                            latLonExtent = webMercatorUtils.webMercatorToGeographic(extent);
                         }
                         datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
                     }
@@ -408,7 +415,7 @@ define([
             submitFormToNext: function(postBody) {
                 console.debug("sending order via form submission to NEXT: ", postBody);
                 
-                var url = "http://www.ngdc.noaa.gov/next-web/orders/create";
+                var url = "//www.ngdc.noaa.gov/next-web/orders/create";
 
                 //create a new form element and submit it.
                 var form = document.createElement("form");
