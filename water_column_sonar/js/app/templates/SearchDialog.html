@@ -46,7 +46,7 @@
                     <select disabled multiple="true" data-dojo-type="dojox/form/CheckedMultiSelect" data-dojo-attach-point="instrumentSelect" name="instruments">
                         <option value="EK500">EK500 (single-beam)</option>
                         <option value="EK60">EK60 (single-beam)</option>
-                        <option value="EK60">EK80 (single-beam)</option>
+                        <option value="EK80">EK80 (single-beam)</option>
                         <option value="ES60">ES60 (single-beam)</option>
                         <option value="EM122">EM122 (multibeam)</option>
                         <option value="EM2040">EM2040 (multibeam)</option>
@@ -66,60 +66,59 @@
             </tr> 
 
             <tr>
-                <td>
-                    Discrete Frequencies<br>
-                    (for Single-Beam):&nbsp;&nbsp;&nbsp;
+                <td colspan="2">
+                    Center Frequencies for Single Beam:&nbsp;&nbsp;&nbsp;
                     <input data-dojo-attach-point="chkAllFrequencies" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllFrequencies"/>
                     <label>All</label><br>
-                    <select disabled multiple="true" data-dojo-type="dojox/form/CheckedMultiSelect" data-dojo-attach-point="frequencySelect" name="frequencies">
-                        <option value="18">18 kHz</option>
-                        <option value="38">38 kHz</option>
-                        <option value="70">70 kHz</option>
-                        <option value="120">120 kHz</option>
-                        <option value="200">200 kHz</option>
-                        <option value="710">710 kHz</option>
-                    </select>
-                </td>
-
-                <td style="vertical-align=top">
-                    Parameters for Multibeam:
-                    <table style="border:1px solid #b3b3b3">
+                    <table style="border:1px solid #b3b3b3; text-align: center; border-spacing: 15px 0px;">
                         <tr>
-                            <td colspan="2">
-                                Frequency Range:<br>
-                                <label for="minFrequencyText">Min:</label>
-                                <input id="minFrequencyText" data-dojo-attach-point="minFrequencyText" class="frequencyText" type="text" data-dojo-type="dijit/form/NumberTextBox" name="minFrequency" 
-                                    data-dojo-props="constraints:{min:0,max:800,places:0},
-                                        invalidMessage:'Please enter a numeric value.',
-                                        rangeMessage:'Frequency out of range (0-800kHz).'"/>
-                                <label for="maxFrequencyText">Max:</label>
-                                <input id="maxFrequencyText" data-dojo-attach-point="maxFrequencyText" class="frequencyText" type="text" data-dojo-type="dijit/form/NumberTextBox" name="maxFrequency" 
-                                    data-dojo-props="constraints:{min:0,max:800,places:0},
-                                        invalidMessage:'Please enter a numeric value.',
-                                        rangeMessage:'Frequency out of range (0-800kHz).'"/> kHz
+                            <td>kHz</td>
+                            <td>Narrowband</td>
+                            <td>
+                                Broadband                                
+                            </td>
+                            <td>
+                                <img id="broadbandHelp" class="tooltipButton" src="images/question-button.png">
+                                <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'broadbandHelp'">
+                                    <div class="tooltipText">The EK80 can produce narrowband and broadband data. However, few EK80 datasets are currently archived. If no results are returned, try including narrowband frequencies in your search.<br><br>In the cruise/file attributes, broadband frequencies have a "W" appended, e.g. "70WkHz".</div>
+                                </div>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
-                                Number of Beams:<br>
-                                <label for="minNumBeamsSpinner">Min:</label>
-                                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minNumBeamsSpinner" 
-                                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:450,places:0}" name="minNumBeams" style="width: 55px"></div>
-                                <label for="maxNumBeamsSpinner">Max:</label>
-                                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxNumBeamsSpinner" 
-                                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:450,places:0}" name="maxNumBeams" style="width: 55px"></div>
-                            </td>
+                            <td>18</td>
+                            <td><input disabled data-dojo-attach-point="chkNarrowband18" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkNarrowband18"/></td>
+                            <td><input disabled data-dojo-attach-point="chkBroadband18" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkBroadband18"/></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td colspan="2">
-                                Swath Width (degrees):<br>
-                                <label for="minSwathWidthSpinner">Min:</label>
-                                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minSwathWidthSpinner" 
-                                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:180,places:0}" name="minSwathWidth" style="width: 55px"></div>
-                                <label for="maxSwathWidthSpinner">Max:</label>
-                                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxSwathWidthSpinner" 
-                                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:180,places:0}" name="maxSwathWidth" style="width: 55px"></div>
-                            </td>
+                            <td>38</td>
+                            <td><input disabled data-dojo-attach-point="chkNarrowband38" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkNarrowband38"/></td>
+                            <td><input disabled data-dojo-attach-point="chkBroadband38" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkBroadband38"/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>70</td>
+                            <td><input disabled data-dojo-attach-point="chkNarrowband70" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkNarrowband70"/></td>
+                            <td><input disabled data-dojo-attach-point="chkBroadband70" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkBroadband70"/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>120</td>
+                            <td><input disabled data-dojo-attach-point="chkNarrowband120" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkNarrowband120"/></td>
+                            <td><input disabled data-dojo-attach-point="chkBroadband120" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkBroadband120"/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td><input disabled data-dojo-attach-point="chkNarrowband200" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkNarrowband200"/></td>
+                            <td><input disabled data-dojo-attach-point="chkBroadband200" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkBroadband200"/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>710</td>
+                            <td><input disabled data-dojo-attach-point="chkNarrowband710" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkNarrowband710"/></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </table>
                 </td>
@@ -127,7 +126,7 @@
             <tr>
                 <td colspan="2">                    
                     <input data-dojo-attach-point="chkBottomSoundings" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkBottomSoundings"/>
-                    Limit to Files with Bottom Soundings<br><br>
+                    Limit to Files with Bottom Soundings<br>
 
                     <input checked data-dojo-attach-point="chkZoomToResults" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkZoomToResults"/>
                     Zoom to Results

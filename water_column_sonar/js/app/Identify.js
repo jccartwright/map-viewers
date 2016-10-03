@@ -59,18 +59,13 @@ define([
 
                 //formatter specific to each sublayer, keyed by Layer/sublayer name.
                 this.formatters = {
-                    'Water Column Sonar/File-Level: NMFS': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/File-Level: OER': lang.hitch(this, this.wcdFileFormatter), 
-                    'Water Column Sonar/File-Level: UNOLS': lang.hitch(this, this.wcdFileFormatter), 
-                    'Water Column Sonar/File-Level: Other NOAA': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/File-Level: Other': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/File-Level: Non-U.S.': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/Cruise-Level: NMFS': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Cruise-Level: OER': lang.hitch(this, this.wcdCruiseFormatter), 
-                    'Water Column Sonar/Cruise-Level: UNOLS': lang.hitch(this, this.wcdCruiseFormatter), 
-                    'Water Column Sonar/Cruise-Level: Other NOAA': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Cruise-Level: Other': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Cruise-Level: Non-U.S.': lang.hitch(this, this.wcdCruiseFormatter)
+                    'Water Column Sonar/File Geometries': lang.hitch(this, this.wcdFileFormatter),
+                    'Water Column Sonar/NMFS Cruises': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/OER Cruises': lang.hitch(this, this.wcdCruiseFormatter), 
+                    'Water Column Sonar/UNOLS Cruises': lang.hitch(this, this.wcdCruiseFormatter), 
+                    'Water Column Sonar/Other NOAA Cruises': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Other Cruises': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Non-U.S. Cruises': lang.hitch(this, this.wcdCruiseFormatter)
                 };
             }, //end constructor
 
@@ -164,7 +159,7 @@ define([
                     '<div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>' +
                     '<div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
 
-                if (a['Instrument Name'] === 'EK60' || a['Instrument Name'] === 'EK500' || a['Instrument Name'] === 'ES60') {
+                if (a['Instrument Name'] === 'EK60' || a['Instrument Name'] === 'EK80' || a['Instrument Name'] === 'EK500' || a['Instrument Name'] === 'ES60') {
                     template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
                 } else {
                     template +=
@@ -242,43 +237,18 @@ define([
 
             sortResults: function(results) {
                 var features;
-                if (results['Water Column Sonar']) {    
-                    if ((features = results['Water Column Sonar']['File-Level: NMFS'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['File-Level: OER'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['File-Level: UNOLS'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['File-Level: Other NOAA'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['File-Level: Other'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['File-Level: Non-U.S.'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: NMFS'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: OER'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: UNOLS'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: Other NOAA'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: Other'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: Non-U.S.'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
+                if (results['Water Column Sonar']) {
+                    for (sublayerId in results['Water Column Sonar']) {
+                        if (results['Water Column Sonar'].hasOwnProperty(sublayerId)) {
+                            features = results['Water Column Sonar'][sublayerId];
+                            if (sublayerId === 'File Geometries') {
+                                features.sort(this.wcdFileSort);
+                            }
+                            else {
+                                features.sort(this.wcdCruiseSort);
+                            }
+                        }
+                    }                      
                 }
             },
 
@@ -309,7 +279,7 @@ define([
                 identifyParams.height = this._map.height;
                 identifyParams.mapExtent = this._map.extent;
 
-                identifyParams.layerIds = [1, 2, 3, 4, 5, 6]; //Sublayers for file-level geometries
+                identifyParams.layerIds = [6]; //Sublayer for file-level geometries
                 identifyParams.layerDefinitions = layer.layerDefinitions;
                 return(identifyParams);
             },
@@ -389,14 +359,12 @@ define([
 
             addCruiseAndInstrumentToFileLayerDefs: function(cruiseId, instrument) {
                 var newLayerDefs = [];
-                array.forEach(this.fileTaskInfo.params.layerIds, lang.hitch(this, function(layerId) {
-                    var layerDef = this.fileTaskInfo.params.layerDefinitions[layerId];
-                    if (layerDef) {
-                        newLayerDefs[layerId] = layerDef + " AND CRUISE_NAME = '" + cruiseId + "' AND INSTRUMENT_NAME = '" + instrument + "'";
-                    } else {
-                        newLayerDefs[layerId] = "CRUISE_NAME = '" + cruiseId + "' AND INSTRUMENT_NAME = '" + instrument + "'";
-                    }
-                }));
+                var layerDef = this.fileTaskInfo.params.layerDefinitions[6];
+                if (layerDef) {
+                    newLayerDefs[6] = layerDef + " AND CRUISE_NAME = '" + cruiseId + "' AND INSTRUMENT_NAME = '" + instrument + "'";
+                } else {
+                    newLayerDefs[6] = "CRUISE_NAME = '" + cruiseId + "' AND INSTRUMENT_NAME = '" + instrument + "'";
+                }
                 return newLayerDefs;
             },
 

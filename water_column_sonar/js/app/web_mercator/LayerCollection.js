@@ -66,7 +66,7 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),  
-                    new WebTiledLayer('http://tileservice.charts.noaa.gov/tiles/50000_1/{level}/{col}/{row}.png', {
+                    new WebTiledLayer('https://tileservice.charts.noaa.gov/tiles/50000_1/{level}/{col}/{row}.png', {
                         id: 'RNC',
                         visible: false,
                         opacity: 0.5
@@ -110,7 +110,7 @@ define([
             },
 
             setSubLayerVisibility: function() {
-                this.getLayerById('Water Column Sonar').setVisibleLayers([8, 9, 10, 11, 12, 13]);
+                this.getLayerById('Water Column Sonar').setVisibleLayers([0, 1, 2, 3, 4, 5]);
             }
         });
     }

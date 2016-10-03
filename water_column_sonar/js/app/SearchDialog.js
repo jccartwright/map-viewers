@@ -83,7 +83,7 @@ define([
                     this.instrumentSelect.set('disabled', this.chkAllInstruments.checked);
                 }));
                 on(this.chkAllFrequencies, 'click', lang.hitch(this, function() {
-                    this.frequencySelect.set('disabled', this.chkAllFrequencies.checked);
+                    this.setFrequencyCheckboxesDisabled(this.chkAllFrequencies.checked);
                 }));
 
                 script.get("//maps.ngdc.noaa.gov/mapviewer-support/wcd/ships.groovy", {
@@ -151,6 +151,7 @@ define([
             },
 
             execute: function(values) {  
+                values.frequencies = this.getFrequencies();
                 if (this.isDefault(values)) {
                     this.reset();
                 }
@@ -159,6 +160,53 @@ define([
                     values.zoomToResults = this.chkZoomToResults.checked;
                     topic.publish('/wcd/Search', values);
                 }                
+            },
+
+            getFrequencies: function() {
+                var frequencies = [];
+                frequencies.push([]); //18 placeholder
+                frequencies.push([]); //38
+                frequencies.push([]); //70
+                frequencies.push([]); //120
+                frequencies.push([]); //200
+                frequencies.push([]); //710
+
+                if (!this.chkAllFrequencies.checked) {
+                    if (this.chkNarrowband18.checked) {
+                        frequencies[0].push('18');
+                    }
+                    if (this.chkBroadband18.checked) {
+                        frequencies[0].push('18W');
+                    }
+                    if (this.chkNarrowband38.checked) {
+                        frequencies[1].push('38');
+                    }
+                    if (this.chkBroadband38.checked) {
+                        frequencies[1].push('38W');
+                    }
+                    if (this.chkNarrowband70.checked) {
+                        frequencies[2].push('70');
+                    }
+                    if (this.chkBroadband70.checked) {
+                        frequencies[2].push('70W');
+                    }
+                    if (this.chkNarrowband120.checked) {
+                        frequencies[3].push('120');
+                    }
+                    if (this.chkBroadband120.checked) {
+                        frequencies[3].push('120W');
+                    }
+                    if (this.chkNarrowband200.checked) {
+                        frequencies[4].push('200');
+                    }
+                    if (this.chkBroadband200.checked) {
+                        frequencies[4].push('200W');
+                    }
+                    if (this.chkNarrowband710.checked) {
+                        frequencies[5].push('710');
+                    }
+                }
+                return frequencies;
             },
 
             isDefault: function(values) {
@@ -198,20 +246,22 @@ define([
                 this.instrumentSelect._updateSelection();
                 this.instrumentSelect.set('disabled', true);
                 this.chkAllInstruments.set('checked', true);
+                
+                this.setFrequencyCheckboxesDisabled(true);
+                this.chkNarrowband18.set('checked', false);
+                this.chkBroadband18.set('checked', false);
+                this.chkNarrowband38.set('checked', false);
+                this.chkBroadband38.set('checked', false);
+                this.chkNarrowband18.set('checked', false);
+                this.chkNarrowband70.set('checked', false);
+                this.chkBroadband70.set('checked', false);
+                this.chkNarrowband120.set('checked', false);
+                this.chkBroadband120.set('checked', false);
+                this.chkNarrowband200.set('checked', false);
+                this.chkBroadband200.set('checked', false);
+                this.chkNarrowband710.set('checked', false);
 
-                this.frequencySelect.reset();
-                this.frequencySelect._updateSelection();
-                this.frequencySelect.set('disabled', true);
                 this.chkAllFrequencies.set('checked', true);
-
-                this.minFrequencyText.set('value', '');
-                this.maxFrequencyText.set('value', '');
-                             
-                this.minNumBeamsSpinner.set('value', '');
-                this.maxNumBeamsSpinner.set('value', '');
-
-                this.minSwathWidthSpinner.set('value', '');
-                this.maxSwathWidthSpinner.set('value', '');
 
                 this.chkBottomSoundings.set('checked', false);
                 this.chkZoomToResults.set('checked', true);
@@ -220,6 +270,20 @@ define([
             reset: function() {
                 this.clearForm();
                 topic.publish('/wcd/ResetSearch');
+            },
+
+            setFrequencyCheckboxesDisabled: function(disabled) {
+                this.chkNarrowband18.set('disabled', disabled);
+                this.chkBroadband18.set('disabled', disabled);
+                this.chkNarrowband38.set('disabled', disabled);
+                this.chkBroadband38.set('disabled', disabled);
+                this.chkNarrowband70.set('disabled', disabled);
+                this.chkBroadband70.set('disabled', disabled);
+                this.chkNarrowband120.set('disabled', disabled);
+                this.chkBroadband120.set('disabled', disabled);
+                this.chkNarrowband200.set('disabled', disabled);
+                this.chkBroadband200.set('disabled', disabled);
+                this.chkNarrowband710.set('disabled', disabled);
             }
     });
 });

@@ -136,7 +136,7 @@ define([
                     //     opacity: 0.5,
                     //     imageServiceParameters: this.imageServiceParameters
                     // }),
-                    new WebTiledLayer('http://tileservice.charts.noaa.gov/tiles/50000_1/{level}/{col}/{row}.png', {
+                    new WebTiledLayer('https://tileservice.charts.noaa.gov/tiles/50000_1/{level}/{col}/{row}.png', {
                         id: 'RNC',
                         visible: false,
                         opacity: 0.5

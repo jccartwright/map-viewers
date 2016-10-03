@@ -5,6 +5,7 @@ define([
     'dojo/_base/config',
     'dojo/io-query',
     'dojo/_base/lang',
+    'dojo/_base/array',
     'dojo/topic',
     'dojo/on',
     'dojo/aspect',
@@ -45,6 +46,7 @@ define([
         config,
         ioQuery,
         lang,
+        array,
         topic,
         on,
         aspect,
@@ -89,12 +91,11 @@ define([
                 this.overlayNode = dom.byId(this.overlayNodeId);
             },
 
-            init: function() {                
-                esriConfig.defaults.io.corsEnabledServers = [
-                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://gisdev.ngdc.noaa.gov/arcgis/rest/services'
-                ];
-
+            init: function() {
+                esriConfig.defaults.io.corsEnabledServers.push('maps.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('gis.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('gisdev.ngdc.noaa.gov');
+                
                 esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
                 //add queryParams into config object, values in queryParams take precedence
@@ -331,37 +332,23 @@ define([
                     cruiseCond.push("INSTRUMENT_NAME in (" + quoted.join(',') + ")");
                 }
 
-                if (values.frequencies && values.frequencies.length > 0) {
+                if (values.frequencies && this.isFrequencyFilter(values.frequencies)) {
                     var clauses = [];
                     for (i = 0; i < values.frequencies.length; i++) {
-                        clauses.push("FREQUENCY LIKE '%" + values.frequencies[i] + "kHz%'");
+                        var subClauses = [];
+                        for (var j = 0; j < values.frequencies[i].length; j++) {
+                            subClauses.push("FREQUENCY LIKE '%" + values.frequencies[i][j] + "kHz%'");
+                        }
+                        
+                        if (subClauses.length > 0) {
+                            clauses.push('(' + subClauses.join(' OR ') + ')');
+                        }
                     }
                     var frequencyClause = '(' + clauses.join(' AND ') + ')';
                     fileCond.push(frequencyClause);
                     cruiseCond.push(frequencyClause);
                 }
 
-                if (values.minFrequency) {
-                    fileCond.push("MIN_FREQ>=" + values.minFrequency);
-                    cruiseCond.push("MIN_FREQ>=" + values.minFrequency);
-                }
-                if (values.maxFrequency) {
-                    fileCond.push("MAX_FREQ<=" + values.maxFrequency);
-                    cruiseCond.push("MAX_FREQ<=" + values.maxFrequency);
-                }
-
-                if (values.minNumBeams) {
-                    fileCond.push("NUMBEROFBEAMS>=" + values.minNumBeams);
-                }
-                if (values.maxNumBeams) {
-                    fileCond.push("NUMBEROFBEAMS<=" + values.maxNumBeams);
-                }                
-                if (values.minSwathWidth) {
-                    fileCond.push("SWATHWIDTH>=" + values.minSwathWidth);
-                }
-                if (values.maxSwathWidth) {
-                    fileCond.push("SWATHWIDTH<=" + values.maxSwathWidth);
-                }
                 if (values.bottomSoundingsOnly) {
                     fileCond.push("BOTTOM_HIT='Y'");
                 }   
@@ -371,21 +358,16 @@ define([
                 
                 var layerDefinitions = [];
 
-                //Apply to all 6 file-level sublayers
-                layerDefinitions[1] = fileLayerDefinition;
-                layerDefinitions[2] = fileLayerDefinition;
-                layerDefinitions[3] = fileLayerDefinition;
-                layerDefinitions[4] = fileLayerDefinition;
-                layerDefinitions[5] = fileLayerDefinition;
-                layerDefinitions[6] = fileLayerDefinition;
-
                 //Apply to all 6 cruise-level sublayers
-                layerDefinitions[8] = cruiseLayerDefinition;
-                layerDefinitions[9] = cruiseLayerDefinition;
-                layerDefinitions[10] = cruiseLayerDefinition;
-                layerDefinitions[11] = cruiseLayerDefinition;
-                layerDefinitions[12] = cruiseLayerDefinition;
-                layerDefinitions[13] = cruiseLayerDefinition;
+                layerDefinitions[0] = cruiseLayerDefinition;
+                layerDefinitions[1] = cruiseLayerDefinition;
+                layerDefinitions[2] = cruiseLayerDefinition;
+                layerDefinitions[3] = cruiseLayerDefinition;
+                layerDefinitions[4] = cruiseLayerDefinition;
+                layerDefinitions[5] = cruiseLayerDefinition;
+
+                //Apply to file-level sublayer
+                layerDefinitions[6] = fileLayerDefinition;
                 
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);
@@ -413,10 +395,10 @@ define([
                 var layerDefsStr = '';
 
                 //Only operate on cruise-level geometries (sublayers 8-13)
-                for (var i = 8; i <= 13; i++) {
+                for (var i = 0; i <= 5; i++) {
                     if (layerDefs[i] !== '') {
                         layerDefsStr += i + ':' + layerDefs[i];
-                        if (i < 13) {
+                        if (i < 5) {
                             layerDefsStr += ';';
                         }
                     }
@@ -523,7 +505,17 @@ define([
                     }
                 }
                 return pd + n.toString();
-            }
+            },
+
+            isFrequencyFilter: function(frequencies) {
+                var isFrequencyFilter = false;
+                array.forEach(frequencies, function(frequency) {
+                    if (frequency.length > 0) {
+                        isFrequencyFilter = true;
+                    }
+                });
+                return isFrequencyFilter;
+            },
         });
     }
 );
