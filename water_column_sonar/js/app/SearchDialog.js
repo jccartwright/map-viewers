@@ -164,12 +164,9 @@ define([
 
             getFrequencies: function() {
                 var frequencies = [];
-                frequencies.push([]); //18 placeholder
-                frequencies.push([]); //38
-                frequencies.push([]); //70
-                frequencies.push([]); //120
-                frequencies.push([]); //200
-                frequencies.push([]); //710
+                for (var i = 0; i < 7; i++) {
+                    frequencies.push([]);
+                }
 
                 if (!this.chkAllFrequencies.checked) {
                     if (this.chkNarrowband18.checked) {
