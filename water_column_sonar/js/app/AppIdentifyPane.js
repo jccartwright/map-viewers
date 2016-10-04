@@ -279,7 +279,6 @@ define([
             },
 
             clearFileFeatureStore: function() {
-                //console.log("inside clearFeatureStore...");
                 //Remove all items except for the root
                 var allItems = this.fileFeatureStore.query();
                 array.forEach(allItems, lang.hitch(this, function(item) {
@@ -306,7 +305,6 @@ define([
                                 numFeaturesForLayer = results[svcName][layerName].length;
                                 totalFeatures += numFeaturesForLayer;
 
-                                //numFeatures += results[svcName][layerName].length;
                                 for (var i = 0; i < results[svcName][layerName].length; i++) {
                                     var item = results[svcName][layerName][i];
                                     var layerKey = svcName + '/' + layerName;
@@ -376,28 +374,7 @@ define([
                                     var item = results[svcName][layerName][i];
                                     var layerKey = svcName + '/' + layerName;
                                     var layerUrl = results[svcName][layerName][i].layerUrl;
-                                    //Create a layer "folder" node if it doesn't already exist
-                                    // if (this.fileFeatureStore.query({id: layerName}).length === 0) {
-                                    //     this.fileFeatureStore.put({
-                                    //         uid: ++this.uid,
-                                    //         id: layerName,
-                                    //         label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
-                                    //         type: 'folder',
-                                    //         parent: 'root'
-                                    //     });
-                                    // }
-                                    //Create a cruise "folder" node if it doesn't already exist
                                     var surveyId = item.feature.attributes['Cruise ID'];
-                                    // if (this.fileFeatureStore.query({id: surveyKey}).length === 0) {
-                                    //     this.fileFeatureStore.put({
-                                    //         uid: ++this.uid,
-                                    //         id: surveyKey,
-                                    //         label: '<b>Cruise ID: ' + surveyId + '</b>',
-                                    //         type: 'folder',
-                                    //         parent: layerName
-                                    //     });
-                                    // }
-
                                     var instrumentKey;
 
                                     //Create an instrument "folder" node if it doesn't already exist
@@ -411,12 +388,8 @@ define([
                                             type: 'folder',
                                             parent: 'root'
                                         });
-
-                                        //Add this node to the list of nodes to be expanded to in constructFeatureTree
-                                        //this.fileExpandedNodePaths.push(['root', layerName, surveyKey, instrumentKey]);
                                     }
                                     
-
                                     //Add the current item to the store
                                     this.fileFeatureStore.put({
                                         uid: ++this.uid,
@@ -475,7 +448,6 @@ define([
                 }));
                 this.tree.placeAt(this.featurePane);
                 this.tree.startup();
-
                 this.tree.expandAll();
             },
 
@@ -621,12 +593,15 @@ define([
                         instrument: items[i].attributes['Instrument Name']
                     });
                 }
+                var cruiseList = [this.currentItem.attributes['Cruise ID']];
+                var instrumentList = [this.currentItem.attributes['Instrument Name']];
 
                 this.requestDataDialog.fileInfos = fileInfos;
                 this.requestDataDialog.cruiseInfos = null;
                 this.requestDataDialog.geometry = null;
                 this.requestDataDialog.hideGeometryCheckBox();
                 this.requestDataDialog.hideFullCruiseWarning();
+                this.requestDataDialog.displayFileCountAndSize(cruiseList, instrumentList, this.identify.searchGeometry, fileInfos.length);
                 this.requestDataDialog.show();
             },
 
@@ -643,6 +618,7 @@ define([
                 this.requestDataDialog.geometry = null;
                 this.requestDataDialog.hideGeometryCheckBox();
                 this.requestDataDialog.hideFullCruiseWarning();
+                this.requestDataDialog.displayFileCountAndSize(null, null, null);
                 this.requestDataDialog.show();
             },
 
@@ -652,6 +628,8 @@ define([
                 for (var i = 0; i < items.length; i++) {
                     cruiseInfos.push([items[i].attributes['Cruise ID'], items[i].attributes['Instrument Name']]);
                 }
+                var cruiseList = this.getCruiseList(cruiseInfos);
+                var instrumentList = this.getInstrumentList(cruiseInfos);
 
                 this.requestDataDialog.cruiseInfos = cruiseInfos;
                 this.requestDataDialog.fileInfos = null;
@@ -659,12 +637,15 @@ define([
                 if (this.identify.searchGeometry.type === 'point') {
                     this.requestDataDialog.showFullCruiseWarning();
                     this.requestDataDialog.hideGeometryCheckBox();
+                    this.requestDataDialog.displayFileCountAndSize(cruiseList, instrumentList, null);
                 }
                 else {
                     if (this.requestDataDialog.chkPassGeometry.checked) {
                         this.requestDataDialog.hideFullCruiseWarning();
+                        this.requestDataDialog.displayFileCountAndSize(cruiseList, instrumentList, this.identify.searchGeometry);
                     } else {
                         this.requestDataDialog.showFullCruiseWarning();
+                        this.requestDataDialog.displayFileCountAndSize(cruiseList, instrumentList, null);
                     }
                     this.requestDataDialog.showGeometryCheckBox();
                 }
@@ -676,23 +657,55 @@ define([
                     this.currentItem.attributes['Cruise ID'],
                     this.currentItem.attributes['Instrument Name']
                 ];
+                var cruiseInfos = [cruiseInfo];
+                this.requestDataDialog.cruiseInfos = cruiseInfos;
+                var cruiseList = this.getCruiseList(cruiseInfos);
+                var instrumentList = this.getInstrumentList(cruiseInfos);
 
-                this.requestDataDialog.cruiseInfos = [cruiseInfo];
                 this.requestDataDialog.fileInfos = null;
                 this.requestDataDialog.geometry = this.identify.searchGeometry;
                 if (this.identify.searchGeometry.type === 'point') {
                     this.requestDataDialog.showFullCruiseWarning();
                     this.requestDataDialog.hideGeometryCheckBox();
+                    this.requestDataDialog.displayFileCountAndSize(cruiseList, instrumentList, null);
                 }
                 else {
                     if (this.requestDataDialog.chkPassGeometry.checked) {
                         this.requestDataDialog.hideFullCruiseWarning();
+                        this.requestDataDialog.displayFileCountAndSize(cruiseList, instrumentList, this.identify.searchGeometry);
                     } else {
                         this.requestDataDialog.showFullCruiseWarning();
+                        this.requestDataDialog.displayFileCountAndSize(cruiseList, instrumentList, null);
                     }
                     this.requestDataDialog.showGeometryCheckBox();
                 }
                 this.requestDataDialog.show();
+            },
+
+            getCruiseList: function(cruiseInfos) {
+                var cruiseList = [];
+
+                array.forEach(cruiseInfos, function(cruiseInfo) {
+                    var cruise = cruiseInfo[0];
+
+                    if (array.indexOf(cruiseList, cruise) === -1) {
+                        cruiseList.push(cruise);
+                    }
+                });
+                return cruiseList;
+            },
+
+            getInstrumentList: function(cruiseInfos) {
+                var instrumentList = [];
+
+                array.forEach(cruiseInfos, function(cruiseInfo) {
+                    var instrument = cruiseInfo[1];
+
+                    if (array.indexOf(instrumentList, instrument) === -1) {
+                        instrumentList.push(instrument);
+                    }
+                });
+                return instrumentList;
             },
 
             getYear: function(dateStr) {
