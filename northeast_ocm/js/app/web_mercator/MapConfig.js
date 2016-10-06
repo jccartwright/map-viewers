@@ -105,7 +105,7 @@ define([
             },
 
             setupHurricaneLayer: function() {                
-                var queryTask = new QueryTask('http://maps.coast.noaa.gov/arcgis/rest/services/Hurricanes/AllStorms/MapServer/0');
+                var queryTask = new QueryTask('//maps.coast.noaa.gov/arcgis/rest/services/Hurricanes/AllStorms/MapServer/0');
                 var query = new Query();
                 query.where = "Display_StormName = 'SANDY 2012'";
                 query.returnGeometry = false;
@@ -117,7 +117,7 @@ define([
                         var pt = webMercatorUtils.geographicToWebMercator(new Point(feature.attributes['BEGINLON'], feature.attributes['BEGINLAT'], new SpatialReference(4326)));
                         
                         //var sms = new SimpleMarkerSymbol().setStyle(SimpleMarkerSymbol.STYLE_SQUARE).setColor(new Color([255,0,0,0.5]));
-                        var symbol = new PictureMarkerSymbol('http://maps.ngdc.noaa.gov/viewers/northeast_ocm/images/hurricane_icon.png', 39, 35);
+                        var symbol = new PictureMarkerSymbol('//maps.ngdc.noaa.gov/viewers/northeast_ocm/images/hurricane_icon.png', 39, 35);
                         var graphic = new Graphic(pt, symbol);
 
                         // var textSymbol = new TextSymbol(feature.attributes['Display_DateAndTime'] + ': ' + feature.attributes['NormalizedMSW'] + 'mph');
@@ -142,7 +142,7 @@ define([
                 var renderer = new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbol.STYLE_SHORTDOT, new Color([216,4,4]), 3));
 
                 //Add hurricanes feature layer, set definition to be SANDY 2012
-                this.hurricaneLayer = new FeatureLayer('http://maps.coast.noaa.gov/arcgis/rest/services/Hurricanes/AllStorms/MapServer/0', {
+                this.hurricaneLayer = new FeatureLayer('//maps.coast.noaa.gov/arcgis/rest/services/Hurricanes/AllStorms/MapServer/0', {
                     mode: FeatureLayer.MODE_ONDEMAND,
                     renderer: renderer,
                     outFields: ['Display_StormName', 'Display_DateAndTime', 'NormalizedMSW']
