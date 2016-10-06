@@ -293,7 +293,14 @@ define([
                     topic.publish('/ngdc/hideLoading'); //Hide the loading spinner
                     this.showOrderConfirmationDialog(response);
                 }), function(error) {
-                    alert('Error: ' + error);
+                    var message;
+                    if (error.response && error.response.text) {
+                        message = JSON.parse(error.response.text).message;
+                        alert('Error: ' + message);
+                    } else {
+                        alert('Unspecified error. Please contact wcd.info@noaa.gov for assistance.')
+                    }
+                    topic.publish('/ngdc/hideLoading'); //Hide the loading spinner
                 });
             },
 
@@ -321,12 +328,6 @@ define([
             },
 
             updateFileSizeText: function(numFiles, megabytes) {
-                if (numFiles) {
-                    this.numFilesText.innerHTML = numFiles.toString();
-                } else {
-                    this.numFilesText.innerHTML = 'unavailable';
-                }
-
                 if (megabytes) {
                     var gigabytes = Math.round(megabytes / 1024 * 100) / 100;
                     this.fileSizeText.innerHTML = (megabytes < 1024 ? megabytes + ' MB' : gigabytes + ' GB');
@@ -339,7 +340,18 @@ define([
                 } else {
                     this.fileSizeText.innerHTML = 'unavailable';
                 }
-                this.fileCountAndSizeAvailable = true;
+
+                if (numFiles > 0) {
+                    this.numFilesText.innerHTML = numFiles.toString();
+                    this.fileCountAndSizeAvailable = true;
+                } else if (numFiles === 0) {
+                    this.numFilesText.innerHTML = '0 <b>(Indicates an error. Data extraction disabled.)</b>';
+                    this.fileCountAndSizeAvailable = false;
+                } else {
+                    this.numFilesText.innerHTML = 'unavailable';
+                    this.fileCountAndSizeAvailable = true;
+                }
+
                 this.updateSubmitButtonState();
             },
 

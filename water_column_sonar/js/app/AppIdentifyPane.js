@@ -128,7 +128,11 @@ define([
                         this.showImagePreview();
                     } else {
                         this.setTitle(this.featurePageTitle);
-                        this.stackContainer.selectChild(this.featurePage);
+
+                        //Put this selectChild on a very short timer. This seems to solve the "blank page" problem when hitting the back button.
+                        setTimeout(lang.hitch(this, function() {
+                            this.stackContainer.selectChild(this.featurePage);
+                        }), 10);
                     }
                 });
 

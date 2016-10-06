@@ -394,7 +394,7 @@ define([
             zoomToResults: function(layerDefs) {
                 var layerDefsStr = '';
 
-                //Only operate on cruise-level geometries (sublayers 8-13)
+                //Only operate on cruise-level geometries (sublayers 0-5)
                 for (var i = 0; i <= 5; i++) {
                     if (layerDefs[i] !== '') {
                         layerDefsStr += i + ':' + layerDefs[i];
