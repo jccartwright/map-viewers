@@ -124,7 +124,11 @@ define([
                 this.backButton.onClick = lang.hitch(this, function(){
                     if (this.isFileFeatures) {
                         this.setTitle(this.fileFeaturePageTitle);
-                        this.stackContainer.selectChild(this.fileFeaturePage);
+                        
+                        //Put this selectChild on a very short timer. This seems to solve the "blank page" problem when hitting the back button.
+                        setTimeout(lang.hitch(this, function() {
+                            this.stackContainer.selectChild(this.fileFeaturePage);
+                        }), 10);                        
                         this.showImagePreview();
                     } else {
                         this.setTitle(this.featurePageTitle);

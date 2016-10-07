@@ -326,90 +326,109 @@ define([
 
             //Construct an object containing the filter criteria, adhering to the format the NEXT API is expecting, 
             //i.e.: {items: [{dataset: 'Multibeam', platforms: 'Knorr,Okeanos Explorer'}, {dataset: 'Sounding', startYear: 2000}]}
-            constructFilterCriteria: function() {
+            constructFilterCriteria: function(itemId /*optional survey/DEM id*/) {
                 var filterCriteria = {items: []};
-                var geometry;
+                var datasetInfo;
+                var latLonExtent;
+                var surveyIds;
+                var identifyResults;
+                var extent;
+
+                if (this.identify.searchGeometry.type === 'extent') {
+                    extent = this.identify.searchGeometry;
+                } else if (this.identify.searchGeometry.type === 'polygon') {
+                    extent = this.identify.searchGeometry.getExtent();
+                }
 
                 if (this.isMultibeam) {
-                    var datasetInfo = {dataset: 'Multibeam'};
+                    datasetInfo = {dataset: 'Multibeam'};
                     
-                    if (this.identify.searchGeometry.type == 'extent') {
-                        var latLonExtent;
-                        if (this.identify.searchGeometry.spatialReference.wkid == 4326) {
+                    if (extent) {
+                        if (extent.spatialReference.wkid === 4326) {
                             latLonExtent = this.identify.searchGeometry;
                         }
-                        else if (this.identify.searchGeometry.spatialReference.wkid == 102100 || this.identify.searchGeometry.spatialReference.wkid == 3857) {
-                            latLonExtent = webMercatorUtils.webMercatorToGeographic(this.identify.searchGeometry);
+                        else if (extent.spatialReference.isWebMercator()) {
+                            latLonExtent = webMercatorUtils.webMercatorToGeographic(extent);
                         }
                         datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
                     }
                     
                     //Pass the list of survey IDs from the identifyResults
-                    var surveyIds = [];
-                    array.forEach(this.identifyResults['Multibeam']['Multibeam Bathymetric Surveys'], lang.hitch(this, function(identifyResult) {
-                        surveyIds.push(identifyResult.feature.attributes['Survey ID']);
-                    }));
+                    surveyIds = [];
+                    if (itemId) {
+                        surveyIds.push(itemId);
+                    } else {
+                        array.forEach(this.identifyResults['Multibeam']['Multibeam Bathymetric Surveys'], lang.hitch(this, function(identifyResult) {
+                            surveyIds.push(identifyResult.feature.attributes['Survey ID']);
+                        }));                        
+                    }
                     datasetInfo.surveys = surveyIds.join(',');
-
                     filterCriteria.items.push(datasetInfo);
                 }
                 if (this.isNosHydro) {
-                    var datasetInfo = {dataset: 'nos', grouped: true};
+                    datasetInfo = {dataset: 'nos', grouped: true};
                     
-                    if (this.identify.searchGeometry.type == 'extent') {
-                        if (this.identify.searchGeometry.spatialReference.wkid == 4326) {
+                    if (extent) {
+                        if (extent.spatialReference.wkid === 4326) {
                             latLonExtent = this.identify.searchGeometry;
                         }
-                        else if (this.identify.searchGeometry.spatialReference.wkid == 102100 || this.identify.searchGeometry.spatialReference.wkid == 3857) {
-                            latLonExtent = webMercatorUtils.webMercatorToGeographic(this.identify.searchGeometry);
+                        else if (extent.spatialReference.isWebMercator()) {
+                            latLonExtent = webMercatorUtils.webMercatorToGeographic(extent);
                         }
                         datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
                     }
                     
                     //Pass the list of survey IDs from the identifyResults
-                    var surveyIds = [];
-
-                    if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data']) {
-                        var identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data'];
-                        array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
-                            var surveyId = identifyResult.feature.attributes['Survey ID'];
-                            if (array.indexOf(identifyResults, surveyId) == -1) {
-                                surveyIds.push(surveyId);
-                            }
-                        }));
+                    surveyIds = [];
+                    if (itemId) {
+                        surveyIds.push(itemId);
                     }
+                    else {
+                        if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data']) {
+                            identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with Digital Sounding Data'];
+                            array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
+                                var surveyId = identifyResult.feature.attributes['Survey ID'];
+                                if (array.indexOf(identifyResults, surveyId) === -1) {
+                                    surveyIds.push(surveyId);
+                                }
+                            }));
+                        }
 
-                    if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs']) {
-                        var identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs'];
-                        array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
-                            var surveyId = identifyResult.feature.attributes['Survey ID'];
-                            if (array.indexOf(identifyResults, surveyId) == -1) {
-                                surveyIds.push(surveyId);
-                            }
-                        }));
+                        if (this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs']) {
+                            identifyResults = this.identifyResults['NOS Hydrographic Surveys']['Surveys with BAGs'];
+                            array.forEach(identifyResults, lang.hitch(this, function(identifyResult) {
+                                var surveyId = identifyResult.feature.attributes['Survey ID'];
+                                if (array.indexOf(identifyResults, surveyId) === -1) {
+                                    surveyIds.push(surveyId);
+                                }
+                            }));
+                        }
                     }
                     datasetInfo.groupNames = surveyIds.join(',');
-
                     filterCriteria.items.push(datasetInfo);
                 }
                 if (this.isDemTiles) {
-                    var datasetInfo = {dataset: 'DEM'};
-                    if (this.identify.searchGeometry.type == 'extent') {
-                        if (this.identify.searchGeometry.spatialReference.wkid == 4326) {
+                    datasetInfo = {dataset: 'DEM'};
+                    if (extent) {
+                        if (extent.spatialReference.wkid === 4326) {
                             latLonExtent = this.identify.searchGeometry;
                         }
-                        else if (this.identify.searchGeometry.spatialReference.wkid == 102100 || this.identify.searchGeometry.spatialReference.wkid == 3857) {
-                            latLonExtent = webMercatorUtils.webMercatorToGeographic(this.identify.searchGeometry);
+                        else if (extent.spatialReference.isWebMercator()) {
+                            latLonExtent = webMercatorUtils.webMercatorToGeographic(extent);
                         }
                         datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
                     }
                     
-                    if (this.identify.searchGeometry.type == 'point') {
+                    if (this.identify.searchGeometry.type === 'point') {
                         var itemIds = [];
                         array.forEach(this.identifyResults['DEM Tiles']['DEM Tiles'], lang.hitch(this, function(identifyResult) {
                             itemIds.push(identifyResult.feature.attributes['ITEM_ID']);
                         }));
                         datasetInfo.itemIds = itemIds.join(',');
+                    }
+
+                    if (itemId) {
+                        datasetInfo.itemIds = itemId;
                     }
                     filterCriteria.items.push(datasetInfo);
                 }
@@ -443,7 +462,7 @@ define([
             submitFormToNext: function(postBody) {
                 console.log("sending order via form submission to NEXT: ", postBody);
                 
-                var url = "http://www.ngdc.noaa.gov/next-web/orders/create";
+                var url = "//www.ngdc.noaa.gov/next-web/orders/create";
 
                 //create a new form element and submit it.
                 var form = document.createElement("form");
