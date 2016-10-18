@@ -2,16 +2,23 @@ define([
     'dojo/_base/declare',
     'dijit/registry',
     'dojo/dom',
+    'dojo/_base/array',
     'dojo/_base/config',
     'dojo/io-query',
     'dojo/_base/lang',
     'dojo/topic',
     'dojo/on',
     'dojo/aspect',
+    'dojo/request/xhr',
+    'dojo/promise/all',
     'dijit/form/CheckBox',
     'esri/config',
     'esri/geometry/Extent',
+    'esri/geometry/geometryEngine',
     'esri/SpatialReference',
+    'esri/tasks/GeometryService',
+    'esri/tasks/ProjectParameters',
+    'esri/dijit/Legend',
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'app/arctic/MapConfig',
@@ -20,7 +27,7 @@ define([
     'ngdc/arctic/ZoomLevels',
     'ngdc/antarctic/ZoomLevels',
     'ngdc/Banner',
-    'ngdc/CoordinatesToolbar',
+    'ngdc/CoordinatesWithElevationToolbar',
     'app/web_mercator/LayerCollection',
     'app/arctic/LayerCollection',
     'app/antarctic/LayerCollection',
@@ -35,16 +42,23 @@ define([
         declare,
         registry,
         dom,
+        array,
         config,
         ioQuery,
         lang,
         topic,
         on,
         aspect,
+        xhr,
+        all,
         CheckBox,
         esriConfig,
         Extent,
+        geometryEngine,
         SpatialReference,
+        GeometryService,
+        ProjectParameters,
+        Legend,
         Logger,
         MercatorMapConfig,
         ArcticMapConfig,
@@ -53,7 +67,7 @@ define([
         ArcticZoomLevels,
         AntarcticZoomLevels,
         Banner,
-        CoordinatesToolbar,
+        CoordinatesWithElevationToolbar,
         MercatorLayerCollection,
         ArcticLayerCollection,
         AntarcticLayerCollection,
@@ -77,7 +91,10 @@ define([
             init: function() {
                 esriConfig.defaults.io.corsEnabledServers = [
                     'http://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
+                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'
+                ];
+
+                esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
@@ -119,6 +136,7 @@ define([
             },
 
             setupBanner: function() {
+
                 this.banner = new Banner({
                     breadcrumbs: [
                         {url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
@@ -155,7 +173,7 @@ define([
 
                 registry.byId('mapContainer').watch('selectedChildWidget', lang.hitch(this, function(name, oval, nval){
                     var mapId = nval.id;
-                    console.debug(mapId + ' map view selected');
+                    logger.debug(mapId + ' map view selected');
                     topic.publish('/ngdc/mapViewActivated', mapId);
                     this.enableMapView(mapId);
                 }));
@@ -164,11 +182,12 @@ define([
             },
 
             enableMapView: function(/*String*/ mapId) {
-                if (mapId == 'mercator') {
+                this.mapId = mapId;
+                if (mapId === 'mercator') {
                     this.mercatorMapConfig.setEnabled(true);
                     this.arcticMapConfig.setEnabled(false);
                     this.antarcticMapConfig.setEnabled(false);
-                } else if (mapId == 'arctic') {
+                } else if (mapId === 'arctic') {
                     this.mercatorMapConfig.setEnabled(false);
                     this.arcticMapConfig.setEnabled(true);
                     this.antarcticMapConfig.setEnabled(false);
@@ -194,7 +213,7 @@ define([
                 this.mercatorMapConfig = new MercatorMapConfig('mercator', {
                     center: center,
                     zoom: zoom,
-                    extent: this.initialExtent,
+                    initialExtent: this.initialExtent,
                     logo: false,
                     showAttribution: false,
                     overview: true,
@@ -206,24 +225,19 @@ define([
                     nosHydroVisible: this.nosHydroVisible,
                     tracklineVisible: this.tracklineVisible,
                     demVisible: this.demVisible
-                }));  
-
-                var coordinatesToolbar = new CoordinatesToolbar({map: this.mercatorMapConfig.map}, 'mercatorCoordinatesToolbar');
-
-                //Hide the scalebar at small scales <= 4
-                on(this.mercatorMapConfig.map, 'zoom-end', lang.hitch(this, function() {
-                    var level = this.mercatorMapConfig.map.getAbsoluteLevel();
-                    if (level <= 4) {
-                        //These need to be on a short timer due to unexpected errors during the zoom animation
-                        setTimeout(function() {
-                            coordinatesToolbar.hideScalebar();
-                        }, 100);
-                    } else {
-                        setTimeout(function() {
-                            coordinatesToolbar.showScalebar();
-                        }, 100);
-                    }
                 }));
+
+                aspect.after(this.mercatorMapConfig, 'mapReady', lang.hitch(this, function() {
+                    var legend = new Legend({
+                        map: this.mercatorMapConfig.map,
+                        layerInfos: [
+                            {title: 'DEM Tiles (new)', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')}
+                        ]
+                    }, 'dynamicLegend');
+                    legend.startup();
+                }));
+
+                new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
             },
 
             setupArcticView: function() {
@@ -255,7 +269,7 @@ define([
                     demVisible: this.demVisible
                 }));
 
-                new CoordinatesToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
 
             setupAntarcticView: function() {
@@ -286,7 +300,7 @@ define([
                     demVisible: this.demVisible
                 }));
 
-                new CoordinatesToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
             },
 
             //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'
@@ -323,8 +337,9 @@ define([
             },
 
             filterSurveys: function(values) {
-                var layerDefinitions;
+                var layerDefinition;
                 var sql = [];
+                var serviceLayerDefs = {};
                                                     
                 //Multibeam
                 if (values.startYear) {
@@ -337,15 +352,17 @@ define([
                     sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");                    
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
                 }
-                layerDefinitions = sql.join(' and ');
-                //console.log(layerDefinitions);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinitions]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinitions]);
-                this.antarcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinitions]);
+                if (values.institution) {
+                    sql.push("UPPER(SOURCE) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
+                }
+                layerDefinition = sql.join(' and ');
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
+                serviceLayerDefs.multibeam = layerDefinition;
 
-                
                 //Trackline Bathymetry
                 sql = [];
                 if (values.startYear) {
@@ -360,16 +377,17 @@ define([
                 if (values.platform) {
                     sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
                 }
-                layerDefinitions = sql.join(' and ');
-                //console.log(layerDefinitions);
+                if (values.institution) {
+                    sql.push("UPPER(INST_SHORT) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
+                }
+                layerDefinition = sql.join(' and ');
                 var allLayerDefinitions = [];
-                //allLayerDefinitions[0] = layerDefinitions;
-                allLayerDefinitions[1] = layerDefinitions;
+                allLayerDefinitions[1] = layerDefinition;
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
                 this.antarcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
-                
-                
+                serviceLayerDefs.trackline = layerDefinition;
+
                 //NOS Hydro 
                 sql = [];
                 if (values.startYear) {
@@ -384,21 +402,25 @@ define([
                 if (values.platform) {
                     sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
                 }
-                layerDefinitions = sql.join(' and ');
-                //console.log(layerDefinitions);
+                layerDefinition = sql.join(' and ');
                 allLayerDefinitions = [];
-                allLayerDefinitions[0] = layerDefinitions;
-                allLayerDefinitions[1] = layerDefinitions;
-                allLayerDefinitions[2] = layerDefinitions;      
+                allLayerDefinitions[0] = layerDefinition;
+                allLayerDefinitions[1] = layerDefinition;
+                allLayerDefinitions[2] = layerDefinition;      
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions(allLayerDefinitions);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions(allLayerDefinitions);
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions(allLayerDefinitions);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions(allLayerDefinitions);
+                serviceLayerDefs.nosHydro = layerDefinition;
                         
                 this.layersPanel.enableResetButton();
                 this.layersPanel.setCurrentFilterString(values);
+
+                if (values.zoomToResults) {
+                    this.zoomToResults(serviceLayerDefs);
+                }
             },
 
             resetSurveyFilter: function() {            
@@ -420,6 +442,134 @@ define([
                 this.layersPanel.disableResetButton();
                 this.layersPanel.searchDialog.clearForm();
                 this.layersPanel.setCurrentFilterString('');
+            },
+
+            zoomToResults: function(serviceLayerDefs) {
+                var deferreds = [];
+                var url;
+                var params;
+
+                if (this.layersPanel.chkMultibeam.checked) {
+                    url = '//gis.ngdc.noaa.gov/geoextents/multibeam_dynamic/';
+                    params = {layerDefs: '0:' + serviceLayerDefs.multibeam};
+                    deferreds.push(xhr.post(
+                        url, {
+                            data: params,
+                            handleAs: 'json'
+                        })
+                    );
+                }
+
+                if (this.layersPanel.chkTrackline.checked) {
+                    url = '//gis.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
+                    params = {layerDefs: '1:' + serviceLayerDefs.trackline};
+                    deferreds.push(xhr.post(
+                        url, {
+                            data: params,
+                            handleAs: 'json'
+                        })
+                    );
+                }
+
+                if (this.layersPanel.chkNosHydroBags.checked || this.layersPanel.chkNosHydroDigital.checked || this.layersPanel.chkNosHydroNonDigital.checked) {
+                    url = '//gis.ngdc.noaa.gov/geoextents/nos_hydro_dynamic/';
+                    var layerDef = serviceLayerDefs.nosHydro;
+                    params = {layerDefs: '0:' + layerDef + ';1:' + layerDef + ';2:' + layerDef};
+                    deferreds.push(xhr.post(
+                        url, {
+                            data: params,
+                            handleAs: 'json'
+                        })
+                    );
+                }
+
+                //Hit the geoextents endpoint for each of the visible services, then zoom to the union of the returned extents.
+                all(deferreds).then(lang.hitch(this, function(responses) {
+                    logger.debug(responses);
+                    this.zoomToUnionOfBboxes(responses);
+                }));
+            },
+
+            //Zooms to bbox in geographic coordinates
+            zoomToUnionOfBboxes: function(responses) {
+                var fullExtent;
+
+                array.forEach(responses, lang.hitch(this, function(response) {
+                    if (response.bbox) {
+                        //logger.debug(response.bbox);
+                        var wkt = new Wkt.Wkt();
+                        wkt.read(response.bbox);
+                        var config = {
+                            spatialReference: { wkid: 4326 },
+                            editable: false
+                        };
+                        var polygon = wkt.toObject(config);
+                        var extent = polygon.getExtent();
+
+                        if (fullExtent) {
+                            fullExtent = fullExtent.union(extent);
+                        } else {
+                            fullExtent = extent;
+                        }
+                    }
+                }));
+
+                if (fullExtent) {
+                    if (this.mapId === 'mercator') {
+                        this.mercatorMapConfig.map.setExtent(this.clampExtentTo85(fullExtent), true);
+                    } else if (this.mapId === 'arctic') {
+                        this.zoomToPolarBbox(fullExtent, true);
+                    } else { //antarctic
+                        this.zoomToPolarBbox(fullExtent, false);
+                    }
+                }
+            },
+
+            //Ensure the extent doesn't go beyond the bounds of the Mercator map (85 N/S)
+            clampExtentTo85: function(extent) {
+                if (extent.ymax > 85) {
+                    extent.ymax = 85;
+                }
+                if (extent.ymin > 85) {
+                    extent.ymin = 85;
+                }
+                if (extent.ymax < -85) {
+                    extent.ymax = -85;
+                }
+                if (extent.ymin < -85) {
+                    extent.ymin = -85;
+                }
+                return extent;
+            },
+
+            //Input: Extent in geographic coords. Densifies the geometry, projects it to either epsg:3995 or epsg:3031, then zooms to that geometry.
+            zoomToPolarBbox: function(extent, isArctic) {
+                var geometryService = esriConfig.defaults.geometryService;
+                var extentWidth = Math.abs(extent.xmax - extent.xmin);
+                
+                //Densify the geometry with ~20 vertices along the longest edge
+                var maxSegmentLength = extentWidth / 20;
+                var densifiedGeometry = geometryEngine.densify(extent, maxSegmentLength);
+
+                var projectParams = new ProjectParameters();   
+                if (isArctic) {
+                    projectParams.outSR = new SpatialReference(3995);
+                } else {
+                    projectParams.outSR = new SpatialReference(3031);
+                }
+                projectParams.transformForward = true; 
+                projectParams.geometries = [densifiedGeometry];
+                
+                //Project the densififed geometry, then zoom to the polygon's extent
+                geometryService.project(projectParams, lang.hitch(this, function(geometries) {
+                    if (isArctic) {
+                        this.arcticMapConfig.map.setExtent(geometries[0].getExtent(), true);
+                    } else {
+                        this.antarcticMapConfig.map.setExtent(geometries[0].getExtent(), true); 
+                    }
+                }), function(error) {
+                    logger.error(error);
+                });
             }
         });
     }

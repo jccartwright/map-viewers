@@ -64,7 +64,7 @@ define([
 
                 xhr('platforms.json', {
                     preventCache: true,
-                    handleAs: 'json',
+                    handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populatePlatformSelect(data.items);
@@ -76,7 +76,7 @@ define([
 
                 xhr('institutions.json', {
                     preventCache: true,
-                    handleAs: 'json',
+                    handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populateInstitutionSelect(data.items);
@@ -88,7 +88,7 @@ define([
 
                 xhr('surveys.json', {
                     preventCache: true,
-                    handleAs: 'json',
+                    handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populateSurveySelect(data.items);
@@ -203,6 +203,11 @@ define([
             },
 
             filterSelects: function() {
+                if (!this.startYearSpinner || !this.endYearSpinner || !this.platformSelect || !this.institutionSelect || !this.surveySelect) {
+                    //guard against calling this function before the widgets are initialized
+                    return;
+                }
+
                 var minYear = this.startYearSpinner.get('value') || null;
                 var maxYear = this.endYearSpinner.get('value') || null;
                 var selectedPlatform = this.platformSelect.get('value');

@@ -38,7 +38,7 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),                                 
-                    new TiledWMSLayer('//gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
+                    new TiledWMSLayer('http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
                         id: 'GMRT',
                         visible: false,
                         format: 'jpeg',
@@ -53,8 +53,8 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer', {
                         id: 'Ocean Reference',
-                        visible: true,
-                    }),
+                        visible: true
+                    })
                 ];
             },  //end defineMapServices
 

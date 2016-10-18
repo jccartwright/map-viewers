@@ -19,7 +19,7 @@ define([
                         visible: false
                     }, 
                     {
-                        label: 'Bathymetry Contours (IBCSO/GEBCO_08)',
+                        label: 'Bathymetric Contours (IBCSO/GEBCO_08)',
                         services: [{id: 'IBCSO Contours'}],
                         visible: false
                     },

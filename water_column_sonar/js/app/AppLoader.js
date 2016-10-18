@@ -5,6 +5,7 @@ define([
     'dojo/_base/config',
     'dojo/io-query',
     'dojo/_base/lang',
+    'dojo/_base/array',
     'dojo/topic',
     'dojo/on',
     'dojo/aspect',
@@ -22,14 +23,18 @@ define([
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'app/arctic/MapConfig',
+    'app/antarctic/MapConfig',
     'ngdc/web_mercator/ZoomLevels',
     'ngdc/arctic/ZoomLevels',
+    'ngdc/antarctic/ZoomLevels',
     'ngdc/Banner',
     'ngdc/CoordinatesWithElevationToolbar',
     'app/web_mercator/LayerCollection',
     'app/arctic/LayerCollection',
+    'app/antarctic/LayerCollection',
     'app/web_mercator/MapToolbar',
     'app/arctic/MapToolbar',
+    'app/antarctic/MapToolbar',
     'app/Identify',
     'app/AppIdentifyPane',
     'app/LayersPanel',
@@ -41,6 +46,7 @@ define([
         config,
         ioQuery,
         lang,
+        array,
         topic,
         on,
         aspect,
@@ -58,14 +64,18 @@ define([
         Logger,
         MercatorMapConfig,
         ArcticMapConfig,
+        AntarcticMapConfig,
         MercatorZoomLevels,
         ArcticZoomLevels,
+        AntarcticZoomLevels,
         Banner,
         CoordinatesWithElevationToolbar,
         MercatorLayerCollection,
         ArcticLayerCollection,
+        AntarcticLayerCollection,
         MercatorMapToolbar,
         ArcticMapToolbar,
+        AntarcticMapToolbar,
         Identify,
         IdentifyPane,
         LayersPanel
@@ -74,20 +84,18 @@ define([
         return declare(null, {
             mercatorMapConfig: null,
             arcticMapConfig: null,
+            antarcticMapConfig: null,
 
             constructor: function(args){
                 declare.safeMixin(this,args);
                 this.overlayNode = dom.byId(this.overlayNodeId);
             },
 
-            init: function() {                
-                esri.config.defaults.io.corsEnabledServers = [
-                    'http://gis.ngdc.noaa.gov/arcgis/rest/services',
-                    'https://gis.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'https://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
-
+            init: function() {
+                esriConfig.defaults.io.corsEnabledServers.push('maps.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('gis.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('gisdev.ngdc.noaa.gov');
+                
                 esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
                 //add queryParams into config object, values in queryParams take precedence
@@ -116,13 +124,13 @@ define([
                     this.resetWcd();
                 }));
 
-                //Keep track of when both the Mercator and Arctic maps are ready. Only then should current region be selected. 
+                //Keep track of when the Mercator, Arctic, and Antarctic maps are ready. Only then should current region be selected. 
                 //Messaged passed from MapConfig.mapReady().
                 this.mapReadyCount = 0;
                 topic.subscribe('/wcd/MapReady', lang.hitch(this, function() {
                     this.mapReadyCount++;
                     
-                    if (this.mapReadyCount == 2 && this.startupSurveys.length > 0) {
+                    if (this.mapReadyCount === 3 && this.startupSurveys.length > 0) {
                         var filterValues = {};
                         filterValues.surveyIds = this.startupSurveys;
                         filterValues.zoomToResults = true;
@@ -160,6 +168,9 @@ define([
                 registry.byId('mapContainer').selectChild('arctic');
                 this.setupArcticView();
 
+                registry.byId('mapContainer').selectChild('antarctic');
+                this.setupAntarcticView();
+
                 //go back to mercator as default view
                 registry.byId('mapContainer').selectChild('mercator');
 
@@ -175,12 +186,18 @@ define([
 
             enableMapView: function(/*String*/ mapId) {
                 this.mapId = mapId;
-                if (mapId == 'mercator') {                    
+                if (mapId === 'mercator') {                    
                     this.mercatorMapConfig.setEnabled(true);
-                    this.arcticMapConfig.setEnabled(false);                    
-                } else { //Arctic
+                    this.arcticMapConfig.setEnabled(false);
+                    this.antarcticMapConfig.setEnabled(false);
+                } else if (mapId === 'arctic') {
                     this.mercatorMapConfig.setEnabled(false);
-                    this.arcticMapConfig.setEnabled(true);                    
+                    this.arcticMapConfig.setEnabled(true);
+                    this.antarcticMapConfig.setEnabled(false);                
+                } else { //Antarctic
+                    this.mercatorMapConfig.setEnabled(false);
+                    this.arcticMapConfig.setEnabled(false);
+                    this.antarcticMapConfig.setEnabled(true);
                 }
             },
 
@@ -227,7 +244,34 @@ define([
                     lods: zoomLevels.lods
                 }, new ArcticLayerCollection());
 
-                new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map}, 'arcticCoordinatesToolbar');
+                new CoordinatesWithElevationToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
+            },
+
+            setupAntarcticView: function() {            
+                logger.debug('setting up Antarctic view...');
+                
+                var initialExtent = new Extent({
+                    xmin: -4000000,
+                    ymin: -4000000,
+                    xmax: 4000000,
+                    ymax: 4000000,
+                    spatialReference: new SpatialReference({wkid: 3031})
+                });  
+
+                var zoomLevels = new AntarcticZoomLevels();
+            
+                this.antarcticMapConfig = new AntarcticMapConfig('antarctic', {
+                    extent: initialExtent,
+                    //zoom: 3,
+                    logo: false,
+                    showAttribution: false,
+                    overview: false,
+                    sliderStyle: 'large',
+                    navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
+                    lods: zoomLevels.lods
+                }, new AntarcticLayerCollection());
+
+                new CoordinatesWithElevationToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');                
             },
 
             filterWcd: function(values) {                
@@ -288,38 +332,23 @@ define([
                     cruiseCond.push("INSTRUMENT_NAME in (" + quoted.join(',') + ")");
                 }
 
-                if (values.frequencies && values.frequencies.length > 0) {
+                if (values.frequencies && this.isFrequencyFilter(values.frequencies)) {
                     var clauses = [];
-                    var clause = 'FREQUENCY LIKE '
                     for (i = 0; i < values.frequencies.length; i++) {
-                        clauses.push("FREQUENCY LIKE '%" + values.frequencies[i] + "kHz%'");
+                        var subClauses = [];
+                        for (var j = 0; j < values.frequencies[i].length; j++) {
+                            subClauses.push("FREQUENCY LIKE '%" + values.frequencies[i][j] + "kHz%'");
+                        }
+                        
+                        if (subClauses.length > 0) {
+                            clauses.push('(' + subClauses.join(' OR ') + ')');
+                        }
                     }
                     var frequencyClause = '(' + clauses.join(' AND ') + ')';
                     fileCond.push(frequencyClause);
                     cruiseCond.push(frequencyClause);
                 }
 
-                if (values.minFrequency) {
-                    fileCond.push("MIN_FREQ>=" + values.minFrequency);
-                    cruiseCond.push("MIN_FREQ>=" + values.minFrequency);
-                }
-                if (values.maxFrequency) {
-                    fileCond.push("MAX_FREQ<=" + values.maxFrequency);
-                    cruiseCond.push("MAX_FREQ<=" + values.maxFrequency);
-                }
-
-                if (values.minNumBeams) {
-                    fileCond.push("NUMBEROFBEAMS>=" + values.minNumBeams);
-                }
-                if (values.maxNumBeams) {
-                    fileCond.push("NUMBEROFBEAMS<=" + values.maxNumBeams);
-                }                
-                if (values.minSwathWidth) {
-                    fileCond.push("SWATHWIDTH>=" + values.minSwathWidth);
-                }
-                if (values.maxSwathWidth) {
-                    fileCond.push("SWATHWIDTH<=" + values.maxSwathWidth);
-                }
                 if (values.bottomSoundingsOnly) {
                     fileCond.push("BOTTOM_HIT='Y'");
                 }   
@@ -329,24 +358,20 @@ define([
                 
                 var layerDefinitions = [];
 
-                //Apply to all 6 file-level sublayers
-                layerDefinitions[1] = fileLayerDefinition;
-                layerDefinitions[2] = fileLayerDefinition;
-                layerDefinitions[3] = fileLayerDefinition;
-                layerDefinitions[4] = fileLayerDefinition;
-                layerDefinitions[5] = fileLayerDefinition;
-                layerDefinitions[6] = fileLayerDefinition;
-
                 //Apply to all 6 cruise-level sublayers
-                layerDefinitions[8] = cruiseLayerDefinition;
-                layerDefinitions[9] = cruiseLayerDefinition;
-                layerDefinitions[10] = cruiseLayerDefinition;
-                layerDefinitions[11] = cruiseLayerDefinition;
-                layerDefinitions[12] = cruiseLayerDefinition;
-                layerDefinitions[13] = cruiseLayerDefinition;
+                layerDefinitions[0] = cruiseLayerDefinition;
+                layerDefinitions[1] = cruiseLayerDefinition;
+                layerDefinitions[2] = cruiseLayerDefinition;
+                layerDefinitions[3] = cruiseLayerDefinition;
+                layerDefinitions[4] = cruiseLayerDefinition;
+                layerDefinitions[5] = cruiseLayerDefinition;
+
+                //Apply to file-level sublayer
+                layerDefinitions[6] = fileLayerDefinition;
                 
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);                
+                this.arcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions(layerDefinitions);
 
                 this.layersPanel.enableResetButton();
                 this.layersPanel.setCurrentFilterString(values);
@@ -359,6 +384,7 @@ define([
             resetWcd: function() {            
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions([]);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions([]);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').setLayerDefinitions([]);
 
                 this.layersPanel.disableResetButton();
                 this.layersPanel.searchDialog.clearForm();
@@ -368,11 +394,11 @@ define([
             zoomToResults: function(layerDefs) {
                 var layerDefsStr = '';
 
-                //Only operate on cruise-level geometries (sublayers 8-13)
-                for (var i = 8; i <= 13; i++) {
+                //Only operate on cruise-level geometries (sublayers 0-5)
+                for (var i = 0; i <= 5; i++) {
                     if (layerDefs[i] !== '') {
                         layerDefsStr += i + ':' + layerDefs[i];
-                        if (i < 13) {
+                        if (i < 5) {
                             layerDefsStr += ';';
                         }
                     }
@@ -411,10 +437,10 @@ define([
                 var polygon = wkt.toObject(config);
 
                 var extent = polygon.getExtent();
-                if (this.mapId == 'mercator') {
+                if (this.mapId === 'mercator') {
                     this.mercatorMapConfig.map.setExtent(this.clampExtentTo85(extent), true);
-                } else {
-                    this.zoomToArcticBbox(extent);
+                } else  {
+                    this.zoomToPolarBbox(extent, this.mapId);
                 }
             },
 
@@ -436,7 +462,7 @@ define([
             },
 
             //Input: Extent in geographic coords. Densifies the geometry, projects it to epsg:3995, then zooms to that geometry.
-            zoomToArcticBbox: function(extent) {
+            zoomToPolarBbox: function(extent, mapId) {
                 var geometryService = esriConfig.defaults.geometryService;
                 var extentWidth = Math.abs(extent.xmax - extent.xmin);
                 
@@ -444,14 +470,22 @@ define([
                 var maxSegmentLength = extentWidth / 20;
                 var densifiedGeometry = geometryEngine.densify(extent, maxSegmentLength);
 
-                var projectParams = new ProjectParameters();   
-                projectParams.outSR = new SpatialReference(3995);
+                var projectParams = new ProjectParameters();
+                if (mapId === 'arctic') {
+                    projectParams.outSR = new SpatialReference(3995);
+                } else {
+                    projectParams.outSR = new SpatialReference(3031);
+                }
                 projectParams.transformForward = true; 
                 projectParams.geometries = [densifiedGeometry];
                 
                 //Project the densififed geometry, then zoom to the polygon's extent
-                geometryService.project(projectParams, lang.hitch(this, function(geometries) {                            
-                    this.arcticMapConfig.map.setExtent(geometries[0].getExtent(), true);
+                geometryService.project(projectParams, lang.hitch(this, function(geometries) {
+                    if (this.mapId === 'arctic') {
+                        this.arcticMapConfig.map.setExtent(geometries[0].getExtent(), true);
+                    } else {
+                        this.antarcticMapConfig.map.setExtent(geometries[0].getExtent(), true);
+                    }
                 }), function(error) {
                     logger.error(error);
                 });
@@ -471,7 +505,17 @@ define([
                     }
                 }
                 return pd + n.toString();
-            }
+            },
+
+            isFrequencyFilter: function(frequencies) {
+                var isFrequencyFilter = false;
+                array.forEach(frequencies, function(frequency) {
+                    if (frequency.length > 0) {
+                        isFrequencyFilter = true;
+                    }
+                });
+                return isFrequencyFilter;
+            },
         });
     }
 );

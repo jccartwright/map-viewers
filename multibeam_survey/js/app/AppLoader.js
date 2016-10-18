@@ -9,7 +9,6 @@ define([
     'dojo/on',
     'dojo/aspect',
     'dojo/dom-style',
-    'dojo/dom',
     'dijit/form/CheckBox',
     'dijit/TooltipDialog',
     'dijit/popup',
@@ -32,7 +31,6 @@ define([
         on,
         aspect,
         domStyle,
-        dom,
         CheckBox,
         TooltipDialog,
         popup,
@@ -71,7 +69,7 @@ define([
                     });
 
                     //create Map and add layers
-                    var mapConfig = new MapConfig("mapDiv", {
+                    new MapConfig("mapDiv", {
                         //extent/fitExtent properties don't work properly (sometimes zooms out too far). Give it a dummy extent and call setExtent later
                         center: [0,0],
                         zoom: 3,
@@ -97,7 +95,7 @@ define([
 
                 var tooltipTimeout;
                 var mouseLeaveTimeout;
-                var toggleGmrt = registry.byId('toggleGmrt')
+                var toggleGmrt = registry.byId('toggleGmrt');
                 //Show the tooltip 1/2 sec after entering the toggle button
                 on(toggleGmrt, 'mouseenter', lang.hitch(this, function() {
                     tooltipTimeout = setTimeout(lang.hitch(this, function() {

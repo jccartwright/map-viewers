@@ -51,13 +51,12 @@ html,body {
     z-index: 100;
 }
 
-.coordinatesToolbar {
+.coordinatesWithElevationToolbar {
     position: absolute;
     bottom: 10px;
     left: 10px;
     z-index: 9999;
 }
-
 
 
 .esriScalebar {
@@ -93,6 +92,14 @@ html,body {
     background-position: center center;
     width: 20px;
     height: 100px;
+}
+
+.downloadIcon {
+    background-image:  url('../images/drive-download.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 16px;
+    height: 16px;   
 }
 
 /*** Loader ***/
@@ -276,11 +283,31 @@ html,body {
     font: 12px arial,helvetica,verdana,sans-serif;
 }
 
-.wildcardLabel {
-    font-size: 11px;
+.tooltipButton {
+    vertical-align: bottom;
+}
+
+.tooltipButtonMiddle {
+    vertical-align: middle;
+}
+
+.tooltipText {
+    width: 200px;
 }
 
 #legend {
     /*legend is hidden on startup to prevent premature display*/
     display: none;
+}
+
+.queryIcon {
+    background-image: url(../images/magnifyingglass.png);
+    width: 20px;
+    height: 20px;
+}
+
+.clearSelectionIcon {
+    background-image: url(../images/x.png);
+    width: 16px;
+    height: 16px;
 }

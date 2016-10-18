@@ -1,99 +1,152 @@
 <div class="layersPanel_class">
-    <h3>Bathymetric Surveys</h3>
-    <input type="checkbox" data-dojo-attach-point="chkMultibeam" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkMultibeam">Multibeam Bathymetric Surveys</label><br>
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Marine Geology and Geophysics', open: false">
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Bathymetric Surveys', open: false">
+            <input type="checkbox" data-dojo-attach-point="chkMultibeam" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkMultibeam">Multibeam Bathymetric Surveys</label><br>
 
-    <input type="checkbox" id="chkSinglebeam" data-dojo-attach-point="chkSinglebeam" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkSinglebeam">Single-Beam (Trackline) Bathymetric Surveys</label><br><br>
+            <input type="checkbox" id="chkSinglebeam" data-dojo-attach-point="chkSinglebeam" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkSinglebeam">Single-Beam (Trackline) Bathymetric Surveys</label><br><br>
 
-    <b><i>NOS Hydrographic Surveys:</i></b><br>
-    <input type="checkbox" id="chkNosHydroBags" data-dojo-attach-point="chkNosHydroBags" data-dojo-type="dijit/form/CheckBox">
-    <label id="lblNosHydroBags" for="chkNosHydroBags">Surveys with BAGs (Bathymetric Attributed Grids)</label><br>
+            <b><i>NOS Hydrographic Surveys:</i></b><br>
+            <input type="checkbox" id="chkNosHydroBags" data-dojo-attach-point="chkNosHydroBags" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblNosHydroBags" for="chkNosHydroBags">Surveys with BAGs (Bathymetric Attributed Grids)</label><br>
 
-    <input type="checkbox" id="chkNosHydroDigital" data-dojo-attach-point="chkNosHydroDigital" data-dojo-type="dijit/form/CheckBox">
-    <label id="lblNosHydroDigital"for="chkNosHydroDigital">Surveys with Digital Sounding Data</label><br>
+            <input type="checkbox" id="chkNosHydroDigital" data-dojo-attach-point="chkNosHydroDigital" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblNosHydroDigital"for="chkNosHydroDigital">Surveys with Digital Sounding Data</label><br>
 
-    <input type="checkbox" id="chkNosHydroNonDigital" data-dojo-attach-point="chkNosHydroNonDigital" data-dojo-type="dijit/form/CheckBox">
-    <label id="lblNosHydroNonDigital"for="chkNosHydroNonDigital">Surveys without Digital Sounding Data</label><br><br>
+            <input type="checkbox" id="chkNosHydroNonDigital" data-dojo-attach-point="chkNosHydroNonDigital" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblNosHydroNonDigital"for="chkNosHydroNonDigital">Surveys without Digital Sounding Data</label><br><br>
 
-    <!-- <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="searchButton">Search Surveys</div>
-    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetButton" disabled>Reset</div>
-    <img id="searchHelp" class="tooltipButtonMiddle" src="images/question-button.png"><br>
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'searchHelp'">
-        <div class="tooltipText"><b>Search Surveys:</b> opens a dialog where you can specify a desired range of survey years, platform name, source institution, and survey ID. After clicking "OK", a filter will be applied to the Multibeam, Single-Beam, and NOS Hydrographic Surveys layers, displaying only data of interest. The current filter is displayed below the "Search Surveys" button. Note: the filter does not apply to the BAG Hillshades, DEMs, or OCM Bathymetric Lidar.<br><b>Reset:</b> clears the current filter.</div>
+            <!-- <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="searchButton">Search Surveys</div>
+            <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetButton" disabled>Reset</div>
+            <img id="searchHelp" class="tooltipButtonMiddle" src="images/question-button.png"><br>
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'searchHelp'">
+                <div class="tooltipText"><b>Search Surveys:</b> opens a dialog where you can specify a desired range of survey years, platform name, source institution, and survey ID. After clicking "OK", a filter will be applied to the Multibeam, Single-Beam, and NOS Hydrographic Surveys layers, displaying only data of interest. The current filter is displayed below the "Search Surveys" button. Note: the filter does not apply to the BAG Hillshades, DEMs, or OCM Bathymetric Lidar.<br><b>Reset:</b> clears the current filter.</div>
+            </div>
+            <div id="currentFilter" class="filterText"></div><br> -->
+
+            <input type="checkbox" id="chkBagHillshades" data-dojo-attach-point="chkBagHillshades" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblBagHillshades"for="chkBagHillshades">BAG Color Shaded Relief Imagery</label>
+        </div>
+
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Trackline Geophysical Surveys', open: false">
+            <input type="checkbox" id="chkGravity" data-dojo-attach-point="chkGravity" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkGravity">Gravity</label><br>
+            
+            <input type="checkbox" id="chkMagnetics" data-dojo-attach-point="chkMagnetics" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkMagnetics">Magnetics</label><br>
+            
+            <input type="checkbox" id="chkMcs" data-dojo-attach-point="chkMcs" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkMcs">Multi-Channel Seismics</label><br>
+
+            <input type="checkbox" id="chkSeismicRefraction" data-dojo-attach-point="chkSeismicRefraction" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkSeismicRefraction">Seismic Refraction</label><br>
+
+            <input type="checkbox" id="chkShotPointNavigation" data-dojo-attach-point="chkShotPointNavigation" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkShotPointNavigation">Shot-Point Navigation</label><br>
+
+            <input type="checkbox" id="chkSideScan" data-dojo-attach-point="chkSideScan" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkSideScan">Side Scan Sonar</label><br>
+
+            <input type="checkbox" id="chkScs" data-dojo-attach-point="chkScs" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkScs">Single-Channel Seismics</label><br>
+
+            <input type="checkbox" id="chkSubbottom" data-dojo-attach-point="chkSubbottom" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkSubbottom">Subbottom Profile</label><br>
+
+            <input type="checkbox" id="chkAeromag" data-dojo-attach-point="chkAeromag" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkAeromag">Aeromagnetic Surveys</label>
+        </div>
+
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Digital Elevation Models (DEMs)', open: false">
+            <input type="checkbox" id="chkDems" data-dojo-attach-point="chkDems" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkDems">DEM Footprints</label><br>
+
+            <input type="checkbox" id="chkDemHillshades" data-dojo-attach-point="chkDemHillshades" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkDemHillshades">DEM Color Shaded Relief Imagery</label>
+        </div>
+
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Marine Geology', open: false">
+            <input type="checkbox" id="chkSampleIndex" data-dojo-attach-point="chkSampleIndex" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkSampleIndex">Index to Marine and Lacustrine Geologic Samples</label><br>
+
+            <input type="checkbox" id="chkMarineGeology" data-dojo-attach-point="chkMarineGeology" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkMarineGeology">Marine Geology Inventory</label>
+        </div>
+
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Geomagnetism', open: false">
+            <input type="checkbox" id="chkDeclination" data-dojo-attach-point="chkDeclination" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkDeclination">Magnetic Declination</label><br>
+
+            <input type="checkbox" id="chkEMAG2" data-dojo-attach-point="chkEMAG2" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkEMAG2">EMAG2</label>
+        </div>
+
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Undersea Features', open: false">
+            <input type="checkbox" id="chkUnderseaFeatures" data-dojo-attach-point="chkUnderseaFeatures" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkUnderseaFeatures">GEBCO Gazetteer of Undersea Feature Names</label>
+        </div>
+
     </div>
-    <div id="currentFilter" class="filterText"></div><br> -->
 
-    <input type="checkbox" id="chkBagHillshades" data-dojo-attach-point="chkBagHillshades" data-dojo-type="dijit/form/CheckBox">
-    <label id="lblBagHillshades"for="chkBagHillshades">BAG Color Shaded Relief Imagery</label><br><br>
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Climate Data Online (CDO)', open: false">
+        <input type="checkbox" id="chkCrn" data-dojo-attach-point="chkCrn" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkCrn">U.S. Climate Reference Network (USCRN)</label><br>
 
-    <!--<input type="checkbox" id="chkEmodNet" data-dojo-attach-point="chkEmodNet" data-dojo-type="dijit/form/CheckBox">
-    <label id="lblEmodNet" for="chkEmodNet"><a href="http://www.emodnet-bathymetry.eu/" target="_blank">EMODNet</a> (European Marine Observation and Data Network) Survey Tracks/Polygons</label><br>-->
-    <hr>
+        <input type="checkbox" id="chkGhcnd" data-dojo-attach-point="chkGhcnd" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGhcnd">Global Historical Climate Network- Daily (GHCND)</label><br>
 
-    <h3>Trackline Geophysical Data</h3>
+        <input type="checkbox" id="chkGsom" data-dojo-attach-point="chkGsom" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGsom">Global Summary of the Month (GSOM)</label><br>
 
-    <input type="checkbox" id="chkGravity" data-dojo-attach-point="chkGravity" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkGravity">Gravity</label><br>
-    
-    <input type="checkbox" id="chkMagnetics" data-dojo-attach-point="chkMagnetics" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkMagnetics">Magnetics</label><br>
-    
-    <input type="checkbox" id="chkMcs" data-dojo-attach-point="chkMcs" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkMcs">Multi-Channel Seismics</label><br>
+        <input type="checkbox" id="chkGsoy" data-dojo-attach-point="chkGsoy" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGsoy">Global Summary of the Year (GSOY)</label><br>
 
-    <input type="checkbox" id="chkSeismicRefraction" data-dojo-attach-point="chkSeismicRefraction" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkSeismicRefraction">Seismic Refraction</label><br>
+        <input type="checkbox" id="chkIsd" data-dojo-attach-point="chkIsd" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkIsd">Integrated Surface Global Hourly Data (ISD)</label>
+    </div>
 
-    <input type="checkbox" id="chkShotPointNavigation" data-dojo-attach-point="chkShotPointNavigation" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkShotPointNavigation">Shot-Point Navigation</label><br>
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Arctic Regional Climatology', open: false">
+        <input type="checkbox" id="chkTemperature" data-dojo-attach-point="chkTemperature" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTemperature">Sea Water Temperature</label><br>
 
-    <input type="checkbox" id="chkSideScan" data-dojo-attach-point="chkSideScan" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkSideScan">Side Scan Sonar</label><br>
+        <input type="checkbox" id="chkSalinity" data-dojo-attach-point="chkSalinity" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSalinity">Salinity</label><br>
 
-    <input type="checkbox" id="chkScs" data-dojo-attach-point="chkScs" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkScs">Single-Channel Seismics</label><br>
+        Time Period:
+        <select data-dojo-attach-point="timeSelect" name="timeSelect" data-dojo-type="dijit/form/Select" style="width:80px;">
+        </select><br>
 
-    <input type="checkbox" id="chkSubbottom" data-dojo-attach-point="chkSubbottom" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkSubbottom">Subbottom Profile</label><br>
+        Depth (m):
+        <select data-dojo-attach-point="elevationSelect" name="elevationSelect" data-dojo-type="dijit/form/Select" style="width:80px;">
+        </select><br><br>
+        
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Show Legend', open: false">
+            <img src="//data.nodc.noaa.gov/thredds/wms/woa/DATA_ANALYSIS/NP_REG_CLIMAT/DATA/netcdf/temperature/0.25/t00_04.nc?REQUEST=GetLegendGraphic&amp;COLORBARONLY=false&amp;WIDTH=50&amp;HEIGHT=200&amp;PALETTE=rainbow&amp;NUMCOLORBANDS=25&amp;LAYER=t_an&amp;COLORSCALERANGE=-3,11">
+            <img src="//data.nodc.noaa.gov/thredds/wms/woa/DATA_ANALYSIS/NP_REG_CLIMAT/DATA/netcdf/salinity/0.25/s00_04.nc?REQUEST=GetLegendGraphic&amp;COLORBARONLY=false&amp;WIDTH=50&amp;HEIGHT=200&amp;PALETTE=rainbow&amp;NUMCOLORBANDS=25&amp;LAYER=s_an&amp;COLORSCALERANGE=0,40">
+        </div>
+    </div>
 
-    <input type="checkbox" id="chkAeromag" data-dojo-attach-point="chkAeromag" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkAeromag">Aeromagnetic Surveys</label><br>
-    
-    <hr>
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'NOMADS NARR-A Monthly', open: false">
+        <input type="checkbox" id="chkNARR" data-dojo-attach-point="chkNARR" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkNARR">Ground Heat Flux</label><br>
+        
+        Year:
+        <select data-dojo-attach-point="narrYearSelect" name="timnarrYearSelecteSelect" data-dojo-type="dijit/form/Select" style="width:80px;">
+        </select><br>
 
-    <h3>Digital Elevation Models (DEMs)</h3>
+        Month:
+        <select data-dojo-attach-point="narrMonthSelect" name="narrMonthSelect" data-dojo-type="dijit/form/Select" style="width:80px;">
+        </select><br>   
 
-    <input type="checkbox" id="chkDems" data-dojo-attach-point="chkDems" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkDems">DEM Footprints</label><br>
+        3-Hourly Increment:
+        <select data-dojo-attach-point="narrHourSelect" name="narrHourSelect" data-dojo-type="dijit/form/Select" style="width:80px;">
+        </select><br><br>
 
-    <input type="checkbox" id="chkDemHillshades" data-dojo-attach-point="chkDemHillshades" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkDemHillshades">DEM Color Shaded Relief Imagery</label>
-    <hr>
-
-    <h3>Marine Geology</h3>
-
-    <input type="checkbox" id="chkSampleIndex" data-dojo-attach-point="chkSampleIndex" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkSampleIndex">Index to Marine and Lacustrine Geologic Samples</label><br>
-
-    <input type="checkbox" id="chkMarineGeology" data-dojo-attach-point="chkMarineGeology" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkMarineGeology">Marine Geology Inventory</label>
-    <hr>
-
-    <h3>Geomagnetism</h3>
-
-    <input type="checkbox" id="chkDeclination" data-dojo-attach-point="chkDeclination" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkDeclination">Magnetic Declination</label><br>
-
-    <input disabled type="checkbox" id="chkEmag2" data-dojo-attach-point="chkEmag2" data-dojo-type="dijit/form/CheckBox">
-    <label disabled for="chkEmag2">EMAG2</label><br>
-    <hr>
-
-    <h3>Undersea Features</h3>
-
-    <input type="checkbox" id="chkUnderseaFeatures" data-dojo-attach-point="chkUnderseaFeatures" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkUnderseaFeatures">GEBCO Gazetteer of Undersea Feature Names</label><br>
-
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Show Legend', open: false">
+            <img src="http://nomads.ncdc.noaa.gov/thredds/wms/narr-a-cdc-mon/201408/20140801/narrmonhr-a_221_20140801_1500_000.grb?REQUEST=GetLegendGraphic&amp;COLORBARONLY=false&amp;WIDTH=50&amp;HEIGHT=200&amp;PALETTE=rainbow&amp;NUMCOLORBANDS=25&amp;LAYER=Ground_Heat_Flux&amp;COLORSCALERANGE=-5,50">
+        </div>
+    </div>
 
     <!-- <h3>Bathymetric Lidar</h3>
 

@@ -30,6 +30,12 @@ define([
         ){
         
         return declare([MapConfig], {
+
+            constructor: function() {
+                if (Proj4js) {  
+                    this.sourceProj = new Proj4js.Proj('EPSG:32661');
+                }
+            },
                         
             //handle setup which requires all layers to be loaded
             mapReady: function() {
@@ -45,17 +51,15 @@ define([
                 }, 'arcticMapToolbar');
                 this.mapToolbar.startup();
                 
-                // this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
-                // this.identify.enabled = false;
+                this.identify = new Identify({map: this.map, layerCollection: this.mapLayerCollection});
 
-                // this.identifyPane = new IdentifyPane({
-                //     map: this.map,
-                //     identify: this.identify,
-                //     class: 'identifyPane',
-                //     autoExpandTree: false
-                // }, dom.byId('arcticIdentifyPaneDiv'));
-                // this.identifyPane.startup();
-                // this.identifyPane.enabled = false;
+                this.identifyPane = new IdentifyPane({
+                    map: this.map,
+                    identify: this.identify,
+                    class: 'identifyPane',
+                    autoExpandTree: false
+                }, dom.byId('arcticIdentifyPaneDiv'));
+                this.identifyPane.startup();
                 
                 this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
                 
@@ -72,6 +76,18 @@ define([
                 layerDefs[4] = 'YEAR=2016 AND MOD(CONTOUR, 2)=0';
                 this.mapLayerCollection.getLayerById('Magnetic Declination').setVisibleLayers([0, 4]);
                 this.mapLayerCollection.getLayerById('Magnetic Declination').setLayerDefinitions(layerDefs);
+
+                this.mapLayerCollection.getLayerById('CRN').setLayerDefinitions(['LATITUDE>=50']);
+                this.mapLayerCollection.getLayerById('GHCND').setLayerDefinitions(['LATITUDE>=50']);
+                this.mapLayerCollection.getLayerById('GSOM').setLayerDefinitions(['LATITUDE>=50']);
+                this.mapLayerCollection.getLayerById('GSOY').setLayerDefinitions(['LATITUDE>=50']);
+                this.mapLayerCollection.getLayerById('ISD').setLayerDefinitions(['LATITUDE>=50']);
+
+                this.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(['LAT>=50']);
+                this.mapLayerCollection.getLayerById('Marine Geology').setLayerDefinitions(['LATITUDE>=50']);
+
+
+                //this.mapLayerCollection.getLayerById('EMAG2').setVisibleLayers([5]);
 
             }                 
         });

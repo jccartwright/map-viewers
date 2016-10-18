@@ -88,6 +88,56 @@ define([
                 return html;
             },
 
+            aeromagFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>Aeromagnetic Survey: ${surveyId}</h3>' +
+                    '<div class="valueName"><span class="parameterValue"><a href="${surveyUrl}" target="_blank">Survey URL</a></span></div>' +
+                    '<div class="valueName"><span class="parameterValue"><a href="${projectUrl}" target="_blank">Project URL</a></span></div>' +
+                    '<div class="valueName">Source Institution: <span class="parameterValue">${sourceInstitution}</span></div>' +
+                    '<div class="valueName">Project ID: <span class="parameterValue">${projectId}</span></div>' +
+                    '<div class="valueName">Full Project Name: <span class="parameterValue">${fullProjectName}</span></div>' +
+                    '<div class="valueName">Departure Date: <span class="parameterValue">${departureDate}</span></div>' +
+                    '<div class="valueName">Departure Airport: <span class="parameterValue">${departureAirport}</span></div>' +
+                    '<div class="valueName">Arrival Date: <span class="parameterValue">${arrivalDate}</span></div>' +
+                    '<div class="valueName">Arrival Airport: <span class="parameterValue">${arrivalAirport}</span></div>' +
+                    '<div class="valueName">Total Field (F): <span class="parameterValue">${totalField}</span></div>' +
+                    '<div class="valueName">Residual Field (R): <span class="parameterValue">${residualField}</span></div>' +
+                    '<div class="valueName">North Vector Component (X): <span class="parameterValue">${northVectorComponent}</span></div>' +
+                    '<div class="valueName">East Vector Component (Y): <span class="parameterValue">${eastVectorComponent}</span></div>' +
+                    '<div class="valueName">Vertical Component (Z): <span class="parameterValue">${verticalComponent}</span></div>' +
+                    '<div class="valueName">Magnetic Declination (D): <span class="parameterValue">${magneticDeclination}</span></div>' +
+                    '<div class="valueName">Horizontal Intensity (H): <span class="parameterValue">${horizontalIntensity}</span></div>' +
+                    '<div class="valueName">Magnetic Inclination (I): <span class="parameterValue">${magneticInclination}</span></div>' +
+                    '<div class="valueName">Electromagnetics (E): <span class="parameterValue">${electromagnetics}</span></div>' +
+                    '<div class="valueName">Other (e.g. Radiometrics): <span class="parameterValue">${other}</span></div>';
+
+                var html = string.substitute(template, {                        
+                        surveyId: a['Survey ID'],
+                        surveyUrl: a['Survey URL'],
+                        projectUrl: a['Project URL'],
+                        sourceInstitution: a['Source Institution'],
+                        projectId: a['Project ID'],
+                        fullProjectName: a['Full Project Name'],
+                        departureDate: a['Departure Date'],
+                        departureAirport: a['Departure Airport'],
+                        arrivalDate: a['Arrival Date'],
+                        arrivalAirport: a['Arrival Airport'],
+                        totalField: a['Total Field (T)'],
+                        residualField: a['Residual Field (R)'],
+                        northVectorComponent: a['North Vector Component (X)'],
+                        eastVectorComponent: a['East Vector Component (Y)'],
+                        verticalComponent: a['Vertical Component (Z)'],
+                        magneticDeclination: a['Magnetic Declination (D)'],
+                        horizontalIntensity: a['Horizontal Intensity (H)'],
+                        magneticInclination: a['Magnetic Inclination (I)'],
+                        electromagnetics: a['Electromagnetics (E)'],
+                        other: a['Other (e.g. Radiometrics)']
+                    });                
+                return html;
+            },
+
             nosHydroFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
@@ -166,25 +216,200 @@ define([
                 return html;
             },
 
-            lidarFormatter: function(feature) {
+            marineGeologyFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template =
-                    '<h3>Bathymetric Lidar: ${name}</h3>' +
-                    '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
-                    '<div class="valueName">Project: <span class="parameterValue">${project}</span></div>' +
-                    '<div class="valueName">Year: <span class="parameterValue">${year}</span></div>' +
-                    '<div class="valueName"><span class="parameterValue"><a href="${prefix}${id}" target="_blank">Link to Data</a></span></div>' +
-                    '<div class="valueName"><span class="parameterValue"><a href="${metalink}" target="_blank">Metadata Link</a></span></div>';
+                    '<table>' +
+                    '<tr><td class="valueName">Dataset Title:</td><td class="parameterValue"><a href="${url}" target="_blank">${datasetTitle}</a></td></tr>' +
+                    '<tr><td class="valueName">MGGID:</td><td class="parameterValue">${mggId}</td></tr>' +
+                    '<tr><td class="valueName">Institution:</td><td class="parameterValue">${institution}</td></tr>' +
+                    '<tr><td class="valueName">Cruise:</td><td class="parameterValue">${cruise}</td></tr>' +
+                    '<tr><td class="valueName">Platform:</td><td class="parameterValue">${platform}</td></tr>' +
+                    '<tr><td class="valueName">Hole/Sample ID:</td><td class="parameterValue">${holeSampleId}</td></tr>' +
+                    '<tr><td class="valueName">Device:</td><td class="parameterValue">${device}</td></tr>' +
+                    '<tr><td class="valueName">Collection Date:</td><td class="parameterValue">${collectionDate}</td></tr>' +
+                    '<tr><td class="valueName">Latitude:</td><td class="parameterValue">${latitude}</td></tr>' +
+                    '<tr><td class="valueName">Longitude:</td><td class="parameterValue">${longitude}</td></tr>';
+                    if (a['Metadata URL'] !== '') {
+                        template += '<tr><td colspan="2" class="parameterValue"><b><a href="${metadataUrl}" target="_blank">Metadata Link</a></b></td></tr>';
+                    }
+                    template += '</table>';
 
                 var html = string.substitute(template, {
-                        id: a['ID'],
-                        name: a['Name'],
-                        project: a['Project'],
-                        year: a['Year'],
-                        metalink: a['Metalink'],
-                        prefix: 'http://www.coast.noaa.gov/dataviewer/index.html?action=advsearch&qType=in&qFld=ID&qVal='
-                    });                
+                    datasetTitle: a['Dataset Title'],
+                    mggId: a['MGGID'],
+                    institution: a['Institution'],
+                    cruise: a['Cruise'],
+                    platform: a['Platform'],
+                    holeSampleId: a['Hole/Sample ID'],
+                    device: a['Device'],
+                    collectionDate: a['Collection Date'],
+                    latitude: a['Latitude'],
+                    longitude: a['Longitude'],
+                    metadata: a['Metadata gov.noaa.ngdc.mgg:'],
+                    url: a['URL'],
+                    metadataUrl: a['Metadata URL']
+                });                
+                return html;
+            },
+
+            sampleIndexFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<table>' +
+                    '<tr><td class="valueName">Repository:</td><td class="parameterValue"><a href="${repositoryLink}" target="_blank" title="contact info/links to the sample repository"><b>${repository} [Contact the Curator]</b></a></td></tr>' +
+                    '<tr><td class="valueName">Platform Name:</td><td class="parameterValue">${platform}</td></tr>' +
+                    '<tr><td class="valueName">Lake:</td><td class="parameterValue">${lake}</td></tr>' +
+                    '<tr><td class="valueName">Survey ' + (a['Alternate Cruise or Leg'] ? '(Alternate) ' : '') + 'ID:</td><td class="parameterValue"><a href="${cruiseOrLegLink}" target="_blank">${cruiseOrLeg}</a>' + (a['Alternate Cruise or Leg'] ? ' (<a href="${alternateCruiseOrLegLink}" target="_blank">${alternateCruiseOrLeg})' : '') + '</td></tr>' +
+                    '<tr><td class="valueName">Sample:</td><td class="parameterValue"><a href="${dataLink}" target="_blank" title="go to more information, data, images, and links to related resources">${sampleId} [Data and images]</a></td></tr>' +
+                    '<tr><td class="valueName">Device:</td><td class="parameterValue">${device}</td></tr>' +
+                    '<tr><td class="valueName">Latitude:</td><td class="parameterValue">${latitude}' + (a['End Latitude'] ? ' to ${endLatitude}' : '') + '</td></tr>' +
+                    '<tr><td class="valueName">Longitude:</td><td class="parameterValue">${longitude}' + (a['End Longitude'] ? ' to ${endLongitude}' : '') + '</td></tr>' +
+                    '<tr><td class="valueName">Water Depth (m):</td><td class="parameterValue">${waterDepth}</td></tr>' +
+                    '<tr><td class="valueName">Date:</td><td class="parameterValue">${dateCollected}</td></tr>' +
+                    '<tr><td class="valueName">PI:</td><td class="parameterValue">${pi}</td></tr>' +
+                    '<tr><td class="valueName">Core Len/Diam (cm):</td><td class="parameterValue">${coreLength}/${coreDiameter}</td></tr>' +
+                    '<tr><td class="valueName">Province:</td><td class="parameterValue">${province}</td></tr>' +
+                    '<tr><td class="valueName">IGSN:</td><td class="parameterValue">${igsn}</td></tr>' +
+                    '<tr><td class="valueName">Sample Comments:</td><td class="parameterValue">${sampleComments}</td></tr>' +
+                    '<tr><td class="valueName">Storage:</td><td class="parameterValue">${storageMethod}</td></tr>' +
+                    '</table>';
+
+                var html = string.substitute(template, {
+                    dataLink: a['Data Link'],
+                    repository: a['Repository'],
+                    repositoryLink: a['Repository Link'],
+                    platform: a['Platform'],
+                    cruiseOrLeg: a['Cruise or Leg'],
+                    cruiseOrLegLink: a['Cruise or Leg Link'],
+                    alternateCruiseOrLeg: a['Alternate Cruise or Leg'],
+                    alternateCruiseOrLegLink: a['Alternate Cruise or Leg Link'],
+                    sampleId: a['Sample ID'],
+                    device: a['Device'],
+                    dateCollected: a['Date Collected'],
+                    endDateOfCollection: a['End Date of Collection'],
+                    latitude: a['Latitude'],
+                    longitude: a['Longitude'],
+                    endLatitude: a['End Latitude'],
+                    endLongitude: a['End Longitude'],
+                    waterDepth: a['Water Depth (m)'],
+                    endWaterDepth: a['End Water Depth (m)'],
+                    storageMethod: a['Storage Method'],
+                    coreLength: a['Core Length (cm)'],
+                    coreDiameter: a['Core Diameter (cm)'],
+                    pi: a['PI'],
+                    province: a['Province'],
+                    lake: a['Lake'],
+                    dateLastUpdated: a['Date Information Last Updated'],
+                    igsn: a['IGSN'],
+                    sampleComments: a['Sample Comments'],
+                    imlgs: a['IMLGS']
+                });                
+                return html;
+            },
+
+            underseaFeaturesFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>Undersea Feature: ${name} ${type}</h3>';
+
+                var html = string.substitute(template, {
+                    name: a['NAME'],
+                    type: a['TYPE']
+                });
+                return html;
+            },
+
+            crnFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>Climate Reference Network: ${station} (${state})</h3>' +   
+                    '<div class="valueName">Period of Record: <span class="parameterValue">${begDate} to ${endDate}</span></div>' +                
+                    '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Station Details</a></span></div>';
+
+                var html = string.substitute(template, {
+                    station: a['STATION'],
+                    state: a['STATE'],
+                    begDate: a['BEG_DATE'],
+                    endDate: a['END_DATE'],
+                    url: 'http://www.ncdc.noaa.gov/crn/station.htm?stationId=' + a['STATION_ID']
+                });
+                return html;
+            },
+
+            ghcndFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>GCHN Daily: ${stationName}</h3>' +
+                    '<div class="valueName">Period of Record: <span class="parameterValue">${dataBeginDate} to ${dataEndDate}</span></div>' +    
+                    '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Station Details</a></span></div>';
+
+                var html = string.substitute(template, {
+                    stationName: a['STATION_NAME'],
+                    dataBeginDate: a['DATA_BEGIN_DATE'],
+                    dataEndDate: a['DATA_END_DATE'],                        
+                    url: 'http://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/' + a['STATION_ID'] + '/detail'
+                });
+                return html;
+            },
+
+            gsomFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>Global Surface Summary of the Month: ${stationName}</h3>' +
+                    '<div class="valueName">Period of Record: <span class="parameterValue">${dataBeginDate} to ${dataEndDate}</span></div>' +    
+                    '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Station Details</a></span></div>';
+
+                var html = string.substitute(template, {
+                    stationName: a['STATION_NAME'],
+                    dataBeginDate: a['DATA_BEGIN_DATE'],
+                    dataEndDate: a['DATA_END_DATE'],
+                    url: 'http://www.ncdc.noaa.gov/cdo-web/datasets/GSOM/stations/' + a['STATION_ID'] + '/detail'
+                });
+                return html;
+            },
+
+            gsoyFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>Global Surface Summary of the Month: ${stationName}</h3>' +
+                    '<div class="valueName">Period of Record: <span class="parameterValue">${dataBeginDate} to ${dataEndDate}</span></div>' +    
+                    '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Station Details</a></span></div>';
+
+                var html = string.substitute(template, {
+                    stationName: a['STATION_NAME'],
+                    dataBeginDate: a['DATA_BEGIN_DATE'],
+                    dataEndDate: a['DATA_END_DATE'],
+                    url: 'http://www.ncdc.noaa.gov/cdo-web/datasets/GSOY/stations/' + a['STATION_ID'] + '/detail'
+                });
+                return html;
+            },
+
+            isdFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>Integrated Surface Global Hourly Data: ${station}</h3>' +
+                    '<div class="valueName">Period of Record: <span class="parameterValue">${beginDate} to ${endDate}</span></div>' +    
+                    '<div class="valueName"><span class="parameterValue"><a href="${simpleUrl}" target="_blank">Data Access (Simplified)</a></span></div>' +
+                    '<div class="valueName"><span class="parameterValue"><a href="${advancedUrl}" target="_blank">Data Access (Advanced)</a></span></div>';
+
+                var html = string.substitute(template, {
+                    station: a['STATION'],
+                    beginDate: a['BEG_DATE'],
+                    endDate: a['END_DATE'],
+                    advancedUrl: 'http://www7.ncdc.noaa.gov/CDO/cdodataelem.cmd?p_ndatasetid=11&datasetabbv=DS3505&p_cqueryby=ENTIRE&p_ncntryid=&p_nrgnid=' + 
+                        '&p_nstprovid=&p_cfileform=&p_csubqueryby=STATION&resolution=40&poeoption=ADVANCED&p_asubqueryitems=' + a['AWSBAN'],
+                    simpleUrl: 'http://www7.ncdc.noaa.gov/CDO/cdodateoutmod.cmd?p_ndatasetid=11&datasetabbv=DS3505&p_cqueryby=ENTIRE&p_ncntryid=&p_nrgnid=' + 
+                        '&p_nstprovid=&p_cfileform=&p_csubqueryby=STATION&resolution=40&poeoption=SIMPLE&p_asubqueryitems=' + a['AWSBAN']
+                });
                 return html;
             },
 
@@ -202,6 +427,14 @@ define([
                     return a.feature.attributes['Survey ID'] <= b.feature.attributes['Survey ID'] ? -1 : 1;
                 }
                 return a.feature.attributes['Survey Start Year'] < b.feature.attributes['Survey Start Year'] ? 1 : -1;
+            },
+
+            aeromagSort: function(a, b) {
+                //Sort by start year descending, then alphabetical by survey ID
+                if (a.feature.attributes['Start Year'] === b.feature.attributes['Start Year']) {
+                    return a.feature.attributes['Survey ID'] <= b.feature.attributes['Survey ID'] ? -1 : 1;
+                }
+                return a.feature.attributes['Start Year'] < b.feature.attributes['Start Year'] ? 1 : -1;
             },
 
             nosHydroSort: function(a, b) {
@@ -237,37 +470,80 @@ define([
                 return a.feature.attributes['NAME'] <= b.feature.attributes['NAME'] ? -1 : 1;
             },
 
+            marineGeologySort: function(a, b) {
+                //Sort by NOS Survey ID, then Sample ID within surveys
+                var attr1 = a.feature.attributes;
+                var attr2 = b.feature.attributes;
+                if (attr1['MGGID'] === attr2['MGGID']) {                   
+                    return attr1['Hole/Sample ID'] <= attr2['Hole/Sample ID'] ? -1 : 1;
+                }
+                return attr1['MGGID'] <= attr2['MGGID'] ? -1 : 1;
+            },
+
+            sampleIndexSort: function(a, b) {
+                //Sort by Platform, Cruise, Alternate Cruise, Sample ID
+                var attr1 = a.feature.attributes;
+                var attr2 = b.feature.attributes;
+
+                if (attr1['Platform'] === attr2['Platform']) {
+
+                    if (attr1['Cruise or Leg'] === attr2['Cruise or Leg']) {
+                        if (attr1['Alternate Cruise or Leg'] === attr2['Alternate Cruise or Leg']) {
+                            return attr1['Sample ID'] <= attr2['Sample ID'] ? -1 : 1;
+                        }
+                        return attr1['Alternate Cruise or Leg'] <= attr2['Alternate Cruise or Leg'] ? -1 : 1;
+                    }
+                    return attr1['Cruise or Leg'] <= attr2['Cruise or Leg'] ? -1 : 1;
+                }
+                return attr1['Platform'] <= attr2['Platform'] ? -1 : 1;                
+            },
+
             sortResults: function(results) {
                 var features;
+                var sublayerId;
+
                 if (results['Multibeam']) {    
                     if ((features = results['Multibeam']['Multibeam Bathymetric Surveys'])) {
                         features.sort(this.multibeamSort);
                     }                    
                 }
-                if (results['Trackline Bathymetry']) {    
-                    if ((features = results['Trackline Bathymetry']['Marine Trackline Surveys: Bathymetry'])) {
-                        features.sort(this.tracklineSort);
+                if (results['Trackline Combined']) {   
+                    for (sublayerId in results['Trackline Combined']) {
+                        if (results['Trackline Combined'].hasOwnProperty(sublayerId)) {
+                            features = results['Trackline Combined'][sublayerId];
+                            if (sublayerId === 'Aeromagnetic Surveys') {
+                                features.sort(this.aeromagSort);
+                            }
+                            else {
+                                features.sort(this.tracklineSort);
+                            }
+                        }
                     }                    
                 }
-
                 if (results['NOS Hydrographic Surveys']) {  
-                    for (var sublayer in results['NOS Hydrographic Surveys']) {
-                        if (results['NOS Hydrographic Surveys'].hasOwnProperty(sublayer)) {
-                            results['NOS Hydrographic Surveys'][sublayer].sort(this.nosHydroSort);
+                    for (sublayerId in results['NOS Hydrographic Surveys']) {
+                        if (results['NOS Hydrographic Surveys'].hasOwnProperty(sublayerId)) {
+                            results['NOS Hydrographic Surveys'][sublayerId].sort(this.nosHydroSort);
                         }
                     }                                
-                }
-                
+                }               
                 if (results['DEM Extents']) {    
                     if ((features = results['DEM Extents']['All NCEI Bathymetric DEMs'])) {
                         features.sort(this.demSort);
                     }                    
                 }
-
                 if (results['DEM Tiles']) {    
                     if ((features = results['DEM Tiles']['DEM Tiles'])) {
                         features.sort(this.demTileSort);
                     }                    
+                }
+                if (results['Sample Index']) { 
+                    features = results['Sample Index']['All Samples by Institution'];
+                    features.sort(this.sampleIndexSort);                
+                }
+                if (results['Marine Geology']) {
+                    features = results['Marine Geology']['Marine Geology Data Sets/Reports'];
+                    features.sort(this.marineGeologySort);
                 }
             }
 

@@ -59,18 +59,13 @@ define([
 
                 //formatter specific to each sublayer, keyed by Layer/sublayer name.
                 this.formatters = {
-                    'Water Column Sonar/File-Level: NMFS': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/File-Level: OER': lang.hitch(this, this.wcdFileFormatter), 
-                    'Water Column Sonar/File-Level: UNOLS': lang.hitch(this, this.wcdFileFormatter), 
-                    'Water Column Sonar/File-Level: Other NOAA': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/File-Level: Other': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/File-Level: Non-U.S.': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/Cruise-Level: NMFS': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Cruise-Level: OER': lang.hitch(this, this.wcdCruiseFormatter), 
-                    'Water Column Sonar/Cruise-Level: UNOLS': lang.hitch(this, this.wcdCruiseFormatter), 
-                    'Water Column Sonar/Cruise-Level: Other NOAA': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Cruise-Level: Other': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Cruise-Level: Non-U.S.': lang.hitch(this, this.wcdCruiseFormatter)
+                    'Water Column Sonar/File Geometries': lang.hitch(this, this.wcdFileFormatter),
+                    'Water Column Sonar/NMFS Cruises': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/OER Cruises': lang.hitch(this, this.wcdCruiseFormatter), 
+                    'Water Column Sonar/UNOLS Cruises': lang.hitch(this, this.wcdCruiseFormatter), 
+                    'Water Column Sonar/Other NOAA Cruises': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Other Cruises': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Non-U.S. Cruises': lang.hitch(this, this.wcdCruiseFormatter)
                 };
             }, //end constructor
 
@@ -94,32 +89,32 @@ define([
                     template += '<div class="valueName">Image Preview:</div><a href="${imageFullsize}" target="_blank"><img src="${imageThumbnail}" width="300"></img></a>';
                 }
 
-                template += '\
-                    <div class="fileHeader">Cruise Details:</div>\
-                    <div class="valueName">Survey: <span class="parameterValue">${surveyID}</span></div>\
-                    <div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>\
-                    <div class="valueName">Project(s): <span class="parameterValue">${projectName}</span></div>\
-                    <div class="valueName">Source Group: <span class="parameterValue">${sourceGroup}</span></div>\
-                    <div class="valueName">Institution: <span class="parameterValue">${sourceName}</span></div>\
-                    <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
-                    <div class="fileHeader">Instrument Details:</div>\
-                    <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
+                template +=
+                    '<div class="fileHeader">Cruise Details:</div>' +
+                    '<div class="valueName">Survey: <span class="parameterValue">${surveyID}</span></div>' +
+                    '<div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>' +
+                    '<div class="valueName">Project(s): <span class="parameterValue">${projectName}</span></div>' +
+                    '<div class="valueName">Source Group: <span class="parameterValue">${sourceGroup}</span></div>' +
+                    '<div class="valueName">Institution: <span class="parameterValue">${sourceName}</span></div>' +
+                    '<div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>' +
+                    '<div class="fileHeader">Instrument Details:</div>' +
+                    '<div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
 
-                if (a['Instrument Name'] == 'EK60' || a['Instrument Name'] == 'EK500' || a['Instrument Name'] == 'ES60') {
+                if (a['Instrument Name'] === 'EK60' || a['Instrument Name'] === 'EK80' || a['Instrument Name'] === 'EK500' || a['Instrument Name'] === 'ES60') {
                     template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
                 } else {
-                    template += '\
-                        <div class="valueName">Min Frequency (kHz): <span class="parameterValue">${minFrequency}</span></div>\
-                        <div class="valueName">Max Frequency (kHz): <span class="parameterValue">${maxFrequency}</span></div>\
-                        <div class="valueName">Beam Type: <span class="parameterValue">${beamType}</span></div>\
-                        <div class="valueName">Number of Beams: <span class="parameterValue">${numBeams}</span></div>\
-                        <div class="valueName">Swath Width (degrees): <span class="parameterValue">${swathWidth}</span></div>';   
+                    template +=
+                        '<div class="valueName">Min Frequency (kHz): <span class="parameterValue">${minFrequency}</span></div>' +
+                        '<div class="valueName">Max Frequency (kHz): <span class="parameterValue">${maxFrequency}</span></div>' +
+                        '<div class="valueName">Beam Type: <span class="parameterValue">${beamType}</span></div>' +
+                        '<div class="valueName">Number of Beams: <span class="parameterValue">${numBeams}</span></div>' +
+                        '<div class="valueName">Swath Width (degrees): <span class="parameterValue">${swathWidth}</span></div>';   
                 } 
-                template += '\
-                    <div class="valueName">Recording Range (m): <span class="parameterValue">${recordingRange}</span></div>\
-                    <div class="valueName">Recorded Bottom?: <span class="parameterValue">${recordedBottom}</span></div>\
-                    <div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>\
-                    <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>';
+                template +=
+                    '<div class="valueName">Recording Range (m): <span class="parameterValue">${recordingRange}</span></div>' +
+                    '<div class="valueName">Recorded Bottom?: <span class="parameterValue">${recordedBottom}</span></div>' +
+                    '<div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>' +
+                    '<div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>';
 
                 var html = string.substitute(template, {
                         fileName: a['File Name'],
@@ -130,7 +125,7 @@ define([
                         sourceGroup: this.replacePipesWithCommas(a['Source Group']),
                         sourceName: this.replacePipesWithCommas(a['Source Name']),
                         scientistName: this.replacePipesWithCommas(a['Scientist Name']),
-                        collectionDate: a['Collection Date'],
+                        collectionDate: this.formatDate(a['Collection Date']),
                         publishDate: a['Publish Date'],
                         beamType: a['Beam Type'],
                         calibrationState: a['Calibration State'],
@@ -140,7 +135,7 @@ define([
                         frequency: a['Frequency'],
                         minFrequency: a['Min Frequency (kHz)'],
                         maxFrequency: a['Max Frequency (kHz)'],
-                        recordedBottom: a['Recorded Bottom?'] == 'Y' ? 'Yes' : 'No',
+                        recordedBottom: a['Recorded Bottom?'] === 'Y' ? 'Yes' : 'No',
                         imageThumbnail: a['Image Thumbnail'],
                         imageFullsize: a['Image Full Size']
                     });                
@@ -150,53 +145,55 @@ define([
             wcdCruiseFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
-                var template = '\
-                    <div class="fileName">Attributes for ${surveyID}</div>\
-                    <div class="fileHeader">Cruise Details:</div>\
-                    <div class="valueName">Cruise ID: <span class="parameterValue">${surveyID}</span></div>\
-                    <div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>\
-                    <div class="valueName">Dates: <span class="parameterValue">${departureDate} to ${arrivalDate}</span></div>\
-                    <div class="valueName">Departure Port: <span class="parameterValue">${departurePort}</span></div>\
-                    <div class="valueName">Arrival Port: <span class="parameterValue">${arrivalPort}</span></div>\
-                    <div class="valueName">Project(s): <span class="parameterValue">${projectName}</span></div>\
-                    <div class="valueName">Source Group: <span class="parameterValue">${sourceGroup}</span></div>\
-                    <div class="valueName">Institution(s): <span class="parameterValue">${sourceName}</span></div>\
-                    <div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>\
-                    <div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
+                var template =
+                    '<div class="fileName">Attributes for ${surveyID}</div>' +
+                    '<div class="fileHeader">Cruise Details:</div>' +
+                    '<div class="valueName">Cruise ID: <span class="parameterValue">${surveyID}</span></div>' +
+                    '<div class="valueName">Ship: <span class="parameterValue">${shipName}</span></div>' +
+                    '<div class="valueName">Dates: <span class="parameterValue">${departureDate} to ${arrivalDate}</span></div>' +
+                    '<div class="valueName">Departure Port: <span class="parameterValue">${departurePort}</span></div>' +
+                    '<div class="valueName">Arrival Port: <span class="parameterValue">${arrivalPort}</span></div>' +
+                    '<div class="valueName">Project(s): <span class="parameterValue">${projectName}</span></div>' +
+                    '<div class="valueName">Source Group: <span class="parameterValue">${sourceGroup}</span></div>' +
+                    '<div class="valueName">Institution(s): <span class="parameterValue">${sourceName}</span></div>' +
+                    '<div class="valueName">Scientist(s): <span class="parameterValue">${scientistName}</span></div>' +
+                    '<div class="valueName">Instrument: <span class="parameterValue">${instrumentName}</span></div>';
 
-                if (a['Instrument Name'] == 'EK60' || a['Instrument Name'] == 'EK500' || a['Instrument Name'] == 'ES60') {
+                if (a['Instrument Name'] === 'EK60' || a['Instrument Name'] === 'EK80' || a['Instrument Name'] === 'EK500' || a['Instrument Name'] === 'ES60') {
                     template += '<div class="valueName">Frequency (kHz): <span class="parameterValue">${frequency}</span></div>';
                 } else {
-                    template += '\
-                        <div class="valueName">Min Frequency (kHz): <span class="parameterValue">${minFrequency}</span></div>\
-                        <div class="valueName">Max Frequency (kHz): <span class="parameterValue">${maxFrequency}</span></div>';
+                    template +=
+                        '<div class="valueName">Min Frequency (kHz): <span class="parameterValue">${minFrequency}</span></div>' +
+                        '<div class="valueName">Max Frequency (kHz): <span class="parameterValue">${maxFrequency}</span></div>';
                 }
 
                 template += '<div class="valueName">Calibration State: <span class="parameterValue">${calibrationState}</span></div>';
 
-                if (a['Citation Text'] != '') {
+                if (a['Citation Text'] !== '') {
                     template += '<div class="valueName">Citation: <span class="parameterValue">${citationText}</span></div>';
                 }
-                if (a['Citation Link'] != '') {
+                if (a['Citation Link'] !== '') {
                     template += '<div class="valueName">Citation Link: <span class="parameterValue"><a href="${citationLink}" target="_blank">${citationLink}</a></span></div>';
                 }
 
                 //Parse the variable number of key-value pairs from the ANCILLARY field, and display them as URLs.
                 var ancillaryString = a['ANCILLARY'];
                 var ancillaryObject = {};
-                if (ancillaryString && ancillaryString != '') {
+                if (ancillaryString && ancillaryString !== '') {
                     template += '<br>';
                     ancillaryObject = JSON.parse(ancillaryString);
                     for (var key in ancillaryObject) {
-                        template += '<div class="valueName"><span class="parameterValue"><a href="' + ancillaryObject[key] + '" target="_blank">' + key + '</a></span></div>';
+                        if (ancillaryObject.hasOwnProperty(key)) {
+                            template += '<div class="valueName"><span class="parameterValue"><a href="' + ancillaryObject[key] + '" target="_blank">' + key + '</a></span></div>';
+                        }
                     }
                 }
 
                 var html = string.substitute(template, {
                         surveyID: a['Cruise ID'],
                         shipName: a['Ship Name'],
-                        departureDate: a['Start Date'],
-                        arrivalDate: a['End Date'],
+                        departureDate: this.formatDate(a['Start Date']),
+                        arrivalDate: this.formatDate(a['End Date']),
                         departurePort: a['Departure Port'],
                         arrivalPort: a['Arrival Port'],
                         projectName: this.replacePipesWithCommas(a['Project Name']),
@@ -229,49 +226,29 @@ define([
             },
 
             wcdCruiseSort: function(a, b) {
-                //Sort alphabetically on File Name
-                return a.feature.attributes['Cruise ID'] > b.feature.attributes['Cruise ID'] ? 1 : -1;
+                //Reverse-sort the cruises by date
+                var tokens = a.feature.attributes['End Date'].split('/');
+                var date1 = new Date(tokens[2], tokens[0], tokens[1]);
+                tokens = b.feature.attributes['End Date'].split('/');
+                var date2 = new Date(tokens[2], tokens[0], tokens[1]);
+                
+                return date1 < date2 ? 1 : -1;
             },
 
             sortResults: function(results) {
                 var features;
-                if (results['Water Column Sonar']) {    
-                    if ((features = results['Water Column Sonar']['File-Level: NMFS'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['File-Level: OER'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['File-Level: UNOLS'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['File-Level: Other NOAA'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['File-Level: Other'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['File-Level: Non-U.S.'])) {
-                        features.sort(this.wcdFileSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: NMFS'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: OER'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: UNOLS'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: Other NOAA'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: Other'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
-                    if ((features = results['Water Column Sonar']['Cruise-Level: Non-U.S.'])) {
-                        features.sort(this.wcdCruiseSort);
-                    }
+                if (results['Water Column Sonar']) {
+                    for (sublayerId in results['Water Column Sonar']) {
+                        if (results['Water Column Sonar'].hasOwnProperty(sublayerId)) {
+                            features = results['Water Column Sonar'][sublayerId];
+                            if (sublayerId === 'File Geometries') {
+                                features.sort(this.wcdFileSort);
+                            }
+                            else {
+                                features.sort(this.wcdCruiseSort);
+                            }
+                        }
+                    }                      
                 }
             },
 
@@ -282,7 +259,7 @@ define([
                 var layer = layerCollection.getLayerById(layerId);
 
                 logger.debug('creating IdentifyTask for URL '+layer.url);
-                taskInfo = {
+                var taskInfo = {
                     layer: layer,
                     task: new IdentifyTask(layer.url),
                     enabled: layer.visible,
@@ -302,7 +279,7 @@ define([
                 identifyParams.height = this._map.height;
                 identifyParams.mapExtent = this._map.extent;
 
-                identifyParams.layerIds = [1, 2, 3, 4, 5, 6]; //Sublayers for file-level geometries
+                identifyParams.layerIds = [6]; //Sublayer for file-level geometries
                 identifyParams.layerDefinitions = layer.layerDefinitions;
                 return(identifyParams);
             },
@@ -335,7 +312,7 @@ define([
                 if (this.fileTaskInfo.enabled) {
                     topic.publish('/ngdc/showLoading');
 
-                    this.deferreds[this.fileTaskInfo.layer.id] = taskInfo.task.execute(this.fileTaskInfo.params);
+                    this.deferreds[this.fileTaskInfo.layer.id] = this.fileTaskInfo.task.execute(this.fileTaskInfo.params);
                 } else {
                     logger.debug('task not enabled: '+ this.fileTaskInfo.layer.url);
                 }
@@ -382,21 +359,19 @@ define([
 
             addCruiseAndInstrumentToFileLayerDefs: function(cruiseId, instrument) {
                 var newLayerDefs = [];
-                array.forEach(this.fileTaskInfo.params.layerIds, lang.hitch(this, function(layerId) {
-                    var layerDef = this.fileTaskInfo.params.layerDefinitions[layerId];
-                    if (layerDef) {
-                        newLayerDefs[layerId] = layerDef + " AND CRUISE_NAME = '" + cruiseId + "' AND INSTRUMENT_NAME = '" + instrument + "'";
-                    } else {
-                        newLayerDefs[layerId] = "CRUISE_NAME = '" + cruiseId + "' AND INSTRUMENT_NAME = '" + instrument + "'";
-                    }
-                }));
+                var layerDef = this.fileTaskInfo.params.layerDefinitions[6];
+                if (layerDef) {
+                    newLayerDefs[6] = layerDef + " AND CRUISE_NAME = '" + cruiseId + "' AND INSTRUMENT_NAME = '" + instrument + "'";
+                } else {
+                    newLayerDefs[6] = "CRUISE_NAME = '" + cruiseId + "' AND INSTRUMENT_NAME = '" + instrument + "'";
+                }
                 return newLayerDefs;
             },
 
             updateLayerDefinitions: function(layer, layerDefinitions) {
                 this.inherited(arguments);
 
-                if (this.fileTaskInfo.layer.id == layer.id) {
+                if (this.fileTaskInfo.layer.id === layer.id) {
                     this.fileTaskInfo.params.layerDefinitions = layerDefinitions;
                 }
             },
@@ -407,6 +382,28 @@ define([
                 this.fileTaskInfo.params.width  = this._map.width;
                 this.fileTaskInfo.params.height = this._map.height;
                 this.fileTaskInfo.params.mapExtent = this._map.extent;                
+            },
+
+            //Convert a date string from mm/dd/yyyy to yyyy-mm-dd
+            formatDate: function(dateStr) {
+                var tokens = dateStr.split('/');
+                if (tokens.length === 3) {
+                    var date = new Date(tokens[2], tokens[0], tokens[1]);
+                    return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
+                } else {
+                    return '';
+                }
+            },
+
+            padDigits: function(n, totalDigits){
+                n = n.toString();
+                var pd = '';
+                if (totalDigits > n.length) {
+                    for (var i = 0; i < (totalDigits - n.length); i++) {
+                        pd += '0';
+                    }
+                }
+                return pd + n.toString();
             }
 
         });
