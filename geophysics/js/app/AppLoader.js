@@ -91,9 +91,9 @@ define([
             },
 
             init: function() {
-                esriConfig.defaults.io.corsEnabledServers = [
-                    '//maps.ngdc.noaa.gov/arcgis/rest/services',
-                    '//mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
+                esriConfig.defaults.io.corsEnabledServers.push('gis.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('gisdev.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('maps.ngdc.noaa.gov');
 
                 esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
@@ -727,6 +727,11 @@ define([
                     editable: false
                 };
                 var polygon = wkt.toObject(config);
+
+                //shift to 360 before getting the Extent
+                array.forEach(polygon.rings[0], function(item){
+                    item[0] = item[0] < 0 ? item[0] + 360: item[0];
+                });
 
                 var extent = polygon.getExtent();
                 if (this.mapId === 'mercator') {
