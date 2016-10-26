@@ -42,6 +42,10 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'Trackline Bathymetry', this.chkTrackline.checked);                    
                 }));
 
+                on(this.chkTracklineDensity, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'Trackline Bathymetry Density', this.chkTracklineDensity.checked);                    
+                }));
+
                 on(this.chkEmodNetMultibeam, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'EMODNet Multibeam Polygons', this.chkEmodNetMultibeam.checked);
                     topic.publish('/ngdc/layer/visibility', 'EMODNet Multibeam Lines', this.chkEmodNetMultibeam.checked);
