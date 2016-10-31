@@ -40,7 +40,7 @@ define([
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
                     identify: this.identify,
-                    class: 'identifyPane',
+                    'class': 'identifyPane',
                     autoExpandTree: false
                 }, dom.byId('arcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
