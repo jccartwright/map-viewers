@@ -18,6 +18,7 @@ define([
     'esri/SpatialReference',
     'esri/tasks/GeometryService',
     'esri/tasks/ProjectParameters',
+    'esri/dijit/Legend',
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'ngdc/web_mercator/ZoomLevels',
@@ -50,6 +51,7 @@ define([
         SpatialReference,
         GeometryService,
         ProjectParameters,
+        Legend,
         Logger,
         MercatorMapConfig,
         MercatorZoomLevels,
@@ -71,10 +73,9 @@ define([
             },
 
             init: function() {
-                esriConfig.defaults.io.corsEnabledServers = [
-                    'http://maps.ngdc.noaa.gov/arcgis/rest/services',
-                    'http://mapdevel.ngdc.noaa.gov/arcgis/rest/services'
-                ];
+                esriConfig.defaults.io.corsEnabledServers.push('maps.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('gis.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('gisdev.ngdc.noaa.gov');
 
                 esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
@@ -175,6 +176,16 @@ define([
                 }));
 
                 new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
+
+                aspect.after(this.mercatorMapConfig, 'mapReady', lang.hitch(this, function() {
+                    var legend = new Legend({
+                        map: this.mercatorMapConfig.map,
+                        layerInfos: [
+                            {title: 'NCEI Trackline Bathymetry Density', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry Density')}
+                        ]
+                    }, 'dynamicLegend');
+                    legend.startup();
+                }));
             },
 
             //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'

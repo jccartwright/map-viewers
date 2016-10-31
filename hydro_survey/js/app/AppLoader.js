@@ -53,9 +53,11 @@ define([
             },
 
             init: function() {
-                esriConfig.defaults.io.corsEnabledServers = [
-                    '//maps.ngdc.noaa.gov/arcgis/rest/services',
-                    '//mapdevel.ngdc.noaa.gov/arcgis/rest/services'];
+                esriConfig.defaults.io.corsEnabledServers.push('maps.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('gis.ngdc.noaa.gov');
+                esriConfig.defaults.io.corsEnabledServers.push('gisdev.ngdc.noaa.gov');
+
+                esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);

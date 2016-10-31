@@ -27,7 +27,7 @@ define([
 
                 this.mapToolbar = new MapToolbar({
                     map: this.map, 
-                    layerCollection: this.mapLayerCollection, 
+                    layerCollection: this.mapLayerCollection 
                 }, 'mercatorMapToolbar');
                 this.mapToolbar.startup();
 
@@ -36,7 +36,7 @@ define([
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
                     identify: this.identify,
-                    class: 'identifyPane',
+                    'class': 'identifyPane',
                     autoExpandTree: false
                 }, dom.byId('mercatorIdentifyPaneDiv'));
                 this.identifyPane.startup();

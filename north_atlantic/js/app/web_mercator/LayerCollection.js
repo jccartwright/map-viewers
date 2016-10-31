@@ -105,7 +105,7 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),
-                    new TiledWMSLayer('//gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
+                    new TiledWMSLayer('http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
                         id: 'GMRT Masked',
                         visible: false,
                         format: 'jpeg',
@@ -113,7 +113,7 @@ define([
                         epsgCode: '3857',
                         layerNames: ['topo-mask']
                     }),
-                    new TiledWMSLayer('//gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
+                    new TiledWMSLayer('http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
                         id: 'GMRT Unmasked',
                         visible: false,
                         format: 'jpeg',
@@ -146,7 +146,7 @@ define([
                     //     imageParameters: this.imageParameters.png32
                     // }),
 
-                    new ArcGISDynamicMapServiceLayer('//service.ncddc.noaa.gov/arcgis/rest/services/OceanExploration/OE_IOCM_Planned/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('http://service.ncddc.noaa.gov/arcgis/rest/services/OceanExploration/OE_IOCM_Planned/MapServer', { //Force HTTP
                         id: 'OER Planned Expeditions',
                         visible: false,
                         imageParameters: this.imageParameters.png32
@@ -192,7 +192,7 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('//geoappext.nrcan.gc.ca/arcgis/rest/services/GSCA/multibeam_multifaisceaux_index/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('http://geoappext.nrcan.gc.ca/arcgis/rest/services/GSCA/multibeam_multifaisceaux_index/MapServer', { //Force HTTP
                         id: 'NRCan Multibeam',
                         visible: false,
                         imageParameters: this.imageParameters.png32
@@ -252,7 +252,12 @@ define([
                         id: 'Multibeam (dynamic)',
                         visible: this.multibeamVisible,
                         imageParameters: this.imageParameters.png32
-                    }),                    
+                    }),
+                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/trackline_bathymetry_density/MapServer', {
+                        id: 'Trackline Bathymetry Density',
+                        visible: false,                
+                        imageParameters: this.imageParameters.png32
+                    }),              
                     new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer', {
                         id: 'World Boundaries and Places',
                         visible: false

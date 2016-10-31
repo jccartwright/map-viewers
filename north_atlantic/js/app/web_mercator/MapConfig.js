@@ -41,8 +41,8 @@ define([
                 }, dom.byId('mercatorIdentifyPaneDiv'));
                 this.identifyPane.startup();
             
-                this.mapLayerCollection.getLayerById('OSPAR Boundaries').setVisibleLayers([-1]);
-                this.mapLayerCollection.getLayerById('Protected Sites').setVisibleLayers([-1]);
+                //this.mapLayerCollection.getLayerById('OSPAR Boundaries').setVisibleLayers([-1]);
+                //this.mapLayerCollection.getLayerById('Protected Sites').setVisibleLayers([-1]);
             }
          
             

@@ -14,7 +14,7 @@ define([
         ){
 
         return declare([LayerCollection], {
-            constructor: function(options) {
+            constructor: function() {
                 this.name = 'app/arctic/LayerCollection';
 
                 this.defineMapServices();
