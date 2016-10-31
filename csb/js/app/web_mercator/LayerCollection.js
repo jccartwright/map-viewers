@@ -18,7 +18,7 @@ define([
         ){
 
         return declare([AbstractLayerCollection], {
-            constructor: function(options) {
+            constructor: function() {
                 this.name = 'app.web_mercator.LayerCollection';
 
                 this.defineMapServices();
@@ -65,7 +65,7 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),
-                    new TiledWMSLayer('//gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
+                    new TiledWMSLayer('http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
                         id: 'GMRT Masked',
                         visible: false,
                         format: 'jpeg',
@@ -73,7 +73,7 @@ define([
                         epsgCode: '3857',
                         layerNames: ['topo-mask']
                     }),
-                    new TiledWMSLayer('//gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
+                    new TiledWMSLayer('http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
                         id: 'GMRT Unmasked',
                         visible: false,
                         format: 'jpeg',
@@ -199,7 +199,7 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer', {
                         id: 'Ocean Reference',
-                        visible: true,
+                        visible: true
                     }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
                         id: 'Graticule',
