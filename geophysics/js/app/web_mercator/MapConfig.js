@@ -29,7 +29,7 @@ define([
 
                 this.mapToolbar = new MapToolbar({
                     map: this.map, 
-                    layerCollection: this.mapLayerCollection, 
+                    layerCollection: this.mapLayerCollection 
                 }, 'mercatorMapToolbar');
                 this.mapToolbar.startup();
 

@@ -40,34 +40,34 @@ define([
                 this.identifyPane = new IdentifyPane({
                     map: this.map,
                     identify: this.identify,
-                    class: 'identifyPane',
+                    'class': 'identifyPane',
                     autoExpandTree: false
                 }, dom.byId('antarcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
                 this.identifyPane.enabled = false;  
 
                 topic.subscribe('/geophysics/layer/visibility', lang.hitch(this, function(id, visible) {
-                    if (id == 'All Parameters') {
+                    if (id === 'All Parameters') {
                         topic.publish('/ngdc/sublayer/visibility', '(Antarctic) Trackline Combined', [0], visible);
-                    } else if (id == 'Bathymetry') {
+                    } else if (id === 'Bathymetry') {
                         topic.publish('/ngdc/sublayer/visibility', '(Antarctic) Trackline Combined', [1], visible);
-                    } else if (id == 'Gravity') {
+                    } else if (id === 'Gravity') {
                         topic.publish('/ngdc/sublayer/visibility', '(Antarctic) Trackline Combined', [2], visible);
-                    } else if (id == 'Magnetics') {
+                    } else if (id === 'Magnetics') {
                         topic.publish('/ngdc/sublayer/visibility', '(Antarctic) Trackline Combined', [3], visible);
-                    } else if (id == 'Multi-Channel Seismics') {
+                    } else if (id === 'Multi-Channel Seismics') {
                         topic.publish('/ngdc/sublayer/visibility', '(Antarctic) Trackline Combined', [4], visible);
-                    } else if (id == 'Seismic Refraction') {
+                    } else if (id === 'Seismic Refraction') {
                         topic.publish('/ngdc/sublayer/visibility', '(Antarctic) Trackline Combined', [5], visible);
-                    } else if (id == 'Shot-Point Navigation') {
+                    } else if (id === 'Shot-Point Navigation') {
                         topic.publish('/ngdc/sublayer/visibility', '(Antarctic) Trackline Combined', [6], visible);
-                    } else if (id == 'Side Scan Sonar') {
+                    } else if (id === 'Side Scan Sonar') {
                         topic.publish('/ngdc/sublayer/visibility', '(Antarctic) Trackline Combined', [7], visible);
-                    } else if (id == 'Single-Channel Seismics') {
+                    } else if (id === 'Single-Channel Seismics') {
                         topic.publish('/ngdc/sublayer/visibility', '(Antarctic) Trackline Combined', [8], visible);
-                    } else if (id == 'Subbottom Profile') {
+                    } else if (id === 'Subbottom Profile') {
                         topic.publish('/ngdc/sublayer/visibility', '(Antarctic) Trackline Combined', [9], visible);
-                    } else if (id == 'Aeromagnetics') {
+                    } else if (id === 'Aeromagnetics') {
                         topic.publish('/ngdc/sublayer/visibility', '(Antarctic) Trackline Combined', [10], visible);
                     }
                 }));
