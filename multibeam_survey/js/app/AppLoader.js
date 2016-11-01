@@ -16,6 +16,7 @@ define([
     'esri/geometry/Extent',
     'esri/geometry/webMercatorUtils',
     'esri/SpatialReference',
+    'esri/tasks/GeometryService',
     'ngdc/Logger',
     'app/MapConfig',
     'app/LayerCollection',
@@ -38,6 +39,7 @@ define([
         Extent,
         webMercatorUtils,
         SpatialReference,
+        GeometryService,
         Logger,
         MapConfig,
         LayerCollection
