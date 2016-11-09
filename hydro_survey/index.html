@@ -3,8 +3,8 @@
 <head>
     <title>NOS Hydrographic Survey Preview</title>
     <link rel="shortcut icon" href="//www.ngdc.noaa.gov/image/favicon.ico">
-    <link rel="stylesheet" href="//js.arcgis.com/3.17/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="//js.arcgis.com/3.17/esri/css/esri.css">
+    <link rel="stylesheet" href="//js.arcgis.com/3.18/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="//js.arcgis.com/3.18/esri/css/esri.css">
     <link rel="stylesheet" href="css/local.css">
     <script>
         var dojoConfig = {
@@ -38,7 +38,7 @@
             }
         };
     </script>
-    <script src="//js.arcgis.com/3.17/"></script>
+    <script src="//js.arcgis.com/3.18/"></script>
 </head>
 <body class="tundra">
 <div id="loadingOverlay" class="loadingOverlay pageOverlay">
@@ -54,6 +54,9 @@
             <div id="homeButton"></div>
             <div id="toggleRnc" class="toggleRnc" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:false">
                 Show RNCs
+            </div>
+            <div id="toggleBagFootprints" class="toggleBagFootprints" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:false">
+                Show BAG Footprints
             </div>
         </div>
     </div> <!-- end centerPane -->

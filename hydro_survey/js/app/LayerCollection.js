@@ -1,11 +1,12 @@
 define([
-    "dojo/_base/declare", 
-    "ngdc/layers/AbstractLayerCollection", 
-    "esri/layers/ArcGISTiledMapServiceLayer", 
-    "esri/layers/ArcGISImageServiceLayer", 
-    "esri/layers/ImageServiceParameters", 
-    "esri/layers/ArcGISDynamicMapServiceLayer", 
-    "esri/layers/FeatureLayer"
+    'dojo/_base/declare', 
+    'ngdc/layers/AbstractLayerCollection', 
+    'esri/layers/ArcGISTiledMapServiceLayer', 
+    'esri/layers/ArcGISImageServiceLayer', 
+    'esri/layers/ImageServiceParameters', 
+    'esri/layers/ArcGISDynamicMapServiceLayer', 
+    'esri/layers/FeatureLayer',
+    'esri/InfoTemplate'
     ],
     function(
         declare, 
@@ -14,7 +15,8 @@ define([
         ArcGISImageServiceLayer,
         ImageServiceParameters,
         ArcGISDynamicMapServiceLayer,
-        FeatureLayer
+        FeatureLayer,
+        InfoTemplate
         ){
 
         return declare([LayerCollection], {
@@ -30,39 +32,48 @@ define([
                 //TODO check to ensure unique id
 
                 var params = new ImageServiceParameters();
-                params.format = "jpgpng";
+                params.format = 'jpgpng';
                 params.compressionQuality = 90;
                 params.interpolation = ImageServiceParameters.INTERPOLATION_BILINEAR;
 
+                var template = new InfoTemplate('BAG Footprint', '${Name}');
+
                 //all are invisible by default to hide the initial zoom to extent
                 this.mapServices = [
-                    new esri.layers.ArcGISTiledMapServiceLayer("//services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", {
-                        id: "World Imagery",
+                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer', {
+                        id: 'World Imagery',
                         visible: false
                     }),                                  
-                    new ArcGISImageServiceLayer("//gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades_subsets/ImageServer", {
-                        id: "BAG Hillshades",
+                    new ArcGISImageServiceLayer('//gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades_subsets/ImageServer', {
+                        id: 'BAG Hillshades',
                         imageServiceParameters: params,
                         visible: false
                     }),
-                    new ArcGISImageServiceLayer("//seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
-                        id: "RNC",
+                    new ArcGISImageServiceLayer('//seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer', {
+                        id: 'RNC',
                         imageServiceParameters: params,
                         visible: false,
                         opacity: 0.5
                     }),
-                    new FeatureLayer("//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1", {
-                        id: "NOS Hydro Digital",
+                    new FeatureLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1', {
+                        id: 'NOS Hydro Digital',
                         mode: FeatureLayer.MODE_ONDEMAND,
                         visible: false
                     }),
-                    new FeatureLayer("//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/2", {
-                        id: "NOS Hydro Non-Digital",
+                    new FeatureLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/2', {
+                        id: 'NOS Hydro Non-Digital',
                         mode: FeatureLayer.MODE_ONDEMAND,
                         visible: false
                     }),
-                    new esri.layers.ArcGISTiledMapServiceLayer("//services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer", {
-                        id: "Boundaries/Labels",
+                    new FeatureLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/3', {
+                        id: 'BAG Footprints',
+                        mode: FeatureLayer.MODE_ONDEMAND,
+                        visible: false,
+                        infoTemplate: template,
+                        outFields: ['Name']
+                    }),
+                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer', {
+                        id: 'Boundaries/Labels',
                         visible: false
                     })
                 ];
