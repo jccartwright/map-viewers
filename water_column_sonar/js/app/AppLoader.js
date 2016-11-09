@@ -398,7 +398,7 @@ define([
                 //Only query on the visible layers
                 var visibleLayers = this.mercatorMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').visibleLayers;
                 array.forEach(visibleLayers, function(layerIdx) {
-                    layerDefs.push(layerIdx + ':' + allLayerDefs[layerIdx]);    
+                    layerDefs.push(layerIdx + ':' + allLayerDefs[layerIdx]);
                 })
 
                 var layerDefsStr = layerDefs.join(';');
@@ -424,6 +424,7 @@ define([
                 }
             },
 
+
             //Zooms to bbox in geographic coordinates
             zoomToBbox: function(bboxWkt) {
                 var wkt = new Wkt.Wkt();
@@ -435,11 +436,18 @@ define([
                 };
                 var polygon = wkt.toObject(config);
 
+                //shift to 360 before getting the Extent
+                array.forEach(polygon.rings[0], function(item){
+                    item[0] = item[0] < 0 ? item[0] + 360: item[0];
+                });
+
                 var extent = polygon.getExtent();
                 if (this.mapId === 'mercator') {
                     this.mercatorMapConfig.map.setExtent(this.clampExtentTo85(extent), true);
-                } else  {
-                    this.zoomToPolarBbox(extent, this.mapId);
+                } else if (this.mapId === 'arctic') {
+                    this.zoomToPolarBbox(extent, true);
+                } else {
+                    this.zoomToPolarBbox(extent, false);
                 }
             },
 
@@ -460,8 +468,8 @@ define([
                 return extent;
             },
 
-            //Input: Extent in geographic coords. Densifies the geometry, projects it to epsg:3995, then zooms to that geometry.
-            zoomToPolarBbox: function(extent, mapId) {
+            //Input: Extent in geographic coords. Densifies the geometry, projects it to either epsg:3995 or epsg:3031, then zooms to that geometry.
+            zoomToPolarBbox: function(extent, isArctic) {
                 var geometryService = esriConfig.defaults.geometryService;
                 var extentWidth = Math.abs(extent.xmax - extent.xmin);
                 
@@ -469,8 +477,8 @@ define([
                 var maxSegmentLength = extentWidth / 20;
                 var densifiedGeometry = geometryEngine.densify(extent, maxSegmentLength);
 
-                var projectParams = new ProjectParameters();
-                if (mapId === 'arctic') {
+                var projectParams = new ProjectParameters();   
+                if (isArctic) {
                     projectParams.outSR = new SpatialReference(3995);
                 } else {
                     projectParams.outSR = new SpatialReference(3031);
@@ -480,10 +488,10 @@ define([
                 
                 //Project the densififed geometry, then zoom to the polygon's extent
                 geometryService.project(projectParams, lang.hitch(this, function(geometries) {
-                    if (this.mapId === 'arctic') {
+                    if (isArctic) {
                         this.arcticMapConfig.map.setExtent(geometries[0].getExtent(), true);
                     } else {
-                        this.antarcticMapConfig.map.setExtent(geometries[0].getExtent(), true);
+                        this.antarcticMapConfig.map.setExtent(geometries[0].getExtent(), true); 
                     }
                 }), function(error) {
                     logger.error(error);
