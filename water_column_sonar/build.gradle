@@ -1,7 +1,7 @@
 import org.apache.tools.ant.filters.*
 
 ext.buildDate = new Date().format('YYYY-MM-dd')
-version = '2.9'
+version = '2.10'
 
 jar {
     from "."
