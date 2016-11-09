@@ -5,7 +5,8 @@ define([
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISImageServiceLayer',
     'esri/layers/WebTiledLayer',
-    'ngdc/layers/TiledWMSLayer'
+    'ngdc/layers/TiledWMSLayer',
+    'esri/urlUtils'
     ],
     function(
         declare, 
@@ -14,7 +15,8 @@ define([
         ArcGISDynamicMapServiceLayer,
         ArcGISImageServiceLayer,
         WebTiledLayer,
-        TiledWMSLayer
+        TiledWMSLayer,
+        urlUtils
         ){
 
         return declare([AbstractLayerCollection], {
@@ -83,7 +85,7 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),
-                    new TiledWMSLayer('http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
+                    new TiledWMSLayer('https://gisdev.ngdc.noaa.gov/https-proxy/proxy?http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
                         id: 'GMRT Masked',
                         visible: false,
                         format: 'jpeg',
@@ -91,7 +93,7 @@ define([
                         epsgCode: '3857',
                         layerNames: ['topo-mask']
                     }),
-                    new TiledWMSLayer('http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
+                    new TiledWMSLayer('https://gisdev.ngdc.noaa.gov/https-proxy/proxy?http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
                         id: 'GMRT Unmasked',
                         visible: false,
                         format: 'jpeg',

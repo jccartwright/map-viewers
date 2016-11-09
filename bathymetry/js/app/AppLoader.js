@@ -37,6 +37,7 @@ define([
     'app/web_mercator/Identify',
     'app/AppIdentifyPane',
     'app/LayersPanel',
+     'esri/urlUtils',
     'dojo/domReady!'],
     function(
         declare,
@@ -76,7 +77,8 @@ define([
         AntarcticMapToolbar,
         WebMercatorIdentify,
         IdentifyPane,
-        LayersPanel) {
+        LayersPanel,
+        urlUtils) {
 
         return declare(null, {
             mercatorMapConfig: null,
@@ -89,6 +91,12 @@ define([
             },
 
             init: function() {
+                //doesn't seem to be working
+                urlUtils.addProxyRule({
+                    "proxyUrl": "https://gis.ngdc.noaa.gov/https-proxy/proxy?",
+                    "urlPrefix": "http://gmrt.marine-geo.org"
+                });
+
                 esriConfig.defaults.io.corsEnabledServers.push('maps.ngdc.noaa.gov');
                 esriConfig.defaults.io.corsEnabledServers.push('gis.ngdc.noaa.gov');
                 esriConfig.defaults.io.corsEnabledServers.push('gisdev.ngdc.noaa.gov');
