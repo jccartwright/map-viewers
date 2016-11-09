@@ -208,7 +208,7 @@ define([
 
                 this.mercatorMapConfig = new MercatorMapConfig('mercator', {
                     center:[-110, 0], //centered over eastern Pacific
-                    zoom: 0, //relative zoom level; equivalent to absolute zoom level 2
+                    zoom: 1, //relative zoom level; equivalent to absolute zoom level 3
                     logo: false,
                     showAttribution: false,
                     overview: true,
