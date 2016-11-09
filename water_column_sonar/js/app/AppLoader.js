@@ -391,18 +391,17 @@ define([
                 this.layersPanel.setCurrentFilterString('');
             },
 
-            zoomToResults: function(layerDefs) {
+            zoomToResults: function(allLayerDefs) {
+                var layerDefs = [];
                 var layerDefsStr = '';
 
-                //Only operate on cruise-level geometries (sublayers 0-5)
-                for (var i = 0; i <= 5; i++) {
-                    if (layerDefs[i] !== '') {
-                        layerDefsStr += i + ':' + layerDefs[i];
-                        if (i < 5) {
-                            layerDefsStr += ';';
-                        }
-                    }
-                }
+                //Only query on the visible layers
+                var visibleLayers = this.mercatorMapConfig.mapLayerCollection.getLayerById('Water Column Sonar').visibleLayers;
+                array.forEach(visibleLayers, function(layerIdx) {
+                    layerDefs.push(layerIdx + ':' + allLayerDefs[layerIdx]);    
+                })
+
+                var layerDefsStr = layerDefs.join(';');
 
                 if (layerDefsStr !== '') {
                     var params = {};
