@@ -147,7 +147,7 @@ define([
                     cruiseAndInstrumentPairs: this.cruiseInfos                    
                 };
 
-                if (this.wktGeometry) {
+                if (this.wktGeometry && this.chkPassGeometry.checked) {
                     orderParams.wktGeometry = this.wktGeometry;
                 }
 
