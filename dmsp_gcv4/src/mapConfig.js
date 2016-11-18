@@ -249,7 +249,7 @@ function addWMSLayer(arg) {
 
 	//TODO show loading message
 	
-	var wmsURL = "http://mapserver.ngdc.noaa.gov/cgi-bin/public/gcv4?";
+	var wmsURL = "https://gis.ngdc.noaa.gov/cgi-bin/public/gcv4?";
 
 	if (globals.wmsLayer) {
 		//stash the current layer so we can remove it when the new one is loaded

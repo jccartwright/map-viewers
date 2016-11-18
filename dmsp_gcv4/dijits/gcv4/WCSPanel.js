@@ -24,7 +24,7 @@ dojo.declare('gcv4.WCSPanel',[dijit._Widget, dijit._Templated],{
 			return;
 		} 
 
-		var urlTemplate = 'http://mapserver.ngdc.noaa.gov/cgi-bin/public/gcv4/${0}?request=GetCoverage&service=WCS&version=1.0.0&COVERAGE=${0}&crs=EPSG:4326&format=geotiff&resx=0.0083333333&resy=0.0083333333&bbox=${1},${2},${3},${4}';
+		var urlTemplate = 'https://gis.ngdc.noaa.gov/cgi-bin/public/gcv4/${0}?request=GetCoverage&service=WCS&version=1.0.0&COVERAGE=${0}&crs=EPSG:4326&format=geotiff&resx=0.0083333333&resy=0.0083333333&bbox=${1},${2},${3},${4}';
 		var url = dojo.string.substitute(urlTemplate,[
 			this.imageName,
 			this.minx.get('value'),
