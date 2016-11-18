@@ -1,0 +1,13 @@
+{
+  identifier:'name', 
+  label:'name', 
+  items:[
+    {name:'All Satellites'},
+    {name:'F10'},
+    {name:'F12'},
+    {name:'F14'},
+    {name:'F15'},
+    {name:'F16'},
+    {name:'F18'}
+  ]
+}
