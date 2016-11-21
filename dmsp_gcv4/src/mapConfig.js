@@ -141,22 +141,22 @@ function getMapServiceList(){
 	imageParametersJpg.format = "jpg";
 	
 	globals.mapServices = [
-	new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/ESRI_StreetMap_World_2D/MapServer", {
+	new esri.layers.ArcGISTiledMapServiceLayer("https://services.arcgisonline.com/ArcGIS/rest/services/ESRI_StreetMap_World_2D/MapServer", {
 		id: "Street Map",
 		visible: false,
 		opacity: 1
 	}), 
-	new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/ESRI_Imagery_World_2D/MapServer", {
+	new esri.layers.ArcGISTiledMapServiceLayer("https://services.arcgisonline.com/ArcGIS/rest/services/ESRI_Imagery_World_2D/MapServer", {
 		id: "Imagery",
 		visible: false,
 		opacity: 1
 	}),
-	new esri.layers.ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/ESRI_ShadedRelief_World_2D/MapServer", {
+	new esri.layers.ArcGISTiledMapServiceLayer("https://services.arcgisonline.com/ArcGIS/rest/services/ESRI_ShadedRelief_World_2D/MapServer", {
 		id: "Shaded Relief",
 		visible: false,
 		opacity: 1
 	}),	 
-	new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/rest/services/web_mercator/graticule/MapServer", {
+	new esri.layers.ArcGISDynamicMapServiceLayer("https://maps.ngdc.noaa.gov/rest/services/web_mercator/graticule/MapServer", {
 		id: "Graticule",
 		visible: true,
 		opacity: 0.5,
