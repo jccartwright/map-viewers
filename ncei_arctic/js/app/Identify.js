@@ -336,7 +336,7 @@ define([
                     state: a['STATE'],
                     begDate: a['BEG_DATE'],
                     endDate: a['END_DATE'],
-                    url: 'http://www.ncdc.noaa.gov/crn/station.htm?stationId=' + a['STATION_ID']
+                    url: 'https://www.ncdc.noaa.gov/crn/station.htm?stationId=' + a['STATION_ID']
                 });
                 return html;
             },
@@ -353,7 +353,7 @@ define([
                     stationName: a['STATION_NAME'],
                     dataBeginDate: a['DATA_BEGIN_DATE'],
                     dataEndDate: a['DATA_END_DATE'],                        
-                    url: 'http://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/' + a['STATION_ID'] + '/detail'
+                    url: 'https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/' + a['STATION_ID'] + '/detail'
                 });
                 return html;
             },
@@ -370,7 +370,7 @@ define([
                     stationName: a['STATION_NAME'],
                     dataBeginDate: a['DATA_BEGIN_DATE'],
                     dataEndDate: a['DATA_END_DATE'],
-                    url: 'http://www.ncdc.noaa.gov/cdo-web/datasets/GSOM/stations/' + a['STATION_ID'] + '/detail'
+                    url: 'https://www.ncdc.noaa.gov/cdo-web/datasets/GSOM/stations/' + a['STATION_ID'] + '/detail'
                 });
                 return html;
             },
@@ -387,7 +387,7 @@ define([
                     stationName: a['STATION_NAME'],
                     dataBeginDate: a['DATA_BEGIN_DATE'],
                     dataEndDate: a['DATA_END_DATE'],
-                    url: 'http://www.ncdc.noaa.gov/cdo-web/datasets/GSOY/stations/' + a['STATION_ID'] + '/detail'
+                    url: 'https://www.ncdc.noaa.gov/cdo-web/datasets/GSOY/stations/' + a['STATION_ID'] + '/detail'
                 });
                 return html;
             },
@@ -405,9 +405,9 @@ define([
                     station: a['STATION'],
                     beginDate: a['BEG_DATE'],
                     endDate: a['END_DATE'],
-                    advancedUrl: 'http://www7.ncdc.noaa.gov/CDO/cdodataelem.cmd?p_ndatasetid=11&datasetabbv=DS3505&p_cqueryby=ENTIRE&p_ncntryid=&p_nrgnid=' + 
+                    advancedUrl: 'https://www7.ncdc.noaa.gov/CDO/cdodataelem.cmd?p_ndatasetid=11&datasetabbv=DS3505&p_cqueryby=ENTIRE&p_ncntryid=&p_nrgnid=' +
                         '&p_nstprovid=&p_cfileform=&p_csubqueryby=STATION&resolution=40&poeoption=ADVANCED&p_asubqueryitems=' + a['AWSBAN'],
-                    simpleUrl: 'http://www7.ncdc.noaa.gov/CDO/cdodateoutmod.cmd?p_ndatasetid=11&datasetabbv=DS3505&p_cqueryby=ENTIRE&p_ncntryid=&p_nrgnid=' + 
+                    simpleUrl: 'https://www7.ncdc.noaa.gov/CDO/cdodateoutmod.cmd?p_ndatasetid=11&datasetabbv=DS3505&p_cqueryby=ENTIRE&p_ncntryid=&p_nrgnid=' +
                         '&p_nstprovid=&p_cfileform=&p_csubqueryby=STATION&resolution=40&poeoption=SIMPLE&p_asubqueryitems=' + a['AWSBAN']
                 });
                 return html;
