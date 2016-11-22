@@ -85,7 +85,7 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),
-                    new TiledWMSLayer('https://gisdev.ngdc.noaa.gov/https-proxy/proxy?http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
+                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
                         id: 'GMRT Masked',
                         visible: false,
                         format: 'jpeg',
@@ -93,7 +93,7 @@ define([
                         epsgCode: '3857',
                         layerNames: ['topo-mask']
                     }),
-                    new TiledWMSLayer('https://gisdev.ngdc.noaa.gov/https-proxy/proxy?http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
+                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
                         id: 'GMRT Unmasked',
                         visible: false,
                         format: 'jpeg',
