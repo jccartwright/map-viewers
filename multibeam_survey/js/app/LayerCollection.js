@@ -38,7 +38,7 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),                                 
-                    new TiledWMSLayer('http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
+                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
                         id: 'GMRT',
                         visible: false,
                         format: 'jpeg',
