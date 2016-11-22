@@ -51,14 +51,14 @@ function preInit() {
 				name: 'etopo1',
 				label: "ETOPO1 (ice)",
 				resolution: "0.016666666666666667",  //1 degree
-				previewUrl: "http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer",
+				previewUrl: "https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer",
 				description: "Grid of Earth's surface depicting the top of the Antarctic and Greenland ice sheets (1-minute resolution)"
 			},
 			{
 				name: 'etopo1_bedrock',
 				label: "ETOPO1 (bedrock)",
 				resolution: "0.016666666666666667",  //1 degree
-				previewUrl: "http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer",
+				previewUrl: "https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer",
 				description: "Grid of Earth's surface depicting the bedrock underneath the ice sheets (1-minute resolution)"
 			},
 /*			
@@ -66,42 +66,42 @@ function preInit() {
 				name: 'DEM',
 				label: "DEM",
 				resolution: "0.016666666666666667",
-				previewUrl: "http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_hillshades_mosaic/MapServer"
+				previewUrl: "https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_hillshades_mosaic/MapServer"
 			},
 */
 			{
 				name: 'crm',
 				label: "Coastal Relief Models",
 				resolution: "0.000833333333333334", //3 arcsecond
-				previewUrl: "http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
 				description: "Coastal Relief Model (3-second resolution)"
 			},
 			{
 				name: 'socal_3as',
 				label: "Southern California Coastal Relief Model (3 arc-second)",
 				resolution: "0.000833333333333334", //3 arcsecond
-				previewUrl: "http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
 				description: "Southern California Coastal Relief Model (3-second resolution)"
 			},
 			{
 				name: 'socal_3as_hs',
 				label: "Southern California Coastal Relief Model Hillshade (3 arc-second)",
 				resolution: "0.000833333333333334", //3 arcsond
-				previewUrl: "http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
 				description: "Southern California Relief Model Hillshade (3 arc-second resolution)"
 			},
 			{
 				name: 'socal_1as',
 				label: "Southern California Coastal Relief Model (1 arc-second)",
 				resolution: "0.000277777780000", //1 arcsecond
-				previewUrl: "http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
 				description: "Southern California Coastal Relief Model (1 arc-second resolution)"
 			},
 			{
 				name: 'socal_1as_hs',
 				label: "Southern California Coastal Relief Model Hillshade (1 arc-second)",
 				resolution: "0.000277777780000", //1 arcsecond
-				previewUrl: "http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
 				description: "Southern California Coastal Relief Model Hillshade (1 arc-second resolution)"
 			},
 /*
@@ -109,7 +109,7 @@ function preInit() {
 				name: 'alaska_crm',
 				label: 'Southern Alaska CRM',
 				resolution: '0.00666666667',
-				previewUrl: "http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
 				description: "Southern Alaska Coastal Relief Model (24-second resolution)"
 			},
 */
@@ -119,7 +119,7 @@ function preInit() {
 				label: "GLOBE",
 				resolution: "0.008333333333333334",  //30 arcsecond
 				//no preview service yet for GLOBE
-				previewUrl: "http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer",
+				previewUrl: "https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer",
 			 	description: "GLOBE (30-second resolution)"
 			},
 */
@@ -129,7 +129,7 @@ function preInit() {
 				label: "1deg_gridcenter",
 				resolution: "1.0",  
 				//no preview service
-				previewUrl: "http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer",
+				previewUrl: "https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer",
 			 	description: "grid-centered test (1 degree resolution)"
 			},
 */
@@ -139,7 +139,7 @@ function preInit() {
 				label: "1deg_cellcenter",
 				resolution: "1.0",  
 				//no preview service
-				previewUrl: "http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer",
+				previewUrl: "https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer",
 			 	description: "cell-centered test (1 degree resolution)"
 			}
 */
@@ -147,7 +147,7 @@ function preInit() {
 				name: 'great_lakes',
 				label: "Great Lakes Bathymetry",
 				resolution: "0.000833333333333334", //3 arcsecond
-				previewUrl: "http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer",
 				description: "Great Lakes Bathymetry (3-second resolution)"
 			}
 			]
@@ -235,9 +235,9 @@ function preInit() {
 	}
 	
 	function updateUrl() {
-		//var urlTemplate = "http://mapserver.ngdc.noaa.gov/cgi-bin/public/wcs/${coverage}.${extension}?request=getcoverage&version=1.0.0&service=wcs&coverage=${coverage}&CRS=EPSG:4326&format=${format}&resx=${resolution}&resy=${resolution}&bbox=${extent.xmin},${extent.ymin},${extent.xmax},${extent.ymax}";
-		//var urlTemplate = "http://mapserver.ngdc.noaa.gov/wcs-proxy/wcs.groovy?filename=${coverage}.${extension}&request=getcoverage&version=1.0.0&service=wcs&coverage=${coverage}&CRS=EPSG:4326&format=${format}&resx=${resolution}&resy=${resolution}&bbox=${extent.xmin},${extent.ymin},${extent.xmax},${extent.ymax}";
-		var urlTemplate = "http://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/wcs.groovy?filename=${coverage}.${extension}&request=getcoverage&version=1.0.0&service=wcs&coverage=${coverage}&CRS=EPSG:4326&format=${format}&resx=${resolution}&resy=${resolution}&bbox=${extent.xmin},${extent.ymin},${extent.xmax},${extent.ymax}";
+		//var urlTemplate = "https://mapserver.ngdc.noaa.gov/cgi-bin/public/wcs/${coverage}.${extension}?request=getcoverage&version=1.0.0&service=wcs&coverage=${coverage}&CRS=EPSG:4326&format=${format}&resx=${resolution}&resy=${resolution}&bbox=${extent.xmin},${extent.ymin},${extent.xmax},${extent.ymax}";
+		//var urlTemplate = "https://mapserver.ngdc.noaa.gov/wcs-proxy/wcs.groovy?filename=${coverage}.${extension}&request=getcoverage&version=1.0.0&service=wcs&coverage=${coverage}&CRS=EPSG:4326&format=${format}&resx=${resolution}&resy=${resolution}&bbox=${extent.xmin},${extent.ymin},${extent.xmax},${extent.ymax}";
+		var urlTemplate = "https://maps.ngdc.noaa.gov/mapviewer-support/wcs-proxy/wcs.groovy?filename=${coverage}.${extension}&request=getcoverage&version=1.0.0&service=wcs&coverage=${coverage}&CRS=EPSG:4326&format=${format}&resx=${resolution}&resy=${resolution}&bbox=${extent.xmin},${extent.ymin},${extent.xmax},${extent.ymax}";
 		
 		if (globals.selectedExtent != null && dijit.byId('layerSelect').isValid() && dijit.byId('formatSelect').isValid()) {
 			var cellCount = calculateCellCount();
@@ -281,13 +281,13 @@ function preInit() {
 /*		
 	var mybanner = new banner.Banner({
 		breadcrumbs: [
-			{url: 'http://www.noaa.gov', label: 'NOAA'},
-			{url: 'http://www.nesdis.noaa.gov', label: 'NESDIS'},
-			{url: 'http://www.ngdc.noaa.gov', label: 'NGDC'},
-			{url: 'http://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
-			{url: 'http://ngdc.noaa.gov/mgg/bathymetry/relief.html', label: 'Bathymetry'}
+			{url: 'https://www.noaa.gov', label: 'NOAA'},
+			{url: 'https://www.nesdis.noaa.gov', label: 'NESDIS'},
+			{url: 'https://www.ngdc.noaa.gov', label: 'NGDC'},
+			{url: 'https://maps.ngdc.noaa.gov/viewers', label: 'Maps'},
+			{url: 'https://ngdc.noaa.gov/mgg/bathymetry/relief.html', label: 'Bathymetry'}
 		],
-		dataUrl: "http://ngdc.noaa.gov/mgg/bathymetry/relief.html",
+		dataUrl: "https://ngdc.noaa.gov/mgg/bathymetry/relief.html",
 		image: "/images/mapservice.gif"
 	});
 	mybanner.placeAt('banner');
@@ -295,8 +295,8 @@ function preInit() {
 	//create the dialog
 	globals.coordDialog = new bboxDialog.BoundingBoxDialog({title:'Specify an Area of Interest', style: 'width:300px;'});
 
-	esri.config.defaults.io.proxyUrl = "http://maps.ngdc.noaa.gov/proxy.jsp";
-	//esri.config.defaults.io.proxyUrl = "http://agsdevel.ngdc.noaa.gov/proxy.php";
+	esri.config.defaults.io.proxyUrl = "https://maps.ngdc.noaa.gov/proxy.jsp";
+	//esri.config.defaults.io.proxyUrl = "https://agsdevel.ngdc.noaa.gov/proxy.php";
 }
 
 //called after common initialization
@@ -330,38 +330,38 @@ function getMapServiceList(){
 	imageParametersJpg.format = "jpg";
 
 	globals.mapServices = [
-	new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer", {
+	new esri.layers.ArcGISTiledMapServiceLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer", {
 		id: "Ocean",
 		visible: false,
 		opacity: 1
 	}),
-	new esri.layers.ArcGISTiledMapServiceLayer("http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer", {
+	new esri.layers.ArcGISTiledMapServiceLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer", {
 		id: "Canvas",
 		visible: true,
 		opacity: 1
 	}),
-	new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_hillshade/MapServer", {
+	new esri.layers.ArcGISTiledMapServiceLayer("https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco08_hillshade/MapServer", {
 	 	id: "GEBCO_08 (tiled)",
 	 	visible: false,
 	 	opacity: 1
 	}),
-	new esri.layers.ArcGISTiledMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer", {
+	new esri.layers.ArcGISTiledMapServiceLayer("https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer", {
 	 	id: "ETOPO1 (tiled)",
 	 	visible: false,
 	 	opacity: 1
 	}),
-	new esri.layers.ArcGISImageServiceLayer("http://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer", {
+	new esri.layers.ArcGISImageServiceLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer", {
 		id: "DEM Hillshades",
 		visible: false,
 		opacity: 1
 	}),
 	//5
-//	new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crm_hillshade/MapServer", {
+//	new esri.layers.ArcGISDynamicMapServiceLayer("https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/crm_hillshade/MapServer", {
 //		id: "CRM Hillshade",
 //		visible: false,
 //		opacity: 1
 //	}),	
-	new esri.layers.ArcGISDynamicMapServiceLayer("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer", {
+	new esri.layers.ArcGISDynamicMapServiceLayer("https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer", {
 		id: "Graticule",
 		visible: true,
 		opacity: 0.7,
@@ -406,7 +406,7 @@ function mapInitializedCustom(theMap) {
 function mapReadyCustom(theMap) {
 	//console.log('inside mapReadyCustom...');
 
-	globals.geometryService = new esri.tasks.GeometryService('http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer');
+	globals.geometryService = new esri.tasks.GeometryService('https://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer');
 
 	initBasemapToolbar();
 	initTOC();
