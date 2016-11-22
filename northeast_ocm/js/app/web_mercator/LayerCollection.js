@@ -78,7 +78,7 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer', {
                         id: 'Ocean Base',
-                        visible: true,
+                        visible: true
                     }),
                     new ArcGISImageServiceLayer('//gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer', {
                     //new ArcGISImageServiceLayer('//mapdevel.ngdc.noaa.gov/arcgis/rest/services/DEM_SeaLevel_source/ImageServer', {
