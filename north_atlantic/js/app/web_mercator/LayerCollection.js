@@ -105,7 +105,7 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),
-                    new TiledWMSLayer('http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
+                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
                         id: 'GMRT Masked',
                         visible: false,
                         format: 'jpeg',
@@ -113,7 +113,7 @@ define([
                         epsgCode: '3857',
                         layerNames: ['topo-mask']
                     }),
-                    new TiledWMSLayer('http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
+                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
                         id: 'GMRT Unmasked',
                         visible: false,
                         format: 'jpeg',
@@ -121,7 +121,7 @@ define([
                         epsgCode: '3857',
                         layerNames: ['topo']
                     }),
-                    new TiledWMSLayer('http://ows.emodnet-bathymetry.eu/wms?', {
+                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://ows.emodnet-bathymetry.eu/wms?', {
                         id: 'EMODNet DTM',
                         visible: false,
                         format: 'PNG',
@@ -146,13 +146,13 @@ define([
                     //     imageParameters: this.imageParameters.png32
                     // }),
 
-                    new ArcGISDynamicMapServiceLayer('http://service.ncddc.noaa.gov/arcgis/rest/services/OceanExploration/OE_IOCM_Planned/MapServer', { //Force HTTP
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://service.ncddc.noaa.gov/arcgis/rest/services/OceanExploration/OE_IOCM_Planned/MapServer', { //Force HTTP
                         id: 'OER Planned Expeditions',
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
                     
-                    new TiledWMSLayer('http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling?', {
+                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling?', {
                         id: 'MAREANO Multibeam',
                         visible: false,
                         format: 'png',
@@ -160,7 +160,7 @@ define([
                         epsgCode: '900913',
                         layerNames: ['Flerstraale']
                     }),
-                    new TiledWMSLayer('http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling?', {
+                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://wms.geonorge.no/skwms1/wms.dekning_sjomaaling?', {
                         id: 'MAREANO Single-Beam',
                         visible: false,
                         format: 'png',
@@ -192,7 +192,7 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('http://geoappext.nrcan.gc.ca/arcgis/rest/services/GSCA/multibeam_multifaisceaux_index/MapServer', { //Force HTTP
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://geoappext.nrcan.gc.ca/arcgis/rest/services/GSCA/multibeam_multifaisceaux_index/MapServer', { //Force HTTP
                         id: 'NRCan Multibeam',
                         visible: false,
                         imageParameters: this.imageParameters.png32
@@ -203,7 +203,7 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
+                        sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
                         layerNames: ['EMODnet_Bathymetry_single_beams_polygons'],
                         opacity: 0.5
                     }),
@@ -213,7 +213,7 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
+                        sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
                         layerNames: ['EMODnet_Bathymetry_multi_beams_polygons'],
                         opacity: 0.5
                     }),
@@ -223,7 +223,7 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
+                        sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
                         layerNames: ['EMODnet_Bathymetry_single_beams_points', 'EMODnet_Bathymetry_single_beams_lines']
                     }),
                     new TiledWMSLayer('//geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
@@ -232,12 +232,12 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
+                        sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
                         layerNames: ['EMODnet_Bathymetry_multi_beams_points', 'EMODnet_Bathymetry_multi_beams_lines']
                     }),                    
                     new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer', {
                         id: 'Trackline Bathymetry (tiled)',
-                        visible: this.tracklineVisible,
+                        visible: this.tracklineVisible
                     }),
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer', {
                         id: 'Trackline Combined (dynamic)',
