@@ -104,7 +104,7 @@ function preInit() {
 	
 	//retrieve JSON file via JSONP CGI, construct store from data and assign to Grid
     dojo.io.script.get({
-        url: "https://mapserver.ngdc.noaa.gov/cgi-bin/public/dmsp_json",
+        url: "https://gis.ngdc.noaa.gov/cgi-bin/public/dmsp_json",
         content: {filename: "mosaic_images"},
         callbackParamName: "callback"
     }).then(function(data){
