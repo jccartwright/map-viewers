@@ -111,6 +111,24 @@ define([
                 return html;
             },
 
+            bagFootprintFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>BAG Footprint: ${name}</h3>' +
+                    '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>' +
+                    '<div class="valueName">Survey ID: <span class="parameterValue">${surveyId}</span></div>' +
+                    '<div class="valueName">Cell Size (m): <span class="parameterValue">${cellSize}</span></div>';
+
+                var html = string.substitute(template, {
+                        name: a['Name'],
+                        surveyId: a['Survey ID'],
+                        cellSize: a['Cell Size (m)'],
+                        url: a['Download URL']
+                    });
+                return html;
+            },
+
             demFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
@@ -219,6 +237,11 @@ define([
                     return a.feature.attributes['Survey Year'] < b.feature.attributes['Survey Year'] ? 1 : -1;
                 }
                 return a.layerId <= b.layerId ? -1 : 1;
+            },
+
+            bagFootprintSort: function(a, b) {
+                //Sort alphabetically
+                return a.feature.attributes['Name'] <= b.feature.attributes['Name'] ? -1 : 1;
             },
 
             demSort: function(a, b) {
