@@ -64,7 +64,7 @@ define([
                         var itemId;
                         if (this.currentItem.attributes['Survey ID']) {
                             itemId = this.currentItem.attributes['Survey ID'];
-                        } else if (itemId = this.currentItem.attributes['ITEM_ID']) {
+                        } else if (this.currentItem.attributes['ITEM_ID']) {
                             itemId = this.currentItem.attributes['ITEM_ID'];
                         }
                         this.extractData(itemId);
@@ -86,18 +86,21 @@ define([
 
                 if (item.layerName === 'Multibeam Bathymetric Surveys') {
                     return '<i><b>Multibeam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
-                } 
+                }
                 else if (item.layerName === 'Marine Trackline Surveys: Bathymetry') {
                     return '<i><b>Single-Beam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i>';
-                } 
+                }
                 else if (item.layerName === 'Surveys with BAGs') {
                     return '<i>Surveys wth BAGs (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
-                } 
+                }
                 else if (item.layerName === 'Surveys with Digital Sounding Data') {
                     return '<i>Surveys with Digital Sounding Data (' + this.formatCountString(count) + ')</i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
-                } 
+                }
                 else if (item.layerName === 'Surveys without Digital Sounding Data') {
                     return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
+                }
+                else if (item.layerName === 'BAG Footprints') {
+                    return '<i>BAG Footprints (' + this.formatCountString(count) + ')</i>';
                 } 
                 else if (item.layerName === 'All NCEI Bathymetric DEMs') {
                     return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
@@ -122,18 +125,21 @@ define([
                 //return item.value;
                 if (item.layerName === 'Multibeam Bathymetric Surveys') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
-                } 
+                }
                 else if (item.layerName === 'Marine Trackline Surveys: Bathymetry') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>', uid);
-                } 
+                }
                 else if (item.layerName === 'Surveys with BAGs') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
-                } 
+                }
                 else if (item.layerName === 'Surveys with Digital Sounding Data') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
-                } 
+                }
                 else if (item.layerName === 'Surveys without Digital Sounding Data') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
+                }
+                else if (item.layerName === 'BAG Footprints') {
+                    return this.getItemLabelSpan(item.feature.attributes['Name'], uid);
                 } 
                 else if (item.layerName === 'All NCEI Bathymetric DEMs') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
@@ -172,7 +178,7 @@ define([
                                 var layerKey = svcName + '/' + layerName;
                                 var layerUrl = results[svcName][layerName][j].layerUrl;
                                 
-                                if (svcName === 'NOS Hydrographic Surveys' || svcName === 'NOS Hydro (non-digital)') {
+                                if (svcName === 'NOS Hydrographic Surveys' || svcName === 'BAG Footprints') {
                                     this.isNosHydro = true;
                                     //Create an "NOS Hydrographic Surveys" folder if it doesn't already exist
                                     if (this.featureStore.query({id: 'NOS Hydrographic Surveys'}).length === 0) {
@@ -194,7 +200,7 @@ define([
                                         label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
                                         type: 'folder',
                                         //If NOS Hydro, parent is the NOS Hydro folder, else parent is root.
-                                        parent: svcName === 'NOS Hydrographic Surveys' || svcName === 'NOS Hydro (non-digital)' ? 
+                                        parent: svcName === 'NOS Hydrographic Surveys' || svcName === 'BAG Footprints' ? 
                                             'NOS Hydrographic Surveys' : 'root'
                                     });
                                     //this.expandedNodePaths.push(layerName);
