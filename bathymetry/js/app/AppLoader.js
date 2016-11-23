@@ -101,7 +101,7 @@ define([
                 esriConfig.defaults.io.corsEnabledServers.push('gis.ngdc.noaa.gov');
                 esriConfig.defaults.io.corsEnabledServers.push('gisdev.ngdc.noaa.gov');
 
-                esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
+                esriConfig.defaults.geometryService = new GeometryService('https://maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
@@ -146,13 +146,13 @@ define([
 
                 this.banner = new Banner({
                     breadcrumbs: [
-                        {url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
-                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
-                        {url: '//www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
-                        {url: '//maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
-                        {url: '//www.ngdc.noaa.gov/mgg/bathymetry/relief.html', label: 'Bathymetry'}           
+                        {url: 'https://www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
+                        {url: 'https://www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
+                        {url: 'https://www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
+                        {url: 'https://maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
+                        {url: 'https://www.ngdc.noaa.gov/mgg/bathymetry/relief.html', label: 'Bathymetry'}           
                     ],
-                    dataUrl: '//www.ngdc.noaa.gov/mgg/bathymetry/relief.html',
+                    dataUrl: 'https://www.ngdc.noaa.gov/mgg/bathymetry/relief.html',
                     image: 'images/bathymetry_viewer_logo.png',
                     imageAlt: 'NCEI Bathymetric Data Viewer - go to data home'
                 });
@@ -237,8 +237,18 @@ define([
                 aspect.after(this.mercatorMapConfig, 'mapReady', lang.hitch(this, function() {
                     var legend = new Legend({
                         map: this.mercatorMapConfig.map,
-                        layerInfos: [
-                            {title: 'DEM Tiles (new)', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')}
+                        layerInfos: [                            
+                            {title: 'Multibeam', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam')._tiledService},
+                            {title: 'Multibeam', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam')._dynamicService},
+                            {title: 'Trackline Bathymetry', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry')._tiledService},
+                            {title: 'Trackline Bathymetry', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry')._dynamicService},
+                            {title: 'Trackline Bathymetry Density', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry Density')},
+                            {title: 'NOS Hydrographic Surveys', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys')._tiledService},
+                            {title: 'NOS Hydrographic Surveys', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys')._dynamicService},
+                            {title: 'BAG Footprints', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('BAG Footprints')},
+                            {title: 'DEM Extents', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Extents')},
+                            {title: 'DEM Tiles (new)', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')},
+                            {title: 'OCM Lidar', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('OCM Lidar')}
                         ]
                     }, 'dynamicLegend');
                     legend.startup();
@@ -323,10 +333,8 @@ define([
                         this.layersPanel.chkMultibeam.set('checked', true);
                         this.multibeamVisible = true;
                     } 
-                    else if (startupLayers[i].toLowerCase() === 'nos_hydro') {
-                        //Startup with "Surveys with Digital Sounding Data" and "Surveys with BAGs" visible
-                        this.layersPanel.chkNosHydroBags.set('checked', true);
-                        this.layersPanel.chkNosHydroDigital.set('checked', true);
+                    else if (startupLayers[i].toLowerCase() === 'nos_hydro') {                        
+                        this.layersPanel.chkNosHydro.set('checked', true);
                         //this.layersPanel.chkBagHillshades.set('checked', true);
                         this.nosHydroVisible = true;
                     } 
@@ -347,6 +355,8 @@ define([
                 var layerDefinition;
                 var sql = [];
                 var serviceLayerDefs = {};
+                var bagHillshadesLayerDefs = [];
+                var bagFootprintsLayerDefs = [];
                                                     
                 //Multibeam
                 if (values.startYear) {
@@ -405,6 +415,8 @@ define([
                 }
                 if (values.survey) {
                     sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
+                    bagHillshadesLayerDefs = ["UPPER(NAME) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "%'"];
+                    bagFootprintsLayerDefs[3] = "UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'";
                 }
                 if (values.platform) {
                     sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
@@ -413,13 +425,24 @@ define([
                 allLayerDefinitions = [];
                 allLayerDefinitions[0] = layerDefinition;
                 allLayerDefinitions[1] = layerDefinition;
-                allLayerDefinitions[2] = layerDefinition;      
+                allLayerDefinitions[2] = layerDefinition;
+
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('BAG Footprints').setLayerDefinitions(bagFootprintsLayerDefs);
+
+                var bagHillshadesLayer = this.mercatorMapConfig.mapLayerCollection.getLayerById('BAG Hillshades');
+                if (bagHillshadesLayer.setLayerDefinitions) {
+                    this.mercatorMapConfig.mapLayerCollection.getLayerById('BAG Hillshades').setLayerDefinitions(bagHillshadesLayerDefs);
+                }
+
                 this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions(allLayerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions(allLayerDefinitions);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions(allLayerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions(allLayerDefinitions);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('BAG Footprints').setLayerDefinitions(bagFootprintsLayerDefs);
+
+                var bagHillshadesLayer = this.arcticMapConfig.mapLayerCollection.getLayerById('BAG Hillshades');
+                if (bagHillshadesLayer.setLayerDefinitions) {
+                    this.arcticMapConfig.mapLayerCollection.getLayerById('BAG Hillshades').setLayerDefinitions(bagHillshadesLayerDefs);
+                }
+
                 serviceLayerDefs.nosHydro = layerDefinition;
                         
                 this.layersPanel.enableResetButton();
@@ -433,15 +456,26 @@ define([
             resetSurveyFilter: function() {            
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
+
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions([]);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions([]);
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions([]);
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('BAG Footprints').setLayerDefinitions([]);
+
+                var bagHillshadesLayer = this.mercatorMapConfig.mapLayerCollection.getLayerById('BAG Hillshades');
+                if (bagHillshadesLayer.setLayerDefinitions) {
+                    this.mercatorMapConfig.mapLayerCollection.getLayerById('BAG Hillshades').setLayerDefinitions([]);
+                }
+
+                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions([]);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('BAG Footprints').setLayerDefinitions([]);
+
+                bagHillshadesLayer = this.arcticMapConfig.mapLayerCollection.getLayerById('BAG Hillshades');
+                if (bagHillshadesLayer.setLayerDefinitions) {
+                    this.arcticMapConfig.mapLayerCollection.getLayerById('BAG Hillshades').setLayerDefinitions([]);
+                }
 
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions([]);
 
                 this.antarcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
                 this.antarcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
@@ -457,7 +491,7 @@ define([
                 var params;
 
                 if (this.layersPanel.chkMultibeam.checked) {
-                    url = '//gis.ngdc.noaa.gov/geoextents/multibeam_dynamic/';
+                    url = 'https://gis.ngdc.noaa.gov/geoextents/multibeam_dynamic/';
                     params = {layerDefs: '0:' + serviceLayerDefs.multibeam};
                     deferreds.push(xhr.post(
                         url, {
@@ -468,7 +502,7 @@ define([
                 }
 
                 if (this.layersPanel.chkTrackline.checked) {
-                    url = '//gis.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
+                    url = 'https://gis.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
                     params = {layerDefs: '1:' + serviceLayerDefs.trackline};
                     deferreds.push(xhr.post(
                         url, {
@@ -478,8 +512,8 @@ define([
                     );
                 }
 
-                if (this.layersPanel.chkNosHydroBags.checked || this.layersPanel.chkNosHydroDigital.checked || this.layersPanel.chkNosHydroNonDigital.checked) {
-                    url = '//gis.ngdc.noaa.gov/geoextents/nos_hydro_dynamic/';
+                if (this.layersPanel.chkNosHydro.checked) {
+                    url = 'https://gis.ngdc.noaa.gov/geoextents/nos_hydro_dynamic/';
                     var layerDef = serviceLayerDefs.nosHydro;
                     params = {layerDefs: '0:' + layerDef + ';1:' + layerDef + ';2:' + layerDef};
                     deferreds.push(xhr.post(
@@ -511,6 +545,12 @@ define([
                             editable: false
                         };
                         var polygon = wkt.toObject(config);
+
+                        //shift to 360 before getting the Extent
+                        array.forEach(polygon.rings[0], function(item){
+                            item[0] = item[0] < 0 ? item[0] + 360: item[0];
+                        });
+
                         var extent = polygon.getExtent();
 
                         if (fullExtent) {
