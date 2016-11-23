@@ -53,9 +53,9 @@ define([
                 lang.mixin(this, kwArgs); 
 
                 this.multibeamVisible = true;
+                this.nosHydroVisible = false;
+                this.nosHydroAllVisible = true;
                 this.nosBagsVisible = false;
-                this.nosDigitalVisible = false;
-                this.nonNonDigitalVisible = false;
                 this.tracklineVisible = false;
             },
                 
@@ -111,14 +111,14 @@ define([
                     this.filterSelects();
                 }));
 
-                //Subscribe to message to show/hide an entire service. Handles the Multibeam, Trackline, and NOS non-digital layers.
+                //Subscribe to message to show/hide an entire service. Handles the Multibeam, and Trackline layers.
                 topic.subscribe('/ngdc/layer/visibility', lang.hitch(this, function (svcId, visible) {
                     if (svcId === 'Multibeam') {
                         this.multibeamVisible = visible;                    
                     } else if (svcId === 'Trackline Bathymetry') {
                         this.tracklineVisible = visible;
-                    } else if (svcId === 'NOS Hydro (non-digital)') {
-                        this.nonNonDigitalVisible = visible;
+                    } else if (svcId === 'NOS Hydrographic Surveys') {
+                        this.nosHydroVisible = visible;
                     }
                     this.filterSelects();
                     this.setActiveLayersText();
@@ -127,10 +127,10 @@ define([
                 //Subscribe to message to show/hide sublayers from a service. Handles the NOS Hydro BAGs and Digital layers.
                 topic.subscribe('/ngdc/sublayer/visibility', lang.hitch(this, function (svcId, sublayers, visible) {
                     if (svcId === 'NOS Hydrographic Surveys') {
-                        if (sublayers[0] === 0) {
+                        if (array.indexOf(sublayers, 1) > -1 || array.indexOf(sublayers, 2) > -1) {
+                            this.nosHydroAllVisible = visible;
+                        } else if (array.indexOf(sublayers, 0) > -1) {
                             this.nosBagsVisible = visible;
-                        } else if (sublayers[0] === 1) {
-                            this.nosDigitalVisible = visible;
                         }
                     }
                     this.filterSelects();
@@ -264,11 +264,11 @@ define([
                     return true;
                 } else if (this.tracklineVisible && (array.indexOf(itemDatasets, 't') !== -1)) {
                     return true;
-                } else if (this.nosBagsVisible && (array.indexOf(itemDatasets, 'b') !== -1)) {
+                } else if (this.nosHydroVisible && this.nosBagsVisible && (array.indexOf(itemDatasets, 'b') !== -1)) {
                     return true;
-                } else if (this.nosDigitalVisible && (array.indexOf(itemDatasets, 'd') !== -1)) {
+                } else if (this.nosHydroVisible && this.nosHydroAllVisible && (array.indexOf(itemDatasets, 'd') !== -1)) {
                     return true;
-                } else if (this.nonNonDigitalVisible && (array.indexOf(itemDatasets, 'a') !== -1)) {
+                } else if (this.nosHydroVisible && this.nosHydroAllVisible && (array.indexOf(itemDatasets, 'a') !== -1)) {
                     return true;
                 } else {
                     return false;
@@ -286,24 +286,24 @@ define([
                     }
                     text += 'Single-Beam';
                 }
-                if (this.nosBagsVisible) {
+                if (this.nosHydroVisible && this.nosBagsVisible) {
                     if (text.length > 0) {
                         text += ', ';
                     }
-                    text += 'NOS BAGs';
+                    text += 'NOS Hydrographic Surveys with BAGs';
                 }
-                if (this.nosDigitalVisible) {
+                if (this.nosHydroVisible && this.nosHydroAllVisible) {
                     if (text.length > 0) {
                         text += ', ';
                     }
-                    text += 'NOS Digital';
+                    text += 'All NOS Hydrographic Surveys';
                 }
-                if (this.nonNonDigitalVisible) {
-                    if (text.length > 0) {
-                        text += ', ';
-                    }
-                    text += 'NOS Non-Digital';
-                }
+                // if (this.nonNonDigitalVisible) {
+                //     if (text.length > 0) {
+                //         text += ', ';
+                //     }
+                //     text += 'NOS Non-Digital';
+                // }
                 if (text.length === 0) {
                     text += 'None';
                 }

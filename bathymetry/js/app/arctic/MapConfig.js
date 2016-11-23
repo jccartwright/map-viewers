@@ -47,13 +47,13 @@ define([
                 this.identifyPane.enabled = false;
 
                 if (this.mapLayerCollection.nosHydroVisible) {
-                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0, 1]);
+                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').show();
                 }
                 else {
-                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
+                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').hide();
                 }
-                this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
-                this.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setVisibleLayers([0]);
+
+                this.mapLayerCollection.getLayerById('BAG Footprints').setVisibleLayers([3]);
                 
                 this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
 
