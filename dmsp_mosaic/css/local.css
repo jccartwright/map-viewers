@@ -1,0 +1,99 @@
+/* application-specific styles */
+html,body {
+	height: 100%;
+	width: 100%;
+	margin: 0; 
+	padding: 0;
+	overflow:hidden;
+}
+	
+td,th {
+	font-size: small;
+}
+
+#mainWindow {
+	/* required for BorderContainer to layout */
+	width:100%; 
+	height:100%;
+}
+
+#header {
+	height: 50px;
+	border:0;
+	margin:0;
+	padding:0;
+	overflow:hidden;
+	background-color: white;
+}
+
+#footer {
+	height: 20px;
+	border:0px;
+	background-color: white;
+}
+
+#mapDiv {
+	/* don't set size for Center */
+	padding: 0px;
+	border: 2px solid gray;
+}
+
+#accordionContainer {
+	width:350px;
+	border:0px;
+}
+
+#loadingImg {
+	position:absolute;
+	left:50%;
+	top:50%;
+	z-index:100;
+}
+
+#bottomBar {
+	height:20px;
+	width:170px;
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	margin:0px;
+	padding:2px;
+	border:none;
+	z-index:100;
+	background: rgb(119,119,119);
+	background:rgba(119,119,119,0.8);
+}
+
+#coordsDiv {
+	margin-left:5px;
+	font-family: Arial,sans-serif;
+	font-size: 12px;
+	color:#FFFFFF;
+	vertical-align:middle;
+}
+
+#mapToolbar {
+	position:absolute;
+	left:5px;
+	top:5px;
+	z-index:100;
+	border:solid 1px gray;
+	padding: 0px;
+}
+
+.simpleBasemapToolbar {
+	position: absolute;
+	z-index:9999;
+	right: 8px;
+	top: 8px;
+	border: solid 1px gray;
+	font-size: x-small;
+}
+
+.buttonLabel {
+	font-size:x-small;
+}
+
+.selectByCoordsIcon { background-image:url(../images/select_rect_xy.png); width:16px; height:16px; }
+.selectByRectIcon { background-image:url(../images/select_rect_1.gif); width:16px; height:16px; }
+

@@ -1,0 +1,775 @@
+{
+    "label": "filename",
+    "identifier": "filename",
+    "numRows": 128,
+    "items": [
+        {
+            "filename": "F101992.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F10",
+            "product": "avg_lights_x_pct",
+            "year": "1992"
+        },
+        {
+            "filename": "F101992.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F10",
+            "product": "avg_vis",
+            "year": "1992"
+        },
+        {
+            "filename": "F101992.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F10",
+            "product": "cf_cvg",
+            "year": "1992"
+        },
+        {
+            "filename": "F101992.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F10",
+            "product": "stable_lights",
+            "year": "1992"
+        },
+        {
+            "filename": "F101993.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F10",
+            "product": "avg_lights_x_pct",
+            "year": "1993"
+        },
+        {
+            "filename": "F101993.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F10",
+            "product": "avg_vis",
+            "year": "1993"
+        },
+        {
+            "filename": "F101993.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F10",
+            "product": "cf_cvg",
+            "year": "1993"
+        },
+        {
+            "filename": "F101993.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F10",
+            "product": "stable_lights",
+            "year": "1993"
+        },
+        {
+            "filename": "F101994.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F10",
+            "product": "avg_lights_x_pct",
+            "year": "1994"
+        },
+        {
+            "filename": "F101994.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F10",
+            "product": "avg_vis",
+            "year": "1994"
+        },
+        {
+            "filename": "F101994.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F10",
+            "product": "cf_cvg",
+            "year": "1994"
+        },
+        {
+            "filename": "F101994.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F10",
+            "product": "stable_lights",
+            "year": "1994"
+        },
+        {
+            "filename": "F121994.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_lights_x_pct",
+            "year": "1994"
+        },
+        {
+            "filename": "F121994.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_vis",
+            "year": "1994"
+        },
+        {
+            "filename": "F121994.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F12",
+            "product": "cf_cvg",
+            "year": "1994"
+        },
+        {
+            "filename": "F121994.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "stable_lights",
+            "year": "1994"
+        },
+        {
+            "filename": "F121995.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_lights_x_pct",
+            "year": "1995"
+        },
+        {
+            "filename": "F121995.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_vis",
+            "year": "1995"
+        },
+        {
+            "filename": "F121995.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F12",
+            "product": "cf_cvg",
+            "year": "1995"
+        },
+        {
+            "filename": "F121995.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "stable_lights",
+            "year": "1995"
+        },
+        {
+            "filename": "F121996.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_lights_x_pct",
+            "year": "1996"
+        },
+        {
+            "filename": "F121996.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_vis",
+            "year": "1996"
+        },
+        {
+            "filename": "F121996.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F12",
+            "product": "cf_cvg",
+            "year": "1996"
+        },
+        {
+            "filename": "F121996.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "stable_lights",
+            "year": "1996"
+        },
+        {
+            "filename": "F121997.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_lights_x_pct",
+            "year": "1997"
+        },
+        {
+            "filename": "F121997.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_vis",
+            "year": "1997"
+        },
+        {
+            "filename": "F121997.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F12",
+            "product": "cf_cvg",
+            "year": "1997"
+        },
+        {
+            "filename": "F121997.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "stable_lights",
+            "year": "1997"
+        },
+        {
+            "filename": "F121998.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_lights_x_pct",
+            "year": "1998"
+        },
+        {
+            "filename": "F121998.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_vis",
+            "year": "1998"
+        },
+        {
+            "filename": "F121998.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F12",
+            "product": "cf_cvg",
+            "year": "1998"
+        },
+        {
+            "filename": "F121998.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "stable_lights",
+            "year": "1998"
+        },
+        {
+            "filename": "F121999.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_lights_x_pct",
+            "year": "1999"
+        },
+        {
+            "filename": "F121999.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "avg_vis",
+            "year": "1999"
+        },
+        {
+            "filename": "F121999.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F12",
+            "product": "cf_cvg",
+            "year": "1999"
+        },
+        {
+            "filename": "F121999.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F12",
+            "product": "stable_lights",
+            "year": "1999"
+        },
+        {
+            "filename": "F141997.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_lights_x_pct",
+            "year": "1997"
+        },
+        {
+            "filename": "F141997.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_vis",
+            "year": "1997"
+        },
+        {
+            "filename": "F141997.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F14",
+            "product": "cf_cvg",
+            "year": "1997"
+        },
+        {
+            "filename": "F141997.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "stable_lights",
+            "year": "1997"
+        },
+        {
+            "filename": "F141998.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_lights_x_pct",
+            "year": "1998"
+        },
+        {
+            "filename": "F141998.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_vis",
+            "year": "1998"
+        },
+        {
+            "filename": "F141998.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F14",
+            "product": "cf_cvg",
+            "year": "1998"
+        },
+        {
+            "filename": "F141998.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "stable_lights",
+            "year": "1998"
+        },
+        {
+            "filename": "F141999.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_lights_x_pct",
+            "year": "1999"
+        },
+        {
+            "filename": "F141999.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_vis",
+            "year": "1999"
+        },
+        {
+            "filename": "F141999.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F14",
+            "product": "cf_cvg",
+            "year": "1999"
+        },
+        {
+            "filename": "F141999.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "stable_lights",
+            "year": "1999"
+        },
+        {
+            "filename": "F142000.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_lights_x_pct",
+            "year": "2000"
+        },
+        {
+            "filename": "F142000.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_vis",
+            "year": "2000"
+        },
+        {
+            "filename": "F142000.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F14",
+            "product": "cf_cvg",
+            "year": "2000"
+        },
+        {
+            "filename": "F142000.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "stable_lights",
+            "year": "2000"
+        },
+        {
+            "filename": "F142001.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_lights_x_pct",
+            "year": "2001"
+        },
+        {
+            "filename": "F142001.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_vis",
+            "year": "2001"
+        },
+        {
+            "filename": "F142001.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F14",
+            "product": "cf_cvg",
+            "year": "2001"
+        },
+        {
+            "filename": "F142001.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "stable_lights",
+            "year": "2001"
+        },
+        {
+            "filename": "F142002.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_lights_x_pct",
+            "year": "2002"
+        },
+        {
+            "filename": "F142002.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_vis",
+            "year": "2002"
+        },
+        {
+            "filename": "F142002.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F14",
+            "product": "cf_cvg",
+            "year": "2002"
+        },
+        {
+            "filename": "F142002.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "stable_lights",
+            "year": "2002"
+        },
+        {
+            "filename": "F142003.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_lights_x_pct",
+            "year": "2003"
+        },
+        {
+            "filename": "F142003.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "avg_vis",
+            "year": "2003"
+        },
+        {
+            "filename": "F142003.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F14",
+            "product": "cf_cvg",
+            "year": "2003"
+        },
+        {
+            "filename": "F142003.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F14",
+            "product": "stable_lights",
+            "year": "2003"
+        },
+        {
+            "filename": "F152000.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_lights_x_pct",
+            "year": "2000"
+        },
+        {
+            "filename": "F152000.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_vis",
+            "year": "2000"
+        },
+        {
+            "filename": "F152000.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F15",
+            "product": "cf_cvg",
+            "year": "2000"
+        },
+        {
+            "filename": "F152000.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "stable_lights",
+            "year": "2000"
+        },
+        {
+            "filename": "F152001.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_lights_x_pct",
+            "year": "2001"
+        },
+        {
+            "filename": "F152001.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_vis",
+            "year": "2001"
+        },
+        {
+            "filename": "F152001.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F15",
+            "product": "cf_cvg",
+            "year": "2001"
+        },
+        {
+            "filename": "F152001.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "stable_lights",
+            "year": "2001"
+        },
+        {
+            "filename": "F152002.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_lights_x_pct",
+            "year": "2002"
+        },
+        {
+            "filename": "F152002.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_vis",
+            "year": "2002"
+        },
+        {
+            "filename": "F152002.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F15",
+            "product": "cf_cvg",
+            "year": "2002"
+        },
+        {
+            "filename": "F152002.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "stable_lights",
+            "year": "2002"
+        },
+        {
+            "filename": "F152003.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_lights_x_pct",
+            "year": "2003"
+        },
+        {
+            "filename": "F152003.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_vis",
+            "year": "2003"
+        },
+        {
+            "filename": "F152003.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F15",
+            "product": "cf_cvg",
+            "year": "2003"
+        },
+        {
+            "filename": "F152003.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "stable_lights",
+            "year": "2003"
+        },
+        {
+            "filename": "F152004.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_lights_x_pct",
+            "year": "2004"
+        },
+        {
+            "filename": "F152004.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_vis",
+            "year": "2004"
+        },
+        {
+            "filename": "F152004.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F15",
+            "product": "cf_cvg",
+            "year": "2004"
+        },
+        {
+            "filename": "F152004.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "stable_lights",
+            "year": "2004"
+        },
+        {
+            "filename": "F152005.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_lights_x_pct",
+            "year": "2005"
+        },
+        {
+            "filename": "F152005.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_vis",
+            "year": "2005"
+        },
+        {
+            "filename": "F152005.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F15",
+            "product": "cf_cvg",
+            "year": "2005"
+        },
+        {
+            "filename": "F152005.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "stable_lights",
+            "year": "2005"
+        },
+        {
+            "filename": "F152006.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_lights_x_pct",
+            "year": "2006"
+        },
+        {
+            "filename": "F152006.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_vis",
+            "year": "2006"
+        },
+        {
+            "filename": "F152006.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F15",
+            "product": "cf_cvg",
+            "year": "2006"
+        },
+        {
+            "filename": "F152006.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "stable_lights",
+            "year": "2006"
+        },
+        {
+            "filename": "F152007.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_lights_x_pct",
+            "year": "2007"
+        },
+        {
+            "filename": "F152007.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_vis",
+            "year": "2007"
+        },
+        {
+            "filename": "F152007.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F15",
+            "product": "cf_cvg",
+            "year": "2007"
+        },
+        {
+            "filename": "F152007.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "stable_lights",
+            "year": "2007"
+        },
+        {
+            "filename": "F152008.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_lights_x_pct",
+            "year": "2008"
+        },
+        {
+            "filename": "F152008.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "avg_vis",
+            "year": "2008"
+        },
+        {
+            "filename": "F152008.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F15",
+            "product": "cf_cvg",
+            "year": "2008"
+        },
+        {
+            "filename": "F152008.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F15",
+            "product": "stable_lights",
+            "year": "2008"
+        },
+        {
+            "filename": "F162004.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_lights_x_pct",
+            "year": "2004"
+        },
+        {
+            "filename": "F162004.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_vis",
+            "year": "2004"
+        },
+        {
+            "filename": "F162004.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F16",
+            "product": "cf_cvg",
+            "year": "2004"
+        },
+        {
+            "filename": "F162004.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "stable_lights",
+            "year": "2004"
+        },
+        {
+            "filename": "F162005.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_lights_x_pct",
+            "year": "2005"
+        },
+        {
+            "filename": "F162005.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_vis",
+            "year": "2005"
+        },
+        {
+            "filename": "F162005.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F16",
+            "product": "cf_cvg",
+            "year": "2005"
+        },
+        {
+            "filename": "F162005.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "stable_lights",
+            "year": "2005"
+        },
+        {
+            "filename": "F162006.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_lights_x_pct",
+            "year": "2006"
+        },
+        {
+            "filename": "F162006.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_vis",
+            "year": "2006"
+        },
+        {
+            "filename": "F162006.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F16",
+            "product": "cf_cvg",
+            "year": "2006"
+        },
+        {
+            "filename": "F162006.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "stable_lights",
+            "year": "2006"
+        },
+        {
+            "filename": "F162007.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_lights_x_pct",
+            "year": "2007"
+        },
+        {
+            "filename": "F162007.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_vis",
+            "year": "2007"
+        },
+        {
+            "filename": "F162007.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F16",
+            "product": "cf_cvg",
+            "year": "2007"
+        },
+        {
+            "filename": "F162007.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "stable_lights",
+            "year": "2007"
+        },
+        {
+            "filename": "F162008.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_lights_x_pct",
+            "year": "2008"
+        },
+        {
+            "filename": "F162008.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_vis",
+            "year": "2008"
+        },
+        {
+            "filename": "F162008.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F16",
+            "product": "cf_cvg",
+            "year": "2008"
+        },
+        {
+            "filename": "F162008.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "stable_lights",
+            "year": "2008"
+        },
+        {
+            "filename": "F162009.v4b.avg_lights_x_pct.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_lights_x_pct",
+            "year": "2009"
+        },
+        {
+            "filename": "F162009.v4b_web.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "avg_vis",
+            "year": "2009"
+        },
+        {
+            "filename": "F162009.v4b_web.cf_cvg.lzw.tif",
+            "satellite": "F16",
+            "product": "cf_cvg",
+            "year": "2009"
+        },
+        {
+            "filename": "F162009.v4b_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F16",
+            "product": "stable_lights",
+            "year": "2009"
+        },
+        {
+            "filename": "F182010.v4c.avg_lights_x_pct.lzw.tif",
+            "satellite": "F18",
+            "product": "avg_lights_x_pct",
+            "year": "2010"
+        },
+        {
+            "filename": "F182010.v4c_web.avg_vis.lzw.tif",
+            "satellite": "F18",
+            "product": "avg_vis",
+            "year": "2010"
+        },
+        {
+            "filename": "F182010.v4c_web.cf_cvg.lzw.tif",
+            "satellite": "F18",
+            "product": "cf_cvg",
+            "year": "2010"
+        },
+        {
+            "filename": "F182010.v4c_web.stable_lights.avg_vis.lzw.tif",
+            "satellite": "F18",
+            "product": "stable_lights",
+            "year": "2010"
+        }
+    ]
+}

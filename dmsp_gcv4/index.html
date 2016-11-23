@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
+	<title>NOAA/NGDC - Earth Observation Group - Defense Meteorological Satellite Program, Boulder</title>
+	<link rel="stylesheet" type="text/css" href="https://serverapi.arcgisonline.com/jsapi/arcgis/2.5/js/dojo/dijit/themes/claro/claro.css" />
+	<link rel="stylesheet" type="text/css" href="https://serverapi.arcgisonline.com/jsapi/arcgis/2.5/js/dojo/dojox/grid/resources/Grid.css" />
+	<link rel="stylesheet" href="https://serverapi.arcgisonline.com/jsapi/arcgis/2.5/js/dojo/dojox/grid/enhanced/resources/claro/EnhancedGrid.css" />
+	<link rel="stylesheet" type="text/css" href="https://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.0/themes/BoundingBoxDialog.css" />
+	<link rel="stylesheet" type="text/css" href="css/local.css" />
+
+	<!-- TODO *not* recommended to have inline script following stylesheet -->
+	<script type="text/javascript">
+		var djConfig = {
+			parseOnLoad: true, 
+			baseUrl: './',
+			modulePaths: {
+				'gcv4': './dijits/gcv4',
+				'simple_basemap_toolbar': 'https://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.0',
+				'help_panel': 'https://maps.ngdc.noaa.gov/viewers/dijits/help_panel/1.0',
+				'bboxDialog': 'https://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.0'
+			}
+		};
+	</script>
+
+	<script type="text/javascript" src="https://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.5"></script>
+	<script type="text/javascript" src="src/mapConfig.js"></script>
+	<script type="text/javascript" src="src/map.js"></script>
+	</head>
+
+	<body class="claro">
+		<div id="mainWindow" dojoType="dijit.layout.BorderContainer" gutters="true" design="headline">
+			<!-- HEADER SECTION -->
+			<div id="header" dojoType="dijit.layout.ContentPane" region="top" >
+				<!-- BEGIN NGDC HEADER WITH FIRSTGOV SEARCH  -->
+					<a href="https://www.ngdc.noaa.gov/ngdc.html" target="_top" title="go to NGDC home">
+						<img src="https://www.ngdc.noaa.gov/image/nesdisngdcleft.gif" alt="National Geophysical Data Center (NGDC), NOAA Satellite and Information Service" border="0" />
+					</a>
+				<!-- END NGDC HEADER WITH FIRSTGOV SEARCH  -->
+			</div>
+	
+			<!--CENTER CONTAINER-->
+			<div id="mapDiv" dojoType="dijit.layout.ContentPane" region="center">
+				<div id="mapToolbar" dojoType="dijit.Toolbar" layoutAlign="left">
+					<div dojoType="dijit.form.Button" id="selectByRectBtn" iconClass="selectByRectIcon" showLabel="false">Select with Rectangle</div>
+					<div dojoType="dijit.form.Button" id="selectByCoordsBtn" iconClass="selectByCoordsIcon" showLabel="false" onClick="globals.coordDialog.show();">Select with Coordinates</div>
+				</div>
+
+				<img id="loadingImg" src="https://maps.ngdc.noaa.gov/viewers/common/2.3/images/loading.gif" alt="refreshing map"/>
+				
+				<div id="basemapToolbar"></div>
+				
+				<div id="bottomBar" dojoType="dijit.layout.ContentPane">
+					<span id="coordsDiv">Position: not available</span>
+					<span id="scalebar"></span>
+				</div>
+		
+			</div>
+			<!-- RIGHT CONTAINER -->
+			<div id="accordionContainer" dojoType="dijit.layout.AccordionContainer" region="right">
+
+				
+				<div id="tocPane" dojoType="dijit.layout.AccordionPane" title="Layers">
+					<div id="tableDiv" style="width:325px; height:200px;">
+						<table width="100%" dojoType="dojox.grid.EnhancedGrid" id="searchResults" autoHeight="false" selectable="false" plugins="{indirectSelection: true}" selectionMode="single" queryOptions="{ignoreCase: true}">
+						<thead>
+						<tr>
+							<th field="satellite" width="70px">Satellite</th>
+							<th field="year" width="50px">Year</th>
+							<th field="product" width="auto">Product</th>
+						</tr>
+						</thead>
+						</table>
+					</div>
+					<table style="width:100%; padding-top: 15px;">
+					<tr><td colspan="3" style="font-size:medium;">Limit list of images</td></tr>
+					<tr>
+						<td><input dojoType="dijit.form.FilteringSelect" id="satelliteSelect" name="satellite" searchAttr="name" style="width:100px; font-size:x-small;" /></td>
+						<td><input dojoType="dijit.form.FilteringSelect" id="yearSelect" name="year" searchAttr="year" style="width:80px; font-size:x-small;" /></td>
+						<td><input dojoType="dijit.form.FilteringSelect" id="productSelect" name="product" searchAttr="name" style="width:90px; font-size:x-small;" /></td>
+					</tr>
+					</table>
+					<hr width="75%"/>
+					Change Layer Transparency:<br/>
+					<div id="slider" dojoType="dijit.form.HorizontalSlider" name="slider"
+						dojoAttachPoint='slider'
+						value="100"
+						maximum="100"
+						minimum="0"
+						pageIncrement="100"
+						showButtons="true"
+						intermediateChanges="true"
+						slideDuration="500"
+						style="width:200px; height: 20px;">
+					</div>
+				</div>
+
+				<div id="wcsPane" dojoType="dijit.layout.AccordionPane" title="Download Data">
+					<div id="wcsPanel" dojoType="gcv4.WCSPanel"></div>					
+				</div>
+				<div id="aboutPane" dojoType="dijit.layout.AccordionPane" title="About these data">
+					<div id="aboutPanel" dojoType="gcv4.CreditsPanel"></div>					
+				</div>
+				<div id="helpPane" dojoType="dijit.layout.AccordionPane" title="Help">
+					<div id="helpPanel" dojoType="help_panel.HelpPanel"></div>
+				</div>			
+			</div>
+			
+			<div id="footer"  dojoType="dijit.layout.ContentPane" region="bottom">
+				Questions: <a title="ask questions about data on this Web page" href="mailto:ngdc.dmsp@noaa.gov?subject=RE: https://maps.ngdc.noaa.gov/viewers/dmsp_gcv4">ngdc.dmsp@noaa.gov</a>
+			</div>
+		</div>
+		<!-- TODO Toaster is dom node directly under the body, regardless of--> 
+		<!-- where it was declaratively defined. Need to reimplement it and -->
+		<!-- change the specific references to dojo.window and dojo.body to -->
+		<!-- position relative to the parent element instead                -->
+		<div dojoType="dojox.widget.Toaster" id="toaster" messageTopic="toaster" positionDirection="tr-left"></div>
+		<div id="downloadDialogNode"></div>
+	</body>
+</html>

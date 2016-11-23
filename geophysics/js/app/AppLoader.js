@@ -196,11 +196,11 @@ define([
 
             enableMapView: function(/*String*/ mapId) {
                 this.mapId = mapId;
-                if (mapId == 'mercator') {
+                if (mapId === 'mercator') {
                     this.mercatorMapConfig.setEnabled(true);
                     this.arcticMapConfig.setEnabled(false);
                     this.antarcticMapConfig.setEnabled(false);
-                } else if (mapId == 'arctic') {
+                } else if (mapId === 'arctic') {
                     this.mercatorMapConfig.setEnabled(false);
                     this.arcticMapConfig.setEnabled(true);
                     this.antarcticMapConfig.setEnabled(false);
@@ -325,8 +325,8 @@ define([
                 var sql = [];
                 var i;
                 
-                if ((!values.ships || values.ships.length == 0) && 
-                    (!values.institutions || values.institutions.length == 0) && 
+                if ((!values.ships || values.ships.length === 0) && 
+                    (!values.institutions || values.institutions.length === 0) && 
                     !values.startYear && !values.endYear && 
                     !values.startDateAdded && !values.endDateAdded &&       
                     !values.surveyIds) {
@@ -396,7 +396,7 @@ define([
                 layerDefinition = sql.join(' and ');
                 
                 //Setup the layer definition for all 9 marine sublayers at once
-                for (var i = 0; i < 10; i++) {
+                for (i = 0; i < 10; i++) {
                     this.tracklineLayerDefinitions[i] = layerDefinition;        
                 }
                 
@@ -428,8 +428,8 @@ define([
                 var sql = [];
                 var i;
                 
-                if ((!values.projects || values.projects.length == 0) && 
-                    (!values.aeroParams || values.aeroParams.length == 0) && 
+                if ((!values.projects || values.projects.length === 0) && 
+                    (!values.aeroParams || values.aeroParams.length === 0) && 
                     !values.startYear && !values.endYear && 
                     !values.startDateAdded && !values.endDateAdded &&       
                     !values.surveyIds) {
@@ -565,6 +565,9 @@ define([
                 var filter = this.filterValues;
                 var urlParams = [];
                 var visibleTracklineLayers = this.layersPanel.visibleTracklineLayers;
+                var date;
+                var extent;
+                var url;
                     
                 var surveyTypes = [];
 
@@ -576,7 +579,7 @@ define([
                 }
                 urlParams.push('surveyTypes=' + surveyTypes.join(',')); //Always include the surveyTypes param
                 
-                if (isSingleSurvey || (geometry && geometry.type == 'point')) {
+                if (isSingleSurvey || (geometry && geometry.type === 'point')) {
                     //Case when using single-click to identify, then clicking "Get Marine Data for these Surveys" 
                     //Or, when clicking "Get Marine Data for This Survey".
                     
@@ -584,8 +587,8 @@ define([
                     urlParams.push('surveyIds=' + surveyIds.join(','));        
 
                     //If geometry is an extent, pass it in geographic coords.
-                    if (this.mapId == 'mercator' && geometry && geometry.type == 'extent') {
-                        var extent = geometry;
+                    if (this.mapId === 'mercator' && geometry && geometry.type === 'extent') {
+                        extent = geometry;
                         if (geometry.spatialReference.isWebMercator()) {
                             extent = webMercatorUtils.webMercatorToGeographic(geometry);
                         }
@@ -597,11 +600,11 @@ define([
                                 Math.round(extent.ymax*100000)/100000);
                     }
 
-                    if (this.mapId == 'arctic' || this.mapId == 'antarctic') {
+                    if (this.mapId === 'arctic' || this.mapId === 'antarctic') {
                         alert('Warning: The "Draw Rectangle" tool for Arctic/Antarctic projections is currently unsupported for data extraction. The full cruises will be requested.');
                     }
 
-                    var url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
+                    url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
                     window.open(url);
                 }
                 else {
@@ -630,11 +633,11 @@ define([
                             urlParams.push('institutions=' + quoted.join(','));
                         }
                         if (filter.startDateAdded) {
-                            var date = filter.startDateAdded
+                            date = filter.startDateAdded;
                             urlParams.push('firstDateAdded=' + date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2));
                         }
                         if (filter.endDateAdded) {
-                            var date = filter.endDateAdded
+                            date = filter.endDateAdded;
                             urlParams.push('lastDateAdded=' + date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2));
                         }
                     } 
@@ -644,8 +647,8 @@ define([
                     }
 
                     //Pass the extent in geographic coords.
-                    if (this.mapId == 'mercator' && geometry && geometry.type == 'extent') {
-                        var extent = geometry;
+                    if (this.mapId === 'mercator' && geometry && geometry.type === 'extent') {
+                        extent = geometry;
                         if (geometry.spatialReference.isWebMercator()) {
                             extent = webMercatorUtils.webMercatorToGeographic(geometry);
                         }
@@ -657,11 +660,11 @@ define([
                                 Math.round(extent.ymax*100000)/100000);
                     }
 
-                    if (this.mapId == 'arctic' || this.mapId == 'antarctic') {
+                    if (this.mapId === 'arctic' || this.mapId === 'antarctic') {
                         alert('Warning: The "Draw Rectangle" tool for Arctic/Antarctic projections is currently unsupported for data extraction. The full cruises will be requested.');
                     }
 
-                    var url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
+                    url = '//www.ngdc.noaa.gov/trackline/request/?' + urlParams.join('&');
                     if (url.length > 2000) {
                         alert('Warning: request URL is greater than 2000 characters. Problems may be encountered in some web browsers.');
                     }
@@ -669,16 +672,52 @@ define([
                 }   
             },
 
-            zoomToMarineResults: function(layerDef) {
-                var layerDefsStr = '';
+            getTracklineLayerIndex: function(layerId) {
+                if (layerId === 'All Parameters') { 
+                    return 0; 
+                } else if (layerId === 'Bathymetry') { 
+                    return 1; 
+                } else if (layerId === 'Gravity') { 
+                    return 2; 
+                } else if (layerId === 'Magnetics') { 
+                    return 3; 
+                } else if (layerId === 'Multi-Channel Seismics') { 
+                    return 4; 
+                } else if (layerId === 'Seismic Refraction') { 
+                    return 5; 
+                } else if (layerId === 'Shot-Point Navigation') { 
+                    return 6; 
+                } else if (layerId === 'Side Scan Sonar') { 
+                    return 7; 
+                } else if (layerId === 'Single-Channel Seismics') { 
+                    return 8; 
+                } else if (layerId === 'Subbottom Profile') { 
+                    return 9; 
+                } else if (layerId === 'Aeromagnetic Surveys') { 
+                    return 10; 
+                }
+            },
 
-                //Construct string for all 10 marine sublayers
-                for (var i = 0; i <= 9; i++) {
-                    layerDefsStr += i + ':' + layerDef;
-                    if (i < 9) {
-                        layerDefsStr += ';';
+            zoomToMarineResults: function(layerDef) {
+                var visibleLayers = this.layersPanel.visibleTracklineLayers;
+                var layerDefs = [];
+                    
+                //Get the list of survey types currently visible on the map
+                for (var visibleLayer in visibleLayers) {
+                    if (visibleLayers[visibleLayer]) {
+                        layerDefs.push(this.getTracklineLayerIndex(visibleLayer) + ':' + layerDef);
                     }
                 }
+
+                var layerDefsStr = layerDefs.join(';');
+
+                //Construct string for all 10 marine sublayers
+                // for (var i = 0; i <= 9; i++) {
+                //     layerDefsStr += i + ':' + layerDef;
+                //     if (i < 9) {
+                //         layerDefsStr += ';';
+                //     }
+                // }
 
                 var params = {};
                 params.layerDefs = layerDefsStr;
@@ -792,7 +831,7 @@ define([
 
             //Format a date in the form yyyy-mm-dd
             toDateString: function(date) {  
-                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2)
+                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
             },
 
             padDigits: function(n, totalDigits){

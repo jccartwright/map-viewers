@@ -7,14 +7,14 @@
 	<title>Grid Extract</title>
 	<link rel="shortcut icon" href="//www.ngdc.noaa.gov/image/favicon.ico">
 	<meta http-equiv="Content-Type" content= "text/html; charset=utf-8"/>
-	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dijit/themes/claro/claro.css" />
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/banner/1.2/themes/banner.css" />
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.0/themes/BoundingBoxDialog.css" />
-	<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dojox/widget/Toaster/Toaster.css" />
+	<link rel="stylesheet" type="text/css" href="https://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dijit/themes/claro/claro.css" />
+	<link rel="stylesheet" type="text/css" href="https://maps.ngdc.noaa.gov/viewers/dijits/banner/1.2/themes/banner.css" />
+	<link rel="stylesheet" type="text/css" href="https://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.0/themes/BoundingBoxDialog.css" />
+	<link rel="stylesheet" type="text/css" href="https://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dojox/widget/Toaster/Toaster.css" />
 
- 	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.2/themes/SimpleBasemapToolbar.css" />
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/identify/1.10/css/identify.css">
-	<link rel="stylesheet" type="text/css" href="http://maps.ngdc.noaa.gov/viewers/dijits/checkBoxTreeTOC/1.04/themes/tundra/Checkbox.css">
+ 	<link rel="stylesheet" type="text/css" href="https://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.2/themes/SimpleBasemapToolbar.css" />
+	<link rel="stylesheet" type="text/css" href="https://maps.ngdc.noaa.gov/viewers/dijits/identify/1.10/css/identify.css">
+	<link rel="stylesheet" type="text/css" href="https://maps.ngdc.noaa.gov/viewers/dijits/checkBoxTreeTOC/1.04/themes/tundra/Checkbox.css">
 
 
 	<link rel="stylesheet" type="text/css" href="css/local.css" />
@@ -23,20 +23,20 @@
 			parseOnLoad: true,
 			baseUrl: './',
 			modulePaths: {
-				'banner': 'http://maps.ngdc.noaa.gov/viewers/dijits/banner/1.2',
-				'bboxDialog': 'http://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.0',
+				'banner': 'https://maps.ngdc.noaa.gov/viewers/dijits/banner/1.2',
+				'bboxDialog': 'https://maps.ngdc.noaa.gov/viewers/dijits/bboxDialog/1.0',
 
-				'help_panel': 'http://maps.ngdc.noaa.gov/viewers/dijits/help_panel/1.1',
-				'simple_basemap_toolbar': 'http://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.2',
-				'identify':	'http://maps.ngdc.noaa.gov/viewers/dijits/identify/1.10',
-				'checkBoxTreeTOC': 'http://maps.ngdc.noaa.gov/viewers/dijits/checkBoxTreeTOC/1.04',
-				'layers': 'http://maps.ngdc.noaa.gov/viewers/dijits/layers/1.6'
+				'help_panel': 'https://maps.ngdc.noaa.gov/viewers/dijits/help_panel/1.1',
+				'simple_basemap_toolbar': 'https://maps.ngdc.noaa.gov/viewers/dijits/simple_basemap_toolbar/1.2',
+				'identify':	'https://maps.ngdc.noaa.gov/viewers/dijits/identify/1.10',
+				'checkBoxTreeTOC': 'https://maps.ngdc.noaa.gov/viewers/dijits/checkBoxTreeTOC/1.04',
+				'layers': 'https://maps.ngdc.noaa.gov/viewers/dijits/layers/1.6'
 			}
 		};
 	</script>
-	<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
+	<script type="text/javascript" src="https://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8"></script>
 	<script type="text/javascript" src="./src/mapConfig.js"></script>
-	<script type="text/javascript" src="http://maps.ngdc.noaa.gov/viewers/common/2.7.1/src/map.js"></script>
+	<script type="text/javascript" src="https://maps.ngdc.noaa.gov/viewers/common/2.7.1/src/map.js"></script>
 
 	<script type="text/javascript">
 	dojo.require("esri.map");
@@ -60,13 +60,13 @@
 		<!--HEADER SECTION-->
 		<div id="header" dojoType="dijit.layout.ContentPane" region="top" >
 			<map name="noaangdc">
-				<area shape="rect" coords="0,0,165,50" href="http://www.noaa.gov/" title="go to National Oceanic & Atmospheric Administration home" alt="go to National Oceanic & Atmospheric Administration home" target="blank"/>
-				<area shape="rect" coords="165,0,440,50" href="http://www.ngdc.noaa.gov/" title="go to National Geophysical Data Center home" alt="go to National Geophysical Data Center home" target="blank"/>
+				<area shape="rect" coords="0,0,165,50" href="https://www.noaa.gov/" title="go to National Oceanic & Atmospheric Administration home" alt="go to National Oceanic & Atmospheric Administration home" target="blank"/>
+				<area shape="rect" coords="165,0,440,50" href="https://www.ngdc.noaa.gov/" title="go to National Geophysical Data Center home" alt="go to National Geophysical Data Center home" target="blank"/>
 			</map>
 			<table style="border:0;width:100%;">
 			<tr>
 				<td style="text-align:left">
-					<img style="border:0; height:50px; width:440px;" id="nesdisleft" src="http://www.ngdc.noaa.gov/image/nesdisngdcleft.gif" usemap="#noaangdc" alt="NOAA Logo, National Geophysical Data Center." />
+					<img style="border:0; height:50px; width:440px;" id="nesdisleft" src="https://www.ngdc.noaa.gov/image/nesdisngdcleft.gif" usemap="#noaangdc" alt="NOAA Logo, National Geophysical Data Center." />
 				</td>
 				<td style="text-align:right">
 					<span style="font-size:xx-large; font-weight:bold; font-family:Arial, Helvetica, sans-serif;">Grid Extract</span>
@@ -81,7 +81,7 @@
 					<div dojoType="dijit.form.Button" id="selectByRectBtn" iconClass="selectByRectIcon" showLabel="false">Select with Rectangle</div>
 					<div dojoType="dijit.form.Button" id="selectByCoordsBtn" iconClass="selectByCoordsIcon" showLabel="false">Select with Coordinates</div>
 				</div>
-				<img id="loadingImg" src="http://maps.ngdc.noaa.gov/viewers/common/2.8/images/loading.gif" alt="refreshing map"/>
+				<img id="loadingImg" src="https://maps.ngdc.noaa.gov/viewers/common/2.8/images/loading.gif" alt="refreshing map"/>
 
 <!--				<div id="basemapToolbar"></div> -->
 				<div id="bottomBar" dojoType="dijit.layout.ContentPane">
@@ -123,7 +123,7 @@
 					</td>
 					<td style="text-align:center; color:red;">Warning: these data not to be used for navigation</td>
 					<td style="text-align:right; padding-right:10px;">
-						<a href="http://www.ngdc.noaa.gov/ngdcinfo/privacy.html" target="_blank">Privacy Policy</a>
+						<a href="https://www.ngdc.noaa.gov/ngdcinfo/privacy.html" target="_blank">Privacy Policy</a>
 					</td>
 				</tr>
 				</table>

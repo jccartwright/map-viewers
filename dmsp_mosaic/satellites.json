@@ -1,0 +1,9 @@
+{
+  identifier:'name', 
+  label:'name', 
+  items:[
+    {name:'All Satellites'},
+    {name:'F16'},
+	{name:'F18'}
+  ]
+}

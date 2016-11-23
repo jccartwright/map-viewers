@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="build-viewer" default="zip" basedir=".">
+
+        <property name="project-name" value="dmsp_mosaic" />
+		<property name="version" value="1.0" />
+        <property name="folder-to-zip" value=".." />
+        <property name="destination" value="target" />
+		
+        <target name="clean">
+                <delete file="${destination}/${project-name}-${version}.zip" />
+<!--                <delete dir="${destination}" /> -->
+        </target>
+
+        <target name="zip">
+                <mkdir dir="${destination}" />
+                <zip destfile="${destination}/${project-name}-${version}.zip"
+                     basedir="${folder-to-zip}"
+                     excludes="./target,./build.xml" />
+        </target>
+
+</project>
