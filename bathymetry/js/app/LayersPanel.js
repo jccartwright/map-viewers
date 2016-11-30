@@ -7,6 +7,7 @@ define([
     'dojo/dom',
     'dojo/dom-attr',
     'dijit/form/CheckBox',
+    'dijit/form/RadioButton',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
@@ -21,6 +22,7 @@ define([
         dom,
         domAttr,
         CheckBox,
+        RadioButton,
         _WidgetBase, 
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
@@ -41,39 +43,34 @@ define([
                 on(this.chkTrackline, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Trackline Bathymetry', this.chkTrackline.checked);                    
                 }));
-
-                on(this.chkNosHydroBags, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0], this.chkNosHydroBags.checked);
-
-                    //If the BAG Hillshades are visible, toggle the extra "Surveys with BAGs" overlay on top of the hillshades.
-                    if (this.chkBagHillshades.checked) {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', this.chkNosHydroBags.checked);
-                    }
-                    else {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', false);
-                    }
+                on(this.chkTracklineDensity, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'Trackline Bathymetry Density', this.chkTracklineDensity.checked);                    
                 }));
-                on(this.chkNosHydroDigital, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [1], this.chkNosHydroDigital.checked);
+
+                this.bagFootprintsVisible = false;
+                this.bagHillshadesVisible = false;
+
+                on(this.chkNosHydro, 'change', lang.hitch(this, function() {
+                     topic.publish('/ngdc/layer/visibility', 'NOS Hydrographic Surveys', this.chkNosHydro.checked);
+                     this.radioNosHydroAll.set('disabled', !this.chkNosHydro.checked);
+                     this.radioNosHydroBags.set('disabled', !this.chkNosHydro.checked);
                 }));
-                on(this.chkNosHydroNonDigital, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'NOS Hydro (non-digital)', this.chkNosHydroNonDigital.checked);
+
+                on(this.radioNosHydroAll, 'click', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0, 1, 2], true);               
+                }));
+                on(this.radioNosHydroBags, 'click', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [1, 2], false);
+                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0], true);
+                }));
+                on(this.chkBagFootprints, 'change', lang.hitch(this, function() {
+                    this.bagFootprintsVisible = this.chkBagFootprints.checked;
+                    topic.publish('/ngdc/layer/visibility', 'BAG Footprints', this.bagFootprintsVisible);
                 }));
                 on(this.chkBagHillshades, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.chkBagHillshades.checked);   
-
-                    //If the "Surveys with BAGs" are visible, toggle the extra overlay on top of the hillshades.
-                    if (this.chkBagHillshades.checked && this.chkNosHydroBags.checked) {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', true);
-                    }
-                    else {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', false);
-                    }                                     
+                    this.bagHillshadesVisible = this.chkBagHillshades.checked;
+                    topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.bagHillshadesVisible);                       
                 }));
-
-                // on(this.chkEmodNet, 'change', lang.hitch(this, function() {
-                //     topic.publish('/ngdc/layer/visibility', 'EMODNet', this.chkEmodNet.checked);
-                // }));
 
                 on(this.chkDems, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'DEM Extents', this.chkDems.checked);

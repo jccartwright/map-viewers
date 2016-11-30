@@ -5,8 +5,7 @@ define([
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISImageServiceLayer',
     'esri/layers/WebTiledLayer',
-    'ngdc/layers/TiledWMSLayer',
-    'esri/urlUtils'
+    'ngdc/layers/TiledWMSLayer'
     ],
     function(
         declare, 
@@ -15,8 +14,7 @@ define([
         ArcGISDynamicMapServiceLayer,
         ArcGISImageServiceLayer,
         WebTiledLayer,
-        TiledWMSLayer,
-        urlUtils
+        TiledWMSLayer
         ){
 
         return declare([AbstractLayerCollection], {
@@ -53,35 +51,35 @@ define([
             defineMapServices: function() {
                 //TODO check to ensure unique id
                 this.mapServices = [
-                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer', {
                         id: 'NatGeo',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_hillshade/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2014_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
                         id: 'GEBCO_2014',
                         visible: false
                     }),                    
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/ETOPO1_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
                         id: 'ETOPO1',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer', {
                         id: 'Light Gray',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer', {
                         id: 'Dark Gray',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer', {
                         id: 'World Imagery',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer', {
                         id: 'NatGeo Basemap',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer', {
                         id: 'Ocean Base',
                         visible: true
                     }),
@@ -101,110 +99,106 @@ define([
                         epsgCode: '3857',
                         layerNames: ['topo']
                     }),
-                    new ArcGISImageServiceLayer('//gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer', {
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer', {
                         id: 'DEM Hillshades',
                         visible: this.demVisible,
                         imageServiceParameters: this.imageServiceParameters
                     }),                    
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
                         visible: false,
                         opacity: 0.7
+                    }),                    
+                    new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
+                        id: 'BAG Hillshades (tiled)',
+                        visible: false
                     }),
-
-                    //NOS Non-Digital is separate from the tiled/dynamic pair, which only displays BAGs and Digital.
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
-                        id: 'NOS Hydro (non-digital)',
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades_subsets/ImageServer', {
+                        id: 'BAG Hillshades (dynamic)',
+                        imageServiceParameters: this.imageServiceParameters,
+                        visible: false
+                    }),
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry_density/MapServer', {
+                        id: 'Trackline Bathymetry Density',
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro/MapServer', {
-                        id: 'NOS Hydro (tiled)',
+                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro/MapServer', {
+                        id: 'NOS Hydrographic Surveys (tiled)',
                         visible: this.nosHydroVisible
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
-                        id: 'NOS Hydro (dynamic)',
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
+                        id: 'NOS Hydrographic Surveys (dynamic)',
                         visible: this.nosHydroVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-
-                    new ArcGISTiledMapServiceLayer('//gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
-                        id: 'BAG Hillshades',
-                        visible: false
-                    }),                    
-                    // new ArcGISImageServiceLayer("//seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
-                    //     id: 'RNC',
-                    //     visible: false,
-                    //     opacity: 0.5,
-                    //     imageServiceParameters: this.imageServiceParameters
-                    // }),
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
+                        id: 'BAG Footprints',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),
                     new WebTiledLayer('https://tileservice.charts.noaa.gov/tiles/50000_1/{level}/{col}/{row}.png', {
                         id: 'RNC',
                         visible: false,
                         opacity: 0.5
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
-                        id: 'NOS Hydro (BAGs)',
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
-                    new ArcGISDynamicMapServiceLayer('//maps.coast.noaa.gov/arcgis/rest/services/DAV/DAV/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://maps.coast.noaa.gov/arcgis/rest/services/DAV/DAV/MapServer', {
                         id: 'OCM Lidar',
                         visible: false,
                         imageParameters: this.imageParameters.png32,
                         opacity: 1
                     }),
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer', {
                         id: 'Trackline Bathymetry (tiled)',
                         visible: this.tracklineVisible
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer', {
                         id: 'Trackline Combined (dynamic)',
                         visible: this.tracklineVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer', {
                         id: 'Multibeam (tiled)',
                         visible: this.multibeamVisible
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
                         id: 'Multibeam (dynamic)',
                         visible: this.multibeamVisible,
                         imageParameters: this.imageParameters.png32
                     }),   
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/dem_tiles/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/dem_tiles/MapServer', {
                         id: 'DEM Tiles',
                         visible: this.demVisible,
                         imageParameters: this.imageParameters.png32
                     }),                 
-                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer', {
                         id: 'World Boundaries and Places',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer', {
                         id: 'Light Gray Reference',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer', {
                         id: 'Dark Gray Reference',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('//services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer', {
                         id: 'Ocean Reference',
                         visible: true
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
                         id: 'Graticule',
                         visible: false,
                         opacity: 0.7,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer', {
                         id: 'DEM Extents',
                         visible: this.demVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
                         id: 'Poles Mask',
                         visible: true,
                         imageParameters: this.imageParameters.png32
@@ -231,11 +225,19 @@ define([
                      },
                      {
                          id: 'NOS Hydrographic Surveys',
-                         tiledService: this.getLayerById('NOS Hydro (tiled)'),
-                         dynamicService: this.getLayerById('NOS Hydro (dynamic)'),
+                         tiledService: this.getLayerById('NOS Hydrographic Surveys (tiled)'),
+                         dynamicService: this.getLayerById('NOS Hydrographic Surveys (dynamic)'),
                          visible: this.nosHydroVisible,
-                         cutoffZoom: 9
-                     }                     
+                         cutoffZoom: 9,
+                         defaultVisibleLayers: [0, 1, 2]
+                     },
+                     {
+                        id: 'BAG Hillshades',
+                        tiledService: this.getLayerById('BAG Hillshades (tiled)'),
+                        dynamicService: this.getLayerById('BAG Hillshades (dynamic)'),
+                        visible: false,
+                        cutoffZoom: 16
+                    },
                 ];
             },
 
@@ -248,11 +250,12 @@ define([
                 //this.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([9999]); //Manually set all the sublayers to invisible for 'NOS Hydro'
                 //this.getLayerById('NOS Hydro Non-Digital').setVisibleLayers([9999]);
 
-                this.getLayerById('DEM Extents').setVisibleLayers([12]);
+                //his.getLayerById('DEM Extents').setVisibleLayers([12]);
+                //this.getLayerById('BAG Footprints').setVisibleLayers([3]);
 
                 //this.getLayerById('DAV').setVisibleLayers([-1]);
 
-                //this.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0])
+                //this.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0, 1, 2])
             }
         });
     }
