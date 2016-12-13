@@ -129,7 +129,7 @@ define([
                         epsgCode: '900913',
                         layerNames: ['mean_atlas_land']
                     }),                                    
-                    new ArcGISTiledMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
                         visible: false,
                         opacity: 0.7
@@ -192,7 +192,7 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://geoappext.nrcan.gc.ca/arcgis/rest/services/GSCA/multibeam_multifaisceaux_index/MapServer', { //Force HTTP
+                    new ArcGISDynamicMapServiceLayer('https://geoappext.nrcan.gc.ca/arcgis/rest/services/GSCA/multibeam_multifaisceaux_index/MapServer', {
                         id: 'NRCan Multibeam',
                         visible: false,
                         imageParameters: this.imageParameters.png32
