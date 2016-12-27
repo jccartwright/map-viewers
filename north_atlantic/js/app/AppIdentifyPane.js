@@ -62,8 +62,11 @@ define([
                 else if (layerKey == 'Protected Sites/NEAFC Closure Area') {
                     return 'NEAFC Fisheries Closures';
                 }
-                else if (layerKey == 'OER Planned Expeditions/Okeanos Explorer 2016') {
-                    return 'NOAA/OER Planned Expeditions';
+                else if (layerKey == 'OER Planned Expeditions/Okeanos Explorer and Other 2017 Planned Mapping Areas') {
+                    return 'NOAA/OER Planned Expeditions (areas)';
+                }
+                else if (layerKey == 'OER Planned Expeditions/Okeanos Explorer 2017 Planned Tracks') {
+                    return 'NOAA/OER Planned Expeditions (tracks)';
                 }
             },
 
@@ -98,8 +101,11 @@ define([
                 else if (item.formatter == 'Protected Sites/NEAFC Closure Area') {
                     return this.getItemLabelSpan(item.feature.attributes['siteName'], uid);
                 }   
-                else if (item.formatter == 'OER Planned Expeditions/Okeanos Explorer 2016') {
+                else if (item.formatter == 'OER Planned Expeditions/Okeanos Explorer and Other 2017 Planned Mapping Areas') {
                     return this.getItemLabelSpan(item.feature.attributes['Cruise ID'], uid);
+                }
+                else if (item.formatter == 'OER Planned Expeditions/Okeanos Explorer 2017 Planned Tracks') {
+                    return this.getItemLabelSpan(item.feature.attributes['cruise_id'], uid);
                 }           
             },
 

@@ -50,7 +50,8 @@ define([
                     'EMODNet Singlebeam Lines/default': lang.hitch(this, this.emodnetSinglebeamFormatter),
                     //'Protected Sites/OSPAR MPA Network': lang.hitch(this, this.protectedSitesFormatter),
                     //'Protected Sites/NEAFC Closure Area': lang.hitch(this, this.protectedSitesFormatter),
-                    'OER Planned Expeditions/Okeanos Explorer 2016': lang.hitch(this, this.oerPlannedFormatter)
+                    'OER Planned Expeditions/Okeanos Explorer and Other 2017 Planned Mapping Areas': lang.hitch(this, this.oerPlannedFormatter),
+                    'OER Planned Expeditions/Okeanos Explorer 2017 Planned Tracks': lang.hitch(this, this.oerPlannedTracksFormatter)
                 };
             } //end constructor
         });
