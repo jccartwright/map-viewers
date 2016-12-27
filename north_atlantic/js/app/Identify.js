@@ -217,6 +217,32 @@ define([
                 return html;
             },
 
+            //For the planned tracks, the field names are slightly different from the above layer (they don't have field aliases). Need to change this if they update their service.
+            oerPlannedTracksFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = '\
+                    <h3>OER Planned Expedition:</h3>\
+                    <div class="valueName">Cruise ID: <span class="parameterValue">${cruiseId}</span></div>\
+                    <div class="valueName">Data Type: <span class="parameterValue">${datatype}</span></div>\
+                    <div class="valueName">Collection Year: <span class="parameterValue">${collectionYear}</span></div>\
+                    <div class="valueName">Project Status: <span class="parameterValue">${projectStatus}</span></div>\
+                    <div class="valueName">Point of Contact: <span class="parameterValue">${pointofContact}</span></div>\
+                    <div class="valueName">Collection Date: <span class="parameterValue">${collectionDate}</span></div>\
+                    <div class="valueName">Owner: <span class="parameterValue">${owner}</span></div>';
+
+                var html = string.substitute(template, {
+                        cruiseId: a['cruise_id'],
+                        datatype: a['datatype'],
+                        collectionYear: a['collyear'],
+                        projectStatus: a['projstatus'],
+                        pointofContact: a['poc'],
+                        collectionDate: a['colldate'],
+                        owner: a['owner']
+                    });                
+                return html;
+            },
+
             multibeamSort: function(a, b) {
                 //Sort by year descending, then alphabetical by survey ID
                 if (a.feature.attributes['Survey Year'] == b.feature.attributes['Survey Year']) {
