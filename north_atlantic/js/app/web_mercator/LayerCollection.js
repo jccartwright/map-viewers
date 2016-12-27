@@ -203,7 +203,7 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
+                        //sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
                         layerNames: ['EMODnet_Bathymetry_single_beams_polygons'],
                         opacity: 0.5
                     }),
@@ -213,7 +213,7 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
+                        //sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
                         layerNames: ['EMODnet_Bathymetry_multi_beams_polygons'],
                         opacity: 0.5
                     }),
@@ -223,7 +223,7 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
+                        //sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
                         layerNames: ['EMODnet_Bathymetry_single_beams_points', 'EMODnet_Bathymetry_single_beams_lines']
                     }),
                     new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
@@ -232,7 +232,7 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
+                        //sld: 'https://maps.ngdc.noaa.gov/viewers/emodnet.sld',
                         layerNames: ['EMODnet_Bathymetry_multi_beams_points', 'EMODnet_Bathymetry_multi_beams_lines']
                     }),                    
                     new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer', {
