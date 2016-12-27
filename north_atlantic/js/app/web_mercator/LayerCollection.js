@@ -146,7 +146,7 @@ define([
                     //     imageParameters: this.imageParameters.png32
                     // }),
 
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://service.ncddc.noaa.gov/arcgis/rest/services/OceanExploration/OE_IOCM_Planned/MapServer', { //Force HTTP
+                    new ArcGISDynamicMapServiceLayer('https://service.ncddc.noaa.gov/arcgis/rest/services/OceanExploration/OE_IOCM_Planned/MapServer', { //Force HTTP
                         id: 'OER Planned Expeditions',
                         visible: false,
                         imageParameters: this.imageParameters.png32
