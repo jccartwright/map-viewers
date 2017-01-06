@@ -647,10 +647,17 @@ define([
                     }
 
                     //Pass the extent in geographic coords.
-                    if (this.mapId === 'mercator' && geometry && geometry.type === 'extent') {
-                        extent = geometry;
-                        if (geometry.spatialReference.isWebMercator()) {
-                            extent = webMercatorUtils.webMercatorToGeographic(geometry);
+                    if (this.mapId === 'mercator' && geometry) {
+                        //First convert any polygon into an extent.
+                        var extent;
+                        if (geometry.type === 'extent') {
+                            extent = geometry;
+                        } else if (geometry.type === 'polygon') {
+                            extent = geometry.getExtent();
+                        }
+
+                        if (extent.spatialReference.isWebMercator()) {
+                            extent = webMercatorUtils.webMercatorToGeographic(extent);
                         }
                         //Round lat/lon values to 5 decimal places
                         urlParams.push('geometry=' + 
