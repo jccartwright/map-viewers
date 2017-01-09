@@ -2,9 +2,9 @@ define([
     'dojo/_base/declare', 
     'dojo/_base/lang',
     'dojo/dom',
-    'ngdc/antarctic/MapConfig',
-    'app/antarctic/MapToolbar',
-    'app/antarctic/Identify',
+    'ngdc/arctic/MapConfig',
+    'app/arctic/MapToolbar',
+    'app/arctic/Identify',
     'app/AppIdentifyPane'
     ],
     function(
@@ -23,14 +23,14 @@ define([
             mapReady: function() {
                 this.inherited(arguments);
 
-                //console.log('inside custom Antarctic mapReady...');   
+                //console.log('inside custom Arctic mapReady...');   
 
                 this.mapToolbar = new MapToolbar({
                     map: this.map, 
                     layerCollection: this.mapLayerCollection, 
-                    maxLat: -50, 
-                    minLat: -90
-                }, 'antarcticMapToolbar');
+                    maxLat: 90, 
+                    minLat: 50
+                }, 'arcticMapToolbar');
                 this.mapToolbar.startup();
                 this.mapToolbar.enabled = false;
                 
@@ -41,14 +41,10 @@ define([
                     map: this.map,
                     identify: this.identify,
                     class: 'identifyPane',
-                    autoExpandTree: false
-                }, dom.byId('antarcticIdentifyPaneDiv'));
+                    autoExpandTree: true
+                }, dom.byId('arcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
-                this.identifyPane.enabled = false;    
-
-                this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
-
-                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);            
+                this.identifyPane.enabled = false;
             }
          
             

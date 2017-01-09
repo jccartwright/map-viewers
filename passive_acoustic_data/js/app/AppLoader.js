@@ -155,11 +155,11 @@ define([
                 // setup map views. You can only draw a Map into a visible container
                 this.setupMercatorView();
 
-                //registry.byId('mapContainer').selectChild('arctic');
-                //this.setupArcticView();
+                registry.byId('mapContainer').selectChild('arctic');
+                this.setupArcticView();
 
-                //registry.byId('mapContainer').selectChild('antarctic');
-                //this.setupAntarcticView();
+                registry.byId('mapContainer').selectChild('antarctic');
+                this.setupAntarcticView();
 
                 //go back to mercator as default view
                 registry.byId('mapContainer').selectChild('mercator');
@@ -178,16 +178,16 @@ define([
                 this.mapId = mapId;
                 if (mapId === 'mercator') {
                     this.mercatorMapConfig.setEnabled(true);
-                    //this.arcticMapConfig.setEnabled(false);
-                    //this.antarcticMapConfig.setEnabled(false);
+                    this.arcticMapConfig.setEnabled(false);
+                    this.antarcticMapConfig.setEnabled(false);
                 } else if (mapId === 'arctic') {
                     this.mercatorMapConfig.setEnabled(false);
-                    //this.arcticMapConfig.setEnabled(true);
-                    //this.antarcticMapConfig.setEnabled(false);
+                    this.arcticMapConfig.setEnabled(true);
+                    this.antarcticMapConfig.setEnabled(false);
                 } else { //antarctic
                     this.mercatorMapConfig.setEnabled(false);
-                    //this.arcticMapConfig.setEnabled(false);
-                    //this.antarcticMapConfig.setEnabled(true);
+                    this.arcticMapConfig.setEnabled(false);
+                    this.antarcticMapConfig.setEnabled(true);
                 }   
             },
 
@@ -282,25 +282,120 @@ define([
                 if (values.endDate) {
                     sql.push("DC_START_DATE <= date '" + this.toDateString(values.endDate) + "'");                
                 }  
+
+                if (values.sourceOrganizations && values.sourceOrganizations.length > 0) {
+                    var conditionals = [];
+                    for (i = 0; i < values.sourceOrganizations.length; i++) {
+                        //Surround each string with wildcard characters and single quotes
+                        conditionals.push("SOURCE_ORGANIZATION LIKE '%" + values.sourceOrganizations[i] + "%'");
+                    }
+                    if (conditionals.length > 1) {
+                        sql.push('(' + conditionals.join(' OR ') + ')');
+                    }
+                    else {
+                        sql.push(conditionals[0]);
+                    }
+                }
+                if (values.fundingOrganizations && values.fundingOrganizations.length > 0) {
+                    var conditionals = [];
+                    for (i = 0; i < values.fundingOrganizations.length; i++) {
+                        //Surround each string with wildcard characters and single quotes
+                        conditionals.push("FUNDING_ORGANIZATION LIKE '%" + values.fundingOrganizations[i] + "%'");
+                    }
+                    if (conditionals.length > 1) {
+                        sql.push('(' + conditionals.join(' OR ') + ')');
+                    }
+                    else {
+                        sql.push(conditionals[0]);
+                    }
+                }
+
+                if (values.instruments && values.instruments.length > 0) {
+                    var conditionals = [];
+                    for (i = 0; i < values.instruments.length; i++) {
+                        //Surround each string with single quotes
+                        conditionals.push("INSTRUMENT='" + values.instruments[i] + "'");
+                    }
+                    if (conditionals.length > 1) {
+                        sql.push('(' + conditionals.join(' OR ') + ')');
+                    }
+                    else {
+                        sql.push(conditionals[0]);
+                    }
+                }
+
+                if (values.platformTypes && values.platformTypes.length > 0) {
+                    var conditionals = [];
+                    for (i = 0; i < values.platformTypes.length; i++) {
+                        //Surround each string with single quotes
+                        conditionals.push("PLATFORM_NAME='" + values.platformTypes[i] + "'");
+                    }
+                    if (conditionals.length > 1) {
+                        sql.push('(' + conditionals.join(' OR ') + ')');
+                    }
+                    else {
+                        sql.push(conditionals[0]);
+                    }
+                }
+
                 if (values.minSampleRate) {
-                    sql.push("MIN_SAMPLE_RATE >=" + values.minSampleRate);
+                    sql.push("MAX_SAMPLE_RATE>=" + values.minSampleRate);
                 }
                 if (values.maxSampleRate) {
-                    sql.push("MAX_SAMPLE_RATE <=" + values.maxSampleRate);
+                    sql.push("MIN_SAMPLE_RATE<=" + values.maxSampleRate);
                 }
-                if (values.institution) {
-                    sql.push("UPPER(SOURCE_ORGANIZATION) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");                    
+
+                if (values.minBottomDepth) {
+                    sql.push("MAX_BOTTOM_DEPTH>=" + values.minBottomDepth);
                 }
-                if (values.instrument) {
-                    sql.push("UPPER(INSTRUMENT_NAME) LIKE '" + values.instrument.toUpperCase().replace(/\*/g, '%') + "'");                    
+                if (values.maxBottomDepth) {
+                    sql.push("MIN_BOTTOM_DEPTH<=" + values.maxBottomDepth + ' AND MAX_BOTTOM_DEPTH<=' + values.maxBottomDepth);
                 }
-                if (values.platformType) {
-                    sql.push("UPPER(PLATFORM_TYPE_NAME  ) LIKE '" + values.platformType.toUpperCase().replace(/\*/g, '%') + "'");                    
-                }    
+
+                if (values.recordingDuration) {
+                    if (values.recordingDuration === '100') {
+                        sql.push("RECORDING_PERCENT=100");
+                    } else if (values.recordingDuration === '0-25') {
+                        sql.push("RECORDING_PERCENT<25");
+                    } else if (values.recordingDuration === '25-50') {
+                        sql.push("RECORDING_PERCENT>=25 AND RECORDING_PERCENT<25");
+                    } else if (values.recordingDuration === '50-75') {
+                        sql.push("RECORDING_PERCENT>=50 AND RECORDING_PERCENT<25");
+                    } else if (values.recordingDuration === '75-100') {
+                        sql.push("RECORDING_PERCENT>=75 AND RECORDING_PERCENT<100");
+                    }
+                }
+
+                if (values.numChannels) {
+                    if (values.numChannels === '1') {
+                        sql.push("NUMBER_CHANNELS=1");
+                    } else if (values.numChannels === '2') {
+                        sql.push("NUMBER_CHANNELS=2");
+                    } else if (values.numChannels === '3+') {
+                        sql.push("NUMBER_CHANNELS>=3");
+                    }
+                }
+                // if (values.minSampleRate) {
+                //     sql.push("MIN_SAMPLE_RATE >=" + values.minSampleRate);
+                // }
+                // if (values.maxSampleRate) {
+                //     sql.push("MAX_SAMPLE_RATE <=" + values.maxSampleRate);
+                // }
+                // if (values.institution) {
+                //     sql.push("UPPER(SOURCE_ORGANIZATION) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");                    
+                // }
+                // if (values.instrument) {
+                //     sql.push("UPPER(INSTRUMENT_NAME) LIKE '" + values.instrument.toUpperCase().replace(/\*/g, '%') + "'");                    
+                // }
+                // if (values.platformType) {
+                //     sql.push("UPPER(PLATFORM_TYPE_NAME  ) LIKE '" + values.platformType.toUpperCase().replace(/\*/g, '%') + "'");                    
+                // }    
 
                 layerDefinition = sql.join(' and ');
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([layerDefinition]);
-                //this.arcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([layerDefinition]);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([layerDefinition]);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([layerDefinition]);
+
 
                 this.layersPanel.enableResetButton();
                 this.layersPanel.setCurrentFilterString(values);
@@ -312,8 +407,8 @@ define([
 
             resetPadFilter: function() {            
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([]);
-                //this.arcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([]);
-                //this.antarcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([]);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([]);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([]);
                 
                 this.layersPanel.disableResetButton();
                 this.layersPanel.searchDialog.clearForm();

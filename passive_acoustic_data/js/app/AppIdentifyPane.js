@@ -42,7 +42,7 @@ define([
             },
 
             getFolderName: function(layerKey) {
-                if (layerKey == 'PAD/DATA_COLLECTION') {
+                if (layerKey == 'PAD/Data Collections') {
                     return 'Passive Acoustic Data';
                 }                 
             },
@@ -56,8 +56,8 @@ define([
             },
 
             getItemDisplayLabel: function(item, uid) {
-                if (item.formatter == 'PAD/DATA_COLLECTION') {
-                    return this.getItemLabelSpan(item.feature.attributes['DC_NAME'], uid);
+                if (item.formatter == 'PAD/Data Collections') {
+                    return this.getItemLabelSpan(item.feature.attributes['Data Collection Name'], uid);
                 }                 
             },
 

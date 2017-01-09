@@ -35,9 +35,9 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                on(this.chkPad, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'PAD', this.chkPad.checked);
-                }));
+                // on(this.chkPad, 'change', lang.hitch(this, function() {
+                //     topic.publish('/ngdc/layer/visibility', 'PAD', this.chkPad.checked);
+                // }));
 
                 on(this.searchButton, 'click', lang.hitch(this, function() {
                     if (!this.searchDialog) {
