@@ -230,6 +230,15 @@ html,body {
     color: #000;
 }
 
+.objectValue {
+    padding-left: 30px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: normal;
+    color: #000;
+}
+
 .filterText {
     margin: 0px;
     padding: 0px;
@@ -245,8 +254,9 @@ html,body {
     font-size: 12px;
 }
 
-.surveySelect-multiSelect {
-    width: 300px;
+.surveySelect-multiSelect .dojoxCheckedMultiSelectWrapper {
+    width: 200px;
+    overflow: auto;
 }
 
 .surveySelect-filteringSelect {

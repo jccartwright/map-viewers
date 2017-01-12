@@ -2,9 +2,9 @@ define([
     'dojo/_base/declare', 
     'dojo/_base/lang',
     'dojo/dom',
-    'ngdc/arctic/MapConfig',
-    'app/arctic/MapToolbar',
-    'app/arctic/Identify',
+    'ngdc/antarctic/MapConfig',
+    'app/antarctic/MapToolbar',
+    'app/antarctic/Identify',
     'app/AppIdentifyPane'
     ],
     function(
@@ -23,14 +23,14 @@ define([
             mapReady: function() {
                 this.inherited(arguments);
 
-                //console.log('inside custom Arctic mapReady...');   
+                //console.log('inside custom Antarctic mapReady...');   
 
                 this.mapToolbar = new MapToolbar({
                     map: this.map, 
                     layerCollection: this.mapLayerCollection, 
-                    maxLat: 90, 
-                    minLat: 50
-                }, 'arcticMapToolbar');
+                    maxLat: -50, 
+                    minLat: -90
+                }, 'antarcticMapToolbar');
                 this.mapToolbar.startup();
                 this.mapToolbar.enabled = false;
                 
@@ -41,23 +41,10 @@ define([
                     map: this.map,
                     identify: this.identify,
                     class: 'identifyPane',
-                    autoExpandTree: false
-                }, dom.byId('arcticIdentifyPaneDiv'));
+                    autoExpandTree: true
+                }, dom.byId('antarcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
-                this.identifyPane.enabled = false;
-
-                if (this.mapLayerCollection.nosHydroVisible) {
-                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0, 1]);
-                }
-                else {
-                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
-                }
-                this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
-                this.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setVisibleLayers([0]);
-                
-                this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
-
-                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
+                this.identifyPane.enabled = false;          
             }
          
             

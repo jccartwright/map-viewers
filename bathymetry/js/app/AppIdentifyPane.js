@@ -328,7 +328,7 @@ define([
                     
                     if (extent) {
                         if (extent.spatialReference.wkid === 4326) {
-                            latLonExtent = this.identify.searchGeometry;
+                            latLonExtent = extent;
                         }
                         else if (extent.spatialReference.isWebMercator()) {
                             latLonExtent = webMercatorUtils.webMercatorToGeographic(extent);
@@ -353,7 +353,7 @@ define([
                     
                     if (extent) {
                         if (extent.spatialReference.wkid === 4326) {
-                            latLonExtent = this.identify.searchGeometry;
+                            latLonExtent = extent;
                         }
                         else if (extent.spatialReference.isWebMercator()) {
                             latLonExtent = webMercatorUtils.webMercatorToGeographic(extent);
@@ -394,7 +394,7 @@ define([
                     datasetInfo = {dataset: 'DEM'};
                     if (extent) {
                         if (extent.spatialReference.wkid === 4326) {
-                            latLonExtent = this.identify.searchGeometry;
+                            latLonExtent = extent;
                         }
                         else if (extent.spatialReference.isWebMercator()) {
                             latLonExtent = webMercatorUtils.webMercatorToGeographic(extent);

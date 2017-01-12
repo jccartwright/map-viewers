@@ -19,7 +19,7 @@ define([
 
             //called after parent class constructor
             constructor: function() {
-                logger.debug('inside constructor for app/web_mercator/Identify');
+                logger.debug('inside constructor for app/antarctic/Identify');
 
                 //augment arguments object with list of layers to identify.
                 arguments[0].layerIds = ['PAD'];
@@ -29,7 +29,7 @@ define([
 
                 //formatter specific to each sublayer, keyed by Layer/sublayer name.
                 this.formatters = {
-                    'PAD/DATA_COLLECTION': lang.hitch(this, this.padFormatter)
+                    'PAD/Data Collections': lang.hitch(this, this.padFormatter)
                 };
             } //end constructor
         });

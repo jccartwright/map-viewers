@@ -36,16 +36,11 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer', {
-                        id: 'Trackline Bathymetry',
-                        visible: false,
+                    new ArcGISDynamicMapServiceLayer('https://gisdev.ngdc.noaa.gov/arcgis/rest/services/passive_acoustic_data/MapServer', {
+                        id: 'PAD',
+                        visible: true,
                         imageParameters: this.imageParameters.png32
-                    }),                    
-                    new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
-                        id: 'Multibeam',
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
+                    }), 
                     new ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/graticule/MapServer', {
                         id: 'Graticule',
                         visible: true,
@@ -68,6 +63,8 @@ define([
                         imageParameters: this.imageParameters.png32
                     })
                 ];
+
+                this.getLayerById('PAD').objectIdFields = {0: 'Data Collections ID'};
 
             }, //end defineMapServices
 
