@@ -369,7 +369,8 @@ define([
                     sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
+                    //Escape single quotes in the ship name (i.e. Jeanne D'Arc, L'Atelante) with 2 single quotes
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace("'", "''").replace(/\*/g, '%') + "'");
                 }
                 if (values.institution) {
                     sql.push("UPPER(SOURCE) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
@@ -392,7 +393,8 @@ define([
                     sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
                 }
                 if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
+                    //Escape single quotes in the ship name (i.e. Jeanne D'Arc, L'Atelante) with 2 single quotes
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace("'", "''").replace(/\*/g, '%') + "'");
                 }
                 if (values.institution) {
                     sql.push("UPPER(INST_SHORT) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
