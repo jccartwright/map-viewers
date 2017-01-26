@@ -139,6 +139,7 @@ define([
             stationDataCarib: {
                 identifier: 'name',
                 items: [
+                    {name: 'Bermuda', id: 'BERMUDA'},
                     {name: 'Bridgetown, Barbados', id: 'BRIDGETOWN'},
                     {name: 'Havana, Cuba', id: 'HAVANA'},
                     {name: 'Santiago de Cuba, Cuba', id: 'SANTIAGO'},
