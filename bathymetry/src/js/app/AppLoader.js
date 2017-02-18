@@ -37,7 +37,7 @@ define([
     'app/web_mercator/Identify',
     'app/AppIdentifyPane',
     'app/LayersPanel',
-     'esri/urlUtils',
+    'esri/urlUtils',
     'dojo/domReady!'],
     function(
         declare,
@@ -93,8 +93,8 @@ define([
             init: function() {
                 //doesn't seem to be working
                 urlUtils.addProxyRule({
-                    "proxyUrl": "https://gis.ngdc.noaa.gov/https-proxy/proxy?",
-                    "urlPrefix": "http://gmrt.marine-geo.org"
+                    'proxyUrl': 'https://gis.ngdc.noaa.gov/https-proxy/proxy?',
+                    'urlPrefix': 'http://gmrt.marine-geo.org'
                 });
 
                 esriConfig.defaults.io.corsEnabledServers.push('maps.ngdc.noaa.gov');
@@ -360,10 +360,10 @@ define([
                                                     
                 //Multibeam
                 if (values.startYear) {
-                    sql.push("SURVEY_YEAR >= " + values.startYear);
+                    sql.push('SURVEY_YEAR >= ' + values.startYear);
                 }   
                 if (values.endYear) {
-                    sql.push("SURVEY_YEAR <= " + values.endYear);
+                    sql.push('SURVEY_YEAR <= ' + values.endYear);
                 }
                 if (values.survey) {
                     sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
@@ -384,10 +384,10 @@ define([
                 //Trackline Bathymetry
                 sql = [];
                 if (values.startYear) {
-                    sql.push("END_YR >= " + values.startYear);
+                    sql.push('END_YR >= ' + values.startYear);
                 }       
                 if (values.endYear) {
-                    sql.push("START_YR <= " + values.endYear);
+                    sql.push('START_YR <= ' + values.endYear);
                 }
                 if (values.survey) {
                     sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
@@ -410,10 +410,10 @@ define([
                 //NOS Hydro 
                 sql = [];
                 if (values.startYear) {
-                    sql.push("SURVEY_YEAR >= " + values.startYear);
+                    sql.push('SURVEY_YEAR >= ' + values.startYear);
                 }       
                 if (values.endYear) {
-                    sql.push("SURVEY_YEAR <= " + values.endYear);
+                    sql.push('SURVEY_YEAR <= ' + values.endYear);
                 }
                 if (values.survey) {
                     sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");

@@ -10,8 +10,8 @@ define([
     'dijit/form/Button',
     'dijit/Tooltip',
     'esri/geometry/webMercatorUtils', 
-    'ngdc/identify/IdentifyPane' 
-    ],
+    'ngdc/identify/IdentifyPane'
+],
     function(
         declare, 
         config, 
@@ -419,19 +419,19 @@ define([
             },
             
             submitFormToNext: function(postBody) {
-                console.debug("sending order via form submission to NEXT: ", postBody);
+                console.debug('sending order via form submission to NEXT: ', postBody);
                 
-                var url = "https://www.ngdc.noaa.gov/next-web/orders/create";
+                var url = 'https://www.ngdc.noaa.gov/next-web/orders/create';
 
                 //create a new form element and submit it.
-                var form = document.createElement("form");
+                var form = document.createElement('form');
                 form.action = url;
                 form.method = 'POST';
                 form.target = '_blank';
 
                 //JSON payload goes in "order" parameter
-                var inputElement = document.createElement("textarea");
-                inputElement.name = "order";
+                var inputElement = document.createElement('textarea');
+                inputElement.name = 'order';
                 inputElement.value = JSON.stringify(postBody);
 
                 form.appendChild(inputElement);

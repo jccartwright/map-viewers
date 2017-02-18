@@ -19,7 +19,7 @@ define([
     'dojo/request/xhr',
     'dojo/store/Memory', 
     'dojo/text!./templates/SearchDialog.html'
-    ],
+],
     function(
         declare,
         Dialog,
@@ -142,11 +142,11 @@ define([
                 this.surveysStore = new Memory({data: {identifier: 'id', items: items}});
 
                 this.surveySelect = new FilteringSelect({
-                    name: "id",
+                    name: 'id',
                     store: this.surveysStore,
-                    searchAttr: "id",
+                    searchAttr: 'id',
                     required: false,
-                    style: "width:220px;"
+                    style: 'width:220px;'
                 });
 
                 //Disable the validator so we can type any value into the box (e.g. wildcards).
@@ -160,11 +160,11 @@ define([
                 this.platformsStore = new Memory({data: {identifier: 'id', items: items}});
 
                 this.platformSelect = new FilteringSelect({
-                    name: "id",
+                    name: 'id',
                     store: this.platformsStore,
-                    searchAttr: "id",
+                    searchAttr: 'id',
                     required: false,
-                    style: "width:220px;"
+                    style: 'width:220px;'
                 }); 
 
                 //Disable the validator so we can type any value into the box (e.g. wildcards).
@@ -183,11 +183,11 @@ define([
                 this.institutionsStore = new Memory({data: {identifier: 'id', items: items}});
 
                 this.institutionSelect = new FilteringSelect({
-                    name: "id",
+                    name: 'id',
                     store: this.institutionsStore,
-                    searchAttr: "id",
+                    searchAttr: 'id',
                     required: false,
-                    style: "width:220px;"
+                    style: 'width:220px;'
                 }); 
 
                 //Disable the validator so we can type any value into the box (e.g. wildcards).
@@ -353,5 +353,5 @@ define([
                     this.institutionSelect.set('disabled', true);
                 }
             }  
+        });
     });
-});

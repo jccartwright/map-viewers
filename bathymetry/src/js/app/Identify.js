@@ -36,21 +36,21 @@ define([
                     '<div class="valueName">Sidescan: <span class="parameterValue">${sidescan} million pixels</span></div>';
 
                 var html = string.substitute(template, {
-                        url: a['Download URL'],
-                        ngdcId: a['NGDC ID'],
-                        surveyId: a['Survey ID'],
-                        surveyYear: a['Survey Year'],
-                        source: a['Source'],
-                        platformName: a['Platform Name'],
-                        chiefScientist: a['Chief Scientist'],
-                        instrument: a['Instrument'],
-                        fileCount: a['File Count'],
-                        trackLength: a['Track Length (km)'],
-                        totalTime: a['Total Time (hrs)'],
-                        bathymetryBeams: a['Bathymetry Beams'] / 1000000.0,
-                        amplitudeBeams: a['Amplitude Beams'] / 1000000.0,
-                        sidescan: a['Sidescan'] / 1000000.0
-                    });                
+                    url: a['Download URL'],
+                    ngdcId: a['NGDC ID'],
+                    surveyId: a['Survey ID'],
+                    surveyYear: a['Survey Year'],
+                    source: a['Source'],
+                    platformName: a['Platform Name'],
+                    chiefScientist: a['Chief Scientist'],
+                    instrument: a['Instrument'],
+                    fileCount: a['File Count'],
+                    trackLength: a['Track Length (km)'],
+                    totalTime: a['Total Time (hrs)'],
+                    bathymetryBeams: a['Bathymetry Beams'] / 1000000.0,
+                    amplitudeBeams: a['Amplitude Beams'] / 1000000.0,
+                    sidescan: a['Sidescan'] / 1000000.0
+                });                
                 return html;
             },
 
@@ -72,18 +72,18 @@ define([
                     '<div class="valueName">Date Added: <span class="parameterValue">${dateAdded}</span></div>';
 
                 var html = string.substitute(template, {
-                        url: a['Download URL'],
-                        surveyId: a['Survey ID'],
-                        surveyType: a['Survey Type'],
-                        platformName: a['Platform Name'],
-                        startYear: a['Survey Start Year'],
-                        endYear: a['Survey End Year'],
-                        sourceInstitution: a['Source Institution'],
-                        project: a['Project'],
-                        country: a['Country'],
-                        chiefScientist: a['Chief Scientist'],
-                        dateAdded: a['Date Added']
-                    });                
+                    url: a['Download URL'],
+                    surveyId: a['Survey ID'],
+                    surveyType: a['Survey Type'],
+                    platformName: a['Platform Name'],
+                    startYear: a['Survey Start Year'],
+                    endYear: a['Survey End Year'],
+                    sourceInstitution: a['Source Institution'],
+                    project: a['Project'],
+                    country: a['Country'],
+                    chiefScientist: a['Chief Scientist'],
+                    dateAdded: a['Date Added']
+                });                
                 return html;
             },
 
@@ -100,13 +100,13 @@ define([
                     '<div class="valueName">Platform Name: <span class="parameterValue">${platformName}</span></div>';
 
                 var html = string.substitute(template, {
-                        url: a['Download URL'],
-                        surveyId: a['Survey ID'],
-                        surveyYear: a['Survey Year'],
-                        locality: a['Locality'],
-                        sublocality: a['Sublocality'],
-                        platformName: a['Platform Name']
-                    });                
+                    url: a['Download URL'],
+                    surveyId: a['Survey ID'],
+                    surveyYear: a['Survey Year'],
+                    locality: a['Locality'],
+                    sublocality: a['Sublocality'],
+                    platformName: a['Platform Name']
+                });                
                 return html;
             },
 
@@ -120,11 +120,11 @@ define([
                     '<div class="valueName">Cell Size (m): <span class="parameterValue">${cellSize}</span></div>';
 
                 var html = string.substitute(template, {
-                        name: a['Name'],
-                        surveyId: a['Survey ID'],
-                        cellSize: a['Cell Size (m)'],
-                        url: a['Download URL']
-                    });
+                    name: a['Name'],
+                    surveyId: a['Survey ID'],
+                    cellSize: a['Cell Size (m)'],
+                    url: a['Download URL']
+                });
                 return html;
             },
 
@@ -146,18 +146,18 @@ define([
                     '<div class="valueName">Completion Date: <span class="parameterValue">${completionDate}</span></div>';
 
                 var html = string.substitute(template, {
-                        url: a['DEMURL'],
-                        name: a['Name'],
-                        cellSize: a['Cell Size'],
-                        category: a['Category'],
-                        source: a['Source'],
-                        project: a['Project'],
-                        verticalDatum: a['Vertical Datum'],
-                        status: a['Status'],
-                        type: a['Type'],
-                        coverage: a['Coverage'],
-                        completionDate: a['Completion Date']
-                    });               
+                    url: a['DEMURL'],
+                    name: a['Name'],
+                    cellSize: a['Cell Size'],
+                    category: a['Category'],
+                    source: a['Source'],
+                    project: a['Project'],
+                    verticalDatum: a['Vertical Datum'],
+                    status: a['Status'],
+                    type: a['Type'],
+                    coverage: a['Coverage'],
+                    completionDate: a['Completion Date']
+                });               
                 return html;
             },
 
@@ -173,13 +173,13 @@ define([
                     '<div class="valueName">Vertical Datum: <span class="parameterValue">${verticalDatum}</span></div>';
                     
                 var html = string.substitute(template, {
-                        itemId: a['ITEM_ID'],
-                        name: a['NAME'],
-                        dataset: a['DATASET'],
-                        fileSize: a['FILE_SIZE'],
-                        cellSize: a['CELL_SIZE'],
-                        verticalDatum: a['VERTICAL_DATUM']
-                    });                
+                    itemId: a['ITEM_ID'],
+                    name: a['NAME'],
+                    dataset: a['DATASET'],
+                    fileSize: a['FILE_SIZE'],
+                    cellSize: a['CELL_SIZE'],
+                    verticalDatum: a['VERTICAL_DATUM']
+                });                
                 return html;
             },
 
@@ -195,13 +195,13 @@ define([
                     '<div class="valueName"><span class="parameterValue"><a href="${metalink}" target="_blank">Metadata Link</a></span></div>';
 
                 var html = string.substitute(template, {
-                        id: a['ID'],
-                        name: a['Name'],
-                        project: a['Project'],
-                        year: a['Year'],
-                        metalink: a['Metalink'],
-                        prefix: 'http://www.coast.noaa.gov/dataviewer/index.html?action=advsearch&qType=in&qFld=ID&qVal='
-                    });                
+                    id: a['ID'],
+                    name: a['Name'],
+                    project: a['Project'],
+                    year: a['Year'],
+                    metalink: a['Metalink'],
+                    prefix: 'http://www.coast.noaa.gov/dataviewer/index.html?action=advsearch&qType=in&qFld=ID&qVal='
+                });                
                 return html;
             },
 
