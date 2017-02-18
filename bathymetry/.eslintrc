@@ -25,6 +25,8 @@
     },
     "globals": {
         //"define": true,
+        "Wkt": true,  //provided by Wicket
+        "Proj4js": true,
         "logger": true
     }
 }
