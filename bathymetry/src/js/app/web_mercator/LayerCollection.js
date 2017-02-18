@@ -5,8 +5,7 @@ define([
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISImageServiceLayer',
     'esri/layers/WebTiledLayer',
-    'ngdc/layers/TiledWMSLayer'
-    ],
+    'ngdc/layers/TiledWMSLayer'],
     function(
         declare, 
         AbstractLayerCollection, 
@@ -222,16 +221,16 @@ define([
                         visible: this.tracklineVisible,
                         cutoffZoom: 9,
                         defaultVisibleLayers: [1]
-                     },
-                     {
-                         id: 'NOS Hydrographic Surveys',
-                         tiledService: this.getLayerById('NOS Hydrographic Surveys (tiled)'),
-                         dynamicService: this.getLayerById('NOS Hydrographic Surveys (dynamic)'),
-                         visible: this.nosHydroVisible,
-                         cutoffZoom: 9,
-                         defaultVisibleLayers: [0, 1, 2]
-                     },
-                     {
+                    },
+                    {
+                        id: 'NOS Hydrographic Surveys',
+                        tiledService: this.getLayerById('NOS Hydrographic Surveys (tiled)'),
+                        dynamicService: this.getLayerById('NOS Hydrographic Surveys (dynamic)'),
+                        visible: this.nosHydroVisible,
+                        cutoffZoom: 9,
+                        defaultVisibleLayers: [0, 1, 2]
+                    },
+                    {
                         id: 'BAG Hillshades',
                         tiledService: this.getLayerById('BAG Hillshades (tiled)'),
                         dynamicService: this.getLayerById('BAG Hillshades (dynamic)'),

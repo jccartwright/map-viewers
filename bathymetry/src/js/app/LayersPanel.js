@@ -51,9 +51,9 @@ define([
                 this.bagHillshadesVisible = false;
 
                 on(this.chkNosHydro, 'change', lang.hitch(this, function() {
-                     topic.publish('/ngdc/layer/visibility', 'NOS Hydrographic Surveys', this.chkNosHydro.checked);
-                     this.radioNosHydroAll.set('disabled', !this.chkNosHydro.checked);
-                     this.radioNosHydroBags.set('disabled', !this.chkNosHydro.checked);
+                    topic.publish('/ngdc/layer/visibility', 'NOS Hydrographic Surveys', this.chkNosHydro.checked);
+                    this.radioNosHydroAll.set('disabled', !this.chkNosHydro.checked);
+                    this.radioNosHydroBags.set('disabled', !this.chkNosHydro.checked);
                 }));
 
                 on(this.radioNosHydroAll, 'click', lang.hitch(this, function() {

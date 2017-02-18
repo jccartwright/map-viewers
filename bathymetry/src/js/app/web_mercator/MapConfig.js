@@ -5,8 +5,7 @@ define([
     'ngdc/web_mercator/MapConfig',
     'app/web_mercator/MapToolbar',
     'app/web_mercator/Identify',
-    'app/AppIdentifyPane'
-    ],
+    'app/AppIdentifyPane'],
     function(
         declare, 
         lang, 
@@ -56,7 +55,7 @@ define([
 
                 //Apply layer definitions to the CSC Lidar layer to only show bathymetric lidar
                 var layerDefinitions = [];
-                layerDefinitions[4] = "Data_Classes_Available LIKE '%Bathymetric Lidar Points%'";
+                layerDefinitions[4] = 'Data_Classes_Available LIKE \'%Bathymetric Lidar Points%\'';
                 this.mapLayerCollection.getLayerById('OCM Lidar').setLayerDefinitions(layerDefinitions);
             }
          

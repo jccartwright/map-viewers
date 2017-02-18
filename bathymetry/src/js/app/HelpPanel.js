@@ -7,8 +7,7 @@ define([
     'dojo/_base/lang',
     'dojo/on',
     'ngdc/ContactUsDialog',
-    'dojo/text!./templates/HelpPanel.html'
-    ],
+    'dojo/text!./templates/HelpPanel.html'],
     function(
         declare, 
         config,

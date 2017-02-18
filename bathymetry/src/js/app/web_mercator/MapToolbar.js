@@ -1,7 +1,6 @@
 define([
     'dojo/_base/declare', 
-    'ngdc/MapToolbar'
-    ],
+    'ngdc/MapToolbar'],
     function(
         declare, 
         MapToolbar

@@ -4,8 +4,7 @@ define([
     'dojo/string', 
     'dojo/topic', 
     'dojo/_base/lang',
-    'ngdc/identify/AbstractIdentify'
-    ],
+    'ngdc/identify/AbstractIdentify'],
     function(
         declare, 
         array, 

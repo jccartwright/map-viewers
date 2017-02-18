@@ -28,3 +28,5 @@ projectFilesBackup
 
 node_modules/
 bower_components/
+dist
+eslint-results.html

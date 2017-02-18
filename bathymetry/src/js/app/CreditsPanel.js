@@ -2,8 +2,7 @@ define([
     'dojo/_base/declare',
     'dijit/_WidgetBase', 
     'dijit/_TemplatedMixin', 
-    'dojo/text!./templates/CreditsPanel.html'
-    ],
+    'dojo/text!./templates/CreditsPanel.html'],
     function(declare, 
         _WidgetBase, 
         _TemplatedMixin, 

@@ -5,8 +5,7 @@ define([
     'ngdc/arctic/MapConfig',
     'app/arctic/MapToolbar',
     'app/arctic/Identify',
-    'app/AppIdentifyPane'
-    ],
+    'app/AppIdentifyPane'],
     function(
         declare, 
         lang, 

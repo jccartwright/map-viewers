@@ -440,7 +440,7 @@ define([
                 this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('BAG Footprints').setLayerDefinitions(bagFootprintsLayerDefs);
 
-                var bagHillshadesLayer = this.arcticMapConfig.mapLayerCollection.getLayerById('BAG Hillshades');
+                bagHillshadesLayer = this.arcticMapConfig.mapLayerCollection.getLayerById('BAG Hillshades');
                 if (bagHillshadesLayer.setLayerDefinitions) {
                     this.arcticMapConfig.mapLayerCollection.getLayerById('BAG Hillshades').setLayerDefinitions(bagHillshadesLayerDefs);
                 }
