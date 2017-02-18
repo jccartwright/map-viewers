@@ -60,7 +60,7 @@ gulp.task('clean', function(){
 gulp.task('scripts', function(){
     return gulp.src(srcJsFiles)
     //TODO may not be necessary once Dojo build in place since it can selectively strip console statements
-    .pipe(stripDebug())
+    .pipe(environment == 'production' ? stripDebug() : gutil.noop())
     .pipe(gulp.dest('dist'))
     .pipe(reload());
 });
