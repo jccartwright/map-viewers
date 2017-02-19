@@ -54,13 +54,13 @@ define({
             },
             {
                 name: 'ngdc',
-                //location: '//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ngdc'
-                location: '../../dijits/js/ngdc'
+                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc'
+                //location: 'js/ngdc'
             },
             {
                 name: 'ncei',
-                //location: '//maps.ngdc.noaa.gov/viewers/dijits-2.9/js/ncei'
-                location: '../../dijits/js/ncei'
+                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ncei'
+                //location: 'js/ncei'
             },
             {
                 name: 'dojo',
@@ -104,7 +104,9 @@ define({
     // Non-functional test suite(s) to run in each browser
     suites: [
         //'tests/unit/hello',
-        'tests/unit/extent'
+        'tests/unit/extent',
+        'tests/unit/banner',
+        'tests/unit/appIdentifyPane'
         //'tests/unit/web_mercator/LayerCollection'
         /* 'myPackage/tests/foo', 'myPackage/tests/bar' */ 
     ],
