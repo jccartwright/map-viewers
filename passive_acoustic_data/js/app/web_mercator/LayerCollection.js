@@ -3,22 +3,16 @@ define([
     'ngdc/layers/AbstractLayerCollection', 
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
-    'esri/layers/ArcGISImageServiceLayer',
-    'esri/layers/WebTiledLayer',
-    'ngdc/layers/TiledWMSLayer'
     ],
     function(
         declare, 
         AbstractLayerCollection, 
         ArcGISTiledMapServiceLayer, 
-        ArcGISDynamicMapServiceLayer,
-        ArcGISImageServiceLayer,
-        WebTiledLayer,
-        TiledWMSLayer
+        ArcGISDynamicMapServiceLayer
         ){
 
         return declare([AbstractLayerCollection], {
-            constructor: function(options) {
+            constructor: function() {
                 this.name = 'app.web_mercator.LayerCollection';
 
                 this.defineMapServices();
