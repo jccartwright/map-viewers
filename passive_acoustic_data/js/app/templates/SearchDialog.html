@@ -12,11 +12,11 @@
             <tr>
                 <td colspan="2">
                     Cruise Date:<br>
-                    <label for="startDate">Start:</label>
-                    <input type="text" data-dojo-attach-point='startDate' name="startDate" id="startDate" value="" data-dojo-type="dijit/form/DateTextBox" 
+                    <label for="startDateInput">Start:</label>
+                    <input type="text" data-dojo-attach-point='startDateInput' name="startDate" id="startDate" value="" data-dojo-type="dijit/form/DateTextBox" 
                         data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}" style="width: 90px;"/>
-                    <label for="startDate">End:</label>
-                    <input type="text" data-dojo-attach-point='endDate' name="endDate" id="endDate" value="" data-dojo-type="dijit/form/DateTextBox"
+                    <label for="endDateInput">End:</label>
+                    <input type="text" data-dojo-attach-point='endDateInput' name="endDate" id="endDate" value="" data-dojo-type="dijit/form/DateTextBox"
                         data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}" style="width: 90px;"/>
                     <img id="dateHelp" class="tooltipButton" src="images/question-button.png">
                     <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'dateHelp'">
@@ -29,13 +29,13 @@
                     Source Organization:&nbsp;&nbsp;&nbsp;
                     <input data-dojo-attach-point="chkAllSourceOrganizations" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllSourceOrganizations"/>
                     <label>All</label><br>
-                    <select multiple="true" data-dojo-attach-point="sourceOrganizationSelect" class="surveySelect-multiSelect" name="sourceOrganization" data-dojo-type="dojox/form/CheckedMultiSelect"/>
+                    <select multiple="true" data-dojo-attach-point="sourceOrganizationSelect" class="surveySelect-multiSelect" name="sourceOrganizations" data-dojo-type="dojox/form/CheckedMultiSelect"/>
                 </td>
                 <td>
                     Funding Organization:&nbsp;&nbsp;&nbsp;
                     <input data-dojo-attach-point="chkAllFundingOrganizations" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllFundingOrganizations"/>
                     <label>All</label><br>
-                    <select multiple="true" data-dojo-attach-point="fundingOrganizationSelect" class="surveySelect-multiSelect" name="fundingOrganization" data-dojo-type="dojox/form/CheckedMultiSelect"/>
+                    <select multiple="true" data-dojo-attach-point="fundingOrganizationSelect" class="surveySelect-multiSelect" name="fundingOrganizations" data-dojo-type="dojox/form/CheckedMultiSelect"/>
                 </td>                
             </tr>
             <tr>
@@ -57,10 +57,10 @@
                     Sample Rate (kHz):<br>
                     <label for="minSampleRateSpinner">Min:</label>
                     <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minSampleRateSpinner" 
-                        data-dojo-props="constraints:{min:0,max:1000}" name="minSampleRate" style="width: 55px"></div>
+                        data-dojo-props="constraints:{min:0}" name="minSampleRate" style="width: 55px"></div>
                     <label for="maxSampleRateSpinner">Max:</label>
                     <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxSampleRateSpinner" 
-                        data-dojo-props="constraints:{min:0,max:1000}" name="maxSampleRate" style="width: 55px"></div><br><br>
+                        data-dojo-props="constraints:{min:0}" name="maxSampleRate" style="width: 55px"></div><br><br>
 
                     Sensor Depth (m):<br>
                     <label for="minSensorDepthSpinner">Min:</label>
@@ -94,7 +94,7 @@
             </tr> 
             <tr>
                 <td>
-                    <input checked data-dojo-attach-point="chkZoomToResults" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkZoomToResults"/>
+                    <input disabled data-dojo-attach-point="chkZoomToResults" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkZoomToResults"/>
                     Zoom to Results
                 </td>                
             </tr>

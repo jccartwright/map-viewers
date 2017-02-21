@@ -73,28 +73,56 @@ define([
                 } 
                 if (values.endDate) {
                     s += '<br>End Date: ' + this.toDateString(values.endDate);
-                }                                    
-                if (values.institution) {
-                    s += '<br>Source Organization: ' + values.institution;
                 }
-                if (values.instrument) {
-                    s += '<br>Instrument Name: ' + values.instrument;
+
+                if (values.sourceOrganizations) {
+                    s += '<br>Source Organization: ' + values.sourceOrganizations.join(', ');
                 }
-                if (values.platformType) {
-                    s += '<br>Platform Type: ' + values.platformType;
+                if (values.fundingOrganizations) {
+                    s += '<br>Funding Organization: ' + values.fundingOrganizations.join(', ');
                 }
-                if (values.minSampleRate) {
+                if (values.instruments) {
+                    s += '<br>Instrument Name: ' + values.instruments.join(', ');
+                }
+                if (values.platforms) {
+                    s += '<br>Platform Type: ' + values.platforms.join(', ');
+                }
+                if (!isNaN(values.minSampleRate)) {
                     s += '<br>Min Sample Rate: ' + values.minSampleRate;
                 }
-                if (values.maxSamplerate) {
-                    s += '<br>Max Sample Rate: ' + values.maxSamplerate;
-                }         
+                if (!isNaN(values.maxSampleRate)) {
+                    s += '<br>Max Sample Rate: ' + values.maxSampleRate;
+                }
+                if (!isNaN(values.minSensorDepth)) {
+                    s += '<br>Min Sensor Depth: ' + values.minSensorDepth;
+                }
+                if (!isNaN(values.maxSensorDepth)) {
+                    s += '<br>Max Sensor Depth: ' + values.maxSensorDepth;
+                }
+                if (values.recordingDuration) {
+                    s += '<br>Recording Duration: ' + values.recordingDuration;
+                }
+                if (values.numChannels) {
+                    s += '<br>Number of Channels: ' + values.numChannels;
+                }
+
                 filterDiv.innerHTML = s;
             },
 
-            //Format a date in the form mm/dd/yyyy
-            toDateString: function(date) {
-                return date.getMonth()+1 + '/' + date.getDate() + '/' + date.getFullYear();
+            //Format a date in the form yyyy-mm-dd
+            toDateString: function(date) {  
+                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
+            },
+
+            padDigits: function(n, totalDigits){
+                n = n.toString();
+                var pd = '';
+                if (totalDigits > n.length) {
+                    for (var i = 0; i < (totalDigits - n.length); i++) {
+                        pd += '0';
+                    }
+                }
+                return pd + n.toString();
             }
         });
     }
