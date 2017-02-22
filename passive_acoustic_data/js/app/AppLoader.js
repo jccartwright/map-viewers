@@ -199,8 +199,8 @@ define([
                 var center;
                 var zoom;
                 if (!this.initialExtent) {
-                    center = [-70, 42]; //centered over northeast
-                    zoom = 5; //relative zoom level; equivalent to absolute zoom level 7
+                    center = [-120, 40]; //centered over western US
+                    zoom = 2; //relative zoom level; equivalent to absolute zoom level 4
                 }
 
                 this.mercatorMapConfig = new MercatorMapConfig('mercator', {
@@ -275,16 +275,18 @@ define([
             filterPad: function(values) {
                 var layerDefinition;
                 var sql = [];
+                var conditionals;
+                var i;
                                                                     
                 if (values.startDate) {
-                    sql.push("DC_END_DATE >= date '" + this.toDateString(values.startDate) + "'");          
+                    sql.push("END_DATE >= date '" + this.toDateString(values.startDate) + "'");          
                 }  
                 if (values.endDate) {
-                    sql.push("DC_START_DATE <= date '" + this.toDateString(values.endDate) + "'");                
+                    sql.push("START_DATE <= date '" + this.toDateString(values.endDate) + "'");                
                 }  
 
                 if (values.sourceOrganizations && values.sourceOrganizations.length > 0) {
-                    var conditionals = [];
+                    conditionals = [];
                     for (i = 0; i < values.sourceOrganizations.length; i++) {
                         //Surround each string with wildcard characters and single quotes
                         conditionals.push("SOURCE_ORGANIZATION LIKE '%" + values.sourceOrganizations[i] + "%'");
@@ -297,7 +299,7 @@ define([
                     }
                 }
                 if (values.fundingOrganizations && values.fundingOrganizations.length > 0) {
-                    var conditionals = [];
+                    conditionals = [];
                     for (i = 0; i < values.fundingOrganizations.length; i++) {
                         //Surround each string with wildcard characters and single quotes
                         conditionals.push("FUNDING_ORGANIZATION LIKE '%" + values.fundingOrganizations[i] + "%'");
@@ -311,10 +313,10 @@ define([
                 }
 
                 if (values.instruments && values.instruments.length > 0) {
-                    var conditionals = [];
+                    conditionals = [];
                     for (i = 0; i < values.instruments.length; i++) {
                         //Surround each string with single quotes
-                        conditionals.push("INSTRUMENT='" + values.instruments[i] + "'");
+                        conditionals.push("INSTRUMENT_NAME='" + values.instruments[i] + "'");
                     }
                     if (conditionals.length > 1) {
                         sql.push('(' + conditionals.join(' OR ') + ')');
@@ -325,7 +327,7 @@ define([
                 }
 
                 if (values.platformTypes && values.platformTypes.length > 0) {
-                    var conditionals = [];
+                    conditionals = [];
                     for (i = 0; i < values.platformTypes.length; i++) {
                         //Surround each string with single quotes
                         conditionals.push("PLATFORM_NAME='" + values.platformTypes[i] + "'");
@@ -338,17 +340,24 @@ define([
                     }
                 }
 
-                if (values.minSampleRate) {
+                if (!isNaN(values.minSampleRate)) {
                     sql.push("MAX_SAMPLE_RATE>=" + values.minSampleRate);
                 }
-                if (values.maxSampleRate) {
+                if (!isNaN(values.maxSampleRate)) {
                     sql.push("MIN_SAMPLE_RATE<=" + values.maxSampleRate);
                 }
 
-                if (values.minBottomDepth) {
+                if (!isNaN(values.minSensorDepth)) {
+                    sql.push("MAX_SENSOR_DEPTH>=" + values.minSensorDepth);
+                }
+                if (!isNaN(values.maxSensorDepth)) {
+                    sql.push("MIN_SENSOR_DEPTH<=" + values.maxSensorDepth);
+                }
+
+                if (!isNaN(values.minBottomDepth)) {
                     sql.push("MAX_BOTTOM_DEPTH>=" + values.minBottomDepth);
                 }
-                if (values.maxBottomDepth) {
+                if (!isNaN(values.maxBottomDepth)) {
                     sql.push("MIN_BOTTOM_DEPTH<=" + values.maxBottomDepth + ' AND MAX_BOTTOM_DEPTH<=' + values.maxBottomDepth);
                 }
 
@@ -375,22 +384,7 @@ define([
                         sql.push("NUMBER_CHANNELS>=3");
                     }
                 }
-                // if (values.minSampleRate) {
-                //     sql.push("MIN_SAMPLE_RATE >=" + values.minSampleRate);
-                // }
-                // if (values.maxSampleRate) {
-                //     sql.push("MAX_SAMPLE_RATE <=" + values.maxSampleRate);
-                // }
-                // if (values.institution) {
-                //     sql.push("UPPER(SOURCE_ORGANIZATION) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");                    
-                // }
-                // if (values.instrument) {
-                //     sql.push("UPPER(INSTRUMENT_NAME) LIKE '" + values.instrument.toUpperCase().replace(/\*/g, '%') + "'");                    
-                // }
-                // if (values.platformType) {
-                //     sql.push("UPPER(PLATFORM_TYPE_NAME  ) LIKE '" + values.platformType.toUpperCase().replace(/\*/g, '%') + "'");                    
-                // }    
-
+  
                 layerDefinition = sql.join(' and ');
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([layerDefinition]);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([layerDefinition]);

@@ -82,7 +82,7 @@ define([
                     this.populateFundingOrganizationSelect(null);
                 }));
 
-                xhr('instruments.json', {
+                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/pad/instruments.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -94,7 +94,7 @@ define([
                     this.populateInstrumentSelect(null);
                 }));
 
-                xhr('platforms.json', {
+                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/pad/platforms.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -189,7 +189,10 @@ define([
                     values.recordingDuration === '' && values.numChannels === '');
             },
                    
-            clearForm: function() {                
+            clearForm: function() {
+                this.startDateInput.reset();
+                this.endDateInput.reset();
+
                 this.sourceOrganizationSelect.reset();
                 this.sourceOrganizationSelect._updateSelection();
                 this.sourceOrganizationSelect.set('disabled', true);
@@ -210,8 +213,16 @@ define([
                 this.platformSelect.set('disabled', true);
                 this.chkAllPlatforms.set('checked', true);
 
-                this.startDateInput.reset();
-                this.endDateInput.reset();
+                this.minSampleRateSpinner.set('value', '');
+                this.maxSampleRateSpinner.set('value', '');
+
+                this.minSensorDepthSpinner.set('value', '');
+                this.maxSensorDepthSpinner.set('value', '');
+
+                this.recordingDurationSelect.set('value', '');
+
+                this.numChannelsSelect.set('value', '');
+                
                 this.chkZoomToResults.set('checked', true);
             },
 

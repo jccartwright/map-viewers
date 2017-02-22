@@ -22,7 +22,7 @@ define([
                 logger.debug('inside constructor for app/arctic/Identify');
 
                 //augment arguments object with list of layers to identify.
-                arguments[0].layerIds = ['PAD', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'NOS Hydro (non-digital)', 'DEM Extents'];
+                arguments[0].layerIds = ['PAD'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);

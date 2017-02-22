@@ -30,21 +30,29 @@ define([
                     '<div class="valueName">Platform Type: <span class="parameterValue">${platformName}</span></div>' + 
                     '<div class="valueName">Sensor Depth: <span class="parameterValue">${minSensorDepth} to ${maxSensorDepth} m</span></div>' + 
                     '<div class="valueName">Number of Channels: <span class="parameterValue">${numChannels}</span></div>';
-
-                //TODO figure out how we should parse the "Sample Rate" and "Recording Duration" fields. Recording duration is missing from the view?
                 
-                // var samplingDetailsString = a['Sampling Details'];
-                // var samplingDetailsObject = {};
-                // if (samplingDetailsString && samplingDetailsString !== '') {
-                //     template += '<br>';
-                //     samplingDetailsObject = JSON.parse(samplingDetailsString);
-                //     for (var key in samplingDetailsObject) {
-                //         if (samplingDetailsObject.hasOwnProperty(key)) {
-                //             console.log(samplingDetailsObject[key]);
-                //             //template += '<div class="valueName"><span class="parameterValue"><a href="' + samplingDetailsObject[key] + '" target="_blank">' + key + '</a></span></div>';
-                //         }
-                //     }
-                // }
+                var samplingDetailsString = a['Sampling Details'];
+                var samplingDetailsObject = {};
+                if (samplingDetailsString && samplingDetailsString !== '') {
+                    template += '<div class="valueName">Sampling Details:</div>';
+                    samplingDetailsObject = JSON.parse(samplingDetailsString);
+                    for (var key in samplingDetailsObject) {
+                        if (samplingDetailsObject.hasOwnProperty(key)) {
+                            var values = samplingDetailsObject[key];
+                            console.log(values);
+                            
+                            template += '<div class="objectValue">';
+                            for (var value in values) {
+                                if (values.hasOwnProperty(value)) {
+                                    template += '<b>' + value + '</b>: ' + values[value] + ' ';
+                                }
+                            }
+                            template += '</div>'
+                        }
+                    }
+                } else {
+                    template += '<div class="valueName">Sampling Details Quality: <span class="parameterValue">Unknown</span></div>';
+                }
 
                 var dataQualityString = a['Data Quality'];
                 var dataQualityObject = {};
@@ -59,6 +67,8 @@ define([
                             }
                         }
                     }
+                } else {
+                    template += '<div class="valueName">Data Quality: <span class="parameterValue">Unknown</span></div>';
                 }
 
                 var html = string.substitute(template, {                        
