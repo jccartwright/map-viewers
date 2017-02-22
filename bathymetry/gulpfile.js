@@ -16,6 +16,8 @@ var express = require('express');
 var browserSync = require('browser-sync');
 var gutil = require('gulp-util');
 var minimist = require('minimist');
+var zip = require('gulp-zip');
+var runSequence = require('run-sequence');
 
 var srcJsFiles = ['src/**/*.js'];
 //dijits have nested html templates, css, images
@@ -25,6 +27,8 @@ var srcImageFiles = ['src/**/*.{gif,png,jpg}'];
 
 var p = require('./package.json');
 p.buildDate = new Date().toLocaleString();
+
+var zipFileName = p.name + '-' + p.version + '.zip'
 
 var server;
 var options = minimist(process.argv);
@@ -52,7 +56,7 @@ gulp.task('lint', function() {
 
 
 gulp.task('clean', function(){
-    return gulp.src(['dist'])
+    return gulp.src(['dist', zipFileName, 'eslint-results.html'])
     .pipe(clean());
 });
 
@@ -106,9 +110,6 @@ gulp.task('copy-jsapi', function() {
     return gulp.src('bower_components/**/*', {base: '.'})
     .pipe(environment == 'development' ? gulp.dest('dist') : gutil.noop());
 });
-
-
-gulp.task('build', ['html', 'styles', 'scripts', 'images', 'copy-intern', 'copy-jsapi']);
 
 
 //TODO not yet working
@@ -178,6 +179,18 @@ gulp.task('dojo', ['clean'], function (cb) {
   });
 });
 
+gulp.task('zip', function() {
+    gulp.src('dist/*')
+    .pipe(zip(zipFileName))
+    .pipe(gulp.dest('.'));
+});
+
+gulp.task('build', ['html', 'styles', 'scripts', 'images', 'copy-intern', 'copy-jsapi']);
+
+//TODO currently includes tests but not the Dojo, Esri modules required to run them
+gulp.task('package', function(done) {
+  runSequence('scripts', 'html', 'images', 'styles', 'lint', 'zip', done);
+});
 
 gulp.task('default', ['build', 'files', 'server']);
 
