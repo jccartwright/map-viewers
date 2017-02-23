@@ -46,7 +46,7 @@ gulp.task('lint', function() {
     .pipe(eslint.format())
 
     .pipe(eslint.format(reporter, function(results) {
-      fs.writeFileSync(path.join(__dirname, 'eslint-results.html'), results);
+      fs.writeFileSync(path.join(__dirname, 'dist', 'eslint-results.html'), results);
     }))
 
     // To have the process exit with an error code (1) on
@@ -182,7 +182,7 @@ gulp.task('dojo', ['clean'], function (cb) {
 gulp.task('zip', function() {
     gulp.src('dist/*')
     .pipe(zip(zipFileName))
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest('zip/'+p.version));
 });
 
 gulp.task('build', ['html', 'styles', 'scripts', 'images', 'copy-intern', 'copy-jsapi']);
