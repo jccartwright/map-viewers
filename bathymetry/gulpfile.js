@@ -56,7 +56,7 @@ gulp.task('lint', function() {
 
 
 gulp.task('clean', function(){
-    return gulp.src(['dist', zipFileName, 'eslint-results.html'])
+    return gulp.src(['dist','zip'])
     .pipe(clean());
 });
 
@@ -180,7 +180,7 @@ gulp.task('dojo', ['clean'], function (cb) {
 });
 
 gulp.task('zip', function() {
-    gulp.src('dist/*')
+    gulp.src('dist/**/*')
     .pipe(zip(zipFileName))
     .pipe(gulp.dest('zip/'+p.version));
 });
