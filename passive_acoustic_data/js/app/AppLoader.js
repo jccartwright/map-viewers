@@ -358,7 +358,7 @@ define([
                     sql.push("MAX_BOTTOM_DEPTH>=" + values.minBottomDepth);
                 }
                 if (!isNaN(values.maxBottomDepth)) {
-                    sql.push("MIN_BOTTOM_DEPTH<=" + values.maxBottomDepth + ' AND MAX_BOTTOM_DEPTH<=' + values.maxBottomDepth);
+                    sql.push("MIN_BOTTOM_DEPTH<=" + values.maxBottomDepth);
                 }
 
                 if (values.recordingDuration) {

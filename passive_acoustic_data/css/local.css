@@ -239,6 +239,15 @@ html,body {
     color: #000;
 }
 
+.dataQualityValue {
+    padding-left: 45px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: normal;
+    color: #000;
+}
+
 .filterText {
     margin: 0px;
     padding: 0px;

@@ -38,7 +38,7 @@ define([
                 this.featurePageBottomBar.style = 'height: 50px;';
 
                 this.extractDataButton = new Button({
-                    label: 'Extract Data Collections',
+                    label: 'Request These Data',
                     style: 'bottom: 5px; left: 15px;',
                     iconClass: 'downloadIcon',
                     onClick: lang.hitch(this, function(){
@@ -48,7 +48,7 @@ define([
 
                 //Add a button to the main deployment feature page to request cruises
                 this.extractSingleDatasetButton = new Button({
-                    label: 'Extract This Data Collection',
+                    label: 'Request This Data Collection',
                     style: 'bottom: 5px; left: 5px;',
                     iconClass: 'downloadIcon',
                     onClick: lang.hitch(this, function() {
