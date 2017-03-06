@@ -163,7 +163,7 @@ define([
                 //var gigabytes = Math.round(response.totalFileSizeInBytes / 1073741824.0 * 100) / 100;
                 var okDialog = new Dialog({
                     title: 'Request Submitted',
-                    content: 'Your order has been received, and a data manager will respond to your request.<br>Please contact <a href="mailto:pad.info@noaa.gov">wcd.info@noaa.gov</a> with any questions.<br><br>',                            
+                    content: 'Your order has been received, and a data manager will respond to your request.<br>Please contact <a href="mailto:pad.info@noaa.gov">pad.info@noaa.gov</a> with any questions.<br><br>',                            
                     'class': 'requestDataDialog',
                     style: 'width:300px'
                 });

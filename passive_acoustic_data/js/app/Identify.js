@@ -19,6 +19,7 @@ define([
 
             padFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+                var key, values;
 
                 var template =
                     //'<h3>Passive Acoustic Data: ${name}</h3>' +
@@ -27,44 +28,63 @@ define([
                     '<div class="valueName">Source Organization: <span class="parameterValue">${sourceOrganization}</span></div>' + 
                     '<div class="valueName">Funding Organization: <span class="parameterValue">${fundingOrganization}</span></div>' + 
                     '<div class="valueName">Instrument Name: <span class="parameterValue">${instrumentName}</span></div>' + 
-                    '<div class="valueName">Platform Type: <span class="parameterValue">${platformName}</span></div>' + 
-                    '<div class="valueName">Sensor Depth: <span class="parameterValue">${minSensorDepth} to ${maxSensorDepth} m</span></div>' + 
-                    '<div class="valueName">Number of Channels: <span class="parameterValue">${numChannels}</span></div>';
+                    '<div class="valueName">Platform Type: <span class="parameterValue">${platformName}</span></div>';
+
+                    if (a['Min Sensor Depth (m)'] === a['Max Sensor Depth (m)']) {
+                         template += '<div class="valueName">Sensor Depth: <span class="parameterValue">${minSensorDepth} m</span></div>';
+                    } else {
+                         template += '<div class="valueName">Sensor Depth: <span class="parameterValue">${minSensorDepth} to ${maxSensorDepth} m</span></div>';
+                    }
+                   
+                    if (a['Min Bottom Depth (m)'] === a['Max Bottom Depth (m)']) {
+                        template += '<div class="valueName">Bottom Depth: <span class="parameterValue">${minBottomDepth} m</span></div>';
+                    } else {
+                        template += '<div class="valueName">Bottom Depth: <span class="parameterValue">${minBottomDepth} to ${maxBottomDepth} m</span></div>';
+                    }
+
+                    template += '<div class="valueName">Number of Channels: <span class="parameterValue">${numChannels}</span></div>';
                 
                 var samplingDetailsString = a['Sampling Details'];
                 var samplingDetailsObject = {};
                 if (samplingDetailsString && samplingDetailsString !== '') {
                     template += '<div class="valueName">Sampling Details:</div>';
                     samplingDetailsObject = JSON.parse(samplingDetailsString);
-                    for (var key in samplingDetailsObject) {
+                    for (key in samplingDetailsObject) {
                         if (samplingDetailsObject.hasOwnProperty(key)) {
-                            var values = samplingDetailsObject[key];
-                            console.log(values);
-                            
+                            values = samplingDetailsObject[key];                            
                             template += '<div class="objectValue">';
                             for (var value in values) {
                                 if (values.hasOwnProperty(value)) {
-                                    template += '<b>' + value + '</b>: ' + values[value] + ' ';
+                                    template += value + ': ' + values[value] + '<br>';
                                 }
                             }
-                            template += '</div>'
+                            template += '</div><br>';
                         }
                     }
                 } else {
                     template += '<div class="valueName">Sampling Details Quality: <span class="parameterValue">Unknown</span></div>';
                 }
 
+                //{"1":{"Data Quality":"Good","Date Range":"2014-05-23 to 2015-02-15","Channels":"1","Frequency Range":"10Hz - 20000Hz"}}
                 var dataQualityString = a['Data Quality'];
                 var dataQualityObject = {};
                 if (dataQualityString && dataQualityString !== '') {
                     template += '<div class="valueName">Data Quality:</div>';
                     dataQualityObject = JSON.parse(dataQualityString);
-                    for (var key in dataQualityObject) {
+                    for (key in dataQualityObject) {
                         if (dataQualityObject.hasOwnProperty(key)) {
-                            var values = dataQualityObject[key];
-                            if (values['quality'] && values['channels'] && values['range'] && values['start'] && values['end']) {
-                                template += '<div class="objectValue">' + values['quality'] + ': Channel ' + values['channels'] + ': ' + values['range'] + ' ' + values['start'] + ' to ' + values['end'] + '</div>';
+                            values = dataQualityObject[key];
+                            template += '<div class="objectValue">';
+                            for (var value in values) {
+                                if (values.hasOwnProperty(value)) {
+                                    if (value === 'Data Quality') {
+                                        template += '<b>' + values[value] + '</b>:<br>';
+                                    } else {
+                                        template += '<span class="dataQualityValue">' + value + ': ' + values[value] + '</span><br>';
+                                    }
+                                }
                             }
+                            template += '</div><br>';
                         }
                     }
                 } else {
@@ -74,8 +94,8 @@ define([
                 var html = string.substitute(template, {                        
                         id: a['Data Collections ID'],
                         name: a['Data Collection Name'],
-                        startDate: a['Start Date'],
-                        endDate: a['End Date'],
+                        startDate: this.toDateString(new Date(a['Start Date'])),
+                        endDate: this.toDateString(new Date(a['End Date'])),
                         sourceOrganization: a['Source Organization'],
                         fundingOrganization: a['Funding Organization'],
                         chiefScientist: a['Chief Scientst'],
@@ -87,11 +107,11 @@ define([
                         minInterval: a['Min Recording Interval'],
                         maxInterval: a['Max Recording Interval'],
                         recordingPercent: a['Recording Percent'],
-                        recordingLength: a['Recording Length'],
-                        minBottomDepth: a['Min Bottom Depth (m)'],
-                        maxBottomDepth: a['Max Bottom Depth (m)'],
+                        recordingLength: a['Recording Length'],                        
                         minSensorDepth: a['Min Sensor Depth (m)'],
                         maxSensorDepth: a['Max Sensor Depth (m)'],
+                        minBottomDepth: a['Min Bottom Depth (m)'],
+                        maxBottomDepth: a['Max Bottom Depth (m)'],
                         numChannels: a['Number of Channels'],
                         instrumentName: a['Instrument Name'],
                         platformName: a['Platform Name']
@@ -141,6 +161,22 @@ PLATFORM_NAME ( type: esriFieldTypeString , alias: Platform Name , length: 50 )*
                 //Sort alphabetically
                 return a.feature.attributes['DC_NAME'] <= b.feature.attributes['DC_NAME'] ? -1 : 1;
             },
+
+            //Format a date in the form yyyy-mm-dd
+            toDateString: function(date) {  
+                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
+            },
+
+            padDigits: function(n, totalDigits){
+                n = n.toString();
+                var pd = '';
+                if (totalDigits > n.length) {
+                    for (var i = 0; i < (totalDigits - n.length); i++) {
+                        pd += '0';
+                    }
+                }
+                return pd + n.toString();
+            }
 
         });
     }

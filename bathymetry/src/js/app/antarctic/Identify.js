@@ -29,7 +29,7 @@ define([
                 //formatter specific to each sublayer, keyed by Layer/sublayer name.
                 this.formatters = {
                     'Multibeam/Multibeam Bathymetric Surveys': lang.hitch(this, this.multibeamFormatter),
-                    'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),                    
+                    'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),
                     'DEM Extents/All NCEI Bathymetric DEMs': lang.hitch(this, this.demFormatter)
                 };
             } //end constructor

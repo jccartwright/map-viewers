@@ -11,7 +11,7 @@
         <table cellpadding="3" cellspacing="1">
             <tr>
                 <td colspan="2">
-                    Cruise Date:<br>
+                    Deployment Date:<br>
                     <label for="startDateInput">Start:</label>
                     <input type="text" data-dojo-attach-point='startDateInput' name="startDate" id="startDate" value="" data-dojo-type="dijit/form/DateTextBox" 
                         data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}" style="width: 90px;"/>
@@ -68,7 +68,15 @@
                         data-dojo-props="constraints:{min:0,max:10000}" name="minSensorDepth" style="width: 55px"></div>
                     <label for="maxSensorDepthSpinner">Max:</label>
                     <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxSensorDepthSpinner" 
-                        data-dojo-props="constraints:{min:0,max:10000}" name="maxSensorDepth" style="width: 55px"></div>
+                        data-dojo-props="constraints:{min:0,max:10000}" name="maxSensorDepth" style="width: 55px"></div><br><br>
+
+                    Bottom Depth (m):<br>
+                    <label for="minBottomDepthSpinner">Min:</label>
+                    <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minBottomDepthSpinner" 
+                        data-dojo-props="constraints:{min:0,max:10000}" name="minBottomDepth" style="width: 55px"></div>
+                    <label for="maxBottomDepthSpinner">Max:</label>
+                    <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxBottomDepthSpinner" 
+                        data-dojo-props="constraints:{min:0,max:10000}" name="maxBottomDepth" style="width: 55px"></div>
                 </td>
                 <td>
                     <!-- Recording Duration:&nbsp;&nbsp;&nbsp;

@@ -186,6 +186,7 @@ define([
                     (this.chkAllInstruments.checked || values.instruments.length === 0) &&
                     (this.chkAllPlatforms.checked || values.platforms.length === 0) &&
                     !values.minSampleRate && !values.maxSampleRate && !values.minSensorDepth && !values.maxSensorDepth &&
+                    !values.minBottomDepth && !values.maxBottomDepth &&
                     values.recordingDuration === '' && values.numChannels === '');
             },
                    
@@ -218,6 +219,9 @@ define([
 
                 this.minSensorDepthSpinner.set('value', '');
                 this.maxSensorDepthSpinner.set('value', '');
+
+                this.minBottomDepthSpinner.set('value', '');
+                this.maxBottomDepthSpinner.set('value', '');
 
                 this.recordingDurationSelect.set('value', '');
 
