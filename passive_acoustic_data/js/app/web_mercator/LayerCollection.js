@@ -60,7 +60,7 @@ define([
                         visible: false,
                         opacity: 0.7
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gisdev.ngdc.noaa.gov/arcgis/rest/services/passive_acoustic_data/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/passive_acoustic_data/MapServer', {
                         id: 'PAD',
                         visible: true,
                         imageParameters: this.imageParameters.png32
