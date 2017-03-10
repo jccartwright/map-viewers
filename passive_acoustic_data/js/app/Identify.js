@@ -88,7 +88,7 @@ define([
                         }
                     }
                 } else {
-                    template += '<div class="valueName">Data Quality: <span class="parameterValue">Unknown</span></div>';
+                    template += '<div class="valueName">Data Quality: <span class="parameterValue">Unverified</span></div>';
                 }
 
                 var html = string.substitute(template, {                        
