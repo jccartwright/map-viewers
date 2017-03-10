@@ -10,26 +10,47 @@
     <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
         <table cellpadding="6" cellspacing="3">
         <tr>
-            <td align="left">                       
-                <label>Date of Survey:</label><br>
+            <td colspan="2">
+                Date of Data Collection:<br>
                 <label for="startDateInput">Start:</label>
-                <input data-dojo-type="dijit/form/DateTextBox" class="surveySelect-dateTextBox" data-dojo-attach-point="startDateInput" name="startDate" type="text">
+                <input type="text" data-dojo-attach-point='startDateInput' name="startDate" value="" data-dojo-type="dijit/form/DateTextBox" 
+                    data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}" style="width: 90px;"/>
                 <label for="endDateInput">End:</label>
-                <input data-dojo-type="dijit/form/DateTextBox" class="surveySelect-dateTextBox" data-dojo-attach-point="endDateInput" name="endDate" type="text">                
-            </td>           
+                <input type="text" data-dojo-attach-point='endDateInput' name="endDate" value="" data-dojo-type="dijit/form/DateTextBox"
+                    data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}" style="width: 90px;"/>
+                <img id="dateHelp" class="tooltipButton" src="images/question-button.png">
+                <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'dateHelp'">
+                    <div class="tooltipText">Date format: YYYY-MM-DD</div>
+                </div>   
+            </td>     
         </tr>
         <tr>
             <td align="left" colspan="2">               
-                <label>Platform Name: <img id="platformHelp" class="tooltipButton" src="images/question-button.png"></label><br/>
-                <!-- <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'platformHelp'">
-                    <div class="tooltipText">Select the platform name for the survey. Platforms are shown for the currently-visible layers. You can enter a wildcard (*) to find multiple matches. For example, typing Atlantis* would find both Atlantis and Atlantis II.</div>
-                </div> -->
-                <div data-dojo-attach-point="platformSelectDiv"></div>
+                <label>Provider:</label><br/>
+                <div data-dojo-attach-point="providerSelectDiv"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" colspan="2">               
+                <label>Platform Name:</label><br/>
+                <div data-dojo-attach-point="platformNameSelectDiv"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" colspan="2">               
+                <label>Platform ID:</label><br/>
+                <div data-dojo-attach-point="platformIdSelectDiv"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" colspan="2">               
+                <label>Instrument:</label><br/>
+                <div data-dojo-attach-point="instrumentSelectDiv"></div>
             </td>
         </tr>
         <tr>
             <td>
-                <input data-dojo-attach-point="chkZoomToResults" data-dojo-type="dijit/form/CheckBox" checked="true" value="false" type="checkbox" name="chkZoomToResults"/>
+                <input disabled data-dojo-attach-point="chkZoomToResults" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkZoomToResults"/>
                 Zoom to Results
             </td>
         </tr>

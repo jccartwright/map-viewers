@@ -37,13 +37,11 @@ define([
                     map: this.map,
                     identify: this.identify,
                     'class': 'identifyPane',
-                    autoExpandTree: false
+                    autoExpandTree: true
                 }, dom.byId('mercatorIdentifyPaneDiv'));
                 this.identifyPane.startup();
                 
-                this.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setVisibleLayers([0]);
-
-                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
+                //this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
             }
          
             

@@ -94,6 +94,14 @@ html,body {
     height: 100px;
 }
 
+.downloadIcon {
+    background-image:  url('../images/drive-download.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 16px;
+    height: 16px;   
+}
+
 /*** Loader ***/
 /* used to hide page until layout complete */
 .pageOverlay {

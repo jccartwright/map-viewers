@@ -24,7 +24,7 @@ define([
                 this._overlays = [
                     {
                         label: 'Boundaries/Labels',
-                        services: [{id: 'Ocean Reference'}],
+                        services: [{id: 'Dark Gray Reference'}],
                         visible: true
                     }, 
                     {
@@ -59,7 +59,7 @@ define([
                 ];
 
                 //define the default base
-                this.defaultBasemapIndex = 0;
+                this.defaultBasemapIndex = 6;
 
                 this._validateLayerIds();
 

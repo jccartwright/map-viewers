@@ -7,6 +7,7 @@ define([
     'dojo/_base/lang',
     'dojo/dom-style',
     'dijit/form/Button', 
+    'dijit/Tooltip',
     'ngdc/identify/IdentifyPane' 
     ],
     function(
@@ -18,6 +19,7 @@ define([
         lang,
         domStyle,
         Button,
+        Tooltip,
         IdentifyPane
         ){
 
@@ -32,24 +34,38 @@ define([
                 domStyle.set(this.domNode, 'height', '350px');
                 domStyle.set(this.domNode, 'width', '400px');
 
-                //domStyle.set(this.featurePageBottomBar.domNode, 'height', '30px');
-                //this.featurePageBottomBar.style = 'height: 50px;';
+                domStyle.set(this.featurePageBottomBar.domNode, 'height', '30px');
+                this.featurePageBottomBar.style = 'height: 50px;';
 
-                // this.requestDataFilesButton = new Button({
-                //     label: "Request These Data Files",
-                //     style: "bottom: 5px; left: 15px;",
-                //     onClick: lang.hitch(this, function(){
-                //         this.requestDataFiles();
-                //     })
-                // }).placeAt(this.featurePageBottomBar);
+                this.extractDataButton = new Button({
+                    label: 'Extract Data',
+                    style: 'bottom: 5px; left: 15px;',
+                    iconClass: 'downloadIcon',
+                    onClick: lang.hitch(this, function(){
+                        this.extractData();
+                    })
+                }).placeAt(this.featurePageBottomBar);
 
-                // this.requestDataFileButton = new Button({
-                //     label: "Request This Data File",
-                //     style: "bottom: 25px; left: 15px;",
-                //     onClick: lang.hitch(this, function(){
-                //         this.requestDataFile();
-                //     })
-                // }).placeAt(this.infoPageBottomBar);
+                new Tooltip({
+                    connectId: [this.extractDataButton.domNode],
+                    label: 'Extract data via NEXT (NCEI Extract System).<br><img src="images/drive-download.png">: Data for this layer can be extracted.'
+                });
+
+                //Add a button to the main cruise feature page to request cruises
+                this.extractSingleDatasetButton = new Button({
+                    label: 'Extract This Survey',
+                    style: 'bottom: 5px; left: 5px;',
+                    iconClass: 'downloadIcon',
+                    onClick: lang.hitch(this, function() {
+                        var itemId;
+                        if (this.currentItem.attributes['Survey ID']) {
+                            itemId = this.currentItem.attributes['Survey ID'];
+                        } else if (this.currentItem.attributes['Item ID']) {
+                            itemId = this.currentItem.attributes['Item ID'];
+                        }
+                        this.extractData(itemId);
+                    })
+                }).placeAt(this.infoPageBottomBar);
             },
 
             showResults: function() {
@@ -80,8 +96,8 @@ define([
                 else if (item.layerName === 'All NCEI Bathymetric DEMs') {
                     return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
                 }
-                else if (item.layerName === 'CSB Points' || item.layerName === 'CSB Lines') {
-                    return '<i><b>Crowdsourced Bathymetry (' + this.formatCountString(count) + ')</b></i>';
+                else if (item.layerName === 'CSB') {
+                    return '<i><b>Crowdsourced Bathymetry Files (' + this.formatCountString(count) + ')</b></i>';
                 }
             },
 
@@ -113,8 +129,9 @@ define([
                 else if (item.layerName === 'All NCEI Bathymetric DEMs') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
                 }
-                else if (item.layerName === 'CSB Points' || item.layerName === 'CSB Lines') {
-                    return this.getItemLabelSpan(item.feature.attributes['NAME'], uid);
+                else if (item.layerName === 'CSB') {
+                    //return this.getItemLabelSpan(item.feature.attributes['NAME'], uid);
+                    return this.getItemLabelSpan(this.identify.formatDate(item.feature.attributes['Start Date']) + ' - ' + this.identify.formatDate(item.feature.attributes['End Date']) , uid);
                 }
             },
 
@@ -126,6 +143,7 @@ define([
                 var totalFeatures = 0;
                 var numFeaturesForLayer = 0;
                 this.expandedNodePaths = [];
+                this.identifyResults = results;
 
                 for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
                     var svcName = this.identify.layerIds[i];
@@ -186,8 +204,6 @@ define([
                 return totalFeatures;
             },
 
-
-
             constructFeatureTree: function() {
                 this.inherited(arguments);
 
@@ -197,6 +213,97 @@ define([
                 this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys without Digital Sounding Data']); 
 
                 this.tree.set('paths', this.expandedNodePaths);
+            },
+
+
+            showInfo: function() {
+                this.inherited(arguments);
+
+                var layerName = this.currentItem.layerKey.split('/')[0];
+
+                if (layerName === 'CSB') {
+                    this.extractSingleDatasetButton.set('label', 'Extract this File');
+                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', '');
+                } else {
+                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', 'none');
+                }
+            },
+
+            extractData: function(itemId /*Optional survey/DEM id*/) {                
+                var filterCriteria = this.constructFilterCriteria(itemId);
+                if (filterCriteria.items.length > 0) {
+                    this.submitFormToNext(filterCriteria);
+                }
+
+                //filterCriteria = this.replaceWildcardsAndSubmit(filterCriteria);
+            },
+
+            getFilterItemById: function(filterCriteria, id /*'Multibeam'|'Sounding'*/) {
+                for (var i = 0; i < filterCriteria.items.length; i++) {
+                    if (filterCriteria.items[i].dataset === id) {
+                        return filterCriteria.items[i];
+                    }
+                }                
+            },
+
+            //Construct an object containing the filter criteria, adhering to the format the NEXT API is expecting, 
+            //i.e.: {items: [{dataset: 'Multibeam', platforms: 'Knorr,Okeanos Explorer'}, {dataset: 'Sounding', startYear: 2000}]}
+            constructFilterCriteria: function(itemId /*optional survey/DEM id*/) {
+                var filterCriteria = {items: []};
+                var datasetInfo;
+                var latLonExtent;
+                var surveyIds;
+                var identifyResults;
+                var extent;
+
+                // if (this.identify.searchGeometry.type === 'extent') {
+                //     extent = this.identify.searchGeometry;
+                // } else if (this.identify.searchGeometry.type === 'polygon') {
+                //     extent = this.identify.searchGeometry.getExtent();
+                // }
+
+                datasetInfo = {dataset: 'csb'};
+                
+                //Pass the list of file names from the identifyResults
+                names = [];
+                if (itemId) {
+                    names.push(itemId);
+                } else {
+                    if (this.identifyResults['CSB'] && this.identifyResults['CSB']['CSB']) {
+                        array.forEach(this.identifyResults['CSB']['CSB'], lang.hitch(this, function(identifyResult) {
+                            names.push(identifyResult.feature.attributes['Name']);
+                        }));
+                    }                    
+                }
+                datasetInfo.names = names.join(',');
+                filterCriteria.items.push(datasetInfo);
+                
+                return filterCriteria;
+            },
+            
+            submitFormToNext: function(postBody) {
+                console.debug("sending order via form submission to NEXT: ", postBody);
+                
+                var url = "https://www.ngdc.noaa.gov/next-web/orders/create";
+
+                //create a new form element and submit it.
+                var form = document.createElement("form");
+                form.action = url;
+                form.method = 'POST';
+                form.target = '_blank';
+
+                //JSON payload goes in "order" parameter
+                var inputElement = document.createElement("textarea");
+                inputElement.name = "order";
+                inputElement.value = JSON.stringify(postBody);
+
+                form.appendChild(inputElement);
+                form.style.display = 'none';
+                document.body.appendChild(form);
+                form.submit();
+
+                //once the form is sent, it's useless to keep it.
+                document.body.removeChild(form);
             }
         });
     }

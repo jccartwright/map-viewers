@@ -4,6 +4,8 @@ define([
     'dojo/string', 
     'dojo/topic', 
     'dojo/_base/lang',
+    'dojo/date',
+    'dojo/date/locale',
     'ngdc/identify/AbstractIdentify'
     ],
     function(
@@ -12,6 +14,8 @@ define([
         string, 
         topic,
         lang,
+        date,
+        locale,
         AbstractIdentify 
         ){
 
@@ -169,18 +173,29 @@ define([
             csbFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
+                var localDate = new Date(a['START_DATE']);
+                var utcDate = new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000);
+                console.log(localDate);
+                console.log(utcDate);
+
                 var template =
-                    '<h3>Crowdsourced Bathymetry File: ${name}</h3>' +
+                    '<h3>Crowdsourced Bathymetry File</h3>' +
                     '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
                     '<div class="valueName">Start Date: <span class="parameterValue">${startDate}</span></div>' +
                     '<div class="valueName">End Date: <span class="parameterValue">${endDate}</span></div>' + 
-                    '<div class="valueName">Platform: <span class="parameterValue">${platform}</span></div>';
+                    '<div class="valueName">Provider: <span class="parameterValue">${provider}</span></div>' +
+                    '<div class="valueName">Platform Name: <span class="parameterValue">${platformName}</span></div>' +
+                    '<div class="valueName">Platform ID: <span class="parameterValue">${platformId}</span></div>' +
+                    '<div class="valueName">Instrument: <span class="parameterValue">${instrument}</span></div>';
 
                 var html = string.substitute(template, {                        
-                        name: a['NAME'],
-                        startDate: a['START_DATE'],
-                        endDate: a['END_DATE'],
-                        platform: a['PLATFORM']
+                        name: a['Name'],
+                        startDate: this.formatDate(a['Start Date']),
+                        endDate: this.formatDate(a['End Date']),
+                        provider: a['Provider'],
+                        platformName: a['Platform'],
+                        platformId: a['Platform ID'],
+                        instrument: a['Instrument']
                     });               
                 return html;
             },
@@ -229,8 +244,38 @@ define([
                 return a.feature.attributes['Name'] <= b.feature.attributes['Name'] ? -1 : 1;
             },
 
+            csbSort: function(a, b) {
+                //Sort by start date descending
+                return new Date(a.feature.attributes['Start Date']) <= new Date(b.feature.attributes['Start Date']) ? 1 : -1;
+            },
+
             sortResults: function(results) {
                 var features;
+
+                //Collapse the 3 CSB sub-layers (point, line, polygon) into a single layer called CSB.
+                if (results['CSB']) {
+                    var csbArray = [];
+                    if (results['CSB']['CSB Points']) {
+                        csbArray = csbArray.concat(results['CSB']['CSB Points']);
+                        delete results['CSB']['CSB Points'];
+                    }
+                    if (results['CSB']['CSB Lines']) {
+                        csbArray = csbArray.concat(results['CSB']['CSB Lines']);
+                        delete results['CSB']['CSB Lines'];
+                    }
+                    if (results['CSB']['CSB Polygons']) {
+                        csbArray = csbArray.concat(results['CSB']['CSB Polygons']);
+                        delete results['CSB']['CSB Polygons'];
+                    }
+                    results['CSB']['CSB'] = csbArray;
+
+                    array.forEach(results['CSB']['CSB'], function(item) {
+                        item.layerName = 'CSB';
+                    });
+
+                    results['CSB']['CSB'].sort(this.csbSort);
+                }
+
                 if (results['Multibeam']) {    
                     if ((features = results['Multibeam']['Multibeam Bathymetric Surveys'])) {
                         features.sort(this.multibeamSort);
@@ -255,8 +300,24 @@ define([
                         features.sort(this.demSort);
                     }                    
                 }
-            }
+            },
 
+            //Format a date as yyyy-mm-dd
+            formatDate: function(dateStr) {
+                var date = new Date(dateStr);
+                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2) + 'T' + this.padDigits(date.getHours(),2) + ':' + this.padDigits(date.getMinutes(), 2);
+            },
+
+            padDigits: function(n, totalDigits){
+                n = n.toString();
+                var pd = '';
+                if (totalDigits > n.length) {
+                    for (var i = 0; i < (totalDigits - n.length); i++) {
+                        pd += '0';
+                    }
+                }
+                return pd + n.toString();
+            }
         });
     }
 );
