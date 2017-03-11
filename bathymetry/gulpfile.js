@@ -187,9 +187,13 @@ gulp.task('zip', function() {
 
 gulp.task('build', ['html', 'styles', 'scripts', 'images', 'copy-intern', 'copy-jsapi']);
 
-//TODO currently includes tests but not the Dojo, Esri modules required to run them
 gulp.task('package', function(done) {
-  runSequence('scripts', 'html', 'images', 'styles', 'lint', 'zip', done);
+    //include the Dojo, Esri modules required to run browser test client
+    if (environment == 'development') {
+        runSequence('build', 'lint', 'zip', done);
+    } else {
+        runSequence('clean','scripts', 'html', 'images', 'styles', 'lint', 'zip', done);
+    }
 });
 
 gulp.task('default', ['build', 'files', 'server']);
