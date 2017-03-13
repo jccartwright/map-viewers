@@ -41,23 +41,10 @@ define([
                     map: this.map,
                     identify: this.identify,
                     'class': 'identifyPane',
-                    autoExpandTree: false
+                    autoExpandTree: true
                 }, dom.byId('arcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
-                this.identifyPane.enabled = false;
-
-                if (this.mapLayerCollection.nosHydroVisible) {
-                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0, 1]);
-                }
-                else {
-                    this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
-                }
-                this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
-                this.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setVisibleLayers([0]);
-                
-                this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
-
-                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
+                this.identifyPane.enabled = false;                
             }
          
             

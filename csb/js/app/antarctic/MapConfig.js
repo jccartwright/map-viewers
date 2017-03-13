@@ -41,14 +41,10 @@ define([
                     map: this.map,
                     identify: this.identify,
                     'class': 'identifyPane',
-                    autoExpandTree: false
+                    autoExpandTree: true
                 }, dom.byId('antarcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
-                this.identifyPane.enabled = false;    
-
-                this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
-
-                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);            
+                this.identifyPane.enabled = false;                    
             }
          
             

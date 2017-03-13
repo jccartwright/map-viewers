@@ -50,15 +50,7 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'NOS Hydrographic Surveys', this.chkNosHydro.checked);
                 }));                
                 on(this.chkBagHillshades, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.chkBagHillshades.checked);   
-
-                    //If the "Surveys with BAGs" are visible, toggle the extra overlay on top of the hillshades.
-                    if (this.chkBagHillshades.checked && this.chkNosHydro.checked) {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', true);
-                    }
-                    else {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', false);
-                    }                                     
+                    topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.chkBagHillshades.checked);                                      
                 }));
 
                 on(this.chkEmodNetMultibeam, 'change', lang.hitch(this, function() {
@@ -73,6 +65,7 @@ define([
 
                 on(this.chkDems, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'DEM Extents', this.chkDems.checked);
+                    topic.publish('/ngdc/layer/visibility', 'DEM Tiles', this.chkDems.checked);
                 })); 
                 on(this.chkDemHillshades, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'DEM Hillshades', this.chkDemHillshades.checked);
@@ -112,17 +105,41 @@ define([
                 } 
                 if (values.endDate) {
                     s += '<br>End Date: ' + this.toDateString(values.endDate);
-                }                                    
-                if (values.platform) {
-                    s += 'Platform Name: ' + values.platform + '<br>';
-                }                
+                } 
+                if (values.provider) {
+                    s += 'Provider: ' + values.provider + '<br>';
+                }                                   
+                if (values.platformName) {
+                    s += 'Platform Name: ' + values.platformName + '<br>';
+                }
+                if (values.platformId) {
+                    s += 'Platform ID: ' + values.platformId + '<br>';
+                }
+                if (values.instrument) {
+                    s += 'Instrument: ' + values.instrument + '<br>';
+                }
+                
                 filterDiv.innerHTML = s;
             },
 
-            //Format a date in the form mm/dd/yyyy
-            toDateString: function(date) {
-                return date.getMonth()+1 + '/' + date.getDate() + '/' + date.getFullYear();
+            //Format a date as yyyy-mm-dd
+            toDateString: function(dateStr) {
+                var date = new Date(dateStr);
+                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
+            },
+
+            padDigits: function(n, totalDigits){
+                n = n.toString();
+                var pd = '';
+                if (totalDigits > n.length) {
+                    for (var i = 0; i < (totalDigits - n.length); i++) {
+                        pd += '0';
+                    }
+                }
+                return pd + n.toString();
             }
+
+
         });
     }
 );

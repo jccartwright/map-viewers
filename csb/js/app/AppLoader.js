@@ -283,9 +283,18 @@ define([
                 }  
                 if (values.endDate) {
                     sql.push("START_DATE <= date '" + this.toDateString(values.endDate) + "'");                
-                }  
-                if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");                    
+                }
+                if (values.provider) {
+                    sql.push("UPPER(PROVIDER) LIKE '" + values.provider.toUpperCase().replace(/\*/g, '%') + "'");                    
+                }
+                if (values.platformName) {
+                    sql.push("UPPER(PLATFORM) LIKE '" + values.platformName.toUpperCase().replace(/\*/g, '%') + "'");                    
+                }
+                if (values.platformId) {
+                    sql.push("UPPER(EXTERNAL_ID) LIKE '" + values.platformId.toUpperCase().replace(/\*/g, '%') + "'");                    
+                }
+                if (values.instrument) {
+                    sql.push("UPPER(INSTRUMENT) LIKE '" + values.instrument.toUpperCase().replace(/\*/g, '%') + "'");                    
                 }
                 layerDefinition = sql.join(' and ');
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('CSB').setLayerDefinitions([layerDefinition, layerDefinition]);
