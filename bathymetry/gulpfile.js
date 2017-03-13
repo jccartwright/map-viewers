@@ -24,6 +24,7 @@ var srcJsFiles = ['src/**/*.js'];
 var srcHtmlFiles = ['src/**/*.html'];
 var srcCssFiles = ['src/**/*.css'];
 var srcImageFiles = ['src/**/*.{gif,png,jpg}'];
+var testFiles = ['tests/**/*'];
 
 var p = require('./package.json');
 p.buildDate = new Date().toLocaleString();
@@ -70,6 +71,13 @@ gulp.task('scripts', function(){
 });
 
 
+gulp.task('tests', function(){
+    return gulp.src(testFiles, {base: '.'})
+    .pipe(gulp.dest('dist'))
+    .pipe(reload());
+});
+
+
 gulp.task('images', function() {
     return gulp.src(srcImageFiles)
     .pipe(gulp.dest('dist'))
@@ -96,7 +104,8 @@ gulp.task('files', function(){
     gulp.watch(srcHtmlFiles, ['html']);    
     gulp.watch(srcJsFiles, ['scripts']);    
     gulp.watch(srcCssFiles, ['styles']);
-    gulp.watch(srcImageFiles, ['images']);    
+    gulp.watch(srcImageFiles, ['images']);
+    gulp.watch(testFiles, ['tests']);
 });
 
 
@@ -110,7 +119,6 @@ gulp.task('copy-jsapi', function() {
     return gulp.src('bower_components/**/*', {base: '.'})
     .pipe(environment == 'development' ? gulp.dest('dist') : gutil.noop());
 });
-
 
 //TODO not yet working
 //taken from Intern User Guide (https://theintern.github.io/intern/#gulp)
@@ -185,7 +193,7 @@ gulp.task('zip', function() {
     .pipe(gulp.dest('zip/'+p.version));
 });
 
-gulp.task('build', ['html', 'styles', 'scripts', 'images', 'copy-intern', 'copy-jsapi']);
+gulp.task('build', ['html', 'styles', 'scripts', 'images', 'tests', 'copy-intern', 'copy-jsapi']);
 
 gulp.task('package', function(done) {
     //include the Dojo, Esri modules required to run browser test client
