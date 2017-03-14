@@ -1,3 +1,11 @@
+var dojoConfig = {
+    app: {
+        myName: 'jcc',
+        ngdcDijitsUrl: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc',
+        loglevel: 2
+    }
+};
+
 // Learn more about configuring this file at <https://theintern.github.io/intern/#configuration>.
 // These default settings work OK for most people. The options that *must* be changed below are the
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites

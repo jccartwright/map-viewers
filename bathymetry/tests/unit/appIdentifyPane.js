@@ -17,12 +17,6 @@ define([
         name: 'AppIdentifyPane dijit',
         // before the suite starts
         setup: function() {
-            //TODO find a way to access the package configuration in intern.js
-             config.app = {
-                ngdcDijitsUrl: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc',
-                loglevel: 2
-            }
-
             //TODO replace Logger w/ console.log statements which are stripped out during build process
             window.logger = new Logger(config.app.loglevel);
 
