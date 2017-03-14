@@ -30,7 +30,7 @@ var p = require('./package.json');
 p.buildDate = new Date().toLocaleString();
 
 var zipFileName = p.name + '-' + p.version + '.zip'
-
+var lintReportName = 'eslint-results-'+ p.name + '.html';
 var server;
 var options = minimist(process.argv);
 var environment = options.environment || 'development';
@@ -47,7 +47,7 @@ gulp.task('lint', function() {
     .pipe(eslint.format())
 
     .pipe(eslint.format(reporter, function(results) {
-      fs.writeFileSync(path.join(__dirname, 'dist', 'eslint-results.html'), results);
+      fs.writeFileSync(path.join(__dirname, 'dist', lintReportName), results);
     }))
 
     // To have the process exit with an error code (1) on
