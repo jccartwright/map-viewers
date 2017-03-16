@@ -541,22 +541,22 @@ define([
                 if (item.layerName === 'File Geometries') {
                     return '<i><b>Files (' + this.formatCount(count, 'file') + ')</b></i>';
                 }                
-                else if (item.layerName === 'NMFS Cruises') {
+                else if (item.layerName === 'NMFS') {
                     return '<i><b>NMFS (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName === 'OER Cruises') {
+                else if (item.layerName === 'OER') {
                     return '<i><b>OER (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName === 'UNOLS Cruises') {
+                else if (item.layerName === 'UNOLS') {
                     return '<i><b>UNOLS (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName === 'Other NOAA Cruises') {
+                else if (item.layerName === 'NOS') {
                     return '<i><b>Other NOAA (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName === 'Other Cruises') {
+                else if (item.layerName === 'Other Sources') {
                     return '<i><b>Other (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName === 'Non-U.S. Cruises') {
+                else if (item.layerName === 'Non-U.S.') {
                     return '<i><b>Non-U.S. (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
             },

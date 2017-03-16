@@ -60,12 +60,12 @@ define([
                 //formatter specific to each sublayer, keyed by Layer/sublayer name.
                 this.formatters = {
                     'Water Column Sonar/File Geometries': lang.hitch(this, this.wcdFileFormatter),
-                    'Water Column Sonar/NMFS Cruises': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/OER Cruises': lang.hitch(this, this.wcdCruiseFormatter), 
-                    'Water Column Sonar/UNOLS Cruises': lang.hitch(this, this.wcdCruiseFormatter), 
-                    'Water Column Sonar/Other NOAA Cruises': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Other Cruises': lang.hitch(this, this.wcdCruiseFormatter),
-                    'Water Column Sonar/Non-U.S. Cruises': lang.hitch(this, this.wcdCruiseFormatter)
+                    'Water Column Sonar/NMFS': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/OER': lang.hitch(this, this.wcdCruiseFormatter), 
+                    'Water Column Sonar/UNOLS': lang.hitch(this, this.wcdCruiseFormatter), 
+                    'Water Column Sonar/NOS': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Other Sources': lang.hitch(this, this.wcdCruiseFormatter),
+                    'Water Column Sonar/Non-U.S.': lang.hitch(this, this.wcdCruiseFormatter)
                 };
             }, //end constructor
 

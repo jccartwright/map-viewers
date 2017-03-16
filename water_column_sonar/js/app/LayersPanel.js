@@ -47,22 +47,22 @@ define([
                 this.searchDialog = new SearchDialog({title: 'Water Column Sonar Data Search'});
 
                 on(this.chkNMFS, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [0], this.chkNMFS.checked);
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [5], this.chkNMFS.checked);
                 }));
                 on(this.chkOER, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [1], this.chkOER.checked);
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [3], this.chkOER.checked);
                 }));
                 on(this.chkUNOLS, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [2], this.chkUNOLS.checked);
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkUNOLS.checked);
                 }));
-                on(this.chkOtherNoaa, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [3], this.chkOtherNoaa.checked);
+                on(this.chkNos, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [2], this.chkNos.checked);
                 }));
                 on(this.chkOther, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkOther.checked);
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [0], this.chkOther.checked);
                 }));
                 on(this.chkNonUs, 'change', lang.hitch(this, function() {                    
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [5], this.chkNonUs.checked);
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [1], this.chkNonUs.checked);
                 }));
 
                 on(this.searchButton, 'click', lang.hitch(this, function() {                    
