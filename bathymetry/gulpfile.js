@@ -29,12 +29,17 @@ var testFiles = ['tests/**/*'];
 var p = require('./package.json');
 p.buildDate = new Date().toLocaleString();
 
-var zipFileName = p.name + '-' + p.version + '.zip'
+var zipFileName = p.name + '-' + p.version + '-devel.zip'
 var lintReportName = 'eslint-results-'+ p.name + '.html';
+
 var server;
 var options = minimist(process.argv);
 var environment = options.environment || 'development';
 
+//override zipfile name when in production
+if (environment == 'production') {
+    zipFileName = p.name + '-' + p.version + '.zip'
+};
 
 // lint source javascript files. example taken from https://github.com/Esri/angular-esri-map/blob/master/gulpfile.js
 gulp.task('lint', function() {
