@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 define([
     'dojo/_base/declare', 
     'dojo/_base/config', 
