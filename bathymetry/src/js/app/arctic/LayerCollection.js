@@ -52,7 +52,7 @@ define([
                     }),                 
                     new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer', {
                         id: 'DEM Hillshades',
-                        visible: this.demVisible,
+                        visible: false,
                         imageServiceParameters: this.imageServiceParameters
                     }),                                 
                     new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/ibcao_contours/MapServer', {
