@@ -551,10 +551,10 @@ define([
                     return '<i><b>UNOLS (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
                 else if (item.layerName === 'NOS') {
-                    return '<i><b>Other NOAA (' + this.formatCount(count, 'cruise') + ')</b></i>';
+                    return '<i><b>NOS (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
                 else if (item.layerName === 'Other Sources') {
-                    return '<i><b>Other (' + this.formatCount(count, 'cruise') + ')</b></i>';
+                    return '<i><b>Other Sources (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
                 else if (item.layerName === 'Non-U.S.') {
                     return '<i><b>Non-U.S. (' + this.formatCount(count, 'cruise') + ')</b></i>';
