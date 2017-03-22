@@ -164,31 +164,53 @@ define([
                 }));
 
                 var timeOptions = [
-                    {label: 'Annual', value: '00'},
-                    {label: 'Winter', value: '13'},
-                    {label: 'Spring', value: '14'},
-                    {label: 'Summer', value: '15'},
-                    {label: 'Autumn', value: '16'},
-                    {label: 'January', value: '01'},
-                    {label: 'February', value: '02'},
-                    {label: 'March', value: '03'},
-                    {label: 'April', value: '04'},
-                    {label: 'May', value: '05'},
-                    {label: 'June', value: '06'},
-                    {label: 'July', value: '07'},
-                    {label: 'August', value: '08'},
-                    {label: 'September', value: '09'},
-                    {label: 'October', value: '10'},
-                    {label: 'November', value: '11'},
-                    {label: 'December', value: '12'}
+                    {label: 'Annual', value: 'Annual'},
+                    {label: 'Winter', value: 'Winter'},
+                    {label: 'Spring', value: 'Spring'},
+                    {label: 'Summer', value: 'Summer'},
+                    {label: 'Autumn', value: 'Autumn'},
+                    {label: 'January', value: 'January'},
+                    {label: 'February', value: 'February'},
+                    {label: 'March', value: 'March'},
+                    {label: 'April', value: 'April'},
+                    {label: 'May', value: 'May'},
+                    {label: 'June', value: 'June'},
+                    {label: 'July', value: 'July'},
+                    {label: 'August', value: 'August'},
+                    {label: 'September', value: 'September'},
+                    {label: 'October', value: 'October'},
+                    {label: 'November', value: 'November'},
+                    {label: 'December', value: 'December'}
                 ];
+
+                var timeLookup = {
+                    'Annual': {timeString: 'annual', time: '0000-06-29T14:54:22.987Z'},
+                    'Winter': {timeString: 'seasonal', time: '0000-02-13T15:43:35.746Z'},
+                    'Spring': {timeString: 'seasonal', time: '0000-05-14T23:10:47.240Z'},
+                    'Summer': {timeString: 'seasonal', time: '0000-08-14T06:37:58.734Z'},
+                    'Autumn': {timeString: 'seasonal', time: '0000-11-13T14:05:10.227Z'},
+                    'January': {timeString: 'monthly', time: '0000-01-14T05:14:31.915Z'},
+                    'February': {timeString: 'monthly', time: '0000-02-13T15:43:35.746Z'},
+                    'March': {timeString: 'monthly', time: '0000-03-15T02:12:39.578Z'},
+                    'April': {timeString: 'monthly', time: '0000-04-14T12:41:43.409Z'},
+                    'May': {timeString: 'monthly', time: '0000-05-14T23:10:47.240Z'},
+                    'June': {timeString: 'monthly', time: '0000-06-14T09:39:51.071Z'},
+                    'July': {timeString: 'monthly', time: '0000-07-14T20:08:54.902Z'},
+                    'August': {timeString: 'monthly', time: '0000-08-14T06:37:58.734Z'},
+                    'September': {timeString: 'monthly', time: '0000-09-13T17:07:02.565Z'},
+                    'October': {timeString: 'monthly', time: '0000-10-14T03:36:06.396Z'},
+                    'November': {timeString: 'monthly', time: '0000-11-13T14:05:10.227Z'},
+                    'December': {timeString: 'monthly', time: '0000-12-14T00:34:14.059Z'}
+                };
+
                 this.timeSelect.addOption(timeOptions);
 
                 on(this.timeSelect, 'change', lang.hitch(this, function() {
-                    var timeCode = this.timeSelect.get('value');
-                    topic.publish('/layersPanel/selectTime', timeCode);
+                    var timeString = timeLookup[this.timeSelect.get('value')].timeString;
+                    var time = timeLookup[this.timeSelect.get('value')].time;
+                    topic.publish('/layersPanel/selectTime', timeString, time);
 
-                    if (parseInt(timeCode) >= 1 && parseInt(timeCode) <= 12) {
+                    if (timeString === 'Monthly') {
                         this.setDeepElevationsDisabled(true);
                     } else {
                         this.setDeepElevationsDisabled(false);

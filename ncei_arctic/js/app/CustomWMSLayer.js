@@ -16,9 +16,9 @@ define([
         return declare([WMSLayer], {
             layerType: 'WMS',
 
-            constructor: function(baseUrl) {
+            constructor: function() {
                 this.datasetPrefix = arguments[1].datasetPrefix;   
-                this.timeCode = arguments[1].timeCode;
+                this.timeString = arguments[1].timeString;
                 this.datasetSuffix = arguments[1].datasetSuffix;
                 this.elevation = arguments[1].elevation;
                 this.styles = arguments[1].styles;
@@ -31,8 +31,9 @@ define([
                     this.refresh();
                 }));
 
-                topic.subscribe('/layersPanel/selectTime', lang.hitch(this, function (timeCode) {
-                    this.timeCode = timeCode;
+                topic.subscribe('/layersPanel/selectTime', lang.hitch(this, function (timeString, time) {
+                    this.timeString = timeString;
+                    this.time = time;
                     this.refresh();
                 }));
 
@@ -62,17 +63,20 @@ define([
                     bbox: extent.xmin + "," + extent.ymin + "," + extent.xmax + "," + extent.ymax,
                     crs: 'EPSG:' + extent.spatialReference.wkid,
                     width: width,
-                    height: height
+                    height: height,
+                    time: this.time
                 };
 
-                callback(this.url + '/' + this.datasetPrefix + this.timeCode + this.datasetSuffix + '?' + dojo.objectToQuery(params));
+                callback(this.url + '/' + this.datasetPrefix + '_' + this.timeString + '_' + this.datasetSuffix + '?' + dojo.objectToQuery(params));
 
-                //http://data.nodc.noaa.gov/thredds/wms/woa/DATA_ANALYSIS/NP_REG_CLIMAT/DATA/netcdf/temperature/0.25/t16_04.nc?
-                //LAYERS=t_an&ELEVATION=0&
-                //TIME=0000-11-13T14%3A05%3A10.227Z&
-                //TRANSPARENT=true&STYLES=boxfill%2Frainbow&CRS=EPSG%3A4326&
-                //COLORSCALERANGE=-2.1%2C10.5&NUMCOLORBANDS=25&LOGSCALE=false&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&EXCEPTIONS=XML&FORMAT=image%2Fpng&
-                //BBOX=-180,89.875,-90.0625,179.8125&WIDTH=256&HEIGHT=256
+                //Example URL:
+                //https://data.nodc.noaa.gov/thredds/wms/ncml/regclim/arctic_ncml/temperature/temperature_annual_quarter.ncml?
+                //LAYERS=t_an
+                //&ELEVATION=0
+                //&TIME=0000-06-29T14%3A54%3A22.987Z
+                //&TRANSPARENT=true
+                //&STYLES=boxfill%2Frainbow&CRS=EPSG%3A4326&COLORSCALERANGE=-50%2C50&NUMCOLORBANDS=25&LOGSCALE=false
+                //&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&EXCEPTIONS=XML&FORMAT=image%2Fpng&BBOX=179.75,-0.062500000000028,269.6875,89.875&WIDTH=256&HEIGHT=256
             }
    
         });
