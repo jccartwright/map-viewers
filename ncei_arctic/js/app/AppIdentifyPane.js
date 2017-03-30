@@ -64,7 +64,7 @@ define([
                         var itemId;
                         if (this.currentItem.attributes['Survey ID']) {
                             itemId = this.currentItem.attributes['Survey ID'];
-                        } else if (itemId = this.currentItem.attributes['ITEM_ID']) {
+                        } else if (this.currentItem.attributes['ITEM_ID']) {
                             itemId = this.currentItem.attributes['ITEM_ID'];
                         }
                         this.extractData(itemId);
@@ -82,7 +82,7 @@ define([
                 }
             },
 
-            getLayerDisplayLabel: function(item, count) {
+            getLayerDisplayLabel: function(item) {
                 return '<i><b>' + this.getFolderName(item.formatter) + ' (' + this.formatCountString(this.folderCounts[this.getFolderName(item.formatter)]) + ')</b></i>';
             },
 
@@ -122,7 +122,7 @@ define([
                     return 'Aeromagnetic Surveys';
                 }
                 else if (layerKey === 'NOS Hydrographic Surveys/Surveys with BAGs') {
-                    return 'Surveys wth BAGs'
+                    return 'Surveys wth BAGs';
                 } 
                 else if (layerKey === 'NOS Hydrographic Surveys/Surveys with Digital Sounding Data') {
                     return 'Surveys with Digital Sounding Data';
@@ -136,13 +136,13 @@ define([
                 else if (layerKey === 'DEM Tiles/DEM Tiles') {
                     return 'Digital Elevation Models (New Tiles)';
                 }
-                else if (layerKey == 'Marine Geology/Marine Geology Data Sets/Reports') {
+                else if (layerKey === 'Marine Geology/Marine Geology Data Sets/Reports') {
                     return 'Marine Geology Data Sets/Reports';
                 }
-                else if (layerKey == 'Sample Index/All Samples by Institution') {
+                else if (layerKey === 'Sample Index/All Samples by Institution') {
                     return 'Sample Index';
                 }
-                else if (layerKey == 'Sample Index/All Samples by Institution') {
+                else if (layerKey === 'Sample Index/All Samples by Institution') {
                     return 'Sample Index';
                 }
                 else if (layerKey === 'Undersea Features/Point Features' || layerKey === 'Undersea Features/Line Features' || layerKey === 'Undersea Features/Polygon Features') {
@@ -232,15 +232,15 @@ define([
                     return this.getItemLabelSpan(a['NAME'] + ' <i>(' + a['CELL_SIZE'] + ')</i>', uid);
                 }
 
-                else if (item.formatter == 'Marine Geology/Marine Geology Data Sets/Reports') {
-                    if (a['Hole/Sample ID'] != 'Null') {
+                else if (item.formatter === 'Marine Geology/Marine Geology Data Sets/Reports') {
+                    if (a['Hole/Sample ID'] !== 'Null') {
                         return this.getItemLabelSpan('Sample: ' + a['Hole/Sample ID'], uid);
                     } else {
                         return this.getItemLabelSpan('Sample ID not available', uid);
                     }
                 }
-                else if (item.formatter == 'Sample Index/All Samples by Institution') {
-                    if (a['Alternate Cruise or Leg'] == 'Null') {
+                else if (item.formatter === 'Sample Index/All Samples by Institution') {
+                    if (a['Alternate Cruise or Leg'] === 'Null') {
                         return this.getItemLabelSpan(a['Cruise or Leg'] + ':' + a['Sample ID'] + ':' + a['Device'] + ' (' + a['Repository'] + ')', uid);
                     }
                     else {
@@ -570,12 +570,14 @@ define([
                 for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
                     var svcName = this.identify.layerIds[i];
                     for (var layerName in results[svcName]) {
-                        var layerKey = svcName + '/' + layerName;
-                        var folderName = this.getFolderName(layerKey);
-                        if (!this.folderCounts[folderName]) {
-                            this.folderCounts[folderName] = 0;
+                        if (results[svcName].hasOwnProperty(layerName)) {
+                            var layerKey = svcName + '/' + layerName;
+                            var folderName = this.getFolderName(layerKey);
+                            if (!this.folderCounts[folderName]) {
+                                this.folderCounts[folderName] = 0;
+                            }
+                            this.folderCounts[folderName] += results[svcName][layerName].length;
                         }
-                        this.folderCounts[folderName] += results[svcName][layerName].length;                        
                     }
                 }
             }

@@ -16,7 +16,7 @@ define([
         return declare([WMSLayer], {
             layerType: 'WMS',
 
-            constructor: function(baseUrl) {
+            constructor: function() {
                 this.year = arguments[1].year;
                 this.month = arguments[1].month;
                 this.hour = arguments[1].hour;
