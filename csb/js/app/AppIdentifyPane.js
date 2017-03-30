@@ -131,7 +131,17 @@ define([
                 }
                 else if (item.layerName === 'CSB') {
                     //return this.getItemLabelSpan(item.feature.attributes['NAME'], uid);
-                    return this.getItemLabelSpan(this.identify.formatDate(item.feature.attributes['Start Date']) + ' - ' + this.identify.formatDate(item.feature.attributes['End Date']) , uid);
+                    var startDate = item.feature.attributes['Start Date'];
+                    var endDate = item.feature.attributes['End Date'];
+                    if (startDate === 'Null' && endDate === 'Null') {
+                        return 'Unknown date';
+                    } else if (startDate !== 'Null' && endDate === 'Null') {
+                        return this.getItemLabelSpan(this.identify.formatDate(startDate) + ' - Unknown date', uid);
+                    } else if (startDate === 'Null' && endDate !== 'Null') {
+                        return this.getItemLabelSpan('Unknown date - ' + this.identify.formatDate(endDate) , uid);
+                    } else {
+                        return this.getItemLabelSpan(this.identify.formatDate(startDate) + ' - ' + this.identify.formatDate(endDate) , uid);   
+                    }
                 }
             },
 
@@ -285,6 +295,7 @@ define([
                 console.debug("sending order via form submission to NEXT: ", postBody);
                 
                 var url = "https://www.ngdc.noaa.gov/next-web/orders/create";
+                //var url = "https://acceptance.ngdc.noaa.gov/next-web/orders/create";                
 
                 //create a new form element and submit it.
                 var form = document.createElement("form");
