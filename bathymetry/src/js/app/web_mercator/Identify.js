@@ -36,7 +36,10 @@ define([
                     'BAG Footprints/BAG Footprints': lang.hitch(this, this.bagFootprintFormatter),
                     'DEM Extents/All NCEI Bathymetric DEMs': lang.hitch(this, this.demFormatter),
                     'DEM Tiles/DEM Tiles': lang.hitch(this, this.demTileFormatter),
-                    'OCM Lidar/Lidar': lang.hitch(this, this.lidarFormatter)
+                    'OCM Lidar/Elevation >1:20M': lang.hitch(this, this.lidarFormatter),
+                    'OCM Lidar/Elevation 1:12.5M - 1:20M': lang.hitch(this, this.lidarFormatter),
+                    'OCM Lidar/Elevation 1:1.25M - 1:12.5M': lang.hitch(this, this.lidarFormatter),
+                    'OCM Lidar/Elevation <1:1.25M scale': lang.hitch(this, this.lidarFormatter)
                 };
             } //end constructor
         });

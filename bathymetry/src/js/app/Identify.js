@@ -191,7 +191,7 @@ define([
                     '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
                     '<div class="valueName">Project: <span class="parameterValue">${project}</span></div>' +
                     '<div class="valueName">Year: <span class="parameterValue">${year}</span></div>' +
-                    '<div class="valueName"><span class="parameterValue"><a href="${prefix}${id}" target="_blank">Link to Data</a></span></div>' +
+                    '<div class="valueName"><span class="parameterValue"><a href="${prefix}${id}/details/${id}" target="_blank">Link to Data</a></span></div>' +
                     '<div class="valueName"><span class="parameterValue"><a href="${metalink}" target="_blank">Metadata Link</a></span></div>';
 
                 var html = string.substitute(template, {
@@ -200,7 +200,7 @@ define([
                     project: a['Project'],
                     year: a['Year'],
                     metalink: a['Metalink'],
-                    prefix: 'http://www.coast.noaa.gov/dataviewer/index.html?action=advsearch&qType=in&qFld=ID&qVal='
+                    prefix: 'https://coast.noaa.gov/dataviewer/#/lidar/search/where:ID='
                 });                
                 return html;
             },

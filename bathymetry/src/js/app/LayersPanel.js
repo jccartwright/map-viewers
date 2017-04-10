@@ -81,7 +81,7 @@ define([
                 }));  
 
                 on(this.chkOcmLidar, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'OCM Lidar', [4], this.chkOcmLidar.checked);                    
+                    topic.publish('/ngdc/sublayer/visibility', 'OCM Lidar', [0, 1, 2, 3], this.chkOcmLidar.checked);                    
                 }));
 
                 this.searchDialog = new SearchDialog({title: 'Search Bathymetric Surveys'});
