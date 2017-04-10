@@ -141,7 +141,7 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.coast.noaa.gov/arcgis/rest/services/DAV/DAV/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://maps.coast.noaa.gov/arcgis/rest/services/DAV/ElevationFootprints/MapServer', {
                         id: 'OCM Lidar',
                         visible: false,
                         imageParameters: this.imageParameters.png32,

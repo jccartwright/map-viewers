@@ -109,7 +109,7 @@ define([
                 else if (item.layerName === 'DEM Tiles') {
                     return '<i><b>Digital Elevation Models (New Tiles) (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
                 }
-                else if (item.layerName === 'Lidar') {
+                else if (item.svcId === 'OCM Lidar') {
                     return '<i><b>OCM Bathymetric Lidar (' + this.formatCountString(count) + ')</b></i>';
                 }
             },
@@ -148,7 +148,7 @@ define([
                 else if (item.layerName === 'DEM Tiles') {
                     return this.getItemLabelSpan(item.feature.attributes['NAME'] + ' <i>(' + item.feature.attributes['CELL_SIZE'] + ')</i>', uid);
                 }
-                else if (item.layerName === 'Lidar') {
+                else if (item.svcId === 'OCM Lidar') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'], uid);
                 }
             },
