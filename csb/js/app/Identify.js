@@ -190,8 +190,8 @@ define([
 
                 var html = string.substitute(template, {                        
                         name: a['Name'],
-                        startDate: this.formatDate(a['Start Date']),
-                        endDate: this.formatDate(a['End Date']),
+                        startDate: a['Start Date'] === '' ? 'Unknown' : this.formatDate(a['Start Date']),
+                        endDate: a['End Date'] === '' ? 'Unknown' : this.formatDate(a['End Date']),
                         provider: a['Provider'],
                         platformName: a['Platform'],
                         platformId: a['Platform ID'],
@@ -245,7 +245,13 @@ define([
             },
 
             csbSort: function(a, b) {
-                //Sort by start date descending
+                //Sort by start date descending (nulls last)
+                if (a.feature.attributes['Start Date'] === 'Null') {
+                    return 1;
+                }
+                if (b.feature.attributes['Start Date'] === 'Null') {
+                    return -1;
+                }
                 return new Date(a.feature.attributes['Start Date']) <= new Date(b.feature.attributes['Start Date']) ? 1 : -1;
             },
 
