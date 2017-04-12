@@ -304,10 +304,14 @@ define([
                 var totalFeatures = 0;
                 var numFeaturesForLayer = 0;
 
+                //Specify the layer order to be displayed in the identify results
+                var layerNames = ['NMFS', 'OER', 'NOS', 'UNOLS', 'Other Sources', 'Non-U.S.'];
+
                 this.expandedNodePaths = [];
                 for (var svcName in results) {
                     if (results.hasOwnProperty(svcName)) {
-                        for (var layerName in results[svcName]) {
+                        for (var j = 0; j < layerNames.length; j++) {
+                            var layerName = layerNames[j];
                             if (results[svcName].hasOwnProperty(layerName)) {
 
                                 numFeaturesForLayer = results[svcName][layerName].length;
