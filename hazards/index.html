@@ -3,20 +3,20 @@
 <head>
     <!-- Version: @application.version@, Last update: @application.buildDate@ -->
     <title>Natural Hazards Viewer</title>
-    <link rel="shortcut icon" href="//www.ngdc.noaa.gov/image/favicon.ico">
-    <link rel="stylesheet" href="//js.arcgis.com/3.17/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="//js.arcgis.com/3.17/esri/css/esri.css">
+    <link rel="shortcut icon" href="https://www.ngdc.noaa.gov/image/favicon.ico">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.20/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/3.20/esri/css/esri.css">
 
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc/css/MapToolbar.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc/identify/IdentifyPane.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc/themes/tundra/BoundingBoxDialog.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc/css/Banner.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc/css/CoordinatesWithElevationToolbar.css">
+    <link rel="stylesheet" href="https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc/css/MapToolbar.css">
+    <link rel="stylesheet" href="https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc/identify/IdentifyPane.css">
+    <link rel="stylesheet" href="https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc/css/CoordinatesWithElevationToolbar.css">
+
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.18/dojox/layout/resources/FloatingPane.css"/>
+    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.18/dojox/layout/resources/ResizeHandle.css"/>
 
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
-
-    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.17/dojox/layout/resources/FloatingPane.css"/>
-    <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.17/dojox/layout/resources/ResizeHandle.css"/>
 
     <link rel="stylesheet" href="css/local.css">
 
@@ -30,7 +30,7 @@
             packages: [
             {
                 name: "ngdc",
-                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc'
+                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
             },
             {
@@ -39,7 +39,7 @@
             },
             {
                 name: "ncei",
-                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ncei'
+                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ncei'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ncei'
             }
             ],
@@ -47,12 +47,12 @@
             //app-specific config values
             app: {
                 loglevel: 2,
-                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc'
+                ngdcDijitsUrl: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc'
                 //ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
     </script>
-    <script src="//js.arcgis.com/3.17/"></script>
+    <script src="https://js.arcgis.com/3.20/"></script>
 </head>
 <body class="tundra">
 <div id="loadingOverlay" class="loadingOverlay pageOverlay">
@@ -60,28 +60,6 @@
 </div>
 
 <div id="busy"></div>
-
-<div data-dojo-type="dojox/layout/FloatingPane" id="tsEventLegendPane" title="Tsunami Events" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
-    <img src="images/tsevent_legend.png"/>
-</div>  
-<div data-dojo-type="dojox/layout/FloatingPane" id="tsObsLegendPane1" title="Tsunami Observations" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
-    <img src="images/tsobservation_legend1.png"/>
-</div>
-<div data-dojo-type="dojox/layout/FloatingPane" id="tsObsLegendPane2" title="Tsunami Observations" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
-    <img src="images/tsobservation_legend2.png"/>
-</div>
-<div data-dojo-type="dojox/layout/FloatingPane" id="signifEqLegendPane" title="Significant Earthquakes" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
-    <img src="images/signifeq_legend.png"/>
-</div>
-<div data-dojo-type="dojox/layout/FloatingPane" id="volEventLegendPane" title="Significant Volcanic Eruptions" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
-    <img src="images/volevent_legend.png"/>
-</div>
-<div data-dojo-type="dojox/layout/FloatingPane" id="dartLegendPane" title="DART® Deployments" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:50%;left:50%;visibility:hidden;">
-    <img src="images/dart_legend.png"/>
-</div>
-<div data-dojo-type="dojox/layout/FloatingPane" id="plateBoundariesLegendPane" title="Plate Boundaries" resizable="false" dockable="false" style="z-index:9999;position:absolute;top:20%;left:70%;visibility:hidden;">
-    <img src="images/plate_boundaries_legend.png"/>
-</div>  
 
 <div id="mainWindow" class="noBorder" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false">
 
@@ -133,6 +111,6 @@
     );
 
 </script>
-<script src="//maps.ngdc.noaa.gov/js/ga.js"></script>
+<script src="https://maps.ngdc.noaa.gov/js/ga.js"></script>
 </body>
 </html>
