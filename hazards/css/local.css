@@ -312,3 +312,21 @@ html,body {
     /*overflow-x: hidden;*/
     height: 100px; 
 } 
+
+.queryIcon {
+    background-image: url(../images/magnifier.png);
+    width: 16px;
+    height: 16px;
+}
+
+.clearSelectionIcon {
+    background-image: url(../images/x.png);
+    width: 16px;
+    height: 16px;
+}
+
+.legendIcon {
+    background-image: url(../images/stock_chart-toggle-legend.png);
+    width: 16px;
+    height: 16px;
+}

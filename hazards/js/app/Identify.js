@@ -43,7 +43,7 @@ define([
                     'Hazards/Volcano Locations [from Smithsonian]': lang.hitch(this, this.volcanoFormatter),
                     'Hazards/Current DART Deployments': lang.hitch(this, this.dartFormatter),
                     'Hazards/Retrospective BPR Deployments': lang.hitch(this, this.retrospectiveBprFormatter),
-                    'Hazards/NOS/COOPS Tsunami Tide Gauges': lang.hitch(this, this.tideGaugeFormatter),
+                    'Hazards/Tsunami Capable Tide Stations': lang.hitch(this, this.tideGaugeFormatter),
                     'Hazards/Plate Boundaries [from UTIG]': lang.hitch(this, this.plateBoundariesFormatter)
                 };
             }, //end constructor
@@ -757,35 +757,57 @@ define([
 
             tideGaugeFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
-                var html = string.substitute(
-                    '<i><b>Tsunami Tide Gauge</b></i><br>' +
-                    '<table class="idTable">' +
+
+                var template = 
+                    '<i><b>Tsunami Capable Tide Station</b></i><br>' +
+                    '<table class="idTable">';
+
+                if (a['URL (Real-Time)'] !== '') {
+                    template += 
                         '<tr colspan="2">' +
-                            '<td><a href="http://tidesandcurrents.noaa.gov/waterlevels.html?id=${station}" target="_blank">Additional Info</a>' +
-                        '</tr>' +
-                        '<tr class="idTr">' +
-                            '<td><b>Station:</b></td>' +
-                            '<td>${station}</td>' +
-                        '</tr>' +
-                        '<tr class="idTr">' +
-                            '<td><b>Name:</b></td>' +
-                            '<td>${name}</td>' +
-                        '</tr>' +
-                        '<tr class="idTr">' +
-                            '<td><b>State:</b></td>' +
-                            '<td>${state}</td>' +
-                        '</tr>' +
-                        '<tr class="idTr">' +
-                            '<td><b>Latitude/Longitude</b></td>' +
-                            '<td>${latitude}, ${longitude}</td>' +
-                        '</tr>' +
-                    '</table>', {
-                        station: a['Station'],
-                        name: a['Name'],
-                        state: a['State'],
-                        latitude: a['Latitude'],
-                        longitude: a['Longitude']
-                    });                
+                        '<td><a href="${realTimeUrl}" target="_blank">Real-Time Data</a>' +
+                        '</tr>';
+                }
+                if (a['URL (Retrospective)'] !== '') {
+                    template += 
+                        '<tr colspan="2">' +
+                        '<td><a href="${retrospectiveUrl}" target="_blank">Retrospective Data</a>' +
+                        '</tr>';
+                }
+                        
+                template +=        
+                    '<tr class="idTr">' +
+                        '<td><b>Station:</b></td>' +
+                        '<td>${nosId}</td>' +
+                    '</tr>' +
+                    '<tr class="idTr">' +
+                        '<td><b>Station Name:</b></td>' +
+                        '<td>${stationName}</td>' +
+                    '</tr>' +
+                    '<tr class="idTr">' +
+                        '<td><b>Organization:</b></td>' +
+                        '<td>${organization}</td>' +
+                    '</tr>' +
+                    '<tr class="idTr">' +
+                        '<td><b>State:</b></td>' +
+                        '<td>${state}</td>' +
+                    '</tr>' +
+                    '<tr class="idTr">' +
+                        '<td><b>Latitude/Longitude</b></td>' +
+                        '<td>${latitude}, ${longitude}</td>' +
+                    '</tr>' +
+                    '</table>';
+
+                var html = string.substitute(template, {
+                    nosId: a['NOS ID'],
+                    stationName: a['Station Name'],
+                    state: a['State'],
+                    latitude: a['Latitude'],
+                    longitude: a['Longitude'],
+                    realTimeUrl: a['URL (Real-Time)'],
+                    retrospectiveUrl: a['URL (Retrospective)'],
+                    organization: a['Organization']
+                });    
                 return html;
             },
 
