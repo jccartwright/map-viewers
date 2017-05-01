@@ -24,7 +24,8 @@ define([
                     '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>' +
                     '<div class="valueName">Survey ID: <span class="parameterValue">${surveyId}</span></div>' +
                     '<div class="valueName">Platform Name: <span class="parameterValue">${platformName}</span></div>' +
-                    '<div class="valueName">Survey Year: <span class="parameterValue">${surveyYear}</span></div>' +
+                    '<div class="valueName">Survey Start Date: <span class="parameterValue">${startDate}</span></div>' +
+                    '<div class="valueName">Survey End Date: <span class="parameterValue">${endDate}</span></div>' +
                     '<div class="valueName">Source Organization: <span class="parameterValue">${source}</span></div>' +
                     '<div class="valueName">Chief Scientist: <span class="parameterValue">${chiefScientist}</span></div>' +
                     '<div class="valueName">Instrument: <span class="parameterValue">${instrument}</span></div>' +
@@ -37,9 +38,10 @@ define([
 
                 var html = string.substitute(template, {
                     url: a['Download URL'],
-                    ngdcId: a['NGDC ID'],
                     surveyId: a['Survey ID'],
                     surveyYear: a['Survey Year'],
+                    startDate: this.formatDate(a['Start Date']),
+                    endDate: this.formatDate(a['End Date']),
                     source: a['Source'],
                     platformName: a['Platform Name'],
                     chiefScientist: a['Chief Scientist'],
@@ -82,7 +84,7 @@ define([
                     project: a['Project'],
                     country: a['Country'],
                     chiefScientist: a['Chief Scientist'],
-                    dateAdded: a['Date Added']
+                    dateAdded: this.formatDate(a['Date Added'])
                 });                
                 return html;
             },
@@ -156,7 +158,7 @@ define([
                     status: a['Status'],
                     type: a['Type'],
                     coverage: a['Coverage'],
-                    completionDate: a['Completion Date']
+                    completionDate: this.formatDate(a['Completion Date'])
                 });               
                 return html;
             },
@@ -291,6 +293,28 @@ define([
                         features.sort(this.demTileSort);
                     }                    
                 }
+            },
+
+            //Convert a date string from mm/dd/yyyy to yyyy-mm-dd
+            formatDate: function(dateStr) {
+                var tokens = dateStr.split('/');
+                if (tokens.length === 3) {
+                    var date = new Date(tokens[2], tokens[0], tokens[1]);
+                    return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
+                } else {
+                    return '';
+                }
+            },
+
+            padDigits: function(n, totalDigits){
+                n = n.toString();
+                var pd = '';
+                if (totalDigits > n.length) {
+                    for (var i = 0; i < (totalDigits - n.length); i++) {
+                        pd += '0';
+                    }
+                }
+                return pd + n.toString();
             }
 
         });
