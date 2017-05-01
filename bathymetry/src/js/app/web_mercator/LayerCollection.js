@@ -102,7 +102,11 @@ define([
                         id: 'DEM Hillshades',
                         visible: false,
                         imageServiceParameters: this.imageServiceParameters
-                    }),                    
+                    }),
+                    new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_hillshade/ImageServer', {
+                        id: 'Multibeam Mosaic',
+                        visible: false
+                    }),
                     new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
                         visible: false,
