@@ -103,35 +103,28 @@ define([
                                       
                 var basemapLayer = this.mapLayerCollection.getLayerById('Ocean Base');
                 var boundariesLayer = this.mapLayerCollection.getLayerById('Ocean Reference');
-                var gmrtLayer = this.mapLayerCollection.getLayerById('GMRT');
+                var hillshadeLayer = this.mapLayerCollection.getLayerById('Multibeam Mosaic');
+                hillshadeLayer.setDefinitionExpression("SurveyID='" + this.survey + "'");
 
-                //For testing
-                //gmrtLayer.loaded = false;
+                var toggleHillshade = registry.byId('toggleHillshade');
 
-                var toggleGmrt = registry.byId('toggleGmrt');
-
-                //Disable the toggle button if the GMRT service failed to load
-                // if (!gmrtLayer.loaded) {
-                //     toggleGmrt.set('disabled', true);
-                // }
-
-                on(toggleGmrt, "click", lang.hitch(this, function() {
-                    var checked = toggleGmrt.get('checked');
+                on(toggleHillshade, "click", lang.hitch(this, function() {
+                    var checked = toggleHillshade.get('checked');
                     if (checked) {                        
-                        toggleGmrt.set('label', 'Hide GMRT');
-                        gmrtLayer.show();
+                        toggleHillshade.set('label', 'Hide Hillshade');
+                        hillshadeLayer.show();
                     }
                     else {                        
-                        toggleGmrt.set('label', 'Show GMRT');
-                        gmrtLayer.hide();
+                        toggleHillshade.set('label', 'Show Hillshade');
+                        hillshadeLayer.hide();
                     }
                 }));
                 basemapLayer.show();
                 boundariesLayer.show();
-
+                
                 var mbLayer = this.mapLayerCollection.getLayerById('Multibeam');
 
-                var lineSymbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 255, 0]), 2);
+                var lineSymbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 255, 0]), 1);
 
                 mbLayer.setDefinitionExpression("SURVEY_ID = '" + this.survey + "'");
                 mbLayer.setRenderer(new SimpleRenderer(lineSymbol));
