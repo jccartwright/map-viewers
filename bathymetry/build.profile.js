@@ -38,18 +38,19 @@ var profile = {
   packages: [
     // "app" is a sample path for your application
     // set this accordingly
-    "app",
-    "dijit",
-    "dojo",
-    "dojox",
-    "dstore",
-    "dgrid",
-    "dgrid1",
-    "xstyle",
-    "put-selector",
-    "esri", {
+    "./js/app",
+    "../bower_components/dijit",
+    "../bower_components/dojo",
+    "../bower_components/dojox",
+    "../bower_components/dstore",
+    "../bower_components/dgrid",
+    "../bower_components/dgrid1",
+    "../bower_components/xstyle",
+    "../bower_components/put-selector",
+    "../bower_components/esri",
+     {
       name: "moment",
-      location: "moment",
+      location: "../bower_components/arcgis-js-api",
       main: "moment",
       trees: [
           // don"t bother with .hidden, tests, min, src, and templates

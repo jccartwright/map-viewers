@@ -18,6 +18,8 @@ var gutil = require('gulp-util');
 var minimist = require('minimist');
 var zip = require('gulp-zip');
 var runSequence = require('run-sequence');
+var spawn = require('child_process').spawn;
+
 
 var srcJsFiles = ['src/**/*.js'];
 //dijits have nested html templates, css, images
@@ -178,12 +180,12 @@ function reload() {
 // Do the Dojo build via node. taken from https://gist.github.com/odoe/3fd5b192d0c2c27e2b04
 gulp.task('dojo', ['clean'], function (cb) {
   var cmd = spawn('node', [
-    'src/dojo/dojo.js',
+    'bower_components/dojo/dojo.js',
     'load=build',
     '--profile',
     'build.profile.js',
     '--releaseDir',
-    '../dist'
+    './dist'
   ], { stdio: 'inherit' });
 
   return cmd.on('close', function (code) {
