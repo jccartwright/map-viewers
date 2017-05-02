@@ -799,8 +799,8 @@ define([
                     '</table>';
 
                 var html = string.substitute(template, {
-                    nosId: a['NOS ID'],
-                    stationName: a['Station Name'],
+                    nosId: a['ID'],
+                    stationName: a['Name'],
                     state: a['State'],
                     latitude: a['Latitude'],
                     longitude: a['Longitude'],
