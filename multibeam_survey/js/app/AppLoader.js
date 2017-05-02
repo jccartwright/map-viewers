@@ -57,7 +57,7 @@ define([
                 esriConfig.defaults.io.corsEnabledServers.push('gis.ngdc.noaa.gov');
                 esriConfig.defaults.io.corsEnabledServers.push('gisdev.ngdc.noaa.gov');
 
-                esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
+                esriConfig.defaults.geometryService = new GeometryService('https://maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
@@ -85,46 +85,46 @@ define([
                     }, new LayerCollection());
                 }
                 else {
-                    domStyle.set(registry.byId('toggleGmrt').domNode, 'display', 'none');
+                    domStyle.set(registry.byId('toggleHillshade').domNode, 'display', 'none');
                     dom.byId('centerPane').innerHTML = 'Map disabled. Please provide survey, xmin, ymin, xmax, and ymax parameters.';
                 }
 
-                var gmrtTooltip = new TooltipDialog({
-                    id: 'gmrtTooltip',
-                    content: '<a href="http://www.marine-geo.org/portals/gmrt/" target="_blank">Global Multi-Resolution Topography Synthesis, Lamont-Doherty Earth Observatory</a>',
+                var hillshadeTooltip = new TooltipDialog({
+                    id: 'hillshadeTooltip',
+                    content: '<a href="https://noaa.maps.arcgis.com/home/item.html?id=6b16e66ffd3740b5820875ad0af25042" target="_blank">Multibeam Mosaic Hillshade</a>',
                     onMouseLeave: function(){
-                        popup.close(gmrtTooltip);
+                        popup.close(hillshadeTooltip);
                     }
                 });
 
                 var tooltipTimeout;
                 var mouseLeaveTimeout;
-                var toggleGmrt = registry.byId('toggleGmrt');
+                var toggleHillshade = registry.byId('toggleHillshade');
                 //Show the tooltip 1/2 sec after entering the toggle button
-                on(toggleGmrt, 'mouseenter', lang.hitch(this, function() {
+                on(toggleHillshade, 'mouseenter', lang.hitch(this, function() {
                     tooltipTimeout = setTimeout(lang.hitch(this, function() {
                         popup.open({
-                            popup: gmrtTooltip,
-                            around: toggleGmrt.domNode
+                            popup: hillshadeTooltip,
+                            around: toggleHillshade.domNode
                         });
                     }), 500);
                 }));
 
                 //Hide the tooltip when toggle button is clicked
-                on(toggleGmrt, 'click', lang.hitch(this, function() {
+                on(toggleHillshade, 'click', lang.hitch(this, function() {
                     clearTimeout(tooltipTimeout);
-                    popup.close(gmrtTooltip);
+                    popup.close(hillshadeTooltip);
                 }));  
 
                 //Hide the tooltip 1 sec after leaving the toggle button
-                on(toggleGmrt, 'mouseleave', lang.hitch(this, function() {
+                on(toggleHillshade, 'mouseleave', lang.hitch(this, function() {
                     mouseLeaveTimeout = setTimeout(function() {
-                        popup.close(gmrtTooltip);
+                        popup.close(hillshadeTooltip);
                     }, 1000);
                 })); 
 
                 //Keep showing the tooltip when the tooltip is entered
-                on(gmrtTooltip.domNode, 'mouseenter', lang.hitch(this, function() {                    
+                on(hillshadeTooltip.domNode, 'mouseenter', lang.hitch(this, function() {                    
                     setTimeout(function() {
                         //short timeout to make sure this happens after the above mouseleave event
                         clearTimeout(mouseLeaveTimeout);

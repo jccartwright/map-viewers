@@ -102,7 +102,7 @@ html,body {
     left: 10px;
     z-index: 50;
 }
-.toggleGmrt {
+.toggleHillshade {
     position: absolute;
     top: 10px;
     right: 10px;

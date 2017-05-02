@@ -40,6 +40,9 @@ define([
                 on(this.chkMultibeam, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Multibeam', this.chkMultibeam.checked);
                 }));
+                on(this.chkMultibeamMosaic, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'Multibeam Mosaic', this.chkMultibeamMosaic.checked);
+                }));
                 on(this.chkTrackline, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Trackline Bathymetry', this.chkTrackline.checked);                    
                 }));
