@@ -4,8 +4,8 @@
     <!-- Version: @application.version@, Last update: @application.buildDate@ -->
     <title>Multibeam Bathymetric Survey Preview</title>
     <link rel="shortcut icon" href="//www.ngdc.noaa.gov/image/favicon.ico">
-    <link rel="stylesheet" href="//js.arcgis.com/3.17/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="//js.arcgis.com/3.17/esri/css/esri.css">
+    <link rel="stylesheet" href="//js.arcgis.com/3.20/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="//js.arcgis.com/3.20/esri/css/esri.css">
     <link rel="stylesheet" href="css/local.css">
     <script>
         var dojoConfig = {
@@ -17,7 +17,7 @@
             packages: [
             {
                 name: "ngdc",
-                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc'
+                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
             },
             {
@@ -26,7 +26,7 @@
             },
             {
                 name: "ncei",
-                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ncei'
+                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ncei'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ncei'
             }
             ],
@@ -35,12 +35,12 @@
             //app-specific config values
             app: {
                 loglevel: 2,
-                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc'
+                ngdcDijitsUrl: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc'
                 //ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
     </script>
-    <script src="//js.arcgis.com/3.17/"></script>
+    <script src="//js.arcgis.com/3.20/"></script>
 </head>
 <body class="tundra">
 <div id="loadingOverlay" class="loadingOverlay pageOverlay">
@@ -54,8 +54,8 @@
     <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
         <div id="mapDiv" data-dojo-type="dijit/layout/ContentPane" title="Mercator" class="map">
             <div id="homeButton"></div>
-            <div id="toggleGmrt" class="toggleGmrt" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:false">
-                Show GMRT
+            <div id="toggleHillshade" class="toggleHillshade" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:false">
+                Show Hillshade
             </div>
         </div>
     </div> <!-- end centerPane -->

@@ -2,12 +2,14 @@ define([
     'dojo/_base/declare', 
     'ngdc/layers/AbstractLayerCollection', 
     'esri/layers/ArcGISTiledMapServiceLayer',
-    'esri/layers/ArcGISDynamicMapServiceLayer'],
+    'esri/layers/ArcGISDynamicMapServiceLayer',
+    'esri/layers/ArcGISImageServiceLayer'],
     function(
         declare, 
         LayerCollection, 
         ArcGISTiledMapServiceLayer, 
-        ArcGISDynamicMapServiceLayer
+        ArcGISDynamicMapServiceLayer,
+        ArcGISImageServiceLayer
         ){
 
         return declare([LayerCollection], {
@@ -43,7 +45,12 @@ define([
                     new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/antarctic_basemap/MapServer', {
                         id: 'Antarctic Basemap',
                         visible: true
-                    }),                                       
+                    }),
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_hillshade/ImageServer', {
+                        id: 'Multibeam Mosaic',
+                        visible: false,
+                        imageServiceParameters: this.imageServiceParameters
+                    }),
                     new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/ibcso_contours/MapServer', {
                         id: 'IBCSO Contours',
                         visible: false,

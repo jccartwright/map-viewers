@@ -2,6 +2,8 @@ define([
     'dojo/_base/declare', 
     'dojo/_base/lang',
     'dojo/dom',
+    'esri/symbols/SimpleLineSymbol',
+    'dojo/_base/Color',
     'ngdc/web_mercator/MapConfig',
     'app/web_mercator/MapToolbar',
     'app/web_mercator/Identify',
@@ -10,6 +12,8 @@ define([
         declare, 
         lang, 
         dom,
+        SimpleLineSymbol,
+        Color,
         MapConfig,
         MapToolbar,
         Identify,
@@ -36,7 +40,8 @@ define([
                     map: this.map,
                     identify: this.identify,
                     'class': 'identifyPane',
-                    autoExpandTree: false
+                    autoExpandTree: false,
+                    lineSymbol: new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0, 255, 255]), 2)
                 }, dom.byId('mercatorIdentifyPaneDiv'));
                 this.identifyPane.startup();
                 

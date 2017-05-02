@@ -44,6 +44,7 @@ define([
             },
 
             defineMapServices: function() {
+
                 //TODO check to ensure unique id
                 this.mapServices = [
                     new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/arctic_basemap/MapServer', {
@@ -54,7 +55,12 @@ define([
                         id: 'DEM Hillshades',
                         visible: false,
                         imageServiceParameters: this.imageServiceParameters
-                    }),                                 
+                    }),
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_hillshade/ImageServer', {
+                        id: 'Multibeam Mosaic',
+                        visible: false,
+                        imageServiceParameters: this.imageServiceParameters
+                    }),
                     new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/ibcao_contours/MapServer', {
                         id: 'IBCAO Contours',
                         visible: false,
