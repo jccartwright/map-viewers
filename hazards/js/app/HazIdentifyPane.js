@@ -120,8 +120,8 @@ define([
                 else if (item.layerName === 'Retrospective BPR Deployments') {
                     return this.getItemLabelSpan(attr['Deployment ID'], uid);
                 }
-                else if (item.layerName === 'NOS/COOPS Tsunami Tide Gauges') {
-                    return this.getItemLabelSpan(attr['Station'] + ': ' + attr['Name'] + ', ' + attr['State'], uid);
+                else if (item.layerName === 'Tsunami Capable Tide Stations') {
+                    return this.getItemLabelSpan(attr['ID'] + ': ' + attr['Name'], uid);
                 }
                 else {
                     return this.getItemLabelSpan(item.value, uid);

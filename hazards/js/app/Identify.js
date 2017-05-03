@@ -912,7 +912,7 @@ define([
             },
 
             tideGaugeSort: function(a, b) {
-                return a.feature.attributes['Station'] > b.feature.attributes['Station'] ? 1 : -1;
+                return a.feature.attributes['ID'] > b.feature.attributes['ID'] ? 1 : -1;
             },
 
             sortResults: function(results) {
@@ -948,7 +948,7 @@ define([
                     if ((features = results['Hazards']['Retrospective BPR Deployments'])) {
                         features.sort(this.retrospectiveBprSort);
                     }
-                    if ((features = results['Hazards']['NOS/COOPS Tsunami Tide Gauges'])) {
+                    if ((features = results['Hazards']['Tsunami Capable Tide Stations'])) {
                         features.sort(this.tideGaugeSort);
                     }
                 }
