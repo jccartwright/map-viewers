@@ -27,6 +27,7 @@ var srcHtmlFiles = ['src/**/*.html'];
 var srcCssFiles = ['src/**/*.css'];
 var srcImageFiles = ['src/**/*.{gif,png,jpg}'];
 var testFiles = ['tests/**/*'];
+var srcDataFiles = ['src/*.json'];  //datafiles should all be at top level
 
 var p = require('./package.json');
 p.buildDate = new Date().toLocaleString();
@@ -106,15 +107,20 @@ gulp.task('styles', function(){
     .pipe(reload());
 });
 
+gulp.task('datafiles', function(){
+    return gulp.src(srcDataFiles)
+    .pipe(gulp.dest('dist'))
+    .pipe(reload());
+});
 
 gulp.task('files', function(){
     gulp.watch(srcHtmlFiles, ['html']);    
     gulp.watch(srcJsFiles, ['scripts']);    
     gulp.watch(srcCssFiles, ['styles']);
     gulp.watch(srcImageFiles, ['images']);
+    gulp.watch(srcDataFiles, ['datafiles']);
     gulp.watch(testFiles, ['tests']);
 });
-
 
 //required for intern tests to run, e.g. http://localhost:3000/node_modules/intern/client.html?config=tests/intern
 gulp.task('copy-intern', function() {
@@ -200,14 +206,14 @@ gulp.task('zip', function() {
     .pipe(gulp.dest('zip/'+p.version));
 });
 
-gulp.task('build', ['html', 'styles', 'scripts', 'images', 'tests', 'copy-intern', 'copy-jsapi']);
+gulp.task('build', ['html', 'styles', 'scripts', 'images', 'datafiles', 'tests', 'copy-intern', 'copy-jsapi']);
 
 gulp.task('package', function(done) {
     //include the Dojo, Esri modules required to run browser test client
     if (environment == 'development') {
         runSequence('build', 'lint', 'zip', done);
     } else {
-        runSequence('clean','scripts', 'html', 'images', 'styles', 'lint', 'zip', done);
+        runSequence('clean','scripts', 'html', 'images', 'styles', 'datafiles', 'lint', 'zip', done);
     }
 });
 
