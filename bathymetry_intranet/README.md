@@ -1,4 +1,4 @@
-Bathymetry Data Viewer
+Crowdsourced Bathymetry Data Viewer
 ======================
 
 Tasks
