@@ -1,1 +1,1 @@
-include 'autogrid', 'crowdmag', 'firedetects', 'dmsp_gcv4', 'dmsp_mosaic', 'ncei_arctic', 'north_atlantic', 'viirs', 'shared'
+include 'autogrid', 'crowdmag', 'firedetects', 'dmsp_gcv4', 'dmsp_mosaic', 'ncei_arctic', 'viirs', 'shared'
