@@ -1,1 +1,1 @@
-include 'autogrid', 'crowdmag', 'ecs_catalog', 'firedetects', 'dmsp_gcv4', 'dmsp_mosaic', 'ncei_arctic', 'north_atlantic', 'pad', 'sample', 'ttt_coastal_locations', 'water_column_sonar', 'wcs-client', 'viirs', 'shared'
+include 'autogrid', 'crowdmag', 'ecs_catalog', 'firedetects', 'dmsp_gcv4', 'dmsp_mosaic', 'ncei_arctic', 'north_atlantic', 'pad', 'sample', 'water_column_sonar', 'wcs-client', 'viirs', 'shared'
