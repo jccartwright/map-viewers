@@ -1,0 +1,33 @@
+{
+  "name": "sample_index",
+  "version": "2.5.0",
+  "description": "sample index data viewer",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://stash.ngdc.noaa.gov:8443/projects/GIS/repos/map-viewers"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.7",
+    "eslint-html-reporter": "^0.5.2",
+    "express": "^4.14.1",
+    "graceful-fs": "^4.1.11",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-eslint": "^3.0.1",
+    "gulp-intern": "0.0.4",
+    "gulp-strip-debug": "^1.1.0",
+    "gulp-token-replace": "^1.0.3",
+    "gulp-util": "^3.0.8",
+    "gulp-watch": "^4.3.11",
+    "gulp-zip": "^4.0.0",
+    "minimist": "^1.2.0",
+    "proj4": "^2.3.17",
+    "run-sequence": "^1.2.2"
+  },
+  "dependencies": {}
+}
