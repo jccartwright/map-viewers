@@ -76,12 +76,23 @@ define([
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer', {
                         id: 'Ocean Base',
                         visible: false,
-                    }),                                        
+                    }),
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/tsunami_energy/MapServer', {
+                        id: 'Tsunami Energy',
+                        visible: false,
+                        opacity: 0.7,
+                        imageParameters: this.imageParameters.jpeg
+                    }),
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/ttt_contours/MapServer', {
+                        id: 'TTT',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),
                     new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
                         visible: false,
                         opacity: 0.5
-                    }),                                                         
+                    }),
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer', {
                         id: 'World Boundaries and Places',
                         visible: false

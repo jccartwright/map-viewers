@@ -149,8 +149,8 @@ define([
                 topic.subscribe("/hazards/ResetDartSearch", lang.hitch(this, function() {
                     this.resetDarts();
                 })); 
-                topic.subscribe('/hazards/ShowTsObsForEvent', lang.hitch(this, function(tsEventId, tsEventPoint) {
-                    this.showTsObsForEvent(tsEventId, tsEventPoint);
+                topic.subscribe('/hazards/ShowTsObsForEvent', lang.hitch(this, function(tsEventId, activateTTTandRIFT, tsEventPoint) {
+                    this.showTsObsForEvent(tsEventId, activateTTTandRIFT, tsEventPoint);
                 })); 
                 topic.subscribe('/hazards/ShowTsEventForObs', lang.hitch(this, function(tsEventId, tsObsPoint) {
                     this.showTsEventForObs(tsEventId, tsObsPoint);
@@ -225,6 +225,10 @@ define([
                         autoExpandTree: true
                     }, dom.byId('identifyPaneDiv'));
                     this.identifyPane.startup();
+
+                    //Set the TTT and Tsunami Energy sublayers to be hidden on startup
+                    this.mapConfig.mapLayerCollection.getLayerById('TTT').setVisibleLayers([-1]);
+                    this.mapConfig.mapLayerCollection.getLayerById('Tsunami Energy').setVisibleLayers([-1]);
 
                     //If the 'tsEvent' URL param is specified, show the tsunami event and its runups
                     if (config.app.tsEvent) {
@@ -383,11 +387,11 @@ define([
 
                 queryTask.execute(query).then(lang.hitch(this, function(fset) {
                     var point = new Point(fset.features[0].geometry.x, fset.features[0].geometry.y, new SpatialReference({ wkid:102100 }));
-                    this.showTsObsForEvent(tsEvent, point);
+                    this.showTsObsForEvent(tsEvent, true, point);
                 }));
             },
 
-            showTsObsForEvent: function(tsEventId, tsEventPoint) {
+            showTsObsForEvent: function(tsEventId, activateTTTandRIFT, tsEventPoint) {
                 var tsEventLayerDefinitions = "ID=" + tsEventId;
                 this.hazLayerDefinitions[this.tsEventLayerID1] = tsEventLayerDefinitions;
                 this.hazLayerDefinitions[this.tsEventLayerID2] = tsEventLayerDefinitions;
@@ -401,9 +405,15 @@ define([
                 
                 this.layersPanel.setTsEventFilterActive(true);
                 this.layersPanel.setTsObsFilterActive(true);
+
+                if (activateTTTandRIFT) {
+                    this.layersPanel.activateTTTandRIFT(tsEventId);
+                }
                            
                 //Zoom to results
-                this.zoomToTsEventAndObservations(tsEventId, tsEventPoint);
+                if (tsEventPoint) {
+                    this.zoomToTsEventAndObservations(tsEventId, tsEventPoint);
+                }
             },
 
             showTsEventForObs: function(tsEventId, tsObsPoint) {                
@@ -414,9 +424,13 @@ define([
                 this.hazMapService.setLayerDefinitions(this.hazLayerDefinitions);
                 
                 this.layersPanel.setTsEventFilterActive(true);
+
+                this.layersPanel.activateTTTandRIFT(tsEventId);
                 
                 //Zoom to results
-                this.zoomToTsEventForObservation(tsEventId, tsObsPoint);
+                if (tsObsPoint) {
+                    this.zoomToTsEventForObservation(tsEventId, tsObsPoint);
+                }
             },
 
             filterTsObs: function(values) {

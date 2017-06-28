@@ -2,11 +2,16 @@ define([
     'dojo/_base/declare',
     'dojo/_base/lang',
     'dojo/topic',
+    'dojo/request/xhr',
+    'dojo/store/Memory', 
     'dojo/on',
     'dojo/aspect',
     'dojo/dom',
     'dojo/dom-attr',
     'dojo/dom-style',
+    'dojo/_base/array',
+    'esri/geometry/Point',
+    'esri/geometry/webMercatorUtils',
     'app/TsEventSearchDialog',
     'app/TsObsSearchDialog',
     'app/SignifEqSearchDialog',
@@ -27,11 +32,16 @@ define([
         declare, 
         lang,
         topic,
+        xhr,
+        Memory,
         on,
         aspect,
         dom,
         domAttr,
         domStyle,
+        array,
+        Point,
+        webMercatorUtils,
         TsEventSearchDialog,
         TsObsSearchDialog,
         SignifEqSearchDialog,
@@ -84,6 +94,12 @@ define([
                 })); 
                 on(registry.byId("checkPlateBoundaries"), "change", lang.hitch(this, function(checked) {
                     this.togglePlateBoundaries(checked);
+                })); 
+                on(registry.byId("checkTTT"), "change", lang.hitch(this, function(checked) {
+                    this.toggleTTT(checked);
+                })); 
+                on(registry.byId("checkTsunamiEnergy"), "change", lang.hitch(this, function(checked) {
+                    this.toggleTsunamiEnergy(checked);
                 })); 
 
                 on(registry.byId("radioTsEvents1"), "click", lang.hitch(this, function() {
@@ -147,7 +163,51 @@ define([
                 on(registry.byId("dartResetButton"), "click", lang.hitch(this, function() {
                     topic.publish('/hazards/ResetDartSearch');
                     this.setDartFilterActive(false);
-                }));              
+                }));
+
+                xhr.get('signifTsEvents.json', {
+                    preventCache: true,
+                    handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data.items) {
+                        data.items.unshift({id: '', name: ''});
+                        this.populateSignifTsEventsSelect(data.items);
+                    }
+                }), function(err){
+                    logger.error('Error retrieving signifTsEvents JSON: ' + err);
+                });
+
+                on(this.signifTsEventSelect, 'change', lang.hitch(this, function() {
+                    var tsEventId = this.signifTsEventSelect.get('value');
+                    this.activateTTTandRIFT(tsEventId);
+                    if (tsEventId !== '') {
+                        var lon = this.signifTsEventSelect.store.query({id: tsEventId})[0].lon;
+                        var lat = this.signifTsEventSelect.store.query({id: tsEventId})[0].lat;
+                        topic.publish('/hazards/ShowTsObsForEvent', tsEventId, false, webMercatorUtils.geographicToWebMercator(new Point(lon, lat)));
+                    }
+                }));  
+
+                on(registry.byId('resetAllButton'), 'click', lang.hitch(this, function() {
+                    topic.publish('/hazards/ResetTsEventSearch');
+                    topic.publish('/hazards/ResetTsObsSearch');
+                    topic.publish('/hazards/ResetSignifEqSearch');
+                    topic.publish('/hazards/ResetVolEventSearch');
+                    topic.publish('/hazards/ResetDartSearch');
+                    
+                    this.setTsEventFilterActive(false);
+                    this.setTsObsFilterActive(false);
+                    this.setVolEventFilterActive(false);
+                    this.setSignifEqFilterActive(false);
+                    this.setDartFilterActive(false);
+
+                    registry.byId('checkTsEvents').set('checked', false);
+                    registry.byId('checkTsObs').set('checked', false);
+                    registry.byId('checkSignifEqs').set('checked', false);
+                    registry.byId('checkVolEvents').set('checked', false);
+                    registry.byId('checkDarts').set('checked', false);
+
+                    this.signifTsEventSelect.set('value', '');
+                }));        
             },
 
             toggleTsEventVisibility: function(visible) {
@@ -239,6 +299,16 @@ define([
                 registry.byId('checkPlateBoundaries').set('checked', visible);
                 topic.publish('/ngdc/sublayer/visibility', 'Hazards', [11], visible);
             },
+
+            toggleTTT: function(visible) {
+                registry.byId('checkTTT').set('checked', visible);
+                topic.publish('/ngdc/layer/visibility', 'TTT', visible);
+            },
+
+            toggleTsunamiEnergy: function(visible) {
+                registry.byId('checkTsunamiEnergy').set('checked', visible);
+                topic.publish('/ngdc/layer/visibility', 'Tsunami Energy', visible);
+            },
             
             setTsEventFilterActive: function(active) {
                 registry.byId("tsEventResetButton").set("disabled", !active);
@@ -308,9 +378,50 @@ define([
                         this.dartSearchDialog.clearForm();
                     }
                 }
-            }
-            
+            },
 
+            populateSignifTsEventsSelect: function(items) {
+                this.signifTsEventSelect.store = new Memory({data: items});
+                this.getSignifTsEventList();
+            },
+
+            getSignifTsEventList: function() {
+                var items = this.signifTsEventSelect.store.query();
+                this.signifTsEventIds = [];
+                array.forEach(items, lang.hitch(this, function(item) {
+                    if (item.id) {
+                        this.signifTsEventIds.push(item.id);
+                    }
+                }));
+            },
+
+            activateTTTandRIFT: function(tsEventId) {
+                var tttLayer, riftLayer;
+
+                this.signifTsEventSelect.set('value', tsEventId);
+
+                if (tsEventId !== '') {
+                    tttLayer = this.signifTsEventSelect.store.query({id: tsEventId})[0].tttLayer;
+                    riftLayer = this.signifTsEventSelect.store.query({id: tsEventId})[0].riftLayer;
+                }
+
+                topic.publish('/ngdc/sublayer/visibility', 'TTT', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], false);
+                topic.publish('/ngdc/sublayer/visibility', 'Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], false);
+
+                if (tttLayer !== null && tttLayer !== undefined) {
+                    registry.byId('checkTTT').set('checked', true);
+                    topic.publish('/ngdc/sublayer/visibility', 'TTT', [tttLayer], true);
+                } else {
+                    registry.byId('checkTTT').set('checked', false);
+                }
+
+                if (riftLayer !== null && riftLayer !== undefined) {
+                    registry.byId('checkTsunamiEnergy').set('checked', true);
+                    topic.publish('/ngdc/sublayer/visibility', 'Tsunami Energy', [riftLayer], true);
+                } else {
+                    registry.byId('checkTsunamiEnergy').set('checked', false);
+                }   
+            }
         });
     }
 );

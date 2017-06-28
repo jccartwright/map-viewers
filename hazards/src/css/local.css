@@ -330,3 +330,15 @@ html,body {
     width: 16px;
     height: 16px;
 }
+
+.tooltipButton {
+    vertical-align: bottom;
+}
+
+.tooltipButtonMiddle {
+    vertical-align: middle;
+}
+
+.tooltipText {
+    width: 200px;
+}

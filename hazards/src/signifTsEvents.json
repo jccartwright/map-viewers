@@ -1,0 +1,24 @@
+{"identifier":"id","numRows":20,
+	"items":[
+		{"id":361,"tttLayer":0,"riftLayer":0,"name":"1700/1/27 Cascadia Subduction Zone","lon":-125,"lat":45},
+		{"id":456,"tttLayer":1,"riftLayer":1,"name":"1755/11/1 Lisbon, Portugal","lon":-10,"lat":37},
+		{"id":1458,"tttLayer":2,"riftLayer":null,"name":"1918/10/11 Puerto Rico","lon":-67.5,"lat":18.5},
+		{"id":1622,"tttLayer":3,"riftLayer":null,"name":"1929/11/18 Grand Banks, Newfoundland","lon":-56,"lat":44.69},
+		{"id":1762,"tttLayer":4,"riftLayer":2,"name":"1946/4/1 Unimak Island, Alaska","lon":-162.832,"lat":53.492},
+		{"id":1829,"tttLayer":5,"riftLayer":null,"name":"1952/11/4 Kamchatka, Russia","lon":160.057,"lat":52.755},
+		{"id":1867,"tttLayer":6,"riftLayer":3,"name":"1957/3/9 Andreanof Islands, Alaska","lon":-175.629,"lat":51.292},
+		{"id":1902,"tttLayer":7,"riftLayer":4,"name":"1960/5/22 Southern Chile","lon":-73.407,"lat":-38.143},
+		{"id":1954,"tttLayer":8,"riftLayer":5,"name":"1964/3/28 Prince William Sound, Alaska","lon":-147.648,"lat":61.017},
+		{"id":2439,"tttLayer":9,"riftLayer":6,"name":"2004/12/26 Sumatra, Indonesia","lon":95.854,"lat":3.316},
+		{"id":3016,"tttLayer":10,"riftLayer":null,"name":"2006/11/15 S. Kuril Islands, Russia","lon":153.266,"lat":46.592},
+		{"id":3019,"tttLayer":11,"riftLayer":null,"name":"2007/1/13 S. Kuril Islands, Russia","lon":154.524,"lat":46.243},
+		{"id":3037,"tttLayer":12,"riftLayer":null,"name":"2007/4/1 Solomon Islands","lon":157.044,"lat":-8.46},
+		{"id":3168,"tttLayer":13,"riftLayer":null,"name":"2007/8/15 Peru","lon":-76.603,"lat":-13.386},
+		{"id":4440,"tttLayer":14,"riftLayer":7,"name":"2009/9/29 Samoa","lon":-172.095,"lat":-15.489},
+		{"id":4622,"tttLayer":15,"riftLayer":null,"name":"2010/1/12 Haiti","lon":-72.533,"lat":18.457},
+		{"id":4682,"tttLayer":16,"riftLayer":8,"name":"2010/2/27 Central Chile","lon":-72.898,"lat":-36.122},
+		{"id":5413,"tttLayer":17,"riftLayer":9,"name":"2011/3/11 Tohoku, Japan","lon":142.372,"lat":38.297},
+		{"id":5476,"tttLayer":18,"riftLayer":null,"name":"2013/2/6 Solomon Islands","lon":165.114,"lat":-10.766},
+		{"id":5590,"tttLayer":19,"riftLayer":null,"name":"2015/9/16 Central Chile","lon":-71.674,"lat":-31.573}
+	]
+}
