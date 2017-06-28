@@ -226,6 +226,10 @@ define([
                     }, dom.byId('identifyPaneDiv'));
                     this.identifyPane.startup();
 
+                    //Set the TTT and Tsunami Energy sublayers to be hidden on startup
+                    this.mapConfig.mapLayerCollection.getLayerById('TTT').setVisibleLayers([-1]);
+                    this.mapConfig.mapLayerCollection.getLayerById('Tsunami Energy').setVisibleLayers([-1]);
+
                     //If the 'tsEvent' URL param is specified, show the tsunami event and its runups
                     if (config.app.tsEvent) {
                         this.showTsEventOnStartup(config.app.tsEvent);
