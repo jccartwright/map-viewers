@@ -45,7 +45,7 @@ define([
                 this.showTsObservationsButton.startup(); //necessary?
                 this.showTsObservationsButton.placeAt(this.zoomToButton.domNode, 'after');
                 on(this.showTsObservationsButton, 'click', lang.hitch(this, function() {
-                    topic.publish('/hazards/ShowTsObsForEvent', this.currentItem.attributes['ID'], this.highlightGraphic.geometry);
+                    topic.publish('/hazards/ShowTsObsForEvent', parseInt(this.currentItem.attributes['ID']), true, this.highlightGraphic.geometry);
                 }));
                 
                 this.showTsEventButton = new Button({
@@ -57,7 +57,7 @@ define([
                 this.showTsEventButton.startup();
                 this.showTsEventButton.placeAt(this.showTsObservationsButton.domNode, 'after');
                 on(this.showTsEventButton, 'click', lang.hitch(this, function() {
-                    topic.publish('/hazards/ShowTsEventForObs', this.currentItem.attributes['Tsunami Event ID'], this.highlightGraphic.geometry);
+                    topic.publish('/hazards/ShowTsEventForObs', parseInt(this.currentItem.attributes['Tsunami Event ID']), this.highlightGraphic.geometry);
                 }));
             },
 
