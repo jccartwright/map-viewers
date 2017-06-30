@@ -19,7 +19,7 @@ var minimist = require('minimist');
 var zip = require('gulp-zip');
 var runSequence = require('run-sequence');
 var spawn = require('child_process').spawn;
-
+var chmod = require('gulp-chmod');
 
 var srcJsFiles = ['src/**/*.js'];
 //dijits have nested html templates, css, images
@@ -202,6 +202,7 @@ gulp.task('dojo', ['clean'], function (cb) {
 
 gulp.task('zip', function() {
     gulp.src('dist/**/*')
+    .pipe(chmod(0o664, 0o775))
     .pipe(zip(zipFileName))
     .pipe(gulp.dest('zip/'+p.version));
 });
