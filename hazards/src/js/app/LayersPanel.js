@@ -11,7 +11,9 @@ define([
     'dojo/dom-style',
     'dojo/_base/array',
     'esri/geometry/Point',
+    'esri/geometry/Extent',
     'esri/geometry/webMercatorUtils',
+    'esri/SpatialReference',
     'app/TsEventSearchDialog',
     'app/TsObsSearchDialog',
     'app/SignifEqSearchDialog',
@@ -41,7 +43,9 @@ define([
         domStyle,
         array,
         Point,
+        Extent,
         webMercatorUtils,
+        SpatialReference,
         TsEventSearchDialog,
         TsObsSearchDialog,
         SignifEqSearchDialog,
@@ -181,9 +185,23 @@ define([
                     var tsEventId = this.signifTsEventSelect.get('value');
                     this.activateTTTandRIFT(tsEventId);
                     if (tsEventId !== '') {
-                        var lon = this.signifTsEventSelect.store.query({id: tsEventId})[0].lon;
-                        var lat = this.signifTsEventSelect.store.query({id: tsEventId})[0].lat;
-                        topic.publish('/hazards/ShowTsObsForEvent', tsEventId, false, webMercatorUtils.geographicToWebMercator(new Point(lon, lat)));
+                        var store = this.signifTsEventSelect.store;
+                        var lon = store.query({id: tsEventId})[0].lon;
+                        var lat = store.query({id: tsEventId})[0].lat;
+                        var xmin = store.query({id: tsEventId})[0].xmin;
+                        var xmax = store.query({id: tsEventId})[0].xmax;
+                        var ymin = store.query({id: tsEventId})[0].ymin;
+                        var ymax = store.query({id: tsEventId})[0].ymax;
+                        var extent;
+
+                        if (xmin && xmax && ymin && ymax) {
+                            //Handle antimeridian-crossing extent
+                            if (xmin > xmax) {
+                                xmin = xmin - 360;
+                            }
+                            extent = new Extent(xmin, ymin, xmax, ymax, new SpatialReference({wkid: 4326}))
+                        }
+                        topic.publish('/hazards/ShowTsObsForEvent', tsEventId, false, webMercatorUtils.geographicToWebMercator(new Point(lon, lat)), extent);
                     }
                 }));  
 
