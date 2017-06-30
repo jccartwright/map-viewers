@@ -149,8 +149,8 @@ define([
                 topic.subscribe("/hazards/ResetDartSearch", lang.hitch(this, function() {
                     this.resetDarts();
                 })); 
-                topic.subscribe('/hazards/ShowTsObsForEvent', lang.hitch(this, function(tsEventId, activateTTTandRIFT, tsEventPoint) {
-                    this.showTsObsForEvent(tsEventId, activateTTTandRIFT, tsEventPoint);
+                topic.subscribe('/hazards/ShowTsObsForEvent', lang.hitch(this, function(tsEventId, activateTTTandRIFT, tsEventPoint, extent) {
+                    this.showTsObsForEvent(tsEventId, activateTTTandRIFT, tsEventPoint, extent);
                 })); 
                 topic.subscribe('/hazards/ShowTsEventForObs', lang.hitch(this, function(tsEventId, tsObsPoint) {
                     this.showTsEventForObs(tsEventId, tsObsPoint);
@@ -391,7 +391,7 @@ define([
                 }));
             },
 
-            showTsObsForEvent: function(tsEventId, activateTTTandRIFT, tsEventPoint) {
+            showTsObsForEvent: function(tsEventId, activateTTTandRIFT, tsEventPoint, extent) {
                 var tsEventLayerDefinitions = "ID=" + tsEventId;
                 this.hazLayerDefinitions[this.tsEventLayerID1] = tsEventLayerDefinitions;
                 this.hazLayerDefinitions[this.tsEventLayerID2] = tsEventLayerDefinitions;
@@ -410,8 +410,11 @@ define([
                     this.layersPanel.activateTTTandRIFT(tsEventId);
                 }
                            
-                //Zoom to results
-                if (tsEventPoint) {
+                //Zoom to the specified extent or to the event and its observations.
+                if (extent) {
+                    this.mapConfig.map.setExtent(extent, true);
+                }
+                else if (tsEventPoint) {
                     this.zoomToTsEventAndObservations(tsEventId, tsEventPoint);
                 }
             },
