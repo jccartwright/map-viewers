@@ -8,7 +8,9 @@ define([
     'esri/layers/WMSLayerInfo',
     'esri/geometry/Extent',
     'app/CustomWMSLayer',
-    'app/NARRWMSLayer'
+    'app/NARRWMSLayer',
+    'app/AVHRRWMSLayer',
+    'app/SeaIceIndexWMSLayer'
     ],
     function(
         declare, 
@@ -20,7 +22,9 @@ define([
         WMSLayerInfo,
         Extent,
         CustomWMSLayer,
-        NARRWMSLayer
+        NARRWMSLayer,
+        AVHRRWMSLayer,
+        SeaIceIndexWMSLayer
         ){
 
         return declare([LayerCollection], {
@@ -64,6 +68,11 @@ define([
                     }),               
                     new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer', {
                         id: 'DEM Hillshades',
+                        visible: false,
+                        imageServiceParameters: this.imageServiceParameters
+                    }),
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_hillshade/ImageServer', {
+                        id: 'Multibeam Mosaic',
                         visible: false,
                         imageServiceParameters: this.imageServiceParameters
                     }),
@@ -116,7 +125,61 @@ define([
                         numColorBands: 25,
                         logScale: false,
                         visible: false
-                    }),                    
+                    }),
+
+                    new AVHRRWMSLayer('https://www.ncei.noaa.gov/thredds/wms/avhrr-polar-pathfinder-ext-files/nhem/2016/Polar-APP-X_v01r01_Nhem_1400_d20160801_c20160803.nc', {
+                        id: 'AVHRR surface_albedo',                        
+                        format: 'png',
+                        resourceInfo: wmsResourceInfo,
+                        version: '1.3.0',
+                        visibleLayers: ['cdr_surface_albedo'],
+                        styles: 'boxfill/rainbow',
+                        colorScaleRange: '0,1',
+                        numColorBands: 25,
+                        logScale: false,
+                        visible: false
+                    }),
+                    new AVHRRWMSLayer('https://www.ncei.noaa.gov/thredds/wms/avhrr-polar-pathfinder-ext-files/nhem/2016/Polar-APP-X_v01r01_Nhem_1400_d20160801_c20160803.nc', {
+                        id: 'AVHRR sea_ice_thickness',                        
+                        format: 'png',
+                        resourceInfo: wmsResourceInfo,
+                        version: '1.3.0',
+                        visibleLayers: ['cdr_sea_ice_thickness'],
+                        styles: 'boxfill/rainbow',
+                        colorScaleRange: '0,2',
+                        numColorBands: 25,
+                        logScale: false,
+                        visible: false
+                    }),
+                    new AVHRRWMSLayer('https://www.ncei.noaa.gov/thredds/wms/avhrr-polar-pathfinder-ext-files/nhem/2016/Polar-APP-X_v01r01_Nhem_1400_d20160801_c20160803.nc', {
+                        id: 'AVHRR cloud_binary_mask',                        
+                        format: 'png',
+                        resourceInfo: wmsResourceInfo,
+                        version: '1.3.0',
+                        visibleLayers: ['cdr_cloud_binary_mask'],
+                        styles: 'boxfill/redblue',
+                        colorScaleRange: '0,1',
+                        numColorBands: 25,
+                        logScale: false,
+                        visible: false
+                    }),
+
+                    new SeaIceIndexWMSLayer('https://nsidc.org/api/mapservices/NSIDC/ows', {
+                        id: 'Sea Ice Index Daily Concentration',                        
+                        format: 'png',
+                        resourceInfo: wmsResourceInfo,
+                        version: '1.3.0',
+                        visibleLayers: ['g02135_concentration_raster_daily_n'],
+                        visible: false
+                    }),
+                    new SeaIceIndexWMSLayer('https://nsidc.org/api/mapservices/NSIDC/ows', {
+                        id: 'Sea Ice Index Monthly Concentration',                        
+                        format: 'png',
+                        resourceInfo: wmsResourceInfo,
+                        version: '1.3.0',
+                        visibleLayers: ['g02135_concentration_raster_monthly_n'],
+                        visible: false
+                    }),
 
                     new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/ibcao_contours/MapServer', {
                         id: 'IBCAO Contours',
@@ -190,8 +253,17 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),  
-                    
 
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/DSCRTP/MapServer', {
+                        id: 'DSCRTP (tiled)',
+                        visible: false
+                    }),
+                    new ArcGISDynamicMapServiceLayer('https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer', {
+                        id: 'DSCRTP (dynamic)',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),
+                                      
                     new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/graticule/MapServer', {
                         id: 'Graticule',
                         visible: true,
@@ -229,11 +301,21 @@ define([
                     0: 'FEATURE_ID',
                     1: 'FEATURE_ID',
                     2: 'FEATURE_ID'
-                };
+                };                
             },  //end defineMapServices
 
             definePairedMapServices: function() {
-                //logger.debug('creating pairedMapServices...');                
+                this.pairedMapServices = [
+                    {
+                        id: 'DSCRTP',
+                        tiledService: this.getLayerById('DSCRTP (tiled)'),
+                        dynamicService: this.getLayerById('DSCRTP (dynamic)'),
+                        cutoffZoom: 7,
+                        ignoreLayerDefinitions: true,
+                        ignoreDefaultVisibleLayers: true,
+                        visible: false
+                    }
+                ];                
             },
 
             setSubLayerVisibility: function() {

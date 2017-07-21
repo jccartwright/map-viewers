@@ -163,6 +163,9 @@ define([
                 else if (layerKey === 'ISD/Hourly Global') {
                     return 'Integrated Surface Global Hourly Data (ISD)';
                 }
+                else if (layerKey === 'DSCRTP/Locations') {
+                    return 'Deep Sea Corals';
+                }
                             
             },
 
@@ -272,6 +275,9 @@ define([
                 }
                 else if (item.formatter === 'ISD/Hourly Global') {
                     return this.getItemLabelSpan(a['STATION'], uid);
+                }
+                else if (item.formatter === 'DSCRTP/Locations') {
+                    return this.getItemLabelSpan(a['scientificname'] + '(' + a['vernacularnamecategory'] + ')', uid);
                 }
                 
             },

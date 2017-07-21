@@ -24,7 +24,7 @@ define([
                 //augment arguments object with list of layers to identify.
                 arguments[0].layerIds = ['Multibeam', 'Trackline Combined', 'NOS Hydrographic Surveys', 'NOS Hydro (non-digital)', 
                     'DEM Extents', 'Sample Index', 'Marine Geology', 'Undersea Features', //'Magnetic Declination',
-                    'CRN', 'GHCND', 'GSOM', 'GSOY', 'ISD'];
+                    'CRN', 'GHCND', 'GSOM', 'GSOY', 'ISD', 'DSCRTP'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
@@ -57,6 +57,7 @@ define([
                     'GSOM/Global Surface Summary of the Month': lang.hitch(this, this.gsomFormatter),
                     'GSOY/Global Surface Summary of the Year': lang.hitch(this, this.gsoyFormatter),
                     'ISD/Hourly Global': lang.hitch(this, this.isdFormatter),
+                    'DSCRTP/Locations': lang.hitch(this, this.deepSeaCoralFormatter),
                 };
             } //end constructor
         });

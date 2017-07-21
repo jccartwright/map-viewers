@@ -44,6 +44,9 @@ define([
                 on(this.chkMultibeam, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Multibeam', this.chkMultibeam.checked);
                 }));
+                on(this.chkMultibeamMosaic, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'Multibeam Mosaic', this.chkMultibeamMosaic.checked);
+                }));
                 on(this.chkNosHydroBags, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0], this.chkNosHydroBags.checked);
 
@@ -148,7 +151,28 @@ define([
                 on(this.chkNARR, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'NARR-A Monthly', this.chkNARR.checked);                    
                 }));
-                
+
+                on(this.chkDSCRTP, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'DSCRTP', this.chkDSCRTP.checked);                    
+                }));
+
+                on(this.chkAVHRR_albedo, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'AVHRR surface_albedo', this.chkAVHRR_albedo.checked);                    
+                }));
+                on(this.chkAVHRR_seaicethickness, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'AVHRR sea_ice_thickness', this.chkAVHRR_seaicethickness.checked);                    
+                }));
+                on(this.chkAVHRR_cloudmask, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'AVHRR cloud_binary_mask', this.chkAVHRR_cloudmask.checked);                    
+                }));
+
+                on(this.chkSeaIceDailyConcentration, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'Sea Ice Index Daily Concentration', this.chkSeaIceDailyConcentration.checked);                    
+                }));
+                on(this.chkSeaIceMonthlyConcentration, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'Sea Ice Index Monthly Concentration', this.chkSeaIceMonthlyConcentration.checked);                    
+                }));
+
                 var elevations = [0.0,-5.0,-10.0,-15.0,-20.0,-25.0,-30.0,-35.0,-40.0,-45.0,-50.0,-55.0,-60.0,-65.0,-70.0,-75.0,-80.0,-85.0,-90.0,-95.0,
                     -100.0,-125.0,-150.0,-175.0,-200.0,-225.0,-250.0,-275.0,-300.0,-325.0,-350.0,-375.0,-400.0,-425.0,-450.0,-475.0,-500.0,-550.0,-600.0,-650.0,-700.0,
                     -750.0,-800.0,-850.0,-900.0,-950.0,-1000.0,-1050.0,-1100.0,-1150.0,-1200.0,-1250.0,-1300.0,-1350.0,-1400.0,-1450.0,-1500.0,-1550.0,-1600.0,-1650.0,

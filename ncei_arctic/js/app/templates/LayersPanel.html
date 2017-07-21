@@ -1,8 +1,12 @@
 <div class="layersPanel_class">
     <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Marine Geology and Geophysics', open: false">
         <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Bathymetric Surveys', open: false">
+            <a href="https://ngdc.noaa.gov/mgg/bathymetry/relief.html" target="_blank">More information about these layers</a><br><br>
             <input type="checkbox" data-dojo-attach-point="chkMultibeam" data-dojo-type="dijit/form/CheckBox">
             <label for="chkMultibeam">Multibeam Bathymetric Surveys</label><br>
+
+            <input type="checkbox" data-dojo-attach-point="chkMultibeamMosaic" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkMultibeamMosaic">Multibeam Shaded Relief Imagery</label><br>
 
             <input type="checkbox" id="chkSinglebeam" data-dojo-attach-point="chkSinglebeam" data-dojo-type="dijit/form/CheckBox">
             <label for="chkSinglebeam">Single-Beam (Trackline) Bathymetric Surveys</label><br><br>
@@ -26,10 +30,11 @@
             <div id="currentFilter" class="filterText"></div><br> -->
 
             <input type="checkbox" id="chkBagHillshades" data-dojo-attach-point="chkBagHillshades" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblBagHillshades"for="chkBagHillshades">BAG Color Shaded Relief Imagery</label>
+            <label id="lblBagHillshades"for="chkBagHillshades">BAG Shaded Relief Imagery</label>
         </div>
 
         <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Trackline Geophysical Surveys', open: false">
+            <a href="https://ngdc.noaa.gov/mgg/mggd.html" target="_blank">More information about these layers</a><br><br>
             <input type="checkbox" id="chkGravity" data-dojo-attach-point="chkGravity" data-dojo-type="dijit/form/CheckBox">
             <label for="chkGravity">Gravity</label><br>
             
@@ -59,6 +64,7 @@
         </div>
 
         <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Digital Elevation Models (DEMs)', open: false">
+            <a href="https://ngdc.noaa.gov/mgg/coastal/coastal.html" target="_blank">More information about these layers</a><br><br>
             <input type="checkbox" id="chkDems" data-dojo-attach-point="chkDems" data-dojo-type="dijit/form/CheckBox">
             <label for="chkDems">DEM Footprints</label><br>
 
@@ -67,6 +73,7 @@
         </div>
 
         <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Marine Geology', open: false">
+            <a href="https://ngdc.noaa.gov/mgg/geology/geology.html" target="_blank">More information about these layers</a><br><br>
             <input type="checkbox" id="chkSampleIndex" data-dojo-attach-point="chkSampleIndex" data-dojo-type="dijit/form/CheckBox">
             <label for="chkSampleIndex">Index to Marine and Lacustrine Geologic Samples</label><br>
 
@@ -75,6 +82,7 @@
         </div>
 
         <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Geomagnetism', open: false">
+            <a href="https://ngdc.noaa.gov/geomag/geomag.shtml" target="_blank">More information about these layers</a><br><br>
             <input type="checkbox" id="chkDeclination" data-dojo-attach-point="chkDeclination" data-dojo-type="dijit/form/CheckBox">
             <label for="chkDeclination">Magnetic Declination</label><br>
 
@@ -83,6 +91,7 @@
         </div>
 
         <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Undersea Features', open: false">
+            <a href="https://ngdc.noaa.gov/gazetteer/" target="_blank">More information about this layer</a><br><br>
             <input type="checkbox" id="chkUnderseaFeatures" data-dojo-attach-point="chkUnderseaFeatures" data-dojo-type="dijit/form/CheckBox">
             <label for="chkUnderseaFeatures">GEBCO Gazetteer of Undersea Feature Names</label>
         </div>
@@ -91,22 +100,23 @@
 
     <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Climate Data Online (CDO)', open: false">
         <input type="checkbox" id="chkCrn" data-dojo-attach-point="chkCrn" data-dojo-type="dijit/form/CheckBox">
-        <label for="chkCrn">U.S. Climate Reference Network (USCRN)</label><br>
+        <label for="chkCrn"><a href="https://www.nodc.noaa.gov/OC5/regional_climate/arctic/" target=_blank>U.S. Climate Reference Network (USCRN)</a></label><br>
 
         <input type="checkbox" id="chkGhcnd" data-dojo-attach-point="chkGhcnd" data-dojo-type="dijit/form/CheckBox">
-        <label for="chkGhcnd">Global Historical Climate Network- Daily (GHCND)</label><br>
+        <label for="chkGhcnd"><a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn" target="_blank">Global Historical Climate Network- Daily (GHCND)</a></label><br>
 
         <input type="checkbox" id="chkGsom" data-dojo-attach-point="chkGsom" data-dojo-type="dijit/form/CheckBox">
-        <label for="chkGsom">Global Summary of the Month (GSOM)</label><br>
+        <label for="chkGsom"><a href="https://data.nodc.noaa.gov/cgi-bin/iso?id=gov.noaa.ncdc:C00946" target="_blank">Global Summary of the Month (GSOM)</a></label><br>
 
         <input type="checkbox" id="chkGsoy" data-dojo-attach-point="chkGsoy" data-dojo-type="dijit/form/CheckBox">
-        <label for="chkGsoy">Global Summary of the Year (GSOY)</label><br>
+        <label for="chkGsoy"><a href="https://data.nodc.noaa.gov/cgi-bin/iso?id=gov.noaa.ncdc:C00947" target="_blank">Global Summary of the Year (GSOY)</a></label><br>
 
         <input type="checkbox" id="chkIsd" data-dojo-attach-point="chkIsd" data-dojo-type="dijit/form/CheckBox">
-        <label for="chkIsd">Integrated Surface Global Hourly Data (ISD)</label>
+        <label for="chkIsd"><a href="https://data.nodc.noaa.gov/cgi-bin/iso?id=gov.noaa.ncdc:C00532" target="_blank">Integrated Surface Global Hourly Data (ISD)</a></label>
     </div>
 
     <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Arctic Regional Climatology', open: false">
+        <a href="https://www.nodc.noaa.gov/OC5/regional_climate/arctic/" target="_blank">More information about these layers</a><br><br>
         <input type="checkbox" id="chkTemperature" data-dojo-attach-point="chkTemperature" data-dojo-type="dijit/form/CheckBox">
         <label for="chkTemperature">Sea Water Temperature</label><br>
 
@@ -128,6 +138,7 @@
     </div>
 
     <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'NOMADS NARR-A Monthly', open: false">
+        <a href="https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/north-american-regional-reanalysis-narr" target="_blank">More information about these layers</a><br><br>
         <input type="checkbox" id="chkNARR" data-dojo-attach-point="chkNARR" data-dojo-type="dijit/form/CheckBox">
         <label for="chkNARR">Ground Heat Flux</label><br>
         
@@ -146,6 +157,35 @@
         <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Show Legend', open: false">
             <img src="https://nomads.ncdc.noaa.gov/thredds/wms/narr-a-cdc-mon/201408/20140801/narrmonhr-a_221_20140801_1500_000.grb?REQUEST=GetLegendGraphic&amp;COLORBARONLY=false&amp;WIDTH=50&amp;HEIGHT=200&amp;PALETTE=rainbow&amp;NUMCOLORBANDS=25&amp;LAYER=Ground_Heat_Flux&amp;COLORSCALERANGE=-5,50">
         </div>
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Deep Sea Coral Research and Technology Program (DSCRTP)', open: false">
+        <a href="https://deepseacoraldata.noaa.gov/" target="_blank">More information about this layer</a><br><br>
+        <input type="checkbox" id="chkDSCRTP" data-dojo-attach-point="chkDSCRTP" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkDSCRTP">Coral-Sponge Locations</label><br>        
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Extended AVHRR Polar Pathfinder (APP-x)', open: false">
+        <a href="https://www.ncdc.noaa.gov/cdr/atmospheric/extended-avhrr-polar-pathfinder-app-x" target="_blank">More information about these layers</a><br><br>        
+        <input type="checkbox" id="chkAVHRR_albedo" data-dojo-attach-point="chkAVHRR_albedo" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkAVHRR_albedo">Surface Albedo</label><br>
+
+        <input type="checkbox" id="chkAVHRR_seaicethickness" data-dojo-attach-point="chkAVHRR_seaicethickness" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkAVHRR_seaicethickness">Sea Ice Thickness</label><br>
+
+        <input type="checkbox" id="chkAVHRR_cloudmask" data-dojo-attach-point="chkAVHRR_cloudmask" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkAVHRR_cloudmask">Binary Cloud Mask</label><br><br>
+        <i>By default, data is shown from August 1, 2016 at 14:00 LST (1400_d20160801).</i>    
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Sea Ice Index', open: false">
+        <a href="http://nsidc.org/data/docs/noaa/g02135_seaice_index/" target="_blank">More information about these layers</a><br><br> 
+        <input type="checkbox" id="chkSeaIceDailyConcentration" data-dojo-attach-point="chkSeaIceDailyConcentration" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeaIceDailyConcentration">Daily Concentration</label><br>   
+
+        <input type="checkbox" id="chkSeaIceMonthlyConcentration" data-dojo-attach-point="chkSeaIceMonthlyConcentration" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSeaIceMonthlyConcentration">Monthly Concentration</label><br><br>
+        <i>Most recent data shown by default.</i>
     </div>
 
     <!-- <h3>Bathymetric Lidar</h3>
