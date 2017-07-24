@@ -86,6 +86,11 @@ define([
                 this.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(['LAT>=50']);
                 this.mapLayerCollection.getLayerById('Marine Geology').setLayerDefinitions(['LATITUDE>=50']);
 
+                this.mapLayerCollection.getLayerById('DSCRTP').setVisibleLayers([0]);
+                this.mapLayerCollection.getLayerById('DSCRTP').setLayerDefinitions(['LATITUDE>=50']);
+
+                this.mapLayerCollection.getLayerById('DSCRTP').objectIdFields = {0: 'objectid'};
+
 
                 //this.mapLayerCollection.getLayerById('EMAG2').setVisibleLayers([5]);
 

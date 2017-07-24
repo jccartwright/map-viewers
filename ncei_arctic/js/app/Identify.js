@@ -413,6 +413,45 @@ define([
                 return html;
             },
 
+            deepSeaCoralFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3><i>${scientificName}</i> (${vernacularNameCategory})</h3>' +
+                    '<div class="valueName">Date: <span class="parameterValue">${observationDate}</span></div>' +
+                    '<div class="valueName">Depth (m): <span class="parameterValue">${depthInMeters}</span></div>' +  
+                    '<div class="valueName">Position (lat/lon): <span class="parameterValue">${latitude} ${longitude}</span></div>' +  
+                    '<div class="valueName">Location Accuracy (m): <span class="parameterValue">${locationAccuracy}</span></div>' +  
+                    '<div class="valueName">Sample ID: <span class="parameterValue">${sampleId}</span></div>' + 
+                    '<div class="valueName">Data Provider: <span class="parameterValue">${repository}</span></div>' +  
+                    '<div class="valueName">Identification Qualifier: <span class="parameterValue">${identificationQualifier}</span></div>' +  
+                    '<div class="valueName">Citation: <span class="parameterValue">${citation}</span></div>' +  
+                    '<div class="valueName">Catalog Number: <span class="parameterValue">${catalogNumber}</span></div>' +  
+                    '<div class="valueName">Taxonomic Rank: <span class="parameterValue">${taxonomicRank}</span></div>' +  
+                    '<div class="valueName">Sampling Equipment: <span class="parameterValue">${samplingEquipment}</span></div>' +  
+                    '<div class="valueName">Location: <span class="parameterValue">${locality}</span></div>';
+                    
+                var html = string.substitute(template, {
+                    scientificName: a['scientificname'],
+                    vernacularNameCategory: a['vernacularnamecategory'],
+                    observationDate: a['observationdate'],
+                    depthInMeters: a['depthinmeters'],
+                    latitude: a['latitude'],
+                    longitude: a['longitude'],
+                    locationAccuracy: a['locationaccuracy'],
+                    sampleId: a['sampleid'],
+                    repository: a['repository'],
+                    identificationQualifier: a['identificationqualifier'],
+                    citation: a['citation'],
+                    catalogNumber: a['catalognumber'],
+                    taxonomicRank: a['taxonrank'],
+                    samplingEquipment: a['samplingequipment'],
+                    locality: a['locality']
+                });
+                return html;
+            },
+
+
             multibeamSort: function(a, b) {
                 //Sort by year descending, then alphabetical by survey ID
                 if (a.feature.attributes['Survey Year'] === b.feature.attributes['Survey Year']) {
