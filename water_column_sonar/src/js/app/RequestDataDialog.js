@@ -247,7 +247,7 @@ define([
             queryForFileCountAndSize: function(queryParams) {
                 var queryString = ioQuery.objectToQuery(queryParams);
 
-                xhr.get('//www.ngdc.noaa.gov/catalog-index/extents', {
+                xhr.get('https://www.ngdc.noaa.gov/catalog-index/extents', {
                     headers: {
                         //Set these headers to prevent a pre-flight OPTIONS request to the server. These requests are being blocked.
                         "X-Requested-With": null,
@@ -260,9 +260,11 @@ define([
                     var numFiles = response.count;
                     var megabytes = Math.round(response.size / 1048576.0 * 100) / 100;
                     this.updateFileSizeText(numFiles, megabytes);
-                }), function(error) {
-                    alert('Error: ' + error);
-                });
+                }), lang.hitch(this, function(error) {
+                    //alert('Error: ' + error);
+                    console.error('Unable to retrieve file size and count. Error: ' + error);
+                    this.updateFileSizeText(null, null);
+                }));
             },
 
             submitOrder: function(orderParams) {
@@ -341,7 +343,7 @@ define([
                     this.fileSizeText.innerHTML = 'unavailable';
                 }
 
-                if (numFiles > 0) {
+                if (numFiles && numFiles > 0) {
                     this.numFilesText.innerHTML = numFiles.toString();
                     this.fileCountAndSizeAvailable = true;
                 } else if (numFiles === 0) {
