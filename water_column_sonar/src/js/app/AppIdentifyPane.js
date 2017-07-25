@@ -112,11 +112,14 @@ define([
                     label: 'Back',
                     style: 'bottom: 5px; left: 5px;',
                     onClick: lang.hitch(this, function(){
-                        this.isFileFeatures = false;
-                        this.requestFileOrCruiseButton.set('label', 'Request This Cruise');
-                        domStyle.set(this.showFileFeaturesButton.domNode, 'display', ''); //Show the "Show Files" button
-                        this.showInfo(this.currentCruiseItem);
-                        this.hideImagePreview();
+                        //Put this on a very short timer. This seems to solve the "blank page" problem when hitting the back button.
+                        setTimeout(lang.hitch(this, function() {
+                            this.isFileFeatures = false;
+                            this.requestFileOrCruiseButton.set('label', 'Request This Cruise');
+                            domStyle.set(this.showFileFeaturesButton.domNode, 'display', ''); //Show the "Show Files" button
+                            this.showInfo(this.currentCruiseItem);
+                            this.hideImagePreview();
+                        }), 10);
                     })
                 }).placeAt(this.fileFeaturePageBottomBar);
 
