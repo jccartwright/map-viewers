@@ -79,7 +79,7 @@ define([
 
                 this.measurementTypeSelect.set('value', '');
 
-                xhr.get('tsrunupCountries.json', {
+                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/runups/countries.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -91,7 +91,7 @@ define([
                     logger.error('Error retrieving tsrunupCountries JSON: ' + err);
                 });
 
-                xhr.get('tsunamiRegions.json', {
+                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/runups/regions.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -104,7 +104,7 @@ define([
                     logger.error('Error retrieving tsunamiRegions JSON: ' + err);
                 });
 
-                xhr.get('tsrunupAreas.json', {
+                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/runups/areas.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){

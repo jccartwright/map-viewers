@@ -96,7 +96,7 @@ define([
                     this.runupAreaSelect.query.c = this.runupCountrySelect.get('displayedValue') || /.*/;
                 }));
 
-                xhr.get('tseventCountries.json', {
+                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/events/countries.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -108,7 +108,7 @@ define([
                     logger.error('Error retrieving tseventCountries JSON: ' + err);
                 });
 
-                xhr.get('tsrunupCountries.json', {
+                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/runups/countries.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -120,7 +120,7 @@ define([
                     logger.error('Error retrieving tsrunupCountries JSON: ' + err);
                 });
 
-                xhr.get('tsunamiRegions.json', {
+                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/runups/regions.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -133,7 +133,7 @@ define([
                     logger.error('Error retrieving tsunamiRegions JSON: ' + err);
                 });
 
-                xhr.get('tsrunupAreas.json', {
+                xhr.get('http://maps.ngdc.noaa.gov/mapviewer-support/hazards/runups/areas.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
