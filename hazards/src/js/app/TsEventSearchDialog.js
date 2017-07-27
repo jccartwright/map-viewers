@@ -133,7 +133,7 @@ define([
                     logger.error('Error retrieving tsunamiRegions JSON: ' + err);
                 });
 
-                xhr.get('http://maps.ngdc.noaa.gov/mapviewer-support/hazards/runups/areas.groovy', {
+                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/runups/areas.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
