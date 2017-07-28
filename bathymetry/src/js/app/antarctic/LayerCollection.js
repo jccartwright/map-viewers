@@ -67,7 +67,7 @@ define([
                                     showPopup: true
                                 })
                             ],
-                            spatialReferences: [3995],
+                            spatialReferences: [3031],
                             version: '1.3.0'
                         },
                         version: '1.3.0',
@@ -89,7 +89,7 @@ define([
                                     showPopup: true
                                 })
                             ],
-                            spatialReferences: [3995],
+                            spatialReferences: [3031],
                             version: '1.3.0'
                         },
                         version: '1.3.0',
