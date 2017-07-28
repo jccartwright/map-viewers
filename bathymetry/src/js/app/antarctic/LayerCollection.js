@@ -3,13 +3,19 @@ define([
     'ngdc/layers/AbstractLayerCollection', 
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
-    'esri/layers/ArcGISImageServiceLayer'],
+    'esri/layers/ArcGISImageServiceLayer',
+    'esri/layers/WMSLayer',
+    'esri/layers/WMSLayerInfo',
+    'esri/geometry/Extent'],
     function(
         declare, 
         LayerCollection, 
         ArcGISTiledMapServiceLayer, 
         ArcGISDynamicMapServiceLayer,
-        ArcGISImageServiceLayer
+        ArcGISImageServiceLayer,
+        WMSLayer,
+        WMSLayerInfo,
+        Extent
         ){
 
         return declare([LayerCollection], {
@@ -46,6 +52,50 @@ define([
                         id: 'Antarctic Basemap',
                         visible: true
                     }),
+                    new WMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_SP_mask?', {
+                        id: 'GMRT Masked',
+                        format: 'jpeg',
+                        resourceInfo: {
+                            description: 'South_Polar_Bathymetry',
+                            extent: new Extent(-180, -90, 180, 90, {wkid: 4326}),
+                            getMapURL: 'https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_SP_mask?',
+                            layerInfos: [
+                                new WMSLayerInfo({
+                                    name: 'South_Polar_Bathymetry',
+                                    title: 'South_Polar_Bathymetry',
+                                    queryable: true,
+                                    showPopup: true
+                                })
+                            ],
+                            spatialReferences: [3995],
+                            version: '1.3.0'
+                        },
+                        version: '1.3.0',
+                        visibleLayers: ['South_Polar_Bathymetry'],
+                        visible: false
+                    }),
+                    new WMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_SP?', {
+                        id: 'GMRT Unmasked',
+                        format: 'jpeg',
+                        resourceInfo: {
+                            description: 'South_Polar_Bathymetry',
+                            extent: new Extent(-180, -90, 180, 90, {wkid: 4326}),
+                            getMapURL: 'https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_SP?',
+                            layerInfos: [
+                                new WMSLayerInfo({
+                                    name: 'South_Polar_Bathymetry',
+                                    title: 'South_Polar_Bathymetry',
+                                    queryable: true,
+                                    showPopup: true
+                                })
+                            ],
+                            spatialReferences: [3995],
+                            version: '1.3.0'
+                        },
+                        version: '1.3.0',
+                        visibleLayers: ['South_Polar_Bathymetry'],
+                        visible: false
+                    }),  
                     new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_hillshade/ImageServer', {
                         id: 'Multibeam Mosaic',
                         visible: false,
