@@ -26,8 +26,6 @@ define([
     'ngdc/CoordinatesWithElevationToolbar',
     'app/arctic/LayerCollection',
     'app/arctic/MapToolbar',
-    'app/arctic/Identify',
-    'app/AppIdentifyPane',
     'app/LayersPanel',
     'dojo/domReady!'],
     function(
@@ -58,8 +56,6 @@ define([
         CoordinatesWithElevationToolbar,
         ArcticLayerCollection,
         ArcticMapToolbar,
-        Identify,
-        IdentifyPane,
         LayersPanel) {
 
         return declare(null, {
@@ -103,17 +99,7 @@ define([
 
                 this.setupLayersPanel();
 
-                //this.setStartupLayers(startupLayers);
-
                 this.setupMapViews();
-
-                //Subscribe to messages passed by the search dialog
-                topic.subscribe('/bathymetry/Search', lang.hitch(this, function(values) {
-                    this.filterSurveys(values);
-                }));
-                topic.subscribe('/bathymetry/ResetSearch', lang.hitch(this, function() {
-                    this.resetSurveyFilter();
-                }));
             },
 
             setupBanner: function() {
@@ -168,257 +154,72 @@ define([
                     lods: zoomLevels.lods
                 }, new ArcticLayerCollection());
 
+                aspect.after(this.arcticMapConfig, 'mapReady', lang.hitch(this, function() {
+                    this.dscrtplegend = new Legend({
+                        map: this.arcticMapConfig.map,
+                        layerInfos: [                            
+                            {title: 'DSCRTP', layer: this.getLayerById('DSCRTP')._tiledService}
+                        ]
+                    }, 'dynamicDSCRTPLegend');
+                    this.dscrtplegend.startup();
+
+                    this.bathyLegend = new Legend({
+                        map: this.arcticMapConfig.map,
+                        layerInfos: [                            
+                            {title: 'Multibeam', layer: this.getLayerById('Multibeam')},
+                            {title: 'Trackline Bathymetry', layer: this.getLayerById('Trackline Combined')},
+                            {title: 'NOS Hydrographic Surveys', layer: this.getLayerById('NOS Hydrographic Surveys')}
+                        ]
+                    }, 'dynamicBathyLegend');
+                    this.bathyLegend.startup();
+
+                    this.tracklineLegend = new Legend({
+                        map: this.arcticMapConfig.map,
+                        layerInfos: [                            
+                            {title: 'Trackline Geophysical Surveys', layer: this.getLayerById('Trackline Combined')}
+                        ]
+                    }, 'dynamicTracklineLegend');
+                    this.tracklineLegend.startup();
+
+                    this.marineGeologyLegend = new Legend({
+                        map: this.arcticMapConfig.map,
+                        layerInfos: [                            
+                            {title: 'Index to Marine and Lacustrine Geological Samples', layer: this.getLayerById('Sample Index')},
+                            {title: 'Marine Geology Inventory', layer: this.getLayerById('Marine Geology')}
+                        ]
+                    }, 'dynamicMarineGeologyLegend');
+                    this.marineGeologyLegend.startup();
+
+                    this.geomagLegend = new Legend({
+                        map: this.arcticMapConfig.map,
+                        layerInfos: [                            
+                            {title: 'EMAG2', layer: this.getLayerById('EMAG2')}
+                        ]
+                    }, 'dynamicGeomagLegend');
+                    this.geomagLegend.startup();
+
+                    topic.subscribe('/ngdc/layer/visibility', lang.hitch(this, function() {
+                        this.dscrtplegend.refresh();
+                        this.bathyLegend.refresh();
+                        this.tracklineLegend.refresh();
+                        this.marineGeologyLegend.refresh();
+                        this.geomagLegend.refresh();
+                    }));
+                    topic.subscribe('/ngdc/sublayer/visibility', lang.hitch(this, function() {
+                        this.dscrtplegend.refresh();
+                        this.bathyLegend.refresh();
+                        this.tracklineLegend.refresh();
+                        this.marineGeologyLegend.refresh();
+                        this.geomagLegend.refresh();
+                    }));
+                }));
+
                 new CoordinatesWithElevationToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
             },
 
-            //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'
-            setStartupLayers: function(/*String[]*/ startupLayers) {                
-                if (startupLayers.length === 0) {
-                    this.layersPanel.chkMultibeam.set('checked', true);
-                    this.multibeamVisible = true;
-                    return;    
-                }
-
-                for (var i = 0; i < startupLayers.length; i++) {
-                    if (startupLayers[i].toLowerCase() === 'multibeam') {
-                        this.layersPanel.chkMultibeam.set('checked', true);
-                        this.multibeamVisible = true;
-                    } 
-                    else if (startupLayers[i].toLowerCase() === 'nos_hydro') {
-                        //Startup with "Surveys with Digital Sounding Data" and "Surveys with BAGs" visible
-                        this.layersPanel.chkNosHydroBags.set('checked', true);
-                        this.layersPanel.chkNosHydroDigital.set('checked', true);
-                        //this.layersPanel.chkBagHillshades.set('checked', true);
-                        this.nosHydroVisible = true;
-                    } 
-                    else if (startupLayers[i].toLowerCase() === 'trackline') {
-                        this.layersPanel.chkTrackline.set('checked', true);
-                        this.tracklineVisible = true;
-                    } 
-                    else if (startupLayers[i].toLowerCase() === 'dem') {
-                        //Startup with DEM Footprints and DEM Hillshades visible
-                        this.layersPanel.chkDems.set('checked', true);
-                        this.layersPanel.chkDemHillshades.set('checked', true);
-                        this.demVisible = true;
-                    }
-                }
-            },
-
-            filterSurveys: function(values) {
-                var layerDefinition;
-                var sql = [];
-                var serviceLayerDefs = {};
-                                                    
-                //Multibeam
-                if (values.startYear) {
-                    sql.push("SURVEY_YEAR >= " + values.startYear);
-                }   
-                if (values.endYear) {
-                    sql.push("SURVEY_YEAR <= " + values.endYear);
-                }
-                if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                if (values.institution) {
-                    sql.push("UPPER(SOURCE) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                layerDefinition = sql.join(' and ');
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
-                serviceLayerDefs.multibeam = layerDefinition;
-
-                //Trackline Bathymetry
-                sql = [];
-                if (values.startYear) {
-                    sql.push("END_YR >= " + values.startYear);
-                }       
-                if (values.endYear) {
-                    sql.push("START_YR <= " + values.endYear);
-                }
-                if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                if (values.institution) {
-                    sql.push("UPPER(INST_SHORT) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                layerDefinition = sql.join(' and ');
-                var allLayerDefinitions = [];
-                allLayerDefinitions[1] = layerDefinition;
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions(allLayerDefinitions);
-                serviceLayerDefs.trackline = layerDefinition;
-
-                //NOS Hydro 
-                sql = [];
-                if (values.startYear) {
-                    sql.push("SURVEY_YEAR >= " + values.startYear);
-                }       
-                if (values.endYear) {
-                    sql.push("SURVEY_YEAR <= " + values.endYear);
-                }
-                if (values.survey) {
-                    sql.push("UPPER(SURVEY_ID) LIKE '" + values.survey.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                if (values.platform) {
-                    sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
-                }
-                layerDefinition = sql.join(' and ');
-                allLayerDefinitions = [];
-                allLayerDefinitions[0] = layerDefinition;
-                allLayerDefinitions[1] = layerDefinition;
-                allLayerDefinitions[2] = layerDefinition;      
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions(allLayerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions(allLayerDefinitions);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions(allLayerDefinitions);
-                serviceLayerDefs.nosHydro = layerDefinition;
-                        
-                this.layersPanel.enableResetButton();
-                this.layersPanel.setCurrentFilterString(values);
-
-                if (values.zoomToResults) {
-                    this.zoomToResults(serviceLayerDefs);
-                }
-            },
-
-            resetSurveyFilter: function() {                            
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setLayerDefinitions([]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setLayerDefinitions([]);
-
-                this.layersPanel.disableResetButton();
-                this.layersPanel.searchDialog.clearForm();
-                this.layersPanel.setCurrentFilterString('');
-            },
-
-            zoomToResults: function(serviceLayerDefs) {
-                var deferreds = [];
-                var url;
-                var params;
-
-                if (this.layersPanel.chkMultibeam.checked) {
-                    url = '//gis.ngdc.noaa.gov/geoextents/multibeam_dynamic/';
-                    params = {layerDefs: '0:' + serviceLayerDefs.multibeam};
-                    deferreds.push(xhr.post(
-                        url, {
-                            data: params,
-                            handleAs: 'json'
-                        })
-                    );
-                }
-
-                if (this.layersPanel.chkTrackline.checked) {
-                    url = '//gis.ngdc.noaa.gov/geoextents/trackline_combined_dynamic/';
-                    params = {layerDefs: '1:' + serviceLayerDefs.trackline};
-                    deferreds.push(xhr.post(
-                        url, {
-                            data: params,
-                            handleAs: 'json'
-                        })
-                    );
-                }
-
-                if (this.layersPanel.chkNosHydroBags.checked || this.layersPanel.chkNosHydroDigital.checked || this.layersPanel.chkNosHydroNonDigital.checked) {
-                    url = '//gis.ngdc.noaa.gov/geoextents/nos_hydro_dynamic/';
-                    var layerDef = serviceLayerDefs.nosHydro;
-                    params = {layerDefs: '0:' + layerDef + ';1:' + layerDef + ';2:' + layerDef};
-                    deferreds.push(xhr.post(
-                        url, {
-                            data: params,
-                            handleAs: 'json'
-                        })
-                    );
-                }
-
-                //Hit the geoextents endpoint for each of the visible services, then zoom to the union of the returned extents.
-                all(deferreds).then(lang.hitch(this, function(responses) {
-                    logger.debug(responses);
-                    this.zoomToUnionOfBboxes(responses);
-                }));
-            },
-
-            //Zooms to bbox in geographic coordinates
-            zoomToUnionOfBboxes: function(responses) {
-                var fullExtent;
-
-                array.forEach(responses, lang.hitch(this, function(response) {
-                    if (response.bbox) {
-                        //logger.debug(response.bbox);
-                        var wkt = new Wkt.Wkt();
-                        wkt.read(response.bbox);
-                        var config = {
-                            spatialReference: { wkid: 4326 },
-                            editable: false
-                        };
-                        var polygon = wkt.toObject(config);
-                        var extent = polygon.getExtent();
-
-                        if (fullExtent) {
-                            fullExtent = fullExtent.union(extent);
-                        } else {
-                            fullExtent = extent;
-                        }
-                    }
-                }));
-
-                if (fullExtent) {
-                    if (this.mapId === 'mercator') {
-                        this.mercatorMapConfig.map.setExtent(this.clampExtentTo85(fullExtent), true);
-                    } else if (this.mapId === 'arctic') {
-                        this.zoomToPolarBbox(fullExtent, true);
-                    } else { //antarctic
-                        this.zoomToPolarBbox(fullExtent, false);
-                    }
-                }
-            },
-
-            //Ensure the extent doesn't go beyond the bounds of the Mercator map (85 N/S)
-            clampExtentTo85: function(extent) {
-                if (extent.ymax > 85) {
-                    extent.ymax = 85;
-                }
-                if (extent.ymin > 85) {
-                    extent.ymin = 85;
-                }
-                if (extent.ymax < -85) {
-                    extent.ymax = -85;
-                }
-                if (extent.ymin < -85) {
-                    extent.ymin = -85;
-                }
-                return extent;
-            },
-
-            //Input: Extent in geographic coords. Densifies the geometry, projects it to either epsg:3995 or epsg:3031, then zooms to that geometry.
-            zoomToPolarBbox: function(extent, isArctic) {
-                var geometryService = esriConfig.defaults.geometryService;
-                var extentWidth = Math.abs(extent.xmax - extent.xmin);
-                
-                //Densify the geometry with ~20 vertices along the longest edge
-                var maxSegmentLength = extentWidth / 20;
-                var densifiedGeometry = geometryEngine.densify(extent, maxSegmentLength);
-
-                var projectParams = new ProjectParameters();   
-                if (isArctic) {
-                    projectParams.outSR = new SpatialReference(3995);
-                } else {
-                    projectParams.outSR = new SpatialReference(3031);
-                }
-                projectParams.transformForward = true; 
-                projectParams.geometries = [densifiedGeometry];
-                
-                //Project the densififed geometry, then zoom to the polygon's extent
-                geometryService.project(projectParams, lang.hitch(this, function(geometries) {
-                    this.arcticMapConfig.map.setExtent(geometries[0].getExtent(), true);                   
-                }), function(error) {
-                    logger.error(error);
-                });
-            },
+            getLayerById: function(id) {
+                return this.arcticMapConfig.mapLayerCollection.getLayerById(id);
+            }
         });
     }
 );

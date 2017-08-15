@@ -7,7 +7,7 @@ define([
     'esri/layers/WMSLayer',
     'esri/layers/WMSLayerInfo',
     'esri/geometry/Extent',
-    'app/CustomWMSLayer',
+    'app/RegionalClimatologyWMSLayer',
     'app/NARRWMSLayer',
     'app/AVHRRWMSLayer',
     'app/SeaIceIndexWMSLayer'
@@ -21,7 +21,7 @@ define([
         WMSLayer,
         WMSLayerInfo,
         Extent,
-        CustomWMSLayer,
+        RegionalClimatologyWMSLayer,
         NARRWMSLayer,
         AVHRRWMSLayer,
         SeaIceIndexWMSLayer
@@ -77,13 +77,12 @@ define([
                         imageServiceParameters: this.imageServiceParameters
                     }),
 
-                    new CustomWMSLayer('https://data.nodc.noaa.gov/thredds/wms/ncml/regclim/arctic_ncml/temperature', {
+                    new RegionalClimatologyWMSLayer('https://data.nodc.noaa.gov/thredds/wms/nodc/archive/data/0115771/DATA/temperature/netcdf/0.25/t', {
                         id: 'Sea Water Temperature',
-                        datasetPrefix: 'temperature',
-                        timeString: 'annual',
-                        datasetSuffix: 'quarter.ncml',
                         format: 'png',
                         resourceInfo: wmsResourceInfo,
+                        timeString: '00',
+                        datasetSuffix: '_04.nc',
                         version: '1.3.0',
                         visibleLayers: ['t_an'],
                         styles: 'boxfill/rainbow',
@@ -94,13 +93,12 @@ define([
                         visible: false
                     }),
 
-                    new CustomWMSLayer('https://data.nodc.noaa.gov/thredds/wms/ncml/regclim/arctic_ncml/salinity', {
+                    new RegionalClimatologyWMSLayer('https://data.nodc.noaa.gov/thredds/wms/nodc/archive/data/0115771/DATA/salinity/netcdf/0.25/s', {
                         id: 'Salinity',
-                        datasetPrefix: 'salinity',
-                        timeString: 'annual',
-                        datasetSuffix: 'quarter.ncml',
                         format: 'png',
                         resourceInfo: wmsResourceInfo,
+                        timeString: '00',
+                        datasetSuffix: '_04.nc',
                         version: '1.3.0',
                         visibleLayers: ['s_an'],
                         styles: 'boxfill/rainbow',
@@ -127,7 +125,8 @@ define([
                         visible: false
                     }),
 
-                    new AVHRRWMSLayer('https://www.ncei.noaa.gov/thredds/wms/avhrr-polar-pathfinder-ext-files/nhem/2016/Polar-APP-X_v01r01_Nhem_1400_d20160801_c20160803.nc', {
+                    //https://www.ncei.noaa.gov/thredds/wms/avhrr-polar-pathfinder-ext-files/nhem/2016/Polar-APP-X_v01r01_Nhem_1400_d20160731_c20160822.nc
+                    new AVHRRWMSLayer('https://www.ngdc.noaa.gov/thredds/wms/arctic/Polar-APP-X_v01r01_Nhem_1400_d20160731_c20160822.nc', {
                         id: 'AVHRR surface_albedo',                        
                         format: 'png',
                         resourceInfo: wmsResourceInfo,
@@ -139,7 +138,7 @@ define([
                         logScale: false,
                         visible: false
                     }),
-                    new AVHRRWMSLayer('https://www.ncei.noaa.gov/thredds/wms/avhrr-polar-pathfinder-ext-files/nhem/2016/Polar-APP-X_v01r01_Nhem_1400_d20160801_c20160803.nc', {
+                    new AVHRRWMSLayer('https://www.ngdc.noaa.gov/thredds/wms/arctic/Polar-APP-X_v01r01_Nhem_1400_d20160731_c20160822.nc', {
                         id: 'AVHRR sea_ice_thickness',                        
                         format: 'png',
                         resourceInfo: wmsResourceInfo,
@@ -151,19 +150,18 @@ define([
                         logScale: false,
                         visible: false
                     }),
-                    new AVHRRWMSLayer('https://www.ncei.noaa.gov/thredds/wms/avhrr-polar-pathfinder-ext-files/nhem/2016/Polar-APP-X_v01r01_Nhem_1400_d20160801_c20160803.nc', {
+                    new AVHRRWMSLayer('https://www.ngdc.noaa.gov/thredds/wms/arctic/Polar-APP-X_v01r01_Nhem_1400_d20160731_c20160822.nc', {
                         id: 'AVHRR cloud_binary_mask',                        
                         format: 'png',
                         resourceInfo: wmsResourceInfo,
                         version: '1.3.0',
                         visibleLayers: ['cdr_cloud_binary_mask'],
-                        styles: 'boxfill/redblue',
+                        styles: 'boxfill/greyscale',
                         colorScaleRange: '0,1',
                         numColorBands: 25,
                         logScale: false,
                         visible: false
                     }),
-
                     new SeaIceIndexWMSLayer('https://nsidc.org/api/mapservices/NSIDC/ows', {
                         id: 'Sea Ice Index Daily Concentration',                        
                         format: 'png',
@@ -197,23 +195,13 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
-                        id: 'NOS Hydro (non-digital)',
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
-                        id: 'NOS Hydrographic Surveys',
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
                     new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
                         id: 'BAG Hillshades',
                         visible: false,
                         imageServiceParameters: this.imageServiceParameters
                     }),  
                     new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer', {
-                        id: 'NOS Hydro (BAGs)',
+                        id: 'NOS Hydrographic Surveys',
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
@@ -301,7 +289,10 @@ define([
                     0: 'FEATURE_ID',
                     1: 'FEATURE_ID',
                     2: 'FEATURE_ID'
-                };                
+                };
+
+                this.getLayerById('Sea Ice Index Daily Concentration').epsgCode = 5041;
+                this.getLayerById('Sea Ice Index Monthly Concentration').epsgCode = 5041;
             },  //end defineMapServices
 
             definePairedMapServices: function() {

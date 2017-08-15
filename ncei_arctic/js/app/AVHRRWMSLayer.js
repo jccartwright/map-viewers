@@ -14,7 +14,7 @@ define([
         ) {
 
         return declare([WMSLayer], {
-            layerType: 'WMS',
+            layerType: 'threddsWMS',
 
             constructor: function() {
                 this.year = arguments[1].year;
@@ -24,21 +24,6 @@ define([
                 this.colorScaleRange = arguments[1].colorScaleRange;
                 this.numColorBands = arguments[1].numColorBands;
                 this.logScale = arguments[1].logScale;
-
-                // topic.subscribe('/layersPanel/selectNarrYear', lang.hitch(this, function (year) {
-                //     this.year = year;
-                //     this.refresh();
-                // }));
-
-                // topic.subscribe('/layersPanel/selectNarrMonth', lang.hitch(this, function (month) {
-                //     this.month = month;
-                //     this.refresh();
-                // }));
-
-                // topic.subscribe('/layersPanel/selectNarrHour', lang.hitch(this, function (hour) {
-                //     this.hour = hour;
-                //     this.refresh();
-                // }));
                 
                 on(this, 'error', lang.hitch(this, function(error) {
                     console.error(error);

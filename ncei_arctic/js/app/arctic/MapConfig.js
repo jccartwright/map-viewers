@@ -57,17 +57,11 @@ define([
                     map: this.map,
                     identify: this.identify,
                     class: 'identifyPane',
-                    autoExpandTree: false
+                    autoExpandTree: true
                 }, dom.byId('arcticIdentifyPaneDiv'));
                 this.identifyPane.startup();
-                
-                this.mapLayerCollection.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([-1]);
-                
-                this.mapLayerCollection.getLayerById('NOS Hydro (non-digital)').setVisibleLayers([2]);
-                this.mapLayerCollection.getLayerById('NOS Hydro (BAGs)').setVisibleLayers([0]);
-                
+                                
                 this.mapLayerCollection.getLayerById('Trackline Combined').setVisibleLayers([-1]);
-                //topic.publish('/ngdc/sublayer/visibility', 'Trackline Combined', [0], false);                    
 
                 this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
 
@@ -90,10 +84,6 @@ define([
                 this.mapLayerCollection.getLayerById('DSCRTP').setLayerDefinitions(['LATITUDE>=50']);
 
                 this.mapLayerCollection.getLayerById('DSCRTP').objectIdFields = {0: 'objectid'};
-
-
-                //this.mapLayerCollection.getLayerById('EMAG2').setVisibleLayers([5]);
-
             }                 
         });
     }

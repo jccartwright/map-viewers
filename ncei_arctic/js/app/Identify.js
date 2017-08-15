@@ -451,6 +451,29 @@ define([
                 return html;
             },
 
+            seaIceIndexFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = 
+                    '<div class="valueName">Sea Ice Concentration: <span class="parameterValue">${seaIceConcentration}</span></div>';
+                    
+                var html = string.substitute(template, {
+                    seaIceConcentration: a['GRAY_INDEX']
+                });
+                return html;
+            },
+
+            threddsWmsFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = 
+                    '<div class="valueName">Value: <span class="parameterValue">${value}</span></div>';
+                    
+                var html = string.substitute(template, {
+                    value: a['Value']
+                });
+                return html;
+            },
 
             multibeamSort: function(a, b) {
                 //Sort by year descending, then alphabetical by survey ID
