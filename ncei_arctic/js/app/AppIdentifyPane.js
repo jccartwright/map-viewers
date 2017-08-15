@@ -40,46 +40,10 @@ define([
 
                 domStyle.set(this.featurePageBottomBar.domNode, 'height', '30px');
                 this.featurePageBottomBar.style = 'height: 50px;';
-
-                this.extractDataButton = new Button({
-                    label: 'Extract Data',
-                    style: 'bottom: 5px; left: 15px;',
-                    iconClass: 'downloadIcon',
-                    onClick: lang.hitch(this, function(){
-                        this.extractData();
-                    })
-                }).placeAt(this.featurePageBottomBar);
-
-                new Tooltip({
-                    connectId: [this.extractDataButton.domNode],
-                    label: 'Extract data via NEXT (NCEI Extract System).<br><img src="images/drive-download.png">: Data for this layer can be extracted.'
-                });
-
-                //Add a button to the main cruise feature page to request cruises
-                this.extractSingleDatasetButton = new Button({
-                    label: 'Extract This Survey',
-                    style: 'bottom: 5px; left: 5px;',
-                    iconClass: 'downloadIcon',
-                    onClick: lang.hitch(this, function() {
-                        var itemId;
-                        if (this.currentItem.attributes['Survey ID']) {
-                            itemId = this.currentItem.attributes['Survey ID'];
-                        } else if (this.currentItem.attributes['ITEM_ID']) {
-                            itemId = this.currentItem.attributes['ITEM_ID'];
-                        }
-                        this.extractData(itemId);
-                    })
-                }).placeAt(this.infoPageBottomBar);
             },
 
             showResults: function() {
                 this.inherited(arguments);
-                
-                if (this.isMultibeam || this.isNosHydro || this.isDemTiles) {
-                    domStyle.set(this.extractDataButton.domNode, 'display', '');
-                } else {
-                    domStyle.set(this.extractDataButton.domNode, 'display', 'none');
-                }
             },
 
             getLayerDisplayLabel: function(item) {
@@ -165,6 +129,30 @@ define([
                 }
                 else if (layerKey === 'DSCRTP/Locations') {
                     return 'Deep Sea Corals';
+                }
+                else if (layerKey === 'Sea Ice Index Daily Concentration/default') {
+                    return 'Sea Ice Daily Concentration';
+                }
+                else if (layerKey === 'Sea Ice Index Monthly Concentration/default') {
+                    return 'Sea Ice Monthly Concentration';
+                }
+                else if (layerKey === 'AVHRR surface_albedo/default') {
+                    return 'AVHRR APP-x Surface Albedo';
+                }
+                else if (layerKey === 'AVHRR sea_ice_thickness/default') {
+                    return 'AVHRR APP-x Sea Ice Thickness';
+                }
+                else if (layerKey === 'AVHRR cloud_binary_mask/default') {
+                    return 'AVHRR APP-x Cloud Binary Mask';
+                }
+                else if (layerKey === 'NARR-A Monthly/default') {
+                    return 'NARR-A Monthly (Ground Heat Flux)';
+                }
+                else if (layerKey === 'Sea Water Temperature/default') {
+                    return 'Arctic Regional Climatology (Sea Water Temperature)';
+                }
+                else if (layerKey === 'Salinity/default') {
+                    return 'Arctic Regional Climatology (Salinity)';
                 }
                             
             },
@@ -254,12 +242,6 @@ define([
                 else if (item.formatter === 'Undersea Features/Point Features' || item.formatter === 'Undersea Features/Line Features' || item.formatter === 'Undersea Features/Polygon Features') {
                     return this.getItemLabelSpan(a['NAME'] + ' ' + a['TYPE'], uid);
                 } 
-                else if (item.formatter === 'NOS Hydrographic Surveys/Surveys with Digital Sounding Data') {
-                    return this.getItemLabelSpan(a['Survey ID'] + (a['Survey Year'] === 'Null' ? '' : ' <i>(' + a['Survey Year'] + ')</i>'), uid);
-                } 
-                else if (item.formatter === 'NOS Hydrographic Surveys/Surveys with Digital Sounding Data') {
-                    return this.getItemLabelSpan(a['Survey ID'] + (a['Survey Year'] === 'Null' ? '' : ' <i>(' + a['Survey Year'] + ')</i>'), uid);
-                } 
 
                 else if (item.formatter === 'CRN/Climate Reference Network') {
                     return this.getItemLabelSpan(a['STATION'] + ' (' + a['STATE'] + ')', uid);
@@ -279,7 +261,40 @@ define([
                 else if (item.formatter === 'DSCRTP/Locations') {
                     return this.getItemLabelSpan(a['scientificname'] + '(' + a['vernacularnamecategory'] + ')', uid);
                 }
+                else if (item.formatter === 'Sea Ice Index Daily Concentration/default') {
+                    return this.getSeaIceIndexLabel(a['GRAY_INDEX']);
+                }
+                else if (item.formatter === 'Sea Ice Index Monthly Concentration/default') {
+                    return this.getSeaIceIndexLabel(a['GRAY_INDEX']);
+                }
+                else if (item.formatter === 'AVHRR surface_albedo/default') {
+                    return a['Value'];
+                }
+                else if (item.formatter === 'AVHRR sea_ice_thickness/default') {
+                    return a['Value'] + ' m';
+                }
+                else if (item.formatter === 'AVHRR cloud_binary_mask/default') {
+                    return a['Value'];
+                }
+                else if (item.formatter === 'NARR-A Monthly/default') {
+                    return a['Value'] + ' W/m^2';
+                }
+                else if (item.formatter === 'Sea Water Temperature/default') {
+                    return a['Value'] + '°C';
+                }
+                else if (item.formatter === 'Salinity/default') {
+                    return a['Value'];
+                }
                 
+            },
+
+            getSeaIceIndexLabel: function(value) {
+                var val = parseFloat(value);
+                if (val <= 100) {
+                    return val.toFixed(1) + '%';
+                } else {
+                    return '0.0%';
+                }
             },
 
             getItemLabelSpan: function(text, uid) {
@@ -377,31 +392,6 @@ define([
                 this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys without Digital Sounding Data']); 
 
                 this.tree.set('paths', this.expandedNodePaths);
-            },
-
-            showInfo: function() {
-                this.inherited(arguments);
-
-                var layerName = this.currentItem.layerKey.split('/')[0];
-
-                if (layerName === 'Multibeam' || layerName === 'NOS Hydrographic Surveys' || layerName === 'NOS Hydro (non-digital)') {
-                    this.extractSingleDatasetButton.set('label', 'Extract this Survey');
-                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', '');
-                } else if (layerName === 'DEM Tiles') {
-                    this.extractSingleDatasetButton.set('label', 'Extract this DEM');
-                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', '');
-                } else {
-                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', 'none');
-                }
-            },
-
-            extractData: function(itemId /*Optional survey/DEM id*/) {                
-                var filterCriteria = this.constructFilterCriteria(itemId);
-                if (filterCriteria.items.length > 0) {
-                    this.submitFormToNext(filterCriteria);
-                }
-
-                //filterCriteria = this.replaceWildcardsAndSubmit(filterCriteria);
             },
 
             getFilterItemById: function(filterCriteria, id /*'Multibeam'|'Sounding'*/) {

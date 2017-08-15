@@ -13,7 +13,6 @@ define([
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',    
-    'app/SearchDialog',
     'dojo/text!./templates/LayersPanel.html'],
     function(
         declare, 
@@ -30,7 +29,6 @@ define([
         _WidgetBase, 
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
-        SearchDialog,
         template){
         return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
             // Our template - important!
@@ -47,33 +45,11 @@ define([
                 on(this.chkMultibeamMosaic, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Multibeam Mosaic', this.chkMultibeamMosaic.checked);
                 }));
-                on(this.chkNosHydroBags, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0], this.chkNosHydroBags.checked);
-
-                    //If the BAG Hillshades are visible, toggle the extra "Surveys with BAGs" overlay on top of the hillshades.
-                    if (this.chkBagHillshades.checked) {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', this.chkNosHydroBags.checked);
-                    }
-                    else {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', false);
-                    }
-                }));
-                on(this.chkNosHydroDigital, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [1], this.chkNosHydroDigital.checked);
-                }));
-                on(this.chkNosHydroNonDigital, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'NOS Hydro (non-digital)', this.chkNosHydroNonDigital.checked);
-                }));
+                on(this.chkNosHydro, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'NOS Hydrographic Surveys', this.chkNosHydro.checked);
+                }));                
                 on(this.chkBagHillshades, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.chkBagHillshades.checked);   
-
-                    //If the "Surveys with BAGs" are visible, toggle the extra overlay on top of the hillshades.
-                    if (this.chkBagHillshades.checked && this.chkNosHydroBags.checked) {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', true);
-                    }
-                    else {
-                        topic.publish('/ngdc/layer/visibility', 'NOS Hydro (BAGs)', false);
-                    }                                     
+                    topic.publish('/ngdc/layer/visibility', 'BAG Hillshades', this.chkBagHillshades.checked);                                                   
                 }));
                 on(this.chkSinglebeam, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayer/visibility', 'Trackline Combined', [1], this.chkSinglebeam.checked);                    
@@ -175,10 +151,7 @@ define([
 
                 var elevations = [0.0,-5.0,-10.0,-15.0,-20.0,-25.0,-30.0,-35.0,-40.0,-45.0,-50.0,-55.0,-60.0,-65.0,-70.0,-75.0,-80.0,-85.0,-90.0,-95.0,
                     -100.0,-125.0,-150.0,-175.0,-200.0,-225.0,-250.0,-275.0,-300.0,-325.0,-350.0,-375.0,-400.0,-425.0,-450.0,-475.0,-500.0,-550.0,-600.0,-650.0,-700.0,
-                    -750.0,-800.0,-850.0,-900.0,-950.0,-1000.0,-1050.0,-1100.0,-1150.0,-1200.0,-1250.0,-1300.0,-1350.0,-1400.0,-1450.0,-1500.0,-1550.0,-1600.0,-1650.0,
-                    -1700.0,-1750.0,-1800.0,-1850.0,-1900.0,-1950.0,-2000.0,-2100.0,-2200.0,-2300.0,-2400.0,-2500.0,-2600.0,-2700.0,-2800.0,-2900.0,-3000.0,-3100.0,
-                    -3200.0,-3300.0,-3400.0,-3500.0,-3600.0,-3700.0,-3800.0,-3900.0,-4000.0,-4100.0,-4200.0,-4300.0,-4400.0,-4500.0,-4600.0,-4700.0,-4800.0,-4900.0,
-                    -5000.0,-5100.0,-5200.0,-5300.0,-5400.0,-5500.0];
+                    -750.0,-800.0,-850.0,-900.0,-950.0,-1000.0,-1050.0,-1100.0,-1150.0,-1200.0,-1250.0,-1300.0,-1350.0,-1400.0,-1450.0,-1500.0];
 
                 array.forEach(elevations, lang.hitch(this, function(elevation) {
                     this.elevationSelect.addOption({label: elevation.toString(), value: elevation, disabled: false});
@@ -208,31 +181,30 @@ define([
                 ];
 
                 var timeLookup = {
-                    'Annual': {timeString: 'annual', time: '0000-06-29T14:54:22.987Z'},
-                    'Winter': {timeString: 'seasonal', time: '0000-02-13T15:43:35.746Z'},
-                    'Spring': {timeString: 'seasonal', time: '0000-05-14T23:10:47.240Z'},
-                    'Summer': {timeString: 'seasonal', time: '0000-08-14T06:37:58.734Z'},
-                    'Autumn': {timeString: 'seasonal', time: '0000-11-13T14:05:10.227Z'},
-                    'January': {timeString: 'monthly', time: '0000-01-14T05:14:31.915Z'},
-                    'February': {timeString: 'monthly', time: '0000-02-13T15:43:35.746Z'},
-                    'March': {timeString: 'monthly', time: '0000-03-15T02:12:39.578Z'},
-                    'April': {timeString: 'monthly', time: '0000-04-14T12:41:43.409Z'},
-                    'May': {timeString: 'monthly', time: '0000-05-14T23:10:47.240Z'},
-                    'June': {timeString: 'monthly', time: '0000-06-14T09:39:51.071Z'},
-                    'July': {timeString: 'monthly', time: '0000-07-14T20:08:54.902Z'},
-                    'August': {timeString: 'monthly', time: '0000-08-14T06:37:58.734Z'},
-                    'September': {timeString: 'monthly', time: '0000-09-13T17:07:02.565Z'},
-                    'October': {timeString: 'monthly', time: '0000-10-14T03:36:06.396Z'},
-                    'November': {timeString: 'monthly', time: '0000-11-13T14:05:10.227Z'},
-                    'December': {timeString: 'monthly', time: '0000-12-14T00:34:14.059Z'}
+                    'Annual': {timeString: '00'},
+                    'Winter': {timeString: '13'},
+                    'Spring': {timeString: '14'},
+                    'Summer': {timeString: '15'},
+                    'Autumn': {timeString: '16'},
+                    'January': {timeString: '01'},
+                    'February': {timeString: '02'},
+                    'March': {timeString: '03'},
+                    'April': {timeString: '04'},
+                    'May': {timeString: '05'},
+                    'June': {timeString: '06'},
+                    'July': {timeString: '07'},
+                    'August': {timeString: '08'},
+                    'September': {timeString: '09'},
+                    'October': {timeString: '10'},
+                    'November': {timeString: '11'},
+                    'December': {timeString: '12'}
                 };
 
                 this.timeSelect.addOption(timeOptions);
 
                 on(this.timeSelect, 'change', lang.hitch(this, function() {
                     var timeString = timeLookup[this.timeSelect.get('value')].timeString;
-                    var time = timeLookup[this.timeSelect.get('value')].time;
-                    topic.publish('/layersPanel/selectTime', timeString, time);
+                    topic.publish('/layersPanel/selectTime', timeString);
 
                     if (timeString === 'Monthly') {
                         this.setDeepElevationsDisabled(true);
@@ -287,7 +259,6 @@ define([
             },
 
             setDeepElevationsDisabled: function(disabled) {
-                console.log('foo');
                 array.forEach(this.elevationSelect.options, lang.hitch(this, function(option) {
                     if (option.value < -1500) {
                         option.disabled = disabled;

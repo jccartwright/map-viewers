@@ -35,7 +35,7 @@ define([
                     
                     //changing values
                     bbox: extent.xmin + "," + extent.ymin + "," + extent.xmax + "," + extent.ymax,
-                    crs: 'EPSG:' + extent.spatialReference.wkid,
+                    crs: 'EPSG:5041',
                     width: width,
                     height: height
                 };

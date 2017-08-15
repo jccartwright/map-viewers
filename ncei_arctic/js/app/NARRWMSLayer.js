@@ -14,7 +14,7 @@ define([
         ) {
 
         return declare([WMSLayer], {
-            layerType: 'WMS',
+            layerType: 'threddsWMS',
 
             constructor: function() {
                 this.year = arguments[1].year;
@@ -25,18 +25,24 @@ define([
                 this.numColorBands = arguments[1].numColorBands;
                 this.logScale = arguments[1].logScale;
 
+                this.urlPrefix = 'https://gis.ngdc.noaa.gov/https-proxy/proxy?' + this.url;
+                this.updateUrl();
+
                 topic.subscribe('/layersPanel/selectNarrYear', lang.hitch(this, function (year) {
                     this.year = year;
+                    this.updateUrl();
                     this.refresh();
                 }));
 
                 topic.subscribe('/layersPanel/selectNarrMonth', lang.hitch(this, function (month) {
                     this.month = month;
+                    this.updateUrl();
                     this.refresh();
                 }));
 
                 topic.subscribe('/layersPanel/selectNarrHour', lang.hitch(this, function (hour) {
                     this.hour = hour;
+                    this.updateUrl();
                     this.refresh();
                 }));
                 
@@ -68,9 +74,13 @@ define([
                     height: height
                 };
 
-                //http://nomads.ncdc.noaa.gov/thredds/wms/narrmonthly/YYYYMM/YYYYMM01/narrmonhr-a_221_YYYYMM01_HH00_000.grb
-                callback(this.url + '/' + this.year + this.month + '/' + this.year + this.month + '01/narrmonhr-a_221_' + 
-                    this.year + this.month + '01_' + this.hour + '00_000.grb?' + dojo.objectToQuery(params));
+                //Example: http://nomads.ncdc.noaa.gov/thredds/wms/narrmonthly/YYYYMM/YYYYMM01/narrmonhr-a_221_YYYYMM01_HH00_000.grb
+                callback(this.url + '?' + dojo.objectToQuery(params));
+            },
+
+            updateUrl: function() {
+                this.url = this.urlPrefix + '/' + this.year + this.month + '/' + this.year + this.month + '01/narrmonhr-a_221_' + this.year + this.month + '01_' + this.hour + '00_000.grb';
+                topic.publish('/identify/updateLayerUrl', this.id, this.url);
             }
 
             //http://nomads.ncdc.noaa.gov/thredds/wms/narrmonthly/200904/20090401/narrmonhr-a_221_20090401_1200_000.grb?
