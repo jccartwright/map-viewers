@@ -353,7 +353,7 @@ define([
                          'Damage in Millions of Dollars','Damage Description','Deaths','Deaths Description','Injuries','Injuries Description','Missing','Missing Description',
                          'Houses Destroyed','Houses Destroyed Description','Houses Damaged','Houses Damaged Description','Tsunami Associated?','Volcano Event Associated?'*/
                 var html = string.substitute(
-                    '<i><b>Tsunami Observation</b></i><br>' +
+                    '<i><b>Significant Earthquake</b></i><br>' +
                     '<table class="idTable">' +
                         '<tr colspan="2">' +
                             '<td><a href="http://www.ngdc.noaa.gov/nndc/struts/results?EQ_0=${ID}&t=101650&s=13&d=22,26,13,12&nd=display" target="_blank">Additional Info</a>' +
