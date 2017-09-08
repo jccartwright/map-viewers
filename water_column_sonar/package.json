@@ -1,6 +1,6 @@
 {
   "name": "water_column_sonar",
-  "version": "2.10.4",
+  "version": "2.10.5",
   "description": "Water Column Sonar Data Viewer",
   "main": "index.html",
   "scripts": {
