@@ -1,6 +1,6 @@
 {
   "name": "north_atlantic",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "North Atlantic Data Viewer",
   "main": "index.html",
   "scripts": {

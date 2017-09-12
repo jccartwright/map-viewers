@@ -253,7 +253,7 @@ define([
                         visible: this.multibeamVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/trackline_bathymetry_density/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry_density/MapServer', {
                         id: 'Trackline Bathymetry Density',
                         visible: false,                
                         imageParameters: this.imageParameters.png32

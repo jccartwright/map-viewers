@@ -299,7 +299,7 @@ define([
             formatDate: function(dateStr) {
                 var tokens = dateStr.split('/');
                 if (tokens.length === 3) {
-                    var date = new Date(tokens[2], tokens[0], tokens[1]);
+                    var date = new Date(tokens[2], tokens[0]-1, tokens[1]);
                     return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
                 } else {
                     return '';
