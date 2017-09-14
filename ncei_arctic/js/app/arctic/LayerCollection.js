@@ -241,17 +241,11 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),  
-
-                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/DSCRTP/MapServer', {
-                        id: 'DSCRTP (tiled)',
-                        visible: false
-                    }),
-                    new ArcGISDynamicMapServiceLayer('https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer', {
-                        id: 'DSCRTP (dynamic)',
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer', {
+                        id: 'DSCRTP',
                         visible: false,
                         imageParameters: this.imageParameters.png32
-                    }),
-                                      
+                    }),             
                     new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/graticule/MapServer', {
                         id: 'Graticule',
                         visible: true,
@@ -296,17 +290,7 @@ define([
             },  //end defineMapServices
 
             definePairedMapServices: function() {
-                this.pairedMapServices = [
-                    {
-                        id: 'DSCRTP',
-                        tiledService: this.getLayerById('DSCRTP (tiled)'),
-                        dynamicService: this.getLayerById('DSCRTP (dynamic)'),
-                        cutoffZoom: 7,
-                        ignoreLayerDefinitions: true,
-                        ignoreDefaultVisibleLayers: true,
-                        visible: false
-                    }
-                ];                
+               
             },
 
             setSubLayerVisibility: function() {

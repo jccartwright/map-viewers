@@ -82,8 +82,7 @@ define([
 
                 this.mapLayerCollection.getLayerById('DSCRTP').setVisibleLayers([0]);
                 this.mapLayerCollection.getLayerById('DSCRTP').setLayerDefinitions(['LATITUDE>=50']);
-
-                this.mapLayerCollection.getLayerById('DSCRTP').objectIdFields = {0: 'objectid'};
+                this.mapLayerCollection.getLayerById('DSCRTP').objectIdFields = {0: 'OBJECTID'};
             }                 
         });
     }
