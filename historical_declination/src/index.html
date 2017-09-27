@@ -3,14 +3,14 @@
 <head>
     <!-- Version: {{version}}, Last update: {{buildDate}} -->
     <title>Historical Declination Viewer</title>
-    <link rel="shortcut icon" href="//www.ngdc.noaa.gov/image/favicon.ico">
-    <link rel="stylesheet" href="//js.arcgis.com/3.17/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="//js.arcgis.com/3.17/esri/css/esri.css">
+    <link rel="shortcut icon" href="https://www.ngdc.noaa.gov/image/favicon.ico">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.21/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/3.21/esri/css/esri.css">
 
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc/css/MapToolbar.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc/themes/tundra/BoundingBoxDialog.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc/css/Banner.css">
-    <link rel="stylesheet" href="//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc/css/CoordinatesToolbar.css">
+    <link rel="stylesheet" href="https://maps.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc/css/MapToolbar.css">
+    <link rel="stylesheet" href="https://maps.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc/themes/tundra/BoundingBoxDialog.css">
+    <link rel="stylesheet" href="https://maps.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc/css/Banner.css">
+    <link rel="stylesheet" href="https://maps.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc/css/CoordinatesToolbar.css">
 
     <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/css/MapToolbar.css"> -->
     <!-- <link rel="stylesheet" href="../../dijits/js/ngdc/identify/IdentifyPane.css"> -->
@@ -32,7 +32,7 @@
             packages: [
             {
                 name: "ngdc",
-                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc'
+                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
             },
             {
@@ -41,7 +41,7 @@
             },
             {
                 name: "ncei",
-                location: '//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ncei'
+                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ncei'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ncei'
             }
             ],
@@ -49,15 +49,15 @@
             //app-specific config values
             app: {
                 loglevel: 2,
-                ngdcDijitsUrl: '//maps.ngdc.noaa.gov/viewers/dijits-2.10/js/ngdc'
+                ngdcDijitsUrl: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc'
                 //ngdcDijitsUrl: '/../dijits/js/ngdc'
             }
         };
     </script>
-    <script src="//js.arcgis.com/3.17/"></script>
-    <script type="text/javascript" src="//maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
-    <script type="text/javascript" src="//maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3995.js"></script>
-    <script type="text/javascript" src="//maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3031.js"></script>
+    <script src="https://js.arcgis.com/3.21/"></script>
+    <script type="text/javascript" src="https://maps.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
+    <script type="text/javascript" src="https://maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3995.js"></script>
+    <script type="text/javascript" src="https://maps.ngdc.noaa.gov/proj4js/local_defs/EPSG3031.js"></script>
 </head>
 <body class="tundra">
 <div id="loadingOverlay" class="loadingOverlay pageOverlay">
@@ -138,6 +138,6 @@
     );
 
 </script>
-<script src="//maps.ngdc.noaa.gov/js/ga.js"></script>
+<script src="https://maps.ngdc.noaa.gov/js/ga.js"></script>
 </body>
 </html>
