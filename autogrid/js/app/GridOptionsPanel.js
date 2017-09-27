@@ -118,11 +118,15 @@ define([
             },
 
             extentToString: function(geom, precision) {
+                if (geom.type !== 'extent') {
+                    geom = geom.getExtent();
+                }
+
                 return (
-                    geom.xmin.toFixed(precision)+","+
-                    geom.ymin.toFixed(precision)+","+
-                    geom.xmax.toFixed(precision)+","+
-                    geom.ymax.toFixed(precision)
+                    geom.getExtent().xmin.toFixed(precision)+","+
+                    geom.getExtent().ymin.toFixed(precision)+","+
+                    geom.getExtent().xmax.toFixed(precision)+","+
+                    geom.getExtent().ymax.toFixed(precision)
                 );
             },
 
@@ -178,6 +182,10 @@ define([
 
 
             validate: function() {
+                if (this.extent.type !== 'extent') {
+                    this.extent = this.extent.getExtent();
+                }
+
                 if (this.extent &&
                     this.gridSizeText.value &&
                     this.isGridSizeValid() &&
@@ -200,6 +208,10 @@ define([
 
             estimateGridCellSize: function(extent) {
                 var calcHaversineDistance = lang.hitch(this, 'calcHaversineDistance');
+
+                if (extent.type !== 'extent') {
+                    extent = extent.getExtent();
+                }
 
                 //calculate the x,y dimensions in meters using the mid-latitude as a reference
                 var midLat = extent.getHeight() / 2;
@@ -225,6 +237,10 @@ define([
                 if (!extent || ! cellSize) {
                     console.warn("missing bbox and/or cellSize");
                     return;
+                }
+
+                if (extent.type !== 'extent') {
+                    extent = extent.getExtent();
                 }
 
                 var calcHaversineDistance = lang.hitch(this, 'calcHaversineDistance');
