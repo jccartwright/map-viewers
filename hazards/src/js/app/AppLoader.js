@@ -295,7 +295,7 @@ define([
                 //If runup criteria is entered, first query the runup layer to get a list of TSEVENT_IDs. Append those to the tsevent layer defs.
                 if (values.runupRegion || values.runupCountry || values.runupArea || values.minRunupHeight || values.maxRunupHeight || values.minRunupDeaths || values.maxRunupDeaths ||
                     values.minRunupDamage || values.maxRunupDamage || values.minRunupDistance || values.maxRunupDistance) {
-                    var queryTask = new QueryTask("//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/hazards/MapServer/4");
+                    var queryTask = new QueryTask("https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/hazards/MapServer/4");
                     var query = new Query();
                     query.returnDistinctValues = true;
                     query.outFields = ['TSEVENT_ID'];
