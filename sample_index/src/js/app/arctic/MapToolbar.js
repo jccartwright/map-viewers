@@ -19,7 +19,7 @@ define([
                         visible: false
                     }, 
                     {
-                        label: 'Bathymetry Contours (IBCAO/GEBCO_08)',
+                        label: 'Regional Bathymetric Contours (IBCAO/GEBCO_08)',
                         services: [{id: 'IBCAO Contours'}],
                         visible: false
                     },

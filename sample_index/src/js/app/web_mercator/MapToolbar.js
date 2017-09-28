@@ -26,7 +26,7 @@ define([
                         visible: true
                     }, 
                     {
-                        label: 'Bathymetry Contours (from GEBCO_2014)',
+                        label: 'Regional Bathymetric Contours (from GEBCO_2014)',
                         services: [{id: 'GEBCO_2014 Contours'}],
                         visible: false
                     },
