@@ -3,9 +3,9 @@
 <head>
     <!-- Version: {{version}}, Last update: {{buildDate}} -->
     <title>Multibeam Bathymetric Survey Preview</title>
-    <link rel="shortcut icon" href="//www.ngdc.noaa.gov/image/favicon.ico">
-    <link rel="stylesheet" href="//js.arcgis.com/3.20/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="//js.arcgis.com/3.20/esri/css/esri.css">
+    <link rel="shortcut icon" href="https://www.ngdc.noaa.gov/image/favicon.ico">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.21/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/3.21/esri/css/esri.css">
     <link rel="stylesheet" href="css/local.css">
     <script>
         var dojoConfig = {
@@ -17,7 +17,7 @@
             packages: [
             {
                 name: "ngdc",
-                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc'
+                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ngdc'
             },
             {
@@ -26,7 +26,7 @@
             },
             {
                 name: "ncei",
-                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ncei'
+                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ncei'
                 //location: location.pathname.replace(/\/[^/]*$/, '') + '/../../dijits/js/ncei'
             }
             ],
@@ -35,12 +35,12 @@
             //app-specific config values
             app: {
                 loglevel: 2,
-                ngdcDijitsUrl: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc'
+                ngdcDijitsUrl: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc'
                 //ngdcDijitsUrl: '../../dijits/js/ngdc'
             }
         };
     </script>
-    <script src="//js.arcgis.com/3.20/"></script>
+    <script src="https://js.arcgis.com/3.21/"></script>
 </head>
 <body class="tundra">
 <div id="loadingOverlay" class="loadingOverlay pageOverlay">
@@ -82,6 +82,6 @@
     );
 
 </script>
-<script src="//maps.ngdc.noaa.gov/js/ga.js"></script>
+<script src="https://maps.ngdc.noaa.gov/js/ga.js"></script>
 </body>
 </html>
