@@ -55,17 +55,17 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),
-                    new FeatureLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1', {
+                    new FeatureLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1', {
                         id: 'NOS Hydro Digital',
                         mode: FeatureLayer.MODE_ONDEMAND,
                         visible: false
                     }),
-                    new FeatureLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/2', {
+                    new FeatureLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/2', {
                         id: 'NOS Hydro Non-Digital',
                         mode: FeatureLayer.MODE_ONDEMAND,
                         visible: false
                     }),
-                    new FeatureLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/3', {
+                    new FeatureLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/3', {
                         id: 'BAG Footprints',
                         mode: FeatureLayer.MODE_ONDEMAND,
                         visible: false,
