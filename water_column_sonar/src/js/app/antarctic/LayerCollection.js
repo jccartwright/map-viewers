@@ -26,32 +26,32 @@ define([
             defineMapServices: function() {
                 //TODO check to ensure unique id
                 this.mapServices = [
-                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/antarctic_basemap/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/antarctic/antarctic_basemap/MapServer', {
                         id: 'Antarctic Basemap',
                         visible: true
                     }),                                                         
-                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/ibcso_contours/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/antarctic/ibcso_contours/MapServer', {
                         id: 'IBCSO Contours',
                         visible: false,
                         opacity: 0.5
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/water_column_sonar/MapServer', {
                         id: 'Water Column Sonar',
                         visible: true,
                         imageParameters: this.imageParameters.png32
                     }),                           
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/graticule/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/antarctic/graticule/MapServer', {
                         id: 'Graticule',
                         visible: true,
                         opacity: 0.7,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/reference/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/antarctic/reference/MapServer', {
                         id: 'Reference',
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),                    
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/antarctic/clipping_donut/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/antarctic/clipping_donut/MapServer', {
                         id: 'Clipping Donut',
                         visible: true,
                         imageParameters: this.imageParameters.png32
