@@ -61,7 +61,7 @@ define([
                         id: 'Ocean Base',
                         visible: true,
                     }),                  
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/hot_springs/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/hot_springs/MapServer', {
                         id: 'Hot Springs',
                         visible: true,
                         imageParameters: this.imageParameters.png32
@@ -82,7 +82,7 @@ define([
                         id: 'Ocean Reference',
                         visible: true,
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
                         id: 'Graticule',
                         visible: false,
                         opacity: 0.7,
