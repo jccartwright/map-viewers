@@ -27,11 +27,11 @@ define([
                         id: 'NatGeo',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_hillshade/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2014_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
                         id: 'GEBCO_2014',
                         visible: false
                     }),                    
-                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/ETOPO1_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
                         id: 'ETOPO1',
                         visible: false
                     }),
@@ -55,12 +55,12 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),                
-                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
                         visible: false,
                         opacity: 0.7
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/passive_acoustic_data/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/passive_acoustic_data/MapServer', {
                         id: 'PAD',
                         visible: true,
                         imageParameters: this.imageParameters.png32
@@ -81,13 +81,13 @@ define([
                         id: 'Ocean Reference',
                         visible: true,
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
                         id: 'Graticule',
                         visible: false,
                         opacity: 0.7,
                         imageParameters: this.imageParameters.png32
                     }),                    
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
                         id: 'Poles Mask',
                         visible: true,
                         imageParameters: this.imageParameters.png32
