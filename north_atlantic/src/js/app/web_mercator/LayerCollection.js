@@ -77,11 +77,11 @@ define([
                         id: 'NatGeo',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_hillshade/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2014_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
                         id: 'GEBCO_2014',
                         visible: false
                     }),                    
-                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/etopo1_hillshade/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/ETOPO1_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
                         id: 'ETOPO1',
                         visible: false
                     }),
@@ -129,7 +129,7 @@ define([
                         epsgCode: '900913',
                         layerNames: ['mean_atlas_land']
                     }),                                    
-                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/gebco_2014_contours/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
                         visible: false,
                         opacity: 0.7
@@ -187,7 +187,7 @@ define([
                     //     format: 'png',
                     //     visible: false,
                     // }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/proprietary_bathymetric_surveys/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/proprietary_bathymetric_surveys/MapServer', {
                         id: 'Portugal',
                         visible: false,
                         imageParameters: this.imageParameters.png32
@@ -235,25 +235,25 @@ define([
                         sld: 'http://geomag.colorado.edu/sld/emodnet.sld',
                         layerNames: ['EMODnet_Bathymetry_multi_beams_points', 'EMODnet_Bathymetry_multi_beams_lines']
                     }),                    
-                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer', {
                         id: 'Trackline Bathymetry (tiled)',
                         visible: this.tracklineVisible
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer', {
                         id: 'Trackline Combined (dynamic)',
                         visible: this.tracklineVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISTiledMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer', {
+                    new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam/MapServer', {
                         id: 'Multibeam (tiled)',
                         visible: this.multibeamVisible
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
                         id: 'Multibeam (dynamic)',
                         visible: this.multibeamVisible,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry_density/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry_density/MapServer', {
                         id: 'Trackline Bathymetry Density',
                         visible: false,                
                         imageParameters: this.imageParameters.png32
@@ -274,13 +274,13 @@ define([
                         id: 'Ocean Reference',
                         visible: true
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
                         id: 'Graticule',
                         visible: false,
                         opacity: 0.7,
                         imageParameters: this.imageParameters.png32
                     }),                    
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
                         id: 'Poles Mask',
                         visible: true,
                         imageParameters: this.imageParameters.png32
