@@ -66,7 +66,7 @@ define([
                         visible: false,
                         opacity: 0.7
                     }),         
-                    new esri.layers.ArcGISDynamicMapServiceLayer('//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/ttt_coastal_locations/MapServer', {
+                    new esri.layers.ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/ttt_coastal_locations/MapServer', {
                         id: 'TTT',
                         visible: true,
                         imageParameters: this.imageParameters.png32
@@ -87,7 +87,7 @@ define([
                         id: 'Ocean Reference',
                         visible: true,
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
                         id: 'Graticule',
                         visible: false,
                         opacity: 0.7,

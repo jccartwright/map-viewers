@@ -87,7 +87,7 @@ define([
                 esriConfig.defaults.io.corsEnabledServers.push('gis.ngdc.noaa.gov');
                 esriConfig.defaults.io.corsEnabledServers.push('gisdev.ngdc.noaa.gov');
 
-                esriConfig.defaults.geometryService = new GeometryService('//maps.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
+                esriConfig.defaults.geometryService = new GeometryService('https://gis.ngdc.noaa.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer');
 
                 //add queryParams into config object, values in queryParams take precedence
                 var queryParams = ioQuery.queryToObject(location.search.substring(1));
@@ -295,7 +295,7 @@ define([
                 //If runup criteria is entered, first query the runup layer to get a list of TSEVENT_IDs. Append those to the tsevent layer defs.
                 if (values.runupRegion || values.runupCountry || values.runupArea || values.minRunupHeight || values.maxRunupHeight || values.minRunupDeaths || values.maxRunupDeaths ||
                     values.minRunupDamage || values.maxRunupDamage || values.minRunupDistance || values.maxRunupDistance) {
-                    var queryTask = new QueryTask("//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/hazards/MapServer/4");
+                    var queryTask = new QueryTask("https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/hazards/MapServer/4");
                     var query = new Query();
                     query.returnDistinctValues = true;
                     query.outFields = ['TSEVENT_ID'];

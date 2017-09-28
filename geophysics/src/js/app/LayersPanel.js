@@ -265,7 +265,7 @@ define([
              * Update the counts displayed in the TOC of how many surveys fit the filter criteria
              */
             updateSurveyCounts: function(layerDefinitions) {
-                var tracklineMapServiceUrl = '//maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer';
+                var tracklineMapServiceUrl = 'https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_combined_dynamic/MapServer';
                 var marineQuery = new Query();
                 var aeroQuery = new Query;
 

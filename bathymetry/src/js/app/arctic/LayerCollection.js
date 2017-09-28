@@ -157,7 +157,7 @@ define([
                         visible: this.demVisible,
                         imageParameters: this.imageParameters.png32
                     }), 
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_extents/MapServer', {
                         id: 'DEM Extents',
                         visible: this.demVisible,
                         imageParameters: this.imageParameters.png32

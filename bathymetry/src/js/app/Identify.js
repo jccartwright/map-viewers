@@ -137,27 +137,17 @@ define([
                     '<h3>Digital Elevation Model: ${name}</h3>' +
                     '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>' +
                     '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
-                    '<div class="valueName">Cell Size: <span class="parameterValue">${cellSize}</span></div>' +
-                    '<div class="valueName">Category: <span class="parameterValue">${category}</span></div>' +
-                    '<div class="valueName">Source: <span class="parameterValue">${source}</span></div>' +
-                    '<div class="valueName">Project: <span class="parameterValue">${project}</span></div>' +
-                    '<div class="valueName">Vertical Datum: <span class="parameterValue">${verticalDatum}</span></div>' +
-                    '<div class="valueName">Status: <span class="parameterValue">${status}</span></div>' +
-                    '<div class="valueName">Type: <span class="parameterValue">${type}</span></div>' +
-                    '<div class="valueName">Coverage: <span class="parameterValue">${coverage}</span></div>' +
+                    '<div class="valueName">Cell Size: <span class="parameterValue">${cellSize}</span></div>' +                    
+                    '<div class="valueName">Vertical Datum: <span class="parameterValue">${verticalDatum}</span></div>' +                    
+                    '<div class="valueName">Horizontal Datum: <span class="parameterValue">${horizontalDatum}</span></div>' + 
                     '<div class="valueName">Completion Date: <span class="parameterValue">${completionDate}</span></div>';
 
                 var html = string.substitute(template, {
-                    url: a['DEMURL'],
+                    url: a['DEM URL'],
                     name: a['Name'],
                     cellSize: a['Cell Size'],
-                    category: a['Category'],
-                    source: a['Source'],
-                    project: a['Project'],
                     verticalDatum: a['Vertical Datum'],
-                    status: a['Status'],
-                    type: a['Type'],
-                    coverage: a['Coverage'],
+                    horizontalDatum: a['Horizontal Datum'],
                     completionDate: this.formatDate(a['Completion Date'])
                 });               
                 return html;

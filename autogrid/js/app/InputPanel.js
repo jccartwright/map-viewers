@@ -62,7 +62,7 @@ define([
              //{
              //"email": "user@example.com",
              //"items": [{
-             //"dataset": "Autochart",
+             //"dataset": "Autogrid",
              //"geometry": "-145.15625, 40.80315, -136.54297, 46.27649",
              //"gridCellSize": 1060,
              //"backgroundFill": true
@@ -88,7 +88,7 @@ define([
                  }
 
                 var jobOptions = {
-                    "dataset": "Autochart"
+                    "dataset": "Autogrid"
                 };
 
                 lang.mixin(jobOptions, gridOptionsDijit.getData());

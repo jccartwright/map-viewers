@@ -59,7 +59,7 @@ define([
 
             addFeatureLayers: function() {
                 //FeatureLayer used for displaying lines every 2 degrees. Visible at all scales.
-                this.linesLayer = new FeatureLayer("//maps.ngdc.noaa.gov/arcgis/rest/services/historical_declination/MapServer/3", {
+                this.linesLayer = new FeatureLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/historical_declination/MapServer/3", {
                     id: 'Isogonic Lines',
                     mode: FeatureLayer.MODE_SNAPSHOT,
                     outFields: ["Contour"],
@@ -69,7 +69,7 @@ define([
                     //maxAllowableOffset: 5000
                 });
                 //FeatureLayer used for displaying intermediate lines, every 1 degree. Visible at larger scales
-                this.linesLayer2 = new FeatureLayer("//maps.ngdc.noaa.gov/arcgis/rest/services/historical_declination/MapServer/3", {
+                this.linesLayer2 = new FeatureLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/historical_declination/MapServer/3", {
                     id: 'Isogonic Lines2',
                     mode: FeatureLayer.MODE_SNAPSHOT,
                     outFields: ["Contour"],
@@ -79,19 +79,19 @@ define([
                     minScale: 20000000
                     //maxAllowableOffset: 5000
                 });
-                this.polesLayer = new FeatureLayer("//maps.ngdc.noaa.gov/arcgis/rest/services/historical_declination/MapServer/0", {
+                this.polesLayer = new FeatureLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/historical_declination/MapServer/0", {
                     id: 'Poles',
                     mode: FeatureLayer.MODE_SNAPSHOT,
                     visible: false
                 });
-                this.observedPolesLayer = new FeatureLayer("//maps.ngdc.noaa.gov/arcgis/rest/services/historical_declination/MapServer/1", {
+                this.observedPolesLayer = new FeatureLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/historical_declination/MapServer/1", {
                     id: 'Observed Poles',
                     mode: FeatureLayer.MODE_SNAPSHOT,
                     visible: false,
                     showLabels: true, 
                     outFields: ["*"]
                 });
-                this.historicPolesLayer = new FeatureLayer("//maps.ngdc.noaa.gov/arcgis/rest/services/historical_declination/MapServer/2", {
+                this.historicPolesLayer = new FeatureLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/historical_declination/MapServer/2", {
                     id: 'Historic Poles',
                     mode: FeatureLayer.MODE_SNAPSHOT,
                     visible: false

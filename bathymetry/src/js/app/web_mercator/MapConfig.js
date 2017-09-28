@@ -54,8 +54,6 @@ define([
 
                 this.mapLayerCollection.getLayerById('BAG Footprints').setVisibleLayers([3]);
 
-                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
-
                 this.mapLayerCollection.getLayerById('OCM Lidar').setVisibleLayers([-1]);
 
                 //Apply layer definitions to the CSC Lidar layer to only show bathymetric lidar

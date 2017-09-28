@@ -51,7 +51,7 @@ define([
                         imageServiceParameters: params,
                         visible: false
                     }),
-                    new FeatureLayer('https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0', {
+                    new FeatureLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0', {
                         id: 'Multibeam',
                         mode: FeatureLayer.MODE_ONDEMAND,
                         visible: false

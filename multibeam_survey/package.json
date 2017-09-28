@@ -1,6 +1,6 @@
 {
   "name": "multibeam_survey",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "embedded multibeam survey viewer",
   "main": "index.html",
   "scripts": {

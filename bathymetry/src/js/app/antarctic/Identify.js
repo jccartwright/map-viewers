@@ -30,7 +30,7 @@ define([
                 this.formatters = {
                     'Multibeam/Multibeam Bathymetric Surveys': lang.hitch(this, this.multibeamFormatter),
                     'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),
-                    'DEM Extents/All NCEI Bathymetric DEMs': lang.hitch(this, this.demFormatter)
+                    'DEM Extents/NCEI Digital Elevation Models': lang.hitch(this, this.demFormatter)
                 };
             } //end constructor
         });

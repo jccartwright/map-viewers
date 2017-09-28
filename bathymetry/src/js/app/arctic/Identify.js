@@ -33,7 +33,7 @@ define([
                     'NOS Hydrographic Surveys/Surveys with BAGs': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydrographic Surveys/Surveys with Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydrographic Surveys/Surveys without Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
-                    'DEM Extents/All NCEI Bathymetric DEMs': lang.hitch(this, this.demFormatter),
+                    'DEM Extents/NCEI Digital Elevation Models': lang.hitch(this, this.demFormatter),
                     'DEM Tiles/DEM Tiles': lang.hitch(this, this.demTileFormatter),
                 };
             } //end constructor
