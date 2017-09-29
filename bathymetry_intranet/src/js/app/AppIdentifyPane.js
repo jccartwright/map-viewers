@@ -103,7 +103,7 @@ define([
                 else if (item.layerName === 'BAG Footprints') {
                     return '<i>BAG Footprints (' + this.formatCountString(count) + ')</i>';
                 } 
-                else if (item.layerName === 'All NCEI Bathymetric DEMs') {
+                else if (item.layerName === 'NCEI Digital Elevation Models') {
                     return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
                 }
                 else if (item.layerName === 'DEM Tiles') {
@@ -142,7 +142,7 @@ define([
                 else if (item.layerName === 'BAG Footprints') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'], uid);
                 } 
-                else if (item.layerName === 'All NCEI Bathymetric DEMs') {
+                else if (item.layerName === 'NCEI Digital Elevation Models') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
                 }
                 else if (item.layerName === 'DEM Tiles') {
