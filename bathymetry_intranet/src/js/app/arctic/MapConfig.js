@@ -55,8 +55,6 @@ define([
                 this.mapLayerCollection.getLayerById('BAG Footprints').setVisibleLayers([3]);
                 
                 this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
-
-                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
             }
          
             

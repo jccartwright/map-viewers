@@ -46,8 +46,6 @@ define([
                 this.identifyPane.enabled = false;    
 
                 this.mapLayerCollection.getLayerById('Trackline Bathymetry').setVisibleLayers([1]);
-
-                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);            
             }
          
             

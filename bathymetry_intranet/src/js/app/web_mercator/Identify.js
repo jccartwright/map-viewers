@@ -34,7 +34,7 @@ define([
                     'NOS Hydrographic Surveys/Surveys with Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydrographic Surveys/Surveys without Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
                     'BAG Footprints/BAG Footprints': lang.hitch(this, this.bagFootprintFormatter),
-                    'DEM Extents/All NCEI Bathymetric DEMs': lang.hitch(this, this.demFormatter),
+                    'DEM Extents/NCEI Digital Elevation Models': lang.hitch(this, this.demFormatter),
                     'DEM Tiles/DEM Tiles': lang.hitch(this, this.demTileFormatter),
                     'OCM Lidar/Elevation >1:20M': lang.hitch(this, this.lidarFormatter),
                     'OCM Lidar/Elevation 1:12.5M - 1:20M': lang.hitch(this, this.lidarFormatter),
