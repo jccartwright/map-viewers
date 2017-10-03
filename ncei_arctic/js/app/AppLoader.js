@@ -158,7 +158,7 @@ define([
                     this.dscrtplegend = new Legend({
                         map: this.arcticMapConfig.map,
                         layerInfos: [                            
-                            {title: 'DSCRTP', layer: this.getLayerById('DSCRTP')._tiledService}
+                            {title: 'DSCRTP', layer: this.getLayerById('DSCRTP')}
                         ]
                     }, 'dynamicDSCRTPLegend');
                     this.dscrtplegend.startup();
