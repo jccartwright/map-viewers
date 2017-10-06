@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--The viewport meta tag is used to improve the presentation and behavior of the samples 
+      on iOS devices-->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Generate Taxonomy List</title>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.10/js/dojo/dijit/themes/tundra/tundra.css">
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.10/js/esri/css/esri.css" />
+    <style>
+      html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
+    </style>
+
+    <script>var dojoConfig = {parseOnLoad: true};</script>
+    <script src="https://js.arcgis.com/3.10/"></script>
+    <script>
+
+      function init() {
+        console.log("Ready to go");
+      }
+
+      // create a table containing all the unique large marine ecosystem values for deep-sea corals map service DSCRTP
+      function getLMEs()  {
+        dojo.byId('processingMsg').innerHTML = "<center><img src='ajax-loader.gif'></center>";
+        var serviceURL = "https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=1=1";
+        var otherSettings = "&returnGeometry=false&outFields=largemarineecosystem&f=json";
+        var queryURL = serviceURL + otherSettings;
+        var deferred = getGeostatisticsResults(queryURL);
+        // process features returned from query
+        deferred.addCallback(function(response)  {
+          dojo.byId('processingMsg').innerHTML = "";
+          var values = [];
+          var uniqueValues = [];
+          var value;
+          var features = response.features;
+          dojo.forEach(features, function(feature)  {
+            value = feature.attributes["largemarineecosystem"];
+            values.push(value);
+            if (uniqueValues.length === 0)  {
+              uniqueValues.push(value);
+            }
+            else  {
+              var foundIt = false;
+              for (var i=0;i<uniqueValues.length;i++)  {
+                if (uniqueValues[i] == value)  foundIt = true;
+              }
+              if (!foundIt)  uniqueValues.push(value);
+            }
+          });
+          // create a sorted array
+          var sortedValues = uniqueValues.sort(); 
+          // create a table of these values
+          var geostats_html = "";
+          geostats_html += '<center><table colspan="1" border="1">';
+          geostats_html += '<tr><td align="center" width="150"><b>Large Marine Ecosystems</b></td></tr>';
+          for (var i=0;i<sortedValues.length;i++)  {
+            geostats_html += '<tr><td align="left">';
+            geostats_html += sortedValues[i];
+            geostats_html += '</td></tr>';
+          }
+          geostats_html += '</table></center>';
+          dojo.byId("lmeList").innerHTML = geostats_html;
+        });
+      }
+
+      // process query to return features from DSCRTP map service (deep-sea corals)
+      function getGeostatisticsResults(url)  {
+        var deferred = esri.request({
+	  url: url, 
+	  content: { f: "json" },
+	  handleAs: "json",
+ 	  callbackParamName: "callback"
+        });
+        return deferred;
+      }
+
+      dojo.ready(init);
+    </script>
+  </head>
+  
+  <body class="tundra">
+    <p/>
+    <center>You can retrieve the unique large marine ecosystem values from<br/>DSCRTP map service (staging server).<p/></center>
+    <p/>
+    <center>
+    <input type="button" value="Get LMEs" onClick="getLMEs();"/>
+    </center>
+    <p/>
+    <div id="processingMsg"></div>
+    <p/>
+    <div id="lmeList" style="padding:5px; margin:5px; background-color:#eee;">
+    </div>
+  </body>
+
+</html>

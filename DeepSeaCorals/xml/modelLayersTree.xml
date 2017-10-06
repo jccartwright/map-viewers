@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<tree id="0">
+<item id="USAtl">
+    <itemtext><![CDATA[NCCOS Models  <a href="javascript:getModelDetails('NCCOS')" style="background:gray;font:bold 12px Arial;color:white;cursor:hand;padding-right:4px;padding-left:4px;" title="Click for more details on the NCCOS models"><b>?</b></a>]]></itemtext>
+    <item id="NCCOS_GOM">
+    <itemtext><![CDATA[Gulf of Mexico]]></itemtext>
+      <item text="Alcyonacea and Gorgonacea" id="GOM_Alcy"></item>
+      <item text="Gorgonacea" id="GOM_Alcy_Gorg"></item>
+      <item text="Alcyonacea" id="GOM_Alcy_NonGorg"></item>
+      <item text="Antipatharia" id="GOM_Antipatharia"></item>
+      <item id="GOM_Gorg_Bebryce">
+        <itemtext><![CDATA[Gorgonacea Plexauridae <i>Bebryce</i>]]></itemtext>
+      </item>
+      <item id="GOM_Gorg_Callo">
+        <itemtext><![CDATA[Gorgonacea Primnoidae <i>Callogorgia</i>]]></itemtext>
+      </item>
+      <item text="Gorgonacea Ellisellidae" id="GOM_Gorg_Ellis"></item>
+      <item text="Gorgonacea Gorgoniidae" id="GOM_Gorg_Gorgon"></item>
+      <item id="GOM_Gorg_Hypno">
+        <itemtext><![CDATA[Gorgonacea Plexauridae <i>Hypnogorgia</i>]]></itemtext>
+      </item>
+      <item text="Gorgonacea Isididae" id="GOM_Gorg_Isid"></item>
+      <item id="GOM_Scler_Lophelia">
+        <itemtext><![CDATA[Scleractinia Caryophylliidae <i>Lophelia pertusa</i>]]></itemtext>
+      </item>
+      <item id="GOM_Scler_Madracis">
+        <itemtext><![CDATA[Scleractinia Astrocoeniidae <i>Madracis</i>]]></itemtext>
+      </item>
+      <item id="GOM_Scler_Madrepora">
+        <itemtext><![CDATA[Scleractinia Oculinidae <i>Madrepora</i>]]></itemtext>
+      </item>
+      <item id="GOM_Gorg_Plex_Para">
+        <itemtext><![CDATA[Gorgonacea Plexauridae <i>Paramuricea</i>]]></itemtext>
+      </item>
+      <item id="GOM_Gorg_Plex_NonPara">
+        <itemtext><![CDATA[Gorgonacea Plexauridae (excluding <i>Paramuricea</i>)]]></itemtext>
+      </item>
+      <item text="Scleractinia" id="GOM_Scler"></item>
+      <item text="Scleractinia (Framework Forming) (Stony Coral [Branching] excluding Oculina)" id="GOM_Scler_Frame"></item>
+      <item text="Scleractinia (Non-Framework Forming) (Stony Coral [Cup Coral] and unspecified)" id="GOM_Scler_NonFrame"></item>
+    </item>
+    <item id="NCCOS_NE">
+    <itemtext><![CDATA[Northeast & Mid-Atlantic]]></itemtext>
+      <item text="Alcyonacea and Gorgonacea" id="NE_Alcy"></item>
+      <item text="Gorgonacea" id="NE_Alcy_Gorg"></item>
+      <item text="Alcyonacea" id="NE_Alcy_NonGorg"></item>
+      <item text="Pennatulacea" id="NE_Penn"></item>
+      <item text="Scleractinia (Cup Coral)" id="NE_Scleractinia"></item>
+    </item>
+    <item id="NCCOS_SE">
+    <itemtext><![CDATA[Southeast]]></itemtext>
+      <item text="Alcyonacea and Gorgonacea" id="SE_Alcy"></item>
+      <item text="Gorgonacea Calcaxonia " id="SE_Gorg_Calcax"></item>
+      <item text="Gorgonacea" id="SE_Alcy_Gorg"></item>
+      <item text="Gorgonacea Holaxonia" id="SE_Gorg_Holax"></item>
+      <item text="Alcyonacea" id="SE_Alcy_NonGorg"></item>
+      <item text="Antipatharia" id="SE_Antipatharia"></item>
+      <item id="SE_Scler_Lophelia">
+        <itemtext><![CDATA[Scleractinia Caryophylliidae <i>Lophelia pertusa</i>]]></itemtext>
+      </item>
+      <item id="SE_Scler_Madrepora">
+        <itemtext><![CDATA[Scleractinia  Oculinidae <i>Madrepora</i>]]></itemtext>
+      </item>
+      <item id="SE_Scler_Oculina">
+        <itemtext><![CDATA[Scleractinia  Oculinidae <i>Oculina</i>]]></itemtext>
+      </item>
+      <item text="Scleractinia (Framework Forming) (Stony Coral [Branching])" id="SE_Scler_Frame"></item>
+      <item text="Scleractinia (Non-Framework Forming)" id="SE_Scler_NonFrame"></item>
+      <item text="Anthoathecata Stylasteridae (Lace Corals)" id="SE_Anthoathecata"></item>
+      <item text="Pennatulacea" id="SE_Penn"></item>
+    </item>
+  </item>
+</tree>

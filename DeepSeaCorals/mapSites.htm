@@ -1,0 +1,867 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7, IE=9, IE=10">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Deep-Sea Coral Map</title>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.10/js/dojo/dijit/themes/tundra/tundra.css">
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.10/js/esri/dijit/css/Popup.css" />
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.10/js/esri/css/esri.css" />
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.10/js/dojo/dojox/layout/resources/FloatingPane.css" />
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.10/js/dojo/dojox/layout/resources/ResizeHandle.css" />
+    <link rel="stylesheet" type="text/css" href="codebase/dhtmlxtree.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/simpletree.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/layout.css"/>
+
+    <style>
+      .zoominIcon { background-image:url(images/nav_zoomin.png); width:16px; height:16px; }
+      .zoomoutIcon { background-image:url(images/nav_zoomout.png); width:16px; height:16px; }
+      .zoomprevIcon { background-image:url(images/nav_previous.png); width:16px; height:16px; }
+      .zoomnextIcon { background-image:url(images/nav_next.png); width:16px; height:16px; }
+      .panIcon { background-image:url(images/nav_pan.png); width:16px; height:16px; }
+      .deactivateIcon { background-image:url(images/nav_decline.png); width:16px; height:16px; }
+      .geostatisticsIcon { background-image:url(images/chart-icon.png); width:16px; height:16px; }
+      .queryIcon { background-image:url(images/document16.png); width:16px; height:16px; }
+      .downloadIcon { background-image:url(images/download16.png); width:16px; height:16px; }
+      .metadataIcon { background-image:url(images/metadata16.png); width:16px; height:16px; }
+      .resetIcon { background-image:url(images/refresh-icon.png); width:16px; height:16px; }
+      .emailIcon { background-image:url(images/email-icon16.png); width:16px; height:16px; }
+      .navToolbar {background:#000;}	  
+      .tundra .dijitToolbar {
+		border-bottom: none;
+	  	background-color: #6699ff;
+        	background-image: none;
+		background-position: 0px 0px;
+		background-repeat: repeat-x;
+		padding: 2px 2px 2px 2px;
+		zoom: 1;
+      }
+      .reloadBigIcon { background-image:url(images/refresh-icon-32.png); width:30px; height:30px; }
+    </style>
+    
+    <style>
+      a, span, div, body {
+        text-decoration: none;
+      }
+      html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
+      #map{ margin: 0; padding: 0; }
+
+      #preloader {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%; 
+	height: 100%; 
+	margin:0; 
+	padding:0;
+	background:#aaa;				
+	z-index:999;
+      }
+      #preloaderContent {
+	position: absolute;
+	border: 2px solid #fff;
+	color: #fff;
+	padding: 25px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+      }
+      #HomeButton {
+        position: absolute;
+        top: 95px;
+        left: 20px;
+        z-index: 50;
+      }
+      .HomeButton .home {
+        background-color: #666 !important;
+        background-color: rgba(0,0,0,0.80) !important;
+      }
+      .HomeButton .home:hover {
+        background-color: #333 !important;
+        background-color: rgba(102,102,102,0.90) !important;
+      }
+
+      /* center the image in the popup */
+      .esriViewPopup .gallery { margin: 0 auto !important; }       
+      .tundra .dijitTitlePaneTitle {
+        background: #ffff00 !important;
+      }
+      .details {
+        font-size:8pt;
+      }
+      .dijitFixedClosed {  cursor: default;  }
+      .selectedTreeRow {
+        background-color: #ffffff  !important;
+        border: #ffffff  !important;
+      }
+    </style>
+<!--
+    <script>
+      var dojoConfig = { 
+        parseOnLoad: true,
+      };
+ -->
+    </script>
+    <script src="https://js.arcgis.com/3.10/"></script>
+    <script src="codebase/dhtmlxtree.js"></script>
+    <script src="javascripts/mapFunctionsSites.js"></script>
+    <script src="javascripts/chainedselects.js"></script>
+    <script src="javascripts/simpletreemenu.js"></script>
+    <script src="javascripts/taxonconfig.js"></script>
+    <script src="../../common/javascripts/Federated-Analytics.js"></script>
+
+    <script>
+      dojo.require("dojo.parser");
+      dojo.require("dijit.layout.AccordionContainer");
+      dojo.require("dijit.layout.BorderContainer");
+      dojo.require("dijit.layout.ContentPane");
+      dojo.require("dijit.layout.TabContainer");
+      dojo.require("dijit.form.Button");
+      dojo.require("dijit.form.CheckBox");
+      dojo.require("dijit.form.DateTextBox");
+      dojo.require("dijit.form.Form");
+      dojo.require("dijit.form.NumberTextBox");
+      dojo.require("dijit.form.RadioButton");
+      dojo.require("dijit.form.Select");
+      dojo.require("dijit.form.TextBox");
+      dojo.require("dijit.layout.TabContainer");
+      dojo.require("dijit.TitlePane");
+      dojo.require("dijit.Toolbar");
+      dojo.require("dojo.DeferredList");
+      dojo.require("dojox.data.CsvStore");
+      dojo.require("dojox.layout.FloatingPane");
+      dojo.require("esri.map");
+      dojo.require("esri.geometry");
+      dojo.require("esri.arcgis.utils");
+      dojo.require("esri.dijit.HomeButton");
+      dojo.require("esri.dijit.Scalebar");
+      dojo.require("esri.tasks.query");
+      dojo.require("esri.toolbars.navigation");
+
+      
+      var map, loading, navToolbar;
+      var mapCenterPoint;
+      var originalMapExtent, savedMapExtent;
+      var identifyTask, identifyParams;
+      var totalRecords = 0;
+      var retrievedRecords = 0;
+      var mapDrawing = false;
+      var mapLyrsChecked = "";
+      var imageLayerDef, taskLayerDef;
+      var csvStore;
+      var basemap;
+      var dscDynLayer, eezDynLayer, nmsDynLayer, modDynLayer;
+      var sitesLayer, siteHighlightLayer, siteSelectedLayer;
+      var modelLayerDetails = [];
+      var pFloatingPane;
+      var gFloatingPane;
+      var ua = navigator.userAgent;
+      var usingIE = false;
+      var firstTimeLoad = true;
+
+      // PLEASE NOTE: Minimum and maximum values for time and depth can't be programmatically set ... if values need to be changed must manually do it
+      // code for preloader from http://acuriousanimal.com/blog/2010/12/05/how-to-create-a-preloader-in-dojo/
+
+      var hidePreloader = function(){
+      // This really hides the preloader
+        var hide = function(){
+          dojo.fadeOut({
+            node:"preloader",
+            duration:700,
+            onEnd: function(){								
+              dojo.style("preloader", "display", "none");						
+            }
+          }).play();
+        };
+        // Set a timeout to ensure the preloader is visible.
+        setTimeout(hide, 5000);
+      }; 
+        	
+      function showPreloader() {
+        // Show the preloader centered in the viewport		
+        var ps = dojo.position('preloaderContent');
+        var ws = dojo.window.getBox();
+        dojo.style("preloaderContent", "top" , (ws.h/2-ps.h/2)+"px");
+        dojo.style("preloaderContent", "left", (ws.w/2-ps.w/2)+"px");
+        dojo.style("preloaderContent", "visibility" , "visible");
+      };
+
+
+      function init() {
+
+        // overlay content until dojo has been parsed ... then display page
+        showPreloader();
+        dojo.parser.parse();
+        hidePreloader();
+
+        // determine if parameter passed by URL .. currently can set Region to Fish Council Region
+        //   ex. service.ncddc.noaa.gov/website/AGSViewers/DeepSeaCorals/mapSites.htm?region=Gulf of Mexico
+        var regionSelected = false;
+        urlObject = esri.urlToObject(document.location.href);
+        if (urlObject.query)  {
+          urlObject = esri.urlToObject(window.location.href);
+          urlObject.query = urlObject.query || {};
+          if (urlObject.query.region)  {
+            regionSelected = true;
+          }
+        }
+
+        // determine browser
+        if (ua.indexOf("MSIE") != -1)  usingIE = true;
+
+        // load fromDate and toDate
+        dojo.byId("fromDate").value = "-999";
+        var today = new Date();
+        year = today.getFullYear();
+        dojo.byId("toDate").value = year;
+
+        loading = dojo.byId("loadingImg");
+ 
+        // handle the taxon switch
+        var taxonRadios = document.getElementsByName("Scientific_Vernacular_OFG_pQuery");
+        var scientificName = document.getElementById("scientificPicker");
+        var vernacularName = document.getElementById("vernacularPicker");
+        var ofgName = document.getElementById("ofgPicker");
+        var pQueryName = document.getElementById("pQueryPicker");
+        scientificName.style.display = 'block'; // show
+        vernacularName.style.display = 'none';  // hide
+        ofgName.style.display = 'none';         // hide
+        pQueryName.style.display = 'none';      // hide
+        //alert(taxonRadios.length);
+        for (var i=0; i<taxonRadios.length; i++)  {
+          taxonRadios[i].onclick = function()  {
+            var val = this.value;
+            //alert(val);
+            if (val == 'Scientific') {
+              scientificName.style.display = 'block'; 
+              vernacularName.style.display = 'none';  
+              ofgName.style.display = 'none'; 
+              pQueryName.style.display = 'none';
+            }
+            else if (val == 'Vernacular') {
+              scientificName.style.display = 'none'; 
+              vernacularName.style.display = 'block';  
+              ofgName.style.display = 'none'; 
+              pQueryName.style.display = 'none';
+            }
+            else if (val == 'OFG')  {
+              scientificName.style.display = 'none'; 
+              vernacularName.style.display = 'none';  
+              ofgName.style.display = 'block';
+              pQueryName.style.display = 'none';
+            }
+            else if (val == 'pQuery')  {
+              scientificName.style.display = 'none'; 
+              vernacularName.style.display = 'none';  
+              ofgName.style.display = 'none'; 
+              pQueryName.style.display = 'block';
+            }
+          }
+        }  
+
+        // handle the region switch
+        var regionRadios = document.getElementsByName("LME_Ocean_FCR");
+        var lmeRegion = document.getElementById("lmePicker");
+        var oceanRegion = document.getElementById("oceanPicker");
+        var fcrRegion = document.getElementById("fcrPicker");
+        lmeRegion.style.display = 'none'; 	// hide
+        oceanRegion.style.display = 'block';  	// show
+        fcrRegion.style.display = 'none';       // hide
+        for (var i=0; i<regionRadios.length; i++)  {
+          regionRadios[i].onclick = function()  {
+            var val = this.value;
+            if (val == 'LME') {
+              lmeRegion.style.display = 'block'; 
+              oceanRegion.style.display = 'none';  
+              fcrRegion.style.display = 'none'; 
+            }
+            else if (val == 'Ocean') {
+              lmeRegion.style.display = 'none'; 
+              oceanRegion.style.display = 'block';  
+              fcrRegion.style.display = 'none'; 
+            }
+            else if (val == 'FCR')  {
+              lmeRegion.style.display = 'none'; 
+              oceanRegion.style.display = 'none';  
+              fcrRegion.style.display = 'block';
+            }
+          }
+        }                   
+
+        var popup = new esri.dijit.Popup({
+          anchor: "auto", fillSymbol: new esri.symbol.SimpleFillSymbol(esri.symbol.SimpleFillSymbol.STYLE_SOLID, new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([255,0,0]), 2), new dojo.Color([255,255,0,0.25]))
+          }, dojo.create("div"));
+
+        // limit the zoom level  ... right now defined to the max zoom of corals tiled layer
+        var lods = [
+                //{"level" : 0, "resolution" : 156543.03392800014, "scale" : 591657527.591555},
+                //{"level" : 1, "resolution" : 78271.516963999937, "scale" : 295828763.79577702},
+                {"level" : 2, "resolution" : 39135.758482000092, "scale" : 147914381.89788899},
+                {"level" : 3, "resolution" : 19567.879240999919, "scale" : 73957190.948944002},
+                {"level" : 4, "resolution" : 9783.9396204999593, "scale" : 36978595.474472001},
+                {"level" : 5, "resolution" : 4891.9698102499797, "scale" : 18489297.737236001},
+                {"level" : 6, "resolution" : 2445.9849051249898, "scale" : 9244648.8686180003},
+                {"level" : 7, "resolution" : 1222.9924525624949, "scale" : 4622324.4343090001},
+                {"level" : 8, "resolution" : 611.49622628137968, "scale" : 2311162.2171550002},
+                {"level" : 9, "resolution" : 305.74811314055756, "scale" : 1155581.108577},
+                {"level" : 10, "resolution" : 152.87405657041106, "scale" : 577790.55428899999},
+                {"level" : 11, "resolution" : 76.43702828507324, "scale" : 288895.277144},
+                {"level" : 12, "resolution" : 38.21851414253662, "scale" : 144447.638572},
+                {"level" : 13, "resolution" : 19.10925707126831, "scale" : 72223.819286},
+                {"level" : 14, "resolution" : 9.554628535634155, "scale" : 36111.909643},
+                {"level" : 15, "resolution" : 4.77731426794937, "scale" : 18055.954822},
+                {"level" : 16, "resolution" : 2.388657133974685, "scale" : 9027.977411}
+        ];
+
+        map = new esri.Map("map", {
+          center: [-115, -5],
+          sliderStyle: 'small',
+          logo: true,
+          wrapAround180:true,
+          showAttribution:true,
+          infoWindow:popup, 
+          zoom: 0,
+          lods: lods
+        });
+
+
+        var scalebar = new esri.dijit.Scalebar({
+          map: map,
+          scalebarUnit:'dual',
+          attachTo:'bottom-center'
+        });
+
+        navToolbar = new esri.toolbars.Navigation(map);
+        dojo.connect(navToolbar, "onExtentChange", extentHistoryChangeHandler);
+
+        dojo.addClass(map.infoWindow.domNode, "myTheme");
+        
+        dojo.connect(map, "onLoad", mapReady);
+
+        var home = new esri.dijit.HomeButton({
+          theme: "HomeButton",
+          map: map
+        }, "HomeButton");
+        home.startup();
+
+        // add popup floating pane ... site characterization details popup
+        var pdock = new dojox.layout.Dock({
+          id: 'pdock', style: 'position:absolute; bottom:0; left:0; height:650px; width:0px; display:none; z-index:0;'
+        }, dojo.create('div', null, dojo.body()));
+        pFloatingPane = new dojox.layout.FloatingPane({
+          title: "Site Characterization",
+          resizable: true, //allow resizing
+          closable: false, //we never want to close a floating pane - this method destroys the dijit
+          dockable: true, // yes we want to dock it
+          dockTo: pdock,
+          style: 'position:absolute;bottom:30px;left:0px;width:300px;height:300px;visibility:hidden;z-index:999 !important',
+          id: "pFloatingPane"
+        }, dojo.create('div', null, dojo.body()));
+        dojo.connect(pFloatingPane, 'onFocus', function () {
+          dijit.byId('pFloatingPane').bringToTop()
+        });
+        //do the same for onShow
+        dojo.connect(pFloatingPane, 'onShow', function () {
+          dijit.byId('pFloatingPane').bringToTop()
+        });
+        pFloatingPane.startup();
+
+        // add popup floating pane ... geostatistics popup
+        var gdock = new dojox.layout.Dock({
+          id: 'gdock', style: 'position:absolute; bottom:0; right:0; height:650px; width:0px; display:none; z-index:0;'
+        }, dojo.create('div', null, dojo.body()));
+        gFloatingPane = new dojox.layout.FloatingPane({
+          title: "Geostatistics",
+          resizable: true, //allow resizing
+          closable: false, //we never want to close a floating pane - this method destroys the dijit
+          dockable: true, // yes we want to dock it
+          dockTo: gdock,
+          style: 'position:absolute;bottom:30px;right:200px;width:350px;height:500px;visibility:hidden;z-index:999 !important',
+          id: "gFloatingPane"
+        }, dojo.create('div', null, dojo.body()));
+        dojo.connect(gFloatingPane, 'onFocus', function () {
+          dijit.byId('gFloatingPane').bringToTop()
+        });
+        //do the same for onShow
+        dojo.connect(gFloatingPane, 'onShow', function () {
+          dijit.byId('gFloatingPane').bringToTop()
+        });
+        gFloatingPane.startup();
+
+        // initialize basemap layer
+        //basemap = new esri.layers.ArcGISTiledMapServiceLayer("https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
+        basemap = new esri.layers.ArcGISTiledMapServiceLayer("https://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer");
+        basemap.id = "satellite";
+        map.addLayer(basemap);
+
+        // initialize graphic layers
+        sitesLayer = new esri.layers.GraphicsLayer();
+        map.addLayer(sitesLayer);
+        siteSelectedLayer = new esri.layers.GraphicsLayer();
+        map.addLayer(siteSelectedLayer);
+        siteHighlightLayer = new esri.layers.GraphicsLayer();
+        map.addLayer(siteHighlightLayer);
+
+        // add deep sea coral dynamic layer service for handling zoom levels > 11 if looking at entire dataset
+        //dscDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");
+        dscDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");
+        dscDynLayer.setVisibleLayers([0]);
+        map.addLayer(dscDynLayer);
+        dscDynLayer.hide();
+
+        // add EEZ layer .. tiled and dynamic
+        initEEZLayer();
+        map.addLayer(new EEZTiledMapServiceLayer());
+        eezDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");
+        eezDynLayer.setVisibleLayers([1]);
+        map.addLayer(eezDynLayer);
+        eezDynLayer.hide();
+
+        if (regionSelected)  {
+          // reset the region menu to reflect the information passed via the url
+          var lmeRegion = document.getElementById("lmePicker");
+          var oceanRegion = document.getElementById("oceanPicker");
+          var fcrRegion = document.getElementById("fcrPicker");
+          lmeRegion.style.display = 'none';
+          oceanRegion.style.display = 'none';
+          fcrRegion.style.display = 'block';
+          dijit.byId('FCRYes').setValue(true);
+          dijit.byId("fcrSearch").setValue(urlObject.query.region);
+          UpdateMap();
+        }
+        else  {
+          // load corals and sponges tiles
+          initCoralsSpongesLayer();
+          map.addLayer(new CoralsSpongesTiledMapServiceLayer());
+          dojo.byId("msg").innerHTML = "<b>Loading Data .... </b>&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/ajax-loader.gif'>"
+        }
+
+        // add NMSP layer  ..  tiled and dynamic
+        initNMSPLayer();
+        map.addLayer(new NMSPTiledMapServiceLayer());
+        nmsDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");
+        nmsDynLayer.setVisibleLayers([2]);
+        map.addLayer(nmsDynLayer);
+        nmsDynLayer.hide();
+
+      }
+
+      function extentHistoryChangeHandler() {
+        dijit.byId("zoomprev").disabled = navToolbar.isFirstExtent();
+        dijit.byId("zoomnext").disabled = navToolbar.isLastExtent();
+      }
+
+      dojo.ready(init);
+    </script>
+  </head>
+
+  <body class="tundra" onLoad="initListGroup('taxons', document.forms[0].taxonphylum, document.forms[0].taxonorder, document.forms[0].taxonfamily, document.forms[0].taxongenus);ddtreemenu.createTree('treemenu1',false);">
+    <div id="preloader">
+      <div id="preloaderContent" style="visibility: hidden;">
+        <strong>Deep-Sea Coral Map</strong>
+        <p/>
+        <center><img src="images/ajax-loader.gif"></center>
+      </div>
+    </div>
+    <map name="logo_map" id="logo_map">
+       <area shape="rect" coords="75,10,350,30" href="https://deepseacoraldata.noaa.gov" title="Go back to Deep-Sea Coral Data Portal" alt="Deep-Sea Coral Data Portal"/>
+    </map>
+    <div id="mainWindow" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design:'headline', gutters:false" style="width:100%; height:100%;">
+      <div id="header" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top'" style="height:85px;margin:0;padding:0;">
+        <img src="images/map-banner.png" usemap="#logo_map">
+        <div id="navToolbar" dojoType="dijit.Toolbar" align="left">
+          <div id="webmap-toolbar-left">
+            <span style="height: 20px; border-right: 1px solid rgb(0, 0, 0); margin-top: 2px; margin-right: 2px;"></span>
+            <div data-dojo-type="dijit.form.ToggleButton" id="zoomin" title="Draw a box to zoom in." iconClass="zoominIcon" onClick="zoomInHandler();">Zoom In</div>
+            <div data-dojo-type="dijit.form.ToggleButton" id="zoomout" title="Draw a box to zoom out." iconClass="zoomoutIcon" onClick="zoomOutHandler();">Zoom Out</div>
+            <div data-dojo-type="dijit.form.Button" id="zoomprev" title="Step back through previous map changes." iconClass="zoomprevIcon" onClick="prevExtentHandler();">Prev Extent</div>
+            <div data-dojo-type="dijit.form.Button" id="zoomnext" title="Step forward through map changes." iconClass="zoomnextIcon" onClick="nextExtentHandler();">Next Extent</div>
+            <div data-dojo-type="dijit.form.ToggleButton" id="pan" title="Click and drag map." iconClass="panIcon" checked="true" onClick="panHandler();">Pan</div>
+            <div data-dojo-type="dijit.form.Button" id="deactivate" title="Exit Zoom mode, return to Pan mode." iconClass="deactivateIcon" onClick="stopZoomHandler()">Stop Zoom</div>
+            <span style="height: 20px; border-right: 1px solid rgb(0, 0, 0); margin-top: 2px; margin-right: 2px;"></span>
+            <div data-dojo-type="dijit.form.ToggleButton" id="geospatialQuery" title="Summarize corals/sponges within defined spatial extent." iconClass="geostatisticsIcon" onClick="geostatisticsSetup();">Geostatistics</div>
+            <div data-dojo-type="dijit.form.ToggleButton" id="queryMenu" title="Show/hide data query menu." iconClass="queryIcon" onClick="dataQueryHandler();">Data Query</div>
+            <div data-dojo-type="dijit.form.ToggleButton" id="downloadMenu" title="Show/hide data download menu." iconClass="downloadIcon" onClick="dataDownloadHandler();">Data Download</div>
+            <div data-dojo-type="dijit.form.Button" id="metadataPage" title="Show metadata record." iconClass="metadataIcon" onClick="metadataPage();">Metadata</div>
+            <span style="height: 20px; border-right: 1px solid rgb(0, 0, 0); margin-top: 2px; margin-right: 2px;"></span>
+            <img src="images/email-icon16.png" align="center" style="vertical-align: text-top"><a href="mailto:deepseacoraldata@noaa.gov?subject=Deep%20Sea%20Coral" title="mailto:deepseacoraldata@noaa.gov?subject=Deep%20Sea%20Coral"><font color="black" size="2">&nbsp;Contact Us</a></font>
+          </div>
+        </div>
+      </div>
+      <div id="centerDiv" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region:'center',design:'sidebar',gutters:false" style="width: 100%; height: 100%; margin: 0;">
+        <div id="map" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center'">
+          <img id="loadingImg" src="images/loading6.gif" style="position:absolute; right:50%; top:50%; z-index:100;" />
+          <div id="HomeButton"></div>
+          <div id="ReloadButton" style="position:absolute; left:15px; top:135px; z-index:50;"><button data-dojo-type="dijit.form.Button" title="Reload Map" iconClass="reloadBigIcon" showLabel= false onClick="resetMap();"></div>
+          <div style="position:absolute; right:10px; top:25px; z-index:998;">
+            <div id="titlePane_SearchParameters" data-dojo-type="dijit.TitlePane" data-dojo-props="title:'Data Query', closable:false, open:true, toggleable:false" style="font-family:arial;font-size:16px;font-weight:bold;color:#000000;display:none">
+              <center><span style="font-size:14px;font-weight:normal;color:black;display:block;vertical-align:middle;"><b>Use the parameters below to define how you wish to query for records<br/>from the deep-sea coral database.<br/>Results will be displayed on the map.</b></span></center>
+              <br/>
+              <center><span style="font-size:12px;font-weight:normal;color:black;display:block;vertical-align:middle;">(To close this menu, click on highlighted "Data Query" button in the toolbar above the menu)</span></center>
+              <div id="dscForm" data-dojo-type="dijit.form.Form" data-dojo-id="dscForm" data-dojo-props=''>
+                <table style="border:0px solid #aaa;width:100%;font-size:18px;font-weight:normal;color:black;margin:10px 0;vertical-align:middle;" cellspacing="0">
+                  <tr>
+                    <td style="border-right:1px dashed #aaa;padding:0;vertical-align:top;width:30%;font-size:12px;">
+                      <center><b>Taxon</b>&nbsp;&nbsp;&nbsp;<img src="images/help-icon.png" title="Use radio buttons below to switch between different type of taxonomic searchs"</center>
+                      <div id="scientificPicker">
+                        <p/>
+                        <center><input type="text" id="dbSearchTB" style="font-family:arial;font-size:12px;width:175px;background:#fff;color:#000;" value="" data-dojo-type="dijit.form.TextBox"/></center>
+                        <center><font size="1">(Type in scientific name)</font></center>
+                        <p/>
+                      </div>
+                      <div id="vernacularPicker">
+                        <p/>
+                        <center>
+		        <select style="width: 175px;" id="vernacularSearch" data-dojo-id="vernacularSearch" data-dojo-type="dijit.form.Select" maxHeight="200">
+                          <option value="None" selected="selected">Select Coral/Sponge</option>																		          <option value="bamboo coral">Bamboo Coral</option>				
+		          <option value="black coral">Black Coral</option>
+                          <option value="gold coral">Gold coral</option>
+                          <option value="gorgonian coral">Gorgonian coral</option>
+                          <option value="lace coral">Lace coral</option>
+                          <option value="lithotelestid coral">Lithotelestid coral</option>
+                          <option value="other coral-like hydrozoan">Other coral-like hydrozoan</option>
+                          <option value="sea pen">Sea pen</option>
+                          <option value="soft coral">Soft coral</option>
+                          <option value="stoloniferan coral">Stoloniferan coral</option>
+                          <option value="stony coral (branching)">Stony coral (branching)</option>
+                          <option value="stony coral (cup coral)">Stony coral (cup coral)</option>
+                          <option value="stony coral (unspecified)">Stony coral (unspecified)</option>
+                          <option value="calcareous sponge">Calcareous sponge</option>
+                          <option value="demosponge">Demosponge</option>
+                          <option value="glass sponge">Glass sponge</option>
+                          <option value="scleromorph sponge">Scleromorph sponge</option>
+                          <option value="sponge (unspecified)">Sponge (unspecified)</option>
+                          <option value="NA">NA</option>
+                        </select>
+                        </center>
+                        <p/>
+                      </div>
+                      <div id="ofgPicker">
+                        <p/>
+                        <center>
+                        <table style="horizontal-align:center">
+                          <tr><td>
+                            <select style="width: 175px; font-family: Arial; font-size: 12px;" id="taxonphylum" name="taxonphylum" size="1">
+                            </select>
+                          </td></tr>
+                          <tr><td>
+                            <select style="width: 175px; font-family: Arial; font-size: 12px;" id="taxonorder" name="taxonorder" size="1">
+                            </select>
+                          </td></tr>
+                          <tr><td>
+                            <select style="width: 175px; font-family: Arial; font-size: 12px;" id="taxonfamily" name="taxonfamily" size="1">
+                            </select>
+                          </td></tr>
+                          <tr><td>
+                            <select style="width: 175px; font-family: Arial; font-size: 12px;" id="taxongenus" name="taxongenus" size="1">
+                            </select>
+                          </td></tr>
+                        </table>
+                        </center>
+                        <p/>
+                      </div>
+                      <div id="pQueryPicker">
+                        <p/>
+                        <center>
+		        <select style="width: 175px;" id="pQuerySearch" data-dojo-id="pQuerySearch" data-dojo-type="dijit.form.Select" maxHeight="200">
+                          <option value="None" selected="selected">Select Structural Query</option>																				
+		          <option value="structure-forming deep sea corals">Structure-forming Deep-Sea Corals</option>
+                          <option value="structure-forming animals">Other Structure-forming Animals</option>
+                        </select>
+                        </center>
+                        <p/>
+                      </div>
+                      <center>             
+                      <input type="radio" data-dojo-type="dijit.form.RadioButton" name="Scientific_Vernacular_OFG_pQuery" id="scientificYes" checked value="Scientific" />
+                      <label for="scientificYes">Scientific</label>
+                      <input type="radio" data-dojo-type="dijit.form.RadioButton" name="Scientific_Vernacular_OFG_pQuery" id="vernacularYes" value="Vernacular" />
+                      <label for="vernacularYes">Vernacular</label>
+                      <br/>
+                      <span id="ofgElement"><input type="radio" data-dojo-type="dijit.form.RadioButton" name="Scientific_Vernacular_OFG_pQuery" id="OFGYes" value="OFG" />
+                      <label for="OFGYes">Phylum/Order/Family/Genus</label></span>
+                      <br/>
+                      <span id="pQueryElement"><input type="radio" data-dojo-type="dijit.form.RadioButton" name="Scientific_Vernacular_OFG_pQuery" id="pQueryYes" value="pQuery" />
+                      <label for="pQueryYes">Structural Queries</label></span>
+                      </center>
+                    </td>                   
+                    <td style="padding:0;vertical-align:top;text-align:center;width:30%;font-size:12px;">
+                      <center><b>Region</b>&nbsp;&nbsp;&nbsp;<img src="images/help-icon.png" title="Use radio buttons below to switch between different type of region searchs"</center>
+                      <div id="lmePicker">
+                        <p/>
+                        <center>
+		        <select style="width: 175px;" id="lmeSearch" data-dojo-id="lmeSearch" data-dojo-type="dijit.form.Select" maxHeight="200">										
+	      <option value="None" selected="selected">All</option>
+                          <option value="Agulhas Current">Agulhas Current</option>						
+	      <option value="Aleutian Islands">Aleutian Islands</option>
+                          <option value="Antarctica">Antarctica</option>
+                          <option value="Arabian Sea">Arabian Sea</option>
+                          <option value="Bay of Bengal">Bay of Bengal</option>
+                          <option value="Beaufort Sea">Beaufort Sea</option>
+                          <option value="Benguela Current">Benguela Current</option>
+                          <option value="California Current">California Current</option>
+                          <option value="Canadian Eastern Arctic - West Greenland">Canadian Eastern Arctic - West Greenland</option>
+                          <option value="Canary Current">Canary Current</option>
+                          <option value="Caribbean Sea">Caribbean Sea</option>
+                          <option value="Celtic-Biscay Shelf">Celtic-Biscay Shelf</option>
+                          <option value="East Bering Sea">East Bering Sea</option>
+                          <option value="East Brazil Shelf">East Brazil Shelf</option>
+                          <option value="East Central Australian Shelf">East Central Australian Shelf</option>
+                          <option value="East China Sea">East China Sea</option>
+                          <option value="Greenland Sea">Greenland Sea</option>
+                          <option value="Guinea Current">Guinea Current</option>                              
+                          <option value="Gulf of Alaska">Gulf of Alaska</option>
+                          <option value="Gulf of California">Gulf of California</option>
+                          <option value="Gulf of Mexico">Gulf of Mexico</option>
+                          <option value="Gulf of Thailand">Gulf of Thailand</option>
+                          <option value="Hudson Bay Complex">Hudson Bay Complex</option>
+                          <option value="Humboldt Current">Humboldt Current</option>
+                          <option value="Iberian Coastal">Iberian Coastal</option>
+                          <option value="Iceland Shelf and Sea">Iceland Shelf and Sea</option>
+                          <option value="Indonesian Sea">Indonesian Sea</option>
+                          <option value="Insular Pacific-Hawaiian">Insular Pacific - Hawaiian</option>
+                          <option value="Kuroshio Current">Kuroshio Current</option>
+                          <option value="Labrador - Newfoundland">Labrador - Newfoundland</option>
+                          <option value="Mediterranean Sea">Mediterranean Sea</option>
+                          <option value="New Zealand Shelf">New Zealand Shelf</option>
+                          <option value="North Australian Shelf">North Australian Shelf</option>
+                          <option value="North Brazil Shelf">North Brazil Shelf</option>
+                          <option value="Northeast Australian Shelf">Northeast Australian Shelf</option>
+                          <option value="Northeast U.S. Continental Shelf">Northeast U.S. Continental Shelf</option>
+                          <option value="Northern Bering - Chukchi Seas">Northern Bering - Chukchi Seas</option>
+                          <option value="Northwest Australian Shelf">Northwest Australian Shelf</option>
+                          <option value="Pacific Central-American Coastal">Pacific Central-American Coastal</option>
+                          <option value="Patagonian Shelf">Patagonian Shelf</option>
+                          <option value="Red Sea">Red Sea</option>
+                          <option value="Scotian Shelf">Scotian Shelf</option>
+                          <option value="Sea of Japan">Sea of Japan</option>
+                          <option value="Sea of Okhotsk">Sea of Okhotsk</option>
+                          <option value="Somali Coastal Current">Somali Coastal Current</option>
+                          <option value="South Brazil Shelf">South Brazil Shelf</option>
+                          <option value="South China Sea">South China Sea</option>
+                          <option value="South West Australian Shelf">South West Australian Shelf</option>
+                          <option value="Southeast Australian Shelf">Southeast Australian Shelf</option>
+                          <option value="Southeast U.S. Continental Shelf">Southeast U.S. Continental Shelf</option>
+                          <option value="Sulu-Celebes Sea">Sulu-Celebes Sea</option>
+                          <option value="West Bering Sea">West Bering Sea</option>
+                          <option value="West Central Australian Shelf">West Central Australian Shelf</option>
+                          <option value="NA">NA</option>
+                        </select>
+                        </center>
+                        <p/>
+                      </div>
+                      <div id="oceanPicker">
+                        <p/>
+                        <center>
+		        <select style="width: 175px;" id="oceanSearch" data-dojo-id="oceanSearch" data-dojo-type="dijit.form.Select" maxHeight="200">										
+		          <option value="None" selected="selected">All</option>									
+	      <option value="Antarctic">Antarctic</option>
+	      <option value="Arctic">Arctic</option>
+                          <option value="Indian">Indian</option>
+                          <option value="Mediterranean">Mediterranean</option>
+                          <option value="North Atlantic">North Atlantic</option>
+                          <option value="North Pacific">North Pacific</option>
+                          <option value="South Atlantic">South Atlantic</option>
+                          <option value="South Pacific">South Pacific</option>
+                          <option value="Southern">Southern</option>
+                        </select>
+                        </center>
+                        <p/>
+                      </div>
+                      <div id="fcrPicker">
+                        <p/>
+                        <center>
+		        <select style="width: 175px;" id="fcrSearch" data-dojo-id="fcrSearch" data-dojo-type="dijit.form.Select" maxHeight="200">										
+		          <option value="None" selected="selected">All</option>										
+                          <option value="Caribbean">Caribbean</option>
+                          <option value="Gulf of Mexico">Gulf of Mexico</option>
+                          <option value="Mid-Atlantic">Mid-Atlantic</option>
+                          <option value="New England">New England</option>
+                          <option value="North Pacific">North Pacific</option>
+                          <option value="Pacific">Pacific</option>
+                          <option value="South Atlantic">South Atlantic</option>
+                          <option value="Western Pacific">Western Pacific</option>
+                          <option value="NA">NA</option>
+                        </select>
+                        </center>
+                        <p/>
+                      </div>
+                      <center>             
+                      <input type="radio" data-dojo-type="dijit.form.RadioButton" name="LME_Ocean_FCR" id="LMEYes" value="LME" />
+                      <label for="LMEYes">Large Marine Ecosystem</label>
+                      <br/>
+                      <input type="radio" data-dojo-type="dijit.form.RadioButton" name="LME_Ocean_FCR" id="OceanYes" checked value="Ocean" />
+                      <label for="OceanYes">Ocean</label>
+                      <br/>
+                      <input type="radio" data-dojo-type="dijit.form.RadioButton" name="LME_Ocean_FCR" id="FCRYes" value="FCR" />
+                      <label for="FCRYes">Fish Council Region</label>
+                      </center>
+                    </td>
+                    <td style="border-left:1px dashed #aaa;padding:0px;vertical-align:top;text-align:center;width:20%;font-size:12px;">
+                      <center><b>Time Frame</b>&nbsp;&nbsp;&nbsp;<img src="images/help-icon.png" title="Define minimum/maximum time frame by years"><br/>(by years)</center>
+                      <p/>
+                      <center>
+                      <table colspan="2">
+                        <tr><td width="50" align="left"><font face="Arial"><font size="2">From:</font></td><td><input type="text" id="fromDate" style="font-family:arial;font-size:12px;width:50px;background:#fff;color:#000;" value="-999" data-dojo-type="dijit.form.NumberTextBox" constraints="{min:-999,max:2015,places:0,pattern:'#',required:'false'}" onChange="dijit.byId('toDate').constraints.min = arguments[0];"></td></tr>
+                        <tr><td></td><td></td></tr>
+                        <tr><td width="50" align="left"><font face="Arial"><font size="2">To:</font></td><td><input type="text" id="toDate" style="font-family:arial;font-size:12px;width:50px;background:#fff;color:#000;" value="" data-dojo-type="dijit.form.NumberTextBox" constraints="{min:-999,max:2015,places:0,pattern:'#',required:'false'}" onChange="dijit.byId('fromDate').constraints.max = arguments[0];"></td></tr>
+                      </table>
+                      <center><font size="1">(-999 = unknown year)</font></center>
+                      </center>
+                    </td>
+                    <td style="border-left:1px dashed #aaa;padding:0px;vertical-align:top;text-align:center;width:20%;font-size:12px;">										
+                      <center><b>Depth Range</b>&nbsp;&nbsp;&nbsp;<img src="images/help-icon.png" title="Define minimum/maximum depth"><br/>(in meters)</center>
+                      <p/>
+                      <center>
+                      <table colspan="2">
+                        <tr><td width="75" align="left"><font face="Arial"><font size="2">&nbsp;&nbsp;Minimum:</font></td><td><input type="text" id="depthSearchMin" style="font-family:arial;font-size:12px;width:50px;background:#fff;color:#000;" value="-999" data-dojo-type="dijit.form.NumberTextBox" constraints="{min:-999,max:6500,places:0,required:'false'}" onChange="dijit.byId('depthSearchMax').constraints.min = arguments[0];"></td></tr>
+                        <tr><td></td><td></td></tr>
+                        <tr><td width="75" align="left"><font face="Arial"><font size="2">&nbsp;&nbsp;Maximum:</font></td><td><input type="text" id="depthSearchMax" style="font-family:arial;font-size:12px;width:50px;background:#fff;color:#000;" value="6500" data-dojo-type="dijit.form.NumberTextBox" constraints="{min:-999,max:6500,places:0,required:'false'}" onChange="dijit.byId('depthSearchMin').constraints.max = arguments[0];"></td></tr>
+                      </table>
+                      <center><font size="1">(-999 = unknown depth)</font></center>
+                      </center>
+                    </td>
+                  </tr>
+                </table>
+                <p/>
+                <center><input name="recordsWithPhotos" id="recordsWithPhotos" dojoType="dijit.form.CheckBox" value="true"><font size="2">Only show records that have accompanying photos</font></center>
+                <p/>
+<!--
+              </form>
+ -->
+              </div>
+              <div id="optionMenu" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top'" style="font-size:12px;font-family:Helvetica,Arial;height:30px;">
+                <div align="center">
+                  <button dojoType="dijit.form.Button" style="font-size:12px;font-family:Helvetica,Arial;font-weight:normal;" type="button" name="dbSearch" onClick="UpdateMap();"><b>Search</b></button>
+                </div>
+              </div>
+              <p/>
+              <div id="query_error_msg"></div>
+            </div>
+          </div>
+          <div style="position:absolute; right:10px; bottom:25px; z-index:998;">
+            <div id="titlePane_DataDownload" data-dojo-type="dijit.TitlePane" data-dojo-props="title:'Data Download', closable:false, open:true, toggleable:false" style="font-family:arial;font-size:16px;font-weight:bold;color:#000000;display:none">
+              <p/>
+              <center><span style="font-size:14px;font-weight:normal;color:black;display:block;vertical-align:middle;"><b>Use the parameters below to define download format.<br/>Any "Data Query" settings that have been defined<br/>will be used to create the download file.</b></span></center>
+              <br/>
+              <center><span style="font-size:12px;font-weight:normal;color:black;display:block;vertical-align:middle;">(To close this menu, click on highlighted "Data Download" button<br/>in the toolbar above)</span></center>
+              <br/>              
+              <div class="details">
+                <div id="downloadDetails" style="padding:5px;overflow:auto;max-height:450px;font-weight:normal;color:black">
+                <table colspan="2">
+                  <tr>
+                  <td width="200" align="left"><b>Use Map Extent</b>&nbsp;&nbsp;&nbsp;<input type="checkbox" id="useMapExtent" name="useMapExtent" value="true">&nbsp;&nbsp;&nbsp;<img src="images/help-icon.png" title="To limit download to current map extent, use this option"</td><td></td>
+                  </tr>
+                </table>
+                <p/>
+                <table colspan="2">
+                  <tr>
+                    <td width="400" align="left"><b>Output Format</b>&nbsp;&nbsp;&nbsp;<input type="radio" name="outputFormat" id="htmlTable" value="htmlTable"/>html&nbsp;&nbsp;&nbsp;<input type="radio" name="outputFormat" id="csv" value="csv" checked/>csv&nbsp;&nbsp;&nbsp;<input type="radio" name="outputFormat" id="json" value="json"/>json&nbsp;&nbsp;&nbsp;<input type="radio" name="outputFormat" id="kml" value="kml"/>kml</td><td></td>
+                  </tr>
+                </table>
+                <p/>
+                <center>A standard download file will contain the following fields:<br>catalog number, data provider, scientific name, vernacular name, taxonomic rank,<br/>observation date, position (latitude, longitude), locality, location accuracy, depth, depth method,<br/>repository, identification qualifier, sampling equipment, record type, and sample id.</center>
+                <p/>
+                <center><button dojoType="dijit.form.Button" style="font-size:12px;font-family:Helvetica,Arial" title="Standard Download File" type="button" name="submit" onClick="downloadData();"><b>Standard Download</b></button></center>
+                <p/>
+                <center><span style="font-size:14px;display:block;vertical-align: middle;"><b>Please Note</b></span></center>
+                <p/>
+                <center>If you wish to include more fields than the standard download file would contain<br/>or want to download the data in a different output format than listed above,<br/>click "Customized Download" button to go directly to the ERDDAP interface page.</center>
+                <p/>
+	        <center><button dojoType="dijit.form.Button" style="font-size:12px;font-family:Helvetica,Arial" title="Go to ERDDAP interface" type="button" name="submit" onClick="goto_ERDDAP();"><b>Customized Download</b></button></center>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="query_msg" style="position:absolute; right:50%; top:50%; z-index:100;"></div>
+          <div id="dbVersion" style="position:absolute; left:10px; bottom:25px; color:#000; z-index:50; font-family: arial; font-size:12px; font-weight:bold;">Database version: 20170724-0</div>
+          <div id="msg" style="position:absolute; left:10px; bottom:5px; color:#000; z-index:50; font-family: arial; font-size: 12px;"></div>
+          <div id="coords" style="position:absolute; right:10px; top:25px; color:#000; z-index:50; font-family: arial; font-size: 12px;"></div>          
+          <div id="mapScale" style="position:absolute; right:10px; top:5px; color:#000; z-index:50; font-family: arial; font-size: 12px;"></div>
+        </div>
+        <div id="rightPane" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'right'">
+          <div data-dojo-type="dijit.layout.AccordionContainer" style="height:40%">
+            <div id="rightPaneList" class="element" title="Site Characterizations by US Region" data-dojo-type="dijit.layout.ContentPane">
+              <div style="background: #ffffff;" id="itemsDiv">
+                <div id="itemsList">Please standby ... Loading Site Characterization Information</div>
+              </div>
+            </div>
+            <div class="element" title="Model Overlays" selected="false" data-dojo-type="dijit.layout.ContentPane">
+              <div id="addModelLayersDiv">
+                <p/>
+                <div id="treeboxbox_tree1" style="overflow:scroll;"></div>
+              </div>
+            </div>
+            <div id="rightPaneTitle" class="element" title="Map Layers" selected="true" data-dojo-type="dijit.layout.ContentPane">
+              <br/>
+              <center><b>Select data layers to be displayed on map</b></center>
+              <br/>
+              <table colspan="3">
+              <tr><td width="25" height="30"><input name="data_markers" id="data_markers" dojoType="dijit.form.CheckBox" value="true" onClick="UpdateMap();" checked></td><td width="150">Coral-Sponge Locations</td><td></td></tr>
+              <tr><td width="25" height="30"><input name="eez_line" id="eez_line" dojoType="dijit.form.CheckBox" value="true" onClick="UpdateMap();" checked></td><td width="150">Exclusive Economic Zone</td><td><img src="images/eez.png" height="20" width="26"></td></tr>
+              <tr><td width="25" height="30"><input name="bathy_contours" id="bathy_contours" dojoType="dijit.form.CheckBox" value="true" onClick="UpdateMap();"></td><td width="150">GEBCO08 Contours</td><td><img src="images/bathy.png" height="20" width="26"></td></td></tr>
+              <tr><td width="25"></td><td width="150" align="center" style="font-family: arial; font-size: 10px;"><div id="msgBathy"></div></td><td></td></tr>
+              <tr><td width="25" height="30"><input name="nmsp_poly" id="nmsp_poly" dojoType="dijit.form.CheckBox" value="true" onClick="UpdateMap();" checked></td><td width="150">National Marine Sanctuaries</td><td><img src="images/nmsp.png" height="20" width="26"></td></tr>
+              <tr><td width="25" height="30"><input name="site_markers" id="site_markers" dojoType="dijit.form.CheckBox" value="true" onClick="UpdateMap();"></td><td width="150">Site Characterizations</td><td><img src="images/coral-green.png">&nbsp;&nbsp;<img src="images/coral-yellow.png"></td></tr>
+              </table>
+              <br/>
+            </div>
+          </div>
+          <div id="rightPaneLegendPhoto" data-dojo-type="dijit.layout.ContentPane" style="font-size:14px;font-family:Helvetica,Arial;height:55%">
+            <p/>
+            <div data-dojo-type="dijit.layout.TabContainer" id="tabconID">
+              <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Legend'" id="legendTab">
+                <center><img src="images/MapLegend.png"></center>
+              </div>
+              <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Model Legend'" id="modellegTab">
+                <center><img src="images/modelLegend.png"></center>
+              </div>
+              <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="title:'Photo'" id="photoTab">
+                <center><p/><div id="photoImage"><img src="images/photoLegend.png"></div></center>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="footer" data-dojo-type="dijit.layout.ContentPane"  data-dojo-props="region:'bottom'" style="font-size:12px;font-family:Helvetica,Arial;height:35px;font-weight:bold">
+        <table class="footer" align="center">
+          <tr valign="middle" align="center">
+          <td>
+            <a href="https://www.commerce.gov/" title="U.S. Department of Commerce" target="_self"><font color="black">U.S. Department of Commerce</a> |</font>
+            <a href="http://www.noaa.gov" title="National Oceanic &amp; Atmospheric Administration" target="_self"><font color="black">NOAA</a> |</font>
+            <a href="https://www.nesdis.noaa.gov" title="National Environmental Satellites, Data, and Information Services" target="_self"><font color="black">NESDIS</a> |</font>
+            <a href="https://www.ncei.noaa.gov" title="National Centers for Environmental Information" target="_self"><font color="black">NCEI</a> |</font>
+            <a href="https://www.ncddc.noaa.gov" title="National Centers for Environmental Information - Mississippi" target="_self"><font color="black">NCEI</a></font>
+            <br/>
+            <a href="http://www.noaa.gov/disclaimer.html" title="Link to National Oceanic &amp; Atmospheric Administration Disclaimer" target="_self"><font color="black">Disclaimer</a> |</font>
+            <a href="http://www.noaa.gov/privacy.html" title="Link to National Oceanic &amp; Atmospheric Administration Privacy Policy"><font color="black">Privacy Policy</a> |</font>
+            <a href="https://www.copyright.gov/title17/92chap4.html#403" title="Copyright Notice"><font color="black">Copyright Notice</a> |</font>
+            <a href="https://www.usa.gov" target="_self" title="The U.S. Government's Official Web Portal"><font color="black">USA.gov</a></font>
+          </td>
+          <td width="20"></td>
+          <td> 
+            <a href="http://www.cio.noaa.gov/services_programs/info_quality.html" title="Link to National Oceanic &amp; Atmospheric Administration Information Quality" target="_self"><font color="black">Information Quality</a> |</font>
+            <a href="http://www.rdc.noaa.gov/~foia/" title="Link to National Oceanic &amp; Atmospheric Administration FOIA"><font color="black">Freedom of Information Act (FOIA)</a></font>
+            <br/>
+            <a href="https://www.ncddc.noaa.gov/about-ncddc" title="Contact NCEI-MS"><font color="black">Customer Service</a> |</font>
+            <a href="mailto:deepseacoraldata@noaa.gov?subject=Deep%20Sea%20Coral" title="mailto:deepseacoraldata@noaa.gov?subject=Deep%20Sea%20Coral"><font color="black">Contact Us</a></font>
+          </td>
+	  </tr>
+        </table>
+      </div> 
+    </div>
+    <script>
+      modelLayersTree=new dhtmlXTreeObject("treeboxbox_tree1","100%","100%",0);			
+      modelLayersTree.setImagePath("codebase/imgs/dhxtree_skyblue/");
+      modelLayersTree.enableHighlighting(false);
+      modelLayersTree.enableTreeImages(false);
+      modelLayersTree.enableTreeLines(true);
+      //modelLayersTree.enableMultiLineItems("100px");
+      //modelLayersTree.enableThreeStateCheckboxes(true);
+      modelLayersTree.enableRadioButtons(true);
+      modelLayersTree.enableSingleRadioMode(true);
+      modelLayersTree.setOnCheckHandler(UpdateMap);
+      modelLayersTree.loadXML("xml/modelLayersTree.xml");
+    </script>
+  </body>
+</html>
+

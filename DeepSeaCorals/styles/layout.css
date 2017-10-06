@@ -1,0 +1,115 @@
+html, body { 
+        height: 100%; width: 100%; margin: 0; 
+} 
+body{
+	font-family:Helvetica,Arial;
+        background-color:#6699ff;
+	overflow:hidden;
+}
+#header{
+	color:white;font-size:16px;font-weight:bold;
+	background-repeat:repeat;
+        background-position:left top;
+	text-align:left;
+        background-color:#6699ff;
+}
+#rightPane{
+        background-color:white;
+        color:#3f3f3f;
+        width:275px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+}
+#itemsDiv { 
+        background-color: #FFFFFF; 
+        padding: 8px;
+} 
+#itemsList { 
+        font: normal 12px Arial, Verdana, Helvetica, sans-serif; 
+} 
+#footer{
+	color:white;font-size:14px;
+	background-color:#6699ff;
+	margin:0;
+	background-repeat:repeat;
+	background-position:left top;padding:5px 0;
+	text-align:center;overflow:hidden;
+}
+#footer a{
+	color:white;text-decoration:none;
+}
+.dojoxFloatingPaneWrapper {
+	padding: 8px;
+}
+.dojoxFloatingPane {
+	padding: 0 !important;
+	border: solid 1px #769DC0 !important;
+	font-family: Tahoma, Arial, "Kimberley", sans-serif;
+	font-size: 10pt;
+}
+.dojoxFloatingPaneTitle {
+	border: none;
+	padding: 5px 0 10px 8px;
+	height: 16px;
+	font-family: Tahoma, Arial, "Kimberley", sans-serif;
+        font-size: 12pt;
+        font-weight: bold;
+	background: #ABD6FF url('http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/images/titlebar.png') repeat-x;
+}
+.dojoxFloatingPaneContent {
+	border-top: solid 1px #769DC0;
+	font-family: Tahoma, Arial, "Kimberley", sans-serif;
+	font-size: 8pt;
+}
+.dijitSelect * {
+        font-family: Arial;
+	font-size:12px;
+}
+.dijitSelectLabel,.dijitMenuItemLabel{
+	font-size:12px;
+}
+.dijitSelectSelectedOption * {
+	font-weight: bold
+}
+.dijitButtonText{
+	color:#000;
+}
+.dijitCheckBoxInput{
+	opacity: 1;
+}
+.esriPopup.myTheme .titlePane,
+.dj_ie7 .esriPopup.myTheme .titlePane .title {
+	background-color: #000000;
+        color: #ffffff;
+        font-weight: bold;
+}
+.esriPopup.myTheme .titlePane {
+        border-bottom: 1px solid #121310;
+}
+.esriPopup.myTheme a {
+        color: #ffffff;
+}
+.esriPopup.myTheme .titleButton,
+.esriPopup.myTheme .pointer,
+.esriPopup.myTheme .outerPointer,
+.esriPopup.myTheme .esriViewPopup .gallery .mediaHandle,
+.esriPopup.myTheme .esriViewPopup .gallery .mediaIcon {
+}
+.esriPopup.myTheme .contentPane,
+.esriPopup.myTheme .actionsPane {
+        border-color: 1px solid #121310;
+        background-color: #ffffff;
+        color:#000000;
+}
+.infoWindow  {
+        font: normal 11px Arial, Verdana, Helvetica, sans-serif;
+        color: black;
+}
+.smallText {
+        font: normal 12px Arial, Verdana, Helvetica, sans-serif;
+        color: Black;
+}
+.smallText1 {
+        font: normal 10px Arial, Verdana, Helvetica, sans-serif;
+        color: Black;
+}

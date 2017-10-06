@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--The viewport meta tag is used to improve the presentation and behavior of the samples 
+      on iOS devices-->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>Generate Taxonomy List</title>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.10/js/dojo/dijit/themes/tundra/tundra.css">
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.10/js/esri/css/esri.css" />
+    <style>
+      html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
+    </style>
+
+    <script>var dojoConfig = {parseOnLoad: true};</script>
+    <script src="https://js.arcgis.com/3.10/"></script>
+    <script>
+
+      function init() {
+        console.log("Ready to go");
+      }
+
+      // create a table containing all the unique phylum, order, family, genus values for deep-sea corals map service DSCRTP
+      // this is run against the staging databases to help update the taxonconfig.js
+      // make sure when you set up the staging service to set the maximum number of records to something higher than the current number
+      //   of records in the database (under Parameters setting in ArcGIS Server Manager - maximum number of records returned by server)
+      function getTaxonomy()  {
+        // create a general message to display while table being generated
+        var geostats_html = "";
+        geostats_html += '<p/><center><b><font color="red">Please Standby While Taxonomic Table Being Generated</font></b><p><img src="ajax-loader.gif"></center>';
+        dojo.byId("taxonList").innerHTML = geostats_html;       
+        //var serviceURL = "https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=1=1";
+        var serviceURL = "https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=1=1";
+        //var otherSettings = "&returnGeometry=false&outFields=taxonphylum,taxonorder,taxonfamily,taxongenus&f=json";
+        var otherSettings = "&returnGeometry=false&outFields=taxonrank,taxonrank,taxonfamily,taxongenus&f=json";
+        var queryURL = serviceURL + otherSettings;
+        var deferred = getGeostatisticsResults(queryURL);
+        // process features returned from query
+        deferred.addCallback(function(response)  {
+          var values = [];
+          var uniqueValues = [];
+          var value;
+          var features = response.features;
+          dojo.forEach(features, function(feature)  {
+            //taxonPhylum = feature.attributes["taxonphylum"];
+            taxonPhylum = feature.attributes["taxonrank"];
+            //taxonOrder = feature.attributes["taxonorder"];
+            taxonOrder = feature.attributes["taxonrank"];
+            taxonFamily = feature.attributes["taxonfamily"];
+            taxonGenus = feature.attributes["taxongenus"];
+            value = "";
+            value += taxonPhylum;
+            value += ",";
+            value += taxonOrder;
+            value += ",";
+            value += taxonFamily;
+            value += ",";
+            value += taxonGenus;
+            values.push(value);
+            if (uniqueValues.length === 0)  {
+              uniqueValues.push(value);
+            }
+            else  {
+              var foundIt = false;
+              for (var i=0;i<uniqueValues.length;i++)  {
+                if (uniqueValues[i] == value)  foundIt = true;
+              }
+              if (!foundIt)  uniqueValues.push(value);
+            }
+          });
+          // create a sorted array
+          var sortedValues = uniqueValues.sort(); 
+          // create a table of these values
+          var geostats_html = "";
+          geostats_html += '<center><table colspan="4" border="1">';
+          geostats_html += '<tr><td align="center" width="75"><b>Phylum</b></td><td align="center" width="75"><b>Order</b></td><td align="center" width="75"><b>Family</b></td><td align="center" width="75"><b>Genus</b></td></tr>';
+          for (var i=0;i<sortedValues.length;i++)  {
+            var sortedArray = sortedValues[i].split("|");
+            var phylumOrderFamilyGenusArray = sortedArray[0].split(",");
+            geostats_html += '<tr><td align="left">';
+            geostats_html += phylumOrderFamilyGenusArray[0];
+            geostats_html += '</td><td align="left">';
+            geostats_html += phylumOrderFamilyGenusArray[1];
+            geostats_html += '</td><td align="left">';
+            geostats_html += phylumOrderFamilyGenusArray[2];
+            geostats_html += '</td><td align="left">';
+            geostats_html += phylumOrderFamilyGenusArray[3];
+            geostats_html += '</td></tr>';
+          }
+          geostats_html += '</table></center>';
+          dojo.byId("taxonList").innerHTML = geostats_html;
+        });
+      }
+
+      // process query to return features from DSCRTP map service (deep-sea corals)
+      function getGeostatisticsResults(url)  {
+        var deferred = esri.request({
+	  url: url, 
+	  content: { f: "json" },
+	  handleAs: "json",
+ 	  callbackParamName: "callback"
+        });
+        return deferred;
+      }
+
+      dojo.ready(init);
+    </script>
+  </head>
+  
+  <body class="tundra">
+    <p/>
+    <center>You can retrieve the unique taxonomy (phylum, order, family, genus) values from<br/>DSCRTP map service (staging server).</center>
+    <p/>
+    <center>
+    <input type="button" value="Get Taxonomy" onClick="getTaxonomy();"/>
+    </center>
+    <div id="query_msg"></div>
+    <p/>
+    <div id="taxonList" style="padding:5px; margin:5px; background-color:#eee;">
+    </div>
+  </body>
+
+</html>
