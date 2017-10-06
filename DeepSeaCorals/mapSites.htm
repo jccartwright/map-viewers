@@ -404,7 +404,8 @@
 
         // add deep sea coral dynamic layer service for handling zoom levels > 11 if looking at entire dataset
         //dscDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");
-        dscDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");
+        //dscDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");
+        dscDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer");
         dscDynLayer.setVisibleLayers([0]);
         map.addLayer(dscDynLayer);
         dscDynLayer.hide();
@@ -412,7 +413,8 @@
         // add EEZ layer .. tiled and dynamic
         initEEZLayer();
         map.addLayer(new EEZTiledMapServiceLayer());
-        eezDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");
+        //eezDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");
+        eezDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer");
         eezDynLayer.setVisibleLayers([1]);
         map.addLayer(eezDynLayer);
         eezDynLayer.hide();
@@ -432,14 +434,16 @@
         else  {
           // load corals and sponges tiles
           initCoralsSpongesLayer();
-          map.addLayer(new CoralsSpongesTiledMapServiceLayer());
-          dojo.byId("msg").innerHTML = "<b>Loading Data .... </b>&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/ajax-loader.gif'>"
+          //map.addLayer(new CoralsSpongesTiledMapServiceLayer());
+          map.addLayer(new esri.layers.ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/DSCRTP_Web_Mercator/MapServer',{}))
+          dojo.byId("msg").innerHTML = "<b>Loading Data .... </b>&nbsp;&nbsp;&nbsp;&nbsp;<img src='images/ajax-loader.gif'>" 
         }
 
         // add NMSP layer  ..  tiled and dynamic
         initNMSPLayer();
         map.addLayer(new NMSPTiledMapServiceLayer());
-        nmsDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");
+        //nmsDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");
+        nmsDynLayer = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer");
         nmsDynLayer.setVisibleLayers([2]);
         map.addLayer(nmsDynLayer);
         nmsDynLayer.hide();

@@ -55,7 +55,9 @@
         query.outFields = ["recordnum"]
         // var qt = new esri.tasks.QueryTask("https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0");
         //var qt = new esri.tasks.QueryTask("https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0");
-        var qt = new esri.tasks.QueryTask("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0");
+        //var qt = new esri.tasks.QueryTask("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0");
+        var qt = new esri.tasks.QueryTask("https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer/0");
+        
         qt.executeForCount(query,function(count) {
           var countText = count.toLocaleString();
           if (countText == 1)  {
@@ -193,7 +195,8 @@
         dojo.connect(map, "onClick", runIdentifyTask);
         //identifyTask = new esri.tasks.IdentifyTask("https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");  // identify corals and sponges
         //identifyTask = new esri.tasks.IdentifyTask("https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");  // identify corals and sponges
-        identifyTask = new esri.tasks.IdentifyTask("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");  // identify corals and sponges
+        //identifyTask = new esri.tasks.IdentifyTask("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer");  // identify corals and sponges
+        identifyTask = new esri.tasks.IdentifyTask("https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer");
         identifyParams = new esri.tasks.IdentifyParameters();
         identifyParams.tolerance = 3;
         identifyParams.returnGeometry = true;
@@ -702,19 +705,23 @@
             if (whereClause.length != 0)  {
               //var serviceURL = "https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=";
               //var serviceURL = "https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=";
-              var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=";
+              //var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=";
+              var serviceURL = "https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer/0/query?where=";
               serviceURL += whereClause;
             }
             else  {
               //var serviceURL = "https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=where=1=1";
               //var serviceURL = "https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=where=1=1";
-              var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=where=1=1";
+              //var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=where=1=1";
+              var serviceURL = "https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer/0/query?where=where=1=1";
             }
           }
           else  {
             //var serviceURL = "https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=1=1";
             //var serviceURL = "https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=1=1";
-            var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=1=1";
+            //var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=1=1";
+            var serviceURL = "https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer/0/query?where=1=1";
+            
           }
           if (queryWorldExtent)  {
             var geometrySettings = "&returnGeometry=false";
@@ -1012,19 +1019,23 @@
             if (whereClause.length != 0)  {
               //var serviceURL = "https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=";
               //var serviceURL = "https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=";
-              var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=";
+              //var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=";
+              var serviceURL = "https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer/0/query?where=";
               serviceURL += whereClause;
             }
             else  {
               //var serviceURL = "https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=where=1=1";
               //var serviceURL = "https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=where=1=1";
-              var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=where=1=1";
+              //var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=where=1=1";
+              var serviceURL = "https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer/0/query?where=where=1=1";
+              
             }
           }
           else  {
             //var serviceURL = "https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=where=1=1";
             //var serviceURL = "https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=1=1";
-            var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=1=1";
+            //var serviceURL = "https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0/query?where=1=1";
+            var serviceURL = "https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer/0/query?where=1=1";            
           }
           if (gsQuery == "geostats_vernacular")  {
             var otherSettings = "&outFields=vernacularnamecategory&f=json";
@@ -1688,7 +1699,9 @@
                 query.where = imageLayerDef;
                 //var qt = new esri.tasks.QueryTask("https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0");
                 //var qt = new esri.tasks.QueryTask("https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0");
-                var qt = new esri.tasks.QueryTask("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0");
+                //var qt = new esri.tasks.QueryTask("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer/0");
+                var qt = new esri.tasks.QueryTask("https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals/MapServer/0");
+                
 
                 // get a record count quickly
                 qt.executeForCount(query,function(count)  {
@@ -1711,7 +1724,8 @@
                     imageParameters.transparent = true;
                     //var lyr = new esri.layers.ArcGISDynamicMapServiceLayer("https://service.ln.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer", {"imageParameters":imageParameters});
                     //var lyr = new esri.layers.ArcGISDynamicMapServiceLayer("https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer", {"imageParameters":imageParameters});
-                    var lyr = new esri.layers.ArcGISDynamicMapServiceLayer("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer", {"imageParameters":imageParameters});
+                    //var lyr = new esri.layers.ArcGISDynamicMapServiceLayer("https://deepseacoraldata.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/DSCRTP/MapServer", {"imageParameters":imageParameters});
+                    var lyr = new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/deep_sea_corals//MapServer", {"imageParameters":imageParameters});                    
                     lyr.id = "Corals_Sponges";
                     map.addLayer(lyr);
                   }    
