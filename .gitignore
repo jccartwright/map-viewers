@@ -17,10 +17,10 @@ projectFilesBackup
 .classpath/
 .project
 .settings/
-.DS_Store/
+.DS_Store
 *Db.properties
 *Db.script
-
+.vscode
 .gradle/
 /xrun.sh
 /log
