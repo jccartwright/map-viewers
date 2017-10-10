@@ -1,7 +1,7 @@
 var dojoConfig = {
     app: {
         myName: 'jcc',
-        ngdcDijitsUrl: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc',
+        ngdcDijitsUrl: 'https://gis.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc',
         loglevel: 2
     }
 };
@@ -62,12 +62,12 @@ define({
             },
             {
                 name: 'ngdc',
-                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc'
+                location: 'https://gis.ngdc.noaa.gov/viewers/dijits-2.11/js/ngdc'
                 //location: 'js/ngdc'
             },
             {
                 name: 'ncei',
-                location: 'https://maps.ngdc.noaa.gov/viewers/dijits-2.11/js/ncei'
+                location: 'https://gis.ngdc.noaa.gov/viewers/dijits-2.11/js/ncei'
                 //location: 'js/ncei'
             },
             {

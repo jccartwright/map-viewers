@@ -18,7 +18,7 @@ define([
                 {url: 'https://www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
                 {url: 'https://www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
                 {url: 'https://www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
-                {url: 'https://maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
+                {url: 'https://gis.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
                 {url: 'https://www.ngdc.noaa.gov/mgg/bathymetry/relief.html', label: 'Bathymetry'}           
             ];
             expectedNumberOfBreadcrumbs = breadcrumbs.length;
