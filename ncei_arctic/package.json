@@ -1,6 +1,6 @@
 {
   "name": "ncei_arctic",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "Arctic Data Viewer",
   "main": "index.html",
   "scripts": {
