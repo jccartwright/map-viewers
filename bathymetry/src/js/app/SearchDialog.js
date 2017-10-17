@@ -62,7 +62,7 @@ define([
             postCreate: function() {                                                                        
                 this.inherited(arguments);
 
-                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/bathymetry/platforms.groovy', {
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/platforms.groovy', {
                     preventCache: true,
                     handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
@@ -74,7 +74,7 @@ define([
                     this.populatePlatformSelect(null);
                 }));
 
-                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/bathymetry/institutions.groovy', {
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/institutions.groovy', {
                     preventCache: true,
                     handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
@@ -86,7 +86,7 @@ define([
                     this.populateInstitutionSelect(null);
                 }));
 
-                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/bathymetry/surveys.groovy', {
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/surveys.groovy', {
                     preventCache: true,
                     handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
