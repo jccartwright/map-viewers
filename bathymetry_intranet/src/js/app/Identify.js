@@ -135,7 +135,12 @@ define([
 
                 var template =
                     '<h3>Digital Elevation Model: ${name}</h3>' +
-                    '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>' +
+                    '<div class="valueName"><span class="parameterValue"><a href="${metadataUrl}" target="_blank">Link to Metadata</a></span></div>';
+
+                if (a['DEM URL'] !== '') {
+                    template += '<div class="valueName"><span class="parameterValue"><a href="${metadataUrl}" target="_blank">DEM Download</a></span></div>';
+                }
+                template +=
                     '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
                     '<div class="valueName">Cell Size: <span class="parameterValue">${cellSize}</span></div>' +                    
                     '<div class="valueName">Vertical Datum: <span class="parameterValue">${verticalDatum}</span></div>' +                    
@@ -143,7 +148,8 @@ define([
                     '<div class="valueName">Completion Date: <span class="parameterValue">${completionDate}</span></div>';
 
                 var html = string.substitute(template, {
-                    url: a['DEM URL'],
+                    metadataUrl: a['Metadata URL'],
+                    downloadUrl: a['DEM URL'],
                     name: a['Name'],
                     cellSize: a['Cell Size'],
                     verticalDatum: a['Vertical Datum'],
