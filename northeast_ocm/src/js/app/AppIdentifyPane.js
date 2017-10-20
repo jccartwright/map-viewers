@@ -238,11 +238,11 @@ define([
                         query.where = "UPPER(PLATFORM) LIKE '" + item.platforms.toUpperCase().replace(/\*/g, '%') + "'";
                         query.outFields = ["PLATFORM"];
                         if (item.dataset == 'Multibeam') {
-                            queryTask = new QueryTask("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0");
+                            queryTask = new QueryTask("http://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0");
                             promises.multibeamPlatformQuery = queryTask.execute(query);
                         }
                         if (item.dataset == 'Sounding') {
-                            queryTask = new QueryTask("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1"); 
+                            queryTask = new QueryTask("http://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1");
                             promises.nosHydroPlatformQuery = queryTask.execute(query);
                         }                        
                     }
@@ -250,11 +250,11 @@ define([
                         query.where = "UPPER(SURVEY_ID) LIKE '" + item.surveys.toUpperCase().replace(/\*/g, '%') + "'";
                         query.outFields = ["SURVEY_ID"];
                         if (item.dataset == 'Multibeam') {
-                            queryTask = new QueryTask("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0");
+                            queryTask = new QueryTask("http://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0");
                             promises.multibeamSurveyQuery = queryTask.execute(query);
                         }
                         if (item.dataset == 'Sounding') {
-                            queryTask = new QueryTask("http://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1"); 
+                            queryTask = new QueryTask("http://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro_dynamic/MapServer/1");
                             promises.nosHydroSurveyQuery = queryTask.execute(query);
                         }
                     }
