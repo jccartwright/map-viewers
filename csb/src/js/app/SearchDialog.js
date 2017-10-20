@@ -54,7 +54,7 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/csb/providers.groovy', {
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/csb/providers.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -66,7 +66,7 @@ define([
                     this.populateProviderSelect(null);
                 }));
 
-                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/csb/platform_names.groovy', {
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/csb/platform_names.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -78,7 +78,7 @@ define([
                     this.populatePlatformNameSelect(null);
                 }));
 
-                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/csb/platform_ids.groovy', {
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/csb/platform_ids.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -90,7 +90,7 @@ define([
                     this.populatePlatformIdSelect(null);
                 }));
 
-                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/csb/instruments.groovy', {
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/csb/instruments.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
