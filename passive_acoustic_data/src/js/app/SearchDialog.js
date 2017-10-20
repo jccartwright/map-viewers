@@ -58,7 +58,7 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/pad/source-organizations.groovy', {
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/pad/source-organizations.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -70,7 +70,7 @@ define([
                     this.populateSourceOrganizationSelect(null);
                 }));
 
-                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/pad/funding-organizations.groovy', {
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/pad/funding-organizations.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -82,7 +82,7 @@ define([
                     this.populateFundingOrganizationSelect(null);
                 }));
 
-                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/pad/instruments.groovy', {
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/pad/instruments.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
@@ -94,7 +94,7 @@ define([
                     this.populateInstrumentSelect(null);
                 }));
 
-                xhr('https://maps.ngdc.noaa.gov/mapviewer-support/pad/platforms.groovy', {
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/pad/platforms.groovy', {
                     preventCache: true,
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){

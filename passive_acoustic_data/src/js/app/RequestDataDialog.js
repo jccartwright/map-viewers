@@ -137,7 +137,7 @@ define([
 
                 topic.publish('/ngdc/showLoading'); //Show the loading spinner
                 
-                xhr.post('https://maps.ngdc.noaa.gov/mapviewer-support/pad/generateOrder.groovy', {
+                xhr.post('https://gis.ngdc.noaa.gov/mapviewer-support/pad/generateOrder.groovy', {
                     data: jsonString,
                     handleAs: 'json',
                     headers: {'Content-Type':'application/json'},
