@@ -87,7 +87,7 @@ define([
                     this.filterSurveys();
                 }));
 
-                xhr.get('//maps.ngdc.noaa.gov/mapviewer-support/aeromag/projects.groovy', {
+                xhr.get('https://gis.ngdc.noaa.gov/mapviewer-support/aeromag/projects.groovy', {
                     preventCache: true,
                     jsonp: 'callback',
                     handleAs: 'json',
@@ -99,7 +99,7 @@ define([
                     logger.error('Error retrieving institutions JSON: ' + err);
                 });
 
-                xhr.get('//maps.ngdc.noaa.gov/mapviewer-support/aeromag/surveys.groovy', {
+                xhr.get('https://gis.ngdc.noaa.gov/mapviewer-support/aeromag/surveys.groovy', {
                     preventCache: true,
                     jsonp: 'callback',
                     handleAs: 'json',
