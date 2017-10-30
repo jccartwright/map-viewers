@@ -25,7 +25,8 @@ define([
                 this.numColorBands = arguments[1].numColorBands;
                 this.logScale = arguments[1].logScale;
 
-                this.urlPrefix = 'https://gis.ngdc.noaa.gov/https-proxy/proxy?' + this.url;
+                //this.urlPrefix = 'https://gis.ngdc.noaa.gov/https-proxy/proxy?' + this.url;
+                this.urlPrefix = this.url;
                 this.updateUrl();
 
                 topic.subscribe('/layersPanel/selectNarrYear', lang.hitch(this, function (year) {
