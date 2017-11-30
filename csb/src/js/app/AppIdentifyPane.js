@@ -214,10 +214,10 @@ define([
                                 }
 
                                 //Create a layer "folder" node if it doesn't already exist
-                                if (this.featureStore.query({id: layerName}).length === 0) {
+                                if (this.featureStore.query({id: this.getFolderName(layerKey)}).length === 0) {
                                     this.featureStore.put({
                                         uid: ++this.uid,
-                                        id: layerName,
+                                        id: this.getFolderName(layerKey),
                                         label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
                                         type: 'folder',
                                         //If NOS Hydro, parent is the NOS Hydro folder, else parent is root.
@@ -236,7 +236,7 @@ define([
                                     layerUrl: layerUrl,
                                     layerKey: layerKey,
                                     attributes: item.feature.attributes,
-                                    parent: layerName,
+                                    parent: this.getFolderName(layerKey),
                                     type: 'item'
                                 });
                             }
