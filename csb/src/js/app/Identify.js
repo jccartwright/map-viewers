@@ -175,8 +175,8 @@ define([
 
                 var localDate = new Date(a['START_DATE']);
                 var utcDate = new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000);
-                console.log(localDate);
-                console.log(utcDate);
+                //console.log(localDate);
+                //console.log(utcDate);
 
                 var template =
                     '<h3>Crowdsourced Bathymetry File</h3>' +
@@ -197,6 +197,44 @@ define([
                         platformId: a['Platform ID'],
                         instrument: a['Instrument']
                     });               
+                return html;
+            },
+
+            emodnetMultibeamFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>EMODnet Multibeam Bathymetric Survey</h3>' +
+                    '<div class="valueName">CDI Partner: <span class="parameterValue">${cdiPartner}</span></div>' +
+                    '<div class="valueName">CDI Record ID: <span class="parameterValue">${cdiRecordId}</span></div>' +
+                    '<div class="valueName">Dataset Name: <span class="parameterValue">${datasetName}</span></div>' +
+                    '<div class="valueName"><span class="parameterValue"><a href="${details}" target="_blank">More Details from EMODNet</a></span></div>';
+
+                var html = string.substitute(template, {
+                        cdiPartner: a['CDI-partner'],
+                        cdiRecordId: a['CDI-record id'],
+                        datasetName: a['Data set name'],
+                        details: a['Details']
+                    });                
+                return html;
+            },
+
+            emodnetSinglebeamFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =
+                    '<h3>EMODnet Single-Beam Bathymetric Survey</h3>' +
+                    '<div class="valueName">CDI Partner: <span class="parameterValue">${cdiPartner}</span></div>' +
+                    '<div class="valueName">CDI Record ID: <span class="parameterValue">${cdiRecordId}</span></div>' +
+                    '<div class="valueName">Dataset Name: <span class="parameterValue">${datasetName}</span></div>' +
+                    '<div class="valueName"><span class="parameterValue"><a href="${details}" target="_blank">More Details from EMODNet</a></span></div>';
+
+                var html = string.substitute(template, {
+                        cdiPartner: a['CDI-partner'],
+                        cdiRecordId: a['CDI-record id'],
+                        datasetName: a['Data set name'],
+                        details: a['Details']
+                    });                
                 return html;
             },
 

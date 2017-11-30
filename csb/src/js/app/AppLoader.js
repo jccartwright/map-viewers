@@ -18,6 +18,7 @@ define([
     'esri/SpatialReference',
     'esri/tasks/GeometryService',
     'esri/tasks/ProjectParameters',
+    'esri/dijit/Legend',
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'app/arctic/MapConfig',
@@ -57,6 +58,7 @@ define([
         SpatialReference,
         GeometryService,
         ProjectParameters,
+        Legend,
         Logger,
         MercatorMapConfig,
         ArcticMapConfig,
@@ -216,6 +218,24 @@ define([
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
                 }, new MercatorLayerCollection());
+
+                aspect.after(this.mercatorMapConfig, 'mapReady', lang.hitch(this, function() {
+                    var legend = new Legend({
+                        map: this.mercatorMapConfig.map,
+                        layerInfos: [                            
+                            {title: 'Multibeam', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam')._tiledService},
+                            {title: 'Multibeam', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam')._dynamicService},
+                            {title: 'Trackline Bathymetry', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry')._tiledService},
+                            {title: 'Trackline Bathymetry', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry')._dynamicService},
+                            {title: 'Trackline Bathymetry Density', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry Density')},
+                            {title: 'NOS Hydrographic Surveys', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys')._tiledService},
+                            {title: 'NOS Hydrographic Surveys', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys')._dynamicService},
+                            {title: 'DEM Extents', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Extents')},
+                            {title: 'DEM Tiles (new)', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')}
+                        ]
+                    }, 'dynamicLegend');
+                    legend.startup();
+                }));
 
                 new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
             },

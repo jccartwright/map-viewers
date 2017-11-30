@@ -42,8 +42,14 @@ define([
                 on(this.chkMultibeam, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Multibeam', this.chkMultibeam.checked);
                 }));
+                on(this.chkMultibeamMosaic, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'Multibeam Mosaic', this.chkMultibeamMosaic.checked);
+                }));
                 on(this.chkTrackline, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Trackline Bathymetry', this.chkTrackline.checked);                    
+                }));
+                on(this.chkTracklineDensity, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'Trackline Bathymetry Density', this.chkTracklineDensity.checked);                    
                 }));
 
                 on(this.chkNosHydro, 'change', lang.hitch(this, function() {
@@ -54,13 +60,13 @@ define([
                 }));
 
                 on(this.chkEmodNetMultibeam, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'EMODNet Multibeam Polygons', this.chkEmodNetMultibeam.checked);
-                    topic.publish('/ngdc/layer/visibility', 'EMODNet Multibeam Lines', this.chkEmodNetMultibeam.checked);
+                    topic.publish('/ngdc/layer/visibility', 'EMODnet Multibeam Polygons', this.chkEmodNetMultibeam.checked);
+                    topic.publish('/ngdc/layer/visibility', 'EMODnet Multibeam Lines', this.chkEmodNetMultibeam.checked);
                 }));
 
                 on(this.chkEmodNetSinglebeam, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'EMODNet Singlebeam Polygons', this.chkEmodNetSinglebeam.checked);
-                    topic.publish('/ngdc/layer/visibility', 'EMODNet Singlebeam Lines', this.chkEmodNetSinglebeam.checked);
+                    topic.publish('/ngdc/layer/visibility', 'EMODnet Singlebeam Polygons', this.chkEmodNetSinglebeam.checked);
+                    topic.publish('/ngdc/layer/visibility', 'EMODnet Singlebeam Lines', this.chkEmodNetSinglebeam.checked);
                 }));
 
                 on(this.chkDems, 'change', lang.hitch(this, function() {

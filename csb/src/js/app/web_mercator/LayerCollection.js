@@ -85,11 +85,24 @@ define([
                         id: 'DEM Hillshades',
                         visible: false,
                         imageServiceParameters: this.imageServiceParameters
-                    }),                    
+                    }), 
+                    new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_hillshade/ImageServer', {
+                        id: 'Multibeam Mosaic',
+                        visible: false
+                    }),                   
                     new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
                         visible: false,
                         opacity: 0.7
+                    }),
+                    new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
+                        id: 'BAG Hillshades',
+                        visible: false
+                    }),  
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry_density/MapServer', {
+                        id: 'Trackline Bathymetry Density',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro/MapServer', {
                         id: 'NOS Hydro (tiled)',
@@ -99,11 +112,7 @@ define([
                         id: 'NOS Hydro (dynamic)',
                         visible: false,
                         imageParameters: this.imageParameters.png32
-                    }),
-                    new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
-                        id: 'BAG Hillshades',
-                        visible: false
-                    }),                    
+                    }),                                    
                     // new ArcGISImageServiceLayer("//seamlessrnc.nauticalcharts.noaa.gov/ArcGIS/rest/services/RNC/NOAA_RNC/ImageServer", {
                     //     id: 'RNC',
                     //     visible: false,
@@ -117,7 +126,7 @@ define([
                     }),
 
                     new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
-                        id: 'EMODNet Singlebeam Polygons',
+                        id: 'EMODnet Singlebeam Polygons',
                         visible: false,
                         format: 'png',
                         wmsVersion: '1.3.0',
@@ -127,7 +136,7 @@ define([
                         opacity: 0.5
                     }),
                     new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
-                        id: 'EMODNet Multibeam Polygons',
+                        id: 'EMODnet Multibeam Polygons',
                         visible: false,
                         format: 'png',
                         wmsVersion: '1.3.0',
@@ -137,7 +146,7 @@ define([
                         opacity: 0.5
                     }),
                     new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
-                        id: 'EMODNet Singlebeam Lines',
+                        id: 'EMODnet Singlebeam Lines',
                         visible: false,
                         format: 'png',
                         wmsVersion: '1.3.0',
@@ -146,7 +155,7 @@ define([
                         layerNames: ['EMODnet_Bathymetry_single_beams_points', 'EMODnet_Bathymetry_single_beams_lines']
                     }),
                     new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
-                        id: 'EMODNet Multibeam Lines',
+                        id: 'EMODnet Multibeam Lines',
                         visible: false,
                         format: 'png',
                         wmsVersion: '1.3.0',
@@ -215,7 +224,7 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_extents/MapServer', {
                         id: 'DEM Extents',
                         visible: false,
                         imageParameters: this.imageParameters.png32

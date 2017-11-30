@@ -41,14 +41,7 @@ define([
                         label: 'Graticule',
                         services: [{id: 'Graticule'}],
                         visible: false
-                    }//,
-                    /*
-                    {
-                        label: 'EMODNet Survey Tracks/Polygons',
-                        services: [{id: 'EMODNet'}],
-                        visible: true
                     }
-                    */
                 ];
 
                 this._identifyTools = [

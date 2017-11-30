@@ -38,7 +38,7 @@ define([
                 this.featurePageBottomBar.style = 'height: 50px;';
 
                 this.extractDataButton = new Button({
-                    label: 'Extract Data',
+                    label: 'Extract CSB Data',
                     style: 'bottom: 5px; left: 15px;',
                     iconClass: 'downloadIcon',
                     onClick: lang.hitch(this, function(){
@@ -48,7 +48,7 @@ define([
 
                 new Tooltip({
                     connectId: [this.extractDataButton.domNode],
-                    label: 'Extract data via NEXT (NCEI Extract System).<br><img src="images/drive-download.png">: Data for this layer can be extracted.'
+                    label: 'Extract Crowdsourced Bathymetry data via NEXT (NCEI Extract System).'
                 });
 
                 //Add a button to the main cruise feature page to request cruises
@@ -58,10 +58,8 @@ define([
                     iconClass: 'downloadIcon',
                     onClick: lang.hitch(this, function() {
                         var itemId;
-                        if (this.currentItem.attributes['Survey ID']) {
-                            itemId = this.currentItem.attributes['Survey ID'];
-                        } else if (this.currentItem.attributes['Item ID']) {
-                            itemId = this.currentItem.attributes['Item ID'];
+                        if (this.currentItem.attributes['Name']) {
+                            itemId = this.currentItem.attributes['Name'];
                         }
                         this.extractData(itemId);
                     })
@@ -70,6 +68,13 @@ define([
 
             showResults: function() {
                 this.inherited(arguments);
+
+                if (this.identifyResults['CSB'] && this.identifyResults['CSB']['CSB']) {
+                    domStyle.set(this.extractDataButton.domNode, 'display', '');
+                } else {
+                    domStyle.set(this.extractDataButton.domNode, 'display', 'none');
+                }
+                
                 // if (this.numFeatures >= 1000) {
                 //     this.featurePageTitle = "Identified Features (" + this.numFeatures + "+, results limited to 1000)";
                 //     this.setTitle(this.featurePageTitle);
@@ -77,28 +82,46 @@ define([
             },
 
             getLayerDisplayLabel: function(item, count) {
+                if (item.formatter === 'CSB/CSB Points' || item.formatter === 'CSB/CSB Lines' || item.formatter === 'CSB/CSB Polygons') {
+                    item.formatter = 'CSB/CSB';
+                }
+                return '<i><b>' + this.getFolderName(item.formatter) + ' (' + this.formatCountString(this.folderCounts[this.getFolderName(item.formatter)]) + ')</b></i>';
+            },
 
-                if (item.layerName === 'Multibeam Bathymetric Surveys') {
-                    return '<i><b>Multibeam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i>';
+
+            getFolderName: function(layerKey) {
+                if (layerKey === 'Multibeam/Multibeam Bathymetric Surveys') {
+                    return 'NOAA NCEI Multibeam Bathymetric Surveys';
                 } 
-                else if (item.layerName === 'Marine Trackline Surveys: Bathymetry') {
-                    return '<i><b>Single-Beam Bathymetric Surveys (' + this.formatCountString(count) + ')</b></i>';
+                else if (layerKey === 'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry') {
+                    return 'NOAA NCEI Single-Beam Bathymetric Surveys';
+                }  
+                else if (layerKey === 'NOS Hydrographic Surveys/Surveys with BAGs') {
+                    return 'Surveys wth BAGs';
                 } 
-                else if (item.layerName === 'Surveys with BAGs') {
-                    return '<i>Surveys wth BAGs (' + this.formatCountString(count) + ')</i>';
+                else if (layerKey === 'NOS Hydrographic Surveys/Surveys with Digital Sounding Data') {
+                    return 'Surveys with Digital Sounding Data';
                 } 
-                else if (item.layerName === 'Surveys with Digital Sounding Data') {
-                    return '<i>Surveys with Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
-                } 
-                else if (item.layerName === 'Surveys without Digital Sounding Data') {
-                    return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
-                } 
-                else if (item.layerName === 'All NCEI Bathymetric DEMs') {
-                    return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
+                else if (layerKey === 'NOS Hydrographic Surveys/Surveys without Digital Sounding Data') {
+                    return 'Surveys without Digital Sounding Data';
                 }
-                else if (item.layerName === 'CSB') {
-                    return '<i><b>Crowdsourced Bathymetry Files (' + this.formatCountString(count) + ')</b></i>';
+                else if (layerKey === 'DEM Extents/NCEI Digital Elevation Models') {
+                    return 'Digital Elevation Models';
                 }
+                else if (layerKey === 'DEM Tiles/DEM Tiles') {
+                    return 'Digital Elevation Models (New Tiles)';
+                }                
+                else if (layerKey === 'CSB/CSB') { //CSB points/lines/polygons have been collapsed into one layer (Identify.js:sortResults())
+                    return 'Crowdsourced Bathymetry Files';
+                }                                              
+                else if (layerKey === 'EMODnet Singlebeam Polygons/default' || layerKey == 'EMODnet Singlebeam Lines/default') {
+                    return 'EMODnet Single-Beam Bathymetric Surveys';
+                }
+                else if (layerKey === 'EMODnet Multibeam Polygons/default' || layerKey == 'EMODnet Multibeam Lines/default') {
+                    return 'EMODnet Multibeam Bathymetric Surveys';
+                }
+
+                
             },
 
             formatCountString: function(count) {
@@ -126,7 +149,7 @@ define([
                 else if (item.layerName === 'Surveys without Digital Sounding Data') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] === 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
                 } 
-                else if (item.layerName === 'All NCEI Bathymetric DEMs') {
+                else if (item.layerName === 'NCEI Digital Elevation Models') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
                 }
                 else if (item.layerName === 'CSB') {
@@ -143,6 +166,10 @@ define([
                         return this.getItemLabelSpan(this.identify.formatDate(startDate) + ' - ' + this.identify.formatDate(endDate) , uid);   
                     }
                 }
+                else if (item.formatter == 'EMODnet Singlebeam Polygons/default' || item.formatter == 'EMODnet Singlebeam Lines/default' ||
+                    item.formatter == 'EMODnet Multibeam Polygons/default' || item.formatter == 'EMODnet Multibeam Lines/default') {
+                    return this.getItemLabelSpan(item.feature.attributes['Data set name'], uid);
+                }
             },
 
             getItemLabelSpan: function(text, uid) {
@@ -154,6 +181,8 @@ define([
                 var numFeaturesForLayer = 0;
                 this.expandedNodePaths = [];
                 this.identifyResults = results;
+
+                this.computeFolderCounts(results);
 
                 for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
                     var svcName = this.identify.layerIds[i];
@@ -167,8 +196,9 @@ define([
                                 var item = results[svcName][layerName][j];
                                 var layerKey = svcName + '/' + layerName;
                                 var layerUrl = results[svcName][layerName][j].layerUrl;
+                                var layerType = results[svcName][layerName][j].layerType;
                                 
-                                if (svcName === 'NOS Hydrographic Surveys' || svcName === 'NOS Hydro (non-digital)') {
+                                if (svcName === 'NOS Hydrographic Surveys') {
                                     //Create an "NOS Hydrographic Surveys" folder if it doesn't already exist
                                     if (this.featureStore.query({id: 'NOS Hydrographic Surveys'}).length === 0) {
                                         this.featureStore.put({
@@ -182,14 +212,14 @@ define([
                                 }
 
                                 //Create a layer "folder" node if it doesn't already exist
-                                if (this.featureStore.query({id: layerName}).length === 0) {
+                                if (this.featureStore.query({id: this.getFolderName(layerKey)}).length === 0) {
                                     this.featureStore.put({
                                         uid: ++this.uid,
-                                        id: layerName,
+                                        id: this.getFolderName(layerKey),
                                         label: this.getLayerDisplayLabel(item, numFeaturesForLayer),
                                         type: 'folder',
                                         //If NOS Hydro, parent is the NOS Hydro folder, else parent is root.
-                                        parent: svcName === 'NOS Hydrographic Surveys' || svcName === 'NOS Hydro (non-digital)' ? 
+                                        parent: svcName === 'NOS Hydrographic Surveys' ? 
                                             'NOS Hydrographic Surveys' : 'root'
                                     });
                                     //this.expandedNodePaths.push(layerName);
@@ -204,7 +234,7 @@ define([
                                     layerUrl: layerUrl,
                                     layerKey: layerKey,
                                     attributes: item.feature.attributes,
-                                    parent: layerName,
+                                    parent: this.getFolderName(layerKey),
                                     type: 'item'
                                 });
                             }
@@ -239,13 +269,14 @@ define([
                 }
             },
 
-            extractData: function(itemId /*Optional survey/DEM id*/) {                
-                var filterCriteria = this.constructFilterCriteria(itemId);
-                if (filterCriteria.items.length > 0) {
-                    this.submitFormToNext(filterCriteria);
-                }
+            extractData: function(itemId /*Optional survey/DEM id*/) {
 
-                //filterCriteria = this.replaceWildcardsAndSubmit(filterCriteria);
+                if (this.identifyResults['CSB'] && this.identifyResults['CSB']['CSB']) {            
+                    var filterCriteria = this.constructFilterCriteria(itemId);
+                    if (filterCriteria.items.length > 0) {
+                        this.submitFormToNext(filterCriteria);
+                    }
+                }
             },
 
             getFilterItemById: function(filterCriteria, id /*'Multibeam'|'Sounding'*/) {
@@ -315,6 +346,21 @@ define([
 
                 //once the form is sent, it's useless to keep it.
                 document.body.removeChild(form);
+            },
+
+            computeFolderCounts: function(results) {
+                this.folderCounts = {};
+                for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
+                    var svcName = this.identify.layerIds[i];
+                    for (var layerName in results[svcName]) {
+                        var layerKey = svcName + '/' + layerName;
+                        var folderName = this.getFolderName(layerKey);
+                        if (!this.folderCounts[folderName]) {
+                            this.folderCounts[folderName] = 0;
+                        }
+                        this.folderCounts[folderName] += results[svcName][layerName].length;                        
+                    }
+                }
             }
         });
     }

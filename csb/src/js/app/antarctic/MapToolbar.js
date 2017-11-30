@@ -9,7 +9,9 @@ define([
         return declare([MapToolbar], {
             constructor: function() {
                 this._basemaps = [
-                    {base: 'Antarctic Basemap', overlays: [{id: 'Reference'}], label: 'Antarctic Basemap (IBCSO/GEBCO_08)'}
+                    {base: 'Antarctic Basemap', overlays: [{id: 'Reference'}], label: 'Antarctic Basemap (IBCSO/GEBCO_08)'},
+                    {base: 'GMRT Unmasked', overlays: [{id: 'Ocean Reference'}], label: 'Global Multi-Resolution Topography (GMRT) Data Synthesis (LDEO)'},
+                    {base: 'GMRT Masked', overlays: [{id: 'Ocean Reference'}], label: 'Global Multi-Resolution Topography (GMRT) Data Synthesis (LDEO),<br/><i>High-Resolution Areas Highlighted</i>'}
                 ];
 
                 this._overlays = [

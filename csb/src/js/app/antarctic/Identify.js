@@ -22,7 +22,12 @@ define([
                 logger.debug('inside constructor for app/antarctic/Identify');
 
                 //augment arguments object with list of layers to identify.
-                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'DEM Extents', 'CSB'];
+                arguments[0].layerIds = [
+                    'CSB',
+                    'Multibeam', 
+                    'Trackline Bathymetry', 
+                    'DEM Extents'
+                ];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
@@ -32,7 +37,7 @@ define([
                 this.formatters = {
                     'Multibeam/Multibeam Bathymetric Surveys': lang.hitch(this, this.multibeamFormatter),
                     'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),
-                    'DEM Extents/All NCEI Bathymetric DEMs': lang.hitch(this, this.demFormatter),
+                    'DEM Extents/NCEI Digital Elevation Models': lang.hitch(this, this.demFormatter),
                     'CSB/CSB': lang.hitch(this, this.csbFormatter)
                 };
             } //end constructor
