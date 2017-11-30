@@ -58,10 +58,8 @@ define([
                     iconClass: 'downloadIcon',
                     onClick: lang.hitch(this, function() {
                         var itemId;
-                        if (this.currentItem.attributes['Survey ID']) {
-                            itemId = this.currentItem.attributes['Survey ID'];
-                        } else if (this.currentItem.attributes['Item ID']) {
-                            itemId = this.currentItem.attributes['Item ID'];
+                        if (this.currentItem.attributes['Name']) {
+                            itemId = this.currentItem.attributes['Name'];
                         }
                         this.extractData(itemId);
                     })
