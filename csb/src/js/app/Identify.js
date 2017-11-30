@@ -204,7 +204,7 @@ define([
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template =
-                    '<h3>EMODNet Multibeam Bathymetric Survey</h3>' +
+                    '<h3>EMODnet Multibeam Bathymetric Survey</h3>' +
                     '<div class="valueName">CDI Partner: <span class="parameterValue">${cdiPartner}</span></div>' +
                     '<div class="valueName">CDI Record ID: <span class="parameterValue">${cdiRecordId}</span></div>' +
                     '<div class="valueName">Dataset Name: <span class="parameterValue">${datasetName}</span></div>' +
@@ -223,7 +223,7 @@ define([
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template =
-                    '<h3>EMODNet Single-Beam Bathymetric Survey</h3>' +
+                    '<h3>EMODnet Single-Beam Bathymetric Survey</h3>' +
                     '<div class="valueName">CDI Partner: <span class="parameterValue">${cdiPartner}</span></div>' +
                     '<div class="valueName">CDI Record ID: <span class="parameterValue">${cdiRecordId}</span></div>' +
                     '<div class="valueName">Dataset Name: <span class="parameterValue">${datasetName}</span></div>' +

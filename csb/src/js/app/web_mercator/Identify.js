@@ -29,10 +29,10 @@ define([
                     'NOS Hydrographic Surveys', 
                     'DEM Extents', 
                     'DEM Tiles', 
-                    'EMODNet Singlebeam Polygons',
-                    'EMODNet Multibeam Polygons',
-                    'EMODNet Singlebeam Lines',
-                    'EMODNet Multibeam Lines'
+                    'EMODnet Singlebeam Polygons',
+                    'EMODnet Multibeam Polygons',
+                    'EMODnet Singlebeam Lines',
+                    'EMODnet Multibeam Lines'
                 ];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
@@ -48,10 +48,10 @@ define([
                     'DEM Extents/NCEI Digital Elevation Models': lang.hitch(this, this.demFormatter),
                     'DEM Tiles/DEM Tiles': lang.hitch(this, this.demTileFormatter),
                     'CSB/CSB': lang.hitch(this, this.csbFormatter),
-                    'EMODNet Multibeam Polygons/default': lang.hitch(this, this.emodnetMultibeamFormatter),
-                    'EMODNet Multibeam Lines/default': lang.hitch(this, this.emodnetMultibeamFormatter),
-                    'EMODNet Singlebeam Polygons/default': lang.hitch(this, this.emodnetSinglebeamFormatter),
-                    'EMODNet Singlebeam Lines/default': lang.hitch(this, this.emodnetSinglebeamFormatter),
+                    'EMODnet Multibeam Polygons/default': lang.hitch(this, this.emodnetMultibeamFormatter),
+                    'EMODnet Multibeam Lines/default': lang.hitch(this, this.emodnetMultibeamFormatter),
+                    'EMODnet Singlebeam Polygons/default': lang.hitch(this, this.emodnetSinglebeamFormatter),
+                    'EMODnet Singlebeam Lines/default': lang.hitch(this, this.emodnetSinglebeamFormatter),
                 };
             } //end constructor
         });
