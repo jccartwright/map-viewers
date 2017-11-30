@@ -5,8 +5,8 @@
 
     <title>Crowdsourced Bathymetry Viewer (Prototype)</title>
     <link rel="shortcut icon" href="https://www.ngdc.noaa.gov/image/favicon.ico">
-    <link rel="stylesheet" href="https://js.arcgis.com/3.21/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="https://js.arcgis.com/3.21/esri/css/esri.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.22/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/3.22/esri/css/esri.css">
 
     <link rel="stylesheet" href="https://gis.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc/css/MapToolbar.css">
     <link rel="stylesheet" href="https://gis.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc/identify/IdentifyPane.css">
@@ -22,9 +22,9 @@
 
     <link rel="stylesheet" href="src/js/app/css/CreditsPanel.css">
 
-    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.21/dojox/layout/resources/FloatingPane.css"/>
-    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.21/dojox/layout/resources/ResizeHandle.css"/>
-    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.21/dojox/form/resources/CheckedMultiSelect.css"/>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.22/dojox/layout/resources/FloatingPane.css"/>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.22/dojox/layout/resources/ResizeHandle.css"/>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.22/dojox/form/resources/CheckedMultiSelect.css"/>
 
     <link rel="stylesheet" href="css/local.css">
 
@@ -60,7 +60,7 @@
             }
         };
     </script>
-    <script src="https://js.arcgis.com/3.21/"></script>
+    <script src="https://js.arcgis.com/3.22/"></script>
     <script type="text/javascript" src="https://gis.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
     <script type="text/javascript" src="https://gis.ngdc.noaa.gov/proj4js/local_defs/EPSG3995.js"></script>
     <script type="text/javascript" src="https://gis.ngdc.noaa.gov/proj4js/local_defs/EPSG3031.js"></script>
@@ -88,12 +88,16 @@
         </div>
         <div id="legendPanel" data-dojo-type="dijit/layout/ContentPane" title="Legend">
             <div id="legend">
-                <img src="images/bathy_viewer_legend.png"></img><hr/>
+                <b>Crowdsourced Bathymetry Files:</b> features are assigned a random color according to their platform name.<hr>
+                <div id="dynamicLegend"></div><hr/>
+                Multibeam Mosaic Color Scale:
+                <img src="https://gis.ngdc.noaa.gov/viewers/images/multibeam_color_scale.png"></img><hr/>
                 <img src="images/bag_hillshades_color_scale.png"></img><hr/>
-                <img src="images/dem_hillshades_color_scale.png"></img><hr/>
-                GEBCO_2014 Bathymetry Color Scale (depth in meters):<br/>
+                DEM Color Scale (elevation/depth in meters):
+                <img src="https://gis.ngdc.noaa.gov/viewers/images/dem_color_scale.png"></img><hr/>
+                GEBCO_2014 Bathymetry Color Scale (elevation/depth in meters):<br/>
                 <img src="images/gebco_color_scale.png"></img><hr/>
-                ETOPO1 Color Scale (depth/elevation in meters):<br/>
+                ETOPO1 Color Scale (elevation/depth in meters):<br/>
                 <img src="images/etopo1_color_scale.png"></img>
 
 
