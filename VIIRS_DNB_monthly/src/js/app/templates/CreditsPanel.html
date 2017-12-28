@@ -1,0 +1,26 @@
+<div class="creditsPanel_class">
+    This is an interactive map providing access to monthly cloud-free composites of Visible Infrared Imaging Radiometer Suite (VIIRS) Day/Night Band (DNB) low light imaging data: detections of lighting from cities, towns, villages, combustion sources and lit fishing boats. These composites are produced by NOAA's National Centers for Environmental Information (NCEI). Use the time slider to display imagery for the selected month, or press the play button to automatically play back the imagery sequence.
+    <br /><br />
+
+    NCEI provides 4 time-enabled ArcGIS image services with access to the monthly VIIRS DNB composites:<ul><li><a href='https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_AvgRadiance/ImageServer' target='_blank'>Average Radiance</a> (<a href='https://noaa.maps.arcgis.com/home/item.html?id=d7c95b2da6fd43cd9dec19b212f145db' target='_blank'>NOAA GeoPlatform entry)</a></li><li><a href='https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_AvgRadiance_StrayLightImpacted/ImageServer' target='_blank'>Average Radiance (Stray Light Impacted)</a> (<a href='https://noaa.maps.arcgis.com/home/item.html?id=a88d1c4909d3402c896176f8b1ea2f32' target='_blank'>NOAA GeoPlatform entry</a>)</li><li><a href='https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_CloudFreeCoverage/ImageServer' target='_blank'>Cloud-Free Coverage</a></li><li><a href='https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_CloudFreeCoverage_StrayLightImpacted/ImageServer' target='_blank'>Cloud-Free Coverage (Stray Light Impacted)</a></li></ul>
+
+    The Earth Observations Group (EOG) at NOAA/NCEI is producing a version 1 suite of average radiance composite images using nighttime data from the Visible Infrared Imaging Radiometer Suite (VIIRS) Day/Night Band (DNB). VIIRS DNB sensors are on the Suomi National Polar-orbiting Partnership (NPP) satellite and on the NOAA-20 satellite. The imagery in this service is compiled from Suomi NPP data.<br /><br />
+
+    Prior to averaging, the DNB data is filtered to exclude data impacted by stray light, lightning, lunar illumination, and cloud-cover. Cloud-cover is determined using the VIIRS Cloud Mask product (VCM). In addition, data near the edges of the swath are not included in the composites (aggregation zones 29-32). <br /><br />
+
+    Temporal averaging is done on a monthly and annual basis. The version 1 series of monthly composites has not been filtered to screen out lights from aurora, fires, boats, and other temporal lights. However, the annual composites have layers with additional separation, removing temporal lights and background (non-light) values.<br /><br />
+
+    The version 1 products span the globe from 75N latitude to 65S. The products are produced as 15 arc-second geographic grids. Each tile is actually a set of images containing average radiance values and numbers of available observations.<br /><br />In the monthly composites, there are many areas of the globe where it is impossible to get good quality data coverage for that month. This can be due to cloud cover, especially in the tropical regions, or due to solar illumination, as happens toward the poles in their respective summer months. Therefore, it is imperative that users of these data utilize the cloud-free observations file and not assume that a value of zero in the average radiance image means that no lights were observed.<br /><br />
+
+    The version 1 monthly series is run globally using two different configurations. The first excludes any data impacted by stray light. The second includes these data if the radiance vales have undergone the stray-light correction procedure (<a href='http://spie.org/Publications/Proceedings/Paper/10.1117/12.2023107' target='_blank'>Reference</a>). These two configurations are denoted in the filenames as &quot;vcm&quot; and &quot;vcmsl&quot; respectively. The &quot;vcmsl&quot; version, that includes the stray-light corrected data, will have more data coverage toward the poles, but will be of reduced quality. It is up to the users to determine which set is best for their applications. The annual versions are only made with the &quot;vcm&quot; version, excluding any data impacted by stray light.<br /><br />
+
+    The average radiance images (&quot;avg_rade9&quot;) contain floating point radiance values with units in nanowatts/cm²/sr. Note that the original DNB radiance values have been multiplied by 1E9. This was done to alleviate issues some software packages were having with the very small numbers in the original units. Files with extension &quot;cf_cvg&quot; are integer counts of the number of cloud-free coverages, or observations, that went in to constructing the average radiance image.<br /><br />
+
+    <a href='https://ngdc.noaa.gov/eog/viirs/download_dnb_composites.html' target='_blank'>More information about VIIRS DNB Nighttime Lights data at NOAA's National Centers for Environmental Information (NCEI)</a>
+
+    <p>
+        <b>Version:</b>
+        <!--@application.version@, last updated @application.buildDate@-->
+        {{version}}, last updated {{buildDate}}
+    </p>
+</div>
