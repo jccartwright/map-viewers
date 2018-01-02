@@ -159,11 +159,14 @@
     </div>
    </body>
   <script>
-	var crowdmagService;
+          var crowdmagService;
+          var queryObject;
+
          require([
                //                    "dojo/_base/array",
                //                    "esri/Color",
                //                    "dojo/dom",
+               "dojo/io-query",
                "dojo/on",
                "dojo/parser",
                "dojo/ready",
@@ -183,6 +186,7 @@
                //                        array,
                //                        Color,
                //                        dom,
+               ioQuery,
                on,
                parser,
                ready,
@@ -202,6 +206,10 @@
 
                var map, query;
                //var yLayer, zLayer, intensityLayer;
+               var uri = document.location.href;
+               var query = uri.substring(uri.indexOf("?") + 1, uri.length);
+               queryObject = ioQuery.queryToObject(query);
+
 
                ready(function() {
                    //console.log('ready handler fired...');
@@ -212,7 +220,12 @@
                function mapLoadHandler(map) {
                    //console.log('inside mapLoadHandler...');
                    //zoom to user's position if possible
-                   if (navigator.geolocation) {
+                   if (queryObject.nogeolocation) {
+                       console.log("geolocation disabled");
+                   } else if (queryObject.longitude && queryObject.latitude) {
+                       console.log("overriding geolocation with "+queryObject.longitude+", "+queryObject.latitude);
+                       zoomToLocation({"coords":{"longitude": queryObject.longitude, "latitude": queryObject.latitude}});
+                   } else if (navigator.geolocation) {
                        navigator.geolocation.getCurrentPosition(zoomToLocation, locationError);
                    }
                }
