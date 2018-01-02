@@ -1,0 +1,61 @@
+<div class="layersPanel_class">
+    <!-- <h3>VIIRS Day/Night Band (DNB) Monthly Composites</h3> -->
+
+    <b>VIIRS Day/Night Band (DNB) Monthly Composites (Apr. 2012-present)</b><br>
+    <input type="radio" name="radioButton" id="radioButton0" data-dojo-type="dijit/form/RadioButton" checked>
+    <label for="radioButton0">Average Radiance</label><br>                                   
+                                
+    <input type="radio" name="radioButton" id="radioButton1" data-dojo-type="dijit/form/RadioButton">
+    <label for="radioButton1">Cloud-Free Coverage</label><br><br>
+
+    <b>Stray Light Impacted Data Included (Jan. 2014-present)</b><br>
+    <input type="radio" name="radioButton" id="radioButton2" data-dojo-type="dijit/form/RadioButton">
+    <label for="radioButton2">Average Radiance</label><br>                                   
+                                
+    <input type="radio" name="radioButton" id="radioButton3" data-dojo-type="dijit/form/RadioButton">
+    <label for="radioButton3">Cloud-Free Coverage</label><br><br>
+
+    <b>Opacity:</b><br>
+    <div data-dojo-attach-point="opacitySlider" style="width:200px;" name="horizontalSlider" data-dojo-type="dijit/form/HorizontalSlider"
+    data-dojo-props="value:0.75,
+        minimum: 0,
+        maximum:1,
+        intermediateChanges:true,
+        showButtons:false">
+        <ol data-dojo-type="dijit/form/HorizontalRuleLabels" container="topDecoration"
+            style="height:1.5em;font-size:75%;color:gray;">
+            <li>0%</li>
+            <li>20%</li>
+            <li>40%</li>
+            <li>60%</li>
+            <li>80%</li>
+            <li>100%</li>
+        </ol>
+        <div data-dojo-type="dijit/form/HorizontalRule" container="bottomDecoration"
+            count=11 style="height:5px;"></div>
+    </div><br><br>
+
+    <b>Display Stretch Parameters:</b><br>
+    <i>Number of Standard Devations to Clip:</i><br>
+    <div data-dojo-attach-point="stretchSlider" style="width:200px;" name="stretchSlider" data-dojo-type="dijit/form/HorizontalSlider"
+    data-dojo-props="value:10,
+        minimum: 0.1,
+        maximum:100,
+        intermediateChanges:false,
+        showButtons:false">
+        <ol data-dojo-type="dijit/form/HorizontalRuleLabels" container="topDecoration"
+            style="height:1.5em;font-size:75%;color:gray;">
+            <li>0.1</li>
+            <li>20</li>
+            <li>40</li>
+            <li>60</li>
+            <li>80</li>
+            <li>100</li>
+        </ol>
+        <div data-dojo-type="dijit/form/HorizontalRule" container="bottomDecoration"
+            count=11 style="height:5px;"></div>
+    </div>
+    <br><br>
+    
+
+</div>
