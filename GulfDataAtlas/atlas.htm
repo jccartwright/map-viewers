@@ -1,0 +1,809 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+  <head>
+    <meta name="description" content="A virtual atlas to simplify discovery and access to socio-economic, marine, coastal and watershed data.  Atlas provides informational material synthesizing the analysis of the individual maps within the atlas.  Atlas provides access to actual data used to make each of the individual maps within the atlas." />
+    <meta name="keywords" content="climatology,ecosystems,coastal relief,bathymetry,seawater temperature,seawater salinity,salinity zones,salinity seasons,dissolved oxygen,hypoxia,nutrients,phosphates,silicates,nitrates,wind currents,wind speeds,prevailing winds,bottom sediments,SAV,submerged aquatic vegetation,seagrass,deep-sea corals,corals,chemosynthetic communities,hydrocarbon seeps,mangroves,HABs,harmful algal blooms,essential fish habitats,critical habitats,fish habitats,fish abundance,croaker,shrimp,grouper,mackerel,seatrout,snapper,sharks,triggerfish,oil and gas,oil spills,PAH,polyaromatic hydrocarbons,MusselWatch,population density,marine jurisdiction,fishery closure,photic quality,euphotic depth,water quality,SPARROW,CMECS,chlorophyll,federal protected areas,CAGES,SEAMAP,watersheds,recreational facilities,boat ramps,marinas,community social vulnerability indicators,CSVI,commercial vessel shipping density,marsh vegetation,suitable deep-sea coral habitat,social well-being,seafloor geomorphology,navigable waterways,ports,precipitation,PERSIANN" />
+    <title>Gulf of Mexico Data Atlas</title>
+
+    <link rel="stylesheet" type="text/css" href="styles/ddsmoothmenu.css" />
+    <link rel="stylesheet" type="text/css" href="styles/accordion.css" />
+    <link rel="stylesheet" type="text/css" href="styles/mapStyle.css" />
+    <link rel="stylesheet" type="text/css" href="styles/scalebar-fat.css" />
+
+    <style type="text/css">
+      @media (-webkit-transform-3d) {
+            img.olTileImage {
+              -webkit-transform: none;
+            }
+      }
+      .olLayerGrid .olTileImage {
+           -webkit-transition: none;
+           -moz-transition: none;
+           -o-transition: all 0 none;
+           transition: none;
+      }
+      .olImageLoadError {
+            display: none !important;
+      }
+      .olControlLayerSwitcher .layersDiv {
+            font-size:12px !important;
+            background-color:#003C88 !important;
+            opacity: 0.85;
+      }
+      div.olControlPanel {
+            top: 50px;
+            left: 5px;
+            position: absolute;
+      }
+      .olControlPanel div {
+            display: block;
+            width:  32px;
+            height: 32px;
+            margin-top: 20px;
+      }
+      .olControlMousePosition {
+            bottom: 5px !important;
+            right: 5px !important;
+            background-color:#d0d4d5;
+            padding: 4px;
+            opacity: 1.0;
+            width: 150 !important;
+            font-size: smaller !important;
+            font-weight: bold;
+      }
+      .olControlLoadingPanel {
+            background-image:url(images/loading.gif);
+            position: relative;
+            top: 50%;
+            left: 37.5%;
+            width: 195px;
+            height: 11px;
+            background-position:center;
+            background-repeat:no-repeat;
+            display: none;
+      }
+      .helpButtonItemInactive {
+            background-image: url(images/info-rhombus-icon_32.png);
+      }
+    </style>
+ 
+    <script type="text/javascript" src="javascripts/jquery-1.8.min.js"></script>
+    <script type="text/javascript" src="javascripts/ddsmoothmenu.js">
+      /***********************************************
+
+      * Smooth Navigational Menu- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+      
+* This notice MUST stay intact for legal use
+      
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+      
+***********************************************/
+
+    </script>
+    <script type="text/javascript" src="javascripts/OpenLayers.js"></script>
+    <script type="text/javascript" src="javascripts/mapFunctions.js"></script>
+    <script type="text/javascript" src="javascripts/ScaleBar.js"></script>
+    <script type="text/javascript" src="javascripts/LoadingPanel.js"></script>
+    <script type="text/javascript" src="javascripts/acmeousCollapsibleLists.js"></script>
+
+    <script type="text/javascript">
+      ddsmoothmenu.init({
+        mainmenuid: "atlasMenu", //menu DIV id
+        orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+        classname: 'ddsmoothmenu', //class added to menu's outer DIV
+        method: 'toggle', // set to 'hover' (default) or 'toggle'
+        arrowswap: false, // enable rollover effect on menu arrow images?
+        customtheme: ["#1c5a80", "#1c5a80"], // main menu colors
+        contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+      })
+    </script>
+
+    <script type="text/javascript" src="../common/javascripts/Federated-Analytics.js"></script>
+
+    <script type="text/javascript">
+        var map;
+        var scalebar;
+        var layerInfo = {
+                  "currentVersion" : 10.01, 
+                  "serviceDescription" : "", 
+                  "mapName" : "Layers", 
+                  "description" : "", 
+                  "copyrightText" : "", 
+                  "layers" : [
+                    {
+                      "id" : 0, 
+                      "name" : "World Imagery", 
+                      "parentLayerId" : -1, 
+                      "defaultVisibility" : true, 
+                      "subLayerIds" : null, 
+                      "minScale" : 0, 
+                      "maxScale" : 0
+                    }
+                  ], 
+                  "tables" : [
+                    
+                  ], 
+                  "spatialReference" : {
+                    "wkid" : 102100
+                  }, 
+                  "singleFusedMapCache" : true, 
+                  "tileInfo" : {
+                    "rows" : 256, 
+                    "cols" : 256, 
+                    "dpi" : 96, 
+                    "format" : "JPEG", 
+                    "compressionQuality" : 75, 
+                    "origin" : {
+                      "x" : -20037508.342787, 
+                      "y" : 20037508.342787
+                    }, 
+                    "spatialReference" : {
+                      "wkid" : 102100
+                    }, 
+                    "lods" : [
+                      {"level" : 0, "resolution" : 156543.033928, "scale" : 591657527.591555}, 
+                      {"level" : 1, "resolution" : 78271.5169639999, "scale" : 295828763.795777}, 
+                      {"level" : 2, "resolution" : 39135.7584820001, "scale" : 147914381.897889}, 
+                      {"level" : 3, "resolution" : 19567.8792409999, "scale" : 73957190.948944}, 
+                      {"level" : 4, "resolution" : 9783.93962049996, "scale" : 36978595.474472}, 
+                      {"level" : 5, "resolution" : 4891.96981024998, "scale" : 18489297.737236}, 
+                      {"level" : 6, "resolution" : 2445.98490512499, "scale" : 9244648.868618}, 
+                      {"level" : 7, "resolution" : 1222.99245256249, "scale" : 4622324.434309}, 
+                      {"level" : 8, "resolution" : 611.49622628138, "scale" : 2311162.217155}, 
+                      {"level" : 9, "resolution" : 305.748113140558, "scale" : 1155581.108577}, 
+                      {"level" : 10, "resolution" : 152.874056570411, "scale" : 577790.554289}
+                    ]
+                  }, 
+                  "initialExtent" : {
+                    "xmin" : -27403890.4529557, 
+                    "ymin" : -19971868.8804086, 
+                    "xmax" : 27403890.4529557, 
+                    "ymax" : 19971868.8804086, 
+                    "spatialReference" : {
+                      "wkid" : 102100
+                    }
+                  }, 
+                  "fullExtent" : {
+                    "xmin" : -20037507.2295943, 
+                    "ymin" : -19971868.8804086, 
+                    "xmax" : 20037507.2295943, 
+                    "ymax" : 19971868.8804086, 
+                    "spatialReference" : {
+                      "wkid" : 102100
+                    }
+                  }, 
+                  "units" : "esriMeters", 
+                  "supportedImageFormatTypes" : "PNG32,PNG24,PNG,JPG,DIB,TIFF,EMF,PS,PDF,GIF,SVG,SVGZ,AI,BMP", 
+                  "documentInfo" : {
+                    "Title" : "World Imagery", 
+                    "Author" : "ESRI", 
+                    "Comments" : "", 
+                    "Subject" : "imagery, satellite, aerial, 500m (World), 15m (World)", 
+                    "Category" : "imageryBaseMapsEarthCover (Imagery, basemaps, and land cover)", 
+                    "Keywords" : "World, Global, United States", 
+                    "Credits" : "Source: ESRI, i-cubed, USDA FSA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGP"
+                  }, 
+                  "capabilities" : "Map"
+                };
+
+        // settings for production
+        var serverURL = "https://service.ncddc.noaa.gov";		// indicates the url address of wms
+        var htmlURL = "https://www.ncddc.noaa.gov";			// indicates the url address for all text such as description and metadata .. production
+        var serviceURL = "https://service.ncddc.noaa.gov";		// indicates the url address of the server holding the cached tiles for the maps .. production
+
+        // settings for staging
+        //var serverURL = "https://service.ln.ncddc.noaa.gov"                  // indicates the url address of wms .. staging
+        //var htmlURL = "https://www.ln.ncddc.noaa.gov";		  // indicates the url address for all text such as description and metadata .. staging
+        //var serviceURL = "https://service.ln.ncddc.noaa.gov";            // indicates the url address of the server holding the cached tiles for the maps .. staging
+
+        var imageryLayer;
+        var topographyLayer;
+        var simpleLayer;
+        var ngLayer;
+        var oceanLayer;
+        var referenceLayer;
+        var referenceLayer1;
+        var bathymetryLayer;
+        var bathymetryLayer1;
+        var bathySourceLayer;
+        var bathySourceLayer1;
+        var shorelineLayer;
+        var gazetteerLayer;
+        var loopcurrentLayer;
+        var graticuleLayer;
+        var mapLayer = [];
+        var mapPOI = [];
+        var minOpacity = 0.1;
+        var maxOpacity = 0.9;
+        var contourOverlay = false;
+        var placeNameOverlay = false;
+        var bathySourcesOverlay = false;
+        var mapExtent = new OpenLayers.Bounds(-11077478.10883,2218165.88923,-8932349.34703,3653959.02853);
+        var plName = '';
+        var collapsibleFirstTime = true;
+
+        function init() {
+            // pass plate argument through url address ... for example "?plate=Bathymetry - Gulf"
+            var query = location.search.substring(1);
+            var pairs = query.split("&");
+            for (var k=0; k<pairs.length; k++)  {
+              var pos = pairs[k].indexOf("=");
+              var argname = pairs[k].substring(0,pos).toLowerCase();
+              var value = pairs[k].substring(pos+1);
+              if (argname == "plate") {
+                //plateName = value.toUpperCase();
+                plateName = value;
+                var len = plateName.length;
+                var backlen = len;
+                var frag = "";
+                var encval = "";
+                while (backlen > 0)  {
+                  lastpercent = plateName.lastIndexOf("%");
+                  if (lastpercent != -1)  {
+                    frag = plateName.substring(lastpercent+1,plateName.length);
+                    plateName = plateName.substring(0,lastpercent);
+                    if (frag.length >= 2)  {
+                      encval = frag.substring(0,2);
+                      plName = frag.substring(2,frag.length) + plName;
+                      if ("01234567890abcdefABCDEF".indexOf(encval.substring(0,1)) != -1 && "01234567890abcdefABCDEF".indexOf(encval.substring(1,2)) != -1)  {
+                        encval = String.fromCharCode(parseInt(encval, 16));
+                        plName = encval + plName;
+                      }
+                    }
+                    backlen = lastpercent;
+                  }
+                  else  { 
+                    plName = plateName + plName;
+                    backlen = 0;
+                  }
+                }
+              }
+            }           
+
+            var maxExtent = new OpenLayers.Bounds(-12034245,1073787,-7773340,3969833);
+
+            var layerMaxExtent = new OpenLayers.Bounds(
+                layerInfo.fullExtent.xmin,
+                layerInfo.fullExtent.ymin,
+                layerInfo.fullExtent.xmax,
+                layerInfo.fullExtent.ymax
+            );
+
+            var resolutions = [];
+            for (var i=0; i<layerInfo.tileInfo.lods.length; i++)  {
+                resolutions.push(layerInfo.tileInfo.lods[i].resolution);
+            }
+
+            scalebar = new OpenLayers.Control.ScaleBar({
+                displaySystem: "english",
+                align: "center"
+            });
+            map = new OpenLayers.Map('map', {
+                projection: new OpenLayers.Projection('EPSG:102100'),
+                displayProjection: new OpenLayers.Projection('EPSG:4326'),
+                controls: [
+                  scalebar,
+                  new OpenLayers.Control.Navigation(),
+                  new OpenLayers.Control.Zoom()
+                ],
+                restrictedExtent: maxExtent,
+                resolutions: resolutions,
+                tileSize: new OpenLayers.Size(layerInfo.tileInfo.width, layerInfo.tileInfo.height)                
+            });
+
+            var ls = new OpenLayers.Control.LayerSwitcher( {title: 'Switch/add/remove layer'} );
+            map.addControl(ls);
+            ls.maximizeControl();
+            
+            var loadingPanel = new OpenLayers.Control.LoadingPanel();
+            map.addControl(loadingPanel);
+
+            var panel = new OpenLayers.Control.Panel();
+            panel.addControls([
+              new OpenLayers.Control.Button({displayClass: "helpButton", trigger: helpPopup, title: 'Help'})
+            ]);
+            map.addControl(panel);
+
+            imageryLayer = new OpenLayers.Layer.ArcGISCache( "World Imagery Map",
+                    "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", {
+                        isBaseLayer: true,
+                        resolutions: resolutions,                      
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            topographyLayer = new OpenLayers.Layer.ArcGISCache( "World Topography Map",
+                    "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer", {
+                        isBaseLayer: true,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            simpleLayer = new OpenLayers.Layer.ArcGISCache( "Simple World Map",
+                    "https://services.arcgisonline.com/ArcGIS/rest/services/Specialty/DeLorme_World_Base_Map/MapServer", {
+                        isBaseLayer: true,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            ngLayer = new OpenLayers.Layer.ArcGISCache( "National Geographic Map",
+                    "https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer", {
+                        isBaseLayer: true,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            oceanLayer = new OpenLayers.Layer.ArcGISCache( "Ocean Map",
+                    "https://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer", {
+                        isBaseLayer: true,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            referenceLayer = new OpenLayers.Layer.ArcGISCache( "World Reference Map",
+                    "https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer", {
+                        isBaseLayer: false,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            var mapURL = serviceURL + "/arcgiscache/DataAtlas_WorldMaritimeBoundaries/_alllayers";
+            referenceLayer1 = new OpenLayers.Layer.ArcGISCache( "World Maritime Boundaries",
+                    mapURL, {
+                        isBaseLayer: false,
+                        useArcGISServer: false,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            referenceLayer1.setVisibility(true);
+            var mapURL = serviceURL + "/arcgiscache/DataAtlas_NGDC_BathymetricContours_General/_alllayers";
+            bathymetryLayer = new OpenLayers.Layer.ArcGISCache( "General Bathymetry Map (meters)",
+                    mapURL, {
+                        isBaseLayer: false,
+                        useArcGISServer: false,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            bathymetryLayer.setVisibility(false);
+            var mapURL = serviceURL + "/arcgiscache/DataAtlas_NGDC_BathymetricContours_Detailed/_alllayers";
+            bathymetryLayer1 = new OpenLayers.Layer.ArcGISCache( "Detailed Bathymetry Map (meters)",
+                    mapURL, {
+                        isBaseLayer: false,
+                        useArcGISServer: false,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            bathymetryLayer1.setVisibility(false);
+            var mapURL = serviceURL + "/arcgiscache/DataAtlas_US_Shoreline_MediumResolution/_alllayers";
+            shorelineLayer = new OpenLayers.Layer.ArcGISCache( "U.S. Shoreline",
+                    mapURL, {
+                        isBaseLayer: false,
+                        useArcGISServer: false,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            shorelineLayer.setVisibility(false);
+            var mapURL = serviceURL + "/arcgiscache/DataAtlas_GOM_Gazetteer/_alllayers";
+            gazetteerLayer = new OpenLayers.Layer.ArcGISCache( "Place Names - Ocean",
+                    mapURL, {
+                        isBaseLayer: false,
+                        useArcGISServer: false,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            gazetteerLayer.setVisibility(false);
+            var mapURL = serviceURL + "/arcgiscache/DataAtlas_LoopCurrent/_alllayers";
+            loopcurrentLayer = new OpenLayers.Layer.ArcGISCache( "Loop Current", 
+                    mapURL, {
+                        isBaseLayer: false,
+                        useArcGISServer: false,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            loopcurrentLayer.setVisibility(false);
+            var mapURL = serviceURL + "/arcgiscache/DataAtlas_Graticule/Graticule/_alllayers";
+            graticuleLayer = new OpenLayers.Layer.ArcGISCache( "Graticule", 
+                    mapURL, {
+                        isBaseLayer: false,
+                        useArcGISServer: false,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            graticuleLayer.setVisibility(true);
+            var mapURL = serviceURL + "/arcgiscache/DataAtlas_NGDC_MultiBeamSurvey/_alllayers";
+            bathySourceLayer = new OpenLayers.Layer.ArcGISCache( "Multibeam Bathymetry Surveys", 
+                    mapURL, {
+                        isBaseLayer: false,
+                        useArcGISServer: false,
+                        displayInLayerSwitcher: false,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            bathySourceLayer.setVisibility(false);
+            var mapURL = serviceURL + "/arcgiscache/DataAtlas_NGDC_Trackline_Survey/_alllayers";
+            bathySourceLayer1 = new OpenLayers.Layer.ArcGISCache( "Trackline Bathymetry Surveys", 
+                    mapURL, {
+                        isBaseLayer: false,
+                        useArcGISServer: false,
+                        displayInLayerSwitcher: false,
+                        resolutions: resolutions,                        
+                        tileSize: new OpenLayers.Size(layerInfo.tileInfo.cols, layerInfo.tileInfo.rows),                        
+                        tileOrigin: new OpenLayers.LonLat(layerInfo.tileInfo.origin.x , layerInfo.tileInfo.origin.y),                        
+                        maxExtent: layerMaxExtent,                        
+                        projection: 'EPSG:' + layerInfo.spatialReference.wkid
+                    });
+            bathySourceLayer1.setVisibility(false);
+            map.addLayers([imageryLayer,topographyLayer,simpleLayer,ngLayer,oceanLayer,referenceLayer,referenceLayer1,bathymetryLayer,bathymetryLayer1,shorelineLayer,gazetteerLayer,loopcurrentLayer,graticuleLayer]);
+            map.zoomToExtent(new OpenLayers.Bounds(-11077478.10883,2218165.88923,-8932349.34703,3653959.02853));
+            map.addControl(new OpenLayers.Control.MousePosition({formatOutput: formatLonlats}));
+            //map.addControl(new OpenLayers.Control.MousePosition({displayProjection: new OpenLayers.Projection("EPSG:3857")}));
+            if (plName.length != 0)  {
+              ls.minimizeControl();
+              createMainPlate(plName);
+            }
+            else  {
+              var linkURL = htmlURL;
+              linkURL += "/website/DataAtlas/introPage.htm";
+              loadPage(linkURL);
+            }
+        }
+    </script>
+  </head>
+
+  <body onload="init();">
+  <center>
+  <map name="logo_map" id="logo_map">
+  <area shape="rect" coords="150,0,400,50" href="https://gulfatlas.noaa.gov" title="Link to main page of Gulf of Mexico Data Atlas" alt="Gulf of Mexico Data Atlas"/>
+  <area shape="rect" coords="920,0,1080,50" href="javascript:createSurveyPage()" title="Link to Feedback Form" alt="Gulf of Mexico Data Atlas Survey"/>
+  </map>
+  <img src="images/banner_long.png" width="1200" height="50" usemap="#logo_map"/>
+  </center>
+  <table width="1200" align="center" bgcolor="#d2ebf0" height="10">
+  <tr><td><div id="bottomLogoNav">
+    <a class="map-link" href="https://gulfatlas.noaa.gov" title="Select to go to main page of Data Atlas"> 
+      <span style="font-size:60%">Exit to Main Page</span>
+    </a>
+    </div></td></tr>
+  </table> 
+  <table width="1200" border="0" cellspacing="0" cellpadding="0" align="center" height="30" colspan="15" bgcolor="#03285f">
+    <tr><td>
+      <div id="atlasMenu" class="ddsmoothmenu">
+      <ul>
+        <li><a href='#'><b>Basemap</b></a>
+          <ul>
+            <li><a href='javascript:resetMap()'>Reset Map</a></li>
+          </ul>
+        </li>
+        <li><a href='#'><b>Physical</b></a>
+          <ul>
+            <li><a href='#'>Bathymetry</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Bathymetry - Gulf")'>1. Gulf-wide</a></li>
+                <li><a href='javascript:createMainPlate("Bathymetry - Estuarine")'>2. Estuarine</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Coastal Relief</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Coastal Relief - Northern Gulf")'>1. Northern Gulf</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Dissolved Oxygen</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Dissolved Oxygen")'>1. Climatological Mean</a></li>
+                <li><a href='javascript:createMainPlate("Hypoxia")'>2. Hypoxia</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Extreme Natural Events</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Hurricanes")'>1. Tropical Storm - Hurricane Activity</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Marine Geology</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Bottom Sediments - Types")'>1. Dominant Bottom Types and Habitats</a></li>
+                <li><a href='javascript:createMainPlate("Bottom Sediments - Properties")'>2. Seabed Sediment Folk Codes</a></li>
+                <li><a href='javascript:createMainPlate("Geomorphology")'>3. Seafloor Geomorphology</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Nutrients</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Nutrients - Nitrates")'>1. Nitrates - Climatological Mean</a></li>
+                <li><a href='javascript:createMainPlate("Nutrients - Phosphate")'>2. Phosphate - Climatological Mean</a></li>
+                <li><a href='javascript:createMainPlate("Nutrients - Silicate")'>3. Silicate - Climatological Mean</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Prevailing Winds</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Prevailing Winds")'>1. Climatological Average</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Precipitation</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Precipitation")'>1. Climatology</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Remotely Sensed Sea Surface Temperature</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("SST")'>1. Climatological Average</a></li>
+                <li><a href='javascript:createMainPlate("Temperature - CMECS")'>2. CMECS Temperature Subcomponent</a></li>
+                <li><a href='javascript:createMainPlate("Water Column Stability - CMECS")'>3. CMECS Water Column Temperature Change</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Seawater Salinity</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Salinity - Mean")'>1. Climatological Mean</a></li>
+                <li><a href='javascript:createMainPlate("Salinity - CMECS")'>2. CMECS Salinity Subcomponent</a></li>
+                <li><a href='javascript:createMainPlate("Salinity Zones - Estuarine")'>3. Salinity Zones - Estuarine</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Seawater Temperature</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Seawater Temperature")'>1. Climatological Mean</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href='#'><b>Biotic</b></a>
+          <ul>
+            <li><a href='#'>Coastal Characterization - Gulf-wide</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("CCAP")'>1. Coastal Change Analysis Program (CCAP)</a></li>
+                <li><a href='javascript:createMainPlate("Productivity - CMECS")'>2. CMECS Water Column Productivity Modifier</a></li>
+                <li><a href='javascript:createMainPlate("Mangroves")'>3. Mangrove Communities - US and Mexico</a></li>
+                <li><a href='javascript:createMainPlate("Marsh Vegetation")'>4. Marsh Vegetation  - TX, LA, MS, AL</a></li>
+                <li><a href='javascript:createMainPlate("Wetlands")'>5. Wetlands</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Coastal Characterization - Small Areas</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Grand Bay NERR")'>1. Grand Bay NERR</a></li>
+                <li><a href='javascript:createMainPlate("MBCC and Habitat - LCLU 1992")'>2. Mobile Bay</a></li>
+                <li><a href='javascript:createMainPlate("Perdido Coastal Lagoons")'>3. Perdido Coastal Lagoons</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Corals and Hard Bottom</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Chemosynthetic Communities")'>1. Chemosynthetic Communities</a></li>
+                <li><a href='javascript:createMainPlate("Deep-Sea Corals")'>2. Deep-Sea Corals</a></li>
+                <li><a href='javascript:createMainPlate("Suitable Coral Habitat - All")'>3. Deep-Sea Corals - Suitable Habitat</a></li>
+                <li><a href='javascript:createMainPlate("Hydrocarbon Seeps")'>4. Petroleum Hydrocarbon Seeps</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Nonindigenous Aquatic Species</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Nonindigenous Aquatic Species - Asian Tiger Shrimp")'>1. Asian Tiger Shrimp</a></li>
+                <li><a href='javascript:createMainPlate("Nonindigenous Aquatic Species - Lionfish")'>2. Lionfish</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Phytoplankton</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("HABs")'>1. Harmful Algal Blooms (HABs)</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Submerged Aquatic Vegetation</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Seagrasses - Gulf-wide")'>1. Gulf-wide</a></li>
+                <li><a href='javascript:createMainPlate("Seagrasses - Gulf Islands")'>2. Gulf Islands - Mississippi</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href='#'><b>Living Marine Resources</b></a>
+          <ul>
+            <li><a href='#'>Food Habits</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Food Habits - King Mackerel")'>1. King Mackerel</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Habitats</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Critical Habitats")'>1. Critical Habitats</a></li>
+                <li><a href='javascript:createMainPlate("EFH - Council Managed")'>2. Essential Fish Habitats - Council Managed Species</a></li>
+                <li><a href='javascript:createMainPlate("EFH - Highly migratory")'>3. Highly Migratory Species - Atlantic Bluefin Tuna</a></li>
+                <li><a href='javascript:createMainPlate("Suitable Habitat - Bluefin Tuna")'>4. Atlantic Bluefin Tuna - Suitable Habitat</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Invertebrates</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Invertebrates - Eastern Oyster")'>1. Eastern Oyster</a></li>
+                <li><a href='javascript:createMainPlate("Invertebrates - Brown Shrimp")'>2. Brown Shrimp</a></li>
+                <li><a href='javascript:createMainPlate("Invertebrates - Pink Shrimp")'>3. Pink Shrimp</a></li>
+                <li><a href='javascript:createMainPlate("Invertebrates - White Shrimp")'>4. White Shrimp</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Fishes</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Fishes - Atlantic Croaker")'>1. Atlantic Croaker</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Gag Grouper")'>2. Gag Grouper</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Gray Triggerfish")'>3. Gray Triggerfish</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Gulf Butterfish")'>4. Gulf Butterfish</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - King Mackerel")'>5. King Mackerel</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Lane Snapper")'>6. Lane Snapper</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Red Grouper")'>7. Red Grouper</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Red Snapper")'>8. Red Snapper</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Sand Seatrout")'>9. Sand Seatrout</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Silver Seatrout")'>10. Silver Seatrout</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Spanish Mackerel")'>11. Spanish Mackerel</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Spot")'>12. Spot</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Vermilion Snapper")'>13. Vermilion Snapper</a></li>
+                <li><a href='javascript:createMainPlate("Fishes - Yellowedge Grouper")'>14. Yellowedge Grouper</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Reptiles</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Reptiles - Green Sea Turtle")'>1. Green Sea Turtle</a></li>
+                <li><a href='javascript:createMainPlate("Reptiles - Hawksbill Sea Turtle")'>2. Hawksbill Sea Turtle</a></li>
+                <li><a href='javascript:createMainPlate("Reptiles - Kemp Ridley Sea Turtle")'>3. Kemp's Ridley Sea Turtle</a></li>
+                <li><a href='javascript:createMainPlate("Reptiles - Leatherback Sea Turtle")'>4. Leatherback Sea Turtle</a></li>
+                <li><a href='javascript:createMainPlate("Reptiles - Loggerhead Sea Turtle")'>5. Loggerhead Sea Turtle</a></li>
+
+              </ul>
+            </li>
+            <li><a href='#'>Sharks</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Sharks - Atlantic Sharpnose Shark")'>1. Atlantic Sharpnose Shark</a></li>
+                <li><a href='javascript:createMainPlate("Sharks - Blacknose Shark")'>2. Blacknose Shark</a></li>
+                <li><a href='javascript:createMainPlate("Sharks - Blacktip Shark")'>3. Blacktip Shark</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href='#'><b>Socioeconomic Conditions</b></a>
+          <ul>
+            <li><a href='#'>Onshore Conditions</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("CSVI - Poverty")'>1. Community Social Vulnerability Indicators (US Gulf Coast)</a></li>
+                <li><a href='javascript:createMainPlate("Social WellBeing - Social Services")'>2. Community Social Well-Being Indicators (US Gulf Coast)</a></li>
+                <li><a href='javascript:createMainPlate("Population Density")'>3. Population Density (US Only)</a></li>
+                <li><a href='javascript:createMainPlate("Recreational Facilities")'>4. Recreational Facilities (US Only)</a></li>
+                <li><a href='javascript:createMainPlate("Trade Statistics")'>5. Trade Statistics - Ports (US and Mexico)</a></li>
+
+              </ul>
+            </li>
+            <li><a href='#'>Offshore Conditions</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Borrow Sites")'>1. Borrow Sites</a></li>
+                <li><a href='javascript:createMainPlate("Waterways")')>2. Navigable Waterway Routes </a></li>
+                <li><a href='javascript:createMainPlate("Gas and Oil Pipelines")'>3. Oil and Gas Pipelines</a></li>
+                <li><a href='javascript:createMainPlate("Offshore Structures")'>4. Oil and Gas Structures</a></li>
+                <li><a href='javascript:createMainPlate("Shipping and Navigation")'>5. Shipping and Navigation</a></li>
+                <li><a href='javascript:createMainPlate("Shipping Density")')>6. Shipping Density</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href='#'><b>Environmental Quality</b></a>
+          <ul>
+            <li><a href='#'>Discharges</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("MusselWatch - PAHs")'>1. Polynuclear Aromatic Hydrocarbons</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Incidents</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Incidents - Oil Spills")'>1. Oil Spills</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Photic Quality</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Photic Quality - CMECS")'>1. CMECS Photic Quality Modifier</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Water Quality</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Water Quality - Nutrients")'>1. Nutrients - Estuarine</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href='#'><b>Jurisdictions</b></a>
+          <ul>
+            <li><a href='#'>Boundaries</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Fishery Closures")'>1. Fishery Closures</a></li>
+                <li><a href='javascript:createMainPlate("Marine Jurisdictions")'>2. Marine Jurisdictions</a></li>
+                <li><a href='javascript:createMainPlate("Watersheds")'>3. Watersheds</a></li>
+              </ul>
+            </li>
+            <li><a href='#'>Protected Areas - Federal</a>
+              <ul>
+                <li><a href='javascript:createMainPlate("Federal Protected Areas - Cuba")'>1. Cuba</a></li>
+                <li><a href='javascript:createMainPlate("Federal Protected Areas - Mexico")'>2. Mexico</a></li>
+                <li><a href='javascript:createMainPlate("Federal Protected Areas - United States")'>3. United States</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <br style="clear: left"/>
+      </div>
+    </td></tr>
+  </table>
+  <table width="1200" border="0" colspan="2" cellspacing="0" cellpadding="0" align="center" height="25">
+       <tr>
+         <td bgcolor="#d2ebf0"><div id="colorBar" width="1200" height="25"></div></td>
+       </tr>
+  </table>
+  <table width="1200" border="0" cellspacing="0" cellpadding="0" align="center" height="600">
+       <tr>
+          <td width="900" height="600"> 
+            <div id="map" align="center" style="width:100%; height:100%; background-color:#eeeeee; background-image:url('images/loadingMap.jpg');"></div>
+          </td>
+          <td bgcolor="#ffffff" width="320" height="600"> 
+            <div id="rightCol" align="center" style="width:320px;height:600px;overflow:auto;">
+            </div>
+          </td>
+       </tr>
+  </table>
+  <table width="1200" border="0" cellspacing="0" cellpadding="0" align="center" height="30">
+	<tr valign="middle">
+	  <td bgcolor="#d0ecf0" width="880" height="30"><div id="opacityBar"></div></td>
+         <td bgcolor="#d0ecf0"><width="320" height="30"></td>
+       </tr>
+  </table>
+  <table width="1200" border="0" cellspacing="0" cellpadding="2" align="center" height="10">
+	<tr valign="middle">
+	  <td bgcolor="#ffffff">
+          </td>
+       </tr>
+  </table>
+  <table class="smallText" width="1200" border="0" cellspacing="0" cellpadding="2" align="center" height="40">
+       <tr valign="middle" align="center"> 
+          <td bgcolor="#81969b" width="50%" height="40">
+          <a href="http://www.commerce.gov/" target="_blank" title="U.S. Department of Commerce" target="_self"><font color="black">U.S. Department of Commerce</a> |</font>
+          <a href="http://www.noaa.gov" target="_blank" title="National Oceanic &amp; Atmospheric Administration" target="_self"><font color="black">NOAA</a> |</font>
+          <a href="http://www.nesdis.noaa.gov" target="_blank" title="National Environmental Satellites, Data, and Information Services" target="_self"><font color="black">NESDIS</a> |</font>
+          <a href="https://www.ncei.noaa.gov" target="_blank" title="National Centers for Environmental Information" target="_self"><font color="black">NCEI</a></font>
+          <br/>
+          <a href="http://www.noaa.gov/disclaimer" target="_blank" title="Link to National Oceanic &amp; Atmospheric Administration Disclaimer" target="_self"><font color="black">Disclaimer</a> |</font>
+          <a href="http://www.noaa.gov/protecting-your-privacy" target="_blank" title="Link to National Oceanic &amp; Atmospheric Administration Privacy Policy"><font color="black">Privacy Policy</a> |</font>
+          <a href="http://www.copyright.gov/title17/92chap4.html#403" target="_blank" title="Copyright Notice"><font color="black">Copyright Notice</a> |</font>
+          <a href="http://www.usa.gov" target="_blank" title="The U.S. Government's Official Web Portal"><font color="black">USA.gov</a></font>
+          </td>
+          <td width="4" height="20"></td>
+          <td bgcolor="#d0d4d5" width="50%" height="40"> 
+          <a href="http://www.cio.noaa.gov/services_programs/info_quality.html" target="_blank" title="Link to National Oceanic &amp; Atmospheric Administration Information Quality"><font color="black">Information Quality</a> |</font>
+          <a href="http://www.noaa.gov/foia-freedom-of-information-act" target="_blank" title="Link to National Oceanic &amp; Atmospheric Administration FOIA"><font color="black">Freedom of Information Act (FOIA)</a></font>
+          <br/>
+          <a href="https://www.ncddc.noaa.gov/about-ncddc" target="_blank" title="Contact NCEI-MS"><font color="black">Customer Service</a> |</font>
+          <a href="mailto:NCEI.Info@noaa.gov?subject=Data%20Atlas%20web%20site" title="Email Data Atlas Team"><font color="black">NCEI.Info@noaa.gov</a></font>
+          </td>
+	</tr>
+  </table>
+  </body>
+</html>

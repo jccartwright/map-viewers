@@ -1,0 +1,105 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Shipping Density</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><b>Vessel Density - 2010</b></center>
+        <p/> 
+        This map showing <a href="javascript:createSubPlate('Shipping Density - 2010')"><font color="red"><u>Commercial Vessel Density</u></font></a> from October 2009 to October 2010 was developed by NOAA's Office of Coast Survey (OCS). It is based on data from the U.S. Coast Guard's Automatic Identification System (AIS). The AIS tracks marine vessels and records information such as position, speed, heading, vessel identification, and vessel type.
+        <p/>
+        Commercial-use vessels were the focus of this map, thus shipping fairways and port areas show the densest activity. The patterns revealed could be used for planning purposes. For example, a proposed area for a marine sanctuary may coincide with a heavily traveled shipping corridor. In that case, a different proposed area may be chosen for the sanctuary to avoid conflicts with the commercial industry.
+        <p/>
+        One interesting part of the mapped pattern is the orange circle to the southeast of New Orleans, LA. That is the location of the April 2010 Deepwater Horizon oil spill, which resulted in much cleanup and scientific activity in the area during the summer and fall of 2010.
+        <p/>
+        <center><b>Vessel Density - 2011</b></center>
+        <p/>
+        The <a href="javascript:createSubPlate('Shipping Density - 2011')"><font color="red"><u>2011 vessel density</u></font></a> shows a pattern that is similar to the 2010 pattern. The 2011 dataset is less detailed, showing a range of high to low density rather than actual numbers. From the overall dataset, specific vessel types have been broken out into individual maps:  <a href="javascript:openGraphicLandscape('/website/DataAtlas/products/socioeconomicPlates/ShippingDensity/AIS_2011Cargo.jpg')"><font color="blue"><u>cargo vessels</u></font></a>, <a href="javascript:openGraphicLandscape('/website/DataAtlas/products/socioeconomicPlates/ShippingDensity/AIS_2011Fishing.jpg')"><font color="blue"><u>fishing vessels</u></font></a>, <a href="javascript:openGraphicLandscape('/website/DataAtlas/products/socioeconomicPlates/ShippingDensity/AIS_2011Pass.jpg')"><font color="blue"><u>passenger vessels</u></font></a>, <a href="javascript:openGraphicLandscape('/website/DataAtlas/products/socioeconomicPlates/ShippingDensity/AIS_2011Pleas.jpg')"><font color="blue"><u>pleasure craft and sailing vessels</u></font></a>, <a href="javascript:openGraphicLandscape('/website/DataAtlas/products/socioeconomicPlates/ShippingDensity/AIS_2011Tanker.jpg')"><font color="blue"><u>tankers</u></font></a>, and <a href="javascript:openGraphicLandscape('/website/DataAtlas/products/socioeconomicPlates/ShippingDensity/AIS_2011Tugs.jpg')"><font color="blue"><u>tug and towing vessels</u></font></a>. Not all vessels in the Gulf of Mexico use the AIS system, so density is estimated based on vessels that do participate.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        NOAA Office of Coast Survey. Vessel Shipping Density In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2016. [2 screens]. Available from: https://gulfatlas.noaa.gov/.        
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Shipping Density</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/socioeconomicLegends/ShippingDensity_CommercialVessels_AIS.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Shipping Density</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Shipping Density - Commercial Vessels - 2010</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/CommercialVesselDensity.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/CommercialVesselDensity.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Shipping Density - All Vessels - 2011</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/AISVesselDensity2011.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/AISVesselDensity2011_ISO.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Shipping Density - Commercial Vessels - 2010</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getExternalWMSCapabilities('http://coast.noaa.gov/arcgis/services/MarineCadastre/CommercialVesselDensityOctober2009_2010/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Shipping Density - All Vessels - 2011</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getExternalWMSCapabilities('https://coast.noaa.gov/arcgis/services/MarineCadastre/2011VesselDensity/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Shipping Density - Cargo Vessels - 2011</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getExternalWMSCapabilities('https://coast.noaa.gov/arcgis/services/MarineCadastre/2011CargoVesselDensity/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Shipping Density - Fishing Vessels - 2011</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getExternalWMSCapabilities('https://coast.noaa.gov/arcgis/services/MarineCadastre/2011FishingVesselDensity/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Shipping Density - Passenger Vessels - 2011</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getExternalWMSCapabilities('https://coast.noaa.gov/arcgis/services/MarineCadastre/2011PassengerVesselDensity/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Shipping Density - Pleasure Craft and Sailing Vessels - 2011</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getExternalWMSCapabilities('https://coast.noaa.gov/arcgis/services/MarineCadastre/2013PleasureCraftSailingVesselDensity/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Shipping Density - Tankers - 2011</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getExternalWMSCapabilities('https://coast.noaa.gov/arcgis/services/MarineCadastre/2011TankerVesselDensity/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Shipping Density - Tugs and Towing Vessels - 2011</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getExternalWMSCapabilities('https://coast.noaa.gov/arcgis/services/MarineCadastre/2011TugTowingVesselDensity/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Multipurpose Marine Cadastre</td><td><a href="javascript:getDataDownloadLink('http://marinecadastre.gov/data/')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

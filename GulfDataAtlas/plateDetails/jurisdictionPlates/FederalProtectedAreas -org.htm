@@ -1,0 +1,115 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Protected Areas - Federal</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Federal protected areas in the United States are lands and waters owned and/or managed by the federal government to preserve or enhance natural, historical, cultural, wildlife, and aesthetic values and resources.
+        <p/>
+        <b>National Estuarine Research System</b>
+        <br/>
+        The <a href="javascript:getExternalLink('http://www.nerrs.noaa.gov')"><font color="blue"><u>National Estuarine Research Reserve System</u></font></a> in the Gulf of Mexico consists of five protected areas established by partnerships between the National Oceanic and Atmospheric Administration (NOAA) and coastal states. The National Estuarine Research Reserve System protects more than 460,000 acres of coastal and estuarine habitats for long-term research, water-quality monitoring, education, and coastal stewardship in the Gulf of Mexico alone.
+        <p/>
+        <b>National Forests</b>
+        <br/>
+        The <a href="javascript:getExternalLink('http://www.fs.fed.us')"><font color="blue"><u>National Forests</u></font></a> are largely forest and woodland areas owned by the federal government and managed by the United States Forest Service, part of the United States Department of Agriculture. Land management of these areas focuses on timber harvesting, livestock grazing, water, wildlife, and recreation. Over 8 million acres of land are designated as National Forests in Alabama, Florida, Louisiana, Mississippi, and Texas.
+        <p/>
+        <b>National Marine Sanctuaries</b>
+        <br/>
+        The <a href="javascript:getExternalLink('http://sanctuaries.noaa.gov/about/southeast.html')"><font color="blue"><u>National Marine Sanctuaries</u></font></a> are federally designated areas within the United States waters that protect areas of the marine environment with special conservation, recreational, ecological, historical, cultural, archeological, scientific, educational, or aesthetic qualities. Within the Gulf of Mexico there are two national marine sanctuaries that encompass more than 245,000 acres.  The National Marine Sanctuaries Program (NMSP), a division of the National Oceanic and Atmospheric Administration (NOAA), administers to all the marine sanctuaries.
+        <p/>
+        <b>National Park System</b>
+        <br/>
+        The <a href="javascript:getExternalLink('http://www.nps.gov/index.htm')"><font color="blue"><u>National Park System</u></font></a> is run by the National Park Service, a bureau of the Department of the Interior. The system is made up of monuments, memorials, parks, preserves, and seashores. Over 4 million acres have been designated as a part of the National Park System for the states of Alabama, Florida, Louisiana, Mississippi, and Texas.
+        <p/>
+        <b>National Wildlife Refuge System</b>
+        <br/>
+        The <a href="javascript:getExternalLink('http://www.fws.gov/refuges/')"><font color="blue"><u>National Wildlife Refuge System</u></font></a> is the system of public lands and waters set aside to conserve America's fish, wildlife and plants. They are protected areas of the United States managed by the United States Fish and Wildlife Service. The mission of the Refuge System is to manage a national network of lands and waters for the conservation, management, and where appropriate, restoration of fish, wildlife and plant resources and their habitat. Almost 6 million acres have been designated as National Wildlife Refuges in the Gulf of Mexico region.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Federal Protected Areas In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2013. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Protected Areas - Federal</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/jurisdictionLegends/FederalProtectedAreas.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Protected Areas - Federal</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">National Estuarine Research System</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/NOAA_NERRS.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/NOAA_NERRS.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125">National Forests</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/USDA_AdministrativeForests.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/USDA_AdministrativeForests.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125">National Marine Sanctuaries</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/NOAA_NMS.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/NOAA_NMS.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125">National Park Service</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/NPS.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/NPS.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125">National Wildlife Refuge System</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/USFWS_WildlifeRefuges.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/USFWS_WildlifeRefuges.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Federal Protected Areas</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/FederalProtectedAreas/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">National Estuarine Research System</td><td><a href="javascript:getDataDownloadLink('http://cdmo.baruch.sc.edu/get/gis.cfm')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125">National Forests</td><td><a href="javascript:getDataDownloadLink('http://fsgeodata.fs.fed.us')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125">National Marine Sanctuaries</td><td><a href="javascript:getDataDownloadLink('http://sanctuaries.noaa.gov/library/imast_gis.html')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125">National Park Service</td><td><a href="javascript:getDataDownloadLink('http://lagic.lsu.edu/data/losco/national_parks_boundaries_bts_2006_faq.html')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125">National Wildlife Refuge System</td><td><a href="javascript:getDataDownloadLink('http://www.fws.gov/gis/data/CadastralDB/index.htm')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul> 
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

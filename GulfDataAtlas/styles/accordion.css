@@ -1,0 +1,80 @@
+    ul.accordion {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border: 1px solid #000033;
+      width: 280px;
+    }
+    ul.accordion label + input[type='radio'] {
+      display: none;
+    }
+    ul.accordion li {
+      background-color: #FFFFFF; 
+      background-repeat: repeat-x;
+      border-bottom: 1px solid #DDDDDD;
+    }
+    ul.accordion label {
+      background-color: #000066;
+      font: bold 13px Verdana, Arial, sans-serif;
+      color: #ffffff;
+      display: block;
+      padding: 5px;
+      text-align: left;
+      border-bottom: 1px solid #000000;
+      border-top: 1px solid #000000;
+    }
+    ul.accordion label:hover {
+      cursor: pointer;
+    }
+    ul.accordion div.content {
+      font: normal 12px Arial, Verdana, sans-serif;
+      background: white;
+      overflow: auto;
+      padding: 0 10px;
+      height: 465px;
+      display: none;
+      text-align: left;
+    }
+    ul.accordion label + input[type='radio']:checked + div.content {
+      display: block;
+    }
+    ul.accordion1 {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border: 1px solid #000033;
+      width: 280px;
+    }
+    ul.accordion1 label + input[type='radio'] {
+      display: none;
+    }
+    ul.accordion1 li {
+      background-color: #FFFFFF; 
+      background-repeat: repeat-x;
+      border-bottom: 1px solid #DDDDDD;
+    }
+    ul.accordion1 label {
+      background-color: #000066;
+      font: bold 13px Verdana, Arial, sans-serif;
+      color: #ffffff;
+      display: block;
+      padding: 5px;
+      text-align: left;
+      border-bottom: 1px solid #000000;
+      border-top: 1px solid #000000;
+    }
+    ul.accordion1 label:hover {
+      cursor: pointer;
+    }
+    ul.accordion1 div.content {
+      font: normal 12px Arial, Verdana, sans-serif;
+      background: white;
+      overflow: auto;
+      padding: 0 10px;
+      height: 425px;
+      display: none;
+      text-align: left;
+    }
+    ul.accordion1 label + input[type='radio']:checked + div.content {
+      display: block;
+    }

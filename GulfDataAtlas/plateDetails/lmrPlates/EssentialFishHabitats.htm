@@ -1,0 +1,103 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Essential Fish Habitats<br>Council Managed Species</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        It has long been recognized that fish need habitat to thrive and reproduce. Habitats enable fish to reproduce, grow, and migrate according to their unique life histories. Without healthy habitats, fish can be subject to pressures such as being preyed upon and struggling to find sufficient food and shelter. Fish (which includes not only finfish such as red drum, snappers, and groupers, but also shellfish such as shrimp, crabs, and oysters) require the right habitat in the right place at the right time and in the right condition to provide those features that support breeding, feeding, spawning, and growth to maturity. For the fish and shellfish of major interest in the Gulf of Mexico, habitat types include estuaries, substrate such as mud or sand, and the water column itself. The habitat conditions fish require include the right salinity, temperature, oxygen, and in some cases plankton upon which they can feed.
+        <p/>
+        As fisheries managers developed tools to prevent or reduce harmful effects of fishing on important fish stocks, the realization began to grow that providing sufficient habitat of good quality is as important as implementing appropriate fishery management measures such as gear restrictions, area closures, catch limits, and seasonal limits. Eventually, the recognition of the need to protect and conserve important fishery habitats came to the attention of Congress. As a result, in 1996 Congress enacted amendments to the Magnuson-Stevens Fishery Conservation and Management Act that provide statutory protections for such habitats. These statutory safeguards are known as the essential fish habitat (EFH) provisions. With respect to those fishery species managed by a formal fishery management plan, Congress defined EFH as "those waters and substrate necessary to fish for spawning, breeding, feeding, or growth to maturity."
+        <p/>
+        In the Gulf of Mexico, EFH was designated through an amendment prepared in 2005 for the fishery management plans for species managed by the Gulf of Mexico Fishery Management Council (GMFMC). Although EFH designations appear to be very expansive, encompassing most of the coastal waters and Exclusive Economic Zone, it is important to realize the maps of all currently identified EFH in U.S. waters comprise the aggregate of separate EFH designations for many managed species, each with two to four distinct life stages as well as seasonal differences in habitat requirements. For example, EFH for some managed fish stocks is designated only for bottom habitats or surface waters. Careful and deliberate consideration by NOAA National Marine Fisheries Service (NMFS) and the GMFMC was taken in designating the spatial extent of EFH. The effort to identify and delineate EFH was a rigorous process that involved advice and input by numerous state and federal agencies and the public at large. Relative species density was mapped for a limited number of federally managed species and life stages in the NOAA Atlas  but the Atlas does not provide density information for most species and life stages in the fishery management units of the Gulf of Mexico.
+        <p/>
+        NMFS and the fishery management councils must also consider a second, more limited habitat designation for each species in addition to EFH. Habitat Areas of Particular Concern (HAPC) are described as subsets of EFH which are rare, particularly susceptible to human-induced degradation, especially ecologically important, or located in an environmentally stressed area. Examples of HAPCs include coral communities, areas where spawning aggregations are known to occur, and topographic features of special value. HAPCs are not afforded any additional regulatory protection under the Magnuson-Stevens Act; however, federal actions with potentially adverse impacts to HAPC will be more carefully scrutinized during the consultation process and will be subject to more stringent EFH conservation recommendations. An adverse effect on EFH is defined as any impact that reduces the quality and/or quantity of EFH to include direct or indirect physical, chemical, or biological alterations of waters and substrates. Federal action agencies which fund, permit, or carry out activities that may adversely affect EFH are required to consult with NMFS regarding the potential impacts of their actions on EFH and respond in writing to NMFS or council recommendations. Measures recommended by NMFS or a Council to protect EFH are advisory, not prescriptive. In addition, NMFS and Councils may comment on and make recommendations to any state agency on their activities that may adversely affect EFH. The Magnuson-Stevens Act does not require non-government organizations, local, or state agencies to consult with the NMFS regarding effects of their actions on EFH.
+        <p/>
+        Refer to NMFS Southeast Region's website for additional information regarding EFH in the Southeast U.S.:  <a href="javascript:getExternalLink('http://sero.nmfs.noaa.gov/hcd/hcd.htm')"><font color="blue"><u>http://sero.nmfs.noaa.gov/hcd/hcd.htm</u></font></a>.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Croom M, Dale D, Frick A. Essential Fish Habitats - Council Managed Species In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [1 screen]. Available from: https://gulfatlas.noaa.gov/.       
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Essential Fish Habitats<br>Council Managed Species</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/lmrLegends/EssentialFishHabitats.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Essential Fish Habitats<br>Council Managed Species</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Coral</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GOM_EFH_Coral.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GOM_EFH_Coral.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">EFH HAPCs</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/FMA_EFH_HAPCs.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/FMA_EFH_HAPCs.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Coastal Migratory Pelagics</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GOM_EFH_Coastal_Migratory_Pelagics.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GOM_EFH_Coastal_Migratory_Pelagics.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Red Drum</font></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GOM_EFH_Red_Drum.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GOM_EFH_Red_Drum.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Reef Fish</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GOM_EFH_Reef_Fish.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GOM_EFH_Reef_Fish.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Shrimp</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GOM_EFH_Shrimp.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GOM_EFH_Shrimp.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Spiny Lobster</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GOM_EFH_Spiny_Lobster.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GOM_EFH_Spiny_Lobster.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Essential Fish Habitats</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/EssentialFishHabitats/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">National Marine Fisheries Service-<br/>GIS Data</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownloadLink('http://www.habitat.noaa.gov/protection/efh/newInv/index.html')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">National Marine Fisheries Services-<br/>Habitat Conservation Data</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownloadLink('http://sero.nmfs.noaa.gov/maps_gis_data/habitat_conservation/efh_gom/index.html')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">National Marine Fisheries Service-<br/>EFH Mapper</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownloadLink('http://www.habitat.noaa.gov/protection/efh/efhmapper/index.html')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

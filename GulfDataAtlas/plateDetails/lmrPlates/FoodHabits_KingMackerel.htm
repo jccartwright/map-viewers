@@ -1,0 +1,95 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Food Habits</center></div>
+        <div class="smallTextBold"><center>King Mackerel<br/>(<i>Scomberomorus cavalla</i>)</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        The king mackerel (<i>Scomberomorus cavalla</i>) is primarily a pelagic carnivore, feeding mostly on a wide variety of fishes, and some invertebrates, such as shrimp and squid. Greater than fifty species of fishes have been identified from the stomachs of king mackerel collected in the Gulf of Mexico, as reported from all currently available literature surveyed for the Gulf of Mexico Species Interaction (GoMexSI) project.  The GoMexSI project is seeking to catalogue all published and contributed data on species interactions in the Gulf of Mexico, and is currently focused on the predator/prey interactions of the fishes. At present, diet data from 121 unique references (or 190 including multiple publications from the same data) have been extracted. From these references 80,380 lines of data, representing a total of 2,024 unique interactors, have been accumulated. All of these data can be accessed at the GoMexSI website (<a href="javascript:getExternalLink('http://gomexsi.tamucc.edu')"><font color="blue"><u>gomexsi.tamucc.edu</u></font></a>). Other taxa (e.g. marine mammals, sea and shore birds, sea turtles, etc.) and other interaction types (e.g. parasitism, mutualism, etc.) will soon be included.
+        <p/>
+        Understanding the nature of species interactions in an ecosystem is important for a variety of reasons. Firstly, the network of interactions defines the biostructure of the ecosystem. The predator/prey interactions go a long way toward defining the pathway of energy, nutrient, and in some cases, contaminant flow through the ecosystem. Secondly, by knowing the network structure of the interactions, it is possible to use this information to model the effects of perturbations (both natural and anthropogenic) on the ecosystem. And, lastly, knowledge of the species interactions enables a better understanding of the structure, function, and evolution of the ecosystem.
+        <p/>
+        In this project, six spatially oriented sink food webs for the king mackerel, based on the spatial availability of diet data, were identified. This map shows king mackerel diet composition, in percent volume of each identifiable prey family, for each food web. Unidentifiable fishes were grouped under class Actinopterigii. These data can also be viewed in the <a href="javascript:openGraphicLandscape('/website/DataAtlas/products/lmrPlates/FoodHabits/SCavalla_Prey_pctvol_chart.pdf')"><font color="blue"><u>accompanying chart</u></font></a> <a href="javascript:getExternalLink('http://get.adobe.com/reader')"><img src="images/icon_pdf.gif" height="15" width="15"></a>. Among the six spatial food webs designated for the king mackerel diet data, the dominant, identifiable food items included: the halfbeak, <i>Hemiramphus brasiliensis</i> and the flying fish family, Exocetidae, near the Florida Keys (food web 1); the emerald parrotfish, <i>Nicolsina usta usta</i>, round scad, <i>Decapterus puncatatus</i>, the mackerel family, Scombridae, and the mojarra genus, <i>Eucinostomus</i> spp. along the central west coast of Florida (food web 2); round scad, <i>Decapterus puncatatuson</i> the Mississippi-Alabama coast (food web 3); sand seatrout, <i>Cynoscion arenarius</i>, Atlantic croaker, <i>Micropogonias undulatus</i>, <i>Cynoscion</i> sp., and Gulf menhaden, <i>Brevoortia patronus</i> off the coast of western Louisiana (food web 4); ribbon fish, <i>Trichiurus lepturus</i>, off the coast of Texas (food web 5);  and striped anchovy, <i>Anchoa hepsetus</i> off the coast of Veracruz (food web 6). 
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Simons J, Vega-Cendejas M, Yuan M, Carollo C, Schoonard C, Reed D, Poelen J. Food Habits of King Mackerel In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2015. [1 screen]. Available from: https://gulfatlas.noaa.gov/.       
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Food Habits</center></div>
+        <div class="smallTextBold"><center>King Mackerel<br/>(<i>Scomberomorus cavalla</i>)</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/lmrLegends/FoodHabits_KingMackerel.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Food Habits</center></div>
+        <div class="smallTextBold"><center>King Mackerel<br/>(<i>Scomberomorus cavalla</i>)</center></div>
+        <center><hr width="75%" /></center>
+         <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Food Habits - King Mackerel</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/SCavallaDiet_FoodWebs.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/SCavallaDiet_FoodWebs.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Food Habits - King Mackerel</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/FoodHabits/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Food Habits - King Mackerel</td><td><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/KingMackerelFood.zip')" title="Click to download ESRI shapefiles (260 KB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul> 
+        <br/>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

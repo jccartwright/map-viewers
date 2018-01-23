@@ -1,0 +1,110 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal and Marine Ecological Classification Standard (CMECS) Application for<br>Bottom-to-Surface Temperature Change</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        These maps present 5-year seasonal means, as derived from reanalysis of the Naval Research Laboratory, Stennis Space Center (NRL/SSC) Intra-Americas Sea Ocean Nowcast/Forecast System (IASNFS), of bottom-to-surface temperature differences in the northern Gulf of Mexico for <a href="javascript:createSubPlate('CMECS - Water Column Stability - Fall')"><font color="red"><u>fall</u></font></a>, <a href="javascript:createSubPlate('CMECS - Water Column Stability - Winter')"><font color="red"><u>winter</u></font></a>, <a href="javascript:createSubPlate('CMECS - Water Column Stability - Spring')"><font color="red"><u>spring</u></font></a>, and <a href="javascript:createSubPlate('CMECS - Water Column Stability - Summer')"><font color="red"><u>summer</u></font></a><sup>1</sup>. The NRL IASNFS is a 3-dimensional circulation model based on the Navy Coastal Ocean Model (NCOM) (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#WaterCol')"><font color="blue"><u>Ko et al., 2003</u></font></a>). The model has a 1/24 degree resolution (about ~5.8 km at the northern Gulf of Mexico), and 40 vertical layers. IASNFS covers the Gulf of Mexico and Caribbean Sea and uses Navy's Global NCOM for the open-boundary conditions. IASNFS assimilates satellite altimeter data from GFO, Jason-1, ERS-1/2, EnviSat, and TOPEX, and sea surface temperature from NOAA AVHRR and MODIS (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#WaterCol')"><font color="blue"><u>Ko et al., 2008</u></font></a>). The surface forcing includes wind, heat fluxes, and sea-level air-pressure derived from the Navy operational global weather forecast model, NOGAPS. Vertical temperature differences for the water column stability classification were calculated from modeled temperature at the surface layer and at the bottom layer or to 100-m depth and interpolated onto a 2-minute grid for northern Gulf Coast.
+        <p/>
+        The maps were produced as part of a NASA-funded project to evaluate the classifiers and modifiers identified in the <a href="javascript:getExternalLink('https://iocm.noaa.gov/cmecs/index.html')"><font color="blue"><u>Coastal and Marine Ecological Classification Standard (CMECS) Water Column Component</u></font></a>. The CMECS is a catalog of terms that provides a means for classifying ecological units using a simple standard format and common terminology. CMECS offers a way to organize and interpret data about the marine environment, and it provides a common platform for interrelating data. It builds upon approaches from published national, regional, and local habitat classification procedures, and it offers an umbrella under which a national coastal and marine ecological classification can grow and evolve.
+        <p/>
+        The project was modeled after an exercise undertaken in the United Kingdom to characterize pelagic habitats in which sea surface temperature and salinity, as well as frontal probability, were used to delineate unique pelagic zones (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#WaterCol')"><font color="blue"><u>Connor et al., 2006</u></font></a>). The project assessed satellite- and model-derived products for each month over a 5-year period (from 2005 to 2009) in three regions of the northern Gulf of Mexico as well as three bays, Galveston, Mobile, and Tampa.
+        <p/>
+<!--
+        To validate the model-derived data, comparative maps were developed in which in situ data from the Southeast Area Monitoring and Assessment Program (SEAMAP) program were overlaid on the modeled data and displayed in ArcMap 10<sup>TM</sup>. SEAMAP is a state/federal/university program for the collection, management, and dissemination of fishery-independent data and information in the southeastern United States. Both the modeled data and the SEAMAP data were then reclassified into CMECS categories for water column stability. Visually, the model-derived product matched well with the SEAMAP in situ data. Statistical analyses of the raw data (i.e., data before reclassification into CMECS categories) indicate that the modeled data are consistently different from the in situ data. Reclassifying the data into CMECS categories improved the percent accuracy of these products when compared to in situ data.
+        <p/>
+ -->
+        The modeled bottom-to-surface temperature differences were used to assign classification for water column stability. Water column stability can be characterized as stratified, mixed, and frontal; frontal is an indication of the likelihood of a front being present within a particular area. <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#WaterCol')"><font color="blue"><u>Connor et al. (2006)</u></font></a> define fronts as "an important zone of rapid change in hydrographic and biological character ..." . For this study, water column stability was determined strictly by the modeled bottom-to-surface temperature differences (see table below); however, in the Federal Geographic Data Committee (FGDC) endorsed CMECS, water column stability is defined by density differentials from bottom to surface and determined by delta Sigma-t relative to surface density.
+        <p/>
+        <center>
+        <table colspan="2" cellpadding="1" cellspacing="1" class="smallText3" border="1">
+        <tr><td align="center"><b>Stability Regime</b></td><td align="center"><b>delta T (&deg;C)</b></td></tr>
+        <tr><td>Mixed</td><td>&lt;0.5</td></tr>
+        <tr><td>Frontal</td><td>0.5 to &lt;2.0</td></tr>
+        <tr><td>Stratified</td><td>&gt;2.0</td></tr>
+        </table>
+        </center>
+        <p/>
+        <sup>1</sup><font size="1">For the purposes of this study, fall = October - December; winter = January - March; spring = April - June; and summer = July - September</font>
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Allee R, Finkbeiner R, Gould R, Ko D-S, Lary D, Kurtz J, Madden C, Goodin K. Coastal and Marine Ecological Classification Standard (CMECS) Application for Bottom-to-Surface Temperature Change in the Northern Gulf of Mexico In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [4 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal and Marine Ecological Classification Standard (CMECS) Application for<br>Bottom-to-Surface Temperature Change</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/physicalLegends/CMECS_WaterColumnStability.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal and Marine Ecological Classification Standard (CMECS) Application for<br>Bottom-to-Surface Temperature Change</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Water Column<br/>Temperature Change (CMECS)</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/CMECS_BottomToSurfaceTemp_metadata.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/CMECS_BottomToSurfaceTemp_metadata.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Water Column Temperature Change (CMECS) - Seasonal Means</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/CMECS_WaterColumnStabilityModifier/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Water Column<br/>Temperature Change - Seasonal means of APS-processed MODIS products (tiffs)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/physical/documents/CMECS_WaterColumn.zip')" title="Click to download Tiff Images (~120 KB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Water Column<br/>Temperature Change - APS-processed MODIS data (HDF4)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownloadLink('https://www.nodc.noaa.gov/cgi-bin/OAS/prd/accession/details/94007')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

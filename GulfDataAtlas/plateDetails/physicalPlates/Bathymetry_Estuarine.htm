@@ -1,0 +1,114 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Estuarine Bathymetry</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        An estuary is the thin zone along a coastline (such as bays, lagoons, sounds or sloughs) where freshwater systems and rivers meet and mix with a salty ocean and become brackish water. Estuaries are known by other names, such as interior bays, lagoons, and sounds. (<a href="javascript:getExternalLink('http://estuaries.noaa.gov')"><font color="blue"><u>estuaries.noaa.gov</u></font></a>) 
+        <p/>
+        Because estuaries are governed by tides in the same way as the ocean, estuarine bathymetry supplies the integral component of models that are necessary to understand or predict movement of oil and hazardous materials, temperature and salinity distributions, animal migration, and modeling of storm-surge and tsunami effects. 
+        <p/>
+        The <a href="javascript:zoomToExtent('Whole Gulf')"><font color="red"><u>estuarine bathymetry</u></font></a> presented on the map represents an interpolated data set from the most current depth-sounding information available at the time of publication (1998). Twenty of the estuaries in the Gulf of Mexico are among the nation's most significant estuaries. 
+        <p/>
+        In the table below, click on an estuary to access the bathymetric values. The legend will update accordingly.
+        <p/>
+        <center><b>Western Gulf of Mexico Estuaries</b></center>
+        <p/>
+        <table colspan="2" cellpadding="1" cellspacing="1" class="smallText3" border="1">
+        <tr><td width="120"><a href="javascript:zoomToExtent('Aransas Bay')"><font color="red">Aransas Bay, TX</font></a></td><td width="120"><a href="javascript:zoomToExtent('Galveston Bay')"><font color="red">Galveston Bay, TX</font></a></td></tr>
+        <tr><td width="120"><a href="javascript:zoomToExtent('Atchafalaya Bay')"><font color="red">Atchafalaya Bay, LA</font></a></td><td width="120"><a href="javascript:zoomToExtent('Matagorda Bay')"><font color="red">Matagorda Bay, TX</font></a></td></tr>
+        <tr><td width="120"><a href="javascript:zoomToExtent('Baffin Bay')"><font color="red">Baffin Bay, TX</font></a></td><td width="120"><a href="javascript:zoomToExtent('Mississippi Sound')"><font color="red">Mississippi Sound</font></a></td></tr>
+        <tr><td width="120"><a href="javascript:zoomToExtent('Barataria Bay')"><font color="red">Barataria Bay, LA</font></a></td><td width="120"><a href="javascript:zoomToExtent('Mobile Bay')"><font color="red">Mobile Bay, AL</font></a></td></tr>
+        <tr><td width="120"><a href="javascript:zoomToExtent('Calcasieu Lake')"><font color="red">Calcasieu Lake, LA</font></a></td><td width="120"><a href="javascript:zoomToExtent('San Antonio Bay')"><font color="red">San Antonio Bay, TX</font></a></td></tr>
+        <tr><td width="120"><a href="javascript:zoomToExtent('Corpus Christi Bay')"><font color="red">Corpus Christi Bay, TX</font></a></td><td width="120"><a href="javascript:zoomToExtent('Terrebonne Timbalier Bays')"><font color="red">Terrebonne-Timbalier Bays, LA</font></a></td></tr>
+        </table>
+        <p/>
+        <center><b>Eastern Gulf of Mexico Estuaries</b></center>
+        <p/>
+        <table colspan="2" cellpadding="1" cellspacing="1" class="smallText3" border="1">
+        <tr><td width="120"><a href="javascript:zoomToExtent('Apalachicola Bay')"><font color="red">Apalachicola Bay, FL</font></a></td><td width="120"><a href="javascript:zoomToExtent('Perdido Bay')"><font color="red">Perdido Bay, FL</font></a></td></tr>
+        <tr><td width="120"><a href="javascript:zoomToExtent('Charlotte Harbor')"><font color="red">Charlotte Harbor, FL</font></a></td><td width="120"><a href="javascript:zoomToExtent('St. Andrew Bay')"><font color="red">St. Andrew Bay, FL</font></a></td></tr>
+        <tr><td width="120"><a href="javascript:zoomToExtent('Choctawhatchee Bay')"><font color="red">Choctawhatchee Bay, FL</font></a></td><td width="120"><a href="javascript:zoomToExtent('Sarasota Bay')"><font color="red">Sarasota Bay, FL</font></a></td></tr>
+        <tr><td width="120"><a href="javascript:zoomToExtent('Pensacola Bay')"><font color="red">Pensacola Bay, FL</font></a></td><td width="120"><a href="javascript:zoomToExtent('Tampa Bay')"><font color="red">Tampa Bay, FL</font></a></td></tr>
+        </table>
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Hayes J, Wilson R. Estuarine Bathymetry In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [21 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Estuarine Bathymetry</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/physicalLegends/estuarineBathymetry.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Estuarine Bathymetry</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Estuarine Bathymetry</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/30m_bathy.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/30m_bathy.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>      
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Estuarine Bathymetry</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/EstuarineBathymetry_30m/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to View WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Links:</b>
+            <ul id="noindent">
+              <li>
+              <table class="mediumTextNormal">
+              <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Eastern Gulf</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownloadLink('http://estuarinebathymetry.noaa.gov/eastgulf.html')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+              <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Western Gulf</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownloadLink('http://estuarinebathymetry.noaa.gov/westgulf.html')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+              </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

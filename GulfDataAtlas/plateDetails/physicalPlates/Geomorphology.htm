@@ -1,0 +1,95 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Gulf of Mexico Seafloor</center></div>
+        <div class="largeTextBold"><center>Geomorphology</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Seafloor geomorphology describes the bathymetric features and physical habitats of the ocean environment. The <a href="javascript:getExternalLink('http://www.bluehabitats.org/?page_id=9')"><font color="blue"><u>Blue Habitats</u></font></a> global digital geomorphic seafloor features map (GSFM) (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Geomorphology')"><font color="blue"><u>Harris et al., 2014</u></font></a>) identifies these features by applying the <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Geomorphology')"><font color="blue"><u>International Hydrographic Organization (IHO) Standardization of Undersea Feature Names (version 2008)</u></font></a> definitions and nomenclature to a GIS analysis of bathymetry datasets. A modified 30 arc-second SRTM30_PLUS global bathymetry grid (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Geomorphology')"><font color="blue"><u>Becker et al, 2009</u></font></a>) is the primary data source for the global map. Additional bathymetry data were used in the oceans surrounding the Arctic, and ancillary datasets such as sediment thickness, ocean crust age and existing geomorphology maps were used to verify results of the GIS analysis (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Geomorphology')"><font color="blue"><u>Harris et al., 2014</u></font></a>). New summary statistics, such as the number and area of features, and global and regional occurrence were also generated from this dataset (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Geomorphology')"><font color="blue"><u>Harris et al., 2014</u></font></a>).
+        <p/>
+For this subset of the global GSFM, only the features that fall within the bounding box covering the Gulf of Mexico and the north-western Caribbean Sea are included. These features are organized in a hierarchical classification of GIS layers of increasing detail and specificity. The four <a href="javascript:createSubPlate('Geomorphology - Base')"><font color="red"><u>base layer</u></font></a> features, shelf, slope, abyss and hadal, broadly define the oceanic environment from the coast to its deepest depths and can be overlain by the classification and geomorphic features layers (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Geomorphology')"><font color="blue"><u>Harris et al., 2014</u></font></a>). The <a href="javascript:createSubPlate('Geomorphology - Class')"><font color="red"><u>shelf and abyssal classification</u></font></a> layers refine the base layers into low, medium, and high relief shelves, and abyssal plains, hills and mountains as determined by seafloor roughness; the individual <a href="javascript:createSubPlate('Geomorphology - Features')"><font color="red"><u>geomorphic feature</u></font></a> layers in the Gulf of Mexico are shelf valleys, escarpments, basins, terraces, canyons, rises, seamounts, fans, ridges, and plateaus. Bridges, sills, rift valleys, spreading ridges, and trenches are also found in the Caribbean Sea (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Geomorphology')"><font color="blue"><u>Harris et al., 2014</u></font></a>).
+	</p>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Blue Habitats. Gulf of Mexico Seafloor Geomorphology In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2016. [3 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Gulf of Mexico Seafloor</center></div>
+        <div class="largeTextBold"><center>Geomorphology</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/physicalLegends/GeomorphBase.png"></div></center>
+      </div>
+    </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Gulf of Mexico Seafloor</center></div>
+        <div class="largeTextBold"><center>Geomorphology</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Seafloor Geomorphology</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/gmx_bluehabitats_19115-2.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Seafloor Geomorphology</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/BlueHabitats_Geomorphology/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Blue Habitats</td><td><a href="javascript:getDataDownloadLink('http://www.bluehabitats.org/?page_id=9')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>
+</html>

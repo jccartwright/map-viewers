@@ -1,0 +1,104 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Deep-Sea Corals</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+	Deep-sea corals occur in many shapes and forms and are sessile invertebrates in the Phylum Cnidaria that occur deeper than 50 m in the marine environment. Structure-forming corals have an upright orientation and a rigid, complex branching structure of calcium carbonate, or horn-like protein. The group includes black corals (Antipatharia), stony corals (Scleractinia such as <i>Lophelia pertusa</i> and <i>Madrepora oculata</i>), and octocorals (including sea fans and sea pens), among others.
+        <p/>
+	Corals are well adapted to life in the deep sea, where they grow in cold darkness and feed on particles that rain down from above. The coral colonies grow slowly because food is scarce. Colonies may live to be hundreds or thousands of years old, and they are vulnerable to bottom-contact fishing gear. Coral diversity is actually highest in deep water, where 66% of 5080 species are known to occur (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Coral')"><font color="blue"><u>Cairns, 2007</u></font></a>). Deep-sea corals form important habitat for fish, shrimp, crabs, and sea stars, which are often considered a proxy for biodiversity in the deep sea. 
+        <p/>
+	Data contained in the <a href="javascript:getExternalLink('https://deepseacoraldata.noaa.gov/')"><font color="blue"><u>NOAA National Database of Deep-Sea Corals and Sponges</u></font></a> (as of August 2016) was used in this map. The <a href="javascript:getExternalLink('https://deepseacoraldata.noaa.gov/internal-documents/program-guidance/science-team-guidance-for-data-management/database_intro')"><font color="blue"><u>database</u></font></a> aggregates historical records from samples archived in state and federal museums, research institutions, and reported in the scientific literature. These records are augmented by observations collected by submersible vehicles during deep-water benthic surveys conducted by NOAA and other research institutions. 
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Hourigan, T. F., P. J. Etnoyer, R. P. McGuinn, C. Whitmire, D.S. Dorfman, M. Dornback, S. Cross, D. Sallis. Deep-Sea Corals In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2016. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Deep-Sea Corals</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="/website/DataAtlas/legends/bioticLegends/DeepSeaCorals2016.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Deep-Sea Corals</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Deep-Sea Corals</td><td><a href="javascript:getExternalLink('https://deepseacoraldata.noaa.gov/metadata-records/iso-dscrtp-national-db')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Deep-Sea Corals</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NCCOS_DeepSeaCorals_2016/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Deep-Sea Corals Map</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getExternalLink('https://deepseacoraldata.noaa.gov/website/AGSViewers/DeepSeaCorals/mapSites.htm')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-bottom-style: solid; border-bottom-width: 1px;">Deep-Sea Corals ERDDAP Access</td><td style="border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getExternalLink('https://ecowatch.ncddc.noaa.gov/erddap/tabledap/deep_sea_corals.html?CatalogNumber,DataProvider,ScientificName,VernacularNameCategory,TaxonRank,ObservationDate,latitude,longitude,DepthInMeters,DepthMethod,Locality,LocationAccuracy,Repository,IdentificationQualifier,SamplingEquipment,RecordType,SampleID')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+           </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Coral Reefs and Hard Bottom Areas</td><td><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/bioticPlates/CoralReefsHardBottomAreas-1_03.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Bottom Sediments</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><b>General Regional Description</b></center>
+        <p/>
+        A strong division in the Gulf of Mexico for continental shelf areas exists between sandy environments in the east (Mississippi, Alabama, Florida) and muddy environments in the west (Louisiana, Texas). This division reflects the input and overall westward movement on the shelf of muds from the Mississippi River delta. However, even in the muddy regions, sand shoals (including barrier islands) form where wave/current interactions sort and build up mobile sands. Shell accumulations of gravel texture are often associated with the shoals. Close inshore in turbid and brackish waters, oyster beds and reef buildups are widespread.
+        <p/>
+        On the eastern, very sandy Gulf shelf, sorted sands and gravels with important biogenic fractions dominate over wide areas and show irregular geographic patchiness. The variability is partly due to sand waves (seabed dunes). In the region of the Florida Keys, many existing and drowned coral-algal reef and bank structures are present. Some areas sheltered by the Keys accumulate muddy sediments, such as in Florida Bay.
+        <p/>
+        The deeper parts of the Gulf seabed (>200 m) are comprised mostly of mud sediments, but sands are occasionally detected in the sparse samplings of these depths. These sands are thought to be from gravity slumps and flows of materials from the shelf edges caused by sea-level changes of the past, including the Mississippi River Delta. Suspendates and bottom flows of mud from the active delta appear to spread widely before finally settling over the slopes and basin floor.
+        <p/>
+        Some upper-slope regions have notably extensive areas of hard substrate. Many interconnected processes have formed these features: drowning of ancient coral reefs and deltas, growth of deep cold coral (<i>Lophelia</i>) banks, and formation of carbonate crusts from the alteration of gas hydrates.
+        <p/>
+        <center><b>Dominant Bottom Types and Habitats</b></center>        
+        <p/>
+        This map provides a summary of <a href="javascript:createSubPlate('Bottom Sediments - Dominant')"><font color="red"><u>bottom types and bottom habitats</u></font></a> in the Gulf of Mexico. The sediment characteristics are described as follows: if the most abundant of the seabed-sized fractions of rock, gravel, sand, or mud is >66%, then it is said to be dominant. If the most abundant of these is >33%, then it is subdominant. Refer to the <a href="javascript:getExternalLink('http://upload.wikimedia.org/wikipedia/commons/e/e2/Wentworth-Grain-Size-Chart.pdf')"><font color="blue"><u>Wentworth scale of particle sizes</u></font></a> <a href="javascript:getExternalLink('http://get.adobe.com/reader')"><img src="images/icon_pdf.gif" height="15" width="15"></a>. Percentages are by weight.
+        <p/>
+        If one of the four&#8212;rock, gravel, sand, or mud&#8212;is the more dominant in an area, then strong control is exerted over the types of organisms (benthos) that live on the ocean floor. Rock and gravel provide microhabitats for organisms and favor attached epibenthos (e.g., suspension feeders). However, rock is more stable. Sand is the most mobile of substrates and encourages vagrant and active burrowing forms. Mud is usually stable on the scale of burrows because of its cohesiveness and favors infauna. It also tends to have the highest organic carbon contents.
+        <p/>
+        <a href="javascript:createSubPlate('Bottom Sediments - Mud')"><font color="red"><u>Seabed Mud Content</u></font></a>: Mud is the sediment-size fraction finer than 63 &#181;m, with abundance expressed as percentage by weight. Computing separate maps for silt (coarse mud) and clay (mud finer than 2 &#181;m) contents is not possible because their routine measurement is unreliable. Nevertheless, clay content is a strong determinant of how cohesive (sticky) the bottom is.
+        <p/>
+        <a href="javascript:createSubPlate('Bottom Sediments - Sand')"><font color="red"><u>Seabed Sand Content</u></font></a>: Sand is the sediment-size fraction coarser than 63 &#181;m but finer than 2 mm. The sand percentages are by weight.
+        <p/>
+        <a href="javascript:createSubPlate('Bottom Sediments - Gravel')"><font color="red"><u>Seabed Gravel Content</u></font></a>: Gravel is the sediment-size fraction coarser than 2 mm. At the coarser end gravel includes cobbles and boulders. In this database, objects larger than 256 mm are regarded as rock, beyond gravel. The gravel percentages are by weight.
+        <p/>
+        <a href="javascript:createSubPlate('Bottom Sediments - Rock')"><font color="red"><u>Seabed Rock Content</u></font></a>: Rock occurs as crusts and pavements, pinnacles, and bedrock outcrops. Areas of hard biological framework, such as coral-algal reef fronts, can also be classified as rock. Rock is difficult to map by direct sampling or even visual observations, so results from geophysical techniques, such as sidescan sonar, sonar acoustic classification, and seismic wave analysis, were included in the mapping. Rock percent is in terms of estimated areal exposure, thus allowing for sediment veneers that may be present.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Jenkins C. Dominant Bottom Types and Habitats In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [5 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Bottom Sediments<br>Dominant Bottom Types and Habitats</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/physicalLegends/usSEABED_DominantSediments.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Bottom Sediments<br>Dominant Bottom Types and Habitats</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Bottom Sediments</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/usSEABED_GOM_sediments.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/usSEABED_GOM_sediments.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Bottom Sediments - Dominant Bottom Types</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/usSEABED_DominantSediments/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;  border-bottom-style: solid; border-bottom-width: 1px;"">Bottom Sediments - Mud Sand Gravel Rock Percentages</td><td style="border-top-style: solid; border-top-width: 1px;  border-bottom-style: solid; border-bottom-width: 1px;""><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/usSEABED_MudSandGravelRock/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Bottom Sediments</td><td><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/physical/documents/usSEABED_GOM_Sediments.zip')" title="Click to download ESRI shapefile (13.6 MB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul> 
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Bottom Sediments</td><td><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/physicalPlates/BottomSediments-1_02.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>       
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

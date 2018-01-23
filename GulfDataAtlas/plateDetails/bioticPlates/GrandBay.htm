@@ -1,0 +1,106 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Grand Bay National Estuarine Research Reserve</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        The core area of the Grand Bay National Estuarine Research Reserve (NERR) consists of approximately 12, 800 acres of estuarine tidal marsh, tidal creeks or bayous; shallow, open-water habitats; oyster reefs; seagrass beds; maritime forests; salt flats; sandy beaches; and shell middens. These protected core lands are extremely important to how the estuarine ecosystem functions and include ecological units of a natural estuarine system. This natural system preserves a full range of significant physical, chemical, and biological processes that contribute to the diversity of fauna, flora, and natural processes that occur within the estuary.
+        <p/>
+        <center><b><u>Long Term Monitoring at the Grand Bay NERR</u></b></center>
+        <p/>
+        <a href="javascript:openGraphicPortrait('/website/DataAtlas/products/bioticPlates/GrandBayNERR/GBNERR.pdf')"><font color="blue"><u>Grand Bay NERR monitoring programs</u></font></a> <img src="images/icon_pdf.gif"> offer important sources of data, which are used to develop management strategies for the conservation of critical coastal resources; provide baseline data and supplement research/monitoring efforts outside the local reserve; and support data synthesis efforts. The NERR's System Wide Monitoring Program (SWMP) provides the framework for collecting quantitative data to assess long-term change in estuarine conditions. A key element of SWMP is the system-wide use of a set of consistent standard operating procedures that ensure the long-term collection of data that is comparable both temporally and spatially. Main components of Grand Bay NERR monitoring include (1) abiotic indicators of water quality and weather collected at four stations Reserve-wide; (2) biological monitoring of seagrass habitat, marshbirds, and nearshore fish species; (3) watershed, habitat, and land-use mapping and analysis; and (4) sediment accretion/subsidence collected from vertically controlled surface elevation tables. 
+        <p/>
+        The Coastal Transition Transect was created to track abiotic and biotic change along the entire transition from water's edge to terrestrial habitat to make accurate predictions about the fate of coastal transitions with sea level rise. Vegetation monitoring plots as well as surface elevation tables (SETs), are located along this transect to monitor changes in vegetation composition and sediment accretion, as well as subsidence over time. In addition, shoreline erosion is regularly monitored at six sites across the Reserve using real-time kinematic geographic positioning system (RTK GPS) and total station equipment to ascertain shoreline loss both inter- and intra-annually.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Strange T. Grand Bay National Estuarine Research Reserve In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Grand Bay National Estuarine Research Reserve</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/bioticLegends/GBNERR_Outline.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Grand Bay National Estuarine Research Reserve</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">System Wide Monitoring Program</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GNDNERR_SWMP.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GNDNERR_SWMP.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>      
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Submerged Aquatic Vegetation</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GNDNERR_SAV.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GNDNERR_SAV.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>      
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Coastal Transition Transect</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GNDNERR_CoastalTransitionTransect.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GNDNERR_CoastalTransitionTransect.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>      
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Surface Elevation Tables</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GNDNERR_SET.html')"><font color="blue" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GNDNERR_SET.html')"><font color="blue" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>      
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Erosion Monitoring Sites</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GNDNERR_ErosionMonitoringSites.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GNDNERR_ErosionMonitoringSites.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>      
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Fish Monitoring Sites</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GNDNERR_FishMonitoringSites.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GNDNERR_FishMonitoringSites.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Marshbird Monitoring Sites</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GNDNERR_MarshbirdMonitoringSites.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GNDNERR_MarshbirdMonitoringSites.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">NERR Monitoring Sites</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/GrandBayNERR_Monitoring/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">NOAA's National Estuarine Research Reserve</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownloadLink('http://cdmo.baruch.sc.edu/get/export.cfm')" title="Click to access Centralized Data Management Office"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">System Wide Monitoring Program</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/GNDNERR_SWMP.zip')" title="Click to download ESRI shapefile (4.9 KB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Submerged Aquatic Vegetation</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/GNDNERR_SAV.zip')" title="Click to download ESRI shapefile (21 KB"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Coastal Transition Transect</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/GNDNERR_CoastalTransitionTransect.zip')" title="Click to download ESRI shapefile (4.9 KB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Surface Elevation Tables</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/GNDNERR_SET.zip')"><font color="blue" title="Click to download ESRI shapefile (6.3 KB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Erosion Monitoring Sites</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/GNDNERR_ErosionMonitoringSites.zip')" title="Click to download ESRI shapefile (4.6 KB)"><img src="images/download.png" height="15" width="70"></td></tr>      
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Fish Monitoring Sites</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/GNDNERR_FishMonitoringSites.zip')" title="Click to download ESRI shapefile (5.2 KB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Marshbird Monitoring Sites</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/GNDNERR_MarshbirdMonitoringSites.zip')" title="Click to download ESRI shapefile (6.7 KB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Oil and Gas Pipelines</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        If placed end to end, the oil and gas pipelines in the Gulf of Mexico would wrap around the Earth's equator. The Gulf of Mexico region's oil and gas industry, one of the most developed in the world, supplies the region with jobs and the Nation with a valuable energy source. Nearly all current offshore leasing (a commercial arrangement where the lessee will select/purchase an area offshore from the state or federal government to extract natural resources) and development activity occurs in the central and western Gulf of Mexico. There are over 26,000 miles of oil and gas pipeline on the Gulf of Mexico seafloor. (<a href="javascript:getExternalLink('http://stateofthecoast.noaa.gov/energy/gulfenergy.html')"><font color="blue"><u>NOAA's State of the Coast - Energy</u></font></a>)
+        <p/>
+        Some oil and gas pipelines contain high concentrations of hydrogen sulfide (H<sub>2</sub>S), and these are identified on the map. Hydrogen sulfide gas is a highly toxic contaminant and a safety hazard, and as a result these pipelines are monitored, equipped with alarm systems, and subject to various other safety measures and protocols.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Oil and Gas Pipelines In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [1 screen]. Available from: https://gulfatlas.noaa.gov/.        
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <center><img src="legends/socioeconomicLegends/BOEMRE_OilAndGasPipelines.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Oil and Gas Pipelines</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Oil and Gas Pipelines</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Pipelines.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Pipelines.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Oil and Gas Pipelines</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/BOEM_OilAndGasPipelines/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Bureau of Ocean Energy Management</td><td><a href="javascript:getDataDownloadLink('https://www.data.boem.gov/Main/Mapping.aspx')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>  
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Crude Oil Pipelines</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/economicPlates/CrudeOilPipelines-4_11.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Natural Gas Pipelines</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/economicPlates/NaturalGasPipelines-4_13.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>  
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Bathymetry</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Bathymetry is the measurement of the depth of the ocean floor. It defines the morphology of the bottom of the ocean. In the Gulf of Mexico, the primary features are the shallow continental shelf around the Gulf margins, as well as the continental slopes, rises, and fans that connect to the deep abyssal plain.
+        <p/>
+        The continental shelf is the relatively flat, shallow expanse that extends from the coast to a water depth of approximately 120 m. The shelf generally corresponds with the part of the Gulf that was exposed during the last glacial maximum approximately 20,000 years ago (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Bathymetry')"><font color="blue"><u>Donoghue, 2011</u></font></a>). In the northern Gulf of Mexico, the shelf extends from 100 km to 200 km offshore. Its surface is topographically smooth, and such features as relict stream channels are evident.
+        <p/>
+        North of the Yucatan Peninsula, the continental shelf (the Campeche Bank) is the site of the buried Chicxulub impact crater, which is considered to have contributed to the extinction of the dinosaurs 65 million years ago. The Mexican shelf south of the Rio Grande is the narrowest in the Gulf (~40 km wide in some areas). The topography along both the West Florida shelf and the Campeche Bank is low relief, and is broken only by reefs and relict shoreline features.
+        <p/>
+        At the edge of the continental shelf, the bathymetry steepens to form the continental slope, which extends down to roughly 2000 m. In the northwestern Gulf of Mexico, salt structures deform the seabed of the Central Slope and are the site of significant oil exploration and extraction. In many areas, the foot of the continental slope is marked by steep escarpments, such as West Florida and Sigsbee.Thick, gently sloping sediment piles, referred to as continental rises, lie at their base. These rises deepen slowly toward the flat Sigsbee Abyssal Plain at about 3500 m.
+        <p/>
+        The Louisiana Delta is a massive lobe of sediment deposited over millions of years by the Mississippi River. Offshore, these sediments have built the Mississippi Fan, which covers some 160,000 km<sup>2</sup>. The fan contains many submarine channels and levees that funnel sediment to the deep abyssal plain.
+        <p/>
+        The bathymetry map shown <a href="javascript:addOverlay('contours')"><font color="red"><u>here</u></font></a> includes isobaths (contours of equal depth) located at intervals from 20 m down to 200 m and at 200-m intervals beyond. It also includes the names of the <a href="javascript:addOverlay('placeNames')"><font color="red"><u>primary submarine features</u></font></a> in the Gulf.
+        <p/>
+        Modern bathymetry maps and images are typically derived from digital elevation models (DEMs). The bathymetry image shown here was created from a 9-arcsecond DEM of the Gulf of Mexico. The image was built using the most recent bathymetric data available from several <a href="javascript:addOverlay('bathySources')"><font color="red"><u>sources</u></font></a>: NOAA; the global, 30-arcsecond Generalized Bathymetric Chart of the Ocean (GEBCO) model; high-resolution coastal DEMs of the region; and the Shuttle Radar Topography Mission (SRTM) data for land relief.
+        <p/>
+        DEMs are used for modeling and mapping such coastal processes as tsunamis, hurricane storm surges, sea-level rise, and contaminant dispersal (such as oil) by bathymetry-guided ocean circulation. They are also used for ecosystems management and habitat research, coastal and marine spatial planning, and hazard mitigation and community preparedness. They also create informative-and often beautiful-depictions of Earth below the sea surface.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Eakins B, Henderson J, Varner J. Bathymetry In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [4 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Bathymetry</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/physicalLegends/Bathymetry_0.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Bathymetry</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Bathymetry</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GOM_Basemap.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GOM_Basemap.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td><tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Bathymetry</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/Bathymetry_0/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">National Centers for Environmental Information</td><td><a href="javascript:getDataDownloadLink('https://www.ngdc.noaa.gov/mgg/bathymetry/relief.html')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Bathymetry</td><td><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/physicalPlates/Bathymetry-1_01.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

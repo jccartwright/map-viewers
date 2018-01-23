@@ -1,0 +1,113 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Oil and Gas Structures</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Since the first offshore drilling began in 1942, about 6,000 oil and gas structures have been installed in the Gulf of Mexico. These structures range in size from single well caissons in 10-ft water depths to large, complex facilities in water depths up to almost 10,000 ft. About 3,500 structures currently stand in the Gulf of Mexico; of these, over 3,200 remain active.
+        <p/>
+        Offshore oil and gas structures are commonly referred to as "rigs" or "platforms." These terms actually refer to the drilling rigs used to drill wells and the large structures that serve as production platforms at producing well sites. These large structures comprise only a small portion of the network of structures on the Gulf of Mexico's Outer Continental Shelf.
+        <p/>
+        The Department of the Interior's Bureau of Ocean Energy Management (BOEM) is the federal agency responsible for overseeing the safe and environmentally responsible development of traditional and renewable ocean energy and mineral resources on 1.7 billion acres of the U.S. Outer Continental Shelf.
+        <p/>
+        Plants and invertebrates attach to petroleum platforms only weeks after the platforms are placed in the marine environment. Within a year, the platform can be completely covered with plants and sessile (stationary) invertebrates. The attached plant life and stationary invertebrates attract mobile invertebrates and fish species, and thus form a highly complex food chain.
+        <p/>
+        Petroleum structures provide niches for countless animals. They serve as hunting grounds for swift, open-ocean pelagic fishes, such as mackerel, tuna, jacks, and sharks. At the same time, they provide many species with habitat and places to hide from predators. They also harbor numerous species of juvenile fish and adult life stages. Marine researchers have reported fish densities to be 20 to 50 times higher at oil and gas platforms than in nearby open water. Each platform seasonally serves as critical habitat for 10,000 to 20,000 fishes, many of which are of great recreational and commercial importance.
+        <p/>
+        Oil and gas structures in the Gulf of Mexico create a large network of standing structures, interconnected by hundreds of miles of pipelines. This network effect adds to the value of the structures as an artificial reef ecosystem. Many common species are present on the structures over wide areas, and their presence causes zones of distribution to form for those species across the Gulf. These species distributions are controlled by environmental conditions and factors, including distance from shore, temperature, salinity, turbidity, substrate, riverine influence (especially from the Mississippi River), and others. Some platforms support small populations of coral species that are common on natural hard bottoms. Platforms also support some invasive species, such as the yellow cup coral (<i>Tubastraea coccinea</i>), which has been a particularly successful colonist. This species has demonstrated that, while the network of oil and gas structures can be a valuable artificial reef ecosystem, it also provides stepping stones for invasive species to spread across the Gulf.
+        <p/>
+        Infrastructure no longer in use is commonly referred to as "idle iron." Many structures installed in the 1960s and 1970s became uneconomic to operate and were removed in the 1990s. When an offshore structure is decommissioned, the existing wells are plugged, and the structure is severed 15 ft below the mudline using explosives or various cutting methods. Numerous studies have been conducted on the effects of the process. In the decades following the year 2000, removals are expected to outnumber installations. In October 2010, BOEM issued guidance for new policies focused on removal of inactive structures. Predictions are that by the year 2023, the count of standing structures will be down by over 29 percent.
+        <p/>
+        With the enactment of the new policies, the number of offshore structures is expected to decline more rapidly-a cause for concern among fishermen who target these structures to harvest fish. Structures closest to shore are generally the oldest structures and likely to be removed the soonest. These sites are also the easiest to reach and thus most targeted by fishermen. Support is building for increased conversion of oil and gas structures to artificial reefs. Recognizing the benefits oil and gas platforms contribute to the enhancement of marine fisheries habitats, BOEM announced in 1983, and again in 1993, its support for the conversion of selected retired and obsolete platforms for permanent use as artificial reefs on the Outer Continental Shelf. BOEM's official policy on what is termed the Rigs-to-Reefs Program, rewritten in 1998, supports and encourages the reuse of obsolete offshore petroleum structures as artificial reefs in U.S. waters.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Sinclair J. Oil and Gas Structures In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [1 screen]. Available from: https://gulfatlas.noaa.gov/.        
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Oil and Gas Structures</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/socioeconomicLegends/BOEMRE_DrillingPlatforms.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Oil and Gas Structures</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Oil and Gas Structures</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Platforms.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Platforms.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Oil and Gas Structures</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/BOEM_DrillingPlatforms/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Download Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Bureau of Ocean Energy Management</td><td><a href="javascript:getDataDownloadLink('https://www.data.boem.gov/Main/Mapping.aspx')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul> 
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Oil and Gas Activities</td><td><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/economicPlates/OilGasActivities-4_24.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>   
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Discharges<br>Polynuclear Aromatic Hydrocarbons<br/>Maximums (1999 - 2009)</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Polynuclear aromatic hydrocarbons (PAH) are organic pollutants that occur in crude oil, tar,and other forms of fossil fuels, and have the potential to accumulate in the environment. Total concentrations obtained from bivalve tissue samples throughout the Gulf Coast region from 1999 to 2009 are displayed.  This information was derived from the online Mussel Watch database.  Total PAH values were summed from 44 different PAH compounds measured by Mussel Watch. The maximum total PAH values represents the maximum value measured at each station over this 10-year time period.
+        <p/>
+        Data-point colors are based on the Effects Range Low (ERL), a threshold level that is calculated for sediment but also useful for tissue samples. The ERL for total PAHs (4,022 ng/g) is the concentration at which some sensitive organisms begin to be negatively affected by the presence of PAHs.  The Effects Range Median (ERM) for total PAHs (44,792 ng/g) is the concentration at which 50% of test organisms are negatively affected by PAHs; however, none of the total PAH measurements were that high in this data set. <a href="javascript:getAnimation('/website/DataAtlas/products/environmentalPlates/PAHs_MusselWatch/animation.html')"><font color="blue"><u>Animated total PAH values by year</u></font></a> show the biannual total of PAH measurements collected at all the stations.
+        <p/>
+        The nationwide Mussel Watch Program is the longest continuous contaminant monitoring program in U.S. coastal waters. The program analyzes sediment and bivalve tissue chemistry for a suite of organic contaminants and trace metals to identify trends at over 300 selected coastal sites from 1986 to present. Parameters monitored include sediment and bivalve tissue chemistry for over 100 organic and inorganic contaminants, bivalve histology, and <i>Ciostridium perfringens</i> (pathogen) concentrations. This project regularly quantifies PAH, PCB, DDT and its metabolites, TBT and its metabolites, chlorinated pesticides, and toxic trace elements.
+        <p/>
+        Mussel Watch supports NOAA ecosystem-based management through an integrated program of environmental monitoring, assessment, and research to describe the current status of pollution and to detect changes in the environmental quality of our nation's estuarine and coastal waters. These interrelated activities are designed to provide coastal managers with a national context for measures of local and regional environmental condition. Outcomes include a status of contaminant concentrations around the U.S., including Alaska, Hawaii, the Great Lakes, and Puerto Rico.  Monitoring activities are designed to quantify and assess spatial and temporal trends in coastal contamination, and to provide a baseline to assess impacts of anthropogenic and natural events, including chemical spills, tropical storms, and hurricanes.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Siceloff L. Polynuclear Aromatic Hydrocarbon (PAH) Maximums from 1999 to 2009 In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Discharges<br>Polynuclear Aromatic Hydrocarbons<br/>Maximums (1999 - 2009)</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/environmentalLegends/PAHs_MusselWatch.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Discharges<br>Polynuclear Aromatic Hydrocarbons<br/>Maximums (1999 - 2009)</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Polynuclear Aromatic Hydrocarbons</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/MusselWatch.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/MusselWatch.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Polynuclear Aromatic Hydrocarbons</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NCCOS_PAHMaximums_MusselWatch/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Mussel Watch Data Portal</td><td><a href="javascript:getDataDownloadLink('http://egisws02.nos.noaa.gov/nsandt/#')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>     
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

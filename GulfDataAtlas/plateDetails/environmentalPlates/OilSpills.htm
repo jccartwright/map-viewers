@@ -1,0 +1,89 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Incidents<br>Oil Spills (2000 - 2010)</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Oil spills stem from accidents involving tankers, barges, pipelines, refineries, and storage facilities, often while the oil is being transported to its users. Some of the major oil spills (&gt; 100,000 gallons of oil released) to occur in the Gulf of Mexico from 2000 to 2010 would include the 2005 Hurricane Katrina damages to facilities and tanks in Plaquemines Parish, Saint Bernard Parish, and Mississippi River (over 10,000,000 gallons); the 2006 CITGO Refinery waste oil tank release (42,000 - 1,470,000 gallons); the 2008 Barge DM932 collision (380,000 gallons); and the 2010 Deepwater Horizon semisubmersible drilling platform explosion (207,060,000 gallons). A <a href="javascript:getAnimation('/website/DataAtlas/products/environmentalPlates/OilSpillIncidents_ORR/animation.html')"><font color="blue"><u>time series</u></font></a> of oil spill incidents from 2000 to 2010 is available.
+        <p/>
+        The <a href="javascript:getExternalLink('http://incidentnews.noaa.gov')"><font color="blue"><u>IncidentNews</u></font></a> website provides publicly available information related to oil and hazardous material spills, both current and historical. It is developed and maintained by NOAA's Emergency Response Division (ERD), which is part of NOAA's Office of Response and Restoration (OR&R). ERD was formerly known as the Hazardous Materials Response Division, or HAZMAT. The volume of the Deepwater Horizon release was taken from <a href="javascript:getExternalLink('https://www.doi.gov/deepwaterhorizon/loader.cfm?csModule=security/getFile&PageID=237763')"><font color="blue"><u>Assessment of Flow Rate Estimates for the Deepwater Horizon/Macondo Oil Spill</u></font></a> published by the National Incident Command, Interagency Solutions Group, Flow Rate Technical Group.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Oil Spills (2000 - 2010) In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Incidents<br>Oil Spills (2000 - 2010)</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/environmentalLegends/OilSpillIncidents_ORR.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Incidents<br>Oil Spills (2000 - 2010)</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Oil Spills</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/ORR_OilSpills_IncidentNews.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/ORR_OilSpills_IncidentNews.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Oil Spills</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/ORR_OilSpill_Incidents_2000_2010/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Office of Response and Restoration<br/>IncidentNews</td><td><a href="javascript:getDataDownloadLink('https://incidentnews.noaa.gov/raw/index')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>     
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

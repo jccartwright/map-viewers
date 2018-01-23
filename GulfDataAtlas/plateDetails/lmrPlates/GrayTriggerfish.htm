@@ -1,0 +1,101 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Gray Triggerfish</center></div>
+        <div class="smallTextBold"><center><i>Balistes capriscus</i></center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        The gray triggerfish (<i>Balistes capriscus</i>) is found throughout the Gulf of Mexico. Information is sparse, particularly for the early life stages. Adults are found offshore in waters between 10 m and 55 m, where they are associated with natural and artificial reefs. Spawning occurs in late spring and summer on offshore reef or hard-bottom habitats. They produce demersal eggs, which they deposit into nests and guard until hatching. Larvae and postlarvae are pelagic and are usually associated with Sargassum and other flotsam. Early and late juveniles are also associated with Sargassum and other flotsam, and can sometimes be found in mangrove estuaries. Triggerfish leave the surface Sargassum habitat in the fall, when juvenile fish move to reef habitat on the bottom.
+        <p/>
+        Gray triggerfish reach sexual maturity at 2 years of age, and can live up to 13 years. They can grow over 23 inches long (total length) and weigh up to 13 pounds. Adults feed on benthic invertebrates such as urchins, sea stars, bivalves, and barnacles. (<a href="javascript:getExternalLink('http://safmc.net/fish-id-and-regs/gray-triggerfish')"><font color="blue"><u>South Atlantic Fishery Management Council</u></font><a>, <a href="javascript:getExternalLink('http://www.flmnh.ufl.edu/fish/Gallery/Descript/Graytriggerfish/graytriggerfish.html')"><font color="blue"><u>Florida Museum of Natural History</u></font><a>, <a href="javascript:getExternalLink('http://www.gulfcouncil.org/Beta/GMFMCWeb/downloads/Final EFH EIS.pdf')"><font color="blue"><u>Final Environmental Impact Statement for the Generic Essential Fish Habitat Amendment</u></font><a>)&nbsp;&nbsp;<a href="javascript:getExternalLink('http://get.adobe.com/reader')"><img src="images/icon_pdf.gif" height="15" width="15"></a>
+        <p/>
+        <center><b>Fisheries-Independent Data<br/>Federal</b></center>
+        <hr width="75%">
+        <p/>
+        For gray triggerfish, <a href="javascript:createSubPlate('Gray Triggerfish - Abundance')"><font color="red"><u>relative abundance</u></font></a> and <a href="javascript:createSubPlate('Gray Triggerfish - Effort')"><font color="red"><u>sampling effort</u></font></a> in 10-minute longitude by latitude blocks are summarized from <a href="javascript:createSubPlate('Gray Triggerfish - Stations')"><font color="red"><u>11,637</u></font></a> 40-ft trawls taken during the SEAMAP Summer and Fall Shrimp/Groundfish surveys from 1987 to 2009. Relative abundance is expressed in catch per unit effort (CPUE), which represents the number caught per 1-hour tow. Sampling effort represents the number of trawls that participated. The CPUE consisted of primarily adult fish, but may represent some juveniles as well.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Hanisko D, Rester J. Gray Triggerfish In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [3 screens]. Available from: https://gulfatlas.noaa.gov/.       
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Gray Triggerfish</center></div>
+        <div class="smallTextBold"><center><i>Balistes capriscus</i></center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/lmrLegends/GrayTriggerfish_Abundance.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Gray Triggerfish</center></div>
+        <div class="smallTextBold"><center><i>Balistes capriscus</i></center></div>
+        <center><hr width="75%" /></center>
+         <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Relative Abundance (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/10min_trawl_graytriggerfish.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/10min_trawl_graytriggerfish.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Trawl Sampling Effort (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/SEAMAP_Trawl_Effort_by_10x10_Grid.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/SEAMAP_Trawl_Effort_by_10x10_Grid.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Trawl Stations (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/SEAMAP_Trawl_Stations.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/SEAMAP_Trawl_Stations.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Relative Abundance (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SEAMAP_Fishes_RelativeAbundance_Trawls/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Trawl Sampling Effort (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SEAMAP_Trawl_Effort/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Trawl Stations (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SEAMAP_Trawl_Stations/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Fisheries-Independent - Federal (SEAMAP)</td><td><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/GrayTriggerfish.zip')" title="Click to download ESRI shapefiles (487 KB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

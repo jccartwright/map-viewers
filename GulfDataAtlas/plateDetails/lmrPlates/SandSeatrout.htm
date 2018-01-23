@@ -1,0 +1,125 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Sand Seatrout</center></div>
+        <div class="smallTextBold"><center><i>Cynoscion arenarius</i></center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Sand seatrout (<i>Cynoscion arenarius</i>) are commonly found in bays, estuaries, and shallow open waters around the Gulf of Mexico. Juvenile sand seatrout prefer unvegetated benthic habitat during the summer months, and adult sand seatrout tend to migrate to deeper waters nearshore and offshore during colder months. Sand seatrout spawn in lower estuarine environments or inshore Gulf waters; their two spawning peaks are early March to May and then in August to September.
+        <p/>
+        Sand seatrout are commonly up to 14 inches in length (total length), but can grow to a maximum of 25 inches and live up to 2 years. Adults feed on shrimp and fish. (<a href="javascript:getExternalLink('http://txmarspecies.tamug.edu/fishdetails.cfm?scinameID=Cynoscion%20arenarius')"><font color="blue"><u>Texas Parks & Wildlife Department</u></font></a>, <a href="javascript:getExternalLink('http://www.nwrc.usgs.gov/wdb/pub/species_profiles/82_11-072.pdf')"><font color="blue"><u>Species Profiles: Life Histories and Environmental Requirements of Coastal Fishes and Invertebrates (Gulf of Mexico)</u></font></a>, <a href="javascript:getExternalLink('http://www.gsmfc.org/publications/GSMFC Number 197.pdf')"><font color="blue"><u>The Sand and Silver Seatrout Fishery of the Gulf of Mexico, United States: A Fisheries Profile</u></font><a>)&nbsp;&nbsp;<a href="javascript:getExternalLink('http://get.adobe.com/reader')"><img src="images/icon_pdf.gif" height="15" width="15"></a>
+        <p/>
+        This map shows the fisheries-independent (federal and state) <a href="javascript:createSubPlate('Sand Seatrout - Stations - Both')"><font color="red"><u>trawl stations</u></font></a> used to calculate catch per unit effort (CPUE) data for sand seatrout.
+        <p/>
+        <center><b>Fisheries-Independent Data<br/>Federal</b></center>
+        <hr width="75%">
+        <p/>
+        <a href="javascript:createSubPlate('Sand Seatrout - Abundance')"><font color="red"><u>Relative abundance</u></font></a> and <a href="javascript:createSubPlate('Sand Seatrout - Effort')"><font color="red"><u>sampling effort</u></font></a> in 10-minute longitude by latitude blocks are summarized from <a href="javascript:createSubPlate('Sand Seatrout - Stations - Federal')"><font color="red"><u>11,637</u></font></a> 40-ft trawls taken during the SEAMAP Summer and Fall Shrimp/Groundfish surveys from 1987 to 2009. Relative abundance is expressed in catch per unit effort (CPUE), which represents the number caught per 1-hour tow. Sampling effort represents the number of trawls. These fish are primarily adult but may represent some juveniles as well.
+        <p/>
+        <center><b>Fisheries-Independent Data<br/>State</b></center>
+        <hr width="75%">
+        Using data from state sources, maps displaying sand seatrout mean catch per unit effort (CPUE) based on <a href="javascript:createSubPlate('Sand Seatrout - MeanCPUE - Locations')"><font color="red"><u>individual sampling locations</u></font></a>, as well as by <a href="javascript:createSubPlate('Sand Seatrout - MeanCPUE - Water Body')"><font color="red"><u>water bodies</u></font></a> are available. The information shows the summarized results from <a href="javascript:createSubPlate('Sand Seatrout - Stations - State')"><font color="red"><u>4,287</u></font></a> trawls (from primarily 16-ft to 20-ft otter trawls) taken from 2000 to 2007 in estuarine and nearshore habitats. This trawl data set was obtained from the Comparative Assessment of Gulf Estuarine ecoSystems (CAGES) Relational Database, which is a compilation of estuarine fishery-independent data contributed by natural resource agencies of the Gulf States (Texas, Louisiana, Mississippi, Alabama, and Florida). There are some differences in each state's gear and sampling methodologies, and CPUE values between states may not be directly comparable. CPUE is expressed in number caught per hectare.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Hanisko D, Rester J, Brown H, Siceloff L. Sand Seatrout In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2013. [7 screens]. Available from: https://gulfatlas.noaa.gov/.       
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Sand Seatrout</center></div>
+        <div class="smallTextBold"><center><i>Cynoscion arenarius</i></center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/lmrLegends/SEAMAP-CAGES_TrawlSites.png"></div></center>
+        </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Sand Seatrout</center></div>
+        <div class="smallTextBold"><center><i>Cynoscion arenarius</i></center></div>
+        <center><hr width="75%" /></center>
+         <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Relative Abundance (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/10min_trawl_sandseatrout.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/10min_trawl_sandseatrout.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td> </tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Trawl Sampling Effort (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/SEAMAP_Trawl_Effort_by_10x10_Grid.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/SEAMAP_Trawl_Effort_by_10x10_Grid.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Trawl Stations (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/SEAMAP_Trawl_Stations.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/SEAMAP_Trawl_Stations.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Mean CPUE by Location (Fisheries-Independent - State)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/CAGES_SandSeatrout_Station.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/CAGES_SandSeatrout_Station.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Mean CPUE by Water Body (Fisheries-Independent - State)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/CAGES_SandSeatrout_WaterBody.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/CAGES_SandSeatrout_WaterBody.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Relative Abundance (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SEAMAP_Fishes_RelativeAbundance_Trawls/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Occurrences (Fisheries-Independent - State)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/CAGES_Fishes_Occurrence/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">CPUE by Location and Water Body (Fisheries-Independent - State)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/CAGES_Fishes_MeanCPUE/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Trawl Stations (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SEAMAP_Trawl_Stations/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Trawl Stations (Fisheries-Independent - State)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/CAGES_Trawl_Stations/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Trawl Sampling Effort (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SEAMAP_Trawl_Effort/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Fisheries-Independent - Federal (SEAMAP)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/SandSeatrout.zip')" title="Click to download ESRI shapefiles (489 KB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Fisheries-Independent - State (CAGES)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/SandSeatroutState.zip')" title="Click to download ESRI shapefiles (170KB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul> 
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Sand Seatrout</td><td><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/lmrPlates/SandSeatrout-3_43.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

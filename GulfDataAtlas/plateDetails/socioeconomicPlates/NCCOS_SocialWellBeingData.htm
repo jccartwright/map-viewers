@@ -1,0 +1,128 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal Community Well-Being Data<br/>(US Gulf Coast)</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        The Gulf of Mexico Coastal Community Well-being Data incorporates a variety of publicly available social, economic, and environmental quantitative data collected by federal, state, and local agencies. Data are available for geographies within the US Gulf of Mexico coastal states of Florida, Alabama, Mississippi, Louisiana, and Texas. For a complete description of the data collection and the methodology, please see the technical report <a href="javascript:getExternalLink('http://coastalscience.noaa.gov/projects/detail?key=109')"><font color="blue"><u>Monitoring Well-being and Changing Environmental Conditions in Coastal Communities: Development of an Assessment Method</u></font></a>. 
+        <p/>
+        In 2013, scientists at NOAA's National Centers for Coast Ocean Science (NCCOS) completed the development of a suite of indicators for measuring coastal well-being at the county level. Community well-being is defined as a population whose basic material needs are met, a social system characterized by freedom and choice, and evidence of good health, social relations and security at the community level. The indicators used in the NCCOS framework are: <i>Access to Social Services</i>, <i>Basic Needs</i>, <i>Economic Security</i>, <i>Education</i>, <i>Environmental Condition</i>, <i>Governance</i>, <i>Health</i>, <i>Safety</i>, and <i>Social Connectedness</i>. Initially this work was conducted for a sample of 37 coastal counties and included three time points. As part of the Gulf of Mexico Integrated Ecosystem Assessment, the application of the indicators is being expanded to include 139 coastal and watershed counties of the US Gulf of Mexico for 2000, 2005, 2007, 2010, and 2012.
+        <p/>
+        The work has focused on the Gulf of Mexico in order to develop a baseline of well-being that would allow NOAA and other agencies to understand recovery progress in communities affected by the Deepwater Horizon oil spill. However, the work also serves a broader purpose of monitoring the condition of coastal communities in relation to a variety of ecosystem disruptions and associated interventions. The well-being of a coastal community is interconnected with the health of its environment, the stability of its economy, the provision of social services, and a multitude of other factors.
+        <p/>
+        Coastal community well-being data for 8 out of the 9 indicators in 2012 are shown below. For each county, investigators collected and consolidated existing, secondary data representing multiple aspects of well-being. To assess changing well-being with respect to environmental conditions, data were collected and well-being scores were calculated for the period of 2000 to 2015 across 139 counties. Higher scores indicate greater community well-being. In the maps shown below, the scores are grouped into high, medium, and low classes using a 3-class Natural Jenks scheme. This classification scheme was applied to the scores of all the counties across all years for each indicator. The analysis provides insight into the individual counties' well-being, comparisons among counties and comparisons across time. In addition, an animated time-series graphic for each of the indicators is available. The 9th indicator, environmental conditions, is a critical piece of the larger analysis and is in the process of completion.
+        <p/>
+        1. <a href="javascript:createSubPlate('Social WellBeing - Access to Social Services')"><font color="red"><u>Access to Social Services</u></font></a>: Assessment of general accessibility of social and health support services required for people to reach an intermediate level of well-being.  This component is measured using population standardized valuations of participation in SNAP and WIC programs, number of hospital beds, human services organizations, number of physicians, population with medical insurance, and households without any vehicles.
+        <br/>
+        2. <a href="javascript:createSubPlate('Social WellBeing - Basic Needs')"><font color="red"><u>Basic Needs</u></font></a>: Assessment of the availability, accessibility, and consumption of rudimentary elements required to sustain human life. This component is measured using population standardized valuations of median housing values, homes without plumbing or kitchen access, size of homes based on median room number, housing availability, median age of homes, and availability of healthy food options.
+        <br/>
+        3. <a href="javascript:createSubPlate('Social WellBeing - Economic Security')"><font color="red"><u>Economic Security</u></font></a>: Assessment of the level to which a county possesses sufficient resources to support at least basic needs, both now and in the foreseeable future. This component is measured using population standardized valuations of federal government expenditures at the county level, local government revenues, gross domestic product for all county industries, economic diversity of employment, median household income, unemployment rate, and youth poverty rate.
+        <br/>
+        4. <a href="javascript:createSubPlate('Social WellBeing - Education')"><font color="red"><u>Education</u></font></a>: Assessment of the educational attainment and educational expenditures in the county. This component is measured using standardized valuations of expenditures per student enrolled in public schools (K-12), population over 25 with at least a high school diploma or equivalent, and school enrollment.
+        <br/>
+        5. <a href="javascript:createSubPlate('Social WellBeing - Governance')"><font color="red"><u>Governance</u></font></a>: Assessment of government influence in local areas.  This component is measured through the FEMA Community Rating System (CRS) county scores and the time since a county comprehensive plan was adopted.
+        <br/>
+        6. <a href="javascript:createSubPlate('Social WellBeing - Health')"><font color="red"><u>Health</u></font></a>: Assessment of physical and mental health of population via proxies for disease burden and general quality of life.  This component is measured using standardized valuations of fertility, life expectancy, mortality due to chronic disease, and recreational opportunities.
+        <br/>
+        7. <a href="javascript:createSubPlate('Social WellBeing - Safety')"><font color="red"><u>Safety</u></font></a>: Assessment of the safety of both person and property from actions or events that cause damage, harm or impede access to needed resources. This component is measured using population standardized valuations of population density in flood hazard zones, number of severe thunderstorms and tornados, number of tropical storms and hurricanes, property crime rates, and violent crime rates.
+        <br/>
+        8. <a href="javascript:createSubPlate('Social WellBeing - Social Connectedness')"><font color="red"><u>Social Connectedness</u></font></a>: Assessment of a community's ability to exchange resources, engage in activities to build and maintain social cohesion, respond and recover from perturbations. This component is measured using population standardized valuations of voter turnout at national elections, number of religious organizations, number of arts and humanities organizations, amount of money given to charity, lack of telephone service, and community tenure.
+        <p/>
+        <center><b>Time-Series of<br/>Coastal Community Well-Being Data</br>(2000-2012)</b></center>
+        <br/>
+        <center>
+        <table class="smallText3" border="1">
+        <tr><td><a href="javascript:getAnimation('/website/DataAtlas/products/socioeconomicPlates/NCCOS_SocialWellBeingData/animation_AccToSS.html')"><font color="blue"><u>Access to Social Services</u></font></a></td></tr>
+        <tr><td><a href="javascript:getAnimation('/website/DataAtlas/products/socioeconomicPlates/NCCOS_SocialWellBeingData/animation_BasicNeeds.html')"><font color="blue"><u>Basic Needs</u></font></a></td></tr>
+        <tr><td><a href="javascript:getAnimation('/website/DataAtlas/products/socioeconomicPlates/NCCOS_SocialWellBeingData/animation_EconSec.html')"><font color="blue"><u>Economic Security</u></font></a></td></tr>
+        <tr><td><a href="javascript:getAnimation('/website/DataAtlas/products/socioeconomicPlates/NCCOS_SocialWellBeingData/animation_Education.html')"><font color="blue"><u>Education</u></font></a></td></tr>
+        <tr><td><a href="javascript:getAnimation('/website/DataAtlas/products/socioeconomicPlates/NCCOS_SocialWellBeingData/animation_Governance.html')"><font color="blue"><u>Governance</u></font></a></td></tr>
+        <tr><td><a href="javascript:getAnimation('/website/DataAtlas/products/socioeconomicPlates/NCCOS_SocialWellBeingData/animation_Health.html')"><font color="blue"><u>Health</u></font></a></td></tr>
+        <tr><td><a href="javascript:getAnimation('/website/DataAtlas/products/socioeconomicPlates/NCCOS_SocialWellBeingData/animation_Safety.html')"><font color="blue"><u>Safety</u></font></a></td></tr>
+        <tr><td><a href="javascript:getAnimation('/website/DataAtlas/products/socioeconomicPlates/NCCOS_SocialWellBeingData/animation_SocialCon.html')"><font color="blue"><u>Social Connectedness</u></font></a></td></tr>
+        </table>
+        </center>
+        <p/>    
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Buck K, Dillard M, Rose K. Coastal Community Well-Being Data, National Centers for Coast Ocean Science, In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2015. [8 screens]. Available from: https://gulfatlas.noaa.gov/.        
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal Community Well-Being Data<br/>(US Gulf Coast)</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/socioeconomicLegends/SocialWellBeing.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal Community Well-Being Data<br/>(US Gulf Coast)</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Coastal Community Well-Being Data - 2000 (US Gulf Coast Only)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/NCCOS_SocialWellBeingIndices/2000GoM_WellBeing_FGDC.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/NCCOS_SocialWellBeingIndices/2000GoM_WellBeing_ISO19115-2.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Coastal Community Well-Being Data - 2005 (US Gulf Coast Only)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/NCCOS_SocialWellBeingIndices/2005GoM_WellBeing_FGDC.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/NCCOS_SocialWellBeingIndices/2005GoM_WellBeing_ISO19115-2.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Coastal Community Well-Being Data - 2007 (US Gulf Coast Only)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/NCCOS_SocialWellBeingIndices/2007GoM_WellBeing_FGDC.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/NCCOS_SocialWellBeingIndices/2007GoM_WellBeing_ISO19115-2.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Coastal Community Well-Being Data - 2010 (US Gulf Coast Only)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/NCCOS_SocialWellBeingIndices/2010GoM_WellBeing_FGDC.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/NCCOS_SocialWellBeingIndices/2010GoM_WellBeing_ISO19115-2.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Coastal Community Well-Being Data - 2012 (US Gulf Coast Only)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/NCCOS_SocialWellBeingIndices/2012GoM_WellBeing_FGDC.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/NCCOS_SocialWellBeingIndices/2012GoM_WellBeing_ISO19115-2.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Coastal Community Well-Being Data - 2012 (US Gulf Coast Only)</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NCCOS_SocialWellBeing_2012/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Coastal Community Well-Being Data - National Centers for Coast Ocean Science</td><td><a href="javascript:getDataDownloadLink(' http://coastalscience.noaa.gov/projects/detail?key=109')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

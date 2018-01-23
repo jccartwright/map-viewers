@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>King Mackerel</title>
+   <script src="https://www.google.com/jsapi"></script>
+   <script src="javascripts/jquery-1.10.1.min.js"></script>
+   <script src="javascripts/jquery.csv-0.71.min.js"></script>
+   <script>
+      // wait till the DOM is loaded
+      //$(function() {
+      //   // grab the CSV
+      //   $.get("test.csv", function(csvString) {
+            // display the contents of the CSV
+      //      $("#chart").html(csvString);
+      //   });
+      //});
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawCharts);
+
+      function drawCharts() {
+        // do the latitude chart
+        $.get("csvs/KingMackerel.csv", function(csvString) {
+          var arrayData = $.csv.toArrays(csvString, {onParseValue:$.csv.hooks.castToScalar});
+          var data = new google.visualization.arrayToDataTable(arrayData);
+          var view = new google.visualization.DataView(data);
+          view.setColumns([0,3]);
+          var options = {
+            hAxis: {title: data.getColumnLabel(0), minValue: data.getColumnRange(0).min, maxValue: data.getColumnRange(0).max, format: '####'},
+            vAxis: {title: data.getColumnLabel(3), minValue: data.getColumnRange(3).min, maxValue: data.getColumnRange(3).max},
+            height: 320,
+            width: 480,
+            legend: 'none'
+          }
+          var chart = new google.visualization.LineChart(document.getElementById('chart'));
+          //var chart = new google.charts.Line(document.getElementById('chart'));
+          chart.draw(view, options);
+        });
+        // do the depth chart
+        $.get("csvs/KingMackerel.csv", function(csvString) {
+          var arrayData = $.csv.toArrays(csvString, {onParseValue:$.csv.hooks.castToScalar});
+          var data = new google.visualization.arrayToDataTable(arrayData);
+          var view = new google.visualization.DataView(data);
+          view.setColumns([0,7]);
+          var options = {
+            hAxis: {title: data.getColumnLabel(0), minValue: data.getColumnRange(0).min, maxValue: data.getColumnRange(0).max, format: '####'},
+            vAxis: {title: data.getColumnLabel(7), minValue: data.getColumnRange(7).min, maxValue: data.getColumnRange(7).max, direction: -1},
+            height: 320,
+            width: 480,
+            legend: 'none'
+          }
+          var chart = new google.visualization.LineChart(document.getElementById('chart1'));
+          chart.draw(view, options);
+        });
+      }
+
+
+   </script>
+</head>
+<body>
+   <center><b>King Mackerel<br><i>Scomberomorus cavalla</i></b></center>
+   <p/>
+   <center><img src="images/KingMackerel.png" height="428" width="524"></center>
+   <p/>
+   <center>
+     <table colspan="2">
+       <tr>
+         <td><div id="chart"></div></td><td><div id="chart1"></div></td>
+       </tr>
+     </table>
+   </center>
+</body>
+</html>

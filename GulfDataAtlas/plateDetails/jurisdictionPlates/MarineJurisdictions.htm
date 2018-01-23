@@ -1,0 +1,122 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Marine Jurisdictions</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Marine jurisdictions encompass the collection of U.S. marine boundaries and limits used to delimit the extent of the nation's sovereignty, exclusive rights, jurisdiction, and control over the maritime areas off its coast. 
+        <p/>
+        <b>State Seaward Boundary</b>
+        <br/>
+        The State Seaward Boundary is the limit of the state's jurisdiction under the Submerged Lands Act of 1953. The Act grants jurisdiction to states out to 3 nmi (although it is 9 nmi for Texas and the Gulf coast of Florida, and for Puerto Rico). The distance is measured from the Submerged Lands Act baseline. 
+        <p/>
+        <b>Revenue Sharing Boundary</b><br/>(Section 8(g) of the Outer Continental Shelf Lands Act)
+        <br/>
+        The Revenue Sharing Boundary extends 3 nmi beyond the State Seaward Boundary. Revenues generated from such resources as oil and gas within this area are shared between the federal government and the coastal state.
+        <p/>
+        <b>Territorial Sea</b>
+        <br/>
+        The territorial sea was extended to 12 nmi from the U.S. baseline by Presidential Proclamation 5928 in 1988, in accordance with the United Nations Convention on the Law of the Sea. The U.S. claims sovereignty in this area from the airspace down through the water column and into the subsoil. 
+        <p/>
+        <b>Contiguous Zone</b>
+        <br/>
+        The U.S. Contiguous Zone is an area between 12 and 24 nmi from the U.S. baseline. The U.S. exercises the "control necessary to prevent infringement of its customs, fiscal, immigration or sanitary laws, and regulations within its territory or territorial sea" consistent with international law.
+        <p/>
+        <b>Exclusive Economic Zone</b>
+        <br/>
+        The exclusive economic zone (EEZ) is the zone where the U.S. and other coastal nations have jurisdiction over economic and resource management. More specifically, the EEZ includes waters three to 200 mi (5 to 322 km) offshore (or 9 to 200 miles-14.5 to 322 km-offshore in western Florida and Texas.) Within the EEZ, the U.S. has sovereign rights for the purposes of exploring, exploiting, conserving and managing natural resources, and jurisdiction as provided for in international law. (<a href="javascript:getExternalLink('http://oceanservice.noaa.gov/facts/eez.html')"><font color="blue"><u>NOAA's Ocean Facts - EEZ</u></font></a>)
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Stein D. Marine Jurisdictions In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Marine Jurisdictions</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/jurisdictionLegends/MarineJurisdictions.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Marine Jurisdictions</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">US Marine Limits Boundaries (Exclusive Economic Zone, Territorial Sea, Contiguous Zone)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/MaritimeLimitsAndBoundaries_US.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/MaritimeLimitsAndBoundaries_US.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">US Revenue Sharing Boundary</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GulfofMexicoLimitof8_g_ZoneBoundary.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GulfofMexicoLimitof8_g_ZoneBoundary.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">US State Seaward Boundary</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GulfofMexicoSubmergedLandsActBoundary.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GulfofMexicoSubmergedLandsActBoundary.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Marine Jurisdictions</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/MarineJurisdictions/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">US Marine Limits Boundaries (Exclusive Economic Zone, Territorial Sea, Contiguous Zone)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownloadLink('http://www.nauticalcharts.noaa.gov/csdl/mbound.htm#data')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">US Revenue Sharing and State Seaward Boundaries</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownload('https://www.data.boem.gov/homepg/pubinfo/repcat/arcinfo/zipped/fedstate.zip')" title="Click to download ESRI shapefiles (1 MB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul> 
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Political Boundaries and Maritime Zones</td><td><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/jurisdictionPlates/MarineJurisdictions-6_01.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>   
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

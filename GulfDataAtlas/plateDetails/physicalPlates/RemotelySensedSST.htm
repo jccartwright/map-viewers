@@ -1,0 +1,102 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Remotely Sensed Sea Surface Temperature</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Sea surface temperature (SST) is a critical environmental parameter and an important indicator of climate change. The 4.6-km resolution SSTs used in this atlas were created jointly by the National Oceanic and Atmospheric Administration's (NOAA) National Centers for Environmental Information (NCEI) and the University of Miami's Rosenstiel School of Marine and Atmospheric Science (RSMAS) as part of the Advanced Very High Resolution Radiometer (AVHRR) Pathfinder Program (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#RSST')"><font color="blue"><u>Casey et al., 2010</u></font></a>). The Pathfinder SST data have multiple applications, including climate studies (El Ni&#241;o/La Ni&#241;a, arctic, oceans, and human health), marine ecosystem studies (coral bleaching and diseases, habitat, marine protected areas), and fisheries and aquaculture (migration, productivity, and distribution). NCEI's 4-km Pathfinder SST data are developed from observations collected by the AVHRR sensors aboard the NOAA Polar Orbiting Environmental Satellites.
+        <p/>
+        SST is a difficult parameter to define precisely because the surface of the ocean has a complex and highly variable temperature structure that is related to ocean turbulence and the air-sea fluxes of heat, moisture, and momentum. The AVHRR instruments used in Pathfinder make direct measurements of what is known as the "skin SST," which is an approximately 10-&#181;m-thick layer at the topmost surface of the ocean. However, to better associate these satellite-derived SST observations with observations collected from ships and buoys, the Pathfinder algorithm is designed to approximate the water temperature at a depth of about 1 meter. 
+        <p/>
+        This map depicts the <a href="javascript:createSubPlate('SST - Annual')"><font color="red"><u>annual climatological average SSTs</u></font></a> from five-day periods throughout the course of an "average" year for a given season. Additionally, maps depicting seasonal <a href="javascript:createSubPlate('SST - Winter')"><font color="red"><u>winter</u></font></a>, <a href="javascript:createSubPlate('SST - Spring')"><font color="red"><u>spring</u></font></a>, <a href="javascript:createSubPlate('SST - Summer')"><font color="red"><u>summer</u></font></a>, and <a href="javascript:createSubPlate('SST - Fall')"><font color="red"><u>fall</u></font></a><sup>1</sup> climatological average SSTs are available. To produce a seasonal climatological average, the mean SSTs for January 1-5, January 6-10, and so on, are calculated. The mean SST derived from the 5-day periods in each season from 1982 through 2009 are then averaged. Data from the Version 5.0 and 5.1 Pathfinder data with quality flag values of 4 through 7 ("good" through "best" quality) are used in the averages.
+        <p/>
+        <sup>1</sup><font size="1">For these maps, winter = January - March; spring = April - June; summer = July - September; fall = October - December</font>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Byrne D, Li Y, Phillips S. Remotely Sensed Sea Surface Temperature - Climatological Average In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [5 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Remotely Sensed Sea Surface Temperature</center></div>
+        <center><hr width="75%" /></center>
+        <center><div id="legendImage"><img src="legends/physicalLegends/SST.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <div class="largeTextBold"><center>Remotely Sensed Sea Surface Temperature</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Remotely Sensed Sea Surface Temperature</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/NODC_GOM_SST.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/NODC_GOM_SST.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">SST - Annual and Seasonal Averages</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NODC_SST/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">National Centers for Environmental Information</td><td><a href="javascript:getDataDownloadLink('https://www.nodc.noaa.gov/cgi-bin/OAS/prd/accession/details/0072888')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul> 
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Remotely Sensed Sea Surface Temperature</td><td><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/physicalPlates/RemotelySensedSST-1_15.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>       
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

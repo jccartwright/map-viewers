@@ -1,0 +1,115 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal and Marine Ecological Classification Standard (CMECS) Application for<br>Sea Surface Salinity</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        These maps present 5-year seasonal means, as estimated from satellite imagery, for sea surface salinity values in the northern Gulf of Mexico for <a href="javascript:createSubPlate('CMECS - Salinity - Fall')"><font color="red"><u>fall</u></font></a>, <a href="javascript:createSubPlate('CMECS - Salinity - Winter')"><font color="red"><u>winter</u></font></a>, <a href="javascript:createSubPlate('CMECS - Salinity - Spring')"><font color="red"><u>spring</u></font></a>, and <a href="javascript:createSubPlate('CMECS - Salinity - Summer')"><font color="red"><u>summer</u></font></a>.<sup>1</sup> Salinity is a measure of the mass fraction of salts in seawater, generally determined as electrical conductivity. Most marine waters have salinities between 34 and 35 PSU, but in estuaries and coastal waters, salinity can vary considerably from zero to hyperhaline (&ge;40 PSU). In estuaries, the salinity distribution is a function of direct precipitation, the influx of freshwater supplied by rivers, groundwater sources and runoff from the land, and marine water supplied by exchange with the ocean as a function of tidal regime.
+        <p/>
+        The Naval Research Laboratory at the Stennis Space Center (NRL/SSC) processed MODIS-Aqua satellite imagery covering the Gulf of Mexico, for a 5-year period from January 2005 - December 2009. Daily, level-1B image files were processed through the NRL/SSC Automated Processing System (APS). Six regions were processed at 1-km spatial resolution:  western Gulf of Mexico, central Gulf of Mexico, eastern Gulf of Mexico, Mobile Bay, Tampa Bay, and Galveston Bay. Monthly composite images were generated from the daily scenes to reduce the effects of cloud cover.
+        <p/>
+        Sea surface salinity was estimated from the ocean color imagery, based on an empirical relationship between colored dissolved organic matter (CDOM) absorption and salinity (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#SalinitySub')"><font color="blue"><u>Ladner et al., 2006; 2008</u></font></a>). NRL produced salinity images from the MODIS satellite ocean color data at both 250 m and 1 km spatial resolution in the Gulf of Mexico using this relationship. The salinity product derived from the ocean color imagery is still experimental and requires further validation. It is expected that different mixing regimes will affect the conservative nature of the CDOM/salinity proxy relationship, resulting in deviations from the above empirical relationship.
+        <p/>
+        The maps were produced as part of a NASA-funded project to evaluate the classifiers and modifiers identified in the <a href="javascript:getExternalLink('https://iocm.noaa.gov/cmecs/index.html')"><font color="blue"><u>Coastal and Marine Ecological Classification Standard (CMECS) Water Column Component</u></font></a>. The CMECS is a catalog of terms that provides a means for classifying ecological units using a simple standard format and common terminology. CMECS offers a way to organize and interpret data about the marine environment, and it provides a common platform for interrelating data. It builds upon approaches from published national, regional, and local habitat classification procedures, and it offers an umbrella under which a national coastal and marine ecological classification can grow and evolve. The project was modeled after an exercise undertaken in the United Kingdom to characterize pelagic habitats in which sea surface temperature and salinity, as well as frontal probability, were used to delineate unique pelagic zones (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#SalinitySub')"><font color="blue"><u>Connor et al., 2006</u></font></a>). 
+        <p/>
+<!--
+        To validate the satellite-derived data, comparative maps were developed in which in situ data from the Southeast Area Monitoring and Assessment Program (SEAMAP) program were overlaid on the modeled data and displayed in ArcMap 10<sup>TM</sup>. SEAMAP is a state/federal/university program for the collection, management and dissemination of fishery-independent data and information in the southeastern United States. Both the satellite data and the SEAMAP data were then reclassified into CMECS categories. Visually, the satellite-derived products matched well with the SEAMAP in situ data. Statistical analyses of the raw data (i.e., data before reclassification into CMECS categories) indicate that the satellite-derived data are consistently different from the in situ data. Reclassifying the data into CMECS categories improved the percent accuracy of these products when compared to in situ data.
+        <p/>
+ -->
+        Salinity is an indicator of the dynamic or conservative nature of mixing within the water body, and is one of the defining features of the structure of coastal waters. Most aquatic organisms function optimally within a narrow range of salinities, which has impact on the ecological balance and trophic structure of communities. CMECS salinity categories are provided in the table below.
+        <p/>
+        <center>
+        <table colspan="2" cellpadding="1" cellspacing="1" class="smallText3" border="1">
+        <tr><td align="center"><b>Salinity Regime</b></td><td align="center"><b>Salinity<br/>(Practical Salinity Unit)</b></td></tr>
+        <tr><td>Oligohaline Water</td><td>&lt;5</td></tr>
+        <tr><td>Mesohaline Water</td><td>5 to &lt;18</td></tr>
+        <tr><td>Lower Polyhaline Water</td><td>18 to &lt;25</td></tr>
+        <tr><td>Upper Polyhaline Water</td><td>25 to &lt;30</td></tr>
+        <tr><td>Euhaline Water</td><td>30 to &lt;40</td></tr>
+        <tr><td>Hyperhaline Water</td><td>&ge;40</td></tr>
+        </table>
+        </center>
+        <p/>
+        <sup>1</sup><font size="1">For the purposes of this study, fall = October - December; winter = January - March; spring = April - June; and summer = July - September</font>
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Allee R, Finkbeiner R, Gould R, Ko D-S, Lary D, Kurtz J, Madden C, Goodin K. Coastal and Marine Ecological Classification Standard (CMECS) Application for Sea Surface Salinity in the Northern Gulf of Mexico In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [4 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal and Marine Ecological Classification Standard (CMECS) Application for<br>Sea Surface Salinity</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/physicalLegends/CMECS_SalinitySubcomponent.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal and Marine Ecological Classification Standard (CMECS) Application for<br>Sea Surface Salinity</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Sea Surface Salinity (CMECS)</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/cmecs_salinity_metadata.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/cmecs_salinity_metadata.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Sea Surface Salinity (CMECS) - Seasonal Means</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/CMECS_Salinity/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Sea Surface Salinity - Seasonal means of APS-processed MODIS products (tiffs)</td><td  style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/physical/documents/CMECS_Salinity.zip')" title="Click to download Tiff Images (~220 KB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Sea Surface Salinity - APS-processed MODIS data (HDF4)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownloadLink('https://www.nodc.noaa.gov/cgi-bin/OAS/prd/accession/details/94007')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

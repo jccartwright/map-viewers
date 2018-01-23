@@ -1,0 +1,96 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Hypoxia Studies<br/>2001 - 2011</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Seasonally depleted dissolved oxygen (DO) occurs during the summer months in the stratified shelf waters of the northern Gulf of Mexico.  DO depletion is caused primarily by the decomposition of algae stimulated by excess nitrogen transported into the system by the Mississippi and Atchafalaya Rivers and by seasonal vertical stratification of freshwater and Gulf water. Most aquatic organisms cannot survive in hypoxic (DO &le; 2.0 mg/l) conditions which form each summer in the middle of the most productive recreational and commercial fishing grounds in the conterminous U.S.
+        <p/>
+        The Southeast Area Monitoring and Assessment Program (SEAMAP) Summer Shrimp/Groundfish Survey is conducted annually by NOAA National Marine Fisheries Service (NMFS). These surveys are conducted in the western and north-central Gulf of Mexico aboard the NOAA Ship <i>Oregon II</i>. SEAMAP is a joint Federal and state program tasked to acquire fishery-independent data in the Gulf of Mexico. The survey follows a stratified random design to sample fishes and invertebrates with a bottom trawl, icthyoplankton with neuston and bongo nets, and environmental profile data at stations in the area between the 10-m and 200-m isobaths in the western and north-central Gulf of Mexico. The environmental profiler is equipped with sensors to measure pressure, water temperature, conductivity, DO, fluorescence, and transmittance acquired at 200-250 stations during June and July. The data are processed aboard the vessel to derive salinity, DO, DO percent saturation, and water density.
+        <p/>
+        Since 2001, the bottom DO data have been made available to researchers within a few days of being collected to support hypoxia research. Environmental profiles were made available for the first time during the 2011 cruise. Although hypoxia has been detected on the Louisiana Continental Shelf each summer for the last 11 years, hypoxia was first measured in the gulf off southern Texas in 2002 about 57 km northeast of Port Aransas. Hypoxia has been recorded each summer since 2007 in the area between Matagorda Bay and Galveston. Wind and wave activity associated with the passage of tropical cyclones breaks up hypoxic areas by reoxygenating the water column. Although 11 tropical storms and hurricanes made landfall in the northern Gulf of Mexico in the last decade, evidence suggests that their effects are temporary and that hypoxic zones reform after these events.
+        <p/>
+        An analysis of the bottom DO data collected during the Summer Shrimp/Groundfish Surveys for the entire 2001-2011 period was conducted on a 10-minute longitude by latitude block following similiar analyses for the conincident biotic abundance data (see Living Marine Resources section of the Atlas). The map displaying <a href="javascript:createSubPlate('Hypoxia - Frequency')"><font color="red"><u>frequency of hypoxia</u></font></a> shows the number of years for hypoxic conditions (available upon zooming in on the map) that were measured in that grid cell during the entire period. To contribute to the frequency of analysis, the area defined by the box had to be sampled during at least 5 of the 10 years represented in the data set. A map showing the <a href="javascript:createSubPlate('Hypoxia - Sampling Sites')"><font color="red"><u>location of all the stations</u></font></a> sampled during the 10-year period provides the full extent of profile data collected during the Summer Shrimp/Groundfish Surveys for this period. An <a href="javascript:getAnimation('/website/DataAtlas/products/physicalPlates/hypoxia/animation.html')"><font color="blue"><u>animated contour map</u></font></a> representing the hypoxic area was derived from the complement of stations taken each year and highlights the early summer variability of the extent of hypoxia.
+        <p/>
+        Each year, about 1 to 3 weeks after the NOAA NMFS yearly surveys, another ongoing NOAA-funded survey lead by Louisiana Universities Marine Consortium (LUMCON) is conducted to map the hypoxic area on the Louisiana and Texas continental shelf. Started in 1985, this consistent survey repeats the exact stations annually and has provided the hypoxia areal extent metric utilized by the Mississippi River/Gulf of Mexico Watershed Nutrient (Hypoxia) Task Force. Beginning in 2009, NOAA has held research coordination workshops for both of the ongoing surveys and implemented a broader monitoring plan for the Northern Gulf.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        May N., Parsons R., Toft T. Dissolved Oxygen - Hypoxia In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [2 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Hypoxia Studies<br/>2001 - 2011</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/physicalLegends/SEAMAP_HypoxiaAnalysis_2001-2011.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Hypoxia Studies<br/>2001 - 2011</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Frequency of Hypoxia</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/HypoxiaGrid.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td  style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/HypoxiaGrid.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Sampling Sites</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/HypoxiaSamples.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/HypoxiaSamples.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Frequency of Hypoxia</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SEAMAP_Hypoxia_2001_2011/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Hypoxia Studies</td><td><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/physical/documents/Hypoxia.zip')" title="Click to download ESRI shapefiles (~190 KB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>     
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

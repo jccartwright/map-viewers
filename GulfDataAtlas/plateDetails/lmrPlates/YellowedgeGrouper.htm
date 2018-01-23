@@ -1,0 +1,102 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Yellowedge Grouper</center></div>
+        <div class="smallTextBold"><center><i>Epinephelus flavolimbatus</i></center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Yellowedge grouper (<i>Epinephelus flavolimbatus</i>) is a deep-water species found throughout the Gulf of Mexico continental shelf, and is particularly abundant in areas off Texas and west Florida. On the outer continental shelf, the species occupies high-relief hard bottoms and rocky outcrops, and is often found in association with snowy grouper and tilefish. Both adults and juveniles are also known to inhabit burrows. The species depth range is from 35 to 370 m, and adults are most common in waters deeper than 180 m. Spawning occurs from April through October and peaks in September.
+        <p/>
+        Yellowedge grouper reach sexual maturity after 5 or 6 years and can live to be over 15 years old. Adults are 20 inches long on average (total length) but can grow to a maximum of 45 inches and weigh up to 40 pounds. These groupers are protogynous hermaphrodites, meaning they function as a female first and some later transition to males. Almost all yellowedge groupers greater than 33 inches (total length) have become males, although this transition often occurs at smaller sizes. Major components of their diet comprise brachyuran crabs, fishes, and other invertebrates. (<a href="javascript:getExternalLink('http://www.gulfcouncil.org/fishing_regulations/regulations_matrix/Site/Yellowedge.html')"><font color="blue"><u>Gulf of Mexico Fishery Management Council</u></font></a>, <a href="javascript:getExternalLink('http://txmarspecies.tamug.edu/fishdetails.cfm?scinameID=Hyporthodus%20flavolimbatus')"><font color="blue"><u>Texas Parks & Wildlife Department</u></font></a>, <a href="javascript:getExternalLink('http://www.gulfcouncil.org/Beta/GMFMCWeb/downloads/Final EFH EIS.pdf')"><font color="blue"><u>Final Environmental Impact Statement for the Generic Essential Fish Habitat Amendment</u></font><a>)&nbsp;&nbsp;<a href="javascript:getExternalLink('http://get.adobe.com/reader')"><img src="images/icon_pdf.gif" height="15" width="15"></a>
+        <p/>
+        <center><b>Fisheries-Independent Data<br/>Federal</b></center>
+        <hr width="75%">
+        <p/>
+        <a href="javascript:createSubPlate('Yellowedge Grouper - Abundance')"><font color="red"><u>Relative abundance</u></font></a> and <a href="javascript:createSubPlate('Yellowedge Grouper - Effort')"><font color="red"><u>sampling effort</u></font></a> in 15-minute longitude by latitude blocks for yellowedge grouper (primarily adult) are summarized from <a href="javascript:createSubPlate('Yellowedge Grouper - Stations')"><font color="red"><u>1,741</u></font></a> bottom longline sets taken during the NOAA Marine Fisheries Service Bottom Longline surveys from 2000 to 2009. Relative abundance is expressed in catch per unit effort (CPUE), which represents the number caught per 100-hook hour (i.e., per 100 hooks fishing for one hour). Sampling effort represents the number of bottom longline sets.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Hanisko D, Rester J. Yellowedge Grouper In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [3 screens]. Available from: https://gulfatlas.noaa.gov/.       
+      </div>
+    </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Yellowedge Grouper</center></div>
+        <div class="smallTextBold"><center><i>Epinephelus flavolimbatus</i></center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/lmrLegends/YellowedgeGrouper_Abundance.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Yellowedge Grouper</center></div>
+        <div class="smallTextBold"><center><i>Epinephelus flavolimbatus</i></center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Relative Abundance - Bottom Longline Surveys (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/15min_LL_Yellowedge_Grouper.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/15min_LL_Yellowedge_Grouper.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Bottom Longline Sampling Effort (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/NMFS_Bottom_Longline_Effort_by_15x15_Grid.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/NMFS_Bottom_Longline_Effort_by_15x15_Grid.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Bottom Longline Surveys (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/NMFS_Bottom_Longline_Stations.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/NMFS_Bottom_Longline_Stations.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Links:</b>
+            <ul id="noindent">
+              <li>  
+                <table class="mediumTextNormal">
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Relative Abundance - Bottom Longline Surveys (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NMFS_Fishes_RelativeAbundance_BottomLongline/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Bottom Longline Sampling Effort (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NMFS_BottomLongline_Effort/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Bottom Longline Surveys (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NMFS_BottomLongline_Stations/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Fisheries-Independent - Federal (SEAMAP)</td><td><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/YellowedgeGrouper.zip')" title="Click to download ESRI shapefiles (154 KB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

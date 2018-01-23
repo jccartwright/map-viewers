@@ -1,0 +1,106 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Salinity Zones - Estuarine</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><b>Static three-zone scheme</b></center>
+        <p/>
+<!--
+        This view of estuarine salinity zones is based on analysis of long-term salinity data for 37 Gulf of Mexico estuaries. Each estuary was subdivided into salinity zones between the head of tide and the seaward boundaries, based on annual-averaged and depth-averaged salinities. The three zones include a Tidal Fresh Zone, a Mixing Zone, and a Seawater Zone.
+ -->
+        This view of <a href="javascript:createSubPlate('Salinity Zones - Estuarine')"><font color="red"><u>estuarine salinity zones</u></font></a> is based on analysis of long-term salinity data for 37 Gulf of Mexico estuaries. Each estuary was subdivided into salinity zones between the head of tide and the seaward boundaries, based on annual-averaged and depth-averaged salinities. The three zones include a Tidal Fresh Zone, a Mixing Zone, and a Seawater Zone.
+        <p/>
+        This three-zone scheme is considered static rather than dynamic because it does not take into account the seasonal variations in salinity patterns and stratification that occur in most estuaries. Nonetheless, it provides a simple and readily understandable way to depict the long-term salinity characteristics of Gulf of Mexico estuarine waters. Note that not all estuaries contain all three zones - for example, Baffin Bay, Texas, receives relatively little freshwater inflow, and is considered to be entirely Seawater Zone. The three-zone scheme was originally presented in the National Estuarine Inventory (NEI) Data Atlas, Vol. 1 (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#SalinityZone')"><font color="blue"><u>NOAA/NOS 1985</u></font></a>) for 27 Gulf of Mexico estuaries. In the 1990s, digital geographies were defined and several estuaries were added to become a key layer within the Coastal Assessment Framework (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#SalinityZone')"><font color="blue"><u>NOAA, 2007</u></font></a>).
+        <p/>
+        <center><b>Dynamic five-zone scheme</b></center>
+        <p/>
+        To improve the spatial and temporal resolution of the salinity zone geographies, the scheme was revised to include five zones, each with geographic boundaries that move to take into account the seasonal variation in salinity within each estuary. A multivariate methodology (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#SalinityZone')"><font color="blue"><u>Bulger et al., 1993</u></font></a>) was applied to derive five bio-salinity zones in four "salinity seasons" for Gulf of Mexico estuaries (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#SalinityZone')"><font color="blue"><u>Christensen et al., 1997</u></font></a>). This refined salinity zone spatial framework incorporated salinity characterization studies completed for Gulf for Mexico estuaries (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#SalinityZone')"><font color="blue"><u>Orlando et al. 1993</u></font></a>). Precipitation, flow-gage data, and monthly salinity averages were evaluated to determine which months would be used to represent the high, low, and transitional salinity periods. A contour modeling procedure was applied to the data to develop seasonal salinity zones for each estuary. Two salinity seasons, <a href="javascript:createSubPlate('Salinity - Seasons - High')"><font color="red"><u>high</u></font></a> and <a href="javascript:createSubPlate('Salinity - Seasons - Low')"><font color="red"><u>low</u></font></a>, are displayed here.
+        <p/>
+        The five-zone scheme is depicted during the "high" salinity season, typically the time of year with the lowest freshwater inflow to estuaries. Note that the months that comprise the "high" salinity season can vary between estuaries. In this scheme, Salinity Zone I (0-0.5 ppt) is equivalent to the Tidal Fresh Zone of the static three-zone scheme, and Salinity Zone V (>25 ppt) is equivalent to the Seawater Zone.
+        <p/>
+        Also shown is the five-zone scheme during the "low" salinity season, typically the time of year with the highest freshwater inflow to estuaries. Note that the months that comprise the "low" salinity season differ between estuaries. For example, the low-salinity season in Aransas Bay, Texas, occurs from January to March, but in Sabine Lake (Texas and Louisiana), the low-salinity season occurs from March to May.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Nelson, D. Estuarine Salinity Zones In Gulf of Mexico Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2015. [3 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Salinity Zones - Estuarine</center></div>
+        <center><hr width="75%" /></center>
+        <center><div id="legendImage"><img src="legends/physicalLegends/GOM_SalinityZones.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Salinity Zones - Estuarine</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Static 3 Salinity Zone Scheme</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GoM_Sal3Zones.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GoM_Sal3Zones.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Dynamic 5 Salinity Zone Scheme</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Gulf_Salinity_5_Season.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Gulf_Salinity_5_Season.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Static 3 Salinity Zone Scheme</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NOS_StaticThreeZoneSalinityScheme/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Dynamic 5 Salinity Zone Scheme - High and Low Seasons</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NOS_DynamicFiveZoneSalinityScheme/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Static 3 Salinity Zone Scheme</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/physical/documents/SalinityZones.zip')" title="Click to download ESRI shapefiles (~1 MB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Dynamic 5 Salinity Zone Scheme</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/physical/documents/SalinitySeasons.zip')" title="Click to download ESRI shapefiles (~50 MB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

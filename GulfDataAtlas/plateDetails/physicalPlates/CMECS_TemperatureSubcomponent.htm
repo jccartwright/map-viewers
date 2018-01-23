@@ -1,0 +1,112 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal and Marine Ecological Classification Standard (CMECS) Application for<br>Sea Surface Temperature</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        These maps present 5-year seasonal means, as estimated from MODIS/Aqua satellite imagery, of sea surface temperature in the northern Gulf of Mexico for <a href="javascript:createSubPlate('CMECS - Temperature - Fall')"><font color="red"><u>fall</u></font></a>, <a href="javascript:createSubPlate('CMECS - Temperature - Winter')"><font color="red"><u>winter</u></font></a>, <a href="javascript:createSubPlate('CMECS - Temperature - Spring')"><font color="red"><u>spring</u></font></a>, and <a href="javascript:createSubPlate('CMECS - Temperature - Summer')"><font color="red"><u>summer</u></font></a><sup>1</sup>. Temperature has a considerable impact on photosynthesis, growth, metabolism, and mobility of organisms. Rates of microbial processes of decomposition, nitrogen fixation, and denitrification generally double with each increase of 10 &deg;C. Organisms tolerate a particular temperature range, and the temperature optimum range may span only a few degrees. The solubility of oxygen and other gases is also temperature dependent.
+        <p/>
+        The Naval Research Laboratory at the Stennis Space Center (NRL/SSC) processed MODIS-Aqua satellite imagery covering the Gulf of Mexico, for a 5-year period from January 2005 to December 2009. Daily, level-1B image files were processed through the NRL/SSC Automated Processing System (APS). Six regions were processed at 1-km spatial resolution:  western Gulf of Mexico, central Gulf of Mexico, eastern Gulf of Mexico, Mobile Bay, Tampa Bay, and Galveston Bay. Monthly composite images were generated from the daily scenes to reduce the effects of cloud cover. Sea surface temperature from MODIS-Aqua was calculated with the standard NASA processing algorithm; uncertainties are about 0.1 &deg;C or less (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#TempSub')"><font color="blue"><u>Minnett et al., 2004</u></font></a>).
+        <p/>
+        The maps were produced as part of a NASA-funded project to evaluate the classifiers and modifiers identified in the <a href="javascript:getExternalLink('https://iocm.noaa.gov/cmecs/index.html')"><font color="blue"><u>Coastal and Marine Ecological Classification Standard (CMECS) Water Column Component</u></font></a>. The CMECS is a catalog of terms that provides a means for classifying ecological units using a simple standard format and common terminology. CMECS offers a way to organize and interpret data about the marine environment, and it provides a common platform for interrelating data. It builds upon approaches from published national, regional, and local habitat classification procedures, and it offers an umbrella under which a national coastal and marine ecological classification can grow and evolve. The project was modeled after an exercise undertaken in the United Kingdom to characterize pelagic habitats in which sea surface temperature and salinity, as well as frontal probability, were used to delineate unique pelagic zones (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#TempSub')"><font color="blue"><u>Connor et al., 2006</u></font></a>).
+        <p/>
+<!--
+        To validate the satellite-derived data, comparative maps were developed in which in situ data from the Southeast Area Monitoring and Assessment Program (SEAMAP) program were overlaid on the modeled data and displayed in ArcMap 10<sup>TM</sup>. SEAMAP is a state/federal/university program for the collection, management and dissemination of fishery-independent data and information in the southeastern United States. Both the satellite data and the SEAMAP data were then reclassified into CMECS categories. Visually, the satellite-derived products matched well with the SEAMAP in situ data. Statistical analyses of the raw data (i.e., data before reclassification into CMECS categories) indicate that the satellite-derived data are consistently different from the in situ data. Reclassifying the data into CMECS categories improved the percent accuracy of these products when compared to in situ data.
+        <p/>
+ -->
+        CMECS temperature categories are established in intervals of sufficient range and resolution to provide meaningful ecological differences yet yield a parsimonious number of categories. Temperature categories are based on the <i>British Columbia Marine Ecological Classification for Canada</i> (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#TempSub')"><font color="blue"><u>Howes et al., 1994</u></font></a>, <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#TempSub')"><font color="blue"><u>Zacharias et al., 1998</u></font></a>; <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#TempSub')"><font color="blue"><u>Resource Information Standards Committee 2002</u></font></a>), which was modified to add the higher temperature ranges typical of the subtropics and tropics. In this study, temperature ranges were in 10&deg;C increments. In the Federal Geographic Data Committee (FGDC) endorsed CMECS, temperature ranges have been further refined and occur in 5&deg;C increments.
+        <p/>
+        <center>
+        <table colspan="2" cellpadding="1" cellspacing="1" class="smallText3" border="1">
+        <tr><td align="center"><b>Temperature Category</b></td><td align="center"><b>Degrees &deg;C</b></td></tr>
+        <tr><td>Frozen/Superchilled Water</td><td>0 and below</td></tr>
+        <tr><td>Cold Water</td><td>0 to &lt;10 (liquid)</td></tr>
+        <tr><td>Temperate Water</td><td>10 to &lt;20</td></tr>
+        <tr><td>Warm Water</td><td>20 to &lt;30</td></tr>
+        <tr><td>Hot Water</td><td>&gt;30</td></tr>
+        </table>
+        </center>
+        <p/>
+        <sup>1</sup><font size="1">For the purposes of this study, fall = October - December; winter = January - March; spring = April - June; and summer = July - September</font>
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Allee R, Finkbeiner R, Gould R, Ko D-S, Lary D, Kurtz J, Madden C, Goodin K. Coastal and Marine Ecological Classification Standard (CMECS) Application for Sea Surface Temperature in the Northern Gulf of Mexico In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [4 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal and Marine Ecological Classification Standard (CMECS) Application for<br>Sea Surface Temperature</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/physicalLegends/CMECS_TemperatureSubcomponent.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal and Marine Ecological Classification Standard (CMECS) Application for<br>Sea Surface Temperature</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Sea Surface Temperature (CMECS)</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/cmecs_sst_metadata.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/cmecs_sst_metadata.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Sea Surface Temperature (CMECS) - Seasonal Means</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/CMECS_Temperature/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Sea Surface Temperature - Seasonal means of APS-processed MODIS products (tiffs)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/physical/documents/CMECS_Temperature.zip')" title="Click to download Tiff Images (~160 KB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Sea Surface Temperature - APS-processed MODIS data (HDF4)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownloadLink('https://www.nodc.noaa.gov/cgi-bin/OAS/prd/accession/details/94007')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

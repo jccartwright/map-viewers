@@ -1,0 +1,268 @@
+body {
+    background-repeat: repeat-x;
+    background-image: url("../images/skin/bg.png");
+    background-color: #25B0E7;
+    /*background-attachment:fixed;*/
+    margin: 0;
+}
+div.headerContainer{
+  border:solid thin;
+  border-bottom:0px;
+  padding:5px;
+  background-color:white;
+  /*margin-top:20px;*/
+  /*margin-bottom:20px;*/
+}
+div.mainContainer{
+  background-color: white;
+  border:solid thin;
+  padding:5px;
+  /*margin-top:20px;*/
+  /*margin-bottom:20px;*/
+  min-height:700px;
+}
+
+div.footerContainer{
+  background-color: #EEEEEE;
+  border:solid thin;
+  border-top:0px;
+  padding:5px;
+  margin-bottom:20px;
+}
+div.topNav{
+  
+}
+div.menubar{
+}
+#jMenu li {
+  border:solid thin;
+}
+img#rightLogoImg {
+  height: 50px;
+}
+#jMenu li a:hover {
+  background-color:#0257A5;
+  color:white;
+  
+}
+
+.roundedCorners{
+  border:solid thin #0058A7;
+  background: #EEEEEE;
+  /*background: white;*/
+  padding:5px;
+
+  /*Round corners of div begin*/
+  -o-border-radius: 10px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-sizing: border-box;
+  -opera-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -khtml-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  /*Round corners of div end*/
+}
+.fullBorder{
+  border:solid thin;
+}
+.alignLeft{
+  text-align:left;
+}
+.alignCenter{
+  text-align:center;
+}
+.alignRight{
+  text-align:right;
+}
+tbody tr:nth-child(2n) td, tbody tr.even{
+  background:none;
+}
+li.inline{
+  display:inline;
+}
+
+/* NAVLINK BUTTONS */
+a.navLink{
+  background: transparent url('../images/buttons/oval-blue-left.gif') no-repeat top left;
+  display: block;
+  float: left;
+  font: normal 13px Tahoma; /* Change 13px as desired */
+  line-height: 16px; /* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 24px) */
+  height: 24px; /* Height of button background height */
+  padding-left: 11px; /* Width of left menu image */
+  margin-right:5px;
+  text-decoration: none;
+  margin-bottom:5px;
+}
+a:link.navLink, a:visited.navLink, a:active.navLink{
+  color: #494949;
+}
+
+a.navLink span{
+background: transparent url('../images/buttons/oval-blue-right.gif') no-repeat top right;
+display: block;
+padding: 4px 11px 4px 0; /*Set 11px below to match value of 'padding-left' value above*/
+}
+
+a.navLink:hover{ /* Hover state CSS */
+background-position: bottom left;
+}
+
+a.navLink:hover span{ /* Hover state CSS */
+background-position: bottom right;
+color: black;
+}
+
+/* TABLES */
+table#searchResultsTable th{
+  background-color:#C3D9FF;
+}
+tr.linkedRow:hover, tr.rowHighlight:hover{
+  color:black;
+  cursor:pointer;
+  text-decoration:underline;
+  background: #AAAAAA;
+}
+
+table{
+  width:100%;
+  border: 1px solid #ccc;
+}
+td.name{
+  padding-top:13px;
+  margin-top:5px;
+  vertical-align:top;
+}
+td.errors select {
+    border: 1px solid red;
+}
+td.errors input {
+    border: 1px solid red;
+}
+tr {
+    border: 0;
+}
+td, th {
+    font: 11px verdana, arial, helvetica, sans-serif;
+    line-height: 12px;
+    padding: 5px 6px;
+}
+th {
+    background: #fff url(../images/skin/shadow.jpg);
+    color: #666;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 17px;
+    padding: 2px 6px;
+}
+th a:link, th a:visited, th a:hover {
+    color: #333;
+    display: block;
+    font-size: 10px;
+    text-decoration: none;
+    width: 100%;
+}
+th.asc a, th.desc a {
+    background-position: right;
+    background-repeat: no-repeat;
+}
+th.asc a {
+    background-image: url(../images/skin/sorted_asc.gif);
+}
+th.desc a {
+    background-image: url(../images/skin/sorted_desc.gif);
+}
+
+.odd {
+    background: #d7d7d7;
+}
+.even {
+    background: #fff;
+}
+
+/* LIST */
+
+.linkedHighlighter:hover, .list th:hover, .list tr:hover {
+    background: #b2d1ff;
+    cursor:pointer;
+}
+
+/* PAGINATION */
+
+.paginateButtons {
+    background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
+    border: 1px solid #ccc;
+    border-top: 0;
+    color: #666;
+    font-size: 10px;
+    overflow: hidden;
+    padding: 10px 3px;
+}
+.paginateButtons a {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-color: #ccc #aaa #aaa #ccc;
+    color: #666;
+    margin: 0 3px;
+    padding: 2px 6px;
+}
+.paginateButtons span {
+    padding: 2px 3px;
+}
+
+.buttons {
+    font-size: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    padding: 0;
+}
+
+.buttons input {
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: bold;
+    margin-left: 3px;
+    overflow: visible;
+    padding: 2px 6px;
+}
+.buttons input.delete {
+    background: transparent url(../images/skin/database_delete.png) 5px 50% no-repeat;
+    padding-left: 28px;
+}
+.buttons input.edit {
+    background: transparent url(../images/skin/database_edit.png) 5px 50% no-repeat;
+    padding-left: 28px;
+}
+.buttons input.save {
+    background: transparent url(../images/skin/database_save.png) 5px 50% no-repeat;
+    padding-left: 28px;
+}
+.required::before{
+  content:url(../images/raisedRequired.png);
+}
+select{
+  max-width:182px;
+  border-color:#bbb;
+}
+h1.title{
+  margin-right:10%;
+  margin-left:10%;
+  margin-bottom:1%;
+  margin-top:1%;
+  text-align:center;
+}
+ul.nav{
+  padding:5px;
+  margin:0px;
+}
+.dataTables_wrapper {
+    clear: both;
+    min-height: 10px;
+    position: relative;
+}

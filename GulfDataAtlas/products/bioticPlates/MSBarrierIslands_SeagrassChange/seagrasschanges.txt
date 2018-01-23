@@ -1,0 +1,7 @@
+point	title	description	icon	
+3532653.5,-9917240.4	Cat Island	<center><div class="smallText3">Cat Island Seagrass Study (2003 and 2006)</div></center>	images/incident_red.png
+3533265.0,-9869543.7	Horn Island	<center><div class="smallText3">Horn Island Seagrass Study (2003 and 2006)</div></center>	images/incident_magenta.png
+3529596.0,-9846918.0	Petit Bois Island	<center><div class="smallText3">Petit Bois Island Seagrass Study (2003 and 2006)</div></center>	images/incident_green.png
+3532042.0,-9898895.5	Ship Island	<center><div class="smallText3">Ship Island Seagrass Study (2003 and 2006)</div></center>	images/incident_yellow.png
+
+

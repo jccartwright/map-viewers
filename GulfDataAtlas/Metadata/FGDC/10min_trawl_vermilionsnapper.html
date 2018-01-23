@@ -1,0 +1,803 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Vermilion snapper distribution and abundance from SEAMAP Summer and Fall Shrimp/Groundfish Surveys (1987-2009)</title>
+		<link rel="schema.dc" href="http://dublincore.org/documents/dces/">
+		<meta name="dc.title" content="Vermilion snapper distribution and abundance from SEAMAP Summer and Fall Shrimp/Groundfish Surveys (1987-2009)">
+		<meta name="dc.creator" content="Southeast Area Monitoring and Assessment Program">
+		<meta name="dc.subject" content="fish distribution trawl fishery independent data SEAMAP species distribution fisheries Atlantic croaker">
+		<meta name="dc.description" content="The data presented here are summarized from Southeast Area Monitoring and Assessment Program (SEAMAP) Summer and Fall Shrimp/Groundfish Surveys. The Summer Shrimp/Groundfish Survey started collecting data in 1982 while the Fall Shrimp/Groundfish Survey started collecting data in 1985. The survey design of both surveys was standardized in 1987. Therefore, the data presented here are from 1987 to 2009. Since 1987, the strategy for the trawl surveys has been that day/night sampling sites are chosen randomly in areas stratified by depth and statistical area. Trawl stations sampled by NMFS, Florida, Alabama, Mississippi, and Louisiana are made with a standard SEAMAP 40-ft net, and Texas samples with a 20-ft net. Depth strata consist of 1-fm intervals from 5 to 20 fm, a 2-fm interval from 20 to 22 fm, a 3-fm interval from 22 to 25 fm, 5 fm intervals from 25 to 50 fm and a 10-fm interval from 50 to 60 fm. Trawls are towed perpendicularly to the depth contours and cover the entire depth stratum on each station. Single tows are for a maximum of 55 minutes; for certain stations, a series of consecutive trawl tows is necessary to cover a given depth stratum, with a minimum individual tow across each stratum of 10 minutes and a maximum tow of 55 minutes. The Texas vessels tow 10 minutes parallel to the depth stratum. The survey design was changed in 2009 for NMFS samples and 2010 for all other SEAMAP participants except Texas. With the new survey design, trawls are towed for 30 minutes regardless of whether a depth stratum is covered or not and stations are no longer stratified on whether they are taken during the day or night. Until 2008, Florida did not participate in the trawl surveys and trawl samples were not taken off Florida. In 2008, Florida began participating in the Summer and Fall Shrimp/Groundfish Surveys and NMFS began trawling off Florida. All species of fishes and invertebrates from trawls are identified, enumerated, and weighed. Weights and individual measurements on selected species other than commercial shrimp are also recorded. Total counts from each trawl station are standardized to account for sampling effort and converted to a catch per unit effort (CPUE). CPUE is expressed as the number of fish caught per 1 hour of tow time for a 40 ft trawl. Mean CPUE was then summarized by 10 minute longitude by latitude blocks in which trawling occurred. Since Texas vessels do not strictly adhere to the survey design, data from Texas were not used for this summary.">
+		<meta name="dc.date" content="Unknown">
+		<meta name="dc.type" content="data.vector digital data">
+		<meta name="dc.source" content="Summarized Data and Maps">
+		<meta name="dc.coverage.x.min" scheme="DD" content="-97">
+		<meta name="dc.coverage.x.max" scheme="DD" content="-82">
+		<meta name="dc.coverage.y.min" scheme="DD" content="25.8">
+		<meta name="dc.coverage.y.max" scheme="DD" content="30.5">
+		<meta name="dc.coverage.placeName" content="Texas">
+		<meta name="dc.coverage.placeName" content="Gulf of Mexico">
+		<meta name="dc.coverage.placeName" content="Mississippi">
+		<meta name="dc.coverage.placeName" content="United States">
+		<meta name="dc.coverage.placeName" content="Louisiana">
+		<meta name="dc.coverage.placeName" content="Alabama">
+		<meta name="dc.coverage.placeName" content="Florida">
+		<meta name="dc.coverage.t.min" content="1987">
+		<meta name="dc.coverage.t.max" content="2009">
+		<meta name="dc.rights" content="Access constraints: None;  Use constraints: The Gulf States Marine Fisheries Commission makes no warranty regarding these data, expressed or implied, nor does the fact of distribution constitute such a warranty. The Gulf States Marine Fisheries Commission cannot assume liability for any damages caused by any errors or omissions in these data, nor as a result of the failure of these data to function on a particular system.">
+		<script type="text/javascript" language="JavaScript1.3">
+/* Onload - Find each <pre> element with an Id="fixvalue" and
+call fixvalue() function to parse text to respect line breaks,
+replace <pre> element with <div> elememt, and convert URL address
+strings in text to <a href> element. */
+
+window.onload = function() {
+	elem = document.getElementById("fixvalue");
+	while (Boolean(elem != null)) {
+		fixvalue(elem);
+		elem = document.getElementById("fixvalue");
+	}
+	window.focus()
+}
+	
+/* Fix value - Parse text in <pre> element to respect line breaks introduced in ArcCatalog
+by the metadata author who intentionally introduced single line breaks to start new lines
+or even more than one consecutive line break to further separate text to form paragraphs.
+Note, fixvalue() calls the addtext() function, which adds text to DIV elements, which are
+sequentially added to a parent DIV element to form separate lines and paragraphs of text. */
+
+function fixvalue(elem) {
+	elem.id = "";
+	var n
+	var val = String("");
+	var pos = Number(0);
+	// Make a newline character to use for basis for splitting string into 
+	// an array of strings that are processed and turned into separate div
+	// elements with either new line or paragraphic-like style.
+	var newline = String.fromCharCode(10);
+	var par = elem.parentNode;
+	if (elem.innerText) {
+		// Position of first newline character in IE
+		n = elem;
+		val = n.innerText;
+		pos = val.indexOf(newline);
+	} else {
+		// Position of first newline character in NS, Firefox
+		n = elem.childNodes[0];
+		val = n.nodeValue;
+		pos = val.indexOf(newline);
+	}
+	if (pos > 0) {
+		// Text string contains at least one white space character
+		var sValue = new String ("");
+		// Split entire text string value on newline character
+		// in order to create an array of string values to process	
+		var aValues = val.split(newline);
+		var padBottom = Number(0);
+		var add = Boolean("false");
+		// Loop thru each potential new line or paragraph and append <DIV>
+		// element and set its className accordingly.				
+		for (var i = 0; i <= aValues.length - 1; i++) {
+			var div = document.createElement("DIV");
+			sValue = aValues[i];
+			add = false;
+			for (var j = 0; j < sValue.length; j++) {
+				if (sValue.charCodeAt(j) > 32) {
+					add = true;
+					// window.alert("CHARACTER AT " + sValue.charAt(j) + " CHARCODE " + sValue.charCodeAt(j))
+					break;
+				}
+			}
+			if (add) {
+				if (i == 0) {
+					// Must clone and append label property (e.g. <b>Abstract</b>) to first <DIV>
+					// element, and then remove it from parent if at first element in aValues array.
+					prev = elem.previousSibling;
+					if (Boolean(prev != null)) {
+						var label = prev.cloneNode(true)
+						div.appendChild(label);
+						par.removeChild(prev);
+					}
+				}
+				// Now test to see whether to set style.paddingBottom to 0 or 4 for newline or 
+				// paragraph, respectively.  Look ahead and if all characters in the next element 
+				// in the aValues array (the next DIV element to make) are not white space then set
+				// style.paddingBottom = 0. Otherwise, set style.paddingBottom = 4 to separate the 
+				// the current <DIV> from the next <DIV> element. 			
+				padBottom = Number(0);
+				if (i < aValues.length - 1) {
+					// Assume paragraph-like separation between DIV elements
+					padBottom = Number(4);
+					// Look for non-white space characters in content for next DIV
+					var nextValue = aValues[i+1];
+					for (var k = 0; k < nextValue.length; k++) {
+						if (nextValue.charCodeAt(k) > 32) {
+							// Found a non-white space character
+							padBottom = Number(0);
+							// window.alert("CHARACTER AT " + nextval.charAt(k) + " CHARCODE " + nextval.charCodeAt(k))
+							break;
+						}
+					}
+				}
+				// Pad element
+				div.style.paddingLeft = 0;
+				div.style.paddingRight = 0;
+				div.style.paddingTop = 0;
+				div.style.paddingBottom = padBottom;
+				// Scan text for URL strings before adding text to div element
+				addtext(div,sValue);
+				// Add new div element to parent div element
+				par.appendChild(div);
+			}
+		}
+		par.removeChild(elem);
+	} else {
+		// No white space charaters in text string so can be added directly to parent DIV element.
+		par.removeChild(elem);
+		// Scan text for URL strings before adding text to div element
+		addtext(par,val);
+	}		
+}
+
+/* Add text - This function adds text to (inside) DIV element, but before doing so 
+searches for strings in the text that resemble URLs and converts them to hypertext
+elements and adds them to the div element as well. Searches for strings that begin 
+with "://" or "www." and converts them to <a href> elements. Add text function is 
+called by fixvalue function */ 
+ 
+function addtext(elem,txt) {
+	// Scan entire text value and test for presense of URL strings, 
+	// convert URL strings to Hypertext Elements, convert text strings
+	// between URL strings to Text Nodes and append all Hypertext
+	// Elements and Text Nodes to DIV element.
+	var start = new Number (0);
+	var end = new Number (0);
+	var url = new String("");
+	var urlpattern = /(\w+):\/\/([\w.]+)((\S)*)|www\.([\w.]+)((\S)*)/g;
+	var punctuation = /[\.\,\;\:\?\!\[\]\(\)\{\}\'\"]/;
+	var result
+	var elemText
+	while((result = urlpattern.exec(txt)) != null) {
+		var fullurl = result[0];
+		var protocol = result[1];
+		url = fullurl;
+		end = result.index;
+		if (start < end){
+			// Append Text Node to parent
+			elemText = document.createTextNode(txt.substring(start, end));
+			elem.appendChild(elemText);
+		}
+		var lastchar = fullurl.charAt(fullurl.length - 1);
+		// Remove last character from url if character is punctuation mark, bracket or parenthesis;
+		if (lastchar.match(punctuation) != null) {
+			// Remove next-to-last character from url if character is punctuation mark, bracket or parenthesis. For example the ")" in "),"
+			var nexttolastchar = fullurl.charAt(fullurl.length - 2);
+			if (nexttolastchar.match(punctuation) != null) {
+				url = fullurl.substring(0,fullurl.length - 2);		
+			} else {		
+				url = fullurl.substring(0,fullurl.length - 1);
+			}		
+		}
+		start = (result.index + url.length)
+		// Test to concatinate 'http://' to url if not already begininng with 'http://', 'https://' or 'ftp://'"
+		if (protocol == "") {
+			url = "http://" + url;
+		}
+		// Append Hypertext (anchor) Element to parent
+		elemText = document.createTextNode(url);
+		var elemAnchor = document.createElement("A");
+		elemAnchor.setAttribute("href", url);
+		elemAnchor.setAttribute("target", "viewer");
+		elemAnchor.appendChild(elemText);
+		elem.appendChild(elemAnchor);				
+	}
+	end = txt.length;
+	if (start < end) {
+		// Append Text Node that follows last Hypertext Element
+		elemText = document.createTextNode(txt.substring(start, end));
+		elem.appendChild(elemText);
+	}
+}
+  </script>
+	</head>
+	<body><a name="Top"></a><h1>Vermilion snapper distribution and abundance from SEAMAP Summer and Fall Shrimp/Groundfish Surveys (1987-2009)</h1>
+		<h2>Metadata:</h2>
+		<ul>
+			<li><a href="#Identification_Information">Identification_Information</a></li>
+			<li><a href="#Data_Quality_Information">Data_Quality_Information</a></li>
+			<li><a href="#Spatial_Data_Organization_Information">Spatial_Data_Organization_Information</a></li>
+			<li><a href="#Entity_and_Attribute_Information">Entity_and_Attribute_Information</a></li>
+			<li><a href="#Distributor1">Distribution_Information</a></li>
+			<li><a href="#Metadata_Reference_Information">Metadata_Reference_Information</a></li>
+		</ul><a name="Identification_Information"><hr>
+		</a><dl>
+			<dt><i>Identification_Information: </i></dt>
+			<dd>
+				<dl>
+					<dt><i>Citation: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>Citation_Information: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Originator: </i>Southeast Area Monitoring and Assessment Program</dt>
+									<dt><i>Publication_Date: </i>Unknown</dt>
+									<dt><i>Title: </i></dt>
+									<dd>Vermilion snapper distribution and abundance from SEAMAP Summer and Fall Shrimp/Groundfish Surveys (1987-2009)</dd>
+									<dt><i>Geospatial_Data_Presentation_Form: </i>vector digital data</dt>
+								</dl>
+							</dd>
+						</dl>
+					</dd>
+					<dt><i>Description: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>Abstract: </i></dt>
+							<dd>
+								<pre id="fixvalue">The data presented here are summarized from Southeast Area Monitoring and Assessment Program (SEAMAP) Summer and Fall Shrimp/Groundfish Surveys. The Summer Shrimp/Groundfish Survey started collecting data in 1982 while the Fall Shrimp/Groundfish Survey started collecting data in 1985. The survey design of both surveys was standardized in 1987. Therefore, the data presented here are from 1987 to 2009. Since 1987, the strategy for the trawl surveys has been that day/night sampling sites are chosen randomly in areas stratified by depth and statistical area. Trawl stations sampled by NMFS, Florida, Alabama, Mississippi, and Louisiana are made with a standard SEAMAP 40-ft net, and Texas samples with a 20-ft net. Depth strata consist of 1-fm intervals from 5 to 20 fm, a 2-fm interval from 20 to 22 fm, a 3-fm interval from 22 to 25 fm, 5 fm intervals from 25 to 50 fm and a 10-fm interval from 50 to 60 fm. Trawls are towed perpendicularly to the depth contours and cover the entire depth stratum on each station. Single tows are for a maximum of 55 minutes; for certain stations, a series of consecutive trawl tows is necessary to cover a given depth stratum, with a minimum individual tow across each stratum of 10 minutes and a maximum tow of 55 minutes. The Texas vessels tow 10 minutes parallel to the depth stratum. The survey design was changed in 2009 for NMFS samples and 2010 for all other SEAMAP participants except Texas. With the new survey design, trawls are towed for 30 minutes regardless of whether a depth stratum is covered or not and stations are no longer stratified on whether they are taken during the day or night. Until 2008, Florida did not participate in the trawl surveys and trawl samples were not taken off Florida. In 2008, Florida began participating in the Summer and Fall Shrimp/Groundfish Surveys and NMFS began trawling off Florida. All species of fishes and invertebrates from trawls are identified, enumerated, and weighed. Weights and individual measurements on selected species other than commercial shrimp are also recorded. Total counts from each trawl station are standardized to account for sampling effort and converted to a catch per unit effort (CPUE). CPUE is expressed as the number of fish caught per 1 hour of tow time for a 40 ft trawl. Mean CPUE was then summarized by 10 minute longitude by latitude blocks in which trawling occurred. Since Texas vessels do not strictly adhere to the survey design, data from Texas were not used for this summary.</pre>
+							</dd>
+							<dt><i>Purpose: </i></dt>
+							<dd>
+								<pre id="fixvalue">Fishery-independent trawl data from Southeast Area Monitoring and Assessment Program (SEAMAP) Summer and Fall Shrimp/Groundfish Surveys (1987 - 2009) are used to map the distribution, abundance and occurrence of vermilion snapper. Catches of vermilion snapper are standardized to account for sampling effort (CPUE) and expressed as the number of fish per 1 hour tow. Mean CPUE is then summarized by 10 minute longitude by latitude blocks in which trawling occurred.</pre>
+							</dd>
+							<dt><i>Supplemental_Information: </i></dt>
+							<dd>
+								<pre id="fixvalue">SEAMAP is a State/Federal/university program for collection, management and dissemination of fishery-independent data and information in the southeastern United States. Resource surveys began in the Gulf of Mexico in 1982. These surveys currently include Winter, Summer, and Fall Shrimp/Groundfish Surveys; Winter, Spring, and Fall Plankton Surveys; a Reeffish Survey; a Vertical Longline Survey; and an Inshore Bottom Longline Survey. These surveys collect a variety of biological and environmental information. All SEAMAP data are available upon request. For information concerning SEAMAP, please contact Jeff Rester of the Gulf States Marine Fisheries Commission at (228) 875-5912 or via e-mail at jrester@gsmfc.org.</pre>
+							</dd>
+						</dl>
+					</dd>
+					<dt><i>Time_Period_of_Content: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>Time_Period_Information: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Range_of_Dates/Times: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Beginning_Date: </i>1987</dt>
+											<dt><i>Ending_Date: </i>2009</dt>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+							<dt><i>Currentness_Reference: </i></dt>
+							<dd>
+								<pre id="fixvalue">ground condition</pre>
+							</dd>
+						</dl>
+					</dd>
+					<dt><i>Status: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>Progress: </i>Complete</dt>
+							<dt><i>Maintenance_and_Update_Frequency: </i>Unknown</dt>
+						</dl>
+					</dd>
+					<dt><i>Spatial_Domain: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>Bounding_Coordinates: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>West_Bounding_Coordinate: </i>-97</dt>
+									<dt><i>East_Bounding_Coordinate: </i>-82</dt>
+									<dt><i>North_Bounding_Coordinate: </i>30.5</dt>
+									<dt><i>South_Bounding_Coordinate: </i>25.8</dt>
+								</dl>
+							</dd>
+						</dl>
+					</dd>
+					<dt><i>Keywords: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>Theme: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Theme_Keyword_Thesaurus: </i>None</dt>
+									<dt><i>Theme_Keyword: </i>fish distribution</dt>
+									<dt><i>Theme_Keyword: </i>trawl</dt>
+									<dt><i>Theme_Keyword: </i>fishery independent data</dt>
+									<dt><i>Theme_Keyword: </i>SEAMAP</dt>
+									<dt><i>Theme_Keyword: </i>species distribution</dt>
+									<dt><i>Theme_Keyword: </i>fisheries</dt>
+									<dt><i>Theme_Keyword: </i>Atlantic croaker</dt>
+								</dl>
+							</dd>
+							<dt><i>Place: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Place_Keyword_Thesaurus: </i>None</dt>
+									<dt><i>Place_Keyword: </i>Texas</dt>
+									<dt><i>Place_Keyword: </i>Gulf of Mexico</dt>
+									<dt><i>Place_Keyword: </i>Mississippi</dt>
+									<dt><i>Place_Keyword: </i>United States</dt>
+									<dt><i>Place_Keyword: </i>Louisiana</dt>
+									<dt><i>Place_Keyword: </i>Alabama</dt>
+									<dt><i>Place_Keyword: </i>Florida</dt>
+								</dl>
+							</dd>
+						</dl>
+					</dd>
+					<dt><i>Access_Constraints: </i>None</dt>
+					<dt><i>Use_Constraints: </i></dt>
+					<dd>
+						<pre id="fixvalue">The Gulf States Marine Fisheries Commission makes no warranty regarding these data, expressed or implied, nor does the fact of distribution constitute such a warranty. The Gulf States Marine Fisheries Commission cannot assume liability for any damages caused by any errors or omissions in these data, nor as a result of the failure of these data to function on a particular system.</pre>
+					</dd>
+					<dt><i>Point_of_Contact: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>Contact_Information: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Contact_Organization_Primary: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Contact_Organization: </i>Gulf States Marine Fisheries Commission</dt>
+											<dt><i>Contact_Person: </i>Jeff Rester</dt>
+										</dl>
+									</dd>
+									<dt><i>Contact_Position: </i>Habitat/SEAMAP Coordinator</dt>
+									<dt><i>Contact_Address: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Address_Type: </i>unknown</dt>
+											<dt><i>Address: </i></dt>
+											<dd>
+												<pre id="fixvalue">2404 Government Street</pre>
+											</dd>
+											<dt><i>City: </i>Ocean Springs</dt>
+											<dt><i>State_or_Province: </i>MS</dt>
+											<dt><i>Postal_Code: </i>39564</dt>
+											<dt><i>Country: </i>US</dt>
+										</dl>
+									</dd>
+									<dt><i>Contact_Voice_Telephone: </i>228-875-5912</dt>
+									<dt><i>Contact_Electronic_Mail_Address: </i>jrester@gsmfc.org</dt>
+								</dl>
+							</dd>
+						</dl>
+					</dd>
+					<dt><i>Native_Data_Set_Environment: </i></dt>
+					<dd>Microsoft Windows Server 2008 R2 Version 6.1 (Build 7601) Service Pack 1; ESRI ArcGIS 10.0.2.3200</dd>
+				</dl>
+			</dd>
+		</dl><a href="#Top">Back to Top</a><a name="Data_Quality_Information"><hr>
+		</a><dl>
+			<dt><i>Data_Quality_Information: </i></dt>
+			<dd>
+				<dl>
+					<dt><i>Logical_Consistency_Report: </i></dt>
+					<dd>
+						<pre id="fixvalue">Not applicable</pre>
+					</dd>
+					<dt><i>Completeness_Report: </i></dt>
+					<dd>
+						<pre id="fixvalue">Not applicable</pre>
+					</dd>
+					<dt><i>Lineage: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>Process_Step: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Process_Description: </i></dt>
+									<dd>
+										<pre id="fixvalue">Fishery-independent catch data from Southeast Area Monitoring and Assessment Program (SEAMAP) Summer and Fall Shrimp/Groundfish Surveys (1987 - 2009) 40 foot trawls with 1.63 inch mesh are used to map the distribution, abundance and occurrence of juvenile red snapper (Lutjanus campechanus). Catches of red snapper were standardized to account for sampling effort (CPUE) and expressed as the number of fish per 1 hour tow. Mean catch per unit effort (CPUE) was then summarized by 10 minute longitude by latitude blocks in which trawling occurred.</pre>
+									</dd>
+									<dt><i>Process_Date: </i>Unknown</dt>
+									<dt><i>Process_Contact: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Contact_Information: </i></dt>
+											<dd>
+												<dl>
+													<dt><i>Contact_Organization_Primary: </i></dt>
+													<dd>
+														<dl>
+															<dt><i>Contact_Organization: </i>Gulf States Marine Fisheries Commission</dt>
+															<dt><i>Contact_Person: </i>Jeff Rester</dt>
+														</dl>
+													</dd>
+													<dt><i>Contact_Position: </i>Habitat/SEAMAP Coordinator</dt>
+													<dt><i>Contact_Address: </i></dt>
+													<dd>
+														<dl>
+															<dt><i>Address_Type: </i>unknown</dt>
+															<dt><i>Address: </i></dt>
+															<dd>
+																<pre id="fixvalue">2404 Government Street</pre>
+															</dd>
+															<dt><i>City: </i>Ocean Springs</dt>
+															<dt><i>State_or_Province: </i>MS</dt>
+															<dt><i>Postal_Code: </i>39564</dt>
+															<dt><i>Country: </i>US</dt>
+														</dl>
+													</dd>
+													<dt><i>Contact_Voice_Telephone: </i>228-875-5912</dt>
+													<dt><i>Contact_Electronic_Mail_Address: </i>jrester@gsmfc.org</dt>
+												</dl>
+											</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+						</dl>
+					</dd>
+				</dl>
+			</dd>
+		</dl><a href="#Top">Back to Top</a><a name="Spatial_Data_Organization_Information"><hr>
+		</a><dl>
+			<dt><i>Spatial_Data_Organization_Information: </i></dt>
+			<dd>
+				<dl>
+					<dt><i>Direct_Spatial_Reference_Method: </i>Vector</dt>
+					<dt><i>Point_and_Vector_Object_Information: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>SDTS_Terms_Description: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>SDTS_Point_and_Vector_Object_Type: </i>GT-polygon composed of chains</dt>
+									<dt><i>Point_and_Vector_Object_Count: </i>693</dt>
+								</dl>
+							</dd>
+						</dl>
+					</dd>
+				</dl>
+			</dd>
+		</dl><a href="#Top">Back to Top</a><a name="Entity_and_Attribute_Information"><hr>
+		</a><dl>
+			<dt><i>Entity_and_Attribute_Information: </i></dt>
+			<dd>
+				<dl>
+					<dt><i>Detailed_Description: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>Entity_Type: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Entity_Type_Label: </i>10min_trawl_vermilionsnapper</dt>
+									<dt><i>Entity_Type_Definition: </i></dt>
+									<dd>Shapefile showing distribution of sampling effort</dd>
+									<dt><i>Entity_Type_Definition_Source: </i></dt>
+									<dd>SEAMAP</dd>
+								</dl>
+							</dd>
+							<dt><i>Attribute: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Attribute_Label: </i>FID</dt>
+									<dt><i>Attribute_Definition: </i></dt>
+									<dd>
+										<pre id="fixvalue">Internal feature number.</pre>
+									</dd>
+									<dt><i>Attribute_Definition_Source: </i></dt>
+									<dd>
+										<pre id="fixvalue">ESRI</pre>
+									</dd>
+									<dt><i>Attribute_Domain_Values: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Unrepresentable_Domain: </i></dt>
+											<dd>Sequential unique whole numbers that are automatically generated.</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+							<dt><i>Attribute: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Attribute_Label: </i>Shape</dt>
+									<dt><i>Attribute_Definition: </i></dt>
+									<dd>
+										<pre id="fixvalue">Feature geometry.</pre>
+									</dd>
+									<dt><i>Attribute_Definition_Source: </i></dt>
+									<dd>
+										<pre id="fixvalue">ESRI</pre>
+									</dd>
+									<dt><i>Attribute_Domain_Values: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Unrepresentable_Domain: </i></dt>
+											<dd>Coordinates defining the features.</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+							<dt><i>Attribute: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Attribute_Label: </i>LON10</dt>
+									<dt><i>Attribute_Definition: </i></dt>
+									<dd>
+										<pre id="fixvalue">Central latitude of a 10 longitude by latitude block</pre>
+									</dd>
+									<dt><i>Attribute_Definition_Source: </i></dt>
+									<dd>
+										<pre id="fixvalue">SEAMAP</pre>
+									</dd>
+									<dt><i>Attribute_Domain_Values: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Range_Domain: </i></dt>
+											<dd>
+												<dl>
+													<dt><i>Range_Domain_Minimum: </i>-180</dt>
+													<dt><i>Range_Domain_Maximum: </i>180</dt>
+												</dl>
+											</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+							<dt><i>Attribute: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Attribute_Label: </i>LAT10</dt>
+									<dt><i>Attribute_Definition: </i></dt>
+									<dd>
+										<pre id="fixvalue">Central latitude of a 10 minute longitude by latitude block</pre>
+									</dd>
+									<dt><i>Attribute_Definition_Source: </i></dt>
+									<dd>
+										<pre id="fixvalue">SEAMAP</pre>
+									</dd>
+									<dt><i>Attribute_Domain_Values: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Range_Domain: </i></dt>
+											<dd>
+												<dl>
+													<dt><i>Range_Domain_Minimum: </i>-90</dt>
+													<dt><i>Range_Domain_Maximum: </i>90</dt>
+												</dl>
+											</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+							<dt><i>Attribute: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Attribute_Label: </i>GRID10ID</dt>
+									<dt><i>Attribute_Definition: </i></dt>
+									<dd>
+										<pre id="fixvalue">free text</pre>
+									</dd>
+									<dt><i>Attribute_Definition_Source: </i></dt>
+									<dd>
+										<pre id="fixvalue">SEAMAP</pre>
+									</dd>
+									<dt><i>Attribute_Domain_Values: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Unrepresentable_Domain: </i></dt>
+											<dd>free text</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+							<dt><i>Attribute: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Attribute_Label: </i>TAXON</dt>
+									<dt><i>Attribute_Definition: </i></dt>
+									<dd>
+										<pre id="fixvalue">Species name</pre>
+									</dd>
+									<dt><i>Attribute_Definition_Source: </i></dt>
+									<dd>
+										<pre id="fixvalue">SEAMAP</pre>
+									</dd>
+									<dt><i>Attribute_Domain_Values: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Unrepresentable_Domain: </i></dt>
+											<dd>free text</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+							<dt><i>Attribute: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Attribute_Label: </i>N</dt>
+									<dt><i>Attribute_Definition: </i></dt>
+									<dd>
+										<pre id="fixvalue">free text</pre>
+									</dd>
+									<dt><i>Attribute_Definition_Source: </i></dt>
+									<dd>
+										<pre id="fixvalue">SEAMAP</pre>
+									</dd>
+									<dt><i>Attribute_Domain_Values: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Unrepresentable_Domain: </i></dt>
+											<dd>free text</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+							<dt><i>Attribute: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Attribute_Label: </i>CPUE</dt>
+									<dt><i>Attribute_Definition: </i></dt>
+									<dd>
+										<pre id="fixvalue">free text</pre>
+									</dd>
+									<dt><i>Attribute_Definition_Source: </i></dt>
+									<dd>
+										<pre id="fixvalue">SEAMAP</pre>
+									</dd>
+									<dt><i>Attribute_Domain_Values: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Unrepresentable_Domain: </i></dt>
+											<dd>free text</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+							<dt><i>Attribute: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Attribute_Label: </i>STDERR</dt>
+									<dt><i>Attribute_Definition: </i></dt>
+									<dd>
+										<pre id="fixvalue">free text</pre>
+									</dd>
+									<dt><i>Attribute_Definition_Source: </i></dt>
+									<dd>
+										<pre id="fixvalue">SEAMAP</pre>
+									</dd>
+									<dt><i>Attribute_Domain_Values: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Unrepresentable_Domain: </i></dt>
+											<dd>free text</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+							<dt><i>Attribute: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Attribute_Label: </i>MIN</dt>
+									<dt><i>Attribute_Definition: </i></dt>
+									<dd>
+										<pre id="fixvalue">SEAMAP</pre>
+									</dd>
+									<dt><i>Attribute_Definition_Source: </i></dt>
+									<dd>
+										<pre id="fixvalue">SEAMAP</pre>
+									</dd>
+									<dt><i>Attribute_Domain_Values: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Unrepresentable_Domain: </i></dt>
+											<dd>free text</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+							<dt><i>Attribute: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Attribute_Label: </i>MAX</dt>
+									<dt><i>Attribute_Definition: </i></dt>
+									<dd>
+										<pre id="fixvalue">free text</pre>
+									</dd>
+									<dt><i>Attribute_Definition_Source: </i></dt>
+									<dd>
+										<pre id="fixvalue">SEAMAP</pre>
+									</dd>
+									<dt><i>Attribute_Domain_Values: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Unrepresentable_Domain: </i></dt>
+											<dd>free text</dd>
+										</dl>
+									</dd>
+								</dl>
+							</dd>
+						</dl>
+					</dd>
+				</dl>
+			</dd>
+		</dl><a href="#Top">Back to Top</a><a name="Distributor1"><hr>
+		</a><dl>
+			<dt><i>Distribution_Information: </i></dt>
+			<dd>
+				<dl>
+					<dt><i>Distributor: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>Contact_Information: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Contact_Organization_Primary: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Contact_Organization: </i>Gulf States Marine Fisheries Commission</dt>
+											<dt><i>Contact_Person: </i>Jeff Rester</dt>
+										</dl>
+									</dd>
+									<dt><i>Contact_Position: </i>Habitat/SEAMAP Coordinator</dt>
+									<dt><i>Contact_Address: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Address_Type: </i>unknown</dt>
+											<dt><i>Address: </i></dt>
+											<dd>
+												<pre id="fixvalue">2404 Government Street</pre>
+											</dd>
+											<dt><i>City: </i>Ocean Springs</dt>
+											<dt><i>State_or_Province: </i>MS</dt>
+											<dt><i>Postal_Code: </i>39564</dt>
+											<dt><i>Country: </i>US</dt>
+										</dl>
+									</dd>
+									<dt><i>Contact_Voice_Telephone: </i>228-875-5912</dt>
+									<dt><i>Contact_Electronic_Mail_Address: </i>jrester@gsmfc.org</dt>
+								</dl>
+							</dd>
+						</dl>
+					</dd>
+					<dt><i>Resource_Description: </i>Summarized Data and Maps</dt>
+					<dt><i>Distribution_Liability: </i></dt>
+					<dd>
+						<pre id="fixvalue">See access and use constraints information.</pre>
+					</dd>
+				</dl>
+			</dd>
+		</dl><a href="#Top">Back to Top</a><a name="Metadata_Reference_Information"><hr>
+		</a><dl>
+			<dt><i>Metadata_Reference_Information: </i></dt>
+			<dd>
+				<dl>
+					<dt><i>Metadata_Date: </i>20120112</dt>
+					<dt><i>Metadata_Contact: </i></dt>
+					<dd>
+						<dl>
+							<dt><i>Contact_Information: </i></dt>
+							<dd>
+								<dl>
+									<dt><i>Contact_Organization_Primary: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Contact_Organization: </i>Gulf States Marine Fisheries Commission</dt>
+											<dt><i>Contact_Person: </i>Jeff Rester</dt>
+										</dl>
+									</dd>
+									<dt><i>Contact_Position: </i>Habitat/SEAMAP Coordinator</dt>
+									<dt><i>Contact_Address: </i></dt>
+									<dd>
+										<dl>
+											<dt><i>Address_Type: </i>unknown</dt>
+											<dt><i>Address: </i></dt>
+											<dd>
+												<pre id="fixvalue">2404 Government Street</pre>
+											</dd>
+											<dt><i>City: </i>Ocean Springs</dt>
+											<dt><i>State_or_Province: </i>MS</dt>
+											<dt><i>Postal_Code: </i>39564</dt>
+											<dt><i>Country: </i>US</dt>
+										</dl>
+									</dd>
+									<dt><i>Contact_Voice_Telephone: </i>228-875-5912</dt>
+									<dt><i>Contact_Electronic_Mail_Address: </i>jrester@gsmfc.org</dt>
+								</dl>
+							</dd>
+						</dl>
+					</dd>
+					<dt><i>Metadata_Standard_Name: </i>FGDC Content Standard for Digital Geospatial Metadata</dt>
+					<dt><i>Metadata_Standard_Version: </i>FGDC-STD-001-1998</dt>
+					<dt><i>Metadata_Time_Convention: </i>local time</dt>
+				</dl>
+			</dd>
+		</dl><a href="#Top">Back to Top</a></body>
+</html>

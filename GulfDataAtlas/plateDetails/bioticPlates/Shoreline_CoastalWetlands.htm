@@ -1,0 +1,177 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal Characterization</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Land-cover changes due to human population growth and attendant impacts on fishery habitats, adjacent uplands, water quality, and living marine resources are occurring at an accelerated rate; therefore, new ways of monitoring are required. Increased imperviousness often accompanies increased human population growth, which enhances urban runoff and increases the loading of chemical, microbial, and nutrient pollution into the Gulf of Mexico. Ultimately, this may adversely affect the health and well being of many marine species and may also affect public health. Information about the extent and rate of habitat degradation and loss is needed for sound resource management decisions. Quantifying changes in the areal extent of wetlands and adjacent uplands are critical for linking land-based human activities to coastal ocean productivity. The <a href="javascript:getExternalLink('http://www.cop.noaa.gov/stressors/resourcelanduse/past/lu-ccap.aspx')"><font color="blue"><u>Coastal Change Analysis Program</u></font></a> (C-CAP) uses satellite imagery and aerial photography to monitor areal extent, functional status, and change in these critical habitats. The C-CAP data, however, will not identify individual species.
+        <p/>
+        The C-CAP produces a nationally standardized database of land cover and land-change information for the coastal regions of the U.S. C-CAP products provide inventories of coastal intertidal areas, wetlands, and adjacent uplands, with the goal of monitoring these habitats by updating the land-cover maps every 5 years. C-CAP products are developed using multiple dates of remotely sensed imagery and consist of raster-based, land-cover maps for each date of analysis, as well as a file that highlights changes that occurred between these dates and where the changes were located.
+        <p/>
+        The C-CAP data sets identify regional landscape patterns and major functional niches (habitat) and are used for environmental impact assessment, urban planning, and zoning applications. This national and regional data set should be used only as a screening tool for local or site-specific management decisions. Small features and changes should be verified with a data source that has higher resolution. 
+        <p/>
+        This map shows the <a href="javascript:createSubPlate('CCAP - 2010')"><font color="red"><u>2010 analysis</u></font></a> of land cover and land cover change data produced for the U.S. Gulf of Mexico coastal region using 30 meter resolution Landsat Thematic Mapper and Landsat Enhanced Thematic Mapper satellite imagery. Also available is the analysis from <a href="javascript:createSubPlate('CCAP - 2006')"><font color="red"><u>2006</u></font></a>, <a href="javascript:createSubPlate('CCAP - 2001')"><font color="red"><u>2001</u></font></a>, and <a href="javascript:createSubPlate('CCAP - 1996')"><font color="red"><u>1996</u></font></a>.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Herold N. Coastal Characterization In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2014. [4 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal Change Analysis Program</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/bioticLegends/CCAP.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Coastal Change Analysis Program</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>1) Alabama
+                <ul id="noindent">
+                  <li>
+                    <table class="mediumTextNormal">
+                    <tr><td width="40"><u>Year</u></td><td width="80" align="center"><u>FGDC</u></td><td width="80" align="center"><u>ISO</u></td></tr>
+                    <tr><td width="40">1996</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/AL_96_LC_z46.html')" title="Click to view <u>FGDC</u> metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/AL_96_LC_z46.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2001</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/AL_01_LC_z46.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/AL_01_LC_z46.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2006</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/AL_06_LC_z46.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/AL_06_LC_z46.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2010</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/2010_AL_MS_C_CAP.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/2010_AL_MS_C_CAP.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    </table>
+                  </li>
+                </ul>
+              </li>
+              <li>2) Florida
+                <ul id="noindent">
+                  <li>
+                    <table class="mediumTextNormal">
+                    <tr><td width="40"><u>Year</u></td><td width="80" align="center"><u>FGDC</u></td><td width="80" align="center"><u>ISO</u></td></tr>
+                    <tr><td width="40">1996</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/FL_96_LC_z46.html')" title="Click to Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/FL_96_LC_z46.html')" title="Click to Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40"></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/FL_96_LC_z5558.html')" title="Click to view FGDC metadata"><img src="images/zones55_58.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/FL_96_LC_z5558.html')" title="Click to view ISO metadata"><img src="images/zones55_58.png" height="15" width="80"></a></td></tr>
+                    <tr><td width="40"></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/FL_96_LC_z56.html')" title="Click to view FGDC metadata"><img src="images/zone56.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/FL_96_LC_z56.html')" title="Click to view ISO metadata"><img src="images/zone56.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2001</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/FL_01_LC_z46.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/FL_01_LC_z46.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40"></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/FL_01_LC_z5558.html')" title="Click to view FGDC metadata"><img src="images/zones55_58.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/FL_01_LC_z5558.html')" title="Click to view ISO metadata"><img src="images/zones55_58.png" height="15" width="80"></a></td></tr>
+                    <tr><td width="40"></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/FL_01_LC_z56.html')" title="Click to view FGDC metadata"><img src="images/zone56.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/FL_01_LC_z56.html')" title="Click to view FGDC metadata"><img src="images/zone56.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2006</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/FL_06_LC_z46.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/FL_06_LC_z46.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40"></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/FL_06_LC_z55.html')" title="Click to view FGDC metadata"><img src="images/zone55.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/FL_06_LC_z55.html')" title="Click to view ISO metadata"><img src="images/zone55.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40"></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/FL_06_LC_z56.html')" title="Click to view FGDC metadata"><img src="images/zone56.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/FL_06_LC_z56.html')" title="Click to view ISO metadata"><img src="images/zone56.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2010</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/2010_FL_CCAP.html')" title="Click to view FGDC metadata"><img src="images/zones46_55_56.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/2010_FL_CCAP.html')" title="Click to view ISO metadata"><img src="images/zones46_55_56.png" height="15" width="80"></a></td></tr>
+                    </table>
+                  </li>
+                </ul>
+              </li>
+              <li>3) Louisiana
+                <ul id="noindent">
+                  <li>
+                    <table class="mediumTextNormal">
+                    <tr><td width="40"><u>Year</u></td><td width="80" align="center"><u>FGDC</u></td><td width="80" align="center"><u>ISO</u></td></tr>
+                    <tr><td width="40">1996</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/LA_96_LC_z36z37.html')" title="Click to view FGDC metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/LA_96_LC_z36z37.html')" title="Click to view ISO metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td></a></td></tr>
+                    <tr><td width="40"></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/LA_96_LC_z46.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/LA_96_LC_z46.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2001</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/LA_01_LC_z36z37.html')" title="Click to view FGDC metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/LA_01_LC_z36z37.html')" title="Click to view ISO metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td></tr>
+                    <tr><td width="40"></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/LA_01_LC_z46.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/LA_01_LC_z46.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2006</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/LA_06_LC_z36z37.html')" title="Click to view FGDC metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/LA_06_LC_z36z37.html')" title="Click to view ISO metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td></tr>
+                    <tr><td width="40"></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/LA_06_LC_z46.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/LA_06_LC_z46.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2010</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/2010_TX_LA_CCAP.html')" title="Click to view FGDC metadata"><img src="images/zones36_37_46.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/2010_TX_LA_CCAP.html')" title="Click to view ISO metadata"><img src="images/zones36_37_46.png" height="15" width="80"></a></td></tr>
+                    </table>
+                  </li>
+                </ul>
+              </li>
+              <li>4) Mississippi
+                <ul id="noindent">
+                  <li>
+                    <table class="mediumTextNormal">
+                    <tr><td width="40"><u>Year</u></td><td width="80" align="center"><u>FGDC</u></td><td width="80" align="center"><u>ISO</u></td></tr>
+                    <tr><td width="40">1996</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/MS_96_LC_z46.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/MS_96_LC_z46.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2001</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/MS_01_LC_z36z37.html')" title="Click to view FGDC metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/MS_01_LC_z36z37.html')" title="Click toview ISO metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td></tr>
+                    <tr><td width="40"></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/MS_01_LC_z46.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/MS_01_LC_z46.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2006</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/MS_06_LC_z36z37.html')" title="Click to view FGDC metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/MS_06_LC_z36z37.html')" title="Click to view ISO metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td></tr>
+                    <tr><td width="40"></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/MS_06_LC_z46.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/MS_06_LC_z46.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    <tr><td width="40">2010</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/2010_AL_MS_C_CAP.html')" title="Click to view FGDC metadata"><img src="images/zone46.png" height="15" width="60"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/2010_AL_MS_C_CAP.html')" title="Click to view ISO metadata"><img src="images/zone46.png" height="15" width="60"></a></td></tr>
+                    </table>
+                  </li>
+                </ul>
+              </li>
+              <li>5) Texas
+                <ul id="noindent">
+                  <li>
+                    <table class="mediumTextNormal">
+                    <tr><td width="40"><u>Year</u></td><td width="80" align="center"><u>FGDC</u></td><td width="80" align="center"><u>ISO</u></td></tr>
+                    <tr><td width="40">1996</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/TX_96_LC_z36z37.html')" title="Click to view FGDC metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/TX_96_LC_z36z37.html')" title="Click to view ISO metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td></tr>
+                    <tr><td width="40">2001</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/TX_01_LC_z36z37.html')" title="Click to view FGDC metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/TX_01_LC_z36z37.html')" title="Click to view ISO metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td></tr>
+                    <tr><td width="40">2006</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/TX_06_LC_z36z37.html')" title="Click to view FGDC metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/TX_06_LC_z36z37.html')" title="Click to view ISO metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td></tr>
+                    <tr><td width="40">2010</td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/2010_TX_LA_CCAP.html')" title="Click to view FGDC metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td><td width="80"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/2010_TX_LA_CCAP.html')" title="Click to view ISO metadata"><img src="images/zones36_37.png" height="15" width="80"></a></td></tr>
+                    </table>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Coastal Characterization (1996, 2001, 2006, 2010)</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/CCAP/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">NOAA Coastal Services Center</td><td><a href="javascript:getDataDownloadLink('http://www.csc.noaa.gov/digitalcoast/dataregistry/#/ccapregional')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul> 
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Forested Wetlands</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/bioticPlates/ForestedWetlands-2_01.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Nonforested Wetlands</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/bioticPlates/NonforestedWetlands-2_02.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>         
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

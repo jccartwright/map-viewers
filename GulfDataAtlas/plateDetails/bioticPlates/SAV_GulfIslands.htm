@@ -1,0 +1,97 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Submerged Aquatic Vegetation</center></div>
+        <div class="smallTextBold"><center>Gulf Islands - Mississippi District</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Mapping areas of seagrass is crucial, in part because the extent of seagrass habitat can serve as a general indicator of coastal ecosystem health (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#SAV')"><font color="blue"><u>Green and Short, 2003</u></font></a>; <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#SAV')"><font color="blue"><u>Mumby et al., 1997</u></font></a>). Federally designated as Essential Fisheries Habitat, seagrasses provide nurseries for juvenile finfish and shellfish and are an important food source for many marine species and wading birds. They also increase water clarity through sediment stabilization, increase nutrient uptake and sequestration, as well as increase dissolved oxygen while reducing atmospheric carbon dioxide via photosynthesis. 
+        <p/>
+        These Mississippi barrier islands were impacted dramatically by Hurricane Katrina on August 29, 2005.
+        <p/>
+        <a href="javascript:openGraphicLandscape('/website/DataAtlas/products/bioticPlates/MSBarrierIslands_SeagrassChange/CatIsland_2003-2006.pdf')"><font color="blue"><u>Cat Island</u></font></a>&nbsp;<img src="images/incident_red.png" height="20" width="20"><br/><a href="javascript:openGraphicLandscape('/website/DataAtlas/products/bioticPlates/MSBarrierIslands_SeagrassChange/ShipIsland_2003-2006.pdf')"><font color="blue"><u>West and East Ship Island</u></font></a>&nbsp;<img src="images/incident_yellow.png" height="20" width="20"><br/><a href="javascript:openGraphicLandscape('/website/DataAtlas/products/bioticPlates/MSBarrierIslands_SeagrassChange/HornIsland_2003-2006.pdf')"><font color="blue"><u>Horn Island</u></font></a>&nbsp;<img src="images/incident_magenta.png" height="20" width="20"><br/><a href="javascript:openGraphicLandscape('/website/DataAtlas/products/bioticPlates/MSBarrierIslands_SeagrassChange/PetitBoisIsland_2003-2006.pdf')"><font color="blue"><u>Petit Bois Island</u></font></a>&nbsp;<img src="images/incident_green.png" height="20" width="20">  
+        <p/>
+        To determine potential impacts of the storm on island seagrass populations, seagrass maps were developed using historical digitized, aerial true-color photography acquired on October 15, 2003 (0.3-m resolution). The photography was compared with digital multispectral imagery acquired on October 29, 2006 (1-m resolution). Seagrass areal coverage and distribution were quantified via digital image processing and visual image interpretation. Results were compared between the two dates to determine post-Katrina change. Assuming that seagrass coverage immediately before Katrina was similar to that determined for 2003, the generally greater coverage in 2006 suggests that the storm impact served to stimulate seagrass growth (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#SAV')"><font color="blue"><u>Carter et al., 2009</u></font></a>).
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Carter G. Submerged Aquatic Vegetation - Gulf Islands, Mississippi In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Submerged Aquatic Vegetation</center></div>
+        <div class="smallTextBold"><center>Gulf Islands - Mississippi District</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center>
+        <table colspan="2" cellpadding="1" cellspacing="1" class="smallText3" border="1">
+        <tr><td align="center" width="50"><img src="images/incident_red.png" height="20" width="20"></td><td align="center">Cat Island</td></tr>
+        <tr><td align="center" width="50"><img src="images/incident_yellow.png" height="20" width="20"></td><td align="center">West and East Ship Island</td></tr>
+        <tr><td align="center" width="50"><img src="images/incident_magenta.png" height="20" width="20"></td><td align="center">Horn Island</td></tr>
+        <tr><td align="center" width="50"><img src="images/incident_green.png" height="20" width="20"></td><td align="center">Petit Bois Island</td></tr>
+        </table>
+        </center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Submerged Aquatic Vegetation</center></div>
+        <div class="smallTextBold"><center>Gulf Islands - Mississippi District</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Cat Island, MS</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/SeagrassChange_CatIsland.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/SeagrassChange_CatIsland.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Horn Island, MS</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/SeagrassChange_HornIsland.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/SeagrassChange_HornIsland.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Petit Bois Island, MS</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/SeagrassChange_PetitBoisIsland.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/SeagrassChange_PetitBoisIsland.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Ship Island, MS</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/SeagrassChange_ShipIsland.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/SeagrassChange_ShipIsland.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Cat Island, MS</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/SeagrassChange_CatIsland.zip')" title="Click to download ESRI shapefile (5.2 MB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Horn Island, MS</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/SeagrassChange_HornIsland.zip')" title="Click to download ESRI shapefile (11 MB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Petit Bois Island, MS</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/SeagrassChange_PetitBoisIsland.zip')" title="Click to download ESRI shapefile (3.2 MB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Ship Island, MS</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/SeagrassChange_ShipIsland.zip')" title="Click to download ESRI shapefile (3.1 MB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

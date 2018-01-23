@@ -1,0 +1,113 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Submerged Aquatic Vegetation</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Seagrass ecosystems are among the most productive and valuable benthic habitats found in the in the waters of the Gulf of Mexico region. They support a diverse array of ecological and habitat functions, as well as various human activities along the Gulf Coast. Maintaining and improving the health of seagrass ecosystems and all coastal and marine ecosystems are essential for ensuring the ecological and economic health of the Gulf of Mexico region. 
+        <p/>
+        Seagrass habitats provide nursery areas for extensive recreationally and commercially significant marine life by providing spawning and foraging habitat for many species of finfish, shellfish, and crustaceans. Smaller species and juveniles find protection from predation in seagrass canopy cover. Seagrasses provide food and feeding habitat for wintering waterfowl and other water birds. Seagrasses also support many threatened and endangered species, such as sea turtles, manatees, and bottlenose dolphins, which eat seagrass leaves and/or feed on smaller animals found in seagrass habitats. Epiphytes and benthic organisms attach to and colonize seagrasses, providing food for many marine animals. The extensive plant biomass of seagrass beds feeds bacteria and microscopic animals at the base of a complex food web. 
+        <p/>
+        Seagrass roots and rhizomes form an intricately interwoven, underground mat that stabilizes the shallow bottom sediment on the seafloor, while simultaneously contributing to water clarity and decreasing wave energy by trapping sediment through waves and currents in their leaves. Trapping sediment cleanses the water from fine particles, and uptake of dissolved nutrients by seagrass will reduce the overgrowth of algae as well, thereby significantly improving water quality.
+        <p/>
+        Changes in seagrass habitat distribution can indicate decreased water quality and poor overall health of coastal waters. Loss of seagrass habitats can lead not only to decreased water quality, but also to increased water column turbidity, shoreline erosion, and the loss of the varied habitat functions that seagrass ecosystems provide. 
+        <p/>
+        The many valuable functions provided by seagrass habitats support the ecosystem and contribute to economic activities. Commercial and recreational fisheries and tourism are several of the top industries in the Gulf region. These activities bring hundreds of millions of dollars into local communities and are directly influenced by the health and productivity of such marine ecosystems as seagrass habitats. 
+        <p/>
+        For more details about seagrass status and trends in the Gulf of Mexico, click on this <a href="javascript:getExternalLink('http://pubs.usgs.gov/sir/2006/5287/')"><font color="blue"><u>link</u></font></a>.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Handley L. Submerged Aquatic Vegetation In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Submerged Aquatic Vegetation</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/bioticLegends/SAV_Gulfwide.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Submerged Aquatic Vegetation</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">SAV - TX</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/TX_Seagrass_Merge.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/TX_Seagrass_Merge.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">SAV - AL, FL, MS, TX</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Seagrass_AL_FL_MS_TX.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Seagrass_AL_FL_MS_TX.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">SAV - USGS</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/USGS_GulfwideSAV_1940_2003.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/USGS_GulfwideSAV_1940_2003.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Submerged Aquatic Vegetation</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SAV_Gulfwide/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">SAV - TX</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownloadLink('https://www.tpwd.state.tx.us/gis/seagrass/')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">SAV - Gulfwide</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/GulfwideSAV.zip')" title="Click to download ESRI shapefile (59 MB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">SAV - USGS</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownloadLink('http://sabdata.cr.usgs.gov/sabnet_pub/pub_sab_app.aspx')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Seagrasses</td><td><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/bioticPlates/Seagrasses-2_03.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Water Quality<br/>Nutrients in Estuaries </center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        The health of the Gulf largely depends on the quality of water discharged from upstream watersheds into the estuaries around the gulf. Much of the excess nutrients from urban and agricultural runoff discharges into bays, estuaries, and sounds, and eventually ends up in the Gulf of Mexico. These nutrients contribute to problems such as hypoxia and red tides.
+        <p/>
+        Statistical methods are often used to explain in-stream measurements of water quality (such as nutrients) in relation to upstream sources and watershed properties (soil characteristics, rainfall, and land use) that influence the transport of nutrients to streams and their delivery to receiving water bodies such as estuaries. U.S. Geological Survey scientists developed a statistical model that integrates monitoring data with landscape information. This model, known as SPARROW (SPAtially-Referenced Regression On Watershed attributes), is watershed-based and designed for use in predicting long-term average values of water characteristics, such as concentrations of nutrients and other selected constituents that are delivered to downstream receiving waters.
+        <p/>
+        In the table below, maps showing the estimated delivered yields and delivered loads of nitrogen and phosphorus as estimated by SPARROW for the water body areas as defined by the NOAA Coastal Assessment Framework (CAF) for the estuaries, bays, and sounds along the U.S. Gulf of Mexico coast in 2002 are available. Delivered yield is the estimated amount of nutrients delivered to an estuary divided by the area of the upstream drainage area that drains to the estuary. Delivered load is the amount of nutrients estimated to be delivered from the upstream drainage basin to each of the estuaries draining into the Gulf of Mexico. These estimates are corrected to match monitored load data at the most downstream monitoring site available. Examples of nutrient source terms used in the SPARROW models include livestock manure, fertilizer applied to crops, runoff from urban land, combined municipal and wastewater discharge, and atmospheric desposition.
+        <p/>
+        <center>
+        <table colspan="2" cellpadding="1" cellspacing="1" class="smallText3" border="1">
+        <tr><td align="center"><b>Nitrogen</b></td><td align="center"><b>Phosphorus</b></td></tr>
+        <tr><td><a href="javascript:createSubPlate('Water Quality - Nitrogen - Total Yield')"><font color="red"><u>Total Yield Delivered</u></font></a></td><td><a href="javascript:createSubPlate('Water Quality - Phosphorus - Total Yield')"><font color="red"><u>Total Yield Delivered</u></font></a></td></tr>
+        <tr><td><a href="javascript:createSubPlate('Water Quality - Nitrogen - Total Load')"><font color="red"><u>Total Load Delivered</u></font></a></td><td><a href="javascript:createSubPlate('Water Quality - Phosphorus - Total Load')"><font color="red"><u>Total Load Delivered</u></font></a></td></tr>
+        </table>
+        </center>
+        <p/>
+        An <a href="javascript:getExternalLink('http://water.usgs.gov/nawqa/sparrow/mrb/gom/')"><font color="blue"><u>online decision support system</u></font></a> is also available with SPARROW. Models are available for the southeastern and south central parts of the United States. Explore the regional SPARROW models online to determine nutrient sources, track nutrient transport to downstream reservoirs and estuaries of interest, and evaluate combinations of nutrient reduction scenarios. Additional water quality and quantity data can be retrieved as well.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Dausman A, Woodside M. Nutrients in Estuarine Waters In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [4 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Water Quality <br/>Nutrients in Estuaries</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/environmentalLegends/NAWQA_Nitrogen_TotalYieldDelivered.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Water Quality - Nutrients in Estuaries</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Nutrients - Phosphorus and Nitrogen</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/USGS_NAWQA_NP_2002.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/USGS_NAWQA_NP_2002.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Nutrients - Nitrogen and Phosphorus - Total Load and Total Yield Delivered</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NAWQA_Nitrogen_Phosphorus_GOM/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Nutrients - Phosphorus and Nitrogen</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/environmental-quality/documents/USGS_WQ_Nutrients.zip')" title="Click to download ESRI shapefiles (500 KB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">USGS Water Quality Assessment Program</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownloadLink('http://water.usgs.gov/nawqa/sparrow/mrb/gom/')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>     
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Eastern Oyster</center></div>
+        <div class="smallTextBold"><center><i>Crassostrea virginica Ostion americano</i></center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        The Eastern oyster (<i>Crassostrea virginica Ostion Americano</i>), a bivalve mollusc of the family Ostreidae, is found in the western Atlantic from the Gulf of St. Lawrence to the Yucatan Peninsula. In the Gulf of Mexico, this species occurs throughout estuaries, shallow nearshore waters, and on reefs located near river mouths. This species is commercially harvested throughout its range for its meat, the seasonality, largely based on water quality, for harvesting being state regulated. The species is also harvested recreationally. The fishery for the species is the fourth largest in the U.S. Gulf of Mexico and there is also a commercial fishery in Mexican waters. The Eastern oyster is not a Council-managed fishery species; however, NOAA, along with other federal agencies, contributes resource protection recommendations under permitting-requiring activities through the Clean Water Act or Rivers and Harbors Act.
+        <p/>
+        Populations of the Eastern oyster are found in the large estuarine bays and sounds of the Gulf with most concentrations found in waters <10 m deep. Sedentary in character, this benthic invertebrate attaches in clusters to shell reefs, firm mud/shell bottoms and other hard substrates. Spawning also occurs in estuarine habitats. In the Gulf of Mexico, April to October are the most active months, although spawning has been reported during all months except February and March. Nursery areas for pelagic larvae and settled juveniles are found in estuarine waters.
+        <p/>
+        The Eastern oyster filter-feeds principally on small unicellular algae and incidentally on suspended detrital particles. It is found in association with numerous predators, commensals, and parasites. Its planktonic larvae drift with the tides and currents until they settle on solid substrate. 
+        <p/>
+        Oysters are  particularly vulnerable to microbial pollution because they may also bioaccumulate bacteria from pollution sources, which may lead to closure of shellfish harvest areas due to high levels of fecal coliform bacteria in surface waters (>14 fc bacteria /100 mL). This source of pollution is one of the leading causes of water quality impairments in the coastal waters of the Gulf of Mexico.
+        <p/>
+        For a more detailed display of Eastern oyster coverage by state, please select from list below:
+        <p/>
+        <center>
+        <table cellpadding="1" cellspacing="1" class="smallText3" border="1">
+        <tr><td align="center"><a href="javascript:createSubPlate('Oysters - Alabama - HTML')"><font color="red">Alabama</font></a></td></tr>
+        <tr><td align="center"><a href="javascript:createSubPlate('Oysters - Florida - HTML')"><font color="red">Florida</font></a></td></tr>
+        <tr><td align="center"><a href="javascript:createSubPlate('Oysters - Louisiana - HTML')"><font color="red">Louisiana</font></a></td></tr>
+        <tr><td align="center"><a href="javascript:createSubPlate('Oysters - Mississippi - HTML')"><font color="red">Mississippi</font></a></td></tr>
+        <tr><td align="center"><a href="javascript:createSubPlate('Oysters - Texas - HTML')"><font color="red">Texas</font></a></td></tr>
+        </table>
+        </center>
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Anson K, Arnold W, Banks P, Berrigan M, Pollack J, Randall B, Reed D. Eastern Oyster In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [6 screens]. Available from: https://gulfatlas.noaa.gov/.       
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Eastern Oyster</center></div>
+        <div class="smallTextBold"><center><i>Crassostrea virginica Ostion americano</i></center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/lmrLegends/GOMoyster.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Eastern Oyster</center></div>
+        <div class="smallTextBold"><center><i>Crassostrea virginica Ostion americano</i></center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Gulf of Mexico</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Oysters_GOM_2011.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Oysters_GOM_2011.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Alabama</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Oysters_AL_2011.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Oysters_AL_2011.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Florida</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Oysters_FL_2011.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Oysters_FL_2011.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Louisiana</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Oysters_LA_2011.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Oysters_LA_2011.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Mississippi</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Oysters_MS_2011.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Oysters_MS_2011.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Texas</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Oysters_TX_2011.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Oysters_TX_2011.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Eastern Oyster</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/Oysters_GOM/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Gulf of Mexico</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/Oysters_GOM_2011.zip')" title="Click to down ESRI shapefiles (19.5 MB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Alabama</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/Oysters_AL_2011.zip')" title="Click to down ESRI shapefiles (470 KB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Florida</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/Oysters_FL_2011.zip')" title="Click to down ESRI shapefiles (1.3 MB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Louisiana</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/Oysters_LA_2011.zip')" title="Click to down ESRI shapefiles (1 MB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Mississippi</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/Oysters_MS_2011.zip')" title="Click to down ESRI shapefiles (54 KB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Texas</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/Oysters_TX_2011.zip')" title="Click to down ESRI shapefiles (16.7 MB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">American Oyster</td><td><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/lmrPlates/AmericanOyster-3_02.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

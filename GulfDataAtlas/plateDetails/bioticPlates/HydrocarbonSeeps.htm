@@ -1,0 +1,108 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Petroleum Hydrocarbon Seeps<br/>Deep Water<br/>Central and Western Gulf of Mexico</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <b>Introduction:</b>
+        <br/>
+        Since 1998, geoscientists at the Bureau of Ocean Energy Management (BOEM) have identified and mapped over 22,000 seafloor seismic-amplitude anomalies in the deep northern Gulf of Mexico. These are areas of anomalously high or low seismic reflectivity response compared with background levels. The areas are important because they identify seafloor areas that are different from the typical soft sediment that covers most of the deep ocean. In particular, this technique identifies likely hard bottoms that have the potential to support deep live-bottom communities such as deep corals or chemosynthetic communities. Most deep hard bottoms in the Gulf of Mexico are the result of precipitation of calcium carbonate by the chemical action of chemosynthetic bacteria. Therefore, indications of hard bottoms also identify likely chemosynthetic communities. Deep corals are often associated with these chemosynthetic communities. Chemosynthetic organisms live immediately adjacent to hydrocarbon seeps; coral communities can sometimes be found around the edge of chemosynthetic communities and may exist within a few feet of an oil seep.
+        <p/>
+        <b>Methods:</b>
+        <br/>
+        Most of the areas mapped have overlapping coverage by two or more 3-D time-migrated seismic surveys. The results cover over 156,000 square miles of seismic data interpretation. The water-bottom horizon was completely mapped over these surveys using hand-interpreted seed lines as well as an automatic picking program to fill between. The seismic amplitude was then displayed in plan view. Anomalously high positive and low positive/negative amplitudes were identified and outlined using polygons. The amplitude maps were cross-checked with the vertical seismic profiles to verify correctness in the autopicked interpretation. Most of the amplitude anomalies are associated with visible migration pathways (e.g., faults) of hydrocarbons. BOEM, the National Oceanic and Atmospheric Administration (NOAA), and industry contractors have confirmed over 100 of the anomalies as hydrocarbon seeps and carbonate hard grounds through utilization of submersible, Remotely Operated Vehicles (ROV), Autonomous Underwater Vehicles (AUV), camera sled surveys, piston cores, and trawls.
+        <p/> 
+        <b>Anomaly Types:</b>
+        <br/>
+        Areas that show a high positive amplitude response relative to background levels are shown in the adjacent map, which displays over 160,000 of these features. The positive amplitudes are reflections from calcium carbonate substrate produced by chemosynthetic bacteria. These positive anomaly areas exhibit a slow to moderate rate of hydrocarbon seepage appropriate to support chemosynthetic communities. Most of the sites that have had direct visual observations support thriving chemosynthetic communities and, often, hard and soft corals. Areas with low positive amplitude response are referred to as negative anomalies and represent rapid hydrocarbon flux, which results in mud volcanoes or mud flows (on steep slopes). These sediments are high in hydrocarbon concentration. The third type of anomaly is a pockmark, which is a circular-to-oval depression likely created by explosive gas expulsion. These latter two anomaly types lack the hard-bottom substrate for benthic community development, so corals and chemosynthetic organisms are unlikely to be found there. More information about seismic seafloor anomalies can be found on <a href="javascript:getExternalLink('https://www.boem.gov/Oil-and-Gas-Energy-Program/Mapping-and-Data/Map-Gallery/Seismic-Water-Bottom-Anomalies-Map-Gallery.aspx')"><font color="blue"><u>BOEM's website</u></font></a>.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Sinclair J, Shedd W. Petroleum Hydrocarbon Seeps in Deep Waters of the Central and Western Gulf of Mexico In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [1 screen]. Available from: https://gulfatlas.noaa.gov.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Petroleum Hydrocarbon Seeps<br/>Deep Water<br/>Central and Western Gulf of Mexico</center></div>
+        <center><hr width="75%" /></center>
+        <center><img src="legends/bioticLegends/BOEM_SeismicAnomalies_Positive.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);makeCollapsible(document.getElementById('origAtlasList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Petroleum Hydrocarbon Seeps<br/>Deep Water<br/>Central and Western Gulf of Mexico</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Seismic Water Bottom Anomalies - Positive</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/BOEM_SeismicAnomalies_Positive.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/BOEM_SeismicAnomalies_Positive.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Seismic Water Bottom Anomalies - Positive</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/BOEM_SeismicWaterBottomAnomalies/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Seismic Water Bottom Anomalies</td><td><a href="javascript:getDataDownloadLink('https://www.boem.gov/uploadedFiles/BOEM/Oil_and_Gas_Energy_Program/Mapping_and_Data/Map_Gallery/positive_anomalies.zip')" title="Click to download ESRI shapefile (~5 MB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+           </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="origAtlasList">
+          <li><b>Original Plate from 1985 Atlas:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Petroleum Hydrocarbon Seeps</td><td><a href="javascript:openGraphicLandscape('/website/DataAtlas/originalAtlas/bioticPlates/PetroleumHydrocarbonSeeps-1_04.pdf')" title="Click to Access"><img src="images/1985Atlas.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

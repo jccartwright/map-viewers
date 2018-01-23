@@ -1,0 +1,104 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Mangrove Communities</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Mangroves are woody, salt-tolerant plants that occur along mudflats, estuary banks, and coastlines in tropical and subtropical environments around the world (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Mang')"><font color="blue"><u>Spaulding et al., 1997</u></font></a>; <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Mang')"><font color="blue"><u>Montagna et al., 2011</u></font></a>). They are able to thrive under harsh environmental conditions, and their extensive root systems provide the structure to support highly diverse and productive coastal ecosystems (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Mang')"><font color="blue"><u>Spaulding et al., 1997</u></font></a>; <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Mang')"><font color="blue"><u>Montagna et al., 2011</u></font></a>).
+        <p/>
+        While over 70 species of mangrove are recognized globally (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Mang')"><font color="blue"><u>Spaulding et al., 1997</u></font></a>), only four are found in the Gulf of Mexico: red mangrove (<i>Rhizophora mangle</i>), white mangrove (<i>Laguncularia racemosa</i>), black mangrove (<i>Avicennia germinans</i>), and button mangrove (<i>Conocarpus erectus</i>) (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Mang')"><font color="blue"><u>Montagna et al., 2011</u></font></a>). The predominant climactic factor restricting the geographic range of mangroves is believed to be freezing winter temperatures; thus, northward range expansion may be an indicator of a warming climate (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Mang')"><font color="blue"><u>Montagna et al., 2011</u></font></a>; <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#Mang')"><font color="blue"><u>Giri et al., 2011</u></font></a>).
+        <p/>
+        For more information about the <a href="javascript:createSubPlate('Mangroves - GOM')"><font color="red"><u>mangrove communities</u></font></a> of the Gulf of Mexico, click on an area of interest provided in the list below:
+        <p/>
+        <center>
+        <table colspan="1" colpadding="1" colspacing="1" border="1">
+        <tr><td width="75" align="center"><a href="javascript:createSubPlate('Mangroves - Florida')"><font color="red">Florida</font></a></td></tr>
+        <tr><td width="75" align="center"><a href="javascript:createSubPlate('Mangroves - Texas')"><font color="red">Texas</font></a></td></tr>
+        <tr><td width="75" align="center"><a href="javascript:createSubPlate('Mangroves - Mexico')"><font color="red">Mexico</font></a></td></tr>
+        </table>
+        </center>
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Moyer R, Ressl R, Rose K. Mangrove Communities - US and Mexico In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center(MS): National Centers for Environmental Information; 2012. [2 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Mangrove Communities</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/bioticLegends/Mangroves.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Mangrove Communities</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Mangroves - Florida</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Mangroves_Florida.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Mangroves_Florida.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125">Mangroves - Texas</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/TXCB2004_Mangroves_merge.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/TXCB2004_Mangroves_merge.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Mangroves - Mexico</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/Mangroves_MX.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/Mangroves_MX.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Mangrove Communities</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/Mangroves_GOM/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Mangroves - Florida</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownloadLink('http://ocean.floridamarine.org/mrgis/Description_Layers_Marine.htm')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125">Mangroves - Texas</td><td><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/biotic/documents/Mangroves_TX.zip')" title="Click to download ESRI shapefiles (~15 MB)"><img src="images/download.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Mangroves - Mexico</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownloadLink('http://www.conabio.gob.mx/informacion/gis/?vns=gis_root/biodiv/monmang/manglegw')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>
+</html>

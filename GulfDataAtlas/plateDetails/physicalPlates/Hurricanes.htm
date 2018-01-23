@@ -1,0 +1,122 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Tropical Storm-Hurricane Activity<br/>1851 to 2012</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Hurricanes are major storm systems that can have significant impact on the Gulf of Mexico region. Storms may bring torrential rain, damaging winds, storm surge, and tornadoes to coastal and inland areas. A storm's intensity is classified using the Saffir-Simpson scale which is based on wind speeds. Although a storm is not called a "hurricane" until it reaches Category 1 status, a storm will be given a name when it reaches tropical storm status in order to simplify communications of forecasts and storm warnings.
+        <p/>
+        <center>
+        <b>Saffir-Simpson Wind Scale</b><br/>
+        <table colspan="2" cellpadding="1" cellspacing="1" class="smallText3" border="1">
+        <tr><td align="center"><b>Category</b></td><td align="center"><b>Wind Speed</b></td></tr>
+        <tr><td align="center">Tropical depression</td><td align="center">&le;34 knots</td></tr>
+        <tr><td align="center">Tropical storm</td><td align="center">35-63 knots</td></tr>
+        <tr><td align="center">Category 1</td><td align="center">64-82 knots</td></tr>
+        <tr><td align="center">Category 2</td><td align="center">83-95 knots</td></tr>
+        <tr><td align="center">Category 3</td><td align="center">96-112 knots</td></tr>
+        <tr><td align="center">Category 4</td><td align="center">113-136 knots</td></tr>
+        <tr><td align="center">Category 5</td><td align="center">&ge;137 knots</td></tr>
+        </table>
+        </center>
+        <p/>
+        The data used in these graphics are from the International Best Track Archive for Climate Stewardship (IBTrACS), which is a synthesis of all global tropical cyclone track and intensity databases. More information is available from <a href="javascript:getExternalLink('https://www.ncdc.noaa.gov/oa/ibtracs/index.php')"><font color="blue"><u>NOAA's National Centers for Environmental Information (NCEI)</u></font></a>.
+        <p/>
+        The Gulf of Mexico tropical cyclones is a subset of the North Atlantic hurricane database, or HURDAT, from 1842 (also known as besttrack). The original HURDAT contains six hourly storm center location (closest 0.1 degrees latitude and longitude), estimated maximum 1-minute sustained winds at 33-ft heights, and when available, central pressure. It should be noted the original HURDAT format has been retired, superseded by HURDAT2. More information is available from <a href="javascript:getExternalLink('http://www.aoml.noaa.gov/hrd/hurdat/Data_Storm.html')"><font color="blue"><u>NOAA's Atlantic Oceanographic and Meteorological Laboratory (AOML)</u></font></a>. In addition, these fields tend to be smoothed and do not represent the storm center wobbles and slight storm speed changes between the six-hour periods of 00, 06, 12, and 18 UTC.
+        <p/>
+        The products shown herein present climatology information on tropical storm activity. For example, one can view how often a tropical cyclone has passed within a given location, providing a "density count." For analysis, a 10-minute grid was applied to the storm data to show their density. These can be partitioned into storm intensity classes as well, including tropical storm and Saffir-Simpson scale categories.
+        <p/>
+        <center>
+        <table colspan="4" cellpadding="1" cellspacing="1" class="smallText3" border="1">
+        <tr><td align="center" width="125">Storm Categories<br/>1851 to 2012</td><td width="25" align="center"><a href="javascript:createSubPlate('Hurricanes - Storm Tracks')"><font color="red"><u>map</u></font></a></td><td width="25" align="center"><a href="javascript:getAnimation('/website/DataAtlas/products/physicalPlates/hurricanes/categoriesAnimation.html')"><font color="red"><u>gif</u></font></a></td><td width="25" align="center"><a href="javascript:openGraphicLandscape('/website/DataAtlas/products/physicalPlates/hurricanes/Categories.pdf')"><font color="red"><u>pdf</u></font></a></td></tr>
+        <tr><td align="center" width="125">Storm Frequency<br/>1851 to 2012</td><td width="25" align="center"><a href="javascript:createSubPlate('Hurricanes - Storm Frequency')"><font color="red"><u>map</u></font></a></td><td width="25" align="center"><a href="javascript:getAnimation('/website/DataAtlas/products/physicalPlates/hurricanes/frequencyAnimation.html')"><font color="red"><u>gif</u></font></a></td><td width="25" align="center"><a href="javascript:openGraphicLandscape('/website/DataAtlas/products/physicalPlates/hurricanes/Frequency25.pdf')"><font color="red"><u>pdf</u></font></a></td></tr>
+        <tr><td align="center" width="125">Maximum Storm Intensity<br/>1851 to 2012</td><td width="25" align="center"><a href="javascript:createSubPlate('Hurricanes - Storm Intensity')"><font color="red"><u>map</u></font></a></td><td width="25" align="center"><a href="javascript:getAnimation('/website/DataAtlas/products/physicalPlates/hurricanes/intensityAnimation.html')"><font color="red"><u>gif</u></font></a></td><td width="25" align="center"><a href="javascript:openGraphicLandscape('/website/DataAtlas/products/physicalPlates/hurricanes/Intensity25.pdf')"><font color="red"><u>pdf</u></font></a></td></tr>
+        </table>
+        </center>
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Fitzpatrick P, Toft T. Tropical Storm - Hurricane Activity from 1851 to 2012 In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2013. [3 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Tropical Storm-Hurricane Activity<br/>1851 to 2012</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/physicalLegends/TropicalStormIntensity.png"></div></center>
+      </div>
+    </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Tropical Storm-Hurricane Activity<br/>1851 to 2012</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Tropical Storm - Hurricane Tracks (1851-2012)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/HurricaneTracks.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/HurricaneTracks.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Gridded Hurricane Frequency</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/HurricaneGrid.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/HurricaneGrid.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Tropical Storms and Hurricanes (1851 to 2012)</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/TropicalStorms_Hurricanes/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Gridded Hurricane Data</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/physical/documents/Hurricanes.zip')" title="Click to download ESRI shapefiles (~751 KB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Atlantic Oceanographic and Meteorological Laboratory</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownloadLink('http://www.aoml.noaa.gov/hrd/hurdat/Data_Storm.html')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Coastal Services Center Historical Hurricane Tracks</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownloadLink('http://csc.noaa.gov/hurricanes/#')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">National Centers for Environmental Information</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownloadLink('http://www.ncdc.noaa.gov/oa/ibtracs/index.php')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">National Hurricane Center</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownloadLink('http://www.nhc.noaa.gov')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>
+</html>

@@ -1,0 +1,101 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Silver Seatrout</center></div>
+        <div class="smallTextBold"><center><i>Cynoscion nothus</i></center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Silver seatrout (<i>Cynoscion nothus</i>) are closely related to the more commonly caught sand seastrout, but silver seatrout appear to favor a slightly cooler upper temperature range (30&deg;C) and deeper waters. Adult silver seatrout are typically offshore residents, but occasional exceptions found in inshore waters. Adults also live in higher salinities than sand seatrout and are more abundant off the Texas coast where offshore salinities tend to be higher, as opposed to the northern Gulf where sand seatrout are much more abundant. Silver seatrout spawn offshore from early May to October in Gulf of Mexico waters. Two peak periods of spawning occur: one in the spring and the other in late summer.
+        <p/>
+        Silver seatrout are commonly up to 10 inches long (total length), but can grow to a maximum of 15 inches and live up to 2 years. Adults feed on crustaceans and small fish. (<a href="javascript:getExternalLink('http://txmarspecies.tamug.edu/fishdetails.cfm?scinameID=Cynoscion%20nothus')"><font color="blue"><u>Texas Parks & Wildlife Department</u></font></a>, <a href="javascript:getExternalLink('http://www.nwrc.usgs.gov/wdb/pub/species_profiles/82_11-072.pdf')"><font color="blue"><u>Species Profiles: Life Histories and Environmental Requirements of Coastal Fishes and Invertebrates (Gulf of Mexico)</u></font></a>, <a href="javascript:getExternalLink('http://www.gsmfc.org/publications/GSMFC Number 197.pdf')"><font color="blue"><u>The Sand and Silver Seatrout Fishery of the Gulf of Mexico, United States: A Fisheries Profile</u></font><a>)&nbsp;&nbsp;<a href="javascript:getExternalLink('http://get.adobe.com/reader')"><img src="images/icon_pdf.gif" height="15" width="15"></a> 
+        <p/>
+        <center><b>Fisheries-Independent Data<br/>Federal</b></center>
+        <hr width="75%">
+        <p/>
+        <a href="javascript:createSubPlate('Silver Seatrout - Abundance')"><font color="red"><u>Relative abundance</u></font></a> and <a href="javascript:createSubPlate('Silver Seatrout - Effort')"><font color="red"><u>sampling effort</u></font></a> by 10-minute longitude by latitude blocks for silver seatrout are summarized from <a href="javascript:createSubPlate('Silver Seatrout - Stations')"><font color="red"><u>11,637</u></font></a> 40-ft trawls taken during the SEAMAP Summer and Fall Shrimp/Groundfish surveys from 1987 to 2009. Relative abundance is expressed in catch per unit effort (CPUE), which represents the number caught per 1-hour tow. Sampling effort represents the number of trawls. These fish are primarily adult but may represent some juveniles as well.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Hanisko D, Rester J. Silver Seatrout In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [3 screens]. Available from: https://gulfatlas.noaa.gov/.       
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Silver Seatrout</center></div>
+        <div class="smallTextBold"><center><i>Cynoscion nothus</i></center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/lmrLegends/SilverSeatrout_Abundance.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Silver Seatrout</center></div>
+        <div class="smallTextBold"><center><i>Cynoscion nothus</i></center></div>
+        <center><hr width="75%" /></center>
+         <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Relative Abundance (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/10min_trawl_silverseatrout.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/10min_trawl_silverseatrout.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td> </tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Trawl Sampling Effort (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/SEAMAP_Trawl_Effort_by_10x10_Grid.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/SEAMAP_Trawl_Effort_by_10x10_Grid.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Trawl Stations (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/SEAMAP_Trawl_Stations.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/SEAMAP_Trawl_Stations.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Relative Abundance (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SEAMAP_Fishes_RelativeAbundance_Trawls/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px;">Trawl Sampling Effort (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SEAMAP_Trawl_Effort/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                <tr><td width="160" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Trawl Stations (Fisheries-Independent - Federal)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SEAMAP_Trawl_Stations/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Fisheries-Independent - Federal (SEAMAP)</td><td><a href="javascript:getDataDownload('https://service.ncddc.noaa.gov/rdn/data-atlas/living-marine/documents/SilverSeatrout.zip')" title="Click to download ESRI shapefiles (488 KB)"><img src="images/download.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

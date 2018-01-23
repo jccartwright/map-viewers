@@ -1,0 +1,112 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>National Protected Areas<br/>Cuba</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Cuba's System of National Protected Areas (Sistema Nacional de Areas Protegidas [SNAP]) are managed by the Center for Natural Protected Areas (Centro Nacional de Areas Protegidas [CNAP]). Although the first National Park, Pico Cristal, was established in 1930 and the first national environmental protection laws were passed in 1959, the establishment of SNAP in 1999 created the unified, legally protected system that exists today (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#ProtAreaCU')"><font color="blue"><u>Whittle and Santos, 2006</u></font></a>). Cuba's eight Protected Areas management categories follow <a href="javascript:getExternalLink('http://www.iucn.org/about/work/programmes/gpap_home/gpap_quality/gpap_pacategories/
+')"><font color="blue"><u>IUCN Protected Areas Categories System</u></font></a> definitions: 
+        <p/>
+        <b>Natural Reserve<br/>(IUCN Category 1a equivalent)</b>
+        <br/>
+        Nature Reserves are sites of national, regional, or international importance that exist in a largely undisturbed ecological state and are susceptible to damage by human activities. Human access, use, and visitation are strictly limited in order to provide maximum protection and preservation of the large-scale ecosystems within. These areas may contain geological or geophysical features and natural communities and species that are valuable due to their uniqueness, vulnerability, or endangered status. Reserves are sources of baseline data for scientific research, environmental monitoring, and genetic conservation initiatives. <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#ProtAreaCU')"><font color="blue"><u>(IUCN, 2014)</u></font></a>
+        <p/>
+        <b>National Park/Ecological Reserve<br/>(IUCN Category II equivalent)</b>
+        <br/>
+        National Parks are large areas in natural or semi-natural states with little or no human population. The goal at these sites is to protect large-scale ecosystems of national, regional, or international importance and associated natural biodiversity. They are resources for scientific research, conservation, education, and spiritual purposes. Nature tourism is encouraged but may be restricted in certain sensitive core areas. <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#ProtAreaCU')"><font color="blue"><u>(IUCN, 2014)</u></font></a> 
+        <p/>
+        <b>Natural Outstanding Element/Monument<br/>(IUCN Category III)</b>
+        <br/>
+        These sites are relatively small and contain one or more outstanding and unique natural or cultural features that are valued for their rarity and representative qualities, aesthetics, or cultural significance. These features include terrestrial and aquatic geomorphological, geological, or living features and their associated habitats, so that biodiversity in these areas may also be protected. <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#ProtAreaCU')"><font color="blue"><u>(IUCN, 2014)</u></font></a> 
+        <p/>
+        <b>Wildlife Refuge/Managed Flora Reserve<br/>(IUCN Category IV equivalent)</b>
+        <br/>
+        These reserves are areas in their natural or semi-natural states that are actively managed to ensure the existence, development, and restoration of significant flora and fauna species, habitats, and communities. Some of these areas may contain only fragments of fully functioning ecosystems and are therefore not self-sustaining, requiring continual intervention in order to support target species. <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#ProtAreaCU')"><font color="blue"><u>(IUCN, 2014)</u></font></a> 
+        <p/>
+        <b>Protected Natural Landscape/Seascape<br/>(IUCN Category V)</b>
+        <br/>
+        These are areas of special ecological, biological, cultural, and scenic value formed over time by the interaction between human populations, nature, and their traditional land-management practices. Preservation of these practices helps to maintain balanced use of natural resources, protect biodiversity and unique cultural assets, and to provide examples of natural resource sustainability that can be applied to other areas. Where appropriate, these areas can act as a buffer around or a corridor between more strictly protected areas. <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#ProtAreaCU')"><font color="blue"><u>(IUCN, 2014)</u></font></a> 
+        <p/>
+        <b>Protected Area of Managed Resources<br/>(IUCN Category VI)</b>
+        <br/>
+        These are large natural areas, predominantly unmodified by human activity, where some parts allow for low-level non-industrial uses of natural resources compatible with nature conservation. Such activities should be integrated with and mutually beneficial to economic and social benefits and natural ecosystems and ecological processes.  These areas may be linked with groups of other protected areas, corridors or ecological networks in order to maximize ecosystem function over large areas. <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#ProtAreaCU')"><font color="blue"><u>(IUCN, 2014)</u></font></a>
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Rose K. National Protected Areas - Cuba In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2015. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>National Protected Areas<br/>Cuba</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/jurisdictionLegends/FederalProtectedAreas_Cuba.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>National Protected Areas<br/>Cuba</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">National Protected Areas - Cuba</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/WDPA_Jan2015_CUclip.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/WDPA_Jan2015_CUclip.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">National Protected Areas<br/>Cuba</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/FederalProtectedAreas_Cuba/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">WDPA Dataset</td><td><a href="javascript:getDataDownloadLink('https://www.protectedplanet.net/')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul> 
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

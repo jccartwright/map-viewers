@@ -1,0 +1,102 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Harmful Algal Blooms</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Phytoplankton, or microscopic drifting plants, are normal components of all aquatic environments; they create the base of both marine and freshwater food webs. When phytoplankton bloom in significant numbers (approximately 1 million cells per liter of seawater equals a "bloom") and produce biotoxins, these events are termed harmful algal blooms or HABs.
+        <p/>
+        HABs represent a present and growing threat to virtually all U.S. coastal waters, where their impacts range from devastating economic effects to public health risks to ecosystem alterations. Often referred to collectively as "red tides", HABs are most often of concern because of the extremely potent toxins they produce. When HAB toxins accumulate in marine animals they lead to closures of commercial and recreational fisheries; mass mortality of birds, fish, and marine mammals; and human illness or even death in extreme cases.
+        <p/>
+        The Phytoplankton Monitoring Network (PMN) was established as an outreach program for monitoring marine phytoplankton and HABs. By linking the general public to laboratory scientists, the PMN helps to build a more informed public while providing useful data to scientists. Making this connection is highlighted in the seven PMN program goals:
+        <ol>
+          <li>Monitor and maintain an extended survey area along coastal waters throughout the year;</li>
+          <li>Create a comprehensive list of harmful algal species that inhabit coastal marine waters;</li>
+          <li>Increase awareness and education the public about HABs;</li>
+          <li>Identify general trends where HABs are more likely to occur;</li>
+          <li>Isolate areas prone to HABs for further study by marine biotoxins researchers in an effort to assist state managers in mitigating the effects of HABs;</li>
+          <li>Create a working relationship between volunteers and marine biotoxins researchers;</li>
+          <li>Increase the public's awareness of research conducted by federal workers on HABs</li>
+        </ol>
+        <p/>
+        PMN volunteers are trained by NOAA staff on sampling techniques and identification methods for marine phytoplankton. Over 50 genera are listed on the volunteer data sheets, including eight potentially toxin-producing genera of dinoflagellates and diatoms. Since the inception of the program in 2001, more than 175 algal blooms and 14 toxic events have been reported by PMN volunteer groups. In the Gulf of Mexico, HABs observed by the network include <i>Alexandrium monilatum</i>, <i>Dinophysis ovum</i>, <i>Karlodinium micrum</i>, <i>Prorocentrum minimum</i>, <i>Pseudo-nitzschia pseudodelicatissima</i>, <i>Pseudo-nitzschia multiseries</i>, and <i>Pseudo-nitzschia pungens</i>. During the <i>Dinophysis</i> bloom and the <i>Pseudo-nitzschia</i> bloom, the toxins okadiac acid and domoic acid were detected by the NOAA Marine Biotoxins Program Analytic Response Team. More information about the PMN can be found at: <a href="javascript:getExternalLink('https://products.coastalscience.noaa.gov/pmn/')"><font color="blue"><u>http://www.chbr.noaa.gov/PMN/</u></font></a>
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Morton S. Harmful Algal Blooms In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2012. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Harmful Algal Blooms (HABs)</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/bioticLegends/ToxicBlooms_PMN.png"></center>
+        </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Harmful Algal Blooms (HABs)</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Phytoplankton Monitoring Network</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/PMN_data.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/PMN_data.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table> 
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Harmful Algal Blooms (PMN)</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NCCOS_ToxicBlooms_PMN/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Phytoplankton Monitoring Network</td><td><a href="javascript:getDataDownloadLink('http://www.chbr.noaa.gov/PMN/')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+           </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

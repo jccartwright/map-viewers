@@ -1,0 +1,94 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Dissolved Oxygen</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Dissolved oxygen plays a critical role in most oceanic biogeochemical processes and is essential for most living resources. In the past few decades, dissolved O<sub>2</sub> concentration measured by chemical methods is often analyzed following various modifications of the Winkler titration followed by end-detections by visual, amperometric, or photometric methods (e.g., <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#DO')"><font color="blue"><u>Carpenter, 1965</u></font></a>; <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#DO')"><font color="blue"><u>Culberson and Huang, 1987</u></font></a>; <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#DO')"><font color="blue"><u>Knapp et al., 1990</u></font></a>; <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#DO')"><font color="blue"><u>Culberson et al., 1991</u></font></a>; <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#DO')"><font color="blue"><u>Dickson, 1994</u></font></a>). Scientifically quality-controlled historical in situ dissolved oxygen data in the World Ocean Database 2013 obtained by chemical methods were used to construct annual, seasonal, and monthly climatological distribution fields of dissolved oxygen, apparent oxygen utilization (AOU), and dissolved oxygen saturation at selected standard depth levels of the world ocean on a one-degree latitude-longitude grid (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#DO')"><font color="blue"><u>Boyer et al., 2009</u></font></a>; <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#DO')"><font color="blue"><u>Garcia et al., 2010</u></font></a>).
+        <p/>
+        Most of the historical O<sub>2</sub> data were obtained from oceanographic research cruises occupying a number of selected oceanographic station locations. Several workers have reviewed the general distribution of water masses within the Gulf of Mexico (e.g., <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#DO')"><font color="blue"><u>Rivas et al., 2005</u></font></a>; <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#DO')"><font color="blue"><u>Nowlin et al., 2001</u></font></a>). In recent years, attention has been paid to oxygen hypoxia processes and the influence of the Mississippi River on the Louisiana Continental Shelf (e.g., <a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#DO')"><font color="blue"><u>Rabalais et al., 2007</u></font></a>).
+        <p/>
+        <a href="javascript:createSubPlate('Dissolved Oxygen - DD')"><font color="red"><u>Dissolved oxygen data distribution</u></font></a> from the World Ocean Database for the Gulf of Mexico shows good overall coverage particularly over the shelf area. From these measurements, climatological mean fields of dissolved oxygen for each season on a one degree grid have been calculated (<a href="javascript:openGraphicPortrait('/website/DataAtlas/Acknowledgements.htm#DO')"><font color="blue"><u>Garcia et al., 2010</u></font></a>). At 10 meters depth, dissolved oxygen for <a href="javascript:createSubPlate('Dissolved Oxygen - Winter - 10m')"><font color="red"><u>winter</u></font></a>, <a href="javascript:createSubPlate('Dissolved Oxygen - Spring - 10m')"><font color="red"><u>spring</u></font></a>, <a href="javascript:createSubPlate('Dissolved Oxygen - Summer - 10m')"><font color="red"><u>summer</u></font></a>, and <a href="javascript:createSubPlate('Dissolved Oxygen - Fall - 10m')"><font color="red"><u>fall</u></font></a><sup>1</sup> are presented in these series of maps. At 250 meters depth, dissolved oxygen for <a href="javascript:createSubPlate('Dissolved Oxygen - Winter - 250m')"><font color="red"><u>winter</u></font></a>, <a href="javascript:createSubPlate('Dissolved Oxygen - Spring - 250m')"><font color="red"><u>spring</u></font></a>, <a href="javascript:createSubPlate('Dissolved Oxygen - Summer - 250m')"><font color="red"><u>summer</u></font></a>, and <a href="javascript:createSubPlate('Dissolved Oxygen - Fall - 250m')"><font color="red"><u>fall</u></font></a> are presented in these series of maps as examples.
+        <p/>
+        <sup>1</sup><font size="1">For these maps, winter = January - March; spring = April - June; summer = July - September; fall = October - December. The maps are based on the objectively analyzed mean climatological values from NCEI's climatology page. These climatologies are based on data collected from January 21, 1864 to December 31, 2010.</font>
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Garcia H. Dissolved Oxygen - Climatological Mean In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2014. [9 screens]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Dissolved Oxygen</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><div id="legendImage"><img src="legends/physicalLegends/NODC_DO_10m.png"></div></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Dissolved Oxygen</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Dissolved Oxygen - Data Distribution</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/WOA13_DO_DataDistPoints.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/WOA13_DO_DataDistPoints.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Dissolved Oxygen - Contours</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/WOA13_DO_Raster.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/WOA13_DO_Raster.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Dissolved Oxygen - Seasonal Means at 10m and 250m</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/NODC_DissolvedOxygen/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">National Centers for Environmental Information</td><td><a href="javascript:getDataDownloadLink('https://www.nodc.noaa.gov/OC5/woa13/')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>     
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

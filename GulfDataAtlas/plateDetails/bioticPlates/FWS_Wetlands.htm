@@ -1,0 +1,91 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Wetlands</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        Wetlands are an important element of the coastal physical environment. They provide habitat for many species of plants and wildlife, even acting as nurseries for fish and shellfish. They also provide flood and erosion protection to coastal zones. A wetland is an area of land that is either permanently or intermittently saturated with water. The water may be either fresh or saltwater. Wetlands can include such diverse ecosystems as estuarine, riverine, lacustrine, and palustrine habitats and can be characterized by rocky bottoms, aquatic beds, shores, moss-lichen wetlands, scrub-scrub wetlands, forested wetlands, or emergent wetlands.
+        <p/> 
+        Mapping of wetlands is important, not only to know where areas of wetlands are located, but also to measure their extent over time. Loss or gain of wetland area may indicate effects of climate change or human impact to the environment. The Emergency Wetlands Resources Act of 1986 (P.L. 99-645, as amended) required the Secretary of the Interior, through the Director of the Fish and Wildlife Service, to map and digitize wetlands of the U.S. and to archive and distribute the data. The National Wetlands Inventory (NWI) was established to conduct a nationwide inventory of U.S. wetlands to provide biologists and others with information on the distribution and type of wetlands to aid in conservation efforts. To conduct this inventory, the NWI developed a wetland classification system (<a href="javascript:getExternalLink('https://www.fws.gov/wetlands/Documents/classwet/index.html')"><font color="blue"><u>Cowardin et al. 1979</u></font></a>) that is now the official FWS wetland classification system and the Federal standard for wetland classification (adopted by the Federal Geographic Data Committee on July 29, 1996: 61 Federal Register 39465). Today, FWS serves its data via an on-line data discovery tool called the "<a href="javascript:getExternalLink('https://www.fws.gov/wetlands/Data/Mapper.html')"><font color="blue"><u>Wetlands Mapper</u></font></a>".
+        <p/>
+        As emergent wetland losses increase, so does the need for information on the causes and effects of this loss. The <a href="javascript:getExternalLink('https://gom.usgs.gov/GOMEmWetStatusTrends.aspx')"><font color="blue"><u>Emergent Wetlands Status and Trends in the Northern Gulf of Mexico report</u></font></a> provides scientists, managers, and citizens with valuable baseline information on the status and trends of emergent wetlands in this region. This study examines the emergent wetlands of eight individual estuarine areas as well as present statewide summaries for Texas, Louisiana, Mississippi, Alabama, and Florida.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Wetlands In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2013. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Wetlands</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/bioticLegends/FWS_NWI.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Wetlands</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Wetlands</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/FWS_Wetlands.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/FWS_Wetlands.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Wetlands</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/FWS_NationalWetlandsInventory/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">National Wetlands Inventory - FWS</td><td><a href="javascript:getDataDownloadLink('https://www.fws.gov/wetlands/Data/Data-Download.html')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+           </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

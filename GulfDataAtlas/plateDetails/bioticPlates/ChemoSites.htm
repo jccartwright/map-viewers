@@ -1,0 +1,99 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Corals and Hard Bottom<br>Known Chemosynthetic Communities</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        The Gulf of Mexico is home to deep-sea animals with a very unusual diet. They eat dissolved gasses. These animals&#8212;known as chemosynthetic life forms&#8212;live thousands of feet below the surface in the aphotic zone where sunlight does not reach. These chemosynthetic communities exist in scattered patches of habitat where hydrocarbons seep up slowly through the seafloor. The food chain for this ecosystem relies on primary producers that consume methanes and sulfides rather than performing photosynthesis, as most life on land does. 
+        <p/>
+        These primary producers, which are various chemosynthetic bacteria, are found to be both free-living and in a mutually beneficial (symbiotic) relationship with larger organisms that are termed "chemosynthetic organisms." Where they are free-living, they manifest as white bacterial mats that permeate the upper layer of hydrocarbon-filled sediments. When dissolved oxygen is present, they can extract their energetic needs from dissolved gasses in their environment. In the process, they produce energy and precipitate carbonate (limestone) substrate. 
+        <p/>
+        Larger organisms include several mussel, oyster, and tubeworm species that harbor chemosynthetic bacteria in specialized internal organs. The animals provide their bacteria with oxygen from their own gills and harvest methane or hydrogen sulfide for their consumption. Tubeworms develop an extensive root-like system to mine hydrogen sulfide from the calcium carbonate substrate itself.
+        <p/>
+        Over time, the chemosynthetic community produces enough calcium carbonate substrate to support the growth of deep-water corals. Often these coexist when corals occur only a few feet from seeping hydrocarbons and tubeworm communities. Hydrocarbon seeps pass through a life cycle of flow rates that eventually diminish until the chemosynthetic community disappears. In the process, as the seep shrinks, calcium carbonate substrate is exposed and the deep-water coral reef community expands.
+        <p/>
+        Chemosynthetic communities and associated cold coral communities can collectively be termed "deep-water live bottoms." These deep-water live bottoms typically occur in the Gulf of Mexico at water depths below 300 m (984 ft). Temperatures at these depths range from about 13&deg;C to 4&deg;C (55&deg;F to 39&deg;F). Water currents at the seafloor are typically about 5-10 cm/s (2-4 in/s). The chemosynthetic communities occur as widely scattered patchy habitat, developing where hydrocarbons seep up with a moderate flow. If other environmental conditions are right, deep-water corals can follow.
+        <p/>
+        Our understanding of these deep-water, live-bottom habitats is improving, and it appears that there are many more than once thought. New sites are positively confirmed each year. Recent work by geophysicists at the Bureau of Ocean Energy Management (BOEM) identifies over 16,000 sites of probable deep-water hard bottom. Although some of these sites may be covered with a layer of soft sediment, many are expected to be exposed hard-bottom that supports live-bottom communities of chemosynthesizers and corals.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Sinclair J. Known Chemosynthetic Communities In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2011. [1 screen]. Available from: https://gulfatlas.noaa.gov/.
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Corals and Hard Bottom<br>Known Chemosynthetic Communities</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/bioticLegends/BOEMRE_FaunaType.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Corals and Hard Bottom<br>Known Chemosynthetic Communities</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Chemosynthetic Communities</td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/BOEMRE_Chemosynth.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/BOEMRE_Chemosynth.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Chemosynthetic Communities</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/BOEM_ChemosyntheticCommunities/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Data Download/Access Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Known Deepwater Benthic Communities (BOEM)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownloadLink('https://www.boem.gov/Environmental-Stewardship/Environmental-Studies/Gulf-of-Mexico-Region/Chemo_web-pdf.aspx')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Seismic Water Bottom Anomalies (BOEM)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getDataDownloadLink('https://www.boem.gov/Oil-and-Gas-Energy-Program/Mapping-and-Data/Map-Gallery/Seismic-Water-Bottom-Anomalies-Map-Gallery.aspx')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">Cold-water Coral Geographic Database (USGS)</td><td style="border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getDataDownloadLink('https://pubs.usgs.gov/of/2008/1351/')" title="Click to Access"><img src="images/access.png" height="15" width="70"></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>      
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

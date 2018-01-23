@@ -1,0 +1,100 @@
+<!--
+  * Accordion Content @ Oliver.prototype.blog (03/03/2012)
+  * http://oli.me.uk/2012/03/03/pure-css-toggle-accordion/
+  * uses only css to create collapsible panes ... no jquery or javascript involved
+ -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml2/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+</head>
+<body>
+  <br/>
+  <ul class='accordion'>
+    <li>
+      <label for='cp-1'>&#9660&nbsp;&nbsp;Description</label>
+      <input type='radio' name='a' id='cp-1' checked='checked'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Social Indicators of Fishing Community Vulnerability and Resilience<br/>(US Gulf Coast)</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        This set of community social vulnerability indicators (CSVI), developed by NOAA Fisheries, provide a statistically robust means of measuring the vulnerability of fishing communities to social disruptions, gentrification, and changes in fishing dependence. The CSVI are used to describe and evaluate community resilience terms of social, economic and psychological welfare by providing a snapshot of community well-being as measured by its vulnerability to disruptive events. They consist of quantitative measures that add depth to existing community information and provide the opportunity for cross-community and cross-regional comparisons for over 2900 communities in 19 states from Maine to Texas.
+        <p/>
+        A <a href="javascript:getExternalLink('http://www.st.nmfs.noaa.gov/humandimensions/social-indicators/map')"><font color="blue"><u>web-based mapping tool</u></font></a> allows users to explore the full set of indicators and communities and can be found at the <a href="javascript:getExternalLink('http://www.st.nmfs.noaa.gov/humandimensions/social-indicators/index')"><font color="blue"><u>NOAA Fisheries Community Social Indicators website</u></font></a>, along with a <a href="javascript:getExternalLink('http://www.nmfs.noaa.gov/sfa/CMS_DEV/Councils/Training2013/S3_Fishing_Com_Vulnerability_Resilience.pdf')"><font color="blue"><u>technical memorandum</u></font></a> <a href="javascript:getExternalLink('http://get.adobe.com/reader')"><img src="images/icon_pdf.gif" height="15" width="15"></a> detailing the development methodology of the indicators. This mapping tool allows users to compare communities on several CSVI developed on a scale of low, medium, or high vulnerability or fishing dependence. Although these indicators were primarily developed to be used in the social impact assessment of proposed Fisheries Management Plans on fishing communities, they can additionally assist in understanding long-term changes to coastal economies as a result of demographic shifts or coastal hazards.
+        <p/>
+        The CSVI cover 3 categories:  social vulnerability, gentrification pressure, and fishing engagement and reliance. Social vulnerability indices address vulnerabilities that may be present in any coastal community regardless of the importance of fishing, such as poverty, the number of minorities and crime. Gentrification pressure indices cover those factors that may indicate a threat to the viability of commercial and recreational fishing communities and businesses such as retiree migration and urban sprawl. Fishing engagement and reliance indices indicate the importance or level of dependence on commercial and/or recreational fishing of communities in coastal counties.
+        <p/>
+        Three CSVI examples for the Gulf of Mexico are shown here (zoom in to view the data as community polygons):
+        <br/>
+        1. <a href="javascript:createSubPlate('CSVI - Poverty')"><font color="red"><u>Poverty</u></font></a> is probably the most common indicator of vulnerable populations. A high rank indicates a high rate of poverty and a more vulnerable population.
+        <br/>
+        2. <a href="javascript:createSubPlate('CSVI - Retiree Migration')"><font color="red"><u>Retiree migration</u></font></a> characterizes those areas with a higher concentration of retirees and elderly population. A higher rank indicates an increased probability of gentrification as retirees seek out the amenities of coastal living.
+        <br/>
+        3. <a href="javascript:createSubPlate('CSVI - Commercial Fishing Engagement')"><font color="red"><u>Commercial fishing engagement</u></font></a> is a measure of the absolute presence of commercial fishing through fishing activity as evidenced through permits and vessel landings. A high rank indicates more engagement.
+        <p/>
+        <hr width="50%" />
+        <b>Citation:</b>
+        <br/>
+        Jepson M, Colburn L. Social Indicators for Coastal Communities, National Marine Fisheries Service, In Gulf of Mexico Data Atlas [Internet]. Stennis Space Center (MS): National Centers for Environmental Information; 2014. [3 screens]. Available from: https://gulfatlas.noaa.gov/.        
+      </div>
+    </li>    
+    <li>
+      <label for='cp-2'>&#9660&nbsp;&nbsp;Legend</label>
+      <input type='radio' name='a' id='cp-2'>
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Community Social Vulnerability Indicators<br/>(US Gulf Coast)</center></div>
+        <center><hr width="75%" /></center>
+        <p/>
+        <center><img src="legends/socioeconomicLegends/CSVI.png"></center>
+      </div>
+    </li>
+    <li>
+      <label for='cp-3'>&#9660&nbsp;&nbsp;More Information</label>
+      <input type='radio' name='a' id='cp-3' onClick="makeCollapsible(document.getElementById('metadataList'), 0);makeCollapsible(document.getElementById('wmsList'), 0);makeCollapsible(document.getElementById('downloadList'), 0);collapsibleFirstTime=false;">
+      <div class='content'>
+        <p/>
+        <div class="largeTextBold"><center>Community Social Vulnerability Indicators<br/>(US Gulf Coast)</center></div>
+        <center><hr width="75%" /></center>
+        <ul id="metadataList">
+          <li><b>Metadata Links:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;">Community Social Vulnerability Indicators (CSVI) - Points (US Gulf Coast Only)</td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GulfCoastCommunities_point.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GulfCoastCommunities_point.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                <tr><td width="125" style="border-top-style: solid; border-top-width: 1px;  border-bottom-style: solid; border-bottom-width: 1px;">Community Social Vulnerability Indicators (CSVI) - Polygons (US Gulf Coast Only)</td><td style="border-top-style: solid; border-top-width: 1px;  border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/FGDC/GulfCoastCommunities_polygon.html')" title="Click to view FGDC metadata"><img src="images/fgdc.png" height="15" width="35"></a></td><td style="border-top-style: solid; border-top-width: 1px;  border-bottom-style: solid; border-bottom-width: 1px;"><a href="javascript:getMetadataRecord('/website/DataAtlas/Metadata/ISO/GulfCoastCommunities_poly.html')" title="Click to view ISO metadata"><img src="images/iso.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="wmsList">
+          <li><b>Web Mapping Service (WMS) Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="160">Community Social Vulnerability Indicators (US Gulf Coast Only)</td><td><a href="javascript:getWMSCapabilities('/arcgis/services/DataAtlas/SocialVulnerabilityIndicators_FishingCommunities_GulfCoast/MapServer/WMSServer?request=GetCapabilities&service=WMS')" title="Click to view WMS capabilities"><img src="images/wms.png" height="15" width="35"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <br/>
+        <ul id="downloadList">
+          <li><b>Access Link:</b>
+            <ul id="noindent">
+              <li>
+                <table class="mediumTextNormal">
+                <tr><td width="125">Social Indicators - National Marine Fisheries Service</td><td><a href="javascript:getDataDownloadLink('http://www.st.nmfs.noaa.gov/humandimensions/social-indicators/index')" title="Click to Access"><img src="images/access.png" height="15" width="70"></a></td></tr>
+                </table>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>
