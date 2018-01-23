@@ -33,6 +33,7 @@
  
   // function to handle loading page into right frame of map and still be able to change content of map
   function loadPage(sourceURL) {
+    console.log('inside loadPage with ', sourceURL);
     var callString = ""+sourceURL+"";
     var pageBlock = document.getElementById('rightCol');
     var xmlhttp = null;
@@ -763,8 +764,9 @@
       mapLayer.push(dataLayer);
     }
 
-    var linkURL = htmlURL;
-    linkURL += "/website/DataAtlas/plateDetails/";
+    // var linkURL = htmlURL;
+    // linkURL += "/website/DataAtlas/plateDetails/";
+    var linkURL = 'plateDetails/';
     linkURL += elementPlateDetails;
     loadPage(linkURL);
     var barColor = "#d2ebf0";
