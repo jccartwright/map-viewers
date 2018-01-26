@@ -1,6 +1,6 @@
 {
   "name": "bathymetry_intranet",
-  "version": "2.11.0",
+  "version": "2.11.1",
   "description": "NCEI Bathymetric Data Viewer (internal version)",
   "main": "index.html",
   "scripts": {
