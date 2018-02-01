@@ -80,8 +80,7 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),
-                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer', {
-                    //new ArcGISImageServiceLayer('https://mapdevel.ngdc.noaa.gov/arcgis/rest/services/DEM_SeaLevel_source/ImageServer', {
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer', {
                         id: 'DEM Hillshades',
                         visible: this.demVisible,
                         imageServiceParameters: this.imageParameters.jpg

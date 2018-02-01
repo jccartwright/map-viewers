@@ -81,7 +81,7 @@ define([
                         epsgCode: '3857',
                         layerNames: ['topo']
                     }),
-                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_hillshades/ImageServer', {
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer', {
                         id: 'DEM Hillshades',
                         visible: false,
                         imageServiceParameters: this.imageServiceParameters
