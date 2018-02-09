@@ -1,0 +1,205 @@
+<div class="layersPanel_class">
+
+    <input id="checkScenarios" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input>                          
+    <label id="labelScenarios" for="checkScenarios">
+        <b>CARIBE-EWS Tsunami Scenarios</b>
+    </label>    
+    <br><br>
+
+    <input id="checkTsunamiEnergy" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input>                          
+    <label id="labelTsunamiEnergy" for="checkTsunamiEnergy">
+        <b>Modeled Tsunami Energy Plots</b>
+    </label>
+    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
+        <div data-dojo-type="dijit/TooltipDialog">
+            <img src="https://maps.ngdc.noaa.gov/viewers/images/Tsunami_RIFT_Legend.png"/>
+        </div>
+    </div><br>
+    Region:<br>
+    <select data-dojo-type="dijit/form/ComboBox" data-dojo-attach-point="regionSelect" data-dojo-props="placeHolder: 'Select a Region',maxHeight:200, required:false" name="region" style="width: 100%; max-width: 350px">
+    </select><br>
+
+    Scenario:<br>
+    <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="tsunamiScenarioSelect" data-dojo-props="placeHolder:'Select a Scenario',maxHeight:200, required:false" style="width: 100%; max-width: 350px">
+    </select>
+    <hr>
+
+    <h3>NOAA/NCEI Natural Hazards Data</h3>
+
+    <input id="checkTsEvents" type="checkBox" data-dojo-type="dijit/form/CheckBox"></input>                          
+    <label id="labelTsEvents" for="checkTsEvents">
+        <b>Tsunami Events</b>
+    </label>
+    <img id="tsEventHelp" class="tooltipButtonMiddle" src="images/question-button.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'tsEventHelp'">
+        <div class="tooltipText">Information about the sources of tsunami events. Most tsunamis are caused by earthquakes, volcanic eruptions, and landslides. <a href="https://ngdc.noaa.gov/hazard/tsu.shtml" target="_blank">More information about tsunami data at NCEI</a>. <a href="https://noaa.maps.arcgis.com/home/item.html?id=b146357d106e4cbfa9e9c41fd0f362b3" target="_blank">More information about the map service</a>.</div>
+    </div>
+    <br>
+    <span id="tsEventsFlag"></span>
+    &nbsp;
+    <span>Show as:</span><br>&nbsp;&nbsp;
+    <input type="radio" name="radioTsEvents" id="radioTsEvents1" data-dojo-type="dijit/form/RadioButton" checked>
+    <label for="radioTsEvents1" id="labelRadioTsEvents1">Symbols for Cause/Fatalities</label>
+    <br>&nbsp;&nbsp;
+    <input type="radio" name="radioTsEvents" id="radioTsEvents2" data-dojo-type="dijit/form/RadioButton">
+    <label for="radioTsEvents2" id="labelRadioTsEvents2">Green Squares <img src="images/green_square.png"/></label><br>
+    <div title="Search Tsunami Events" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="tsEventSearchButton">Search</div>
+    <div title="Reset Tsunami Event Filter" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="tsEventResetButton" disabled>Reset</div>
+    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
+        <div data-dojo-type="dijit/TooltipDialog">
+            <img src="images/tsevent_legend.png"/>
+        </div>
+    </div>      
+    <hr>
+
+    <input id="checkTsObs" type="checkBox" data-dojo-type="dijit/form/CheckBox">
+    <label id="labelTsObs" for="checkTsObs">
+        <b>Tsunami Observations</b>
+    </label>
+    <img id="tsObsHelp" class="tooltipButtonMiddle" src="images/question-button.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'tsObsHelp'">
+        <div class="tooltipText">information about locations where tsunami effects were observed. <a href="https://ngdc.noaa.gov/hazard/tsu.shtml" target="_blank">More information about tsunami data at NCEI</a>. <a href="https://noaa.maps.arcgis.com/home/item.html?id=b146357d106e4cbfa9e9c41fd0f362b3" target="_blank">More information about the map service</a>.</div>
+    </div>
+    <br>
+    <span id="tsObsFlag"></span>                                        
+    <span>Show as:</span><br>&nbsp;&nbsp;
+    <input type="radio" name="radioTsObs" id="radioTsObs1" data-dojo-type="dijit/form/RadioButton" checked disabled>
+    <label for="radioTsObs1">Vertical Bars for Water Height</label><br>                                   
+                                  
+    &nbsp;&nbsp;
+    <input type="radio" name="radioTsObs" id="radioTsObs2" data-dojo-type="dijit/form/RadioButton" disabled>
+    <label for="radioTsObs2">Color-Coded by Measurement Type</label><br>
+    <div title="Search Tsunami Observations" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="tsObsSearchButton">Search</div>
+    <div title="Reset Filter" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="tsObsResetButton" disabled>Reset</div>
+    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
+        <div data-dojo-type="dijit/TooltipDialog">
+            <img src="images/tsobservation_legend2.png"/><br>
+            <img src="images/tsobservation_legend1.png"/>
+        </div>
+    </div>                                      
+    <hr>
+
+    <!-- <input id="checkSignifEqs" type="checkBox" data-dojo-type="dijit/form/CheckBox">
+    <label id="labelSignifEqs" for="checkSignifEqs">
+        <b>Significant Earthquakes</b>
+    </label>
+    <img id="signifEqHelp" class="tooltipButtonMiddle" src="images/question-button.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'signifEqHelp'">
+        <div class="tooltipText">Information about destructive earthquakes that meet at least one of the following criteria: moderate damage (approximately $1 million or more), 10 or more deaths, magnitude 7.5 or greater, Modified Mercalli Intensity X or greater, or the earthquake generated a tsunami. <a href="https://ngdc.noaa.gov/hazard/earthqk.shtml" target="_blank">More information about earthquakes at NCEI</a>. <a href="https://noaa.maps.arcgis.com/home/item.html?id=b146357d106e4cbfa9e9c41fd0f362b3" target="_blank">More information about the map service</a>.</div>
+    </div>
+    <br>   
+    <span id="signifEqFlag"></span>                  
+    <div title="Search Significant Earthquakes" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="signifEqSearchButton">Search</div>
+    <div title="Reset Filter" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="signifEqResetButton" disabled>Reset</div>
+    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
+        <div data-dojo-type="dijit/TooltipDialog">
+            <img src="images/signifeq_legend.png"/>
+        </div>
+    </div>
+    <hr>                                                                                           
+    
+    <input id="checkVolEvents" type="checkBox" data-dojo-type="dijit/form/CheckBox">
+    <label id="labelVolEvents" for="checkVolEvents">
+        <b>Significant Volcanic Eruptions</b>
+    </label>
+    <img id="volEventsHelp" class="tooltipButtonMiddle" src="images/question-button.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'volEventsHelp'">
+        <div class="tooltipText">Information about eruptions that meet at least one of the following criteria: caused fatalities, caused moderate damage (approximately $1 million or more), caused a tsunami, Volcanic Explosivity Index (VEI) of 6 or larger, or the eruption was associated with a major earthquake. <a href="https://ngdc.noaa.gov/hazard/volcano.shtml" target="_blank">More information about volcanoes at NCEI</a>. <a href="https://noaa.maps.arcgis.com/home/item.html?id=b146357d106e4cbfa9e9c41fd0f362b3" target="_blank">More information about the map service</a>.</div>
+    </div>
+    <br>
+    <span id="volEventFlag"></span>
+    <div title="Search Significant Volcanic Eruptions" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="volEventSearchButton">Search</div>                                           
+    <div title="Reset Filter" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="volEventResetButton" disabled>Reset</div>
+    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
+        <div data-dojo-type="dijit/TooltipDialog">
+            <img src="images/volevent_legend.png"/>
+        </div>
+    </div>
+    <br><br> -->
+
+    <input id="checkVolcanoes" type="checkBox" data-dojo-type="dijit/form/CheckBox">
+    <label id="labelVolcanoes" for="checkVolcanoes"><b>Volcanoes</b> <img src="images/tan_triangle.png"/></label>
+    <img id="volcanoesHelp" class="tooltipButtonMiddle" src="images/question-button.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'volcanoesHelp'">
+        <div class="tooltipText">Locations of volcanoes, obtained from the <a href="http://volcano.si.edu/search_volcano.cfm" target="_blank">Smithsonian Institution's Global Volcanism Program</a>.</div>
+    </div>
+    <hr>           
+
+    <input id="checkDarts" type="checkBox" data-dojo-type="dijit/form/CheckBox">
+    <label id="labelDarts" for="checkDarts">
+        <b>DART® Deployments</b>
+    </label>
+    <img id="dartsHelp" class="tooltipButtonMiddle" src="images/question-button.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'dartsHelp'">
+        <div class="tooltipText">Locations of current DART deployments (Deep-Ocean Assessment and Reporting of Tsunamis), and retrospective BPR (bottom-pressure recorder) deployments, including previous DART locations. <a href="https://ngdc.noaa.gov/hazard/DARTData.shtml" target="_blank">More information about DART data at NCEI</a>. <a href="https://noaa.maps.arcgis.com/home/item.html?id=b146357d106e4cbfa9e9c41fd0f362b3" target="_blank">More information about the map service</a>.</div>
+    </div>
+    <br>
+    <span id="dartFlag"></span>                     
+    <div title="Search DARTs" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="dartSearchButton">Search</div>                                                
+    <div title="Reset Filter" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="dartResetButton" disabled>Reset</div>
+    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
+        <div data-dojo-type="dijit/TooltipDialog">
+            <img src="images/dart_legend.png"/>
+        </div>
+    </div>
+    <hr>
+
+    <input id="checkTideGauges" type="checkBox" data-dojo-type="dijit/form/CheckBox">
+    <label id="labelTideGauges" for="checkTideGauges">
+        <b>Tsunami Capable Tide Stations</b>
+    </label>
+    <img id="tideGaugesHelp" class="tooltipButtonMiddle" src="images/question-button.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'tideGaugesHelp'">
+        <div class="tooltipText">Water level data in support of tsunami research. 1-minute water level data from the NOAA/NOS Center for Operational Oceanographic Products and Services (CO-OPS) and high-resolution water level data from the Pacific Tsunami Warning Center (PTWC), and the National Tsunami Warning Center (NTWC). <a href="https://ngdc.noaa.gov/hazard/tide.shtml" target="_blank">More information about tide gauge data at NCEI</a>. <a href="https://noaa.maps.arcgis.com/home/item.html?id=b146357d106e4cbfa9e9c41fd0f362b3" target="_blank">More information about the map service</a>.</div>
+    </div>
+    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
+        <div data-dojo-type="dijit/TooltipDialog">
+            <img src="images/tidegauge_legend.png"/>
+        </div>
+    </div>
+    <hr>
+
+    <input id="checkPlateBoundaries" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked>
+    <label id="labelPlateBoundaries" for="checkPlateBoundaries">
+        <b>Plate Boundaries</b> (UTIG)
+    </label>
+    <img id="plateBoundariesHelp" class="tooltipButtonMiddle" src="images/question-button.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'plateBoundariesHelp'">
+        <div class="tooltipText">Plate boundaries retrieved from the <a href="http://www-udc.ig.utexas.edu/external/plates/data.htm" target="_blank">University of Texas Institute for Geophysics (UTIG)</a>.</div>
+    </div>
+    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
+        <div data-dojo-type="dijit/TooltipDialog">
+            <img src="images/plate_boundaries_legend.png"/>
+        </div>
+    </div>
+    <!-- <hr>
+
+    <h3>Selected Significant Tsunami Events</h3>
+    <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="signifTsEventSelect" data-dojo-props="maxHeight:200, required:false" name="ttt" style="width: 100%; max-width: 350px">
+    </select><br><br>
+    <input id="checkTTT" type="checkBox" data-dojo-type="dijit/form/CheckBox">
+    <label id="labelTTT" for="checkTTT">
+        <b>Tsunami Travel Times</b>
+    </label>
+    <img id="tttHelp" class="tooltipButtonMiddle" src="images/question-button.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'tttHelp'">
+        <div class="tooltipText">Estimated tsunami travel time contours (1-hour time interval) for selected historical tsunami events, calculated using Tsunami Travel Times (TTT) software (Paul Wessel, Geoware).<br><a href="https://noaa.maps.arcgis.com/home/item.html?id=9f98f573b92c49f0ab88ae7364c26701" target="_blank">More information about the map service.</a></div>
+    </div>
+    <br>
+    <input id="checkTsunamiEnergy" type="checkBox" data-dojo-type="dijit/form/CheckBox">
+    <label id="labelTsunamiEnergy" for="checkTsunamiEnergy">
+        <b>RIFT Tsunami Energy</b>
+    </label>
+    <img id="riftHelp" class="tooltipButtonMiddle" src="images/question-button.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'riftHelp'">
+        <div class="tooltipText">Tsunami energy maps for selected historical tsunami events, computed using the Real-Time Forecasting of Tsunamis (RIFT) forecast model by the <a href="http://ptwc.weather.gov" target="_blank">Pacific Tsunami Warning Center</a>.<br><a href="https://noaa.maps.arcgis.com/home/item.html?id=fafe8a3270f14a4d98903214b0b61997" target="_blank">More information about the map service</a>.</div>
+    </div>
+    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
+        <div data-dojo-type="dijit/TooltipDialog">
+            <img src="https://maps.ngdc.noaa.gov/viewers/images/Tsunami_RIFT_Legend.png"/>
+        </div>
+    </div>
+    <br><br> -->
+
+    <div title="Reset All" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetAllButton">Reset All Filters</div>
+</div>

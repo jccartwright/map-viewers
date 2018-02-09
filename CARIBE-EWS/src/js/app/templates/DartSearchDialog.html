@@ -1,0 +1,41 @@
+<div class="dijitDialog searchDialog" role="dialog" aria-labelledby="${id}_title">
+    <div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+        <span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="${id}_title"
+              role="header" level="1"></span>
+        <span style="display: none;" data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon"
+              data-dojo-attach-event="ondijitclick: onCancel" title="${buttonCancel}" role="button" tabIndex="-1">
+            <span data-dojo-attach-point="closeText" class="closeText" title="${buttonCancel}">x</span>
+        </span>
+    </div>
+    <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
+		<table cellpadding="6" cellspacing="3">			
+			<tr>				
+				<td align="left" colspan="2">					
+					<input data-dojo-attach-point="checkShowCurrentDarts" data-dojo-type="dijit/form/CheckBox" checked type="checkbox" name="showCurrentDarts" />
+					<label for="checkShowCurrentDarts"><b>Show Current DART® Deployments</b></label>
+				</td>
+			</tr>
+			<tr>
+				<td align="left" colspan="2">		
+				<hr>		
+				<input data-dojo-attach-point="checkShowRetrospectiveDarts" data-dojo-type="dijit/form/CheckBox" checked type="checkbox" name="showRetrospectiveDarts" />
+					<label for="checkShowRetrospectiveDarts"><b>Show Retrospective BPR Deployments</b></label>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Dates Deployment Active:<br>
+					<label for="startDateInput">Start:</label>
+					<input data-dojo-type="dijit/form/DateTextBox" id="startDateInput" data-dojo-attach-point="startDateInput" name="startDate" type="text" style="width:8em;">
+					<label for="endDateInput">End:</label>
+					<input data-dojo-type="dijit/form/DateTextBox" id="endDateInput" data-dojo-attach-point="endDateInput" name="endDate" type="text" style="width:8em;"><br>
+				</td>
+			</tr>									
+		</table>
+		<div class="dijitDialogPaneActionBar right-align">
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="submitButton" type="submit">OK</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="cancelButton">Cancel</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton">Reset</button>
+        </div>
+	</div>
+</div>
