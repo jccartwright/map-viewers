@@ -1,0 +1,20 @@
+{"nameentifier":"name","numRows":20,
+	"items":[
+		{"name":"Atlantic","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"Cayman Trench","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},		
+		{"name":"Fonseca Gulf","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"Honduras Gulf","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"Lesser Antilles","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"Lesser Antilles Trench","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"Middle America Trench","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"Mona Passage","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"Muertos Trough","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"North Panama Deformed Belt","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"Northern Hispaniola Deformed Belt","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"Northern Venezuela","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"Puerto Rico Trench","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"Puerto Rico/Virgin Islands","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"South America Trench","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"name":"South Caribbean Deformed Belt","lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40}
+	]
+}

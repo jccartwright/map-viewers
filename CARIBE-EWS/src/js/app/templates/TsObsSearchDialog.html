@@ -1,0 +1,143 @@
+<div class="dijitDialog searchDialog" role="dialog" aria-labelledby="${id}_title">
+    <div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+        <span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="${id}_title"
+              role="header" level="1"></span>
+        <span style="display: none;" data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon"
+              data-dojo-attach-event="ondijitclick: onCancel" title="${buttonCancel}" role="button" tabIndex="-1">
+            <span data-dojo-attach-point="closeText" class="closeText" title="${buttonCancel}">x</span>
+        </span>
+    </div>
+    <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
+        <table cellpadding="6" cellspacing="3">
+        <tr>
+            <td>
+                Source Year (-2000 to present):<br>
+                <label for="startYearSpinner">Min:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="startYearSpinner" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:-2000,max:2020,places:0,pattern:'0000'}" name="startYear" style="width: 55px"></div>
+                <label for="endYearSpinner">Max:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="endYearSpinner" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:-2000,max:2020,places:0,pattern:'0000'}" name="endYear" style="width: 55px"></div>
+            </td>           
+        </tr>
+        <tr>
+            <td>
+                <label for="sourceRegionSelect"><b>Source</b> Region Name:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="sourceRegionSelect" data-dojo-props="maxHeight:200, required:false" name="sourceRegion" style="width: 250px;">
+                </select>                               
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="locationText"><b>Observation</b> Location Name includes:</label>
+                <input data-dojo-type="dijit/form/TextBox" type="text" name="locationText" data-dojo-attach-point="locationText" style="width: 350px;">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="runupRegionSelect"><b>Observation</b> Region Name:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="runupRegionSelect" data-dojo-props="maxHeight:200, required:false" name="runupRegion" style="width: 350px;">
+                </select>                               
+            </td>
+        </tr>   
+        <tr>
+        <td>
+            <label for="countrySelect"><b>Observation</b> Country:</label>
+            <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="countrySelect" data-dojo-props="maxHeight:200, required:false" name="country" style="width: 350px;">
+            </select>
+        </td>
+        </tr> 
+        <tr>
+            <td>
+            <label for="areaSelect"><b>Observation</b> Area (state, province, prefecture, etc.):</label>
+            <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="areaSelect" data-dojo-props="required:false" name="area" style="width: 350px;"></select>
+            </td>
+        </tr>  
+        <tr>
+            <td>
+                <select data-dojo-type="dojox/form/CheckedMultiSelect" data-dojo-attach-point="measurementTypeSelect" multiple="true" name="measurementType" style="width: 350px;">
+                    <option VALUE="1">Eyewitness measurement</option>
+                    <option VALUE="4">Water Height, post-tsunami survey measurement</option>
+                    <option VALUE="5">Runup Height, post-tsunami survey measurement</option>                    
+                    <option VALUE="2">Tide-gauge measurement</option>
+                    <option VALUE="3">Deep ocean gauge</option>
+                    <option VALUE="6">Atmospheric pressure wave</option>
+                    <option VALUE="7">Seiche</option>
+                    <option VALUE="8">Height in harbor, post-tsunami survey measurement</option>
+                    <option VALUE="9">Splash mark, post-tsunami survey measurement</option>
+                    <option VALUE="10">Flow depth, post-tsunami survey measurement</option>
+                </select>                
+            </td>
+        </tr>
+        <tr>
+            <td align="left">
+                Water Height (m):
+                <label for="minWaterHeightText">Min:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minWaterHeightText" name="minWaterHeight" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:0.1, constraints:{min:0,max:600}" style="width: 55px"></div>
+                <label for="maxWaterHeightText">Max:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxWaterHeightText" name="maxWaterHeight" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:0.1, constraints:{min:0,max:600}" style="width: 55px"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left">
+                Distance from Source (km):
+                <label for="minDistText">Min:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minDistText" name="minDist" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:20000,places:0}" style="width: 55px"></div>
+                <label for="maxDistText">Max:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxDistText" name="maxDist" 
+                    data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:0,max:20000,places:0}" style="width: 55px"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Number of Deaths at Observation Location:<br>
+                <label for="minDeathsSelect">Min:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="minDeathsSelect" data-dojo-props="maxHeight:200, required:false" name="minDeaths" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Few (~1 to 50 deaths)</option>
+                    <option value="2">Some (~51 to 100 deaths)</option>
+                    <option value="3">Many (~101 to 1000 deaths)</option>
+                    <option value="4">Very Many (~1001 or more deaths)</option>
+                </select>
+                <label for="maxDeathsSelect">Max:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="maxDeathsSelect" data-dojo-props="maxHeight:200, required:false" name="maxDeaths" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Few (~1 to 50 deaths)</option>
+                    <option value="2">Some (~51 to 100 deaths)</option>
+                    <option value="3">Many (~101 to 1000 deaths)</option>
+                    <option value="4">Very Many (~1001 or more deaths)</option>
+                </select>               
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Damage in Millions of Dollars at Observation Location:<br>
+                <label for="minDamageSelect">Min:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="minDamageSelect" data-dojo-props="maxHeight:200, required:false" name="minDamage" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Limited (less than about $1 million) </option>
+                    <option value="2">Moderate (~$1 to $5 million)</option>
+                    <option value="3">Severe (~$5 to $24 million)</option>
+                    <option value="4">Extreme (~$25 million or more)</option>
+                </select>
+                <label for="maxDamageSelect">Max:</label>
+                <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="maxDamageSelect" data-dojo-props="maxHeight:200, required:false" name="maxDamage" style="width: 250px;">
+                    <option value=""></option>
+                    <option value="1">Limited (less than about $1 million) </option>
+                    <option value="2">Moderate (~$1 to $5 million)</option>
+                    <option value="3">Severe (~$5 to $24 million)</option>
+                    <option value="4">Extreme (~$25 million or more)</option>
+                </select>               
+            </td>
+        </tr>       
+        </table>
+        <div class="dijitDialogPaneActionBar right-align">
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="submitButton" type="submit">OK</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="cancelButton">Cancel</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton">Reset</button>
+        </div>
+    </div>
+</div>
