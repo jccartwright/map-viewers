@@ -128,7 +128,7 @@ define([
                         visible: true,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gisdev.ngdc.noaa.gov/arcgis/rest/services/caribe_ews_scenarios/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/caribe_ews_scenarios/MapServer', {
                         id: 'Scenarios',
                         visible: true,
                         imageParameters: this.imageParameters.png32
