@@ -1,14 +1,21 @@
 <div class="layersPanel_class">
 
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Information About the Map', open: false">
+        Since 2011, UNESCO - Intergovernmental Oceanographic Commission (IOC) Experts Meetings and CaribeWave exercises have resulted in a variety of tsunami models of credible scenarios that would impact the Caribbean and adjacent regions. During the <a href="http://www.ioc-tsunami.org/index.php?option=com_oe&task=viewEventRecord&eventID=1956" target="_blank">12th Session of the Tsunami and Other Coastal Hazards Warning System for the Caribbean and Adjacent Regions (ICG/CARIBE-EWS) in Costa Rica on 10-12 May 2017</a>, a formal recommendation was adopted for <a href="http://www.ioc-tsunami.org/index.php?option=com_content&view=article&id=365&Itemid=336&lang=en" target="_blank">Working Group 2 (Hazard Assessment)</a> to compile the aforementioned tsunami scenarios with additional parameters such as tsunami energy plots and NOAA/NCEI historical tsunami data. In response to this recommendation, the Caribbean Tsunami Sources and Models (CATSAM) map viewer was developed to identify potential tsunami sources. CATSAM is intended to provide modelers and hazard assessment professionals with an understanding of the UNESCO/IOC led tsunami modeling efforts, as well as how those efforts overlap with the <a href="https://www.ngdc.noaa.gov/hazard/tsu.shtml" target="_blank">Global Historical Tsunami Database</a> developed and maintained by NOAA’s National Centers for Environmental Information (NCEI) and co-located World Data Service (WDS) for Geophysics. The product is not meant to identify all tsunami sources in the region, just those identified by experts at UNESCO/IOC led meetings, as well as historically observed.<br><br>
+
+        Scenarios presented in CATSAM were defined by several groups of experts on seismology, tsunamis and tsunami modeling. The scenarios were based on historical events and/or tectonic and geodetic data. Although some scenarios have a low probability of occurrence, they should be taken into account for preparedness purposes. The scenarios may include more than a single rupture plane; in this case the planes are labeled (1, 2, 3, ...). Scenarios displaying the moment magnitude (Mw) at each plane correspond to that plane, not to the composite scenario.
+    </div>
+    <br>
+
     <input id="checkScenarios" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input>                          
     <label id="labelScenarios" for="checkScenarios">
-        <b>CARIBE-EWS Tsunami Scenarios</b>
+        <b>CARIBE-EWS Tsunami Rupture Planes</b>
     </label>    
     <br><br>
 
     <input id="checkTsunamiEnergy" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input>                          
     <label id="labelTsunamiEnergy" for="checkTsunamiEnergy">
-        <b>Modeled Tsunami Energy Plots</b>
+        <b>Modeled Tsunami Scenarios</b>
     </label>
     <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
         <div data-dojo-type="dijit/TooltipDialog">
@@ -16,12 +23,13 @@
         </div>
     </div><br>
     Region:<br>
-    <select data-dojo-type="dijit/form/ComboBox" data-dojo-attach-point="regionSelect" data-dojo-props="placeHolder: 'Select a Region',maxHeight:200, required:false" name="region" style="width: 100%; max-width: 350px">
-    </select><br>
+    <div data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="regionSelect" data-dojo-props="searchAttr:'id',labelAttr:'label',labelType:'html',placeHolder:'Select a Region',maxHeight:-1,required:false" name="region" style="width: 100%; max-width: 350px">
+    </div><br>
 
     Scenario:<br>
-    <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="tsunamiScenarioSelect" data-dojo-props="placeHolder:'Select a Scenario',maxHeight:200, required:false" style="width: 100%; max-width: 350px">
-    </select>
+    <div data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="tsunamiScenarioSelect" data-dojo-props="placeHolder:'Select a Scenario',maxHeight:-1, required:false" style="width: 100%; max-width: 350px">
+    </div><br>
+    <div title="Reset" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="scenarioResetButton">Reset</div>
     <hr>
 
     <h3>NOAA/NCEI Natural Hazards Data</h3>
@@ -198,8 +206,8 @@
         <div data-dojo-type="dijit/TooltipDialog">
             <img src="https://maps.ngdc.noaa.gov/viewers/images/Tsunami_RIFT_Legend.png"/>
         </div>
-    </div>
-    <br><br> -->
+    </div> -->
+    <br><br>
 
     <div title="Reset All" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetAllButton">Reset All Filters</div>
 </div>

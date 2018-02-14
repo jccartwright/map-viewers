@@ -1,7 +1,7 @@
 {
   "name": "caribe-ews",
   "version": "0.9",
-  "description": "CARIBE-EWS Scenarios Viewer",
+  "description": "CATSAM (Caribbean Tsunami Sources and Models) Viewer",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
