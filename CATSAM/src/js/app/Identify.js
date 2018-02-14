@@ -84,11 +84,13 @@ define([
                     '<div class="valueName">Slip (m): <span class="parameterValue">${slip}</span></div>' +
                     '<div class="valueName">Mw: <span class="parameterValue">${mw}</span></div>' +
                     '<div class="valueName">Generated at Experts Meeting: <span class="parameterValue">${meeting}</span></div>' +
-                    '<div class="valueName">Historical Events: <span class="parameterValue">${historical}</span></div>' +
+                    '<div class="valueName">Related Historical Events: <span class="parameterValue">${historical}</span></div>' +
                     '<div class="valueName">Used in Exercise: <span class="parameterValue">${exercise}</span></div>' +
                     '<div class="valueName">Shear Modulus (GPa): <span class="parameterValue">${shearModulus}</span></div>' +
+                    '<div class="valueName">Model Employed: <span class="parameterValue">${modelEmployed}</span></div>' +
                     '<div class="valueName">Longitude (E): <span class="parameterValue">${lon}</span></div>' +
-                    '<div class="valueName">Latitude (N): <span class="parameterValue">${lat}</span></div>';
+                    '<div class="valueName">Latitude (N): <span class="parameterValue">${lat}</span></div>' +
+                    '<div class="valueName">Reference: <span class="parameterValue">${reference}</span></div>';
 
                 var html = string.substitute(template, {                
                     name: a['Name'],
@@ -103,11 +105,13 @@ define([
                     slip: a['Slip (m)'],
                     mw: a['Mw'],
                     meeting: a['Generated at Experts Meeting'],
-                    historical: a['Historical Events'],
+                    historical: a['Related Historical Events'],
                     exercise: a['Used in Exercise'],
                     shearModulus: a['Shear Modulus (GPa)'],
+                    modelEmployed: a['Model Employed'],
                     lon: a['Longitude (E)'],
-                    lat: a['Latitude (N)']
+                    lat: a['Latitude (N)'],
+                    reference: a['Reference']
                 });                
                 return html;
             },

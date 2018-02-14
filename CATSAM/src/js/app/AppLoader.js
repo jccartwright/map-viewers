@@ -21,7 +21,7 @@ define([
     'ngdc/Logger',
     'ngdc/web_mercator/MapConfig',
     'ngdc/web_mercator/ZoomLevels',
-    'ngdc/Banner',
+    'app/Banner',
     'ngdc/CoordinatesWithElevationToolbar',
     'app/web_mercator/LayerCollection',
     'app/web_mercator/MapToolbar',
@@ -113,6 +113,13 @@ define([
 
                 this.setupMapViews();
 
+                topic.subscribe('scenarioFaultPlanes', lang.hitch(this, function(faultPlanes) {
+                    this.filterFaultPlanes(faultPlanes);
+                }));
+                topic.subscribe('resetScenario', lang.hitch(this, function() {
+                    this.mapConfig.mapLayerCollection.getLayerById('Scenarios').setLayerDefinitions([]); //.setDefaultLayerDefinitions();
+                }));
+
                 //Subscribe to messages passed by the search dialogs
                 topic.subscribe("/hazards/TsEventSearch", lang.hitch(this, function(values) {
                     this.filterTsEvents(values);
@@ -155,15 +162,15 @@ define([
             setupBanner: function() {
                 this.banner = new Banner({
                     breadcrumbs: [
-                        {url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
-                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
-                        {url: '//www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
-                        {url: '//maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
-                        {url: '//ngdc.noaa.gov/hazard/hazards.shtml', label: 'Hazards'}           
+                        {url: 'https://www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
+                        {url: 'https://www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
+                        {url: 'https://www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
+                        {url: 'https://maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
+                        {url: 'https://ngdc.noaa.gov/hazard/hazards.shtml', label: 'Hazards'}           
                     ],
-                    dataUrl: '//ngdc.noaa.gov/hazard/hazards.shtml',
+                    dataUrl: 'https://ngdc.noaa.gov/hazard/hazards.shtml',
                     image: 'images/viewer_logo.png',
-                    imageAlt: 'NCEI Natural Hazards Viewer - go to data home'
+                    imageAlt: ''
                 });
                 this.banner.placeAt('banner');
             },
@@ -243,6 +250,18 @@ define([
                     }
 
                 }));
+            },
+
+            filterFaultPlanes: function(faultPlanes) {
+                for (var i = 0; i < faultPlanes.length; i++) {
+                    faultPlanes[i] = "'" + faultPlanes[i] + "'";
+                }
+
+                if (faultPlanes && faultPlanes.length > 0) {
+                    this.mapConfig.mapLayerCollection.getLayerById('Scenarios').setLayerDefinitions(["segmento in (" + faultPlanes.join(',') + ')']);
+                } else {
+                    this.mapConfig.mapLayerCollection.getLayerById('Scenarios').setLayerDefinitions([]); //.setDefaultLayerDefinitions();
+                }
             },
 
             filterTsEvents: function(values) {

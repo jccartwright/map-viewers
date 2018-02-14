@@ -1,0 +1,20 @@
+{"identifier":"id",
+	"items":[
+		{"id":"All","label":"All"},
+		{"id":"Atlantic Ocean and Caribbean Sea","label":"Atlantic Ocean and Caribbean Sea <img style='vertical-align:top' src='images/legend_1.png'>"},
+		{"id":"Cayman Trench","label":"Cayman Trench <img style='vertical-align:top' src='images/legend_2.png'>"},
+		{"id":"Colombian Trench and Ecuador Trench","label":"Colombian Trench and Ecuador Trench <img style='vertical-align:top' src='images/legend_3.png'>"},	
+		{"id":"Gulf of Fonseca","label":"Gulf of Fonseca <img style='vertical-align:top' src='images/legend_4.png'>"},
+		{"id":"Gulf of Honduras","label":"Gulf of Honduras <img style='vertical-align:top' src='images/legend_5.png'>"},
+		{"id":"Lesser Antilles","label":"Lesser Antilles <img style='vertical-align:top' src='images/legend_6.png'>"},
+		{"id":"Middle America Trench","label":"Middle America Trench <img style='vertical-align:top' src='images/legend_7.png'>"},
+		{"id":"Mona Passage","label":"Mona Passage <img style='vertical-align:top' src='images/legend_8.png'>"},
+		{"id":"Muertos Trough","label":"Muertos Trough <img style='vertical-align:top' src='images/legend_9.png'>"},
+		{"id":"North Panama Deformed Belt","label":"North Panama Deformed Belt <img style='vertical-align:top' src='images/legend_10.png'>"},
+		{"id":"Northern Hispaniola Deformed Belt","label":"Northern Hispaniola Deformed Belt <img style='vertical-align:top' src='images/legend_11.png'>"},
+		{"id":"Northern Venezuela","label":"Northern Venezuela <img style='vertical-align:top' src='images/legend_12.png'>"},
+		{"id":"Puerto Rico Trench","label":"Puerto Rico Trench <img style='vertical-align:top' src='images/legend_13.png'>"},
+		{"id":"Puerto Rico and Virgin Islands","label":"Puerto Rico and Virgin Islands <img style='vertical-align:top' src='images/legend_14.png'>"},
+		{"id":"South Caribbean Deformed Belt","label":"South Caribbean Deformed Belt <img style='vertical-align:top' src='images/legend_15.png'>"}
+	]
+}

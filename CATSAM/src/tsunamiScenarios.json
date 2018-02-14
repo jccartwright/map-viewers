@@ -1,0 +1,15 @@
+{"identifier":"id","numRows":20,
+	"items":[
+		{"id":"FSCDB","name":"FSCDB","region":"South Caribbean Deformed Belt","energyLayer":0,"faultPlanes":["SCDB-1","SCDB-2"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"id":"MEF","name":"MEF","region":"Mona Passage","energyLayer":1,"faultPlanes":["mef"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"id":"MS","name":"MS","region":"Muertos Trough","energyLayer":2,"faultPlanes":["ms"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"id":"NPDB","name":"NPDB","region":"North Panama Deformed Belt","energyLayer":3,"faultPlanes":["panama"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"id":"PRT","name":"PRT","region":"Puerto Rico Trench","energyLayer":4,"faultPlanes":["prt"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"id":"ROATAN","name":"ROATAN","region":"Gulf of Honduras","energyLayer":5,"faultPlanes":["roatan"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"id":"SAN_PEDRO_SULA","name":"SAN_PEDRO_SULA","region":"Gulf of Honduras","energyLayer":6,"faultPlanes":["g_honduras"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"id":"SMT1","name":"SMT1","region":"Muertos Trough","energyLayer":7,"faultPlanes":["smt1"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"id":"SMT2","name":"SMT2","region":"Muertos Trough","energyLayer":8,"faultPlanes":["smt2"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"id":"WMT","name":"WMT","region":"Muertos Trough","energyLayer":9,"faultPlanes":["wmt"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
+		{"id":"WSCDB","name":"WSCDB","region":"South Caribbean Deformed Belt","energyLayer":10,"faultPlanes":["SCDB-2"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40}
+	]
+}

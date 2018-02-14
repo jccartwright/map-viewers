@@ -85,17 +85,17 @@ define([
                         opacity: 0.7,
                         imageParameters: this.imageParameters.jpeg
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/tsunami_energy/MapServer', {
-                        id: 'Tsunami Energy',
-                        visible: false,
-                        opacity: 0.7,
-                        imageParameters: this.imageParameters.jpeg
-                    }),
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/ttt_contours/MapServer', {
-                        id: 'TTT',
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
+                    // new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/tsunami_energy/MapServer', {
+                    //     id: 'Tsunami Energy',
+                    //     visible: false,
+                    //     opacity: 0.7,
+                    //     imageParameters: this.imageParameters.jpeg
+                    // }),
+                    // new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/ttt_contours/MapServer', {
+                    //     id: 'TTT',
+                    //     visible: false,
+                    //     imageParameters: this.imageParameters.png32
+                    // }),
                     new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
                         visible: false,
@@ -128,7 +128,7 @@ define([
                         visible: true,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/caribe_ews_scenarios/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gisdev.ngdc.noaa.gov/arcgis/rest/services/caribe_ews_scenarios/MapServer', {
                         id: 'Scenarios',
                         visible: true,
                         imageParameters: this.imageParameters.png32

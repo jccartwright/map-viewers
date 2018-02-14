@@ -23,10 +23,12 @@ define([
     'dijit/form/DropDownButton',
     'dijit/form/FilteringSelect',
     'dijit/form/ComboBox',
+    'dijit/form/Select',
     'dijit/TooltipDialog',
     'dijit/form/CheckBox',
     'dijit/form/Button',
     'dijit/form/RadioButton',
+    'dijit/TitlePane',
     'dojox/layout/FloatingPane',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
@@ -57,10 +59,12 @@ define([
         DropDownButton,
         FilteringSelect,
         ComboBox,
+        Select,
         TooltipDialog,
         CheckBox,
         Button,
         RadioButton,
+        TitlePane,
         FloatingPane,
         _WidgetBase, 
         _TemplatedMixin,
@@ -85,6 +89,13 @@ define([
                 on(registry.byId("checkTsunamiEnergy"), "change", lang.hitch(this, function(checked) {
                     this.toggleTsunamiEnergy(checked);
                 })); 
+                on(registry.byId("scenarioResetButton"), "click", lang.hitch(this, function() {
+                    this.regionSelect.set('value', '');
+                    this.tsunamiScenarioSelect.set('value', '');
+                    topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], false);
+                    topic.publish('resetScenario');
+                }));
+
                 on(registry.byId("checkTsEvents"), "change", lang.hitch(this, function(checked) {
                     this.toggleTsEventVisibility(checked);
                 })); 
@@ -208,7 +219,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
-                        data.items.unshift({id: 'All', name: 'All'});
+                        //data.items.unshift({id: 'All', name: 'All'});
                         this.populateRegionsSelect(data.items);
                     }
                 }), function(err){
@@ -253,13 +264,16 @@ define([
                     console.log('Selected scenario: ' + scenario);
                     if (scenario !== '') {
                         var store = this.tsunamiScenarioSelect.store;
-                        //var region = store.query({id: scenario})[0].region;
-                        var energyLayer = store.query({id: scenario})[0].energyLayer;
+                        var item = store.query({id: scenario})[0];
+                        var energyLayer = item.energyLayer;
+                        var faultPlanes = item.faultPlanes.slice(0);
                         //this.regionSelect.set('value', region);
 
                         topic.publish('/ngdc/layer/visibility', 'CARIBE-EWS Tsunami Energy', true);
                         topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], false);
                         topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [energyLayer], true);
+
+                        topic.publish('scenarioFaultPlanes', faultPlanes);
                     }
                 }));  
 
