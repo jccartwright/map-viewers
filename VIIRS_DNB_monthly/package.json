@@ -1,6 +1,6 @@
 {
   "name": "VIIRS_DNB_monthly",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "VIIRS DNB Monthly Composites",
   "main": "index.html",
   "scripts": {
