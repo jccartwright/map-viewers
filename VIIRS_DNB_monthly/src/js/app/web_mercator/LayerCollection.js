@@ -37,15 +37,15 @@ define([
                 params.compressionQuality = 75;
                 //params.interpolation = ImageServiceParameters.INTERPOLATION_BILINEAR;
 
-                var rasterFunction = new RasterFunction();
-                rasterFunction.functionName = 'Stretch';
-                rasterFunction.functionArguments = {
-                    StretchType: 3,
-                    NumberOfStandardDeviations: 10
-                    //Statistics: [[0,35,6.377611090443566,4.507304334516347]]
-                };           
-                rasterFunction.variableName = "Raster";
-                params.renderingRule = rasterFunction;
+                // var rasterFunction = new RasterFunction();
+                // rasterFunction.functionName = 'Stretch';
+                // rasterFunction.functionArguments = {
+                //     StretchType: 3,
+                //     NumberOfStandardDeviations: 10
+                //     //Statistics: [[0,35,6.377611090443566,4.507304334516347]]
+                // };           
+                // rasterFunction.variableName = "Raster";
+                // params.renderingRule = rasterFunction;
 
 
                 //TODO check to ensure unique id
@@ -88,25 +88,25 @@ define([
                     new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_AvgRadiance/ImageServer', {
                         id: 'Monthly_AvgRadiance',
                         visible: true,
-                        opacity: 0.75,
+                        opacity: 0.8,
                         imageServiceParameters: params
                     }),
                     new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_CloudFreeCoverage/ImageServer', {
                         id: 'Monthly_CloudFreeCoverage',
                         visible: false,
-                        opacity: 0.75,
+                        opacity: 0.8,
                         imageServiceParameters: params
                     }),
                     new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_AvgRadiance_StrayLightImpacted/ImageServer', {
                         id: 'Monthly_AvgRadiance_StrayLightImpacted',
                         visible: false,
-                        opacity: 0.75,
+                        opacity: 0.8,
                         imageServiceParameters: params
                     }),
                     new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_CloudFreeCoverage_StrayLightImpacted/ImageServer', {
                         id: 'Monthly_CloudFreeCoverage_StrayLightImpacted',
                         visible: false,
-                        opacity: 0.75,
+                        opacity: 0.8,
                         imageServiceParameters: params
                     }),
                     
