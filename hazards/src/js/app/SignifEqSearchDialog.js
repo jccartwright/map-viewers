@@ -74,9 +74,9 @@ define([
                     });
                 }));
 
-                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/earthquakes/countries.groovy', {
+                xhr.get('https://gis.ngdc.noaa.gov/mapviewer-support/hazards/earthquakes/countries.groovy', {
                     preventCache: true,
-                    handleAs: 'json',
+                    handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         data.items.unshift({id: '', name: ''});
@@ -86,9 +86,9 @@ define([
                     logger.error('Error retrieving signifEqCountries JSON: ' + err);
                 });
 
-                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/earthquakes/regions.groovy', {
+                xhr.get('https://gis.ngdc.noaa.gov/mapviewer-support/hazards/earthquakes/regions.groovy', {
                     preventCache: true,
-                    handleAs: 'json',
+                    handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         data.items.unshift({id: '', name: ''});
