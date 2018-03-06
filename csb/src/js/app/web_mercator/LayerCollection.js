@@ -65,21 +65,21 @@ define([
                         id: 'Ocean Base',
                         visible: false
                     }),
-                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc_mask.map&', {
+                    new TiledWMSLayer('https://www.gmrt.org/services/mapserv/wms_merc_mask?', {
                         id: 'GMRT Masked',
                         visible: false,
                         format: 'jpeg',
                         wmsVersion: '1.1.1',
                         epsgCode: '3857',
-                        layerNames: ['topo-mask']
+                        layerNames: ['GMRTMask']
                     }),
-                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://gmrt.marine-geo.org/cgi-bin/mapserv?map=/public/mgg/web/gmrt.marine-geo.org/htdocs/services/map/wms_merc.map&', {
+                    new TiledWMSLayer('https://www.gmrt.org/services/mapserv/wms_merc?', {
                         id: 'GMRT Unmasked',
                         visible: false,
                         format: 'jpeg',
                         wmsVersion: '1.1.1',
                         epsgCode: '3857',
-                        layerNames: ['topo']
+                        layerNames: ['GMRT']
                     }),
                     new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer', {
                         id: 'DEM Hillshades',

@@ -39,13 +39,13 @@ define([
                         id: 'Antarctic Basemap',
                         visible: true
                     }),
-                    new WMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_SP_mask?', {
+                    new WMSLayer('https://www.gmrt.org/services/mapserv/wms_SP_mask?', {
                         id: 'GMRT Masked',
                         format: 'jpeg',
                         resourceInfo: {
                             description: 'South_Polar_Bathymetry',
                             extent: new Extent(-180, -90, 180, 90, {wkid: 4326}),
-                            getMapURL: 'https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_SP_mask?',
+                            getMapURL: 'https://www.gmrt.org/services/mapserv/wms_SP_mask?',
                             layerInfos: [
                                 new WMSLayerInfo({
                                     name: 'South_Polar_Bathymetry',
@@ -61,13 +61,13 @@ define([
                         visibleLayers: ['South_Polar_Bathymetry'],
                         visible: false
                     }),
-                    new WMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_SP?', {
+                    new WMSLayer('https://www.gmrt.org/services/mapserv/services/wms_SP?', {
                         id: 'GMRT Unmasked',
                         format: 'jpeg',
                         resourceInfo: {
                             description: 'South_Polar_Bathymetry',
                             extent: new Extent(-180, -90, 180, 90, {wkid: 4326}),
-                            getMapURL: 'https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_SP?',
+                            getMapURL: 'https://www.gmrt.org/services/mapserv/wms_SP?',
                             layerInfos: [
                                 new WMSLayerInfo({
                                     name: 'South_Polar_Bathymetry',

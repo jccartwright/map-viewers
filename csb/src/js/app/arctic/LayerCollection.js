@@ -39,13 +39,13 @@ define([
                         id: 'Arctic Basemap',
                         visible: true
                     }),
-                    new WMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_NP_mask?', {
+                    new WMSLayer('https://www.gmrt.org/services/mapserv/wms_NP_mask?', {
                         id: 'GMRT Masked',
                         format: 'jpeg',
                         resourceInfo: {
                             description: 'North_Polar_Bathymetry',
                             extent: new Extent(-180, -90, 180, 90, {wkid: 4326}),
-                            getMapURL: 'https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_NP_mask?',
+                            getMapURL: 'https://www.gmrt.org/services/mapserv/wms_NP_mask?',
                             layerInfos: [
                                 new WMSLayerInfo({
                                     name: 'North_Polar_Bathymetry',
@@ -61,13 +61,13 @@ define([
                         visibleLayers: ['North_Polar_Bathymetry'],
                         visible: false
                     }),
-                    new WMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_NP?', {
+                    new WMSLayer('https://www.gmrt.org/services/mapserv/wms_NP?', {
                         id: 'GMRT Unmasked',
                         format: 'jpeg',
                         resourceInfo: {
                             description: 'North_Polar_Bathymetry',
                             extent: new Extent(-180, -90, 180, 90, {wkid: 4326}),
-                            getMapURL: 'https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.marine-geo.org/services/wms_NP?',
+                            getMapURL: 'https://www.gmrt.org/services/mapserv/wms_NP?',
                             layerInfos: [
                                 new WMSLayerInfo({
                                     name: 'North_Polar_Bathymetry',
