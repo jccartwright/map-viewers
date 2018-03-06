@@ -96,9 +96,9 @@ define([
                     this.runupAreaSelect.query.c = this.runupCountrySelect.get('displayedValue') || /.*/;
                 }));
 
-                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/events/countries.groovy', {
+                xhr.get('https://gis.ngdc.noaa.gov/mapviewer-support/hazards/events/countries.groovy', {
                     preventCache: true,
-                    handleAs: 'json',
+                    handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         data.items.unshift({id: '', name: ''});
@@ -108,9 +108,9 @@ define([
                     logger.error('Error retrieving tseventCountries JSON: ' + err);
                 });
 
-                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/runups/countries.groovy', {
+                xhr.get('https://gis.ngdc.noaa.gov/mapviewer-support/hazards/runups/countries.groovy', {
                     preventCache: true,
-                    handleAs: 'json',
+                    handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         data.items.unshift({id: '', name: ''});
@@ -120,9 +120,9 @@ define([
                     logger.error('Error retrieving tsrunupCountries JSON: ' + err);
                 });
 
-                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/runups/regions.groovy', {
+                xhr.get('https://gis.ngdc.noaa.gov/mapviewer-support/hazards/runups/regions.groovy', {
                     preventCache: true,
-                    handleAs: 'json',
+                    handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         data.items.unshift({id: '', name: ''});
@@ -133,9 +133,9 @@ define([
                     logger.error('Error retrieving tsunamiRegions JSON: ' + err);
                 });
 
-                xhr.get('https://maps.ngdc.noaa.gov/mapviewer-support/hazards/runups/areas.groovy', {
+                xhr.get('https://gis.ngdc.noaa.gov/mapviewer-support/hazards/runups/areas.groovy', {
                     preventCache: true,
-                    handleAs: 'json',
+                    handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         data.items.unshift({id: '', name: ''});
