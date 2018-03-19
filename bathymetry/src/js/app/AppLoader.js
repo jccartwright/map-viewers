@@ -92,12 +92,6 @@ define([
             },
 
             init: function() {
-                //doesn't seem to be working
-                urlUtils.addProxyRule({
-                    'proxyUrl': 'https://gis.ngdc.noaa.gov/https-proxy/proxy?',
-                    'urlPrefix': 'http://gmrt.marine-geo.org'
-                });
-
                 esriConfig.defaults.io.corsEnabledServers.push('maps.ngdc.noaa.gov');
                 esriConfig.defaults.io.corsEnabledServers.push('gis.ngdc.noaa.gov');
                 esriConfig.defaults.io.corsEnabledServers.push('gisdev.ngdc.noaa.gov');

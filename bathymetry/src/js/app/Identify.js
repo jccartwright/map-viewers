@@ -138,7 +138,7 @@ define([
                     '<div class="valueName"><span class="parameterValue"><a href="${metadataUrl}" target="_blank">Link to Metadata</a></span></div>';
 
                 if (a['DEM URL'] !== '') {
-                    template += '<div class="valueName"><span class="parameterValue"><a href="${metadataUrl}" target="_blank">DEM Download</a></span></div>';
+                    template += '<div class="valueName"><span class="parameterValue"><a href="${downloadUrl}" target="_blank">DEM Download</a></span></div>';
                 }
                 template +=
                     '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
