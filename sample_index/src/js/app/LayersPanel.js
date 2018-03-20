@@ -1,12 +1,17 @@
 define([
     'dojo/_base/declare',
     'dojo/_base/lang',
+    'dojo/_base/array',
     'dojo/topic',
     'dojo/on',    
     'dojo/dom',
+    'dojo/request/xhr',
+    'dojo/store/Memory',
     'dijit/registry',
     'dijit/form/RadioButton',
-    'dijit/Tooltip',
+    'dijit/form/FilteringSelect',
+    'esri/tasks/query', 
+    'esri/tasks/QueryTask',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
@@ -15,12 +20,17 @@ define([
     function(
         declare, 
         lang,
+        array,
         topic,
         on,
         dom,
+        xhr,
+        Memory,
         registry,
         RadioButton,
-        Tooltip,
+        FilteringSelect,
+        Query,
+        QueryTask,
         _WidgetBase, 
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
@@ -35,60 +45,207 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                on(registry.byId('AllInst'), 'click', lang.hitch(this, function() { this.selectInst('AllInst'); }));
-                on(registry.byId('None'), 'click', lang.hitch(this, function() { this.selectInst('None'); }));
-                on(registry.byId('AOML'), 'click', lang.hitch(this, function() { this.selectInst('AOML'); }));
-                on(registry.byId('ARFFSU'), 'click', lang.hitch(this, function() { this.selectInst('ARFFSU'); }));
-                on(registry.byId('AWI'), 'click', lang.hitch(this, function() { this.selectInst('AWI'); }));
-                on(registry.byId('BOSCORF'), 'click', lang.hitch(this, function() { this.selectInst('BOSCORF'); }));
-                on(registry.byId('BPCRC'), 'click', lang.hitch(this, function() { this.selectInst('BPCRC'); }));
-                on(registry.byId('BPCRR'), 'click', lang.hitch(this, function() { this.selectInst('BPCRR'); }));
-                on(registry.byId('Canada'), 'click', lang.hitch(this, function() { this.selectInst('Canada'); }));
-                on(registry.byId('DSDP'), 'click', lang.hitch(this, function() { this.selectInst('DSDP'); }));
-                on(registry.byId('ECS'), 'click', lang.hitch(this, function() { this.selectInst('ECS'); }));
-                on(registry.byId('France'), 'click', lang.hitch(this, function() { this.selectInst('France'); }));
-                on(registry.byId('GEOMAR'), 'click', lang.hitch(this, function() { this.selectInst('GEOMAR'); }));
-                on(registry.byId('IODP'), 'click', lang.hitch(this, function() { this.selectInst('IODP'); }));
-                on(registry.byId('LDEO'), 'click', lang.hitch(this, function() { this.selectInst('LDEO'); }));
-                on(registry.byId('LacCore'), 'click', lang.hitch(this, function() { this.selectInst('LacCore'); }));
-                on(registry.byId('ODP'), 'click', lang.hitch(this, function() { this.selectInst('ODP'); }));
-                on(registry.byId('OSU'), 'click', lang.hitch(this, function() { this.selectInst('OSU'); }));
-                on(registry.byId('PMEL'), 'click', lang.hitch(this, function() { this.selectInst('PMEL'); }));
-                on(registry.byId('RSMAS'), 'click', lang.hitch(this, function() { this.selectInst('RSMAS'); }));
-                on(registry.byId('SIO'), 'click', lang.hitch(this, function() { this.selectInst('SIO'); }));
-                on(registry.byId('SOEST'), 'click', lang.hitch(this, function() { this.selectInst('SOEST'); }));
-                on(registry.byId('UWISC'), 'click', lang.hitch(this, function() { this.selectInst('U WISC'); }));
-                on(registry.byId('URI'), 'click', lang.hitch(this, function() { this.selectInst('URI'); }));
-                on(registry.byId('USC'), 'click', lang.hitch(this, function() { this.selectInst('USC'); }));
-                on(registry.byId('USGSMP'), 'click', lang.hitch(this, function() { this.selectInst('USGSMP'); }));
-                on(registry.byId('USGSWH'), 'click', lang.hitch(this, function() { this.selectInst('USGSWH'); }));
-                on(registry.byId('USGSSP'), 'click', lang.hitch(this, function() { this.selectInst('USGSSP'); }));
-                on(registry.byId('UT'), 'click', lang.hitch(this, function() { this.selectInst('UT'); }));
-                on(registry.byId('WHOI'), 'click', lang.hitch(this, function() { this.selectInst('WHOI'); }));
-                on(registry.byId('NMNH'), 'click', lang.hitch(this, function() { this.selectInst('NMNH'); }));
+                xhr.get('repositories.json', {
+                    preventCache: true,
+                    handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data.items) {
+                        //data.items.unshift({id: 'All', name: 'All'});
+                        this.populateRepositorySelect(data.items);
+                    }
+                }), function(err){
+                    logger.error('Error retrieving repositories JSON: ' + err);
+                });
+
+                var queryTask = new QueryTask('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer/0');
+
+                var query = new Query();
+                query.where = '1=1';
+                query.returnGeometry = false;
+                query.returnDistinctValues = true;
+
+                query.outFields = ['CRUISE', 'FACILITY_CODE'];
+                query.orderByFields = ['CRUISE', 'FACILITY_CODE'];
+                queryTask.execute(query, lang.hitch(this, function(results) {
+                    this.populateCruiseSelect(results);
+                }), function(error) {
+                    logger.error(error);
+                });
+
+                query.outFields = ['PLATFORM'];
+                query.orderByFields = ['PLATFORM'];
+                queryTask.execute(query, lang.hitch(this, function(results) {
+                    this.populatePlatformSelect(results);
+                }), function(error) {
+                    logger.error(error);
+                });
+
+                query.outFields = ['LAKE'];
+                query.orderByFields = ['LAKE'];
+                queryTask.execute(query, lang.hitch(this, function(results) {
+                    this.populateLakeSelect(results);
+                }), function(error) {
+                    logger.error(error);
+                });
+
+                query.outFields = ['DEVICE'];
+                query.orderByFields = ['DEVICE'];
+                queryTask.execute(query, lang.hitch(this, function(results) {
+                    this.populateDeviceSelect(results);
+                }), function(error) {
+                    logger.error(error);
+                });
 
                 on(this.searchButton, 'click', lang.hitch(this, function() {
-                    if (!this.searchDialog) {
-                        this.searchDialog = new SearchDialog({title: 'Filter Samples'});
-                    }
-                    this.searchDialog.show();
+                    this.executeSearch();
                 }));  
 
                 on(this.resetButton, 'click', lang.hitch(this, function() {
-                    topic.publish('/sample_index/ResetSearch');
-                }));                                  
+                    this.resetSearch();
+                }));                                 
             },
 
-            selectInst: function(/*String*/ inst) {
-                topic.publish('/sample_index/SelectInstitution', inst);
+            populateRepositorySelect: function(items) {
+                //<div data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="repositorySelect" data-dojo-props="searchAttr:'id',labelAttr:'label',labelType:'html',placeHolder:'Select a Region',maxHeight:-1,required:false" name="region" style="width: 100%; max-width: 350px"> -->
+
+                this.repositorySelect = new FilteringSelect({
+                    name: 'id',
+                    searchAttr: 'id',
+                    labelAttr: 'label',
+                    labelType: 'html',
+                    placeHolder: 'All Repositories',
+                    maxHeight: -1,
+                    required: false,
+                    style: 'width: 100%; max-width: 350px'
+                });
+
+                this.repositorySelect.store = new Memory({data: items});
+                this.repositorySelect.placeAt(this.repositorySelectDiv);
+                this.repositorySelect.startup();
+
+                on(this.repositorySelect, 'change', lang.hitch(this, function(){
+                    this.cruiseSelect.set('value', '');
+                    this.filterCruiseSelect(this.repositorySelect.get('value'));
+                }));  
             },
 
-            setSelectedInst: function(/*String*/ inst) {
-                if (registry.byId(inst)) {                    
-                    registry.byId(inst).set('checked', true);
+            populateCruiseSelect: function(results) {   
+                var items = this.getCruiseStoreItems(results, 'CRUISE');
+                this.cruiseStore = new Memory({data: {identifier: 'id', items: items}});
+
+                this.cruiseSelect = new FilteringSelect({
+                    name: 'id',
+                    store: this.cruiseStore,
+                    searchAttr: 'id',
+                    required: false,
+                    placeHolder: 'All Cruises',
+                    style: 'width: 100%; max-width: 350px'
+                });
+
+                //Disable the validator so we can type any value into the box (e.g. wildcards).
+                this.cruiseSelect.validate = function() { 
+                    return true; 
+                };
+                this.cruiseSelect.placeAt(this.cruiseSelectDiv);  
+            },
+
+            populatePlatformSelect: function(results) {   
+                var items = this.getStoreItems(results, 'PLATFORM');
+                this.platformStore = new Memory({data: {identifier: 'id', items: items}});
+
+                this.platformSelect = new FilteringSelect({
+                    name: 'id',
+                    store: this.platformStore,
+                    searchAttr: 'id',
+                    required: false,
+                    placeHolder: 'All Platforms',
+                    style: 'width: 100%; max-width: 350px'
+                });
+
+                //Disable the validator so we can type any value into the box (e.g. wildcards).
+                this.platformSelect.validate = function() { 
+                    return true; 
+                };
+                this.platformSelect.placeAt(this.platformSelectDiv);  
+            },
+
+            populateLakeSelect: function(results) {   
+                var items = this.getStoreItems(results, 'LAKE');
+                this.lakeStore = new Memory({data: {identifier: 'id', items: items}});
+
+                this.lakeSelect = new FilteringSelect({
+                    name: 'id',
+                    store: this.lakeStore,
+                    searchAttr: 'id',
+                    required: false,
+                    placeHolder: 'All Lakes',
+                    style: 'width: 100%; max-width: 350px'
+                });
+
+                //Disable the validator so we can type any value into the box (e.g. wildcards).
+                this.lakeSelect.validate = function() { 
+                    return true; 
+                };
+                this.lakeSelect.placeAt(this.lakeSelectDiv);  
+            },
+
+            populateDeviceSelect: function(results) {   
+                var items = this.getStoreItems(results, 'DEVICE');
+                this.deviceStore = new Memory({data: {identifier: 'id', items: items}});
+
+                this.deviceSelect = new FilteringSelect({
+                    name: 'id',
+                    store: this.deviceStore,
+                    searchAttr: 'id',
+                    required: false,
+                    placeHolder: 'All Devices',
+                    style: 'width: 100%; max-width: 350px'
+                });
+
+                //Disable the validator so we can type any value into the box (e.g. wildcards).
+                this.deviceSelect.validate = function() { 
+                    return true; 
+                };
+                this.deviceSelect.placeAt(this.deviceSelectDiv);  
+            },
+
+            filterCruiseSelect: function(repository) {
+                if (repository === '') {
+                    this.cruiseSelect.set('query', {repository: /.*/});
+                    this.cruiseSelect.set('placeHolder', 'All Cruises');
+                } else {
+                    this.cruiseSelect.set('query', {repository: repository});
+                    this.cruiseSelect.set('placeHolder', 'All ' + repository + ' Cruises');
                 }
             },
 
+            getCruiseStoreItems: function(results) {
+                var items = [];
+
+                array.forEach(results.features, function(feature) {
+                    var cruise = feature.attributes['CRUISE'];
+                    var repository = feature.attributes['FACILITY_CODE'];
+                    var id = cruise + ' (' + repository + ')';
+                    //var id = cruise;
+                    items.push({id: id, cruise: cruise, repository: repository});
+                });
+
+                return items;
+            },
+
+            getStoreItems: function(results, attributeName) {
+                var items = [];
+
+                array.forEach(results.features, function(feature) {
+                    var value = feature.attributes[attributeName];
+                    if (value && value !== 'null') {
+                        items.push({id: value});
+                    }
+                });
+
+                return items;
+            },
+            
             disableResetButton: function() {
                 this.resetButton.set('disabled', true);
             },
@@ -97,49 +254,103 @@ define([
                 this.resetButton.set('disabled', false);
             },
 
-            setCurrentFilterString: function(values) {
-                var filterDiv = dom.byId('currentFilter');
-                if (!values) {
-                    filterDiv.innerHTML = '';
-                    return;
+            executeSearch: function() {
+                var values = {};
+
+                //Use _lastDisplayedValue instead of value to handle if a user typed in a string (i.e. with wildcard) that doesn't match anything in the store. Otherwise value is empty.
+                values.repository = this.repositorySelect.get('_lastDisplayedValue');
+
+                //values.cruise = this.cruiseSelect.get('_lastDisplayedValue');
+                if (this.cruiseSelect.get('_lastDisplayedValue') !== '') {
+                    values.cruise = this.cruiseSelect.get('item').cruise;
+                    values.repository = this.cruiseSelect.get('item').repository;
                 }
 
-                var s = '<b>Current filter:</b><br>';
+                values.platform = this.platformSelect.get('_lastDisplayedValue');
+                values.lake = this.lakeSelect.get('_lastDisplayedValue');
+                values.device = this.deviceSelect.get('_lastDisplayedValue');
+                values.minWaterDepth = this.minWaterDepthSpinner.get('value');
+                values.maxWaterDepth = this.maxWaterDepthSpinner.get('value');
+                values.startYear = this.startYearSpinner.get('value');
+                values.endYear = this.endYearSpinner.get('value');
+
+                if (this.isDefault(values)) {
+                    topic.publish('/sample_index/ResetSearch');
+                } else {       
+                    topic.publish('/sample_index/Search', values);
+                }                
+            },
                 
-                if (values.startYear && values.endYear) {
-                    s += '<i>Year:</i> ' + values.startYear + ' to ' + values.endYear + '<br>';
-                }
-                else if (values.startYear) {
-                    s += '<i>Starting year:</i> ' + values.startYear + '<br>';
-                }
-                else if (values.endYear) {
-                    s += '<i>Ending year:</i> ' + values.endYear + '<br>';
-                }
+            isDefault: function(values) {
+                return (!values.startYear && !values.endYear && 
+                    this.repositorySelect.get('_lastDisplayedValue') === '' &&
+                    this.cruiseSelect.get('_lastDisplayedValue') === '' && 
+                    this.platformSelect.get('_lastDisplayedValue') === '' && 
+                    this.lakeSelect.get('_lastDisplayedValue') === '' &&
+                    this.deviceSelect.get('_lastDisplayedValue') === '' &&
+                    values.device === '' && values.lake === '' && values.minWaterDepth === '' && values.maxWaterDepth === '');
+            },
+                   
+            clearForm: function() {     
+                this.repositorySelect.set('value', '');
+                this.cruiseSelect.set('value', '');
+                this.platformSelect.set('value', '');    
+                this.lakeSelect.set('value', '');    
+                this.deviceSelect.set('value', '');    
+                this.minWaterDepthSpinner.set('value', ''); 
+                this.maxWaterDepthSpinner.set('value', '');                                 
+                this.startYearSpinner.set('value', '');
+                this.endYearSpinner.set('value', '');                             
+            },
 
-                if (values.cruise) {
-                    s += '<i>Cruise or Leg:</i> ' + values.cruise + '<br>';
-                }
-                if (values.platform) {
-                    s += '<i>Platform Name:</i> ' + values.platform + '<br>';
-                }
-                if (values.lake) {
-                    s += '<i>Lake Name:</i> ' + values.lake + '<br>';
-                } 
-                if (values.device) {
-                    s += '<i>Device:</i> ' + values.device + '<br>';
-                }   
+            resetSearch: function() {
+                this.clearForm();
+                topic.publish('/sample_index/ResetSearch');
+            }, 
 
-                if (values.minWaterDepth && values.maxWaterDepth) {
-                    s += '<i>Water Depth (m):</i> ' + values.minWaterDepth + ' to ' + values.maxWaterDepth + '<br>';
-                }
-                else if (values.minWaterDepth) {
-                    s += '<i>Min Water Depth (m):</i> ' + values.minWaterDepth + '<br>';
-                }
-                else if (values.maxWaterDepth) {
-                    s += '<i>Max Water Depth (m):</i> ' + values.maxWaterDepth + '<br>';
-                }             
-                filterDiv.innerHTML = s;
-            }
+            // setCurrentFilterString: function(values) {
+            //     var filterDiv = dom.byId('currentFilter');
+            //     if (!values) {
+            //         filterDiv.innerHTML = '';
+            //         return;
+            //     }
+
+            //     var s = '<b>Current filter:</b><br>';
+                
+            //     if (values.startYear && values.endYear) {
+            //         s += '<i>Year:</i> ' + values.startYear + ' to ' + values.endYear + '<br>';
+            //     }
+            //     else if (values.startYear) {
+            //         s += '<i>Starting year:</i> ' + values.startYear + '<br>';
+            //     }
+            //     else if (values.endYear) {
+            //         s += '<i>Ending year:</i> ' + values.endYear + '<br>';
+            //     }
+
+            //     if (values.cruise) {
+            //         s += '<i>Cruise or Leg:</i> ' + values.cruise + '<br>';
+            //     }
+            //     if (values.platform) {
+            //         s += '<i>Platform Name:</i> ' + values.platform + '<br>';
+            //     }
+            //     if (values.lake) {
+            //         s += '<i>Lake Name:</i> ' + values.lake + '<br>';
+            //     } 
+            //     if (values.device) {
+            //         s += '<i>Device:</i> ' + values.device + '<br>';
+            //     }   
+
+            //     if (values.minWaterDepth && values.maxWaterDepth) {
+            //         s += '<i>Water Depth (m):</i> ' + values.minWaterDepth + ' to ' + values.maxWaterDepth + '<br>';
+            //     }
+            //     else if (values.minWaterDepth) {
+            //         s += '<i>Min Water Depth (m):</i> ' + values.minWaterDepth + '<br>';
+            //     }
+            //     else if (values.maxWaterDepth) {
+            //         s += '<i>Max Water Depth (m):</i> ' + values.maxWaterDepth + '<br>';
+            //     }             
+            //     filterDiv.innerHTML = s;
+            // }
         });
     }
 );

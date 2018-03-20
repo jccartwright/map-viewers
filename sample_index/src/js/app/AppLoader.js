@@ -14,6 +14,8 @@ define([
     'esri/geometry/Extent',
     'esri/SpatialReference',
     'esri/tasks/GeometryService',
+    'esri/tasks/query', 
+    'esri/tasks/QueryTask',
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'app/arctic/MapConfig',
@@ -49,6 +51,8 @@ define([
         Extent,
         SpatialReference,
         GeometryService,
+        Query,
+        QueryTask,
         Logger,
         MercatorMapConfig,
         ArcticMapConfig,
@@ -79,6 +83,8 @@ define([
 
                 this.currentInstitution = null;
                 this.currentFilter = null;
+
+                this.queryTask = new QueryTask('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer/0');
             },
 
             init: function() {
@@ -130,7 +136,9 @@ define([
                 }));
                 topic.subscribe('/sample_index/ResetSearch', lang.hitch(this, function() {
                     this.resetFilter();
-                }));          
+                }));
+
+                this.resetFeatureCount();
             },
 
             setupBanner: function() {
@@ -317,13 +325,17 @@ define([
             filterSamples: function(values) {
                 var layerDefinition;
                 var sql = [];
-                                                    
-                //Multibeam
+                       
+                if (values.repository)                              {
+                    sql.push("FACILITY_CODE='" + values.repository + "'");
+                }
                 if (values.startYear) {
-                    sql.push("TO_NUMBER(SUBSTR(BEGIN_DATE,0,4)) >= " + values.startYear);  //TODO replace Oracle-specific functions
+                    sql.push("YEAR >= " + values.startYear);
+                    //sql.push("TO_NUMBER(SUBSTR(BEGIN_DATE,0,4)) >= " + values.startYear);  //TODO replace Oracle-specific functions
                 }   
                 if (values.endYear) {
-                    sql.push("TO_NUMBER(SUBSTR(BEGIN_DATE,0,4)) <= " + values.endYear);  //TODO replace Oracle-specific functions
+                    //sql.push("TO_NUMBER(SUBSTR(BEGIN_DATE,0,4)) <= " + values.endYear);  //TODO replace Oracle-specific functions
+                    sql.push("YEAR >= " + values.endYear);
                 }
                 if (values.cruise) {
                     sql.push("(UPPER(CRUISE) LIKE '%" + values.cruise.toUpperCase() + "%' OR UPPER(LEG) LIKE '%" + values.cruise.toUpperCase() + "%')");
@@ -345,16 +357,19 @@ define([
                 }
                 layerDefinition = sql.join(' AND ');
                 this.currentFilter = layerDefinition;
-                if (this.currentInstitution && this.currentInstitution != 'AllInst') {
-                    layerDefinition += " AND FACILITY_CODE IN ('" + this.currentInstitution + "')";
-                }
+
+                this.displayFeatureCount(layerDefinition);
+
+                // if (this.currentInstitution && this.currentInstitution != 'AllInst') {
+                //     layerDefinition += " AND FACILITY_CODE IN ('" + this.currentInstitution + "')";
+                // }
                 //console.log(layerDefinitions);
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
                 this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
 
                 this.layersPanel.enableResetButton();
-                this.layersPanel.setCurrentFilterString(values);
+                //this.layersPanel.setCurrentFilterString(values);
             },
 
             resetFilter: function() {
@@ -367,10 +382,41 @@ define([
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
                 this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
 
-                this.layersPanel.disableResetButton();
-                this.layersPanel.searchDialog.clearForm();
-                this.layersPanel.setCurrentFilterString('');
-            }        
+                //this.layersPanel.disableResetButton();
+
+                this.resetFeatureCount();
+            },
+
+            displayFeatureCount: function(layerDefinition) {
+                var query = new Query();
+                query.where = layerDefinition;
+
+                this.queryTask.executeForCount(query, lang.hitch(this, function(count) {
+                    var countDiv = dom.byId('featureCount');
+                    countDiv.innerHTML = 'Number of Samples Displayed: ' + count;
+                }), function(error) {
+                    logger.error(error);
+                });
+            },
+
+            resetFeatureCount: function() {
+                var countDiv = dom.byId('featureCount');
+                countDiv.innerHTML = 'Number of Samples Displayed: ';
+
+                if (!this.featureCountTotal) {
+                    var query = new Query();
+                    query.where = '1=1';
+                    this.queryTask.executeForCount(query, lang.hitch(this, function(count) {
+                        this.featureCountTotal = count;
+                        countDiv.innerHTML = 'Number of Samples Displayed: ' + count;
+                    }), function(error) {
+                        logger.error(error);
+                    });  
+                }
+                else {
+                    countDiv.innerHTML = 'Number of Samples Displayed: ' + this.featureCountTotal;   
+                }
+            }
         });
     }
 );
