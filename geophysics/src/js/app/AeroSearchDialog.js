@@ -90,7 +90,7 @@ define([
                 xhr.get('https://gis.ngdc.noaa.gov/mapviewer-support/aeromag/projects.groovy', {
                     preventCache: true,
                     jsonp: 'callback',
-                    handleAs: 'json',
+                    handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populateProjectSelect(data.items);
@@ -102,7 +102,7 @@ define([
                 xhr.get('https://gis.ngdc.noaa.gov/mapviewer-support/aeromag/surveys.groovy', {
                     preventCache: true,
                     jsonp: 'callback',
-                    handleAs: 'json',
+                    handleAs: 'json'
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populateSurveySelect(data.items);

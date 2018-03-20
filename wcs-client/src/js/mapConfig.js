@@ -355,7 +355,7 @@ function getMapServiceList(){
 		visible: false,
 		opacity: 1
 	}),
-	new esri.layers.ArcGISDynamicMapServiceLayer("https://maps.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer", {
+	new esri.layers.ArcGISDynamicMapServiceLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer", {
 		id: "Graticule",
 		visible: true,
 		opacity: 0.7,
