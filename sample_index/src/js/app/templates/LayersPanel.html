@@ -1,161 +1,37 @@
 <div class="layersPanel_class">
-    <h3>Select Repository:</h3> 
-                                                                
-    <input type="radio" name="selectInst" id="AllInst" data-dojo-type="dijit/form/RadioButton"checked />
-    <label for="AllInst">All Samples by Institution</label><br/>
+    <h3>Filter Samples:</h3> 
     
-    <input type="radio" name="selectInst" id="None" data-dojo-type="dijit/form/RadioButton"/>
-    <label for="None">None</label><br/>                 
-    
-    <div class="instDiv" id="AOML_div"> 
-        <input type="radio" name="selectInst" id="AOML" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="AOML"><img class="inst_icon" src="images/AOML_symbol.png"> AOML</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'AOML_div'">NOAA Atlantic Oceanographic and Meteorological Lab</div>
-    </div><br>
-    <div class="instDiv" id="ARFFSU_div">  
-        <input type="radio" name="selectInst" id="ARFFSU" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="ARFFSU"><img class="inst_icon" src="images/ARFFSU_symbol.png"> ARFFSU</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'ARFFSU_div'">Antarctic Research Facility, Florida State University</div>
-    </div><br>
-    <div class="instDiv" id="AWI_div">
-        <input type="radio" name="selectInst" id="AWI" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="AWI"><img class="inst_icon" src="images/AWI_symbol.png"> AWI</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'AWI_div'">Alfred Wegener Institute, Germany</div>
-    </div><br>
-    <div class="instDiv" id="BOSCORF_div">
-        <input type="radio" name="selectInst" id="BOSCORF" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="BOSCORF"><img class="inst_icon" src="images/BOSCORF_symbol.png"> BOSCORF</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'BOSCORF_div'">British Ocean Sediment Core Research Facility, UK</div>
-    </div><br>
-    <div class="instDiv" id="BPCRC_div"> 
-        <input type="radio" name="selectInst" id="BPCRC" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="BPCRC"><img class="inst_icon" src="images/BPCRC_symbol.png"> BPCRC</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'BPCRC_div'">Byrd Polar and Climate Core Repository</div>
-    </div><br>
-    <div class="instDiv" id="BPCRR_div"> 
-        <input type="radio" name="selectInst" id="BPCRR" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="BPCRR"><img class="inst_icon" src="images/BPCRR_symbol.png"> BPCRR</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'BPCRR_div'">Byrd Polar and Climate Rock Repository</div>
-    </div><br>
-    <div class="instDiv" id="Canada_div">   
-        <input type="radio" name="selectInst" id="Canada" data-dojo-type="dijit/form/RadioButton"/>                
-        <label for="Canada"><img class="inst_icon" src="images/Canada_symbol.png"> Canada</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'Canada_div'">Geological Survey of Canada</div>
-    </div><br>
-    <div class="instDiv" id="DSDP_div"> 
-        <input type="radio" name="selectInst" id="DSDP" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="DSDP"><img class="inst_icon" src="images/DSDP_symbol.png"></img> DSDP</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'DSDP_div'">Deep Sea Drilling Project, IODP</div>
-    </div><br>
-    <div class="instDiv" id="ECS_div">              
-        <input type="radio" name="selectInst" id="ECS" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="ECS"><img class="inst_icon" src="images/ECS_symbol.png"> ECS</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'ECS_div'">Extended Continental Shelf Project</div>
-    </div><br>
-    <div class="instDiv" id="France_div">              
-        <input type="radio" name="selectInst" id="France" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="France"><img class="inst_icon" src="images/France_symbol.png"> France</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'France_div'">Universite de Savoie, EDYTEM</div>
-    </div><br>
-    <div class="instDiv" id="GEOMAR_div">   
-        <input type="radio" name="selectInst" id="GEOMAR" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="GEOMAR"><img class="inst_icon" src="images/GEOMAR_symbol.png"> GEOMAR</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'GEOMAR_div'">IFM-GEOMAR, Germany</div>
-    </div><br>
-    <div class="instDiv" id="IODP_div"> 
-        <input type="radio" name="selectInst" id="IODP" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="IODP"><img class="inst_icon" src="images/IODP_symbol.png"> IODP</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'IODP_div'">Integrated Ocean Drilling Program</div>                    
-    </div><br>
-    <div class="instDiv" id="LDEO_div"> 
-        <input type="radio" name="selectInst" id="LDEO" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="LDEO"><img class="inst_icon" src="images/LDEO_symbol.png"> LDEO</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'LDEO_div'">Lamont-Doherty Earth Observatory, Columbia University</div>
-    </div><br>
-    <div class="instDiv" id="LacCore_div">  
-        <input type="radio" name="selectInst" id="LacCore" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="LacCore"><img class="inst_icon" src="images/LacCore_symbol.png"> LacCore</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'LacCore_div'">National Lacustrine Core Repository, University of Minnesota</div>
-    </div><br>
-    <div class="instDiv" id="ODP_div">  
-        <input type="radio" name="selectInst" id="ODP" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="ODP"><img class="inst_icon" src="images/ODP_symbol.png"> ODP</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'ODP_div'">Ocean Drilling Program, IODP</div>
-    </div><br>
-    <div class="instDiv" id="OSU_div">                                          
-        <input type="radio" name="selectInst" id="OSU" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="OSU"><img class="inst_icon" src="images/OSU_symbol.png"> OSU</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'OSU_div'">Oregon State University</div>
-    </div><br>
-    <div class="instDiv" id="PMEL_div"> 
-        <input type="radio" name="selectInst" id="PMEL" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="PMEL"><img class="inst_icon" src="images/PMEL_symbol.png"> PMEL</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'PMEL_div'">NOAA Pacific Marine Environmental Lab</div>
-    </div><br>
-    <div class="instDiv" id="RSMAS_div">                    
-        <input type="radio" name="selectInst" id="RSMAS" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="RSMAS"><img class="inst_icon" src="images/RSMAS_symbol.png"> RSMAS</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'RSMAS_div'">Rosenstiel School of Marine and Atmos Sciences</div>
-    </div><br>  
-    <div class="instDiv" id="SIO_div">  
-        <input type="radio" name="selectInst" id="SIO" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="SIO"><img class="inst_icon" src="images/SIO_symbol.png"> SIO</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'SIO_div'">Scripps Institution of Oceanography</div>
-    </div><br>  
-    <div class="instDiv" id="SOEST_div">    
-        <input type="radio" name="selectInst" id="SOEST" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="SOEST"><img class="inst_icon" src="images/SOEST_symbol.png"> SOEST</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'SOEST_div'">School of Ocean and Earth Science and Tehcnology, University of Hawaii</div>
-    </div><br>
-    <div class="instDiv" id="UWISC_div">                 
-        <input type="radio" name="selectInst" id="UWISC" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="UWISC"><img class="inst_icon" src="images/UWISC_symbol.png"> U WISC</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'UWISC_div'">University of Wisconsin</div>
-    </div><br>
-    <div class="instDiv" id="URI_div">  
-        <input type="radio" name="selectInst" id="URI" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="URI"><img class="inst_icon" src="images/URI_symbol.png"> URI</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'URI_div'">University of Rhode Island</div>
-    </div><br>
-    <div class="instDiv" id="USC_div">  
-        <input type="radio" name="selectInst" id="USC" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="USC"><img class="inst_icon" src="images/USC_symbol.png"> USC</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'USC_div'">University of Southern California</div>
-    </div><br>
-    <div class="instDiv" id="USGSMP_div">   
-        <input type="radio" name="selectInst" id="USGSMP" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="USGSMP"><img class="inst_icon" src="images/USGS_symbol.png"> USGSMP</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'USGSMP_div'">USGS West Coast Repository</div>
-    </div><br>
-    <div class="instDiv" id="USGSWH_div">   
-        <input type="radio" name="selectInst" id="USGSWH" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="USGSWH"><img class="inst_icon" src="images/USGS_symbol.png"> USGSWH</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'USGSWH_div'">USGS East Coast Repository</div>             
-    </div><br>
-    <div class="instDiv" id="USGSSP_div">   
-        <input type="radio" name="selectInst" id="USGSSP" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="USGSSP"><img class="inst_icon" src="images/USGS_symbol.png"> USGSSP</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'USGSSP_div'">USGS Southeast Repository</div>              
-    </div><br>
-    <div class="instDiv" id="UT_div">                                       
-        <input type="radio" name="selectInst" id="UT" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="UT"><img class="inst_icon" src="images/UT_symbol.png"> UT</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'UT_div'">University of Texas Institute of Geophysics</div>
-    </div><br>
-    <div class="instDiv" id="WHOI_div"> 
-        <input type="radio" name="selectInst" id="WHOI" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="WHOI"><img class="inst_icon" src="images/WHOI_symbol.png"> WHOI</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'WHOI_div'">Woods Hole Oceanographic Institution</div>
-    </div><br>
-    <div class="instDiv" id="NMNH_div"> 
-        <input type="radio" name="selectInst" id="NMNH" data-dojo-type="dijit/form/RadioButton"/>
-        <label for="NMNH"><img class="inst_icon" src="images/NMNH_symbol.png"> NMNH</label><br/>
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="showDelay:100, position:['after'], connectId:'NMNH_div'">Smithsonian Institution Museum of Natural History</div>
-    </div><hr>
-    
-    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" id="searchButton">Filter Samples</div>
-    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" id="resetButton" disabled>Reset</div><br>
-    <div id="currentFilter" class="filterText"></div><br>
+    <label>Repository:</label><br/>
+    <div data-dojo-attach-point="repositorySelectDiv"></div>
+    <br>
 
-    
+    <label>Cruise ID:</label><br/>
+    <div data-dojo-attach-point="cruiseSelectDiv"></div>
+    <br>
+            
+    <label>Platform Name:</label><br/>
+    <div data-dojo-attach-point="platformSelectDiv"></div>
+    <br>
+              
+    <label>Lake Name:</label><br/>
+    <div data-dojo-attach-point="lakeSelectDiv"></div>
+    <br>
+
+    <label>Year:</label><br>
+    <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="startYearSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1885,max:2020,places:0,pattern:'0000'}" name="startYear"></div> to
+    <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="endYearSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1885,max:2020,places:0,pattern:'0000'}" name="endYear"></div>
+    <br><br>
+                        
+    <label>Device:</label><br/>
+    <div data-dojo-attach-point="deviceSelectDiv"></div>
+    <br>
+                 
+    <label>Water Depth (m):</label><br>
+    <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minWaterDepthSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:100, constraints:{min:0,max:11000,places:0}" name="minWaterDepth"></div> to
+    <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxWaterDepthSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:100, constraints:{min:0,max:11000,places:0}" name="maxWaterDepth"></div>
+    <br><br>
+
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" id="searchButton">Filter Samples</div>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" id="resetButton">Reset</div><br><br>
+    <div id="featureCount" class="filterText"></div><br>
 </div>
