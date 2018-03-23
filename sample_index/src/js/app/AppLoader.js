@@ -8,7 +8,8 @@ define([
     'dojo/_base/lang',
     'dojo/topic',
     'dojo/on',
-    'dojo/aspect',    
+    'dojo/aspect', 
+    'dojo/Deferred',
     'dijit/form/CheckBox',
     'esri/config',
     'esri/geometry/Extent',
@@ -16,6 +17,16 @@ define([
     'esri/tasks/GeometryService',
     'esri/tasks/query', 
     'esri/tasks/QueryTask',
+    'esri/layers/FeatureLayer',
+    //'esri/dijit/FeatureTable',
+    'app/FeatureTableCustom',
+    'esri/symbols/SimpleMarkerSymbol', 
+    'esri/symbols/SimpleLineSymbol',
+    'esri/geometry/Point', 
+    'esri/renderers/SimpleRenderer',
+    "esri/SpatialReference",
+    'esri/graphic',
+    'esri/Color',
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'app/arctic/MapConfig',
@@ -46,6 +57,7 @@ define([
         topic,
         on,
         aspect,
+        Deferred,
         CheckBox,
         esriConfig,
         Extent,
@@ -53,6 +65,15 @@ define([
         GeometryService,
         Query,
         QueryTask,
+        FeatureLayer,
+        FeatureTable,
+        SimpleMarkerSymbol,
+        SimpleLineSymbol,
+        Point,
+        SimpleRenderer,
+        SpatialReference,
+        Graphic,
+        Color,
         Logger,
         MercatorMapConfig,
         ArcticMapConfig,
@@ -85,6 +106,9 @@ define([
                 this.currentFilter = null;
 
                 this.queryTask = new QueryTask('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer/0');
+
+                this.featureTableVisible = false;
+                this.featureCount = 0;
             },
 
             init: function() {
@@ -117,18 +141,11 @@ define([
                 window.logger = new Logger(config.app.loglevel);
 
                 this.setupBanner();
-
                 this.setupLayersPanel();
-
-                //this.setStartupLayers(startupLayers);
-
                 this.setupMapViews();
+                this.setupFeatureTable();
 
-                //Subscribe to message passed by the LayersPanel. This is also triggered when specifying the 'institution' URL param
-                topic.subscribe('/sample_index/SelectInstitution', lang.hitch(this, function(institution) {
-                    this.layersPanel.setSelectedInst(institution);
-                    this.selectInstitution(institution);
-                }));
+                this.layersPanel.disableShowTableButton();
 
                 //Subscribe to messages passed by the search dialog
                 topic.subscribe('/sample_index/Search', lang.hitch(this, function(values) {
@@ -136,6 +153,13 @@ define([
                 }));
                 topic.subscribe('/sample_index/ResetSearch', lang.hitch(this, function() {
                     this.resetFilter();
+                }));
+
+                topic.subscribe('/sample_index/ShowFeatureTable', lang.hitch(this, function() {
+                    this.showFeatureTable();
+                }));
+                topic.subscribe('/sample_index/HideFeatureTable', lang.hitch(this, function() {
+                    this.hideFeatureTable();
                 }));
 
                 this.resetFeatureCount();
@@ -286,40 +310,82 @@ define([
                 new CoordinatesWithElevationToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
             },
 
-            selectInstitution: function(/*String*/ inst) {
-                var layerDefinitions = [];
-                this.currentInstitution = inst;
+            setupFeatureTable: function() {
+                this.featureLayer = new FeatureLayer("https://gisdev.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/FeatureServer/0", {
+                  mode: FeatureLayer.MODE_ONDEMAND,
+                  //outFields:  ["FACILITY_CODE","PLATFORM","CRUISE","SAMPLE"],
+                  outFields: ['*'],
+                  visible: false,
+                  id: "fLayer",
+                  definitionExpression: "1=0",
+                  orderByFields: ['SAMPLE ASC'],
+                  showColumnHeaderTooltips: false
+                  //definitionExpression: "FACILITY_CODE='USGSWH'"
+                }); 
+                this.mercatorMapConfig.map.addLayer(this.featureLayer); 
 
-                var services = [
-                    this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index'),
-                    this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index'),
-                    this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index')
-                ];
+                var selectionSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 20,
+                    new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                    new Color([0,255,255]), 1),
+                    new Color([0,255,255,0.25]));
 
-                array.forEach(services, lang.hitch(this, function(svc) {
+                this.featureTable = new FeatureTable({
+                  featureLayer: this.featureLayer,
+                  map: this.arcticMapConfig.map,
+                  showGridMenu: true//,
+                  //batchCount: 100,
+                  //syncSelection: true
+                  //hiddenFields: ["FID","C_Seq","Street"]  // field that end-user can show, but is hidden on startup
+                }, 'featureTableNode');
 
-                    if (inst === 'AllInst') {
-                        svc.hide();
-                        if (this.currentFilter) {
-                            layerDefinitions[0] = this.currentFilter;
-                        }
-                        svc.setLayerDefinitions(layerDefinitions);
-                        svc.show();
-                    } else if (inst === 'None') {
-                        svc.hide();
-                    } else {
-                        svc.hide();
-                                                
-                        if (this.currentFilter) {
-                            layerDefinitions = [this.currentFilter + " AND FACILITY_CODE in ('" + inst + "')"];
-                        } else {
-                            layerDefinitions = ["FACILITY_CODE in ('" + inst + "')"];
-                        }
+                var borderContainer = registry.byId('centerContainer');
+                var featureTableContainer = registry.byId('featureTableContainer');
+                borderContainer.removeChild(featureTableContainer);
+                
+                this.featureTable.startup();
 
-                        svc.setLayerDefinitions(layerDefinitions);   
-                        svc.show();
-                    }
+                on(this.featureTable, 'row-select', lang.hitch(this, function() {
+                    var objectids = [];
+                    array.forEach(this.featureTable.selectedRows, lang.hitch(this, function(selectedRow) {
+                        var point = new Point(selectedRow['LON'], selectedRow['LAT'], new SpatialReference({wkid:4326}));                        
+                        this.mercatorMapConfig.map.graphics.add(new Graphic(point, selectionSymbol));
+                        this.arcticMapConfig.map.graphics.add(new Graphic(this.projectPoint(point, 3995), selectionSymbol));
+                        this.antarcticMapConfig.map.graphics.add(new Graphic(this.projectPoint(point, 3031), selectionSymbol));
+                    }));
                 }));
+
+                on(this.featureTable, 'row-deselect', lang.hitch(this, function() {
+                    this.mercatorMapConfig.map.graphics.clear();
+                    this.arcticMapConfig.map.graphics.clear();
+                    this.antarcticMapConfig.map.graphics.clear();
+                }));
+
+                on(this.featureTable, 'load', lang.hitch(this, function() {
+                    this.featureLayer.name = 'Geological Samples';
+                }));
+            },
+
+            showFeatureTable: function() {
+                var borderContainer = registry.byId('centerContainer');
+                var featureTableContainer = registry.byId('featureTableContainer');
+                borderContainer.addChild(featureTableContainer);
+                this.featureTableVisible = true;
+                this.featureTable.refresh();
+            },
+
+            hideFeatureTable: function() {
+                var borderContainer = registry.byId('centerContainer');
+                var featureTableContainer = registry.byId('featureTableContainer');
+                borderContainer.removeChild(featureTableContainer);
+                this.featureTableVisible = false;
+            },
+
+            projectPoint: function(point, wkid) {
+                this.sourceProj = new Proj4js.Proj('EPSG:4326');
+                this.destProj = new Proj4js.Proj('EPSG:' + wkid);
+                var pt = {x: point.x, y: point.y};
+                Proj4js.transform(this.sourceProj, this.destProj, pt);
+                return new Point(pt.x, pt.y, new SpatialReference({wkid:wkid}));    
             },
 
             filterSamples: function(values) {
@@ -358,18 +424,26 @@ define([
                 layerDefinition = sql.join(' AND ');
                 this.currentFilter = layerDefinition;
 
-                this.displayFeatureCount(layerDefinition);
-
-                // if (this.currentInstitution && this.currentInstitution != 'AllInst') {
-                //     layerDefinition += " AND FACILITY_CODE IN ('" + this.currentInstitution + "')";
-                // }
-                //console.log(layerDefinitions);
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
                 this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions([layerDefinition]);
 
                 this.layersPanel.enableResetButton();
-                //this.layersPanel.setCurrentFilterString(values);
+
+                this.displayFeatureCount(layerDefinition).then(lang.hitch(this, function() {
+                    if (this.featureCount > 50000) {
+                        this.layersPanel.disableShowTableButton();
+                        this.hideFeatureTable()
+                        this.featureLayer.setDefinitionExpression("1=0");
+                    }
+                    else {
+                        this.layersPanel.enableShowTableButton();
+                        this.featureLayer.setDefinitionExpression(layerDefinition);
+                        if (this.featureTableVisible) {
+                            this.featureTable.refresh();
+                        }
+                    }
+                }));  
             },
 
             resetFilter: function() {
@@ -385,18 +459,29 @@ define([
                 //this.layersPanel.disableResetButton();
 
                 this.resetFeatureCount();
+
+                this.hideFeatureTable();
+                this.layersPanel.disableShowTableButton();
+                this.featureLayer.setDefinitionExpression("1=0");
             },
 
             displayFeatureCount: function(layerDefinition) {
+                var deferred = new Deferred();
                 var query = new Query();
                 query.where = layerDefinition;
 
+                var countDiv = dom.byId('featureCount');
                 this.queryTask.executeForCount(query, lang.hitch(this, function(count) {
-                    var countDiv = dom.byId('featureCount');
                     countDiv.innerHTML = 'Number of Samples Displayed: ' + count;
+                    this.featureCount = count;
+                    deferred.resolve('success');
                 }), function(error) {
                     logger.error(error);
+                    countDiv.innerHTML = 'Number of Samples Displayed: 0'
+                    this.featureCount = 0;
+                    deferred.resolve('error');
                 });
+                return deferred.promise;
             },
 
             resetFeatureCount: function() {
@@ -408,6 +493,7 @@ define([
                     query.where = '1=1';
                     this.queryTask.executeForCount(query, lang.hitch(this, function(count) {
                         this.featureCountTotal = count;
+                        this.featureCount = count;
                         countDiv.innerHTML = 'Number of Samples Displayed: ' + count;
                     }), function(error) {
                         logger.error(error);
