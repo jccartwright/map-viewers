@@ -5,6 +5,7 @@ define([
     'dojo/topic',
     'dojo/on',    
     'dojo/dom',
+    'dojo/dom-style',
     'dojo/request/xhr',
     'dojo/store/Memory',
     'dijit/registry',
@@ -24,6 +25,7 @@ define([
         topic,
         on,
         dom,
+        domStyle,
         xhr,
         Memory,
         registry,
@@ -102,7 +104,21 @@ define([
 
                 on(this.resetButton, 'click', lang.hitch(this, function() {
                     this.resetSearch();
-                }));                                 
+                }));  
+
+                this.isShowTableToggled = true;
+                on(this.showHideTableButton, 'click', lang.hitch(this, function() {
+                    if (this.isShowTableToggled) {
+                        this.showHideTableButton.set('label', 'Hide Table');
+                        this.isShowTableToggled = false;
+                        topic.publish('/sample_index/ShowFeatureTable');
+                    }
+                    else {
+                        this.showHideTableButton.set('label', 'Show Table');
+                        this.isShowTableToggled = true;
+                        topic.publish('/sample_index/HideFeatureTable');
+                    }
+                }));
             },
 
             populateRepositorySelect: function(items) {
@@ -252,6 +268,16 @@ define([
 
             enableResetButton: function() {
                 this.resetButton.set('disabled', false);
+            },
+
+            disableShowTableButton: function() {
+                this.showHideTableButton.set('disabled', true);
+                this.showHideTableButton.set('label', 'Show Table');
+            },
+
+            enableShowTableButton: function() {
+                this.showHideTableButton.set('disabled', false);
+                this.showHideTableButton.set('label', 'Show Table');
             },
 
             executeSearch: function() {
