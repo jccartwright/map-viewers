@@ -35,6 +35,10 @@
     <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" id="resetButton">Reset</div><br><br>
     <div id="featureCount" class="filterText"></div><br>
 
-    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="showHideTableButton" id="showHideTableButton">Show Table</div><br>
-    <i>(Maximum of 50,000 samples for table)</i>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="showHideTableButton" id="showHideTableButton">Show Table</div>
+    <img id="tableHelp" class="tooltipButtonMiddle" src="images/question-button.png"><br>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'tableHelp'">
+        <div class="tooltipText">The table can display a maximum of 50,000 samples. If the "Show Table" button is disabled, please apply a filter to display a smaller number of samples.</div>
+    </div>
+    <!-- <i>(Maximum of 50,000 samples for table)</i> -->
 </div>

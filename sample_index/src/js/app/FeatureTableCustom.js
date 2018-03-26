@@ -15,11 +15,11 @@ define([
             //Taken from the stock FeatureTable, with a couple functions overridden, to allow sorting across the entire set of features in the FeatureLayer, instead of just a chunk at a time.
 
             _generateStoreForNonPaginatedLayer: function(a) {
-                var grid = a.grid
-                  , layer = a.layer
-                  , layerInfo = a.layerInfo
-                  , where = a.where || null
-                  , orderByFields = a.orderByFields || null;
+                var grid = a.grid;
+                var layer = a.layer;
+                var layerInfo = a.layerInfo;
+                var where = a.where || null;
+                var orderByFields = a.orderByFields || null;
                 return this.queryLayerForIds({
                     layer: layer,
                     idProperty: layerInfo.idProperty,
@@ -33,15 +33,15 @@ define([
                         ids: ids,
                         where: where,
                         orderByFields: orderByFields
-                    })
+                    });
                 })).otherwise(lang.hitch(this, function() {
-                    this._showLoadError()
-                }))
+                    this._showLoadError();
+                }));
             },
 
             queryLayerForIds: function(a) {
-                var layer = a.layer
-                  , idProperty = a.idProperty;
+                var layer = a.layer;
+                var idProperty = a.idProperty;
                 var where = a.where || "1\x3d1";
                 var query = new Query();
                 var orderByFields = a.orderByFields || null;

@@ -8,6 +8,7 @@ define([
     'dojo/_base/lang',
     'dojo/topic',
     'dojo/on',
+    'dojo/promise/all',
     'dojo/aspect', 
     'dojo/Deferred',
     'dijit/form/CheckBox',
@@ -24,7 +25,6 @@ define([
     'esri/symbols/SimpleLineSymbol',
     'esri/geometry/Point', 
     'esri/renderers/SimpleRenderer',
-    "esri/SpatialReference",
     'esri/graphic',
     'esri/Color',
     'ngdc/Logger',
@@ -56,6 +56,7 @@ define([
         lang,
         topic,
         on,
+        all,
         aspect,
         Deferred,
         CheckBox,
@@ -71,7 +72,6 @@ define([
         SimpleLineSymbol,
         Point,
         SimpleRenderer,
-        SpatialReference,
         Graphic,
         Color,
         Logger,
@@ -123,8 +123,7 @@ define([
                 lang.mixin(config.app, queryParams);
                 
                 if (queryParams.institution) {
-                    //this.selectInstitution(queryParams.institution);   
-                    this.selectedInstitution = queryParams.institution;
+                    this.selectedRepository = queryParams.institution;
                 }
                 this.initialExtent = null;
                 if (queryParams.minx && queryParams.maxx && queryParams.miny && queryParams.maxy) {
@@ -188,26 +187,35 @@ define([
 
             setupMapViews: function() {
                 logger.debug('setting up map views...');
+                var deferreds = [];
+
                 // setup map views. You can only draw a Map into a visible container
-                this.setupMercatorView();
+                deferreds.push(this.setupMercatorView());
 
                 registry.byId('mapContainer').selectChild('arctic');
-                this.setupArcticView();
+                deferreds.push(this.setupArcticView());
 
                 registry.byId('mapContainer').selectChild('antarctic');
-                this.setupAntarcticView();
+                deferreds.push(this.setupAntarcticView());
 
                 //go back to mercator as default view
                 registry.byId('mapContainer').selectChild('mercator');
 
                 registry.byId('mapContainer').watch('selectedChildWidget', lang.hitch(this, function(name, oval, nval){
                     var mapId = nval.id;
-                    console.debug(mapId + ' map view selected');
+                    logger.debug(mapId + ' map view selected');
                     topic.publish('/ngdc/mapViewActivated', mapId);
                     this.enableMapView(mapId);
                 }));
 
                 this.enableMapView('mercator');
+
+                all(deferreds).then(lang.hitch(this, function() {
+                    if (this.selectedRepository) {  
+                        this.layersPanel.setSelectedRepository(this.selectedRepository);
+                        this.filterSamples({repository: this.selectedRepository});
+                    }
+                }));
             },
 
             enableMapView: function(/*String*/ mapId) {
@@ -227,6 +235,7 @@ define([
             },
 
             setupMercatorView: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up Mercator view...');
 
                 var zoomLevels = new MercatorZoomLevels();
@@ -247,14 +256,20 @@ define([
                     overview: true,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
-                    lods: zoomLevels.lods,
-                    selectedInstitution: this.selectedInstitution
+                    lods: zoomLevels.lods
                 }, new MercatorLayerCollection());  
 
                 new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
+
+                aspect.after(this.mercatorMapConfig, 'mapReady', function() {
+                    deferred.resolve('success');
+                });
+
+                return deferred.promise;
             },
 
             setupArcticView: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up Arctic view...');
                 
                 var initialExtent = new Extent({
@@ -275,14 +290,20 @@ define([
                     overview: false,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
-                    lods: zoomLevels.lods,
-                    selectedInstitution: this.selectedInstitution
+                    lods: zoomLevels.lods
                 }, new ArcticLayerCollection());
 
                 new CoordinatesWithElevationToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
+
+                aspect.after(this.arcticMapConfig, 'mapReady', function() {
+                    deferred.resolve('success');
+                });
+
+                return deferred.promise;
             },
 
             setupAntarcticView: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up Antarctic view...');
                 
                 var initialExtent = new Extent({
@@ -303,25 +324,30 @@ define([
                     overview: false,
                     sliderStyle: 'large',
                     navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
-                    lods: zoomLevels.lods,
-                    selectedInstitution: this.selectedInstitution
+                    lods: zoomLevels.lods
                 }, new AntarcticLayerCollection());
 
                 new CoordinatesWithElevationToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
+
+                aspect.after(this.antarcticMapConfig, 'mapReady', function() {
+                    deferred.resolve('success');
+                });
+
+                return deferred.promise;
             },
 
             setupFeatureTable: function() {
                 this.featureLayer = new FeatureLayer("https://gisdev.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/FeatureServer/0", {
                   mode: FeatureLayer.MODE_ONDEMAND,
-                  //outFields:  ["FACILITY_CODE","PLATFORM","CRUISE","SAMPLE"],
-                  outFields: ['*'],
-                  visible: false,
+                  outFields:  ['FACILITY_CODE','PLATFORM','CRUISE', 'LEG', 'SAMPLE', 'DEVICE', 'BEGIN_DATE', 'YEAR', 'LON', 'LAT', 'WATER_DEPTH', 'STORAGE_METH', 
+                    'CORED_LENGTH', 'CORED_DIAM', 'PI', 'PROVINCE', 'LAKE', 'IGSN', 'LAST_UPDATE', 'SHOW_SAMPL', 'CRUISE_URL', 'LEG_URL', 'REPOSITORY_URL'],
+                  visible: false, //The FeatureLayer should not be visible on the map. It's only used to populate the FeatureTable.
                   id: "fLayer",
-                  definitionExpression: "1=0",
+                  definitionExpression: "1=0", //Start with no samples visible; you have to apply a filter first
                   orderByFields: ['SAMPLE ASC'],
                   showColumnHeaderTooltips: false
-                  //definitionExpression: "FACILITY_CODE='USGSWH'"
                 }); 
+
                 this.mercatorMapConfig.map.addLayer(this.featureLayer); 
 
                 var selectionSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 20,
@@ -331,21 +357,29 @@ define([
 
                 this.featureTable = new FeatureTable({
                   featureLayer: this.featureLayer,
-                  map: this.arcticMapConfig.map,
-                  showGridMenu: true//,
-                  //batchCount: 100,
-                  //syncSelection: true
-                  //hiddenFields: ["FID","C_Seq","Street"]  // field that end-user can show, but is hidden on startup
+                  showGridMenu: true,
+                  hiddenFields: ['OBJECTID']
                 }, 'featureTableNode');
 
+                //Start with the featureTable hidden
                 var borderContainer = registry.byId('centerContainer');
                 var featureTableContainer = registry.byId('featureTableContainer');
                 borderContainer.removeChild(featureTableContainer);
+
+                this.featureTable.fieldInfos = [
+                    {name: 'YEAR', format: {template: '${value}'}},
+                    {name: 'LAT', format: {places: 3}},
+                    {name: 'LON', format: {places: 3}},
+                    {name: 'WATER_DEPTH', format: {template: '${value}'}},
+                    {name: 'SHOW_SAMPL', format: {template: '<a href="${value}" target="_blank">Data Link</a>'}},                    
+                    {name: 'CRUISE_URL', format: {template: '<a href="${value}" target="_blank">Cruise or Leg Link</a>'}},
+                    {name: 'LEG_URL', format: {template: '<a href="${value}" target="_blank">Alternate Cruise or Leg Link</a>'}},
+                    {name: 'REPOSITORY_URL', format: {template: '<a href="${value}" target="_blank">Repository Link</a>'}}
+                ];
                 
                 this.featureTable.startup();
 
                 on(this.featureTable, 'row-select', lang.hitch(this, function() {
-                    var objectids = [];
                     array.forEach(this.featureTable.selectedRows, lang.hitch(this, function(selectedRow) {
                         var point = new Point(selectedRow['LON'], selectedRow['LAT'], new SpatialReference({wkid:4326}));                        
                         this.mercatorMapConfig.map.graphics.add(new Graphic(point, selectionSymbol));
@@ -361,7 +395,7 @@ define([
                 }));
 
                 on(this.featureTable, 'load', lang.hitch(this, function() {
-                    this.featureLayer.name = 'Geological Samples';
+                    this.featureLayer.name = 'Geological Samples'; //Override the layer name from the map service
                 }));
             },
 
@@ -397,10 +431,8 @@ define([
                 }
                 if (values.startYear) {
                     sql.push("YEAR >= " + values.startYear);
-                    //sql.push("TO_NUMBER(SUBSTR(BEGIN_DATE,0,4)) >= " + values.startYear);  //TODO replace Oracle-specific functions
                 }   
                 if (values.endYear) {
-                    //sql.push("TO_NUMBER(SUBSTR(BEGIN_DATE,0,4)) <= " + values.endYear);  //TODO replace Oracle-specific functions
                     sql.push("YEAR >= " + values.endYear);
                 }
                 if (values.cruise) {
@@ -433,7 +465,7 @@ define([
                 this.displayFeatureCount(layerDefinition).then(lang.hitch(this, function() {
                     if (this.featureCount > 50000) {
                         this.layersPanel.disableShowTableButton();
-                        this.hideFeatureTable()
+                        this.hideFeatureTable();
                         this.featureLayer.setDefinitionExpression("1=0");
                     }
                     else {
@@ -449,9 +481,9 @@ define([
             resetFilter: function() {
                 var layerDefinitions = [];
                 this.currentFilter = null;
-                if (this.currentInstitution && this.currentInstitution != 'AllInst') {
-                    layerDefinitions = ["FACILITY_CODE IN ('" + this.currentInstitution + "')"];
-                }       
+                // if (this.currentInstitution && this.currentInstitution != 'AllInst') {
+                //     layerDefinitions = ["FACILITY_CODE IN ('" + this.currentInstitution + "')"];
+                // }       
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
                 this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
@@ -477,7 +509,7 @@ define([
                     deferred.resolve('success');
                 }), function(error) {
                     logger.error(error);
-                    countDiv.innerHTML = 'Number of Samples Displayed: 0'
+                    countDiv.innerHTML = 'Number of Samples Displayed: unavailable';
                     this.featureCount = 0;
                     deferred.resolve('error');
                 });

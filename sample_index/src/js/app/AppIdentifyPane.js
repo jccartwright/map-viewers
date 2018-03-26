@@ -167,17 +167,6 @@ define([
                 return counts;                
             },
 
-            constructFeatureTree: function() {
-                this.inherited(arguments);
-
-                // //Add the NOS Hydro sub-layers to the list of nodes to be expanded to
-                // this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys with BAGs']);
-                // this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys with Digital Sounding Data']);
-                // this.expandedNodePaths.push(['root', 'NOS Hydrographic Surveys', 'Surveys without Digital Sounding Data']); 
-
-                //this.tree.set('paths', this.expandedNodePaths);
-            },
-
             getLakeAndPlatformString: function(attr) {
                 return (attr['Lake'] == 'Null' ? '' : '(' + attr['Lake'] + ') ') + 
                     (attr['Platform'] == 'Unknown Platform' ? '' : 'Platform: ') + 

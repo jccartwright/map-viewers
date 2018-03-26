@@ -20,10 +20,6 @@ define([
         ){
         
         return declare([MapConfig], {
-
-            constructor: function(name, options){
-                this.selectedInstitution = options.selectedInstitution
-            },
                         
             //handle setup which requires all layers to be loaded
             mapReady: function() {
@@ -46,10 +42,6 @@ define([
                     autoExpandTree: false
                 }, dom.byId('mercatorIdentifyPaneDiv'));
                 this.identifyPane.startup();
-
-                if (this.selectedInstitution) {
-                    topic.publish('/sample_index/SelectInstitution', this.selectedInstitution);
-                }
             }            
         });
     }
