@@ -5,7 +5,6 @@ define([
     'dojo/topic',
     'dojo/on',    
     'dojo/dom',
-    'dojo/dom-style',
     'dojo/request/xhr',
     'dojo/store/Memory',
     'dijit/registry',
@@ -25,7 +24,6 @@ define([
         topic,
         on,
         dom,
-        domStyle,
         xhr,
         Memory,
         registry,
@@ -121,9 +119,11 @@ define([
                 }));
             },
 
-            populateRepositorySelect: function(items) {
-                //<div data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="repositorySelect" data-dojo-props="searchAttr:'id',labelAttr:'label',labelType:'html',placeHolder:'Select a Region',maxHeight:-1,required:false" name="region" style="width: 100%; max-width: 350px"> -->
+            setSelectedRepository: function(repository) {
+                this.repositorySelect.set('value', repository);
+            },
 
+            populateRepositorySelect: function(items) {
                 this.repositorySelect = new FilteringSelect({
                     name: 'id',
                     searchAttr: 'id',
@@ -314,7 +314,7 @@ define([
                     this.platformSelect.get('_lastDisplayedValue') === '' && 
                     this.lakeSelect.get('_lastDisplayedValue') === '' &&
                     this.deviceSelect.get('_lastDisplayedValue') === '' &&
-                    values.device === '' && values.lake === '' && values.minWaterDepth === '' && values.maxWaterDepth === '');
+                    !values.minWaterDepth && !values.maxWaterDepth);
             },
                    
             clearForm: function() {     
@@ -332,51 +332,7 @@ define([
             resetSearch: function() {
                 this.clearForm();
                 topic.publish('/sample_index/ResetSearch');
-            }, 
-
-            // setCurrentFilterString: function(values) {
-            //     var filterDiv = dom.byId('currentFilter');
-            //     if (!values) {
-            //         filterDiv.innerHTML = '';
-            //         return;
-            //     }
-
-            //     var s = '<b>Current filter:</b><br>';
-                
-            //     if (values.startYear && values.endYear) {
-            //         s += '<i>Year:</i> ' + values.startYear + ' to ' + values.endYear + '<br>';
-            //     }
-            //     else if (values.startYear) {
-            //         s += '<i>Starting year:</i> ' + values.startYear + '<br>';
-            //     }
-            //     else if (values.endYear) {
-            //         s += '<i>Ending year:</i> ' + values.endYear + '<br>';
-            //     }
-
-            //     if (values.cruise) {
-            //         s += '<i>Cruise or Leg:</i> ' + values.cruise + '<br>';
-            //     }
-            //     if (values.platform) {
-            //         s += '<i>Platform Name:</i> ' + values.platform + '<br>';
-            //     }
-            //     if (values.lake) {
-            //         s += '<i>Lake Name:</i> ' + values.lake + '<br>';
-            //     } 
-            //     if (values.device) {
-            //         s += '<i>Device:</i> ' + values.device + '<br>';
-            //     }   
-
-            //     if (values.minWaterDepth && values.maxWaterDepth) {
-            //         s += '<i>Water Depth (m):</i> ' + values.minWaterDepth + ' to ' + values.maxWaterDepth + '<br>';
-            //     }
-            //     else if (values.minWaterDepth) {
-            //         s += '<i>Min Water Depth (m):</i> ' + values.minWaterDepth + '<br>';
-            //     }
-            //     else if (values.maxWaterDepth) {
-            //         s += '<i>Max Water Depth (m):</i> ' + values.maxWaterDepth + '<br>';
-            //     }             
-            //     filterDiv.innerHTML = s;
-            // }
+            }
         });
     }
 );

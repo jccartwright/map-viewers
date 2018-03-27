@@ -290,3 +290,20 @@ html,body {
 .identifyPane-titleDescription {
     font-size: 10px;
 }
+
+
+.tooltipButton {
+    vertical-align: bottom;
+}
+
+.tooltipButtonMiddle {
+    vertical-align: middle;
+}
+
+.tooltipText {
+    width: 200px;
+}
+
+.esri-feature-table .dgrid-cell {
+    width: 100px;
+}

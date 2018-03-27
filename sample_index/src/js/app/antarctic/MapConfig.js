@@ -46,8 +46,6 @@ define([
                 this.identifyPane.startup();
                 this.identifyPane.enabled = false;              
             }
-         
-            
         });
     }
 );
