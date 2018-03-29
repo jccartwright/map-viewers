@@ -1,6 +1,6 @@
 {
   "name": "sample_index",
-  "version": "2.9.0",
+  "version": "2.8.0",
   "description": "sample index data viewer",
   "main": "index.html",
   "scripts": {
