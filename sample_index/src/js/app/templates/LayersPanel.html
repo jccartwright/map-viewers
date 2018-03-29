@@ -5,7 +5,7 @@
     <div data-dojo-attach-point="repositorySelectDiv"></div>
     <br>
 
-    <label>Cruise ID:</label><br/>
+    <label>Survey ID:</label><br/>
     <div data-dojo-attach-point="cruiseSelectDiv"></div>
     <br>
             
@@ -31,14 +31,17 @@
     <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="maxWaterDepthSpinner" class="searchDialog-spinner" data-dojo-props="intermediateChanges:true, smallDelta:100, constraints:{min:0,max:11000,places:0}" name="maxWaterDepth"></div>
     <br><br>
 
-    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" id="searchButton">Filter Samples</div>
-    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" id="resetButton">Reset</div><br><br>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="searchButton">Search Samples</div>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetButton" disabled>Reset</div>
+    <img id="searchHelp" class="tooltipButtonMiddle" src="images/question-button.png"><br>
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'searchHelp'">
+        <div class="tooltipText"><b>Search Samples:</b> specify any combination of repository name, survey ID, platform name, lake name, range of years, device, and range of water depths. After clicking "Search Samples", a filter will be applied to the map layer, displaying only data of interest. The current number of points displayed on the map is shown below.<br><br><b>Reset:</b> clears the current filter.</div>
+    </div>
     <div id="featureCount" class="filterText"></div><br>
 
-    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="showHideTableButton" id="showHideTableButton">Show Table</div>
+    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="showHideTableButton" data-dojo-props="iconClass:'tableIcon', showLabel:true" id="showHideTableButton">Show Table</div>
     <img id="tableHelp" class="tooltipButtonMiddle" src="images/question-button.png"><br>
     <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'tableHelp'">
-        <div class="tooltipText">The table can display a maximum of 50,000 samples. If the "Show Table" button is disabled, please apply a filter to display a smaller number of samples.</div>
+        <div class="tooltipText"><b>Show Table:</b> Display a table displaying geologic sample information, with the current filter applied. The table can display a maximum of 50,000 samples. If the "Show Table" button is disabled, please apply a filter to display a smaller number of samples. Click on table rows (select multiple with shift or ctrl-click) to highlight samples on the map. Click on the column headers to sort on that field.</div>
     </div>
-    <!-- <i>(Maximum of 50,000 samples for table)</i> -->
 </div>

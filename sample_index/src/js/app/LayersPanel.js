@@ -5,17 +5,18 @@ define([
     'dojo/topic',
     'dojo/on',    
     'dojo/dom',
+    'dojo/Deferred',
+    'dojo/promise/all',
     'dojo/request/xhr',
     'dojo/store/Memory',
-    'dijit/registry',
-    'dijit/form/RadioButton',
     'dijit/form/FilteringSelect',
+    'dijit/form/NumberSpinner',
+    'dijit/form/Button',
     'esri/tasks/query', 
     'esri/tasks/QueryTask',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
-    'app/SearchDialog',
     'dojo/text!./templates/LayersPanel.html'],
     function(
         declare, 
@@ -24,17 +25,18 @@ define([
         topic,
         on,
         dom,
+        Deferred,
+        all,
         xhr,
         Memory,
-        registry,
-        RadioButton,
         FilteringSelect,
+        NumberSpinner,
+        Button,
         Query,
         QueryTask,
         _WidgetBase, 
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
-        SearchDialog,
         template){
         return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
             // Our template - important!
@@ -45,56 +47,23 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                xhr.get('repositories.json', {
-                    preventCache: true,
-                    handleAs: 'json',
-                }).then(lang.hitch(this, function(data){
-                    if (data.items) {
-                        //data.items.unshift({id: 'All', name: 'All'});
-                        this.populateRepositorySelect(data.items);
-                    }
-                }), function(err){
-                    logger.error('Error retrieving repositories JSON: ' + err);
-                });
-
-                var queryTask = new QueryTask('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer/0');
-
+                this.queryTask = new QueryTask('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer/0');
+                
                 var query = new Query();
                 query.where = '1=1';
                 query.returnGeometry = false;
                 query.returnDistinctValues = true;
 
-                query.outFields = ['CRUISE', 'FACILITY_CODE'];
-                query.orderByFields = ['CRUISE', 'FACILITY_CODE'];
-                queryTask.execute(query, lang.hitch(this, function(results) {
-                    this.populateCruiseSelect(results);
-                }), function(error) {
-                    logger.error(error);
-                });
+                var deferreds = [];
+                deferreds.push(this.populateRepositorySelect());
+                deferreds.push(this.populateCruiseSelect(query));
+                deferreds.push(this.populatePlatformSelect(query));
+                deferreds.push(this.populateLakeSelect(query));
+                deferreds.push(this.populateDeviceSelect(query));
 
-                query.outFields = ['PLATFORM'];
-                query.orderByFields = ['PLATFORM'];
-                queryTask.execute(query, lang.hitch(this, function(results) {
-                    this.populatePlatformSelect(results);
-                }), function(error) {
-                    logger.error(error);
-                });
-
-                query.outFields = ['LAKE'];
-                query.orderByFields = ['LAKE'];
-                queryTask.execute(query, lang.hitch(this, function(results) {
-                    this.populateLakeSelect(results);
-                }), function(error) {
-                    logger.error(error);
-                });
-
-                query.outFields = ['DEVICE'];
-                query.orderByFields = ['DEVICE'];
-                queryTask.execute(query, lang.hitch(this, function(results) {
-                    this.populateDeviceSelect(results);
-                }), function(error) {
-                    logger.error(error);
-                });
+                all(deferreds).then(lang.hitch(this, function() {
+                    topic.publish('layersPanel/filtersReady');
+                }));
 
                 on(this.searchButton, 'click', lang.hitch(this, function() {
                     this.executeSearch();
@@ -123,7 +92,9 @@ define([
                 this.repositorySelect.set('value', repository);
             },
 
-            populateRepositorySelect: function(items) {
+            populateRepositorySelect: function() {
+                var deferred = new Deferred();
+
                 this.repositorySelect = new FilteringSelect({
                     name: 'id',
                     searchAttr: 'id',
@@ -134,24 +105,34 @@ define([
                     required: false,
                     style: 'width: 100%; max-width: 350px'
                 });
-
-                this.repositorySelect.store = new Memory({data: items});
                 this.repositorySelect.placeAt(this.repositorySelectDiv);
                 this.repositorySelect.startup();
+
+                xhr.get('repositories.json', {
+                    preventCache: true,
+                    handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data && data.items) {
+                        this.repositorySelect.store = new Memory({data: data.items});
+                    }
+                    deferred.resolve('success');
+                }), function(err){
+                    logger.error('Error retrieving repositories JSON: ' + err);
+                    deferred.resolve('error');
+                });
 
                 on(this.repositorySelect, 'change', lang.hitch(this, function(){
                     this.cruiseSelect.set('value', '');
                     this.filterCruiseSelect(this.repositorySelect.get('value'));
                 }));  
+                return deferred.promise;
             },
 
-            populateCruiseSelect: function(results) {   
-                var items = this.getCruiseStoreItems(results, 'CRUISE');
-                this.cruiseStore = new Memory({data: {identifier: 'id', items: items}});
+            populateCruiseSelect: function(query) { 
+                var deferred = new Deferred();
 
                 this.cruiseSelect = new FilteringSelect({
                     name: 'id',
-                    store: this.cruiseStore,
                     searchAttr: 'id',
                     required: false,
                     placeHolder: 'All Cruises',
@@ -163,15 +144,25 @@ define([
                     return true; 
                 };
                 this.cruiseSelect.placeAt(this.cruiseSelectDiv);  
+
+                query.outFields = ['CRUISE', 'FACILITY_CODE'];
+                query.orderByFields = ['CRUISE', 'FACILITY_CODE'];
+                this.queryTask.execute(query, lang.hitch(this, function(results) {
+                    var items = this.getCruiseStoreItems(results, 'CRUISE');
+                    this.cruiseSelect.store = new Memory({data: {identifier: 'id', items: items}});
+                    deferred.resolve('success');
+                }), function(error) {
+                    logger.error(error);
+                    deferred.resolve('error');
+                });  
+                return deferred.promise;              
             },
 
-            populatePlatformSelect: function(results) {   
-                var items = this.getStoreItems(results, 'PLATFORM');
-                this.platformStore = new Memory({data: {identifier: 'id', items: items}});
+            populatePlatformSelect: function(query) {  
+                var deferred = new Deferred(); 
 
                 this.platformSelect = new FilteringSelect({
                     name: 'id',
-                    store: this.platformStore,
                     searchAttr: 'id',
                     required: false,
                     placeHolder: 'All Platforms',
@@ -183,15 +174,24 @@ define([
                     return true; 
                 };
                 this.platformSelect.placeAt(this.platformSelectDiv);  
+
+                query.outFields = ['PLATFORM'];
+                query.orderByFields = ['PLATFORM'];
+                this.queryTask.execute(query, lang.hitch(this, function(results) {
+                    var items = this.getStoreItems(results, 'PLATFORM');
+                    this.platformSelect.store = new Memory({data: {identifier: 'id', items: items}});
+                    deferred.resolve('success');
+                }), function(error) {
+                    logger.error(error);
+                    deferred.resolve('error');
+                });
+                return deferred.promise;
             },
 
-            populateLakeSelect: function(results) {   
-                var items = this.getStoreItems(results, 'LAKE');
-                this.lakeStore = new Memory({data: {identifier: 'id', items: items}});
-
+            populateLakeSelect: function(query) {  
+                var deferred = new Deferred(); 
                 this.lakeSelect = new FilteringSelect({
                     name: 'id',
-                    store: this.lakeStore,
                     searchAttr: 'id',
                     required: false,
                     placeHolder: 'All Lakes',
@@ -203,15 +203,24 @@ define([
                     return true; 
                 };
                 this.lakeSelect.placeAt(this.lakeSelectDiv);  
+
+                query.outFields = ['LAKE'];
+                query.orderByFields = ['LAKE'];
+                this.queryTask.execute(query, lang.hitch(this, function(results) {
+                    var items = this.getStoreItems(results, 'LAKE');
+                    this.lakeSelect.store = new Memory({data: {identifier: 'id', items: items}});
+                    deferred.resolve('success');
+                }), function(error) {
+                    logger.error(error);
+                    deferred.resolve('error');
+                });
+                return deferred.promise
             },
 
-            populateDeviceSelect: function(results) {   
-                var items = this.getStoreItems(results, 'DEVICE');
-                this.deviceStore = new Memory({data: {identifier: 'id', items: items}});
-
+            populateDeviceSelect: function(query) {  
+                var deferred = new Deferred(); 
                 this.deviceSelect = new FilteringSelect({
                     name: 'id',
-                    store: this.deviceStore,
                     searchAttr: 'id',
                     required: false,
                     placeHolder: 'All Devices',
@@ -223,6 +232,18 @@ define([
                     return true; 
                 };
                 this.deviceSelect.placeAt(this.deviceSelectDiv);  
+
+                query.outFields = ['DEVICE'];
+                query.orderByFields = ['DEVICE'];
+                this.queryTask.execute(query, lang.hitch(this, function(results) {
+                    var items = this.getStoreItems(results, 'DEVICE');
+                    this.deviceSelect.store = new Memory({data: {identifier: 'id', items: items}});
+                    deferred.resolve('success');
+                }), function(error) {
+                    logger.error(error);
+                    deferred.resolve('error');
+                });
+                return deferred.promise;
             },
 
             filterCruiseSelect: function(repository) {
@@ -286,7 +307,6 @@ define([
                 //Use _lastDisplayedValue instead of value to handle if a user typed in a string (i.e. with wildcard) that doesn't match anything in the store. Otherwise value is empty.
                 values.repository = this.repositorySelect.get('_lastDisplayedValue');
 
-                //values.cruise = this.cruiseSelect.get('_lastDisplayedValue');
                 if (this.cruiseSelect.get('_lastDisplayedValue') !== '') {
                     values.cruise = this.cruiseSelect.get('item').cruise;
                     values.repository = this.cruiseSelect.get('item').repository;
