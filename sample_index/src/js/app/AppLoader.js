@@ -140,11 +140,24 @@ define([
                 window.logger = new Logger(config.app.loglevel);
 
                 this.setupBanner();
-                this.setupLayersPanel();
-                this.setupMapViews();
-                this.setupFeatureTable();
 
-                this.layersPanel.disableShowTableButton();
+                var deferreds = [];
+                deferreds.push(this.setupLayersPanel());
+                deferreds.push(this.setupMapViews());
+
+                all(deferreds).then(lang.hitch(this, function() {
+                    this.setupFeatureTable();
+                    this.layersPanel.disableShowTableButton();
+                    if (this.selectedRepository) {  
+                        this.layersPanel.setSelectedRepository(this.selectedRepository);
+                        this.filterSamples({repository: this.selectedRepository});
+                    } else {
+                        this.resetFeatureCount();
+                    }
+                    this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index').show();
+                    this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').show();
+                    this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').show();
+                }));
 
                 //Subscribe to messages passed by the search dialog
                 topic.subscribe('/sample_index/Search', lang.hitch(this, function(values) {
@@ -159,9 +172,7 @@ define([
                 }));
                 topic.subscribe('/sample_index/HideFeatureTable', lang.hitch(this, function() {
                     this.hideFeatureTable();
-                }));
-
-                this.resetFeatureCount();
+                }));    
             },
 
             setupBanner: function() {
@@ -181,12 +192,20 @@ define([
             },
 
             setupLayersPanel: function() {
+                var deferred = new Deferred();
                 this.layersPanel = new LayersPanel();
                 this.layersPanel.placeAt('layersPanel');
+
+                topic.subscribe('layersPanel/filtersReady', lang.hitch(this, function() {
+                    deferred.resolve('success');
+                }));
+                return deferred.promise;
             },
 
             setupMapViews: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up map views...');
+
                 var deferreds = [];
 
                 // setup map views. You can only draw a Map into a visible container
@@ -211,11 +230,9 @@ define([
                 this.enableMapView('mercator');
 
                 all(deferreds).then(lang.hitch(this, function() {
-                    if (this.selectedRepository) {  
-                        this.layersPanel.setSelectedRepository(this.selectedRepository);
-                        this.filterSamples({repository: this.selectedRepository});
-                    }
+                    deferred.resolve('success');
                 }));
+                return deferred.promise;
             },
 
             enableMapView: function(/*String*/ mapId) {
@@ -337,37 +354,26 @@ define([
             },
 
             setupFeatureTable: function() {
-                this.featureLayer = new FeatureLayer("https://gisdev.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/FeatureServer/0", {
-                  mode: FeatureLayer.MODE_ONDEMAND,
-                  outFields:  ['FACILITY_CODE','PLATFORM','CRUISE', 'LEG', 'SAMPLE', 'DEVICE', 'BEGIN_DATE', 'YEAR', 'LON', 'LAT', 'WATER_DEPTH', 'STORAGE_METH', 
-                    'CORED_LENGTH', 'CORED_DIAM', 'PI', 'PROVINCE', 'LAKE', 'IGSN', 'LAST_UPDATE', 'SHOW_SAMPL', 'CRUISE_URL', 'LEG_URL', 'REPOSITORY_URL'],
-                  visible: false, //The FeatureLayer should not be visible on the map. It's only used to populate the FeatureTable.
-                  id: "fLayer",
-                  definitionExpression: "1=0", //Start with no samples visible; you have to apply a filter first
-                  orderByFields: ['SAMPLE ASC'],
-                  showColumnHeaderTooltips: false
+                this.featureLayer = new FeatureLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/FeatureServer/0", {
+                    mode: FeatureLayer.MODE_ONDEMAND,
+                    outFields:  ['FACILITY_CODE','PLATFORM','CRUISE', 'LEG', 'SAMPLE', 'DEVICE', 'BEGIN_DATE', 'YEAR', 'LON', 'LAT', 'WATER_DEPTH', 'STORAGE_METH', 
+                        'CORED_LENGTH', 'CORED_DIAM', 'PI', 'PROVINCE', 'LAKE', 'IGSN', 'LAST_UPDATE', 'SHOW_SAMPL', 'CRUISE_URL', 'LEG_URL', 'REPOSITORY_URL'],
+                    visible: false, //The FeatureLayer should not be visible on the map. It's only used to populate the FeatureTable.
+                    id: "fLayer",
+                    definitionExpression: "1=0", //Start with no samples visible; you have to apply a filter first
+                    orderByFields: ['SAMPLE ASC'],
+                    showColumnHeaderTooltips: false
                 }); 
-
                 this.mercatorMapConfig.map.addLayer(this.featureLayer); 
 
-                var selectionSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 20,
-                    new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-                    new Color([0,255,255]), 1),
-                    new Color([0,255,255,0.25]));
-
                 this.featureTable = new FeatureTable({
-                  featureLayer: this.featureLayer,
-                  showGridMenu: true,
-                  hiddenFields: ['OBJECTID']
+                    featureLayer: this.featureLayer,
+                    showGridMenu: true,
+                    hiddenFields: ['OBJECTID']
                 }, 'featureTableNode');
 
-                //Start with the featureTable hidden
-                var borderContainer = registry.byId('centerContainer');
-                var featureTableContainer = registry.byId('featureTableContainer');
-                borderContainer.removeChild(featureTableContainer);
-
                 this.featureTable.fieldInfos = [
-                    {name: 'YEAR', format: {template: '${value}'}},
+                    {name: 'YEAR', format: {template: '${value}'}}, //prevents the comma in years
                     {name: 'LAT', format: {places: 3}},
                     {name: 'LON', format: {places: 3}},
                     {name: 'WATER_DEPTH', format: {template: '${value}'}},
@@ -379,6 +385,18 @@ define([
                 
                 this.featureTable.startup();
 
+                //Start with the featureTable hidden
+                var borderContainer = registry.byId('centerContainer');
+                var featureTableContainer = registry.byId('featureTableContainer');
+                borderContainer.removeChild(featureTableContainer);
+
+                //Selection symbol: cyan square
+                var selectionSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 10,
+                    new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                    new Color([0,255,255]), 1),
+                    new Color([0,255,255,0.25]));
+
+                //When row(s) are selected, highlight them on the map by adding to the graphics layer
                 on(this.featureTable, 'row-select', lang.hitch(this, function() {
                     array.forEach(this.featureTable.selectedRows, lang.hitch(this, function(selectedRow) {
                         var point = new Point(selectedRow['LON'], selectedRow['LAT'], new SpatialReference({wkid:4326}));                        
@@ -388,6 +406,7 @@ define([
                     }));
                 }));
 
+                //Clear the graphics layer when deselecting row
                 on(this.featureTable, 'row-deselect', lang.hitch(this, function() {
                     this.mercatorMapConfig.map.graphics.clear();
                     this.arcticMapConfig.map.graphics.clear();
@@ -480,15 +499,10 @@ define([
 
             resetFilter: function() {
                 var layerDefinitions = [];
-                this.currentFilter = null;
-                // if (this.currentInstitution && this.currentInstitution != 'AllInst') {
-                //     layerDefinitions = ["FACILITY_CODE IN ('" + this.currentInstitution + "')"];
-                // }       
+                this.currentFilter = null;    
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
                 this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').setLayerDefinitions(layerDefinitions);
-
-                //this.layersPanel.disableResetButton();
 
                 this.resetFeatureCount();
 

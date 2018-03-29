@@ -40,11 +40,11 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/sample_index/MapServer', {
                         id: 'Sample Index (tiled)',
-                        visible: true
+                        visible: false
                     }),
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer', {
                         id: 'Sample Index (dynamic)',
-                        visible: true,
+                        visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/arctic_ps/graticule/MapServer', {
@@ -73,7 +73,7 @@ define([
                         id: 'Sample Index',
                         tiledService: this.getLayerById('Sample Index (tiled)'),
                         dynamicService: this.getLayerById('Sample Index (dynamic)'),
-                        visible: true,
+                        visible: false,
                         cutoffZoom: 8
                     }                                    
                 ];

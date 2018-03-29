@@ -304,6 +304,25 @@ html,body {
     width: 200px;
 }
 
+/*Modify the default width of FeatureTable cells*/
 .esri-feature-table .dgrid-cell {
     width: 100px;
+}
+
+.queryIcon {
+    background-image: url(../images/magnifyingglass.png);
+    width: 20px;
+    height: 20px;
+}
+
+.clearSelectionIcon {
+    background-image: url(../images/x.png);
+    width: 16px;
+    height: 16px;
+}
+
+.tableIcon {
+    background-image: url(../images/table.png);
+    width: 16px;
+    height: 16px;
 }

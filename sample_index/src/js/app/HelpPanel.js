@@ -23,6 +23,18 @@ define([
                 this.identifyRectIconUrl = config.app.ngdcDijitsUrl+'/images/layer-shape.png';
                 this.identifyPolyIconUrl = config.app.ngdcDijitsUrl+'/images/layer-shape-polygon.png';
                 this.identifyCoordsIconUrl = config.app.ngdcDijitsUrl+'/images/layer-shape-xy.png';
+            },
+
+            postCreate: function() {
+                this.inherited(arguments);
+
+                on(this.contactUsButton, 'click', lang.hitch(this, function() {
+                    //TODO: should we lazily construct this or put into constructor?
+                    if (!this.contactUsDialog) {
+                        this.contactUsDialog = new ContactUsDialog({title: 'Contact Us'});
+                    }
+                    this.contactUsDialog.show();
+                }));
             }
         });
     }
