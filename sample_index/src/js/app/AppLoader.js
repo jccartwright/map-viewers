@@ -452,7 +452,7 @@ define([
                     sql.push("YEAR >= " + values.startYear);
                 }   
                 if (values.endYear) {
-                    sql.push("YEAR >= " + values.endYear);
+                    sql.push("YEAR <= " + values.endYear);
                 }
                 if (values.cruise) {
                     sql.push("(UPPER(CRUISE) LIKE '%" + values.cruise.toUpperCase() + "%' OR UPPER(LEG) LIKE '%" + values.cruise.toUpperCase() + "%')");
