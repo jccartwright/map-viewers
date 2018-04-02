@@ -1,6 +1,8 @@
 define([
     'dojo/_base/declare',
     'dojo/_base/config',
+    'dojo/on',
+    'dojo/_base/lang',
     'dijit/_WidgetBase', 
     'dijit/_TemplatedMixin', 
     'dojo/text!./templates/HelpPanel.html'
@@ -8,6 +10,8 @@ define([
     function(
         declare, 
         config,
+        on,
+        lang,
         _WidgetBase, 
         _TemplatedMixin, 
         template
