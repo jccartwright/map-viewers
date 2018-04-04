@@ -5,31 +5,18 @@ define([
     'dojo/request/xhr',
     'dojo/store/Memory', 
     'dojo/on',
-    'dojo/aspect',
     'dojo/dom',
-    'dojo/dom-attr',
-    'dojo/dom-style',
-    'dojo/_base/array',
-    'esri/geometry/Point',
-    'esri/geometry/Extent',
-    'esri/geometry/webMercatorUtils',
-    'esri/SpatialReference',
     'app/TsEventSearchDialog',
-    'app/TsObsSearchDialog',
-    'app/SignifEqSearchDialog',
-    'app/VolEventSearchDialog',
+    'app/TsObsSearchDialog',    
     'app/DartSearchDialog',
     'dijit/registry',
     'dijit/form/DropDownButton',
     'dijit/form/FilteringSelect',
-    'dijit/form/ComboBox',
-    'dijit/form/Select',
     'dijit/TooltipDialog',
     'dijit/form/CheckBox',
     'dijit/form/Button',
     'dijit/form/RadioButton',
     'dijit/TitlePane',
-    'dojox/layout/FloatingPane',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
@@ -41,31 +28,18 @@ define([
         xhr,
         Memory,
         on,
-        aspect,
         dom,
-        domAttr,
-        domStyle,
-        array,
-        Point,
-        Extent,
-        webMercatorUtils,
-        SpatialReference,
         TsEventSearchDialog,
         TsObsSearchDialog,
-        SignifEqSearchDialog,
-        VolEventSearchDialog,
         DartSearchDialog,
         registry,
         DropDownButton,
         FilteringSelect,
-        ComboBox,
-        Select,
         TooltipDialog,
         CheckBox,
         Button,
         RadioButton,
         TitlePane,
-        FloatingPane,
         _WidgetBase, 
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
@@ -92,7 +66,7 @@ define([
                 on(registry.byId("scenarioResetButton"), "click", lang.hitch(this, function() {
                     this.regionSelect.set('value', '');
                     this.tsunamiScenarioSelect.set('value', '');
-                    topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], false);
+                    topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], false);
                     topic.publish('resetScenario');
                 }));
 
@@ -102,12 +76,6 @@ define([
                 on(registry.byId("checkTsObs"), "change", lang.hitch(this, function(checked) {
                     this.toggleTsObsVisibility(checked);
                 })); 
-                // on(registry.byId("checkSignifEqs"), "change", lang.hitch(this, function(checked) {
-                //     this.toggleSignifEqVisibility(checked);
-                // })); 
-                // on(registry.byId("checkVolEvents"), "change", lang.hitch(this, function(checked) {
-                //     this.toggleVolEventVisibility(checked);
-                // })); 
                 on(registry.byId("checkVolcanoes"), "change", lang.hitch(this, function(checked) {
                     this.toggleVolcanoVisibility(checked);
                 }));
@@ -116,17 +84,13 @@ define([
                 })); 
                 on(registry.byId("checkTideGauges"), "change", lang.hitch(this, function(checked) {
                     this.toggleTideGaugeVisibility(checked);
-                })); 
+                }));
+                on(registry.byId("checkIocStations"), "change", lang.hitch(this, function(checked) {
+                    this.toggleIocStationVisibility(checked);
+                }));
                 on(registry.byId("checkPlateBoundaries"), "change", lang.hitch(this, function(checked) {
                     this.togglePlateBoundaries(checked);
                 })); 
-                // on(registry.byId("checkTTT"), "change", lang.hitch(this, function(checked) {
-                //     this.toggleTTT(checked);
-                // })); 
-                // on(registry.byId("checkTsunamiEnergy"), "change", lang.hitch(this, function(checked) {
-                //     this.toggleTsunamiEnergy(checked);
-                // })); 
-
                 on(registry.byId("radioTsEvents1"), "click", lang.hitch(this, function() {
                     this.setTsEventSymbol('cause/deaths');
                 })); 
@@ -159,26 +123,6 @@ define([
                     topic.publish('/hazards/ResetTsObsSearch');
                     this.setTsObsFilterActive(false);
                 }));
-                // on(registry.byId("signifEqSearchButton"), "click", lang.hitch(this, function() {
-                //     if (!this.signifEqSearchDialog) {
-                //         this.signifEqSearchDialog = new SignifEqSearchDialog({title: 'Significant Earthquakes Search'});
-                //     }
-                //     this.signifEqSearchDialog.show();
-                // }));
-                // on(registry.byId("signifEqResetButton"), "click", lang.hitch(this, function() {
-                //     topic.publish('/hazards/ResetSignifEqSearch');
-                //     this.setSignifEqFilterActive(false);
-                // }));
-                // on(registry.byId("volEventSearchButton"), "click", lang.hitch(this, function() {
-                //     if (!this.volEventSearchDialog) {
-                //         this.volEventSearchDialog = new VolEventSearchDialog({title: 'Significant Volcanic Eruptions Search'});    
-                //     }
-                //     this.volEventSearchDialog.show();
-                // }));
-                // on(registry.byId("volEventResetButton"), "click", lang.hitch(this, function() {
-                //     topic.publish('/hazards/ResetVolEventSearch');
-                //     this.setVolEventFilterActive(false);
-                // }));
                 on(registry.byId("dartSearchButton"), "click", lang.hitch(this, function() {
                     if (!this.dartSearchDialog) {
                         this.dartSearchDialog = new DartSearchDialog({title: 'DART® Deployments Search'});
@@ -189,18 +133,6 @@ define([
                     topic.publish('/hazards/ResetDartSearch');
                     this.setDartFilterActive(false);
                 }));
-
-                // xhr.get('signifTsEvents.json', {
-                //     preventCache: true,
-                //     handleAs: 'json',
-                // }).then(lang.hitch(this, function(data){
-                //     if (data.items) {
-                //         data.items.unshift({id: '', name: ''});
-                //         this.populateSignifTsEventsSelect(data.items);
-                //     }
-                // }), function(err){
-                //     logger.error('Error retrieving signifTsEvents JSON: ' + err);
-                // });
 
                 xhr.get('tsunamiScenarios.json', {
                     preventCache: true,
@@ -219,41 +151,16 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
-                        //data.items.unshift({id: 'All', name: 'All'});
                         this.populateRegionsSelect(data.items);
                     }
                 }), function(err){
                     logger.error('Error retrieving regions JSON: ' + err);
                 });
 
-                // on(this.signifTsEventSelect, 'change', lang.hitch(this, function() {
-                //     var tsEventId = this.signifTsEventSelect.get('value');
-                //     this.activateTTTandRIFT(tsEventId);
-                //     if (tsEventId !== '') {
-                //         var store = this.signifTsEventSelect.store;
-                //         var lon = store.query({id: tsEventId})[0].lon;
-                //         var lat = store.query({id: tsEventId})[0].lat;
-                //         var xmin = store.query({id: tsEventId})[0].xmin;
-                //         var xmax = store.query({id: tsEventId})[0].xmax;
-                //         var ymin = store.query({id: tsEventId})[0].ymin;
-                //         var ymax = store.query({id: tsEventId})[0].ymax;
-                //         var extent;
-
-                //         if (xmin && xmax && ymin && ymax) {
-                //             //Handle antimeridian-crossing extent
-                //             if (xmin > xmax) {
-                //                 xmin = xmin - 360;
-                //             }
-                //             extent = new Extent(xmin, ymin, xmax, ymax, new SpatialReference({wkid: 4326}))
-                //         }
-                //         topic.publish('/hazards/ShowTsObsForEvent', tsEventId, false, webMercatorUtils.geographicToWebMercator(new Point(lon, lat)), extent);
-                //     }
-                // }));  
-
                 on(this.regionSelect, 'change', lang.hitch(this, function(region) {                    
-                    console.log('Selected region: ' + region);
+                    //console.log('Selected region: ' + region);
                     this.tsunamiScenarioSelect.set('value', '');
-                    if (region === 'All') {
+                    if (region === '' || region === 'All') {
                         this.tsunamiScenarioSelect.query.region = /.*/;
                     } else {
                         this.tsunamiScenarioSelect.query.region = region;
@@ -261,7 +168,7 @@ define([
                 }));  
 
                 on(this.tsunamiScenarioSelect, 'change', lang.hitch(this, function(scenario) {
-                    console.log('Selected scenario: ' + scenario);
+                    //console.log('Selected scenario: ' + scenario);
                     if (scenario !== '') {
                         var store = this.tsunamiScenarioSelect.store;
                         var item = store.query({id: scenario})[0];
@@ -270,7 +177,7 @@ define([
                         //this.regionSelect.set('value', region);
 
                         topic.publish('/ngdc/layer/visibility', 'CARIBE-EWS Tsunami Energy', true);
-                        topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], false);
+                        topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], false);
                         topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [energyLayer], true);
 
                         topic.publish('scenarioFaultPlanes', faultPlanes);
@@ -280,23 +187,15 @@ define([
                 on(registry.byId('resetAllButton'), 'click', lang.hitch(this, function() {
                     topic.publish('/hazards/ResetTsEventSearch');
                     topic.publish('/hazards/ResetTsObsSearch');
-                    topic.publish('/hazards/ResetSignifEqSearch');
-                    topic.publish('/hazards/ResetVolEventSearch');
                     topic.publish('/hazards/ResetDartSearch');
                     
                     this.setTsEventFilterActive(false);
                     this.setTsObsFilterActive(false);
-                    this.setVolEventFilterActive(false);
-                    this.setSignifEqFilterActive(false);
                     this.setDartFilterActive(false);
 
                     registry.byId('checkTsEvents').set('checked', false);
                     registry.byId('checkTsObs').set('checked', false);
-                    registry.byId('checkSignifEqs').set('checked', false);
-                    registry.byId('checkVolEvents').set('checked', false);
                     registry.byId('checkDarts').set('checked', false);
-
-                    this.signifTsEventSelect.set('value', '');
                 }));        
             },
 
@@ -362,17 +261,7 @@ define([
                 this.tsObsSymbol = option;
                 this.toggleTsObsVisibility(true);
             },
-
-            toggleSignifEqVisibility: function(visible) {
-                registry.byId('checkSignifEqs').set('checked', visible);
-                topic.publish('/ngdc/sublayer/visibility', 'Hazards', [5], visible);
-            },
-
-            toggleVolEventVisibility: function(visible) {
-                registry.byId('checkVolEvents').set('checked', visible);
-                topic.publish('/ngdc/sublayer/visibility', 'Hazards', [6], visible);
-            },
-
+            
             toggleVolcanoVisibility: function(visible) {
                 registry.byId('checkVolcanoes').set('checked', visible);
                 topic.publish('/ngdc/sublayer/visibility', 'Hazards', [7], visible);
@@ -387,6 +276,11 @@ define([
             toggleTideGaugeVisibility: function(visible) {
                 registry.byId('checkTideGauges').set('checked', visible);
                 topic.publish('/ngdc/sublayer/visibility', 'Hazards', [10], visible);
+            },
+
+            toggleIocStationVisibility: function(visible) {
+                registry.byId('checkIocStations').set('checked', visible);
+                topic.publish('iocStationsVisibility', visible);
             },
 
             togglePlateBoundaries: function(visible) {
@@ -432,34 +326,6 @@ define([
                 }
             },
 
-            setSignifEqFilterActive: function(active) {
-                registry.byId("signifEqResetButton").set("disabled", !active);
-                if (active) {
-                    dom.byId("signifEqFlag").innerHTML = "<i><b>Filter Activated</b></i><br>";
-                    registry.byId('checkSignifEqs').set('checked', true);
-                }
-                else {
-                    dom.byId("signifEqFlag").innerHTML = "";
-                    if  (this.signifEqSearchDialog) {
-                        this.signifEqSearchDialog.clearForm();
-                    }
-                }
-            }, 
-
-            setVolEventFilterActive: function(active) {
-                registry.byId("volEventResetButton").set("disabled", !active);
-                if (active) {
-                    dom.byId("volEventFlag").innerHTML = "<i><b>Filter Activated</b></i><br>";
-                    registry.byId('checkVolEvents').set('checked', true);
-                }
-                else {
-                    dom.byId("volEventFlag").innerHTML = ""; 
-                    if (this.volEventSearchDialog) {
-                        this.volEventSearchDialog.clearForm();
-                    }
-                }
-            }, 
-
             setDartFilterActive: function(active) {
                 registry.byId("dartResetButton").set("disabled", !active);
                 if (active) {
@@ -474,58 +340,17 @@ define([
                 }
             },
 
-            populateSignifTsEventsSelect: function(items) {
-                this.signifTsEventSelect.store = new Memory({data: items});
-                this.getSignifTsEventList();
-            },
-
-            getSignifTsEventList: function() {
-                var items = this.signifTsEventSelect.store.query();
-                this.signifTsEventIds = [];
-                array.forEach(items, lang.hitch(this, function(item) {
-                    if (item.id) {
-                        this.signifTsEventIds.push(item.id);
-                    }
-                }));
-            },
-
             populateRegionsSelect: function(items) {
                 this.regionSelect.store = new Memory({data: items});
                 this.regionSelect.startup();
-                //this.getSignifTsEventList();
             },
 
             populateTsunamiScenariosSelect: function(items) {
                 this.tsunamiScenarioSelect.store = new Memory({data: items});
-                //this.tsunamiScenarioSelect.startup();
             },
 
-            activateTTTandRIFT: function(tsEventId) {
-                var tttLayer, riftLayer;
-
-                this.signifTsEventSelect.set('value', tsEventId);
-
-                if (tsEventId !== '') {
-                    tttLayer = this.signifTsEventSelect.store.query({id: tsEventId})[0].tttLayer;
-                    riftLayer = this.signifTsEventSelect.store.query({id: tsEventId})[0].riftLayer;
-                }
-
-                topic.publish('/ngdc/sublayer/visibility', 'TTT', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], false);
-                topic.publish('/ngdc/sublayer/visibility', 'Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], false);
-
-                if (tttLayer !== null && tttLayer !== undefined) {
-                    registry.byId('checkTTT').set('checked', true);
-                    topic.publish('/ngdc/sublayer/visibility', 'TTT', [tttLayer], true);
-                } else {
-                    registry.byId('checkTTT').set('checked', false);
-                }
-
-                if (riftLayer !== null && riftLayer !== undefined) {
-                    registry.byId('checkTsunamiEnergy').set('checked', true);
-                    topic.publish('/ngdc/sublayer/visibility', 'Tsunami Energy', [riftLayer], true);
-                } else {
-                    registry.byId('checkTsunamiEnergy').set('checked', false);
-                }   
+            setIocStationsCheckboxEnabled: function() {
+                registry.byId('checkIocStations').set('disabled', false);
             }
         });
     }

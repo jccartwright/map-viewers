@@ -3,7 +3,7 @@
 <head>
     <!-- Version: {{version}}, Last update: {{buildDate}} -->
 
-    <title>Caribbean Tsunami Sources and Models</title>
+    <title>Caribbean and Adjacent Regions Tsunami Sources and Models (CATSAM)</title>
     <link rel="shortcut icon" href="https://www.ngdc.noaa.gov/image/favicon.ico">
     <link rel="stylesheet" href="https://js.arcgis.com/3.23/dijit/themes/tundra/tundra.css" />
     <link rel="stylesheet" href="https://js.arcgis.com/3.23/esri/css/esri.css">
@@ -71,12 +71,12 @@
     <div id="leftPane" data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true">
         <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" title="Layers">
         </div>
-        <!-- <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
+        <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
             <div id="credits" data-dojo-type="app/CreditsPanel"></div>
         </div>
         <div id="helpPanel" data-dojo-type="dijit/layout/ContentPane" title="Help">
             <div id="help" data-dojo-type="app/HelpPanel"></div>
-        </div> -->
+        </div>
 
     </div> <!-- end leftPane -->
 
@@ -90,14 +90,13 @@
 
 </div> <!-- end mainWindow BorderContainer -->
 <div id="identifyPaneDiv"></div>
-
 <script>
     //unless the Dijit is listed in the require list, it cannot be addressed via the registry
     require([
-        "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "dojo/dom", "dojo/dom-style", "app/AppLoader",
+        "ngdc/LoadingOverlay", "dojo/parser", "app/AppLoader",
         "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer", "dijit/layout/TabContainer",
         "app/HelpPanel", "app/CreditsPanel", "dojo/domReady!" ],
-            function(LoadingOverlay, registry, parser, dom, domStyle, AppLoader) {
+            function(LoadingOverlay, parser, AppLoader) {
                 var loadingOverlay = new LoadingOverlay();
                 var appLoader = new AppLoader();
 

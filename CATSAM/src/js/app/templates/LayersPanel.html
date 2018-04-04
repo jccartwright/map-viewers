@@ -1,7 +1,7 @@
 <div class="layersPanel_class">
 
     <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Information About the Map', open: false">
-        Since 2011, UNESCO - Intergovernmental Oceanographic Commission (IOC) Experts Meetings and CaribeWave exercises have resulted in a variety of tsunami models of credible scenarios that would impact the Caribbean and adjacent regions. During the <a href="http://www.ioc-tsunami.org/index.php?option=com_oe&task=viewEventRecord&eventID=1956" target="_blank">12th Session of the Tsunami and Other Coastal Hazards Warning System for the Caribbean and Adjacent Regions (ICG/CARIBE-EWS) in Costa Rica on 10-12 May 2017</a>, a formal recommendation was adopted for <a href="http://www.ioc-tsunami.org/index.php?option=com_content&view=article&id=365&Itemid=336&lang=en" target="_blank">Working Group 2 (Hazard Assessment)</a> to compile the aforementioned tsunami scenarios with additional parameters such as tsunami energy plots and NOAA/NCEI historical tsunami data. In response to this recommendation, the Caribbean Tsunami Sources and Models (CATSAM) map viewer was developed to identify potential tsunami sources. CATSAM is intended to provide modelers and hazard assessment professionals with an understanding of the UNESCO/IOC led tsunami modeling efforts, as well as how those efforts overlap with the <a href="https://www.ngdc.noaa.gov/hazard/tsu.shtml" target="_blank">Global Historical Tsunami Database</a> developed and maintained by NOAA’s National Centers for Environmental Information (NCEI) and co-located World Data Service (WDS) for Geophysics. The product is not meant to identify all tsunami sources in the region, just those identified by experts at UNESCO/IOC led meetings, as well as historically observed.<br><br>
+        Since 2011, UNESCO - Intergovernmental Oceanographic Commission (IOC) Experts Meetings and CaribeWave exercises have resulted in a variety of tsunami models of credible scenarios that would impact the Caribbean and adjacent regions. During the <a href="http://www.ioc-tsunami.org/index.php?option=com_oe&task=viewEventRecord&eventID=1956" target="_blank">12th Session of the Tsunami and Other Coastal Hazards Warning System for the Caribbean and Adjacent Regions (ICG/CARIBE-EWS) in Costa Rica on 10-12 May 2017</a>, a formal recommendation was adopted for <a href="http://www.ioc-tsunami.org/index.php?option=com_content&view=article&id=365&Itemid=336&lang=en" target="_blank">Working Group 2 (Hazard Assessment)</a> to compile the aforementioned tsunami scenarios with additional parameters such as tsunami energy plots and NOAA/NCEI historical tsunami data. In response to this recommendation, the Caribbean and Adjacent Regions Tsunami Sources and Models (CATSAM) map viewer was developed to identify potential tsunami sources. CATSAM is intended to provide modelers and hazard assessment professionals with an understanding of the UNESCO/IOC led tsunami modeling efforts, as well as how those efforts overlap with the <a href="https://www.ngdc.noaa.gov/hazard/tsu.shtml" target="_blank">Global Historical Tsunami Database</a> developed and maintained by NOAA’s National Centers for Environmental Information (NCEI) and co-located World Data Service (WDS) for Geophysics. The product is not meant to identify all tsunami sources in the region, just those identified by experts at UNESCO/IOC led meetings, as well as historically observed.<br><br>
 
         Scenarios presented in CATSAM were defined by several groups of experts on seismology, tsunamis and tsunami modeling. The scenarios were based on historical events and/or tectonic and geodetic data. Although some scenarios have a low probability of occurrence, they should be taken into account for preparedness purposes. The scenarios may include more than a single rupture plane; in this case the planes are labeled (1, 2, 3, ...). Scenarios displaying the moment magnitude (Mw) at each plane correspond to that plane, not to the composite scenario.
     </div>
@@ -87,44 +87,6 @@
     </div>                                      
     <hr>
 
-    <!-- <input id="checkSignifEqs" type="checkBox" data-dojo-type="dijit/form/CheckBox">
-    <label id="labelSignifEqs" for="checkSignifEqs">
-        <b>Significant Earthquakes</b>
-    </label>
-    <img id="signifEqHelp" class="tooltipButtonMiddle" src="images/question-button.png">
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'signifEqHelp'">
-        <div class="tooltipText">Information about destructive earthquakes that meet at least one of the following criteria: moderate damage (approximately $1 million or more), 10 or more deaths, magnitude 7.5 or greater, Modified Mercalli Intensity X or greater, or the earthquake generated a tsunami. <a href="https://ngdc.noaa.gov/hazard/earthqk.shtml" target="_blank">More information about earthquakes at NCEI</a>. <a href="https://noaa.maps.arcgis.com/home/item.html?id=b146357d106e4cbfa9e9c41fd0f362b3" target="_blank">More information about the map service</a>.</div>
-    </div>
-    <br>   
-    <span id="signifEqFlag"></span>                  
-    <div title="Search Significant Earthquakes" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="signifEqSearchButton">Search</div>
-    <div title="Reset Filter" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="signifEqResetButton" disabled>Reset</div>
-    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
-        <div data-dojo-type="dijit/TooltipDialog">
-            <img src="images/signifeq_legend.png"/>
-        </div>
-    </div>
-    <hr>                                                                                           
-    
-    <input id="checkVolEvents" type="checkBox" data-dojo-type="dijit/form/CheckBox">
-    <label id="labelVolEvents" for="checkVolEvents">
-        <b>Significant Volcanic Eruptions</b>
-    </label>
-    <img id="volEventsHelp" class="tooltipButtonMiddle" src="images/question-button.png">
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'volEventsHelp'">
-        <div class="tooltipText">Information about eruptions that meet at least one of the following criteria: caused fatalities, caused moderate damage (approximately $1 million or more), caused a tsunami, Volcanic Explosivity Index (VEI) of 6 or larger, or the eruption was associated with a major earthquake. <a href="https://ngdc.noaa.gov/hazard/volcano.shtml" target="_blank">More information about volcanoes at NCEI</a>. <a href="https://noaa.maps.arcgis.com/home/item.html?id=b146357d106e4cbfa9e9c41fd0f362b3" target="_blank">More information about the map service</a>.</div>
-    </div>
-    <br>
-    <span id="volEventFlag"></span>
-    <div title="Search Significant Volcanic Eruptions" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="volEventSearchButton">Search</div>                                           
-    <div title="Reset Filter" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="volEventResetButton" disabled>Reset</div>
-    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
-        <div data-dojo-type="dijit/TooltipDialog">
-            <img src="images/volevent_legend.png"/>
-        </div>
-    </div>
-    <br><br> -->
-
     <input id="checkVolcanoes" type="checkBox" data-dojo-type="dijit/form/CheckBox">
     <label id="labelVolcanoes" for="checkVolcanoes"><b>Volcanoes</b> <img src="images/tan_triangle.png"/></label>
     <img id="volcanoesHelp" class="tooltipButtonMiddle" src="images/question-button.png">
@@ -152,9 +114,10 @@
     </div>
     <hr>
 
+    <h3>Tsunami Capable Tide Stations</h3>
     <input id="checkTideGauges" type="checkBox" data-dojo-type="dijit/form/CheckBox">
     <label id="labelTideGauges" for="checkTideGauges">
-        <b>Tsunami Capable Tide Stations</b>
+        <b>NOAA/CO-OPS</b>
     </label>
     <img id="tideGaugesHelp" class="tooltipButtonMiddle" src="images/question-button.png">
     <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'tideGaugesHelp'">
@@ -164,6 +127,15 @@
         <div data-dojo-type="dijit/TooltipDialog">
             <img src="images/tidegauge_legend.png"/>
         </div>
+    </div>
+    <br>
+    <input disabled id="checkIocStations" type="checkBox" data-dojo-type="dijit/form/CheckBox">
+    <label id="labelIocStations" for="checkIocStations">
+        <b>IOC</b>
+    </label>
+    <img id="iocStationsHelp" class="tooltipButtonMiddle" src="images/question-button.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'iocStationsHelp'">
+        <div class="tooltipText">Selected 1-minute water level stations from the Intergovernmental Oceanographic Commission of UNESCO (IOC-UNESCO). Selecting a station will take you to an external website maintained by IOC-UNESCO. The data presented under the IOC service has not undergone any quality control and data is provided as received. The main objective is to provide a fast status assessment of station availability and performance. <a href="http://www.ioc-sealevelmonitoring.org/disclaimer.php" target="_blank">More information about tide gauge data at IOC</a>.<br><a href="http://www.ioc-sealevelmonitoring.org/service.php" target="_blank">More information about IOC services</a>.</div>
     </div>
     <hr>
 
@@ -180,34 +152,6 @@
             <img src="images/plate_boundaries_legend.png"/>
         </div>
     </div>
-    <!-- <hr>
-
-    <h3>Selected Significant Tsunami Events</h3>
-    <select data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="signifTsEventSelect" data-dojo-props="maxHeight:200, required:false" name="ttt" style="width: 100%; max-width: 350px">
-    </select><br><br>
-    <input id="checkTTT" type="checkBox" data-dojo-type="dijit/form/CheckBox">
-    <label id="labelTTT" for="checkTTT">
-        <b>Tsunami Travel Times</b>
-    </label>
-    <img id="tttHelp" class="tooltipButtonMiddle" src="images/question-button.png">
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'tttHelp'">
-        <div class="tooltipText">Estimated tsunami travel time contours (1-hour time interval) for selected historical tsunami events, calculated using Tsunami Travel Times (TTT) software (Paul Wessel, Geoware).<br><a href="https://noaa.maps.arcgis.com/home/item.html?id=9f98f573b92c49f0ab88ae7364c26701" target="_blank">More information about the map service.</a></div>
-    </div>
-    <br>
-    <input id="checkTsunamiEnergy" type="checkBox" data-dojo-type="dijit/form/CheckBox">
-    <label id="labelTsunamiEnergy" for="checkTsunamiEnergy">
-        <b>RIFT Tsunami Energy</b>
-    </label>
-    <img id="riftHelp" class="tooltipButtonMiddle" src="images/question-button.png">
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'riftHelp'">
-        <div class="tooltipText">Tsunami energy maps for selected historical tsunami events, computed using the Real-Time Forecasting of Tsunamis (RIFT) forecast model by the <a href="http://ptwc.weather.gov" target="_blank">Pacific Tsunami Warning Center</a>.<br><a href="https://noaa.maps.arcgis.com/home/item.html?id=fafe8a3270f14a4d98903214b0b61997" target="_blank">More information about the map service</a>.</div>
-    </div>
-    <div title="Show Legend" data-dojo-type="dijit/form/DropDownButton" data-dojo-props="iconClass: 'legendIcon', showLabel: false">
-        <div data-dojo-type="dijit/TooltipDialog">
-            <img src="https://maps.ngdc.noaa.gov/viewers/images/Tsunami_RIFT_Legend.png"/>
-        </div>
-    </div> -->
     <br><br>
-
     <div title="Reset All" data-dojo-type="dijit/form/Button" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetAllButton">Reset All Filters</div>
 </div>

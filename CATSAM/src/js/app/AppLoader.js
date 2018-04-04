@@ -1,19 +1,23 @@
 define([
     'dojo/_base/declare',
-    'dijit/registry',
     'dojo/dom',
     'dojo/_base/config',
     'dojo/io-query',
     'dojo/_base/lang',
     'dojo/topic',
     'dojo/on',
+    'dojo/request',
     'dojo/aspect',
     'dojo/_base/array',
-    'dijit/form/CheckBox',
     'esri/config',
     'esri/geometry/Extent',
     'esri/geometry/Point',
     'esri/geometry/Multipoint',
+    'esri/graphic',
+    'esri/Color',
+    'esri/layers/FeatureLayer',
+    'esri/symbols/SimpleMarkerSymbol', 
+    'esri/symbols/SimpleLineSymbol',
     'esri/SpatialReference',
     'esri/tasks/QueryTask',
     'esri/tasks/query',
@@ -31,20 +35,24 @@ define([
     'dojo/domReady!'],
     function(
         declare,
-        registry,
         dom,
         config,
         ioQuery,
         lang,
         topic,
         on,
+        request,
         aspect,
         array,
-        CheckBox,
         esriConfig,
         Extent,
         Point,
         Multipoint,
+        Graphic,
+        Color,
+        FeatureLayer,
+        SimpleMarkerSymbol,
+        SimpleLineSymbol,
         SpatialReference,
         QueryTask,
         Query,
@@ -151,12 +159,12 @@ define([
                 topic.subscribe("/hazards/ResetDartSearch", lang.hitch(this, function() {
                     this.resetDarts();
                 })); 
-                topic.subscribe('/hazards/ShowTsObsForEvent', lang.hitch(this, function(tsEventId, activateTTTandRIFT, tsEventPoint, extent) {
-                    this.showTsObsForEvent(tsEventId, activateTTTandRIFT, tsEventPoint, extent);
+                topic.subscribe('/hazards/ShowTsObsForEvent', lang.hitch(this, function(tsEventId, tsEventPoint, extent) {
+                    this.showTsObsForEvent(tsEventId, tsEventPoint, extent);
                 })); 
                 topic.subscribe('/hazards/ShowTsEventForObs', lang.hitch(this, function(tsEventId, tsObsPoint) {
                     this.showTsEventForObs(tsEventId, tsObsPoint);
-                }));              
+                }));                   
             },
 
             setupBanner: function() {
@@ -169,7 +177,7 @@ define([
                         {url: 'https://ngdc.noaa.gov/hazard/hazards.shtml', label: 'Hazards'}           
                     ],
                     dataUrl: 'https://ngdc.noaa.gov/hazard/hazards.shtml',
-                    image: 'images/viewer_logo.png',
+                    image: 'images/CATSAM_viewer_logo.png',
                     imageAlt: ''
                 });
                 this.banner.placeAt('banner');
@@ -206,7 +214,7 @@ define([
                     showAttribution: false,
                     overview: true,
                     sliderStyle: 'large',
-                    navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
+                    //navigationMode: 'classic', //disable CSS transforms to eliminate annoying flickering in Chrome
                     lods: zoomLevels.lods
                 }, new MercatorLayerCollection());                 
 
@@ -232,10 +240,6 @@ define([
 
                     this.mapConfig.mapLayerCollection.getLayerById('CARIBE-EWS Tsunami Energy').setVisibleLayers([-1]);
 
-                    //Set the TTT and Tsunami Energy sublayers to be hidden on startup
-                    // this.mapConfig.mapLayerCollection.getLayerById('TTT').setVisibleLayers([-1]);
-                    // this.mapConfig.mapLayerCollection.getLayerById('Tsunami Energy').setVisibleLayers([-1]);
-
                     //If the 'tsEvent' URL param is specified, show the tsunami event and its runups
                     if (config.app.tsEvent) {
                         this.showTsEventOnStartup(config.app.tsEvent);
@@ -249,6 +253,107 @@ define([
                         this.setStartupLayers(config.app.layers);
                     }
 
+                    //xhr.get('ioc_stations.json', {
+                    request.get('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://www.ioc-sealevelmonitoring.org/service.php?query=stationlist', {
+                        headers: {'X-Requested-With': null},
+                        preventCache: true,
+                        handleAs: 'json'
+                    }).then(lang.hitch(this, function(json) {
+                        this.createIocStationsLayer(json);
+                        this.layersPanel.setIocStationsCheckboxEnabled();
+                    }), function(err){
+                        logger.error('Error retrieving IOC stations: ' + err);
+                    });  
+                }));
+            },
+
+            createIocStationsLayer: function(json) {
+                var features = [];
+                var objectid = 0;
+
+                array.forEach(json, lang.hitch(this, function(item) {
+                    var point = new Point(item['Lon'], item['Lat'], new SpatialReference({wkid:4326}));
+                    var symbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 10,
+                        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+                        new Color([0,255,255]), 1),
+                        new Color([0,255,255,0.25]));
+                    var attr = {'ObjectID': objectid, 'Code':item['Code']};
+                    objectid = objectid + 1;
+
+                    //Filter out all stations with greater than 1 min sampling rate, are not active, and those operated by NOAA (already included the CO-OPS tide gauge layer)
+                    if (item['rate'] <= 1 && 
+                        item['status'] === 1 &&
+                        item['country'] !== 'USA' && 
+                        item['country'] !== 'PRC' && 
+                        item['Location'] !== 'Barbuda' &&
+                        item['Location'] !== 'Bermuda_UK' &&
+                        item['Location'] !== 'Pago_Pago_AS' &&
+                        item['Location'] !== 'Kwajalein_MH') {
+                        features.push(new Graphic(point, symbol, attr));
+                    }                            
+                }));
+
+                var featureCollection = {
+                    "layerDefinition": null,
+                    "featureSet": {
+                        "features": features,
+                        "geometryType": "esriGeometryPoint"
+                    }
+                };
+
+                //Same format as a JSON response from the ArcGIS REST layer endpoint
+                featureCollection.layerDefinition = {
+                    "geometryType": "esriGeometryPoint",
+                    "objectIdField": "ObjectID",
+                    "drawingInfo": {
+                        "renderer": {
+                            "type": "simple",
+                            "symbol": {
+                                "type": "esriSMS",
+                                "style": "esriSMSSquare",
+                                "color": [0,255,255,255],
+                                "size": 8,
+                                "angle": 0,
+                                "xoffset": 0,
+                                "yoffset": 0,
+                                "outline": {
+                                    "color": [0,0,0,255],
+                                    "width": 0.5
+                                }
+                            },
+                            "label": "",
+                            "description": ""
+                        },
+                        "transparency": 0,
+                        "labelingInfo": null
+                    },
+                    "fields": [{
+                        "name": "ObjectID",
+                        "alias": "ObjectID",
+                        "type": "esriFieldTypeOID"
+                    }, {
+                        "name": "Code",
+                        "alias": "Code",
+                        "type": "esriFieldTypeString"
+                    }]
+                };
+
+                //Create a new FeatureLayer based on the featureCollection
+                this.iocStationsFeatureLayer = new FeatureLayer(featureCollection, {
+                    id: 'iocStations',
+                    visible: false
+                });
+                this.mapConfig.map.addLayer(this.iocStationsFeatureLayer);   
+                
+                //When a feature is clicked, open a new window with the station info
+                on(this.iocStationsFeatureLayer, 'click', lang.hitch(this, function(evt) {
+                    var code = evt.graphic.attributes['Code'];
+                    window.open('http://www.ioc-sealevelmonitoring.org/station.php?code=' + code);
+                }));
+
+                //Subscribe to message passed by the layersPanel
+                topic.subscribe('iocStationsVisibility', lang.hitch(this, function(visible) {
+                    this.iocStationsFeatureLayer.setVisibility(visible);
                 }));
             },
 
@@ -260,7 +365,7 @@ define([
                 if (faultPlanes && faultPlanes.length > 0) {
                     this.mapConfig.mapLayerCollection.getLayerById('Scenarios').setLayerDefinitions(["segmento in (" + faultPlanes.join(',') + ')']);
                 } else {
-                    this.mapConfig.mapLayerCollection.getLayerById('Scenarios').setLayerDefinitions([]); //.setDefaultLayerDefinitions();
+                    this.mapConfig.mapLayerCollection.getLayerById('Scenarios').setLayerDefinitions([]);
                 }
             },
 
@@ -409,7 +514,7 @@ define([
                 }));
             },
 
-            showTsObsForEvent: function(tsEventId, activateTTTandRIFT, tsEventPoint, extent) {
+            showTsObsForEvent: function(tsEventId, tsEventPoint, extent) {
                 var tsEventLayerDefinitions = "ID=" + tsEventId;
                 this.hazLayerDefinitions[this.tsEventLayerID1] = tsEventLayerDefinitions;
                 this.hazLayerDefinitions[this.tsEventLayerID2] = tsEventLayerDefinitions;
@@ -423,10 +528,6 @@ define([
                 
                 this.layersPanel.setTsEventFilterActive(true);
                 this.layersPanel.setTsObsFilterActive(true);
-
-                if (activateTTTandRIFT) {
-                    this.layersPanel.activateTTTandRIFT(tsEventId);
-                }
                            
                 //Zoom to the specified extent or to the event and its observations.
                 if (extent) {
@@ -446,8 +547,6 @@ define([
                 
                 this.layersPanel.setTsEventFilterActive(true);
 
-                this.layersPanel.activateTTTandRIFT(tsEventId);
-                
                 //Zoom to results
                 if (tsObsPoint) {
                     this.zoomToTsEventForObservation(tsEventId, tsObsPoint);
@@ -755,7 +854,7 @@ define([
                 if (fset.features.length === 0) {
                     return;
                 }
-                dojo.forEach(fset.features, function(feature) {
+                array.forEach(fset.features, function(feature) {
                     multipoint.addPoint(feature.geometry);
                     var x = feature.geometry.x + 20037507.067161795;
                     if (x > 20037507.067161795) {

@@ -1,28 +1,22 @@
 define([
     'dojo/_base/declare', 
-    'dojo/_base/array', 
     'dojo/_base/config',
-    'dojo/string', 
     'dojo/dom-class',
     'ngdc/identify/IdentifyPane', 
     'dojo/topic', 
     'dojo/on',
     'dojo/dom-style',
-    'esri/dijit/Popup', 
     'dojo/_base/lang', 
     'dijit/form/Button'
     ],
     function(
         declare, 
-        array, 
         config,
-        string,
         domClass, 
         IdentifyPane, 
         topic,
         on,
         domStyle,
-        Popup, 
         lang, 
         Button
         ){
@@ -45,7 +39,7 @@ define([
                 this.showTsObservationsButton.startup(); //necessary?
                 this.showTsObservationsButton.placeAt(this.zoomToButton.domNode, 'after');
                 on(this.showTsObservationsButton, 'click', lang.hitch(this, function() {
-                    topic.publish('/hazards/ShowTsObsForEvent', parseInt(this.currentItem.attributes['ID']), true, this.highlightGraphic.geometry);
+                    topic.publish('/hazards/ShowTsObsForEvent', parseInt(this.currentItem.attributes['ID']), this.highlightGraphic.geometry);
                 }));
                 
                 this.showTsEventButton = new Button({

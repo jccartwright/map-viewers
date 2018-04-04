@@ -1,7 +1,6 @@
 define([
     'dojo/_base/declare',
     'dijit/Dialog',
-    'dijit/_Widget',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
     'dijit/form/Button',
@@ -13,7 +12,6 @@ define([
     'dijit/form/FilteringSelect',
     'dojo/_base/lang',
     'dojo/_base/array',
-    'dojo/dom-attr',
     'dojo/on',
     'dojo/topic',
     'dojo/request/xhr',
@@ -23,7 +21,6 @@ define([
     function(
         declare,
         Dialog,
-        _Widget,
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
         Button, 
@@ -35,7 +32,6 @@ define([
         FilteringSelect,   
         lang,
         array,
-        domAttr,
         on,
         topic,
         xhr,
