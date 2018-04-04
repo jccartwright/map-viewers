@@ -1,7 +1,6 @@
 define([
     'dojo/_base/declare',
     'dijit/Dialog',
-    'dijit/_Widget',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
     'dijit/form/Button', 
@@ -9,8 +8,6 @@ define([
     'dijit/form/CheckBox', 
     'dijit/form/DateTextBox',
     'dojo/_base/lang',
-    'dojo/_base/array',
-    'dojo/dom-attr',
     'dojo/on',
     'dojo/topic',
     'dojo/text!./templates/DartSearchDialog.html'
@@ -18,7 +15,6 @@ define([
     function(
         declare,
         Dialog,
-        _Widget,
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
         Button, 
@@ -26,8 +22,6 @@ define([
         CheckBox, 
         DateTextBox,   
         lang,
-        array,
-        domAttr,
         on,
         topic,
         template 
