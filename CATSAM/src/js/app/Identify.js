@@ -1,20 +1,14 @@
 define([
     'dojo/_base/declare',
-    'dojo/_base/array',
     'dojo/string',
     'ngdc/identify/AbstractIdentify',
-    'dojo/topic',
-    'esri/dijit/Popup',
     'esri/tasks/IdentifyParameters',
     'dojo/_base/lang'
     ],
     function(
         declare, 
-        array, 
         string, 
         AbstractIdentify, 
-        topic, 
-        Popup, 
         IdentifyParameters,
         lang
         ){
@@ -71,7 +65,7 @@ define([
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
                 var template = 
-                    '<h3>Tsunami Scenario</h3>' +
+                    '<h3>Tsunami Rupture Plane</h3>' +
                     '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
                     '<div class="valueName">Basin: <span class="parameterValue">${basin}</span></div>' +
                     '<div class="valueName">Region: <span class="parameterValue">${region}</span></div>' +

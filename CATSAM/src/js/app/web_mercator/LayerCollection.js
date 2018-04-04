@@ -2,46 +2,24 @@ define([
     'dojo/_base/declare', 
     'ngdc/layers/AbstractLayerCollection', 
     'esri/layers/ArcGISTiledMapServiceLayer',
-    'esri/layers/ArcGISDynamicMapServiceLayer',
-    'esri/layers/FeatureLayer'
+    'esri/layers/ArcGISDynamicMapServiceLayer'
     ],
     function(
         declare, 
         AbstractLayerCollection, 
         ArcGISTiledMapServiceLayer, 
-        ArcGISDynamicMapServiceLayer,
-        FeatureLayer
+        ArcGISDynamicMapServiceLayer
         ){
 
         return declare([AbstractLayerCollection], {
-            constructor: function(options) {
+            constructor: function() {
                 this.name = 'app.web_mercator.LayerCollection';
-
-                this.multibeamVisible = false;
-                this.nosHydroVisible = false;
-                this.tracklineVisible = false;
-                this.demVisible = false;
-
-                if (options && options.multibeamVisible) {
-                    this.multibeamVisible = options.multibeamVisible;
-                }
-                if (options && options.nosHydroVisible) {
-                    this.nosHydroVisible = options.nosHydroVisible;
-                }
-                if (options && options.tracklineVisible) {
-                    this.tracklineVisible = options.tracklineVisible;
-                }
-                if (options && options.demVisible) {
-                    this.demVisible = options.demVisible;
-                }
 
                 this.defineMapServices();
 
                 this.setLayerTimeouts();
 
                 this.definePairedMapServices();
-
-                //this.setSubLayerVisibility(); //When using PairedMapServiceLayers, need to do this later in MapConfig.MapReady()
             },
 
             defineMapServices: function() {
@@ -85,17 +63,6 @@ define([
                         opacity: 0.7,
                         imageParameters: this.imageParameters.jpeg
                     }),
-                    // new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/tsunami_energy/MapServer', {
-                    //     id: 'Tsunami Energy',
-                    //     visible: false,
-                    //     opacity: 0.7,
-                    //     imageParameters: this.imageParameters.jpeg
-                    // }),
-                    // new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/ttt_contours/MapServer', {
-                    //     id: 'TTT',
-                    //     visible: false,
-                    //     imageParameters: this.imageParameters.png32
-                    // }),
                     new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
                         visible: false,
@@ -133,9 +100,6 @@ define([
                         visible: true,
                         imageParameters: this.imageParameters.png32
                     }),
-                    // new FeatureLayer('https://services2.arcgis.com/C8EMgrsFcRFL6LrL/arcgis/rest/services/caribe_ews_scenarios/FeatureServer', {
-                    //     id: 'Scenarios'  
-                    // }),
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/poles_mask/MapServer', {
                         id: 'Poles Mask',
                         visible: true,
@@ -144,13 +108,10 @@ define([
                 ];
             },  //end defineMapServices
 
-            definePairedMapServices: function() {
-                
+            definePairedMapServices: function() { 
             },
 
             setSubLayerVisibility: function() {
-                //logger.debug('setting subLayer visibility...');                
-                //this.getLayerById('NOS Hydrographic Surveys').setVisibleLayers([0])
             }
         });
     }
