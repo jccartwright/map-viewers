@@ -57,6 +57,9 @@ define([
                 xhr('https://gis.ngdc.noaa.gov/mapviewer-support/csb/providers.groovy', {
                     preventCache: true,
                     handleAs: 'json',
+                    headers: {
+                        "X-Requested-With": null
+                    }
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populateProviderSelect(data.items);
@@ -69,6 +72,9 @@ define([
                 xhr('https://gis.ngdc.noaa.gov/mapviewer-support/csb/platform_names.groovy', {
                     preventCache: true,
                     handleAs: 'json',
+                    headers: {
+                        "X-Requested-With": null
+                    }
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populatePlatformNameSelect(data.items);
@@ -81,6 +87,9 @@ define([
                 xhr('https://gis.ngdc.noaa.gov/mapviewer-support/csb/platform_ids.groovy', {
                     preventCache: true,
                     handleAs: 'json',
+                    headers: {
+                        "X-Requested-With": null
+                    }
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populatePlatformIdSelect(data.items);
@@ -93,6 +102,9 @@ define([
                 xhr('https://gis.ngdc.noaa.gov/mapviewer-support/csb/instruments.groovy', {
                     preventCache: true,
                     handleAs: 'json',
+                    headers: {
+                        "X-Requested-With": null
+                    }
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
                         this.populateInstrumentSelect(data.items);
