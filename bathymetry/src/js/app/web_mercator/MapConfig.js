@@ -1,6 +1,5 @@
 define([
     'dojo/_base/declare', 
-    'dojo/_base/lang',
     'dojo/dom',
     'esri/symbols/SimpleLineSymbol',
     'dojo/_base/Color',
@@ -10,7 +9,6 @@ define([
     'app/AppIdentifyPane'],
     function(
         declare, 
-        lang, 
         dom,
         SimpleLineSymbol,
         Color,

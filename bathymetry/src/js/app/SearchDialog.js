@@ -12,10 +12,8 @@ define([
     'dijit/form/FilteringSelect',
     'dojo/_base/lang',
     'dojo/_base/array',
-    'dojo/dom-attr',
     'dojo/on',
     'dojo/topic',
-    'dojo/dom-style',
     'dojo/request/xhr',
     'dojo/store/Memory', 
     'dojo/text!./templates/SearchDialog.html'
@@ -34,10 +32,8 @@ define([
         FilteringSelect,
         lang,
         array,
-        domAttr,
         on,
         topic,
-        domStyle,
         xhr,
         Memory,
         template 

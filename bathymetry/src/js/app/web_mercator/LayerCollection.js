@@ -232,7 +232,7 @@ define([
                         dynamicService: this.getLayerById('NOS Hydrographic Surveys (dynamic)'),
                         visible: this.nosHydroVisible,
                         cutoffZoom: 9,
-                        defaultVisibleLayers: [0, 1, 2]
+                        defaultVisibleLayers: [0, 1]
                     },
                     {
                         id: 'BAG Hillshades',
@@ -240,7 +240,7 @@ define([
                         dynamicService: this.getLayerById('BAG Hillshades (dynamic)'),
                         visible: false,
                         cutoffZoom: 16
-                    },
+                    }
                 ];
             },
 

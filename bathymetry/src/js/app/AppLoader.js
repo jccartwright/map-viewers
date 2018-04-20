@@ -8,7 +8,6 @@ define([
     'dojo/io-query',
     'dojo/_base/lang',
     'dojo/topic',
-    'dojo/on',
     'dojo/aspect',
     'dojo/request/xhr',
     'dojo/promise/all',
@@ -38,7 +37,6 @@ define([
     'app/web_mercator/Identify',
     'app/AppIdentifyPane',
     'app/LayersPanel',
-    'esri/urlUtils',
     'dojo/domReady!'],
     function(
         declare,
@@ -49,7 +47,6 @@ define([
         ioQuery,
         lang,
         topic,
-        on,
         aspect,
         xhr,
         all,
@@ -78,8 +75,8 @@ define([
         AntarcticMapToolbar,
         WebMercatorIdentify,
         IdentifyPane,
-        LayersPanel,
-        urlUtils) {
+        LayersPanel
+        ) {
 
         return declare(null, {
             mercatorMapConfig: null,
