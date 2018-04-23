@@ -3,7 +3,6 @@ define([
     'dojo/_base/lang',
     'dojo/topic',
     'dojo/on',
-    'dojo/aspect',
     'dojo/dom',
     'dojo/dom-attr',
     'dijit/form/CheckBox',
@@ -18,7 +17,6 @@ define([
         lang,
         topic,
         on,
-        aspect,
         dom,
         domAttr,
         CheckBox,
@@ -57,14 +55,20 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'NOS Hydrographic Surveys', this.chkNosHydro.checked);
                     this.radioNosHydroAll.set('disabled', !this.chkNosHydro.checked);
                     this.radioNosHydroBags.set('disabled', !this.chkNosHydro.checked);
+                    this.radioNosHydroNonDigital.set('disabled', !this.chkNosHydro.checked);
                 }));
 
                 on(this.radioNosHydroAll, 'click', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0, 1, 2], true);               
+                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0, 1], true);
+                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [2], false);
                 }));
                 on(this.radioNosHydroBags, 'click', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [1, 2], false);
                     topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0], true);
+                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [1, 2], false);  
+                }));
+                on(this.radioNosHydroNonDigital, 'click', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [2], true);
+                    topic.publish('/ngdc/sublayer/visibility', 'NOS Hydrographic Surveys', [0, 1], false);
                 }));
                 on(this.chkBagFootprints, 'change', lang.hitch(this, function() {
                     this.bagFootprintsVisible = this.chkBagFootprints.checked;

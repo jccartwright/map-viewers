@@ -1,16 +1,10 @@
 define([
     'dojo/_base/declare', 
-    'dojo/_base/array', 
     'dojo/string', 
-    'dojo/topic', 
-    'dojo/_base/lang',
     'ngdc/identify/AbstractIdentify'],
     function(
         declare, 
-        array, 
         string, 
-        topic,
-        lang,
         AbstractIdentify 
         ){
 
