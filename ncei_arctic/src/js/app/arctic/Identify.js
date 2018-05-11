@@ -47,7 +47,7 @@ define([
                     'NOS Hydrographic Surveys/Surveys with BAGs': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydrographic Surveys/Surveys with Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydro (non-digital)/Surveys without Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
-                    'DEM Extents/All NCEI Bathymetric DEMs': lang.hitch(this, this.demFormatter),
+                    'DEM Extents/NCEI Digital Elevation Models': lang.hitch(this, this.demFormatter),
                     'Sample Index/All Samples by Institution': lang.hitch(this, this.sampleIndexFormatter),
                     'Marine Geology/Marine Geology Data Sets/Reports': lang.hitch(this, this.marineGeologyFormatter),
                     'Undersea Features/Point Features': lang.hitch(this, this.underseaFeaturesFormatter),
