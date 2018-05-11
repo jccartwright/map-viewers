@@ -273,7 +273,7 @@ define([
                 }
                 
                 if (results['DEM Extents']) {    
-                    if ((features = results['DEM Extents']['All NCEI Bathymetric DEMs'])) {
+                    if ((features = results['DEM Extents']['NCEI Digital Elevation Models'])) {
                         features.sort(this.demSort);
                     }                    
                 }
