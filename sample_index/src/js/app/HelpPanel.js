@@ -1,22 +1,25 @@
 define([
     'dojo/_base/declare',
     'dojo/_base/config',
-    'dojo/on',
-    'dojo/_base/lang',
     'dijit/_WidgetBase', 
-    'dijit/_TemplatedMixin', 
-    'dojo/text!./templates/HelpPanel.html'
-    ],
+    'dijit/_TemplatedMixin',
+    'dijit/_WidgetsInTemplateMixin',
+    'dojo/_base/lang',
+    'dojo/on',
+    'ngdc/ContactUsDialog',
+    'dojo/text!./templates/HelpPanel.html'],
     function(
         declare, 
         config,
-        on,
-        lang,
         _WidgetBase, 
-        _TemplatedMixin, 
+        _TemplatedMixin,
+        _WidgetsInTemplateMixin,
+        lang,
+        on,
+        ContactUsDialog,
         template
         ){
-        return declare([_WidgetBase, _TemplatedMixin], {
+        return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin], {
             // Our template - important!
             templateString: template,
             // A class to be applied to the root node in our template

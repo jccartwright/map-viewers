@@ -4,7 +4,6 @@ define([
     'dojo/_base/array',
     'dojo/topic',
     'dojo/on',    
-    'dojo/dom',
     'dojo/Deferred',
     'dojo/promise/all',
     'dojo/request/xhr',
@@ -24,7 +23,6 @@ define([
         array,
         topic,
         on,
-        dom,
         Deferred,
         all,
         xhr,
@@ -214,7 +212,7 @@ define([
                     logger.error(error);
                     deferred.resolve('error');
                 });
-                return deferred.promise
+                return deferred.promise;
             },
 
             populateDeviceSelect: function(query) {  

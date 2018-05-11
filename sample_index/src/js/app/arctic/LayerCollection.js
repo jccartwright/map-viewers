@@ -2,19 +2,17 @@ define([
     'dojo/_base/declare', 
     'ngdc/layers/AbstractLayerCollection', 
     'esri/layers/ArcGISTiledMapServiceLayer',
-    'esri/layers/ArcGISDynamicMapServiceLayer',
-    'esri/layers/ArcGISImageServiceLayer'
+    'esri/layers/ArcGISDynamicMapServiceLayer'
     ],
     function(
         declare, 
         LayerCollection, 
         ArcGISTiledMapServiceLayer, 
-        ArcGISDynamicMapServiceLayer,
-        ArcGISImageServiceLayer
+        ArcGISDynamicMapServiceLayer
         ){
 
         return declare([LayerCollection], {
-            constructor: function(options) {
+            constructor: function() {
                 this.name = 'app/arctic/LayerCollection';
                 
                 this.defineMapServices();

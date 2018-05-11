@@ -1,23 +1,13 @@
 define([
     'dojo/_base/declare', 
     'dojo/_base/config', 
-    'dojo/_base/array', 
-    'dojo/string',
-    'dojo/topic', 
-    'dojo/_base/lang',
     'dojo/dom-style',
-    'dijit/form/Button', 
     'ngdc/identify/IdentifyPane' 
     ],
     function(
         declare, 
         config, 
-        array, 
-        string, 
-        topic,
-        lang,
         domStyle,
-        Button,
         IdentifyPane
         ){
 
@@ -63,7 +53,7 @@ define([
             getItemDisplayLabel: function(item) {
                 //'Cruise:Sample ID:Device (Repository)'
                 var a = item.feature.attributes;
-                if (a['Alternate Cruise or Leg'] == 'Null') {
+                if (a['Alternate Cruise or Leg'] === 'Null') {
                     return a['Cruise or Leg'] + ':' + a['Sample ID'] + ':' + a['Device'] + ' (' + a['Repository'] + ')';
                 }
                 else {
@@ -168,13 +158,13 @@ define([
             },
 
             getLakeAndPlatformString: function(attr) {
-                return (attr['Lake'] == 'Null' ? '' : '(' + attr['Lake'] + ') ') + 
-                    (attr['Platform'] == 'Unknown Platform' ? '' : 'Platform: ') + 
+                return (attr['Lake'] === 'Null' ? '' : '(' + attr['Lake'] + ') ') + 
+                    (attr['Platform'] === 'Unknown Platform' ? '' : 'Platform: ') + 
                     attr['Platform'];   
             },
 
             getCruiseAndAlternateString: function(attr) {
-                return attr['Cruise or Leg'] + (attr['Alternate Cruise or Leg'] == 'Null' ? '' : ' (' + attr['Alternate Cruise or Leg'] + ')');
+                return attr['Cruise or Leg'] + (attr['Alternate Cruise or Leg'] === 'Null' ? '' : ' (' + attr['Alternate Cruise or Leg'] + ')');
             }
         });
     }

@@ -1,8 +1,6 @@
 define([
     'dojo/_base/declare', 
-    'dojo/_base/lang',
     'dojo/dom',
-    'dojo/topic',
     'ngdc/web_mercator/MapConfig',
     'app/web_mercator/MapToolbar',
     'app/web_mercator/Identify',
@@ -10,9 +8,7 @@ define([
     ],
     function(
         declare, 
-        lang, 
         dom,
-        topic,
         MapConfig,
         MapToolbar,
         Identify,

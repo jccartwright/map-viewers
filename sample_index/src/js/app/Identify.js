@@ -1,17 +1,11 @@
 define([
     'dojo/_base/declare', 
-    'dojo/_base/array', 
     'dojo/string', 
-    'dojo/topic', 
-    'dojo/_base/lang',
     'ngdc/identify/AbstractIdentify'
     ],
     function(
         declare, 
-        array, 
         string, 
-        topic,
-        lang,
         AbstractIdentify 
         ){
 
@@ -78,10 +72,10 @@ define([
                 var attr1 = a.feature.attributes;
                 var attr2 = b.feature.attributes;
 
-                if (attr1['Platform'] == attr2['Platform']) {
+                if (attr1['Platform'] === attr2['Platform']) {
 
-                    if (attr1['Cruise or Leg'] == attr2['Cruise or Leg']) {
-                        if (attr1['Alternate Cruise or Leg'] == attr2['Alternate Cruise or Leg']) {
+                    if (attr1['Cruise or Leg'] === attr2['Cruise or Leg']) {
+                        if (attr1['Alternate Cruise or Leg'] === attr2['Alternate Cruise or Leg']) {
                             return attr1['Sample ID'] <= attr2['Sample ID'] ? -1 : 1;
                         }
                         return attr1['Alternate Cruise or Leg'] <= attr2['Alternate Cruise or Leg'] ? -1 : 1;
