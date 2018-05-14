@@ -1,0 +1,236 @@
+<div class="layersPanel_class">
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'NOAA NCEI/IHO DCDB', open: true" style="background-color: rgb(200,200,200)">
+        <input type="checkbox" id="chkMultibeam" data-dojo-attach-point="chkMultibeam" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkMultibeam">Multibeam Surveys</label>
+        <img id="multibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'multibeamHelp'">
+            <div class="tooltipText">
+                Ship tracks of multibeam bathymetric surveys archived at NOAA NCEI / IHO DCDB.<br><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=db08517a205b48c98a9bc53fece67a46" target="_blank">More infomation on NOAA's GeoPlatform</a><br><br>
+                <div id="multibeamLegend"></div>
+            </div>
+        </div><br>
+
+        <input type="checkbox" data-dojo-attach-point="chkMultibeamMosaic" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkMultibeamMosaic">Multibeam Bathymetry Mosaic</label>
+        <img id="multibeamMosaicHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'multibeamMosaicHelp'">
+            <div class="tooltipText">
+                Gridded multibeam bathymetric data from surveys archived at NOAA NCEI / IHO DCDB.<br><br>
+                More information on NOAA's GeoPlatform:<br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=0441041574c544dc9b6b8a513cad5e95" target="_blank">Multibeam Bathymetry Mosaic</a><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=6b16e66ffd3740b5820875ad0af25042" target="_blank">Shaded Relief Visualization</a><br><br>
+                Legend:<br>
+                <img src="https://maps.ngdc.noaa.gov/viewers/images/multibeam_color_scale.png">
+            </div>
+        </div><br><br>
+
+        <input type="checkbox" id="chkTrackline" data-dojo-attach-point="chkTrackline" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTrackline">Single-Beam Surveys</label>
+        <img id="singlebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'singlebeamHelp'">
+            <div class="tooltipText">
+                Ship tracks of single-beam bathymetric surveys archived at NOAA NCEI / IHO DCDB.<br><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=9548e62e560d4fcc8183337c54124747" target="_blank">More infomation on NOAA's GeoPlatform</a><br><br>
+                <div id="tracklineLegend"></div>
+            </div>
+        </div><br>
+
+        <input type="checkbox" id="chkTracklineDensity" data-dojo-attach-point="chkTracklineDensity" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTracklineDensity">Single-Beam Sounding Density</label>
+        <img id="soundingDensityHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'soundingDensityHelp'">
+            <div class="tooltipText">
+                A map of the density of single-beam bathymetric soundings in the NOAA NCEI / IHO DCDB Marine Trackline Geophysics database.<br><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=a32b23c4407643f4829e622a295ec5a2" target="_blank">More infomation on NOAA's GeoPlatform</a><br><br>
+                <div id="soundingDensityLegend"></div>
+            </div>
+        </div><br><br>
+
+        <input type="checkbox" id="chkNosHydro" data-dojo-attach-point="chkNosHydro" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblNosHydro" for="chkNosHydro">NOAA Hydrographic Surveys:</label>
+        <img id="nosHydroHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nosHydroHelp'">
+            <div class="tooltipText">
+                Location and coverage of NOAA National Ocean Service (NOS) Hydrographic Surveys in U.S. coastal waters.<br><br>
+                There are two options for display: <b>All Surveys with Digital Sounding Data</b>, or only the most modern <b>Surveys with BAGs</b> (bathymetric attributed grids).<br><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=f8ca92b0f19a4de3887bdc160f73106e" target="_blank">More infomation on NOAA's GeoPlatform</a><br><br>
+                <div id="nosHydroLegend"></div>
+            </div>
+        </div><br>
+        &nbsp;&nbsp;<input checked disabled type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-attach-point="radioNosHydroAll" name="radioNosHydro"/> <label for="radioOne">All Surveys with Digital Data</label> <br />
+        &nbsp;&nbsp;<input disabled type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-attach-point="radioNosHydroBags" name="radioNosHydro"> <label for="radioTwo">Surveys with BAGs</label> <br /><br />
+
+        <input type="checkbox" id="chkBagHillshades" data-dojo-attach-point="chkBagHillshades" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblBagHillshades" for="chkBagHillshades">BAG Shaded Relief Imagery</label>
+        <img id="bagHillshadesHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'bagHillshadesHelp'">
+            <div class="tooltipText">
+                Color shaded relief visualization of high-resolution quality-controlled seafloor elevation from NOAA National Ocean Service (NOS) Hydrographic Survey BAGs in U.S. coastal waters.<br><br>
+                More information on NOAA's GeoPlatform:<br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=2320b46f76c34230a72a70029a970f64" target="_blank">BAG Bathymetry Mosaic</a><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=af0614c88e0d4cad9a72115a944b37ff" target="_blank">Shaded Relief Visualization</a><br><br>
+                Legend:<br>
+                <img src="https://maps.ngdc.noaa.gov/viewers/bathymetry/images/bag_hillshades_color_scale.png">
+            </div>
+        </div><br><br>
+
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="bathySurveySearchButton" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="bathySurveySearchButton">Search NCEI/DCDB Surveys</div>
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="bathySurveyResetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="bathySurveyResetButton" disabled>Reset</div>
+        <img id="bathySurveySearchHelp" class="tooltipButtonMiddle" src="images/question-white.png"><br>
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'bathySurveySearchHelp'">
+            <div class="tooltipText"><b>Search NCEI/DCDB Surveys:</b> specify a desired range of survey years, platform name, source institution, and survey ID. After clicking "OK", a filter will be applied to the NOAA NCEI / IHO DCDB Multibeam, Single-Beam, and NOAA Hydrographic Surveys layers, displaying only data of interest. The current filter is displayed below the "Search Surveys" button. Note: only the survey ID filter applies to the BAG Shaded Relief.<br><b>Reset:</b> clears the current filter.</div>
+        </div>
+        <div id="currentBathySurveyFilter" class="bathyFilterText"></div><hr> 
+
+        <input checked type="checkbox" data-dojo-attach-point="chkCsb" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkCsb">Crowdsourced Bathymetry Files</label>
+        <img id="csbHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'csbHelp'">
+            <div class="tooltipText">
+                Locations of Crowdsourced bathymetry files contributed to NOAA NCEI / IHO DCDB. For more information, please see: <a href="https://www.ngdc.noaa.gov/iho/#csb" target="_blank">https://www.ngdc.noaa.gov/iho/#csb</a>.<br><br>
+                No legend available: features are assigned a random color according to their platform name.
+            </div>
+        </div><br>
+
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="csbSearchButton" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="csbSearchButton">Search CSB Files</div>
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="csbResetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="csbResetButton" disabled>Reset</div>
+        <img id="csbSearchHelp" class="tooltipButtonMiddle" src="images/question-white.png"><br>
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'csbSearchHelp'">
+            <div class="tooltipText"><b>Search CSB Files:</b> specify a desired range of data collection dates, provider name, and platform name. After clicking "OK", a filter will be applied to the CSB layer, displaying only data of interest. The current filter is displayed below the "Search CSB Files" button.<br><b>Reset:</b> clears the current filter.</div>
+        </div>
+        <div id="currentCsbFilter" class="filterText"></div><hr>
+
+        <input type="checkbox" id="chkBathyGapAnalysis" data-dojo-attach-point="chkBathyGapAnalysis" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkBathyGapAnalysis">U.S. Bathymetry Coverage and Gap Analysis</label>
+        <img id="bathyGapAnalysisHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'bathyGapAnalysisHelp'">
+            <div class="tooltipText">
+                Bathymetric sounding densities of multibeam, single-beam, NOS hydrographic soundings, NOS BAG, bathymetric LIDAR, and CCOM/JHC extended continental shelf surveys, classified by number of soundings per ~100 m cell.<br><br>
+                <a href="http://noaa.maps.arcgis.com/home/item.html?id=4d7d925fc96d47d9ace970dd5040df0a" target="_blank">More information on NOAA's GeoPlatform</a><br><br>
+                Legend:<br>
+                <img src="https://maps.ngdc.noaa.gov/viewers/images/bathy_gap_analysis_legend.png" width="250">
+                
+            </div>
+        </div>
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Other IHO Member States / International Compilations', open: true">
+        <div data-dojo-type="dijit/layout/ContentPane" style="background-color:rgb(255,0,0);">
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Multibeam Bathymetry', open: false">
+            <input type="checkbox" data-dojo-attach-point="chkGMRT" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkGMRT">Global Multi-Resolution Topography Synthesis (GMRT)</label>
+            <img id="gmrtHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'gmrtHelp'">
+                <div class="tooltipText">
+                    The <a href="https://www.gmrt.org/" target="_blank">Global Multi-Resolution Topography (GMRT)</a> synthesis, from <a href="http://www.ldeo.columbia.edu/" target="_blank">Lamont-Doherty Earth Observatory (LEDO)</a>, Columbia University, is a multi-resolutional compilation of edited multibeam sonar data collected by scientists and institutions worldwide, that is reviewed, processed and gridded by the Marine Geoscience Data System (MGDS) Team and merged into a single continuously updated compilation of global elevation data.
+                </div>
+            </div><hr>
+
+            <input type="checkbox" id="chkEmodNetMultibeam" data-dojo-attach-point="chkEmodNetMultibeam" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblEmodNetMultibeam" for="chkEmodNetMultibeam">EMODnet Multibeam Surveys</label>
+            <img id="emodnetMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'emodnetMultibeamHelp'">
+                <div class="tooltipText">
+                    Multibeam bathymetric surveys archived by the European Marine Observation and Data Network (EMODnet).<br><br>
+                    For more information, please see <a href="http://www.emodnet-bathymetry.eu/">http://www.emodnet-bathymetry.eu/</a>.                   
+                </div>
+            </div><br>
+
+            <input type="checkbox" id="chkEmodNetDtm" data-dojo-attach-point="chkEmodNetDtm" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblEmodNetDtm" for="chkEmodNetDtm">EMODnet Digital Terrain Model (DTM)</label>
+            <img id="emodnetDtmHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'emodnetDtmHelp'">
+                <div class="tooltipText">
+                    Multibeam bathymetric surveys archived by the European Marine Observation and Data Network (EMODnet).<br><br>
+                    For more information, please see <a href="http://www.emodnet-bathymetry.eu/">http://www.emodnet-bathymetry.eu/</a>.
+                </div>
+            </div><hr>
+
+            <input type="checkbox" id="chkNRCanMultibeam" data-dojo-attach-point="chkNRCanMultibeam" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblNRCanMultibeam" for="chkNRCanMultibeam">NRCan Multibeam Surveys</label>
+            <img id="nrCanMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanMultibeamHelp'">
+                <div class="tooltipText">
+                    Footprints of multibeam bathymetric data archived by <a href="https://www.nrcan.gc.ca/home" target="_blank">Natural Resources Canada (NRCan)</a>.<br><br>
+                    <a href="https://www.nrcan.gc.ca/earth-sciences/resources/tools-applications/web-map-services/marine-geoscience-data/17402" target="_blank">More information about available web services</a>
+                </div>
+            </div><br>
+
+            <input type="checkbox" id="chkNRCanMultibeamHillshade" data-dojo-attach-point="chkNRCanMultibeamHillshade" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblNRCanMultibeamHillshade" for="chkNRCanMultibeamHillshade">NRCan Multibeam Shaded Relief</label>
+            <img id="nrCanMultibeamHillshadeHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanMultibeamHillshadeHelp'">
+                <div class="tooltipText">
+                    Shaded relief visualizations of multibeam bathymetric data archived by <a href="https://www.nrcan.gc.ca/home" target="_blank">Natural Resources Canada (NRCan)</a>.<br><br>
+                    Note: this layer will only appear when zoomed in fairly closely to the Canadian coastline.<br><br>
+                    <a href="https://www.nrcan.gc.ca/earth-sciences/resources/tools-applications/web-map-services/marine-geoscience-data/17402" target="_blank">More information about available web services</a>
+                </div>
+            </div><hr>
+
+            <input type="checkbox" id="chkMareanoMultibeam" data-dojo-attach-point="chkMareanoMultibeam" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblMareanoMultibeam" for="chkMareanoMultibeam">MAREANO Multibeam Surveys</label>
+            <img id="mareanoMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mareanoMultibeamHelp'">
+                <div class="tooltipText">
+                    Multibeam survey coverage from <a href="" target="_blank">MAREANO</a> (Norway). See the <a href="http://www.mareano.no/en/maps/mareano_en.html" target="_blank">MAREANO map page</a>.<br><br>
+                    Legend:<br>
+                    Multibeam or Lidar data footprints <img src="https://www.mareano.no/kart/images/legends/wms_sjokart/flerstrale.JPG">
+                </div>
+            </div><br>
+
+            <input type="checkbox" data-dojo-attach-point="chkMareanoMultibeamShadedRelief" data-dojo-type="dijit/form/CheckBox">
+            <label for="chkMareanoMultibeamShadedRelief">MAREANO Multibeam Shaded Relief</label>
+            <img id="mareanoShadedReliefHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mareanoShadedReliefHelp'">
+                <div class="tooltipText">
+                    Shaded relief visualizations of multibeam bathymetric datae from <a href="" target="_blank">MAREANO</a> (Norway). See the <a href="http://www.mareano.no/en/maps/mareano_en.html" target="_blank">MAREANO map page</a>.<br><br>
+                    Legend:
+                </div>
+            </div>
+        </div> 
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Single-Beam Bathymetry', open: false">
+            <input type="checkbox" id="chkEmodNetSinglebeam" data-dojo-attach-point="chkEmodNetSinglebeam" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblEmodNetSinglebeam" for="chkEmodNetSinglebeam">EMODnet Single-Beam Surveys</label>
+            <img id="emodnetSinglebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'emodnetSinglebeamHelp'">
+                <div class="tooltipText">
+                    Single-beam bathymetric surveys archived by the European Marine Observation and Data Network (EMODnet).<br><br>
+                    For more information, please see <a href="http://www.emodnet-bathymetry.eu/">http://www.emodnet-bathymetry.eu/</a>.                   
+                </div>
+            </div><br>
+
+            <!-- <input disabled type="checkbox" id="chkNRCanSinglebeam" data-dojo-attach-point="chkNRCanSinglebeam" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblNRCanSinglebeam" for="chkNRCanSinglebeam">NRCan Single-Beam Surveys</label>
+            <img id="nrCanSinglebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanSinglebeamHelp'">
+                <div class="tooltipText">Text/legend goes here</div>
+            </div><br> -->
+
+            <input type="checkbox" id="chkMareanoSinglebeam" data-dojo-attach-point="chkMareanoSinglebeam" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblMareanoSinglebeam" for="chkMareanoSinglebeam">MAREANO Single-Beam Surveys</label>
+            <img id="mareanoSinglebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mareanoSinglebeamHelp'">
+                <div class="tooltipText">
+                    Single-beam bathymetric survey coverage from <a href="" target="_blank">MAREANO</a> (Norway). See the <a href="http://www.mareano.no/en/maps/mareano_en.html" target="_blank">MAREANO map page</a>.<br><br>
+                    Legend:<br>
+                    Single-beam data footprints <img src="http://mareano.no/kart/images/legends/wms_sjokart/enkeltstrale.JPG">
+                </div>
+            </div>
+
+        </div> 
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Hydrographic Surveys (Multibeam and/or Single-Beam)', open: false">
+            <input type="checkbox" id="chkCanadaBathy" data-dojo-attach-point="chkCanadaBathy" data-dojo-type="dijit/form/CheckBox">
+            <label id="lblCanadaBathy" for="chkCanadaBathy">Fisheries and Oceans Canada 500m Bathymetry</label>
+            <img id="canada500mHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'canada500mHelp'">
+                <div class="tooltipText">
+                    Compilation of bathymetric gridded data at 500m resolution, provided by <a href="http://www.dfo-mpo.gc.ca/index-eng.htm" target="_blank">Fisheries and Oceans Canada</a>.<br><br>
+                    <a href="http://www.charts.gc.ca/data-gestion/index-eng.asp#bathymetry" target="_blank">More information</a>
+                </div>
+            </div>
+        </div> 
+        </div>
+    </div>
+</div>

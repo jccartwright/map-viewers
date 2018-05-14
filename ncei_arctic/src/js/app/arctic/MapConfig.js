@@ -63,8 +63,6 @@ define([
                                 
                 this.mapLayerCollection.getLayerById('Trackline Combined').setVisibleLayers([-1]);
 
-                this.mapLayerCollection.getLayerById('DEM Extents').setVisibleLayers([12]);
-
                 var layerDefs = [];
                 layerDefs[0] = 'YEAR=2016';
                 layerDefs[4] = 'YEAR=2016 AND MOD(CONTOUR, 2)=0';

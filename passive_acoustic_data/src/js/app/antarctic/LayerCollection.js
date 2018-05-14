@@ -51,12 +51,7 @@ define([
                         id: 'Reference',
                         visible: false,
                         imageParameters: this.imageParameters.png32
-                    }),                    
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/dem_extents/MapServer', {
-                        id: 'DEM Extents',
-                        visible: false,
-                        imageParameters: this.imageParameters.png32
-                    }),
+                    }),                                        
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/antarctic/clipping_donut/MapServer', {
                         id: 'Clipping Donut',
                         visible: true,

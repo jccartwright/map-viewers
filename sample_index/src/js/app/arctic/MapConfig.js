@@ -1,6 +1,5 @@
 define([
     'dojo/_base/declare', 
-    'dojo/_base/lang',
     'dojo/dom',
     'ngdc/arctic/MapConfig',
     'app/arctic/MapToolbar',
@@ -9,7 +8,6 @@ define([
     ],
     function(
         declare, 
-        lang, 
         dom,
         MapConfig,
         MapToolbar,

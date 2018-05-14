@@ -94,7 +94,7 @@ define([
                 else if (layerKey === 'NOS Hydrographic Surveys/Surveys without Digital Sounding Data') {
                     return 'Surveys without Digital Sounding Data';
                 } 
-                else if (layerKey === 'DEM Extents/All NCEI Bathymetric DEMs') {
+                else if (layerKey === 'DEM Extents/NCEI Digital Elevation Models') {
                     return 'Digital Elevation Models';
                 }
                 else if (layerKey === 'DEM Tiles/DEM Tiles') {
@@ -216,7 +216,7 @@ define([
                 else if (item.formatter === 'NOS Hydrographic Surveys/Surveys without Digital Sounding Data') {
                     return this.getItemLabelSpan(a['Survey ID'] + (a['Survey Year'] === 'Null' ? '' : ' <i>(' + a['Survey Year'] + ')</i>'), uid);
                 } 
-                else if (item.formatter === 'DEM Extents/All NCEI Bathymetric DEMs') {
+                else if (item.formatter === 'DEM Extents/NCEI Digital Elevation Models') {
                     return this.getItemLabelSpan(a['Name'] + ' <i>(' + a['Cell Size'] + ')</i>', uid);
                 }
                 else if (item.formatter === 'DEM Tiles/DEM Tiles') {

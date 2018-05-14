@@ -1,0 +1,65 @@
+<div class="dijitDialog" role="dialog" aria-labelledby="${id}_title">
+    <div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+        <span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="${id}_title"
+              role="header" level="1"></span>
+        <span style="display: none;" data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon"
+              data-dojo-attach-event="ondijitclick: onCancel" title="${buttonCancel}" role="button" tabIndex="-1">
+            <span data-dojo-attach-point="closeText" class="closeText" title="${buttonCancel}">x</span>
+        </span>
+    </div>
+    <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
+        <table cellpadding="6" cellspacing="3">  
+        <tr>
+            <td>
+                <i><div style="width:230px;" class="wildcardLabel" data-dojo-attach-point="activeLayersText">Visible Layers: None</div></i>
+            </td>
+        </tr>      
+        <tr>
+            <td align="left">                       
+                <label>Min Year:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="startYearSpinner" class="surveySelect-yearSpinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1835,max:2020,places:0,pattern:'0000'}" name="startYear"></div>
+                <label>Max Year:</label>
+                <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="endYearSpinner" class="surveySelect-yearSpinner" data-dojo-props="intermediateChanges:true, smallDelta:1, constraints:{min:1835,max:2020,places:0,pattern:'0000'}" name="endYear"></div>                
+            </td>           
+        </tr>
+        <tr>
+            <td align="left" colspan="2">               
+                <label>Platform Name: <img id="platformHelp" class="tooltipButton" src="images/question-button.png"></label><br/>
+                <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'platformHelp'">
+                    <div class="tooltipText">Select the platform name for the survey. Platforms are shown for the currently-visible layers. You can enter a wildcard (*) to find multiple matches. For example, typing Atlantis* would find both Atlantis and Atlantis II.</div>
+                </div>
+                <div data-dojo-attach-point="platformSelectDiv"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" colspan="2">               
+                <label>Source Institution: <img id="institutionHelp" class="tooltipButton" src="images/question-button.png"></label><br/>
+                <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'institutionHelp'">
+                    <div class="tooltipText">Select the source institution for the survey. Institutions are shown for the currently-visible layers. You can enter a wildcard (*) to find multiple matches.Note: this field currently does not apply to NOS Hydrographic Surveys.</div>
+                </div>
+                <div data-dojo-attach-point="institutionSelectDiv"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" colspan="2">               
+                <label>Survey ID: <img id="surveyIdHelp" class="tooltipButton" src="images/question-button.png"></label><br/>
+                <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'surveyIdHelp'">
+                    <div class="tooltipText">Select the survey ID for the survey. Survey IDs are shown for the currently-visible layers. The list is filtered by the selected min/max year and platform. You can enter a wildcard (*) to find multiple matches. For example, typing EX* would find EX0801, EX0802, EX0901, etc.</div>
+                </div>
+                <div data-dojo-attach-point="surveySelectDiv"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input data-dojo-attach-point="chkZoomToResults" data-dojo-type="dijit/form/CheckBox" checked="true" value="false" type="checkbox" name="chkZoomToResults"/>
+                Zoom to Results
+            </td>
+        </tr>        
+        </table>  
+        <div class="dijitDialogPaneActionBar right-align">
+            <button class="left-align" data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton">Reset</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="cancelButton">Cancel</button>
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="submitButton" type="submit"><b>OK</b></button>
+        </div> 
+    </div>
+</div>
