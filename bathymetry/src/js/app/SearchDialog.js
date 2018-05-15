@@ -13,7 +13,9 @@ define([
     'dojo/_base/lang',
     'dojo/_base/array',
     'dojo/on',
+    'dojo/Deferred',
     'dojo/topic',
+    'dojo/promise/all',
     'dojo/request/xhr',
     'dojo/store/Memory', 
     'dojo/text!./templates/SearchDialog.html'
@@ -33,7 +35,9 @@ define([
         lang,
         array,
         on,
+        Deferred,
         topic,
+        all,
         xhr,
         Memory,
         template 
@@ -48,7 +52,7 @@ define([
             constructor: function(/*Object*/ kwArgs) {
                 lang.mixin(this, kwArgs); 
 
-                this.multibeamVisible = true;
+                this.multibeamVisible = false;
                 this.nosHydroVisible = false;
                 this.nosHydroAllVisible = true;
                 this.nosBagsVisible = false;
@@ -58,41 +62,72 @@ define([
             postCreate: function() {                                                                        
                 this.inherited(arguments);
 
-                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/platforms.groovy', {
+                var deferreds = [];
+
+                deferreds.push(xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/platforms.groovy', {
                     preventCache: true,
                     handleAs: 'json'
-                }).then(lang.hitch(this, function(data){
-                    if (data.items) {
-                        this.populatePlatformSelect(data.items);
-                    }
-                }), lang.hitch(this, function(err){
-                    logger.error('Error retrieving platforms JSON: ' + err);
-                    this.populatePlatformSelect(null);
                 }));
 
-                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/institutions.groovy', {
+                deferreds.push(xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/institutions.groovy', {
                     preventCache: true,
                     handleAs: 'json'
-                }).then(lang.hitch(this, function(data){
-                    if (data.items) {
-                        this.populateInstitutionSelect(data.items);
-                    }
-                }), lang.hitch(this, function(err){
-                    logger.error('Error retrieving institutions JSON: ' + err);
-                    this.populateInstitutionSelect(null);
                 }));
 
-                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/surveys.groovy', {
+                deferreds.push(xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/surveys.groovy', {
                     preventCache: true,
                     handleAs: 'json'
-                }).then(lang.hitch(this, function(data){
-                    if (data.items) {
-                        this.populateSurveySelect(data.items);
-                    }
-                }), lang.hitch(this, function(err){
-                    logger.error('Error retrieving surveys JSON: ' + err);
-                    this.populateSurveySelect(null);
                 }));
+
+                all(deferreds).then(lang.hitch(this, function(results) {
+                    if (results[0].items) {
+                        this.populatePlatformSelect(results[0].items);
+                    }
+                    if (results[1].items) {
+                        this.populateInstitutionSelect(results[1].items);
+                    }
+                    if (results[2].items) {
+                        this.populateSurveySelect(results[2].items);
+                    }
+                    this.filterSelects();
+                    this.setActiveLayersText();
+                }));
+
+                // xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/platforms.groovy', {
+                //     preventCache: true,
+                //     handleAs: 'json'
+                // }).then(lang.hitch(this, function(data){
+                //     if (data.items) {
+                //         this.populatePlatformSelect(data.items);
+                //     }
+                // }), lang.hitch(this, function(err){
+                //     logger.error('Error retrieving platforms JSON: ' + err);
+                //     this.populatePlatformSelect(null);
+                // }));
+
+                // xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/institutions.groovy', {
+                //     preventCache: true,
+                //     handleAs: 'json'
+                // }).then(lang.hitch(this, function(data){
+                //     if (data.items) {
+                //         this.populateInstitutionSelect(data.items);
+                //     }
+                // }), lang.hitch(this, function(err){
+                //     logger.error('Error retrieving institutions JSON: ' + err);
+                //     this.populateInstitutionSelect(null);
+                // }));
+
+                // xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/surveys.groovy', {
+                //     preventCache: true,
+                //     handleAs: 'json'
+                // }).then(lang.hitch(this, function(data){
+                //     if (data.items) {
+                //         this.populateSurveySelect(data.items);
+                //     }
+                // }), lang.hitch(this, function(err){
+                //     logger.error('Error retrieving surveys JSON: ' + err);
+                //     this.populateSurveySelect(null);
+                // }));
 
                 on(this.cancelButton, 'click', lang.hitch(this, function(){
                     this.onCancel();
@@ -123,10 +158,13 @@ define([
                 //Subscribe to message to show/hide sublayers from a service. Handles the NOS Hydro BAGs and Digital layers.
                 topic.subscribe('/ngdc/sublayer/visibility', lang.hitch(this, function (svcId, sublayers, visible) {
                     if (svcId === 'NOS Hydrographic Surveys') {
-                        if (array.indexOf(sublayers, 1) > -1 || array.indexOf(sublayers, 2) > -1) {
-                            this.nosHydroAllVisible = visible;
-                        } else if (array.indexOf(sublayers, 0) > -1) {
+                        //if (array.indexOf(sublayers, 1) > -1 || array.indexOf(sublayers, 2) > -1) {
+                        if (array.indexOf(sublayers, 0) > -1) {
                             this.nosBagsVisible = visible;
+                        } else if (array.indexOf(sublayers, 1) > -1) {
+                            this.nosHydroAllVisible = visible;
+                        } else {
+                            this.nosHydroAllVisible = true;
                         }
                     }
                     this.filterSelects();
@@ -282,17 +320,17 @@ define([
                     }
                     text += 'Single-Beam';
                 }
-                if (this.nosHydroVisible && this.nosBagsVisible) {
-                    if (text.length > 0) {
-                        text += ', ';
-                    }
-                    text += 'NOS Hydrographic Surveys with BAGs';
-                }
                 if (this.nosHydroVisible && this.nosHydroAllVisible) {
                     if (text.length > 0) {
                         text += ', ';
                     }
                     text += 'All NOS Hydrographic Surveys';
+                }
+                else if (this.nosHydroVisible && this.nosBagsVisible) {
+                    if (text.length > 0) {
+                        text += ', ';
+                    }
+                    text += 'NOS Hydrographic Surveys with BAGs';
                 }
                 // if (this.nonNonDigitalVisible) {
                 //     if (text.length > 0) {

@@ -9,6 +9,7 @@ define([
     'dojo/_base/lang',
     'dojo/topic',
     'dojo/aspect',
+    'dojo/Deferred',
     'dojo/request/xhr',
     'dojo/promise/all',
     'dijit/form/CheckBox',
@@ -48,6 +49,7 @@ define([
         lang,
         topic,
         aspect,
+        Deferred,
         xhr,
         all,
         CheckBox,
@@ -114,6 +116,10 @@ define([
                     });
                 }
 
+                if (queryParams.institution) {
+                    this.selectedInstitution = queryParams.institution;
+                }
+
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
 
@@ -123,7 +129,16 @@ define([
 
                 this.setStartupLayers(startupLayers);
 
-                this.setupMapViews();
+                this.setupMapViews().then(lang.hitch(this, function() {
+                    if (this.selectedInstitution) {  
+                        this.filterSurveys({institution: this.selectedInstitution});
+                        this.layersPanel.searchDialog.filterSelects();
+                        this.layersPanel.searchDialog.setActiveLayersText();
+                    } 
+                    // this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index').show();
+                    // this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').show();
+                    // this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').show();
+                }));
 
                 //Subscribe to messages passed by the search dialog
                 topic.subscribe('/bathymetry/Search', lang.hitch(this, function(values) {
@@ -157,15 +172,19 @@ define([
             },
 
             setupMapViews: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up map views...');
+
+                var deferreds = [];
+
                 // setup map views. You can only draw a Map into a visible container
-                this.setupMercatorView();
+                deferreds.push(this.setupMercatorView());
 
                 registry.byId('mapContainer').selectChild('arctic');
-                this.setupArcticView();
+                deferreds.push(this.setupArcticView());
 
                 registry.byId('mapContainer').selectChild('antarctic');
-                this.setupAntarcticView();
+                deferreds.push(this.setupAntarcticView());
 
                 //go back to mercator as default view
                 registry.byId('mapContainer').selectChild('mercator');
@@ -178,6 +197,11 @@ define([
                 }));
 
                 this.enableMapView('mercator');
+
+                all(deferreds).then(lang.hitch(this, function() {
+                    deferred.resolve('success');
+                }));
+                return deferred.promise;
             },
 
             enableMapView: function(/*String*/ mapId) {
@@ -198,6 +222,7 @@ define([
             },
 
             setupMercatorView: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up Mercator view...');
 
                 var zoomLevels = new MercatorZoomLevels();
@@ -226,30 +251,18 @@ define([
                     demVisible: this.demVisible
                 }));
 
+                new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
+
                 aspect.after(this.mercatorMapConfig, 'mapReady', lang.hitch(this, function() {
-                    var legend = new Legend({
-                        map: this.mercatorMapConfig.map,
-                        layerInfos: [                            
-                            {title: 'Multibeam', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam')._tiledService},
-                            {title: 'Multibeam', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam')._dynamicService},
-                            {title: 'Trackline Bathymetry', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry')._tiledService},
-                            {title: 'Trackline Bathymetry', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry')._dynamicService},
-                            {title: 'Trackline Bathymetry Density', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry Density')},
-                            {title: 'NOS Hydrographic Surveys', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys')._tiledService},
-                            {title: 'NOS Hydrographic Surveys', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys')._dynamicService},
-                            {title: 'BAG Footprints', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('BAG Footprints')},
-                            {title: 'DEM Extents', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Extents')},
-                            {title: 'DEM Tiles (new)', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')},
-                            {title: 'OCM Lidar', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('OCM Lidar')}
-                        ]
-                    }, 'dynamicLegend');
-                    legend.startup();
+                    this.setupLegends();
+                    deferred.resolve('success');
                 }));
 
-                new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
+                return deferred.promise;
             },
 
             setupArcticView: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up Arctic view...');
                 
                 var initialExtent = new Extent({
@@ -279,9 +292,16 @@ define([
                 }));
 
                 new CoordinatesWithElevationToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
+
+                aspect.after(this.arcticMapConfig, 'mapReady', function() {
+                    deferred.resolve('success');
+                });
+
+                return deferred.promise;
             },
 
             setupAntarcticView: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up Antarctic view...');
                 
                 var initialExtent = new Extent({
@@ -310,13 +330,68 @@ define([
                 }));
 
                 new CoordinatesWithElevationToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
+
+                aspect.after(this.antarcticMapConfig, 'mapReady', function() {
+                    deferred.resolve('success');
+                });
+
+                return deferred.promise;
+            },
+
+            setupLegends: function() {
+                // var multibeamLegend = new Legend({
+                //     map: this.mercatorMapConfig.map,
+                //     autoUpdate: false,
+                //     respectVisibility: false,
+                //     layerInfos: [
+                //         {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam')._tiledService}
+                //     ]
+                // }, 'multibeamLegend');
+                // multibeamLegend.startup();
+
+                // var tracklineLegend = new Legend({
+                //     map: this.mercatorMapConfig.map,
+                //     autoUpdate: false,
+                //     respectVisibility: false,
+                //     layerInfos: [
+                //         {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry')._tiledService}
+                //     ]
+                // }, 'tracklineLegend');
+                // tracklineLegend.startup();
+
+                // var soundingDensityLegend = new Legend({
+                //     map: this.mercatorMapConfig.map,
+                //     autoUpdate: false,
+                //     respectVisibility: false,
+                //     layerInfos: [
+                //         {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry Density')}
+                //     ]
+                // }, 'soundingDensityLegend');
+                // soundingDensityLegend.startup();
+
+                // var nosHydroLegend = new Legend({
+                //     map: this.mercatorMapConfig.map,
+                //     autoUpdate: false,
+                //     respectVisibility: false,
+                //     layerInfos: [
+                //         {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys')._tiledService, hideLayers: [2, 3]}
+                //     ]
+                // }, 'nosHydroLegend');
+                // nosHydroLegend.startup();
             },
 
             //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'
             setStartupLayers: function(/*String[]*/ startupLayers) {                
+                
                 if (startupLayers.length === 0) {
+                    //By default, set multibeam and nos_hydro layers visible by default
                     this.layersPanel.chkMultibeam.set('checked', true);
                     this.multibeamVisible = true;
+
+                    if (!this.selectedInstitution) {
+                        this.layersPanel.chkNosHydro.set('checked', true);
+                        this.nosHydroVisible = true;
+                    }
                     return;    
                 }
 

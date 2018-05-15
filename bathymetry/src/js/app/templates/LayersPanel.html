@@ -1,51 +1,100 @@
 <div class="layersPanel_class">
-    <h3>Bathymetric Surveys</h3>
-    <input type="checkbox" data-dojo-attach-point="chkMultibeam" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkMultibeam">Multibeam Bathymetric Surveys</label><br>
-    <input type="checkbox" data-dojo-attach-point="chkMultibeamMosaic" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkMultibeamMosaic">Multibeam Bathymetry Mosaic (Shaded Relief Imagery)</label><br><br>
 
-    <input type="checkbox" id="chkTrackline" data-dojo-attach-point="chkTrackline" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkTrackline">Single-Beam (Trackline) Bathymetric Surveys</label><br>
-    <input type="checkbox" id="chkTracklineDensity" data-dojo-attach-point="chkTracklineDensity" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkTracklineDensity">Trackline Bathymetry Density</label><br><br>
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Bathymetric Surveys', open: true">
+        <input type="checkbox" id="chkMultibeam" data-dojo-attach-point="chkMultibeam" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkMultibeam">Multibeam Surveys</label>
+        <img id="multibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'multibeamHelp'">
+            <div class="tooltipText">
+                Ship tracks of multibeam bathymetric surveys archived at NOAA NCEI / IHO DCDB.<br><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=db08517a205b48c98a9bc53fece67a46" target="_blank">More infomation on NOAA's GeoPlatform</a><br><br>
+                <div id="multibeamLegend"></div>
+            </div>
+        </div><br>
 
-    <input type="checkbox" id="chkNosHydro" data-dojo-attach-point="chkNosHydro" data-dojo-type="dijit/form/CheckBox">
-    <label id="lblNosHydro" for="chkNosHydro">NOS Hydrographic Surveys:</label><br>
+        <input type="checkbox" data-dojo-attach-point="chkMultibeamMosaic" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkMultibeamMosaic">Multibeam Bathymetry Mosaic</label>
+        <img id="multibeamMosaicHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'multibeamMosaicHelp'">
+            <div class="tooltipText">
+                Gridded multibeam bathymetric data from surveys archived at NOAA NCEI / IHO DCDB.<br><br>
+                More information on NOAA's GeoPlatform:<br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=0441041574c544dc9b6b8a513cad5e95" target="_blank">Multibeam Bathymetry Mosaic</a><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=6b16e66ffd3740b5820875ad0af25042" target="_blank">Shaded Relief Visualization</a><br><br>
+                Legend:<br>
+                <img src="https://maps.ngdc.noaa.gov/viewers/images/multibeam_color_scale.png">
+            </div>
+        </div><br><hr>
 
-    &nbsp;&nbsp;<input checked disabled type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-attach-point="radioNosHydroAll" name="radioNosHydro"/> <label for="radioOne">All Surveys with Digital Data</label> <br />
-    &nbsp;&nbsp;<input disabled type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-attach-point="radioNosHydroBags" name="radioNosHydro"> <label for="radioTwo">Surveys with Bathymetric Attributed Grids (BAGs)</label> <br />
-    &nbsp;&nbsp;<input disabled type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-attach-point="radioNosHydroNonDigital" name="radioNosHydro"> <label for="radioTwo">Surveys without Digital Data</label> <br /><br />
+        <input type="checkbox" id="chkNosHydro" data-dojo-attach-point="chkNosHydro" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblNosHydro" for="chkNosHydro">NOAA NOS Hydrographic Surveys:</label>
+        <img id="nosHydroHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nosHydroHelp'">
+            <div class="tooltipText">
+                Text/legend goes here
+            </div>
+        </div><br>
 
-    &nbsp;&nbsp;<input type="checkbox" id="chkBagFootprints" data-dojo-attach-point="chkBagFootprints" data-dojo-type="dijit/form/CheckBox">
-    <label id="lblBagFootprints" for="chkBagFootprints">BAG Footprints</label><br>
+        &nbsp;&nbsp;<input checked disabled type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-attach-point="radioNosHydroAll" name="radioNosHydro"/> <label for="radioOne">All Surveys with Digital Data</label> <br />
+        &nbsp;&nbsp;<input disabled type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-attach-point="radioNosHydroBags" name="radioNosHydro"> <label for="radioTwo">Surveys with Bathymetric Attributed Grids (BAGs)</label> <br />
+        &nbsp;&nbsp;<input disabled type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-attach-point="radioNosHydroNonDigital" name="radioNosHydro"> <label for="radioTwo">Surveys without Digital Data</label> <br /><br />
 
-    &nbsp;&nbsp;<input type="checkbox" id="chkBagHillshades" data-dojo-attach-point="chkBagHillshades" data-dojo-type="dijit/form/CheckBox">
-    <label id="lblBagHillshades"for="chkBagHillshades">BAG Color Shaded Relief Imagery</label><br><br>
+        &nbsp;&nbsp;<input type="checkbox" id="chkBagFootprints" data-dojo-attach-point="chkBagFootprints" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblBagFootprints" for="chkBagFootprints">BAG Footprints</label><br>
 
-    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="searchButton">Search Surveys</div>
-    <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetButton" disabled>Reset</div>
-    <img id="searchHelp" class="tooltipButtonMiddle" src="images/question-button.png"><br>
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'searchHelp'">
-        <div class="tooltipText"><b>Search Surveys:</b> specify a desired range of survey years, platform name, source institution, and survey ID. After clicking "OK", a filter will be applied to the Multibeam, Single-Beam, and NOS Hydrographic Surveys layers, displaying only data of interest. The current filter is displayed below the "Search Surveys" button. Note: only the survey ID filter applies to the BAG Footprints/Hillshades. The filter does not apply to DEMs or OCM Bathymetric Lidar.<br><b>Reset:</b> clears the current filter.</div>
+        &nbsp;&nbsp;<input type="checkbox" id="chkBagHillshades" data-dojo-attach-point="chkBagHillshades" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblBagHillshades"for="chkBagHillshades">BAG Color Shaded Relief Imagery</label><br><hr>
+
+        <input type="checkbox" id="chkTrackline" data-dojo-attach-point="chkTrackline" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTrackline">Single-Beam Surveys</label>
+        <img id="singlebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'singlebeamHelp'">
+            <div class="tooltipText">
+                Ship tracks of single-beam bathymetric surveys archived at NOAA NCEI / IHO DCDB.<br><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=9548e62e560d4fcc8183337c54124747" target="_blank">More infomation on NOAA's GeoPlatform</a><br><br>
+                <div id="tracklineLegend"></div>
+            </div>
+        </div><br>
+
+        <input type="checkbox" id="chkTracklineDensity" data-dojo-attach-point="chkTracklineDensity" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkTracklineDensity">Single-Beam Sounding Density</label>
+        <img id="soundingDensityHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'soundingDensityHelp'">
+            <div class="tooltipText">
+                A map of the density of single-beam bathymetric soundings in the NOAA NCEI / IHO DCDB Marine Trackline Geophysics database.<br><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=a32b23c4407643f4829e622a295ec5a2" target="_blank">More infomation on NOAA's GeoPlatform</a><br><br>
+                <div id="soundingDensityLegend"></div>
+            </div>
+        </div><br><br>
+
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="searchButton">Search Bathymetric Surveys</div>
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetButton" disabled>Reset</div>
+        <img id="searchHelp" class="tooltipButtonMiddle" src="images/question-white.png"><br>
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'searchHelp'">
+            <div class="tooltipText"><b>Search Bathymetric Surveys:</b> specify a desired range of survey years, platform name, source institution, and survey ID. After clicking "OK", a filter will be applied to the Multibeam, Single-Beam, and NOS Hydrographic Surveys layers, displaying only data of interest. The current filter is displayed below the "Search Bathymetric Surveys" button. Note: only the survey ID filter applies to the BAG Footprints/Hillshades. The filter does not apply to DEMs or OCM Bathymetric Lidar.<br><b>Reset:</b> clears the current filter.</div>
+        </div>
+        <div id="currentFilter" class="filterText"></div>
     </div>
-    <div id="currentFilter" class="filterText"></div><br>
 
-    <hr>
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Digital Elevation Models', open: true">
+        <input type="checkbox" id="chkDems" data-dojo-attach-point="chkDems" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkDems">DEM Footprints</label><br>
 
-    <h3>Digital Elevation Models (DEMs)</h3>
+        <input type="checkbox" id="chkDemHillshades" data-dojo-attach-point="chkDemHillshades" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkDemHillshades">DEM Color Shaded Relief Imagery</label>
+    </div>
 
-    <input type="checkbox" id="chkDems" data-dojo-attach-point="chkDems" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkDems">DEM Footprints</label><br>
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Coastal Lidar', open: true">
 
-    <input type="checkbox" id="chkDemHillshades" data-dojo-attach-point="chkDemHillshades" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkDemHillshades">DEM Color Shaded Relief Imagery</label>
-    <hr>
-
-    <h3>Bathymetric Lidar</h3>
-
-    <input type="checkbox" id="chkOcmLidar" data-dojo-attach-point="chkOcmLidar" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkOcmLidar">Coastal Lidar Datasets available from <a href="https://coast.noaa.gov/dataviewer" target="_blank">NOAA's Office for Coastal Management</a></label>
+        <input type="checkbox" id="chkOcmLidar" data-dojo-attach-point="chkOcmLidar" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkOcmLidar">Topo-Bathy/Bathy Lidar Datasets</label>
+        <img id="ocmLidarHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'ocmLidarHelp'">
+            <div class="tooltipText">
+                Topo-Bathy/Bathy Lidar Datasets available from <a href="https://coast.noaa.gov/dataviewer" target="_blank">NOAA's Office for Coastal Management
+            </div>
+        </div>
+    </div>
 
     
 </div>
