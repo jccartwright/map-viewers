@@ -14,7 +14,7 @@ define([
                     {base: 'GEBCO_2014 (NCEI)', overlays: [{id: 'World Boundaries and Places'}], label: 'GEBCO_2014 (NOAA NCEI Visualization)'},
                     {base: 'GEBCO_2014', overlays: [{id: 'World Boundaries and Places'}], label: 'GEBCO_2014'},
                     {base: 'GMRT Unmasked', overlays: [{id: 'Ocean Reference'}], label: 'Global Multi-Resolution Topography (GMRT) Data Synthesis (LDEO)'},
-                    {base: 'ETOPO1', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (ETOPO1)'},
+                    // {base: 'ETOPO1', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (ETOPO1)'},
                     {base: 'Light Gray', overlays: [{id: 'Light Gray Reference'}], label: 'Light Gray (Esri)'},
                     {base: 'Dark Gray', overlays: [{id: 'Dark Gray Reference'}], label: 'Dark Gray (Esri)'},
                     {base: 'World Imagery', overlays: [{id: 'World Boundaries and Places'}], label: 'World Imagery (Esri)'},
