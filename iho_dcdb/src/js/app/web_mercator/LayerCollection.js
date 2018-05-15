@@ -112,7 +112,7 @@ define([
                         layerNames: ['mean_atlas_land']
                     }),
 
-                    new TiledWMSLayer('http://wms.geonorge.no/skwms1/wms.havbunnraster2?', {
+                    new TiledWMSLayer('https://wms.geonorge.no/skwms1/wms.havbunnraster2?', {
                         id: 'MAREANO Multibeam Shaded Relief',
                         visible: false,
                         format: 'png',
@@ -121,7 +121,6 @@ define([
                         layerNames: ['Havbunnraster']
                     }),
 
-                    
                     new ArcGISDynamicMapServiceLayer('https://geoappext.nrcan.gc.ca/arcgis/rest/services/GSCA/multibeam_east_e/MapServer', {
                         id: 'NRCan Multibeam East',
                         visible: false,
@@ -281,7 +280,7 @@ define([
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/csb/MapServer', {
                     //new ArcGISDynamicMapServiceLayer('https://gisdev.ngdc.noaa.gov/arcgis/rest/services/acceptance/csb_surge/MapServer', {                        
                         id: 'CSB',
-                        visible: true,
+                        visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
 
@@ -305,7 +304,7 @@ define([
                         id: 'Multibeam',
                         tiledService: this.getLayerById('Multibeam (tiled)'),
                         dynamicService: this.getLayerById('Multibeam (dynamic)'),
-                        visible: false,
+                        visible: true,
                         cutoffZoom: 9
                     },
                     {

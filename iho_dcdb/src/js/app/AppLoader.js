@@ -209,7 +209,7 @@ define([
                 var center;
                 var zoom;
                 if (!this.initialExtent) {
-                    center = [-110, 20]; //centered over eastern Pacific
+                    center = [-70, 20]; //centered over western Atlantic
                     zoom = 1; //relative zoom level; equivalent to absolute zoom level 3
                 }
 

@@ -315,3 +315,11 @@ html,body {
 .tooltipText {
     width: 250px;
 }
+
+.creditsPanel {
+    font-size: 12px;
+}
+
+.helpPanel {
+    font-size: 12px;
+}
