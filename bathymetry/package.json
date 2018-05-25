@@ -1,6 +1,6 @@
 {
   "name": "bathymetry",
-  "version": "2.11.5",
+  "version": "2.12.0",
   "description": "NCEI Bathymetric Data Viewer",
   "main": "index.html",
   "scripts": {

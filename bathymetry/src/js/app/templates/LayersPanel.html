@@ -6,8 +6,9 @@
         <img id="multibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
         <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'multibeamHelp'">
             <div class="tooltipText">
-                Ship tracks of multibeam bathymetric surveys archived at NOAA NCEI / IHO DCDB.<br><br>
-                <a href="https://noaa.maps.arcgis.com/home/item.html?id=db08517a205b48c98a9bc53fece67a46" target="_blank">More infomation on NOAA's GeoPlatform</a><br><br>
+                Ship tracks of multibeam bathymetric surveys archived at NOAA NCEI.<br><br>
+                <a href="https://ngdc.noaa.gov/mgg/bathymetry/multibeam.html" target="_blank">The Multibeam Bathymetry Database (MBBDB) at NCEI</a> collects and archives multibeam data from the earliest commercial installations (circa 1980) through today's modern high-resolution collections. Data are acquired from both U.S. and international government and academic sources (see individual cruise metadata records for source information) and consist of the raw (as collected) sonar data files.<br><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=db08517a205b48c98a9bc53fece67a46" target="_blank">More information about this layer on NOAA's GeoPlatform</a><br><br>
                 <div id="multibeamLegend"></div>
             </div>
         </div><br>
@@ -17,21 +18,28 @@
         <img id="multibeamMosaicHelp" class="tooltipButtonMiddle" src="images/question-white.png">
         <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'multibeamMosaicHelp'">
             <div class="tooltipText">
-                Gridded multibeam bathymetric data from surveys archived at NOAA NCEI / IHO DCDB.<br><br>
-                More information on NOAA's GeoPlatform:<br>
+                A mosaic of gridded multibeam bathymetric data from surveys archived at NOAA NCEI. The data has been gridded at a 3 arcsecond (~90 m) cell size.<br><br>
+                More information about this layer on NOAA's GeoPlatform:<br>
                 <a href="https://noaa.maps.arcgis.com/home/item.html?id=0441041574c544dc9b6b8a513cad5e95" target="_blank">Multibeam Bathymetry Mosaic</a><br>
                 <a href="https://noaa.maps.arcgis.com/home/item.html?id=6b16e66ffd3740b5820875ad0af25042" target="_blank">Shaded Relief Visualization</a><br><br>
-                Legend:<br>
+                Color Scale:<br>
                 <img src="https://maps.ngdc.noaa.gov/viewers/images/multibeam_color_scale.png">
             </div>
         </div><br><hr>
 
         <input type="checkbox" id="chkNosHydro" data-dojo-attach-point="chkNosHydro" data-dojo-type="dijit/form/CheckBox">
-        <label id="lblNosHydro" for="chkNosHydro">NOAA NOS Hydrographic Surveys:</label>
+        <label id="lblNosHydro" for="chkNosHydro">NOAA NOS Hydrographic Data:</label>
         <img id="nosHydroHelp" class="tooltipButtonMiddle" src="images/question-white.png">
         <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nosHydroHelp'">
             <div class="tooltipText">
-                Text/legend goes here
+                Location and coverage of NOAA National Ocean Service (NOS) Hydrographic Surveys in U.S. coastal waters. NCEI maintains the National Ocean Service Hydrographic Data Base (NOSHDB) and Hydrographic Survey Meta Data Base (HSMDB). Both are populated by the Office of Coast Survey and National Geodetic Service, and provide coverage of coastal waters and the U.S. exclusive economic zone and its territories.
+                <ul>
+                    <li><b>All Surveys with Digital Data:</b> Bathymetric data collected for NOAA’s Office of Coast Survey in a usable digital format as either gridded surface data or xyz point soundings.</li>
+                    <li><b>Surveys with BAGs:</b> A Bathymetric Attributed Grid (BAG) is a non-proprietary file format for storing and exchanging bathymetric data developed by the Open Navigation Surface Working Group. BAG files are gridded, multi-dimensional bathymetric data files and are the standard NOS hydrographic data file for public release.</li>
+                    <li><b>Surveys without Digital Data:</b> Smooth Sheet images exist for historical depth soundings that have not been digitized into an xyz format. Smooth Sheets are the final, neatly drafted, accurate plot of verified and corrected bathymetric data based on the method collected and are available as Tagged Image File Format (TIFF), Multi-resolution Seamless Image Database (MrSID) format, or as a geo-referenced PDF.
+                </ul>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=f8ca92b0f19a4de3887bdc160f73106e" target="_blank">More information about this layer on NOAA's GeoPlatform</a><br><br>              
+                <div id="nosHydroLegend"></div>
             </div>
         </div><br>
 
@@ -40,18 +48,37 @@
         &nbsp;&nbsp;<input disabled type="radio" data-dojo-type="dijit/form/RadioButton" data-dojo-attach-point="radioNosHydroNonDigital" name="radioNosHydro"> <label for="radioTwo">Surveys without Digital Data</label> <br /><br />
 
         &nbsp;&nbsp;<input type="checkbox" id="chkBagFootprints" data-dojo-attach-point="chkBagFootprints" data-dojo-type="dijit/form/CheckBox">
-        <label id="lblBagFootprints" for="chkBagFootprints">BAG Footprints</label><br>
+        <label id="lblBagFootprints" for="chkBagFootprints">BAG Footprints</label>
+        <img id="bagFootprintsHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'bagFootprintsHelp'">
+            <div class="tooltipText">
+                Outlines of individual NOS BAG files that show coverage of data acquired.<br><br>
+                <div id="bagFootprintsLegend"></div>
+            </div>
+        </div><br>
 
         &nbsp;&nbsp;<input type="checkbox" id="chkBagHillshades" data-dojo-attach-point="chkBagHillshades" data-dojo-type="dijit/form/CheckBox">
-        <label id="lblBagHillshades"for="chkBagHillshades">BAG Color Shaded Relief Imagery</label><br><hr>
+        <label id="lblBagHillshades" for="chkBagHillshades">BAG Color Shaded Relief</label>
+        <img id="bagHillshadesHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'bagHillshadesHelp'">
+            <div class="tooltipText">
+                A mosaic of all NOAA Hydrographic Survey BAGs in U.S. coastal waters, displayed as a color shaded relief visualization.<br><br>
+                More information about this layer on NOAA's GeoPlatform:<br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=2320b46f76c34230a72a70029a970f64" target="_blank">BAG Bathymetry Mosaic</a><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=af0614c88e0d4cad9a72115a944b37ff" target="_blank">Shaded Relief Visualization</a><br><br>
+                Color Scale:<br>
+                <img src="https://maps.ngdc.noaa.gov/viewers/bathymetry/images/bag_hillshades_color_scale.png">
+            </div>
+        </div><hr>
 
         <input type="checkbox" id="chkTrackline" data-dojo-attach-point="chkTrackline" data-dojo-type="dijit/form/CheckBox">
         <label for="chkTrackline">Single-Beam Surveys</label>
         <img id="singlebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
         <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'singlebeamHelp'">
             <div class="tooltipText">
-                Ship tracks of single-beam bathymetric surveys archived at NOAA NCEI / IHO DCDB.<br><br>
-                <a href="https://noaa.maps.arcgis.com/home/item.html?id=9548e62e560d4fcc8183337c54124747" target="_blank">More infomation on NOAA's GeoPlatform</a><br><br>
+                Ship tracks of single-beam bathymetric surveys archived at NOAA NCEI.<br><br>
+                NCEI's <a href="https://ngdc.noaa.gov/mgg/geodas/trackline.html" target="_blank">Marine Trackline Geophysical database</a> includes single-beam bathymetry data collected during marine cruises from 1939 to the present. Data sources include US and non-US oceanographic institutions, universities, and government agencies with worldwide data coverage.<br><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=9548e62e560d4fcc8183337c54124747" target="_blank">More information about this layer on NOAA's GeoPlatform</a><br><br>
                 <div id="tracklineLegend"></div>
             </div>
         </div><br>
@@ -61,8 +88,8 @@
         <img id="soundingDensityHelp" class="tooltipButtonMiddle" src="images/question-white.png">
         <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'soundingDensityHelp'">
             <div class="tooltipText">
-                A map of the density of single-beam bathymetric soundings in the NOAA NCEI / IHO DCDB Marine Trackline Geophysics database.<br><br>
-                <a href="https://noaa.maps.arcgis.com/home/item.html?id=a32b23c4407643f4829e622a295ec5a2" target="_blank">More infomation on NOAA's GeoPlatform</a><br><br>
+                A map of the density of single-beam bathymetric soundings in the NOAA NCEI Marine Trackline Geophysics database.<br><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=a32b23c4407643f4829e622a295ec5a2" target="_blank">More information about this layer on NOAA's GeoPlatform</a><br><br>
                 <div id="soundingDensityLegend"></div>
             </div>
         </div><br><br>
@@ -71,17 +98,35 @@
         <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetButton" disabled>Reset</div>
         <img id="searchHelp" class="tooltipButtonMiddle" src="images/question-white.png"><br>
         <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'searchHelp'">
-            <div class="tooltipText"><b>Search Bathymetric Surveys:</b> specify a desired range of survey years, platform name, source institution, and survey ID. After clicking "OK", a filter will be applied to the Multibeam, Single-Beam, and NOS Hydrographic Surveys layers, displaying only data of interest. The current filter is displayed below the "Search Bathymetric Surveys" button. Note: only the survey ID filter applies to the BAG Footprints/Hillshades. The filter does not apply to DEMs or OCM Bathymetric Lidar.<br><b>Reset:</b> clears the current filter.</div>
+            <div class="tooltipText"><b>Search Bathymetric Surveys:</b> specify a desired range of survey years, platform name, source institution, and survey ID. After clicking "OK", a filter will be applied to the Multibeam, Single-Beam, and NOS Hydrographic Surveys layers, displaying only data of interest. The current filter is displayed below the "Search Bathymetric Surveys" button. Note: only the survey ID filter applies to the BAG Footprints/Color Shaded Relief. The filter does not apply to DEMs or Topo-Bathy/Bathy Lidar Datasets.<br><b>Reset:</b> clears the current filter.</div>
         </div>
         <div id="currentFilter" class="filterText"></div>
     </div>
 
     <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Digital Elevation Models', open: true">
         <input type="checkbox" id="chkDems" data-dojo-attach-point="chkDems" data-dojo-type="dijit/form/CheckBox">
-        <label for="chkDems">DEM Footprints</label><br>
+        <label for="chkDems">DEM Footprints</label>
+        <img id="demHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'demHelp'">
+            <div class="tooltipText">
+                NCEI builds and distributes high-resolution, coastal digital elevation models (DEMs) that integrate ocean bathymetry and land topography supporting NOAA's mission to understand and predict changes in Earth's environment, and conserve and manage coastal and marine resources to meet our Nation's economic, social, and environmental needs.<br><br>
+                DEMs are used for coastal process modeling (tsunami inundation, storm surge, sea-level rise, contaminant dispersal, etc.), ecosystems management and habitat research, coastal and marine spatial planning, and hazard mitigation and community preparedness.<br><br>
+                These data are referenced to a variety of horizontal and vertical datums, which are defined by specific project requirements; spatial resolution ranges from 1/9 arc-second (~3 meters) to 1 arc-minute (~2 kilometers).<br><br>
+                <a href="https://ngdc.noaa.gov/mgg/coastal/coastal.html" target="_blank">More information at NCEI</a><br>
+                <a href="https://noaa.maps.arcgis.com/home/item.html?id=d41f39c8a6684c54b62c8f1ab731d5ad" target="_blank">More information about this layer on NOAA's GeoPlatform</a>
+            </div>
+        </div><br>
 
         <input type="checkbox" id="chkDemHillshades" data-dojo-attach-point="chkDemHillshades" data-dojo-type="dijit/form/CheckBox">
-        <label for="chkDemHillshades">DEM Color Shaded Relief Imagery</label>
+        <label for="chkDemHillshades">DEM Color Shaded Relief</label>
+        <img id="demHillshadeHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'demHillshadeHelp'">
+            <div class="tooltipText">
+                NCEI provides a global, seamless bathymetry/topography mosaic that includes <a href="https://ngdc.noaa.gov/mgg/coastal/coastal.html" target="_blank">NCEI-stewarded DEMs</a> along with global and regional grids such as <a href="http://www.gebco.net/data_and_products/gridded_bathymetry_data/" target="_blank">GEBCO_2014</a>, <a href="https://www.ngdc.noaa.gov/mgg/bathymetry/arctic/arctic.html" target="_blank">IBCAO</a>, <a href="http://www.ibcso.org/" target="_blank">IBCSO</a>, and the <a href="http://www.soest.hawaii.edu/HMRG/multibeam/" target="_blank">Hawaiian Island Multibeam Synthesis (University of Hawaii)</a>:<br /><li><a href="https://noaa.maps.arcgis.com/home/item.html?id=c876e3c96a8642ab8557646a3b4fa0ff" target="_blank">DEM Global Mosaic (Elevation Values)</a></li><li><a href="https://noaa.maps.arcgis.com/home/item.html?id=feb3c625dc094112bb5281c17679c769" target="_blank">DEM Global Mosaic (Color Shaded Relief)</a></li><br />Please see the corresponding <a href="https://noaa.maps.arcgis.com/home/item.html?id=d41f39c8a6684c54b62c8f1ab731d5ad" target="_blank">DEM Footprints map service</a> for polygon footprints and more information about the individual DEMs used to create this composite view.<br><br>
+                Color Scale:<br>
+                <img src="https://gis.ngdc.noaa.gov/viewers/images/dem_color_scale.png">
+            </div>
+        </div>
     </div>
 
     <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Coastal Lidar', open: true">
@@ -91,7 +136,7 @@
         <img id="ocmLidarHelp" class="tooltipButtonMiddle" src="images/question-white.png">
         <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'ocmLidarHelp'">
             <div class="tooltipText">
-                Topo-Bathy/Bathy Lidar Datasets available from <a href="https://coast.noaa.gov/dataviewer" target="_blank">NOAA's Office for Coastal Management
+                NCEI is the long term archive for coastal lidar data distributed publicly through the <a href="https://coast.noaa.gov/dataviewer" target="_blank">NOAA Office for Coastal Management's Digital Coast</a>. Data span from the mid-1990's through the present, collected using a variety of different lidar systems. The collection includes data from topographic, topographic-bathymetric and bathymetric lidar sensors. The extent of individual lidar surveys varies, ranging from shoreline strips to full county coverage. Many different organizations have contributed to the lidar data collection, including federal, state and local partners. Data are available for all coastal states and include multiple U.S. territories (i.e., Puerto Rico, U.S. Virgin Islands, Guam, American Samoa).
             </div>
         </div>
     </div>

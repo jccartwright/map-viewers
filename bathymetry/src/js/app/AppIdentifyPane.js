@@ -106,7 +106,7 @@ define([
                     return '<i><b>Digital Elevation Models (New Tiles) (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
                 }
                 else if (item.svcId === 'OCM Lidar') {
-                    return '<i><b>OCM Bathymetric Lidar (' + this.formatCountString(count) + ')</b></i>';
+                    return '<i><b>Topo-Bathy/Bathy Lidar Datasets (' + this.formatCountString(count) + ')</b></i>';
                 }
             },
 
