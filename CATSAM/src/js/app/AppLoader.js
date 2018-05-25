@@ -281,7 +281,7 @@ define([
                     objectid = objectid + 1;
 
                     //Filter out all stations with greater than 1 min sampling rate, are not active, and those operated by NOAA (already included the CO-OPS tide gauge layer)
-                    if (item['rate'] <= 1 && 
+                    if (item['XMtInt'] <= 6 && 
                         item['status'] === 1 &&
                         item['country'] !== 'USA' && 
                         item['country'] !== 'PRC' && 
