@@ -56,10 +56,10 @@ define([
 
                 //Apply layer definitions to the CSC Lidar layer to only show bathymetric lidar
                 var layerDefinitions = [];
-                layerDefinitions[0] = 'Data_Classes_Available LIKE \'%Bathymetric Lidar Points%\'';
-                layerDefinitions[1] = 'Data_Classes_Available LIKE \'%Bathymetric Lidar Points%\'';
-                layerDefinitions[2] = 'Data_Classes_Available LIKE \'%Bathymetric Lidar Points%\'';
-                layerDefinitions[3] = 'Data_Classes_Available LIKE \'%Bathymetric Lidar Points%\'';
+                layerDefinitions[0] = 'Data_Classes_Available LIKE \'%Bathymetric%\'';
+                layerDefinitions[1] = 'Data_Classes_Available LIKE \'%Bathymetric%\'';
+                layerDefinitions[2] = 'Data_Classes_Available LIKE \'%Bathymetric%\'';
+                layerDefinitions[3] = 'Data_Classes_Available LIKE \'%Bathymetric%\'';
                 this.mapLayerCollection.getLayerById('OCM Lidar').setLayerDefinitions(layerDefinitions);
             }
          
