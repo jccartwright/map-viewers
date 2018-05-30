@@ -135,9 +135,6 @@ define([
                         this.layersPanel.searchDialog.filterSelects();
                         this.layersPanel.searchDialog.setActiveLayersText();
                     } 
-                    // this.mercatorMapConfig.mapLayerCollection.getLayerById('Sample Index').show();
-                    // this.arcticMapConfig.mapLayerCollection.getLayerById('Sample Index').show();
-                    // this.antarcticMapConfig.mapLayerCollection.getLayerById('Sample Index').show();
                 }));
 
                 //Subscribe to messages passed by the search dialog
@@ -339,45 +336,55 @@ define([
             },
 
             setupLegends: function() {
-                // var multibeamLegend = new Legend({
-                //     map: this.mercatorMapConfig.map,
-                //     autoUpdate: false,
-                //     respectVisibility: false,
-                //     layerInfos: [
-                //         {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam')._tiledService}
-                //     ]
-                // }, 'multibeamLegend');
-                // multibeamLegend.startup();
+                var multibeamLegend = new Legend({
+                    map: this.mercatorMapConfig.map,
+                    autoUpdate: false,
+                    respectVisibility: false,
+                    layerInfos: [
+                        {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam')._tiledService}
+                    ]
+                }, 'multibeamLegend');
+                multibeamLegend.startup();
 
-                // var tracklineLegend = new Legend({
-                //     map: this.mercatorMapConfig.map,
-                //     autoUpdate: false,
-                //     respectVisibility: false,
-                //     layerInfos: [
-                //         {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry')._tiledService}
-                //     ]
-                // }, 'tracklineLegend');
-                // tracklineLegend.startup();
+                var tracklineLegend = new Legend({
+                    map: this.mercatorMapConfig.map,
+                    autoUpdate: false,
+                    respectVisibility: false,
+                    layerInfos: [
+                        {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry')._tiledService}
+                    ]
+                }, 'tracklineLegend');
+                tracklineLegend.startup();
 
-                // var soundingDensityLegend = new Legend({
-                //     map: this.mercatorMapConfig.map,
-                //     autoUpdate: false,
-                //     respectVisibility: false,
-                //     layerInfos: [
-                //         {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry Density')}
-                //     ]
-                // }, 'soundingDensityLegend');
-                // soundingDensityLegend.startup();
+                var soundingDensityLegend = new Legend({
+                    map: this.mercatorMapConfig.map,
+                    autoUpdate: false,
+                    respectVisibility: false,
+                    layerInfos: [
+                        {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('Trackline Bathymetry Density')}
+                    ]
+                }, 'soundingDensityLegend');
+                soundingDensityLegend.startup();
 
-                // var nosHydroLegend = new Legend({
-                //     map: this.mercatorMapConfig.map,
-                //     autoUpdate: false,
-                //     respectVisibility: false,
-                //     layerInfos: [
-                //         {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys')._tiledService, hideLayers: [2, 3]}
-                //     ]
-                // }, 'nosHydroLegend');
-                // nosHydroLegend.startup();
+                var nosHydroLegend = new Legend({
+                    map: this.mercatorMapConfig.map,
+                    autoUpdate: false,
+                    respectVisibility: false,
+                    layerInfos: [
+                        {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys')._tiledService, hideLayers: [3]}
+                    ]
+                }, 'nosHydroLegend');
+                nosHydroLegend.startup();
+
+                var bagFootprintsLegend = new Legend({
+                    map: this.mercatorMapConfig.map,
+                    autoUpdate: false,
+                    respectVisibility: false,
+                    layerInfos: [
+                        {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('NOS Hydrographic Surveys')._tiledService, hideLayers: [0, 1, 2]}
+                    ]
+                }, 'bagFootprintsLegend');
+                bagFootprintsLegend.startup();
             },
 
             //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'

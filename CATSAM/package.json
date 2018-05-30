@@ -1,6 +1,6 @@
 {
   "name": "CATSAM",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CATSAM (Caribbean Tsunami Sources and Models) Viewer",
   "main": "index.html",
   "scripts": {
