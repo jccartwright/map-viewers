@@ -15,7 +15,7 @@ define([
                 logger.debug('inside constructor for app/arctic/Identify');
 
                 //augment arguments object with list of layers to identify.
-                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'DEM Extents', 'DEM Tiles'];
+                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'DEM Extents'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
@@ -27,8 +27,7 @@ define([
                     'NOS Hydrographic Surveys/Surveys with BAGs': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydrographic Surveys/Surveys with Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
                     'NOS Hydrographic Surveys/Surveys without Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
-                    'DEM Extents/NCEI Digital Elevation Models': lang.hitch(this, this.demFormatter),
-                    'DEM Tiles/DEM Tiles': lang.hitch(this, this.demTileFormatter),
+                    'DEM Extents/NCEI Digital Elevation Models': lang.hitch(this, this.demFormatter)
                 };
             } //end constructor
         });

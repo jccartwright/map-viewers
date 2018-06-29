@@ -72,7 +72,7 @@ define([
             showResults: function() {
                 this.inherited(arguments);
                 
-                if (this.isMultibeam || this.isNosHydro || this.isDemTiles) {
+                if (this.isMultibeam || this.isNosHydro) {
                     domStyle.set(this.extractDataButton.domNode, 'display', '');
                 } else {
                     domStyle.set(this.extractDataButton.domNode, 'display', 'none');
@@ -101,9 +101,6 @@ define([
                 } 
                 else if (item.layerName === 'NCEI Digital Elevation Models') {
                     return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
-                }
-                else if (item.layerName === 'DEM Tiles') {
-                    return '<i><b>Digital Elevation Models (New Tiles) (' + this.formatCountString(count) + ')</b></i><img src="images/drive-download.png" title="Data from this layer can be extracted using NEXT">';
                 }
                 else if (item.svcId === 'OCM Lidar') {
                     return '<i><b>Topo-Bathy/Bathy Lidar Datasets (' + this.formatCountString(count) + ')</b></i>';
@@ -141,9 +138,6 @@ define([
                 else if (item.layerName === 'NCEI Digital Elevation Models') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
                 }
-                else if (item.layerName === 'DEM Tiles') {
-                    return this.getItemLabelSpan(item.feature.attributes['NAME'] + ' <i>(' + item.feature.attributes['CELL_SIZE'] + ')</i>', uid);
-                }
                 else if (item.svcId === 'OCM Lidar') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'], uid);
                 }
@@ -159,7 +153,6 @@ define([
                 this.expandedNodePaths = [];
                 this.isNosHydro = false;
                 this.isMultibeam = false;
-                this.isDemTiles = false;
                 this.identifyResults = results;
 
                 for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
@@ -206,10 +199,6 @@ define([
                                 if (svcName === 'Multibeam') {
                                     this.isMultibeam = true;
                                 }
-
-                                if (svcName ==='DEM Tiles') {
-                                    this.isDemTiles = true;
-                                }
                                 
                                 //Add the current item to the store, with the layerName folder as parent
                                 this.featureStore.put({
@@ -248,9 +237,6 @@ define([
 
                 if (layerName === 'Multibeam' || layerName === 'NOS Hydrographic Surveys' || layerName === 'NOS Hydro (non-digital)') {
                     this.extractSingleDatasetButton.set('label', 'Extract this Survey');
-                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', '');
-                } else if (layerName === 'DEM Tiles') {
-                    this.extractSingleDatasetButton.set('label', 'Extract this DEM');
                     domStyle.set(this.extractSingleDatasetButton.domNode, 'display', '');
                 } else {
                     domStyle.set(this.extractSingleDatasetButton.domNode, 'display', 'none');
@@ -385,31 +371,6 @@ define([
                         }
                     }
                     datasetInfo.groupNames = surveyIds.join(',');
-                    filterCriteria.items.push(datasetInfo);
-                }
-                if (this.isDemTiles) {
-                    datasetInfo = {dataset: 'DEM'};
-                    if (extent) {
-                        if (extent.spatialReference.wkid === 4326) {
-                            latLonExtent = extent;
-                        }
-                        else if (extent.spatialReference.isWebMercator()) {
-                            latLonExtent = webMercatorUtils.webMercatorToGeographic(extent);
-                        }
-                        datasetInfo.geometry = latLonExtent.xmin + ',' + latLonExtent.ymin + ',' + latLonExtent.xmax + ',' + latLonExtent.ymax;
-                    }
-                    
-                    if (this.identify.searchGeometry.type === 'point') {
-                        var itemIds = [];
-                        array.forEach(this.identifyResults['DEM Tiles']['DEM Tiles'], lang.hitch(this, function(identifyResult) {
-                            itemIds.push(identifyResult.feature.attributes['ITEM_ID']);
-                        }));
-                        datasetInfo.itemIds = itemIds.join(',');
-                    }
-
-                    if (itemId) {
-                        datasetInfo.itemIds = itemId;
-                    }
                     filterCriteria.items.push(datasetInfo);
                 }
                 return filterCriteria;

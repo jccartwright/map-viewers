@@ -153,28 +153,6 @@ define([
                 return html;
             },
 
-            demTileFormatter: function(feature) {
-                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
-
-                var template =
-                    '<h3>DEM Tile: ${name}</h3>' +
-                    '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
-                    '<div class="valueName">Cell Size: <span class="parameterValue">${cellSize}</span></div>' +
-                    '<div class="valueName">Dataset: <span class="parameterValue">${dataset}</span></div>' +
-                    '<div class="valueName">File Size: <span class="parameterValue">${fileSize}</span></div>' +
-                    '<div class="valueName">Vertical Datum: <span class="parameterValue">${verticalDatum}</span></div>';
-                    
-                var html = string.substitute(template, {
-                    itemId: a['ITEM_ID'],
-                    name: a['NAME'],
-                    dataset: a['DATASET'],
-                    fileSize: a['FILE_SIZE'],
-                    cellSize: a['CELL_SIZE'],
-                    verticalDatum: a['VERTICAL_DATUM']
-                });                
-                return html;
-            },
-
             lidarFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
@@ -246,11 +224,6 @@ define([
                 return a.feature.attributes['Name'] <= b.feature.attributes['Name'] ? -1 : 1;
             },
 
-            demTileSort: function(a, b) {
-                //Sort alphabetically
-                return a.feature.attributes['NAME'] <= b.feature.attributes['NAME'] ? -1 : 1;
-            },
-
             sortResults: function(results) {
                 var features;
                 if (results['Multibeam']) {    
@@ -275,12 +248,6 @@ define([
                 if (results['DEM Extents']) {    
                     if ((features = results['DEM Extents']['NCEI Digital Elevation Models'])) {
                         features.sort(this.demSort);
-                    }                    
-                }
-
-                if (results['DEM Tiles']) {    
-                    if ((features = results['DEM Tiles']['DEM Tiles'])) {
-                        features.sort(this.demTileSort);
                     }                    
                 }
             },
