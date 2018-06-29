@@ -98,7 +98,7 @@ define([
                         epsgCode: '3857',
                         layerNames: ['GMRT']
                     }),
-                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer', {
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_hillshade/ImageServer', {
                         id: 'DEM Hillshades',
                         visible: false,
                         imageServiceParameters: this.imageServiceParameters
@@ -167,11 +167,6 @@ define([
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer', {
                         id: 'Multibeam (dynamic)',
                         visible: this.multibeamVisible,
-                        imageParameters: this.imageParameters.png32
-                    }),   
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_tiles/MapServer', {
-                        id: 'DEM Tiles',
-                        visible: this.demVisible,
                         imageParameters: this.imageParameters.png32
                     }),                 
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer', {

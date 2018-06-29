@@ -101,7 +101,7 @@ define([
                         visibleLayers: ['North_Polar_Bathymetry'],
                         visible: false
                     }),             
-                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer', {
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_hillshade/ImageServer', {
                         id: 'DEM Hillshades',
                         visible: false,
                         imageServiceParameters: this.imageServiceParameters
@@ -152,11 +152,6 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_tiles/MapServer', {
-                        id: 'DEM Tiles',
-                        visible: this.demVisible,
-                        imageParameters: this.imageParameters.png32
-                    }), 
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_extents/MapServer', {
                         id: 'DEM Extents',
                         visible: this.demVisible,

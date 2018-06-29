@@ -15,7 +15,7 @@ define([
                 logger.debug('inside constructor for app/web_mercator/Identify');
 
                 //augment arguments object with list of layers to identify.
-                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'BAG Footprints', 'DEM Extents', 'DEM Tiles', 'OCM Lidar'];
+                arguments[0].layerIds = ['Multibeam', 'Trackline Bathymetry', 'NOS Hydrographic Surveys', 'BAG Footprints', 'DEM Extents', 'OCM Lidar'];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
                 this.init(arguments);
@@ -29,7 +29,6 @@ define([
                     'NOS Hydrographic Surveys/Surveys without Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),
                     'BAG Footprints/BAG Footprints': lang.hitch(this, this.bagFootprintFormatter),
                     'DEM Extents/NCEI Digital Elevation Models': lang.hitch(this, this.demFormatter),
-                    'DEM Tiles/DEM Tiles': lang.hitch(this, this.demTileFormatter),
                     'OCM Lidar/Elevation >1:20M': lang.hitch(this, this.lidarFormatter),
                     'OCM Lidar/Elevation 1:12.5M - 1:20M': lang.hitch(this, this.lidarFormatter),
                     'OCM Lidar/Elevation 1:1.25M - 1:12.5M': lang.hitch(this, this.lidarFormatter),

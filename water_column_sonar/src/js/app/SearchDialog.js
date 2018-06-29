@@ -15,12 +15,9 @@ define([
     'dijit/form/DateTextBox',
     'dojo/_base/lang',
     'dojo/_base/array',
-    'dojo/dom-attr',
     'dojo/on',
     'dojo/topic',
-    'dojo/request/script',
-    'dojo/request/xhr',
-    'dojo/store/Memory',    
+    'dojo/request/script',   
     'dojo/text!./templates/SearchDialog.html'
     ],
     function(
@@ -40,12 +37,9 @@ define([
         DateTextBox,
         lang,
         array,
-        domAttr,
         on,
         topic,
         script,
-        xhr,
-        Memory,
         template 
     ){
         return declare([Dialog, _TemplatedMixin, _WidgetsInTemplateMixin], {

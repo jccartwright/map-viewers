@@ -419,7 +419,7 @@ define([
                     else if (startupLayers[i].toLowerCase() === 'dem') {
                         //Startup with DEM Footprints and DEM Hillshades visible
                         this.layersPanel.chkDems.set('checked', true);
-                        //this.layersPanel.chkDemHillshades.set('checked', true);
+                        this.layersPanel.chkDemHillshades.set('checked', true);
                         this.demVisible = true;
                     }
                 }

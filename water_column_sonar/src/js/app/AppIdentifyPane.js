@@ -2,13 +2,10 @@ define([
     'dojo/_base/declare', 
     'dojo/_base/config', 
     'dojo/_base/array', 
-    'dojo/string', 
     'ngdc/identify/IdentifyPane', 
     'dojo/topic', 
     'dojo/on',
-    'dojo/dom',
-    'esri/dijit/Popup',    
-    'dojo/_base/lang', 
+    'dojo/_base/lang',
     'dojo/store/Memory',
     'dojo/store/Observable',
     'dijit/registry',
@@ -26,12 +23,9 @@ define([
         declare, 
         config,
         array, 
-        string, 
         IdentifyPane, 
         topic, 
         on,
-        dom,
-        Popup, 
         lang, 
         Memory,
         Observable,
@@ -308,7 +302,7 @@ define([
                 var numFeaturesForLayer = 0;
 
                 //Specify the layer order to be displayed in the identify results
-                var layerNames = ['NMFS', 'OER', 'NOS', 'UNOLS', 'Other Sources', 'Non-U.S.'];
+                var layerNames = ['NMFS', 'OER', 'NOS', 'R2R', 'Other Sources', 'Non-U.S.'];
 
                 this.expandedNodePaths = [];
                 for (var svcName in results) {
@@ -554,8 +548,8 @@ define([
                 else if (item.layerName === 'OER') {
                     return '<i><b>OER (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
-                else if (item.layerName === 'UNOLS') {
-                    return '<i><b>UNOLS (' + this.formatCount(count, 'cruise') + ')</b></i>';
+                else if (item.layerName === 'R2R') {
+                    return '<i><b>R2R (' + this.formatCount(count, 'cruise') + ')</b></i>';
                 }
                 else if (item.layerName === 'NOS') {
                     return '<i><b>NOS (' + this.formatCount(count, 'cruise') + ')</b></i>';
