@@ -52,8 +52,8 @@ define([
                 on(this.chkOER, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [3], this.chkOER.checked);
                 }));
-                on(this.chkUNOLS, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkUNOLS.checked);
+                on(this.chkR2R, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [4], this.chkR2R.checked);
                 }));
                 on(this.chkNos, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayer/visibility', 'Water Column Sonar', [2], this.chkNos.checked);

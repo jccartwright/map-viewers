@@ -8,8 +8,6 @@ define([
     'dijit/form/CheckBox',
     'dojo/_base/lang',
     'dojo/_base/array',
-    'dojo/dom',
-    'dojo/dom-attr',
     'dojo/on',
     'dojo/io-query',
     'dijit/form/ValidationTextBox',
@@ -23,9 +21,7 @@ define([
     'esri/geometry/geometryEngine',
     'esri/SpatialReference',
     'esri/config',
-    'esri/tasks/GeometryService',
     'esri/tasks/ProjectParameters',
-    'esri/tasks/DensifyParameters',
     'dojo/text!./templates/RequestDataDialog.html'
 ],
     function(
@@ -38,8 +34,6 @@ define([
         CheckBox,
         lang,
         array,
-        dom,
-        domAttr,
         on,
         ioQuery,
         ValidationTextBox,
@@ -53,9 +47,7 @@ define([
         geometryEngine,
         SpatialReference,
         esriConfig,
-        GeometryService,
         ProjectParameters,
-        DensifyParameters,
         template
         ){
         return declare([Dialog, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -300,7 +292,7 @@ define([
                         message = JSON.parse(error.response.text).message;
                         alert('Error: ' + message);
                     } else {
-                        alert('Unspecified error. Please contact wcd.info@noaa.gov for assistance.')
+                        alert('Unspecified error. Please contact wcd.info@noaa.gov for assistance.');
                     }
                     topic.publish('/ngdc/hideLoading'); //Hide the loading spinner
                 });
