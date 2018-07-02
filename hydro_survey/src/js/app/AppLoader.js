@@ -92,7 +92,7 @@ define([
 
                 var rncTooltip = new TooltipDialog({
                     id: 'rncTooltip',
-                    content: '<a href="//www.nauticalcharts.noaa.gov/mcd/Raster" target="_blank">NOAA Raster Navigational Charts</a>',
+                    content: '<a href="https://nauticalcharts.noaa.gov/charts/noaa-raster-charts.html" target="_blank">NOAA Raster Navigational Charts (RNC®)</a>', 
                     onMouseLeave: function(){
                         popup.close(rncTooltip);
                     }

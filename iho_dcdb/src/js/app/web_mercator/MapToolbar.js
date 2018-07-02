@@ -33,7 +33,7 @@ define([
                         visible: false
                     },
                     {
-                        label: '<a href="http://www.nauticalcharts.noaa.gov/mcd/Raster/" target="_blank">NOAA Raster Navigational Charts (RNC®)</a>',
+                        label: '<a href="https://nauticalcharts.noaa.gov/charts/noaa-raster-charts.html" target="_blank">NOAA Raster Navigational Charts (RNC®)</a>',
                         services: [{id: 'RNC'}],
                         visible: false
                     },

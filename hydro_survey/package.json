@@ -1,6 +1,6 @@
 {
   "name": "hydro_survey",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "embedded map used in hydrographic survey catalogs",
   "main": "index.html",
   "scripts": {
