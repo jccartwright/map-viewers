@@ -127,10 +127,11 @@ define([
             demFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
-                var template =
-                    '<h3>Digital Elevation Model: ${name}</h3>' +
-                    '<div class="valueName"><span class="parameterValue"><a href="${metadataUrl}" target="_blank">Link to Metadata</a></span></div>';
+                var template = '<h3>Digital Elevation Model: ${name}</h3>';
 
+                if (a['Metadata URL'] !== '') {
+                    template += '<div class="valueName"><span class="parameterValue"><a href="${metadataUrl}" target="_blank">Link to Metadata</a></span></div>';
+                }
                 if (a['DEM URL'] !== '') {
                     template += '<div class="valueName"><span class="parameterValue"><a href="${downloadUrl}" target="_blank">DEM Download</a></span></div>';
                 }
