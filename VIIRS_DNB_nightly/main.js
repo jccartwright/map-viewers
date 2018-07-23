@@ -253,10 +253,5 @@ require(["esri/Map",
     function updateImageryLayer(dateText) {
         viirsDailyLayer.mosaicRule.where = "Day = '" + dateText + "'";
         viirsDailyLayer.mosaicRule = viirsDailyLayer.mosaicRule;
-        viirsDailyLayer.visible = viirsDailyLayer.visible;
-        viirsDailyLayer.format = viirsDailyLayer.format;
-        
-        //viirsDailyLayer.refresh();
-        //viirsDailyLayer.redraw();
     }
 });
