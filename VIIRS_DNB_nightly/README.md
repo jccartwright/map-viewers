@@ -1,3 +1,3 @@
-Station Locator
+VIIRS_DNB_nightly
 
-find the nearest stations to the given address or map point
+basic 3D viewer to display the daily VIIRS Day/Night band mosaic
