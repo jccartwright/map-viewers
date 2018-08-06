@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <meta name="description" content="Calcite Maps Demo - ArcGIS">
   <link rel="icon" href="https://www.esri.com/favicon.ico">
-  <title>VIIRS Nightly Mosaics</title>
+  <title>VIIRS DNB Nightly Mosaics</title>
+    <link rel="shortcut icon" href="https://www.ngdc.noaa.gov/image/favicon.ico">
 
   <!-- Calcite Bootstrap -->
     <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-maps-bootstrap.min-v0.8.css">
@@ -17,6 +18,8 @@
     <!-- ArcGIS JS 4 -->
     <link rel="stylesheet" href="https://js.arcgis.com/4.8/esri/css/main.css">
 
+    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.1/css/calcite-web.min.css">
+
   <style>
     html, body {
       margin: 0;
@@ -25,13 +28,85 @@
     }
 
     #controls {
-      padding: 10px;
+      padding: 20px;
+    }
+
+    .sliderContainer {
+      flex: 0 0 80px;
+      order: 2;
+
+      display: flex;
+      flex-flow: row;
+
+      /*padding: 0 12px;*/
+    }
+
+    .sliderValue {
+      flex: 0 0 150px;
+      order: 1;
+
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .sliderInnerContainer {
+      flex: 1 1 auto;
+      order: 2;
+
+      /*display: flex;*/
+      flex-direction: column;
+      justify-content: center;
+      /*padding: 0 20px;*/
+    }
+
+    .sliderLabels {
+      flex: 1 1 auto;
+      order: 1;
+
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .rangeWrapper {
+      flex: 1 1 auto;
+      order: 2;
+
+      position: relative;
+      /*padding: 0 20px;*/
+    }
+
+    .slider {
+      width: 100%;
+      border: none !important;
+    }
+
+    .sliderButton {
+      background: none;
+      border: none;
+      width: 25px;
+    }
+
+    .controlsTable {
+      width:100%; 
+      margin-bottom: 0px;
+    }
+
+    #chkBoundariesLabels {
+      margin-left: 30px;
     }
   </style>
   
 </head>
 
 <body class="calcite-maps calcite-nav-top">
+
+  <div id="loader" class="loader is-active" style="top: 50%; z-index: 99999">
+    <div class="loader-bars"></div>
+    <!-- <div class="loader-text">Loading...</div> -->
+  </div>
 
   <!-- Navbar -->
 
@@ -48,23 +123,25 @@
         </div>
       </a>
       <ul class="dropdown-menu calcite-menu-drawer">
-        <li><a class="hidden-md hidden-lg" href="#mapTab" aria-controls="mapTab" role="tab" data-toggle="tab"> Map</a></li>
-        <li><a class="active hidden-md hidden-lg" href="#sceneTab" aria-controls="sceneTab" role="tab" data-toggle="tab"> Scene</a></li>
+        <li><a class="adctive hidden-md hidden-lg" href="#mapTab" aria-controls="mapTab" role="tab" data-toggle="tab"> Map</a></li>
+        <li><a class="hidden-md hidden-lg" href="#sceneTab" aria-controls="sceneTab" role="tab" data-toggle="tab"> Globe</a></li>
+        <li><a role="menuitem" tabindex="0" data-target="#panelControls" aria-haspopup="true"><span class="glyphicon glyphicon-cog"></span> Controls</a></li>
         <li><a role="menuitem" tabindex="0" data-target="#panelInfo" aria-haspopup="true"><span class="glyphicon glyphicon-info-sign"></span> Info</a></li>
-        <li><a role="menuitem" tabindex="0" data-target="#panelBasemaps" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Basemaps</a></li>
+        <!-- <li><a role="menuitem" tabindex="0" data-target="#panelBasemaps" aria-haspopup="true"><span class="glyphicon glyphicon-th-large"></span> Basemaps</a></li> -->
         <li><a role="menuitem" tabindex="0" id="calciteToggleNavbar" aria-haspopup="true"><span class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
       </ul>
     </div>
     <!-- Title -->
     <div class="calcite-title calcite-overflow-hidden">
-      <span class="calcite-title-main">VIIRS DNB Nightly Mosaics (Prototype)</span>
+      <img src="https://maps.ngdc.noaa.gov/viewers/images/NOAA_seal-shadowed-40px.png" style="padding-right:5px"/>  
+      <span class="calcite-title-main">VIIRS DNB Nightly Mosaics</span>
       <span class="calcite-title-divider hidden-xs"></span>
       <span class="calcite-title-sub hidden-xs">NOAA National Centers for Environmental Information</span> 
     </div>
      <!-- Nav -->
     <ul class="calcite-nav nav navbar-nav">                    
-      <li><a id="mapNav" class="hidden-xs hidden-sm" href="#mapTab" aria-controls="mapTab" aria-expanded="true" role="tab" data-toggle="tab" data-tooltip="tip" title="2D View" data-placement="bottom">Map</a></li>
-      <li class="active"><a id="sceneNav" class="hidden-xs hidden-sm" href="#sceneTab" aria-controls="mapTab" role="tab" data-toggle="tab" data-tooltip="tip" title="3D View" data-placement="bottom">Scene</a></li>                  
+      <li class="active"><a id="mapNav" class="hidden-xs hidden-sm" href="#mapTab" aria-controls="mapTab" aria-expanded="true" role="tab" data-toggle="tab" data-tooltip="tip" title="2D View" data-placement="bottom">Map</a></li>
+      <li><a id="sceneNav" class="hidden-xs hidden-sm" href="#sceneTab" aria-controls="mapTab" role="tab" data-toggle="tab" data-tooltip="tip" title="3D View" data-placement="bottom">Globe</a></li>                  
       <li>
         <div class="calcite-navbar-search calcite-search-expander" role="presentation" tabindex="-1">
           <div id="searchNavDiv" tabindex="0"></div>
@@ -75,33 +152,19 @@
 
   <!-- Map Container  -->
 
-  <div class="calcite-map calcite-map-absolute">
+  <div class="calcite-map calcite-map-absolute">    
     <div id="tabContainer" class="tab-content">
-      <div id="mapTab" class="tab-pane fade" role="tabpanel">
+      <div id="mapTab" class="tab-pane fade in active" role="tabpanel">
          <div id="mapViewDiv"></div>
       </div>
-      <div id="sceneTab" class="tab-pane fade in active" role="tabpanel">
+      <div id="sceneTab" class="tab-pane fade" role="tabpanel">
         <div id="sceneViewDiv"></div>        
       </div>
     </div>
 
-    <div id="panelControls calcite-bgcolor-dark-blue" class="panel" style="bottom:20px; left: 30px; position: absolute; z-index: 99999; padding: 10px;">
-      <form class="calcite-slider" id="example1">
-        <label>
-          Opacity: <span id="opacityText">85%</span>
-          <input id="opacitySlider" type="range" min="0" max="100" value="85" step="1" aria-valuemin="0" aria-valuemax="100" aria-valuenow="85" style="width: 300px">
-        </label><br><br>
-        <label>
-          Date: <span id="dateText">not selected</span>
-          <input id="timeSlider" type="range" min="0" max="50" value="50" step="1" aria-valuemin="0" aria-valuemax="50" aria-valuenow="50" style="width: 300px">
-        </label>
-      </form>
-    </div>
-  </div>
-
   <!-- Panel Container -->
 
-  <div class="calcite-panels calcite-panels-right calcite-bg-custom calcite-text-light calcite-bgcolor-dark-blue panel-group" role="tablist" aria-multiselectable="true">
+  <div class="calcite-panels calcite-panels-left calcite-bg-custom calcite-text-light calcite-bgcolor-dark-blue panel-group" style="bottom:30px; top:auto;" role="tablist" aria-multiselectable="true">
         
     <!-- Info Panel -->
     
@@ -114,14 +177,63 @@
       </div>
       <div id="collapseInfo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingInfo">
         <div class="panel-body">
-          VIIRS Day/Night band (DNB). See description of the <a href="http://noaa.maps.arcgis.com/home/item.html?id=d7c95b2da6fd43cd9dec19b212f145db" target="_blank">image service</a> for more information.
+          This map provides access to nightly mosaics of Visible Infrared Imaging Radiometer Suite (VIIRS) Day/Night Band (DNB) low light imaging data: detections of lighting from cities, towns, villages, combustion sources and lit fishing boats.<br /><br />Use the time slider to select the imagery date. The map can be swtiched between a 2D Map view and a 3D Globe view. Change the transparency of the imagery with the opacity slider. Toggle the boundaries/labels on/off using the checkbox. Click on the map to retrieve the radiance value (nanowatts/cm²/sr) at that location.<br /><br />The image service will contain approximately the past 60 days worth of imagery, with new imagery being added each day, and the older images being removed. The current image will be updated multiple times per day as data from new orbits arrive.<br /><br />NCEI also provides 4 time-enabled ArcGIS image services with access to the monthly VIIRS DNB composites:<ul><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_AvgRadiance/ImageServer" target="_blank">Average Radiance</a> | <a href="https://noaa.maps.arcgis.com/home/item.html?id=d7c95b2da6fd43cd9dec19b212f145db" target="_blank">NOAA GeoPlatform entry</a></li><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_AvgRadiance_StrayLightImpacted/ImageServer" target="_blank">Average Radiance (Stray Light Impacted)</a> | <a href="https://noaa.maps.arcgis.com/home/item.html?id=a88d1c4909d3402c896176f8b1ea2f32" target="_blank">NOAA GeoPlatform entry</a></li><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_CloudFreeCoverage/ImageServer" target="_blank">Cloud-Free Coverage</a></li><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_CloudFreeCoverage_StrayLightImpacted/ImageServer" target="_blank">Cloud-Free Coverage (Stray Light Impacted)</a></li></ul>The Earth Observations Group (EOG) at NOAA/NCEI is producing daily mosaic images using nighttime data from the Visible Infrared Imaging Radiometer Suite (VIIRS) Day/Night Band (DNB). VIIRS DNB sensors are on the Suomi National Polar-orbiting Partnership (NPP) satellite and on the NOAA-20 satellite. The imagery in this service is compiled from Suomi NPP data.<br /><br /><a href="https://ngdc.noaa.gov/eog/viirs/download_dnb_composites.html" target="_blank">More information about VIIRS DNB Nighttime Lights data at NOAA's National Centers for Environmental Information (NCEI)</a>
+        </div>
+     </div>
+    </div>
+
+    <div id="panelControls" class="panel in">
+      <div id="headingControls" class="panel-heading" role="tab">
+        <div class="panel-title">
+          <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseControls"  aria-expanded="true" aria-controls="collapseControls"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><span class="panel-label">Controls</span></a> 
+          <!-- <a class="panel-close" role="button" data-toggle="collapse" tabindex="0" href="#panelControls"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>   -->
+        </div>
+      </div>
+      <div id="collapseControls" class="panel-collapse in" role="tabpanel" aria-labelledby="headingControls">
+        <div class="panel-body">
+        
+          <div class="sliderContainer">
+            <div class="sliderInnerContainer">
+              Date: <span id="dateText">not selected</span>                
+              <div class="rangeWrapper">
+                <table class="controlsTable">
+                  <tr>                  
+                    <td><button id="timeSliderLeftButton" type="button" class="sliderButton glyphicon glyphicon-chevron-left"></button></td>
+                    <td><input class="slider" id="timeSlider" type="range" min="0" max="50" value="50" step="1"/></td>
+                    <td><button id="timeSliderRightButton" type="button" class="sliderButton glyphicon glyphicon-chevron-right"></button></td>
+                  </tr>
+                </table>
+              </div>
+            </div>        
+          </div>
+
+          <table class="controlsTable">
+            <tr>
+              <td>
+                <div class="sliderContainer">
+                  <div class="sliderInnerContainer">
+                    Opacity: <span id="opacityText">90%</span>
+                    <div class="rangeWrapper">
+                      <input class="slider" id="opacitySlider" type="range" min="0" max="100" value="90" step="1"/>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>                
+                <div class="sliderContainer">
+                  <input id="chkBoundariesLabels" type="checkbox" checked/>
+                  Boundaries/Labels
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
      </div>
     </div>
 
     <!-- Basemaps Panel -->
     
-    <div id="panelBasemaps" class="panel collapse"> 
+    <!-- <div id="panelBasemaps" class="panel collapse"> 
       <div id="headingBasemaps" class="panel-heading" role="tab">
         <div class="panel-title">
           <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseBasemaps" aria-expanded="false"   aria-controls="collapseBasemaps"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span><span class="panel-label">Basemaps</span></a> 
@@ -144,7 +256,7 @@
           </select>
         </div>
       </div>
-    </div>
+    </div> -->
   </div> <!-- /.calcite-panels -->
 
   <script type="text/javascript">
@@ -162,6 +274,8 @@
 
   <!-- ArcGIS JS 4 -->
   <script src="https://js.arcgis.com/4.8/"></script>
+
+  <!-- <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.1/js/calcite-web.min.js"></script> -->
 
   <script src="main.js"></script>
 </body>
