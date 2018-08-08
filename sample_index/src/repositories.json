@@ -16,6 +16,7 @@
 		{"id":"LacCore","label":"<img style='vertical-align:top' src='images/LacCore_symbol.png'> LacCore <i>(National Lacustrine Core Repository, University of Minnesota)</i>"},
 		{"id":"ODP","label":"<img style='vertical-align:top' src='images/ODP_symbol.png'> ODP <i>(Ocean Drilling Program, IODP)</i>"},
 		{"id":"OSU","label":"<img style='vertical-align:top' src='images/OSU_symbol.png'> OSU <i>(Oregon State University)</i>"},
+		{"id":"OER","label":"<img style='vertical-align:top' src='images/OER_symbol.png'> OER <i>(NOAA Office of Exploration and Research)</i>"},
 		{"id":"PMEL","label":"<img style='vertical-align:top' src='images/PMEL_symbol.png'> PMEL <i>(NOAA Pacific Marine Environmental Lab)</i>"},
 		{"id":"RSMAS","label":"<img style='vertical-align:top' src='images/RSMAS_symbol.png'> RSMAS <i>(Rosenstiel School of Marine and Atmos Sciences)</i>"},
 		{"id":"SIO","label":"<img style='vertical-align:top' src='images/SIO_symbol.png'> SIO <i>(Scripps Institution of Oceanography)</i>"},
