@@ -339,7 +339,7 @@ define([
             },
 
             setupFeatureTable: function() {
-                this.featureLayer = new FeatureLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/FeatureServer/0", {
+                this.featureLayer = new FeatureLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/Sample_Index/FeatureServer/0", {
                     mode: FeatureLayer.MODE_ONDEMAND,
                     outFields:  ['FACILITY_CODE','PLATFORM','CRUISE', 'LEG', 'SAMPLE', 'DEVICE', 'BEGIN_DATE', 'YEAR', 'LON', 'LAT', 'WATER_DEPTH', 'STORAGE_METH', 
                         'CORED_LENGTH', 'CORED_DIAM', 'PI', 'PROVINCE', 'LAKE', 'IGSN', 'LAST_UPDATE', 'SHOW_SAMPL', 'CRUISE_URL', 'LEG_URL', 'REPOSITORY_URL'],
