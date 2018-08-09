@@ -9,15 +9,14 @@ define([
     'dojo/topic',
     'dojo/on',
     'dojo/aspect',
-    'dojo/request/xhr',
+    'dojo/Deferred',
     'dojo/promise/all',
     'dijit/form/CheckBox',
     'esri/config',
     'esri/geometry/Extent',
-    'esri/geometry/geometryEngine',
     'esri/SpatialReference',
     'esri/tasks/GeometryService',
-    'esri/tasks/ProjectParameters',
+    'esri/dijit/Legend',
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'app/arctic/MapConfig',
@@ -30,11 +29,6 @@ define([
     'app/web_mercator/LayerCollection',
     'app/arctic/LayerCollection',
     'app/antarctic/LayerCollection',
-    'app/web_mercator/MapToolbar',
-    'app/arctic/MapToolbar',
-    'app/antarctic/MapToolbar',
-    'app/web_mercator/Identify',
-    'app/AppIdentifyPane',
     'app/LayersPanel',
     'dojo/domReady!'],
     function(
@@ -48,15 +42,14 @@ define([
         topic,
         on,
         aspect,
-        xhr,
+        Deferred,
         all,
         CheckBox,
         esriConfig,
         Extent,
-        geometryEngine,
         SpatialReference,
         GeometryService,
-        ProjectParameters,
+        Legend,
         Logger,
         MercatorMapConfig,
         ArcticMapConfig,
@@ -69,11 +62,6 @@ define([
         MercatorLayerCollection,
         ArcticLayerCollection,
         AntarcticLayerCollection,
-        MapToolbar,
-        ArcticMapToolbar,
-        AntarcticMapToolbar,
-        WebMercatorIdentify,
-        IdentifyPane,
         LayersPanel) {
 
         return declare(null, {
@@ -151,15 +139,19 @@ define([
             },
 
             setupMapViews: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up map views...');
+
+                var deferreds = [];
+
                 // setup map views. You can only draw a Map into a visible container
-                this.setupMercatorView();
+                deferreds.push(this.setupMercatorView());
 
                 registry.byId('mapContainer').selectChild('arctic');
-                this.setupArcticView();
+                deferreds.push(this.setupArcticView());
 
                 registry.byId('mapContainer').selectChild('antarctic');
-                this.setupAntarcticView();
+                deferreds.push(this.setupAntarcticView());
 
                 //go back to mercator as default view
                 registry.byId('mapContainer').selectChild('mercator');
@@ -172,6 +164,11 @@ define([
                 }));
 
                 this.enableMapView('mercator');
+
+                all(deferreds).then(lang.hitch(this, function() {
+                    deferred.resolve('success');
+                }));
+                return deferred.promise;
             },
 
             enableMapView: function(/*String*/ mapId) {
@@ -192,6 +189,7 @@ define([
             },
 
             setupMercatorView: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up Mercator view...');
 
                 var zoomLevels = new MercatorZoomLevels();
@@ -216,9 +214,17 @@ define([
                 }, new MercatorLayerCollection());
 
                 new CoordinatesWithElevationToolbar({map: this.mercatorMapConfig.map, scalebarThreshold: 4}, 'mercatorCoordinatesToolbar');
+
+                aspect.after(this.mercatorMapConfig, 'mapReady', lang.hitch(this, function() {
+                    this.setupLegends();
+                    deferred.resolve('success');
+                }));
+
+                return deferred.promise;
             },
 
             setupArcticView: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up Arctic view...');
                 
                 var initialExtent = new Extent({
@@ -243,9 +249,16 @@ define([
                 }, new ArcticLayerCollection());
 
                 new CoordinatesWithElevationToolbar({map: this.arcticMapConfig.map}, 'arcticCoordinatesToolbar');
+
+                aspect.after(this.arcticMapConfig, 'mapReady', function() {
+                    deferred.resolve('success');
+                });
+
+                return deferred.promise;
             },
 
             setupAntarcticView: function() {
+                var deferred = new Deferred();
                 logger.debug('setting up Antarctic view...');
                 
                 var initialExtent = new Extent({
@@ -270,6 +283,24 @@ define([
                 }, new AntarcticLayerCollection());
 
                 new CoordinatesWithElevationToolbar({map: this.antarcticMapConfig.map}, 'antarcticCoordinatesToolbar');
+
+                aspect.after(this.antarcticMapConfig, 'mapReady', function() {
+                    deferred.resolve('success');
+                });
+
+                return deferred.promise;
+            },
+
+            setupLegends: function() {
+                var mpaLegend = new Legend({
+                    map: this.mercatorMapConfig.map,
+                    autoUpdate: false,
+                    respectVisibility: false,
+                    layerInfos: [
+                        {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('MPA Inventory')}
+                    ]
+                }, 'mpaLegend');
+                mpaLegend.startup();
             },
 
             filterPad: function(values) {

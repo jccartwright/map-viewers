@@ -72,7 +72,10 @@ define([
             getFolderName: function(layerKey) {
                 if (layerKey === 'PAD/Data Collections') {
                     return 'Passive Acoustic Data';
-                }                 
+                }
+                else if (layerKey === 'MPA Inventory/Major Federal Marine Protected Areas') {
+                    return 'Major Federal Marine Protected Areas';
+                }  
             },
 
             formatCountString: function(count) {
@@ -86,7 +89,10 @@ define([
             getItemDisplayLabel: function(item, uid) {
                 if (item.formatter === 'PAD/Data Collections') {
                     return this.getItemLabelSpan(item.feature.attributes['Data Collection Name'], uid);
-                }                 
+                }
+                else if (item.formatter === 'MPA Inventory/Major Federal Marine Protected Areas') {
+                    return this.getItemLabelSpan(item.feature.attributes['Site Name'], uid);
+                }
             },
 
             getItemLabelSpan: function(text, uid) {
