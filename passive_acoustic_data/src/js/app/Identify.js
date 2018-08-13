@@ -150,6 +150,85 @@ INSTRUMENT_NAME ( type: esriFieldTypeString , alias: Instrument Name , length: 4
 PLATFORM_NAME ( type: esriFieldTypeString , alias: Platform Name , length: 50 )*/
             },
 
+            mpaFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = 
+                    '<div class="valueName">Site ID: <span class="parameterValue">${siteID}</span></div>' +
+                    '<div class="valueName">Site Name: <span class="parameterValue">${siteName}</span></div>' +
+                    '<div class="valueName">Level of Government: <span class="parameterValue">${levelOfGovernment}</span></div>' +
+                    '<div class="valueName">State: <span class="parameterValue">${state}</span></div>' +
+                    '<div class="valueName">National System Status: <span class="parameterValue">${nationalSystemStatus}</span></div>' +
+                    '<div class="valueName">Level of Protection: <span class="parameterValue">${levelOfProtection}</span></div>' +
+                    '<div class="valueName">Management Plan: <span class="parameterValue">${managementPlan}</span></div>' +
+                    '<div class="valueName">Management Agency: <span class="parameterValue">${managementAgency}</span></div>' +
+                    '<div class="valueName">Fishing Restrictions: <span class="parameterValue">${fishingRestrictions}</span></div>' +
+                    '<div class="valueName">Primary Conservation Focus: <span class="parameterValue">${primaryConservationFocus}</span></div>' +
+                    '<div class="valueName">Conservation Focus: <span class="parameterValue">${conservationFocus}</span></div>' +
+                    '<div class="valueName">Protection Focus: <span class="parameterValue">${protectionFocus}</span></div>' +
+                    '<div class="valueName">Permanence: <span class="parameterValue">${permanence}</span></div>' +
+                    '<div class="valueName">Constancy: <span class="parameterValue">${constancy}</span></div>' +
+                    '<div class="valueName">Year Established: <span class="parameterValue">${yearEstablished}</span></div>' +
+                    '<div class="valueName">Designation: <span class="parameterValue">${designation}</span></div>' +
+                    '<div class="valueName">Marine Area (sq. km): <span class="parameterValue">${marineArea}</span></div>' +
+                    '<div class="valueName">Marine Percent: <span class="parameterValue">${marinePercent}</span></div>';
+
+                var html = string.substitute(template, {
+                    siteID: a['Site ID'],
+                    siteName: a['Site Name'],
+                    levelOfGovernment: a['Level of Government'],
+                    state: a['State'],
+                    nationalSystemStatus: a['National System Status'],
+                    levelOfProtection: a['Level of Protection'],
+                    managementPlan: a['Management Plan'],
+                    managementAgency: a['Management Agency'],
+                    fishingRestrictions: a['Fishing Restrictions'],
+                    primaryConservationFocus: a['Primary Conservation Focus'],
+                    conservationFocus: a['Conservation Focus'],
+                    protectionFocus: a['Protection Focus'],
+                    permanence: a['Permanence'],
+                    constancy: a['Constancy'],
+                    yearEstablished: a['Year Established'],
+                    designation: a['Designation'],
+                    marineArea: a['Marine Area (sqkm)'],
+                    marinePercent: a['Marine Percent']
+                });                
+                return html;
+
+                /*
+                Shape ( type: esriFieldTypeGeometry , alias: Shape )
+                Site_ID ( type: esriFieldTypeString , alias: Site ID , length: 10 )
+                Site_Name ( type: esriFieldTypeString , alias: Site Name , length: 254 )
+                Gov_Level ( type: esriFieldTypeString , alias: Level of Government , length: 254 )
+                State ( type: esriFieldTypeString , alias: State , length: 254 )
+                NS_Full ( type: esriFieldTypeString , alias: National System Status , length: 254 )
+                Prot_Lvl ( type: esriFieldTypeString , alias: Level of Protection , length: 254 )
+                Mgmt_Plan ( type: esriFieldTypeString , alias: Management Plan , length: 254 )
+                Mgmt_Agen ( type: esriFieldTypeString , alias: Management Agency , length: 254 )
+                Fish_Rstr ( type: esriFieldTypeString , alias: Fishing Restrictions , length: 254 )
+                Pri_Con_Fo ( type: esriFieldTypeString , alias: Primary Conservation Focus , length: 254 )
+                Cons_Focus ( type: esriFieldTypeString , alias: Conservation Focus , length: 254 )
+                Prot_Focus ( type: esriFieldTypeString , alias: Protection Focus , length: 254 )
+                Permanence ( type: esriFieldTypeString , alias: Permanence , length: 254 )
+                Constancy ( type: esriFieldTypeString , alias: Constancy , length: 254 )
+                Estab_Yr ( type: esriFieldTypeInteger , alias: Year Established )
+                Vessel ( type: esriFieldTypeString , alias: Vessel , length: 254 )
+                Anchor ( type: esriFieldTypeString , alias: Anchor , length: 254 )
+                Design ( type: esriFieldTypeString , alias: Designation , length: 254 )
+                AreaMar ( type: esriFieldTypeDouble , alias: Marine Area (sqkm) )
+                MarPercent ( type: esriFieldTypeInteger , alias: Marine Percent )
+                AreaNT ( type: esriFieldTypeDouble , alias: No Take Area (sqkm) )
+                IUCN ( type: esriFieldTypeString , alias: IUCN Category , length: 254 )
+                Marine ( type: esriFieldTypeString , alias: Marine , length: 254 )
+                IUCN_MPA ( type: esriFieldTypeInteger , alias: IUCN_MPA )
+                WDPA_Cd ( type: esriFieldTypeInteger , alias: WDPA_Cd )
+                Shape_Leng ( type: esriFieldTypeDouble , alias: Shape_Leng )
+                Shape_Area ( type: esriFieldTypeDouble , alias: Shape_Area )
+                OBJECTID ( type: esriFieldTypeOID , alias: OBJECTID )
+                Shape_Length ( type: esriFieldTypeDouble , alias: Shape_Length )
+                */
+            },
+
             sortResults: function(results) {
                 var features;
                 if (results['PAD']) {    

@@ -16,16 +16,7 @@ define([
     'dojox/validate/web',
     'dojo/request/xhr',
     'dojo/json',
-    'dojo/dom-style',
     'dojo/topic',
-    'esri/geometry/Polygon',
-    'esri/geometry/webMercatorUtils',
-    'esri/geometry/geometryEngine',
-    'esri/SpatialReference',
-    'esri/config',
-    'esri/tasks/GeometryService',
-    'esri/tasks/ProjectParameters',
-    'esri/tasks/DensifyParameters',
     'dojo/text!./templates/RequestDataDialog.html'
 ],
     function(
@@ -46,16 +37,8 @@ define([
         validate,
         xhr,
         JSON,
-        domStyle,
         topic,
-        Polygon,
-        webMercatorUtils,
-        geometryEngine,
-        SpatialReference,
-        esriConfig,
-        GeometryService,
-        ProjectParameters,
-        DensifyParameters,
+
         template
         ){
         return declare([Dialog, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -96,6 +79,51 @@ define([
                 else {
                     this.submitButton.set('disabled', true);
                 }
+            },
+
+            show: function() {
+                this.inherited(arguments);
+
+                this.numFilesText.innerHTML = 'Calculating...';
+                this.fileSizeText.innerHTML = 'Calculating...';
+
+                var orderParams = {
+                    files: this.fileInfos
+                };
+
+                if (this.filterValues) {
+                    if (this.filterValues.startDate)                 {
+                        orderParams.startDate = this.toDateString(this.filterValues.startDate);
+                    }
+                    if (this.filterValues.endDate)                 {
+                        orderParams.endDate = this.toDateString(this.filterValues.endDate);
+                    }
+                }
+
+                var jsonString = JSON.stringify(orderParams);
+
+                xhr.post('https://gis.ngdc.noaa.gov/mapviewer-support/pad/order_estimate.groovy', {
+                    data: jsonString,
+                    handleAs: 'json',
+                    headers: {'Content-Type':'application/json'},
+                    timeout: 120000 //2 minute timeout
+                }).then(lang.hitch(this, function(response){
+                    logger.debug(response);
+                    if (response && response.fileCount !== undefined) {
+                        this.numFilesText.innerHTML = response.fileCount;
+                    }
+                    if (response && response.totalFileSize !== undefined) {
+                        this.fileSizeText.innerHTML = response.totalFileSize;
+                    }
+                }), function(error) {
+                    var message;
+                    if (error.response && error.response.text) {
+                        message = JSON.parse(error.response.text).message;
+                        alert('Error: ' + message);
+                    } else {
+                        alert('Unspecified error. Please contact pad.info@noaa.gov for assistance.');
+                    }
+                });
             },
 
             execute: function(formContents) {

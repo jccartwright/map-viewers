@@ -7,6 +7,7 @@ define([
     'dojo/dom',
     'dojo/dom-attr',
     'dijit/form/CheckBox',
+    'dijit/TitlePane',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
@@ -21,6 +22,7 @@ define([
         dom,
         domAttr,
         CheckBox,
+        TitlePane,
         _WidgetBase, 
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
@@ -35,9 +37,12 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                // on(this.chkPad, 'change', lang.hitch(this, function() {
-                //     topic.publish('/ngdc/layer/visibility', 'PAD', this.chkPad.checked);
-                // }));
+                on(this.chkPad, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'PAD', this.chkPad.checked);
+                }));
+                on(this.chkMpas, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'MPA Inventory', this.chkMpas.checked);
+                }));
 
                 on(this.searchButton, 'click', lang.hitch(this, function() {
                     if (!this.searchDialog) {

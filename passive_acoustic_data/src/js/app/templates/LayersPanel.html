@@ -1,17 +1,29 @@
 <div class="layersPanel_class">
     <br>
-    <b>Passive Acoustic Data</b><br>
+    <input checked type="checkbox" id="chkPad" data-dojo-attach-point="chkPad" data-dojo-type="dijit/form/CheckBox">
+    <label for="chkPad"><b>Passive Acoustic Data Deployments</b></label>
+    <img id="padHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'padHelp'">
+        <div class="tooltipText">
+            Description/Legend goes here
+        </div>
+    </div><br>
 
     <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="searchButton"><b>Additional Filters</b></div>
     <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetButton" disabled><b>Reset</b></div>
     <div id="currentFilter" class="filterText"></div><br><br>
 
+    <b>Background</b><br>
     Passive acoustic data are used by NOAA and other agencies and institutions for a wide range of activities including monitoring living marine resources, monitoring of earthquake and geological activity, and assessing impacts of anthropogenic noise on marine life.<br><br>
 
     Information on the archive is available on the <a href="https://www.ngdc.noaa.gov/mgg/pad/" target="_blank">NCEI Passive Acoustic Data Archive</a> page.<br><br>
 
     The NOAA Ocean Noise Reference Station Network, through a unique collaborative effort across offices in NOAA's OAR, NMFS, and NOS and the Department of Interior's National Park Service, is NOAA's first ever acoustic monitoring system deployed broadly throughout the US exclusive economic zone, and enables the collection of consistent and comparable multi-year acoustic data sets covering all major regions of the US.<br><br>
+
+    <b>Fair Use Guidance</b><br>
+    Please review this <a href="https://www.ngdc.noaa.gov/mgg/pad/docs/pad_fair_use.pdf" target="_blank">document</a> to identify appropriate and inappropriate applications of the archived data along with other guidance.<br><br>
     
+    <b>Questions</b><br>
     If you have any questions on the collection and use of the Ocean Noise Reference Station Network data, please contact <a href="mailto:NRS.inquiries@noaa.gov">NRS.inquiries@noaa.gov</a>.<br><br>
 
     <b>Online Resources:</b>
@@ -19,4 +31,17 @@
     	<li><a href="http://dosits.org/" target="_blank">Discovery of Sound in the Sea</a></li>
     	<li><a href="http://www.iobis.org/mapper/" target="_blank">Ocean Biogeographic Information System</a></li>
     </ul>
+    <hr>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Reference Layers', open: true">
+        <input type="checkbox" id="chkMpas" data-dojo-attach-point="chkMpas" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkMpas">Federal Marine Protected Areas</label>
+        <img id="mpaHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mpaHelp'">
+            <div class="tooltipText">
+                Major Federal Marine Protected areas from the <a href="https://marineprotectedareas.noaa.gov/" target="_blank">NOAA MPA Inventory</a>.<br><br>
+                <div id="mpaLegend"></div>
+            </div>
+        </div>
+    </div>
 </div>

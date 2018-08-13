@@ -45,7 +45,7 @@ define([
             postCreate: function() {
                 this.inherited(arguments);
 
-                this.queryTask = new QueryTask('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer/0');
+                this.queryTask = new QueryTask('https://gis.ngdc.noaa.gov/arcgis/rest/services/Sample_Index/MapServer/0');
                 
                 var query = new Query();
                 query.where = '1=1';

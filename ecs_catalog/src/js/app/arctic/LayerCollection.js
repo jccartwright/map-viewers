@@ -57,7 +57,7 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/sample_index_dynamic/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/Sample_Index/MapServer', {
                         id: 'Sample Index',
                         visible: false,
                         imageParameters: this.imageParameters.png32
