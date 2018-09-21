@@ -183,7 +183,7 @@ define(["lib-build/tpl!./NavBar",
 				// On touch device for some reason enabling the tooltip sometimes make touching one bullet go to the following
 				if ( layout == "bullet" && ! has("touch") ) {
 					container.find('.nav-tabs > .entry').tooltip({
-						placement: 'top',
+						placement: 'bottom', //Modification to make the NavBar tooltip display below the bullet and not be hidden outside the iframe. Original: placement: 'top'
 						trigger: 'hover'
 					});
 					container.find('.dropdown-menu > .entry').tooltip({
