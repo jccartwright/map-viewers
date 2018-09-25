@@ -76,7 +76,7 @@ define([
         //   then open the developer console, all the layers ids will be listed,
         //   find the correct one and paste it below
         var WEBMAP_ID = "bffe6553e9bb485eb1339fc3e43184f2";
-        var LAYER_ID = "SiteCharacterizationPoints_8845";
+        var LAYER_ID = "DeepSea_Corals_Site_Characterization_Points_9881";
 
         var clickHandlerIsSetup = false;
 
