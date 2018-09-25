@@ -21,7 +21,7 @@
 				'using-cwd': {
 					cwd: 'deploy/',
 					//dest: 'zip/storymap-series-coral.zip',
-					dest: 'zip/<%=pkg.name%>-<%=pkg.version%>.zip',
+					dest: 'zip/<%=pkg.version%>/<%=pkg.name%>-<%=pkg.version%>.zip',
 					src: 'deploy/**/*'
 				}
 			},
