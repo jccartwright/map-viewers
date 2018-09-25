@@ -16,8 +16,18 @@
 
 		grunt.initConfig({
 			pkg: grunt.file.readJSON('package.json'),
+	
+			zip: {
+				'using-cwd': {
+					cwd: 'deploy/',
+					//dest: 'zip/storymap-series-coral.zip',
+					dest: 'zip/<%=pkg.name%>-<%=pkg.version%>.zip',
+					src: 'deploy/**/*'
+				}
+			},
 
 			clean: {
+				zip: ['zip/*'],
 				deploy: ['deploy/*'],
 				jsapioptim: [
 					'deploy/build-api-viewer.tmp',
@@ -457,7 +467,8 @@
 
 			'copy:readme',
 			'clean:jsapioptim',
-			'clean:fontello'
+			'clean:fontello',
+			'zip'
 		]);
 
 		/*
