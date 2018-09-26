@@ -45,10 +45,6 @@ define([
             region = queryParams.region;
         }
 
-        //Navigate to the specified entry. 
-        //This is default behavior in the stock javascript, but doing it here to ensure that "story-loaded-map" message gets published on initial load (subscribe is below)
-        topic.publish("story-navigate-entry", entry);
-
         //If subentry is specified, append the value as the 'entry' parameter for the embedded story map.
         if (subentry) {
             var webAppData = app.data.getWebAppData();
@@ -106,5 +102,9 @@ define([
                 clickHandlerIsSetup = true;
             }
         });
+
+        //Navigate to the specified entry. 
+        //This is default behavior in the stock javascript, but doing it here to ensure that "story-loaded-map" message gets published on initial load (subscribe is above)
+        topic.publish("story-navigate-entry", entry);
     });
 });
