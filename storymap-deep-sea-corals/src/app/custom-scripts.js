@@ -23,6 +23,7 @@ define([
          *    'region' should be specified for the embedded story maps, to ensure only the points for that region respond to a click event, which navigates to the corresponding slide
          * -When a deep-sea-corals site is clicked, navigate to the the corresponding slide (specified in the StorymapIndex field in the feature layer)
          * -Make the tooltips for the bullets appear below the button instead of above (was getting cut off outside of the iframe when using &embed to hide the header). This modification is in app/storymaps/tpl/ui/desktop/NavBar.js.
+         * -Prefer the (optional) appid specified in the URL over the hard-coded appid in index.html. This modification is in app/storymaps/common/utils/CommonHelper.js.
          */
 
         var queryParams = ioQuery.queryToObject(location.search.substring(1));
