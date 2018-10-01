@@ -12,6 +12,7 @@ define([
                 this._basemaps = [
                     {base: 'Ocean Base', overlays: [{id: 'Ocean Reference'}], label: 'Ocean Basemap (Esri)'},
                     {base: 'GEBCO_2014 (NCEI)', overlays: [{id: 'World Boundaries and Places'}], label: 'GEBCO_2014 (NOAA NCEI Visualization)'},
+                    {base: 'GEBCO_2014 Grayscale (NCEI)', overlays: [{id: 'World Boundaries and Places'}], label: 'GEBCO_2014 Grayscale (NOAA NCEI Visualization)'},
                     {base: 'GEBCO_2014', overlays: [{id: 'World Boundaries and Places'}], label: 'GEBCO_2014'},
                     {base: 'GMRT Unmasked', overlays: [{id: 'Ocean Reference'}], label: 'Global Multi-Resolution Topography (GMRT) Data Synthesis (LDEO)'},
                     // {base: 'ETOPO1', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (ETOPO1)'},
@@ -52,7 +53,7 @@ define([
                 ];
 
                 //define the default base
-                this.defaultBasemapIndex = 1;
+                this.defaultBasemapIndex = 2;
 
                 this._validateLayerIds();
 
