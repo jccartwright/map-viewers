@@ -5,9 +5,12 @@ define([
     'dojo/on',
     'dojo/dom',
     'dojo/dom-attr',
+    'dojo/dom-construct',
     'dijit/form/CheckBox',
     'dijit/form/RadioButton',
+    'dijit/form/Button',
     'dijit/TitlePane',
+    'dijit/Tooltip',
     'dijit/_WidgetBase',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
@@ -21,9 +24,12 @@ define([
         on,
         dom,
         domAttr,
+        domConstruct,
         CheckBox,
         RadioButton,
+        Button,
         TitlePane,
+        Tooltip,
         _WidgetBase, 
         _TemplatedMixin,
         _WidgetsInTemplateMixin,
@@ -141,6 +147,9 @@ define([
                 on(this.bathySurveyResetButton, 'click', lang.hitch(this, function() {
                     topic.publish('/bathymetry/ResetSearch');
                 })); 
+
+                domConstruct.place('<img id="nceiHelp" class="tooltipButtonMiddle" src="images/question-white.png">', this.nceiTitlePane.focusNode);
+                domConstruct.place('<img id="otherIhoHelp" class="tooltipButtonMiddle" src="images/question-white.png">', this.otherIhoTitlePane.focusNode);   
             },
 
             disableCsbResetButton: function() {

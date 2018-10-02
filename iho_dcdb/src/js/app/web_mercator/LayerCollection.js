@@ -40,8 +40,12 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2014_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
                         id: 'GEBCO_2014 (NCEI)',
+                        visible: false
+                    }),
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/gebco_2014_hillshade_grayscale/MapServer', {
+                        id: 'GEBCO_2014 Grayscale (NCEI)',
                         visible: true
-                    }),                                
+                    }),                             
                     new TiledWMSLayer('https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?', {
                         id: 'GEBCO_2014',
                         visible: false,
@@ -111,7 +115,6 @@ define([
                         epsgCode: '900913',
                         layerNames: ['mean_atlas_land']
                     }),
-
                     new TiledWMSLayer('https://wms.geonorge.no/skwms1/wms.havbunnraster2?', {
                         id: 'MAREANO Multibeam Shaded Relief',
                         visible: false,

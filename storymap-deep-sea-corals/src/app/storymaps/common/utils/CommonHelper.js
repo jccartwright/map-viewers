@@ -102,14 +102,16 @@ define(["dojo/cookie",
 			{
 				var urlParams = this.getUrlParams();
 
+				// MODIFICATION: prefer the urlParams appid before the hard-coded appid in index.html
+
+				// Only authorize URL params outside of arcgis.com if a webmap/app owner is specified
+				if( urlParams.appid && app.indexCfg.authorizedOwners && app.indexCfg.authorizedOwners.length > 0 && app.indexCfg.authorizedOwners[0] )
+					return urlParams.appid;
+
 				if( app.indexCfg && app.indexCfg.appid )
 					return app.indexCfg.appid;
 
 				if ( this.isArcGISHosted() || ! isProd )
-					return urlParams.appid;
-
-				// Only authorize URL params outside of arcgis.com if a webmap/app owner is specified
-				if( app.indexCfg.authorizedOwners && app.indexCfg.authorizedOwners.length > 0 && app.indexCfg.authorizedOwners[0] )
 					return urlParams.appid;
 			},
 			getGraphicsLayerByName: function(map, name)
