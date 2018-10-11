@@ -82,8 +82,8 @@ define([
                     '<div class="valueName">Used in Exercise: <span class="parameterValue">${exercise}</span></div>' +
                     '<div class="valueName">Shear Modulus (GPa): <span class="parameterValue">${shearModulus}</span></div>' +
                     '<div class="valueName">Model Employed: <span class="parameterValue">${modelEmployed}</span></div>' +
-                    '<div class="valueName">Longitude (E): <span class="parameterValue">${lon}</span></div>' +
-                    '<div class="valueName">Latitude (N): <span class="parameterValue">${lat}</span></div>' +
+                    '<div class="valueName">Longitude (Centroid): <span class="parameterValue">${lon}</span></div>' +
+                    '<div class="valueName">Latitude (Centroid): <span class="parameterValue">${lat}</span></div>' +
                     '<div class="valueName">Reference: <span class="parameterValue">${reference}</span></div>';
 
                 var html = string.substitute(template, {                
@@ -103,8 +103,8 @@ define([
                     exercise: a['Used in Exercise'],
                     shearModulus: a['Shear Modulus (GPa)'],
                     modelEmployed: a['Model Employed'],
-                    lon: a['Longitude (E)'],
-                    lat: a['Latitude (N)'],
+                    lon: a['Longitude (Centroid)'],
+                    lat: a['Latitude (Centroid)'],
                     reference: a['Reference']
                 });                
                 return html;

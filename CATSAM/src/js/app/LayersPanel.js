@@ -12,6 +12,7 @@ define([
     'dijit/registry',
     'dijit/form/DropDownButton',
     'dijit/form/FilteringSelect',
+    'dijit/form/Select',
     'dijit/TooltipDialog',
     'dijit/form/CheckBox',
     'dijit/form/Button',
@@ -35,6 +36,7 @@ define([
         registry,
         DropDownButton,
         FilteringSelect,
+        Select,
         TooltipDialog,
         CheckBox,
         Button,
@@ -65,8 +67,11 @@ define([
                 })); 
                 on(registry.byId("scenarioResetButton"), "click", lang.hitch(this, function() {
                     this.regionSelect.set('value', '');
+                    //this.meetingExcerciseSelect.set('value', '');
+                    this.meetingExcerciseSelect.reset();
+                    this.meetingExcerciseSelect.set('value', 'any');
                     this.tsunamiScenarioSelect.set('value', '');
-                    topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], false);
+                    topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22], false);
                     topic.publish('resetScenario');
                 }));
 
@@ -165,6 +170,18 @@ define([
                     } else {
                         this.tsunamiScenarioSelect.query.region = region;
                     }
+                }));
+
+                on(this.meetingExcerciseSelect, 'change', lang.hitch(this, function(value) {                    
+                    //this.tsunamiScenarioSelect.set('value', '');
+                    this.tsunamiScenarioSelect.query.expertsMeeting = /.*/;
+                    this.tsunamiScenarioSelect.query.waveExercise = /.*/;
+
+                    if (value === 'expertsMeetings') {
+                        this.tsunamiScenarioSelect.query.expertsMeeting = true;
+                    } else if (value === 'waveExercises') {
+                        this.tsunamiScenarioSelect.query.waveExercise = true;
+                    }
                 }));  
 
                 on(this.tsunamiScenarioSelect, 'change', lang.hitch(this, function(scenario) {
@@ -177,7 +194,7 @@ define([
                         //this.regionSelect.set('value', region);
 
                         topic.publish('/ngdc/layer/visibility', 'CARIBE-EWS Tsunami Energy', true);
-                        topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], false);
+                        topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22], false);
                         topic.publish('/ngdc/sublayer/visibility', 'CARIBE-EWS Tsunami Energy', [energyLayer], true);
 
                         topic.publish('scenarioFaultPlanes', faultPlanes);
