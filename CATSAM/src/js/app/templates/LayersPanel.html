@@ -26,6 +26,13 @@
     <div data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="regionSelect" data-dojo-props="searchAttr:'id',labelAttr:'label',labelType:'html',placeHolder:'Select a Region',maxHeight:-1,required:false" name="region" style="width: 100%; max-width: 350px">
     </div><br>
 
+    Meeting/Exercise:<br>
+    <select data-dojo-attach-point="meetingExcerciseSelect" data-dojo-type="dijit/form/Select" style="width: 100%; max-width: 350px;">
+        <option value="any" selected="selected">Any Expert Meetings/Wave Exercises</option>
+        <option value="expertsMeetings">Generated at Experts Meetings</option>
+        <option value="waveExercises">Used at Wave Exercises</option>
+    </select><br><br>
+
     Scenario:<br>
     <div data-dojo-type="dijit/form/FilteringSelect" data-dojo-attach-point="tsunamiScenarioSelect" data-dojo-props="placeHolder:'Select a Scenario',maxHeight:-1, required:false" style="width: 100%; max-width: 350px">
     </div><br>

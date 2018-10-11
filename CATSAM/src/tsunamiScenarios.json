@@ -1,17 +1,362 @@
-{"identifier":"id","numRows":20,
-	"items":[
-		{"id":"FSCDB","name":"FSCDB","region":"South Caribbean Deformed Belt","energyLayer":0,"faultPlanes":["SCDB-1","SCDB-2"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"MEF","name":"MEF","region":"Mona Passage","energyLayer":1,"faultPlanes":["mef"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"MS","name":"MS","region":"Muertos Trough","energyLayer":2,"faultPlanes":["ms"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"NPDB","name":"NPDB","region":"North Panama Deformed Belt","energyLayer":3,"faultPlanes":["panama"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"PRT","name":"PRT","region":"Puerto Rico Trench","energyLayer":4,"faultPlanes":["prt"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"ROATAN","name":"ROATAN","region":"Gulf of Honduras","energyLayer":5,"faultPlanes":["roatan"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"SAN_PEDRO_SULA","name":"SAN_PEDRO_SULA","region":"Gulf of Honduras","energyLayer":6,"faultPlanes":["g_honduras"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"SMT1","name":"SMT1","region":"Muertos Trough","energyLayer":7,"faultPlanes":["smt1"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"SMT2","name":"SMT2","region":"Muertos Trough","energyLayer":8,"faultPlanes":["smt2"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"WMT","name":"WMT","region":"Muertos Trough","energyLayer":9,"faultPlanes":["wmt"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"WSCDB","name":"WSCDB","region":"South Caribbean Deformed Belt","energyLayer":10,"faultPlanes":["SCDB-2"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"1882","name":"1882","region":"North Panama Deformed Belt","energyLayer":11,"faultPlanes":["PARC-1", "PARC-2"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40},
-		{"id":"Limon","name":"Limon","region":"North Panama Deformed Belt","energyLayer":12,"faultPlanes":["limon"],"lon":-67.5,"lat":18.5,"xmin":-85,"xmax":-40,"ymin":10,"ymax":40}
-	]
+{
+    "identifier": "id",
+    "items": [
+        {
+            "energyLayer": 0,
+            "faultPlanes": [
+                "1882a",
+                "1882b"
+            ],
+            "id": "1882",
+            "name": "1882",
+            "expertsMeeting": true,
+            "waveExercise": true,
+            "region": "North Panama Deformed Belt",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 1,
+            "faultPlanes": [
+                "eslat"
+            ],
+            "id": "BARBADOS",
+            "name": "BARBADOS",
+            "expertsMeeting": false,
+            "waveExercise": true,
+            "region": "Lesser Antilles",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 2,
+            "faultPlanes": [
+                "colec"
+            ],
+            "id": "COLEC",
+            "name": "COLEC",
+            "expertsMeeting": true,
+            "waveExercise": true,
+            "region": "Colombian Trench and Ecuador Trench",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 3,
+            "faultPlanes": [
+                "cuba"
+            ],
+            "id": "CUBA",
+            "name": "CUBA",
+            "expertsMeeting": false,
+            "waveExercise": true,
+            "region": "Cayman Trench",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 4,
+            "faultPlanes": [
+                "dom"
+            ],
+            "id": "DOM",
+            "name": "DOM",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Middle America Trench",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 5,
+            "faultPlanes": [
+                "escdb",
+                "wscdb"
+            ],
+            "id": "FSCDB",
+            "name": "FSCDB",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "South Caribbean Deformed Belt",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 6,
+            "faultPlanes": [
+                "guanica1",
+                "guanica2",
+                "guanica3"
+            ],
+            "id": "GUANICA",
+            "name": "GUANICA",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Middle America Trench",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 7,
+            "faultPlanes": [
+                "limon"
+            ],
+            "id": "Limon",
+            "name": "Limon",
+            "expertsMeeting": true,
+            "waveExercise": true,
+            "region": "North Panama Deformed Belt",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 8,
+            "faultPlanes": [
+                "mef"
+            ],
+            "id": "MEF",
+            "name": "MEF",
+            "expertsMeeting": true,
+            "waveExercise": true,
+            "region": "Mona Passage",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 9,
+            "faultPlanes": [
+                "ms"
+            ],
+            "id": "MS",
+            "name": "MS",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Muertos Trough",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 10,
+            "faultPlanes": [
+                "nicobano1",
+                "nicobano2"
+            ],
+            "id": "NICOBANO",
+            "name": "NICOBANO",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Middle America Trench",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 11,
+            "faultPlanes": [
+                "hai3a",
+                "hai3b",
+                "hai3c"
+            ],
+            "id": "NORTHERN_HAITI",
+            "name": "NORTHERN_HAITI",
+            "expertsMeeting": true,
+            "waveExercise": true,
+            "region": "Northern Hispaniola Deformed Belt",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 12,
+            "faultPlanes": [
+                "panama"
+            ],
+            "id": "NPDB",
+            "name": "NPDB",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "North Panama Deformed Belt",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 13,
+            "faultPlanes": [
+                "osa1",
+                "osa2",
+                "osa3"
+            ],
+            "id": "OSA",
+            "name": "OSA",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Middle America Trench",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 14,
+            "faultPlanes": [
+                "prt"
+            ],
+            "id": "PRT",
+            "name": "PRT",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Puerto Rico Trench",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 15,
+            "faultPlanes": [
+                "roatan"
+            ],
+            "id": "ROATAN",
+            "name": "ROATAN",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Gulf of Honduras",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 16,
+            "faultPlanes": [
+                "g_honduras"
+            ],
+            "id": "SAN_PEDRO_SULA",
+            "name": "SAN_PEDRO_SULA",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Gulf of Honduras",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 17,
+            "faultPlanes": [
+                "smt1"
+            ],
+            "id": "SMT1",
+            "name": "SMT1",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Muertos Trough",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 18,
+            "faultPlanes": [
+                "smt2"
+            ],
+            "id": "SMT2",
+            "name": "SMT2",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Muertos Trough",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 19,
+            "faultPlanes": [
+                "USVI1",
+                "USVI2"
+            ],
+            "id": "USVI",
+            "name": "USVI",
+            "expertsMeeting": false,
+            "waveExercise": true,
+            "region": "Puerto Rico and Virgin Islands",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 20,
+            "faultPlanes": [
+                "ven1",
+                "ven2"
+            ],
+            "id": "VENEZUELA",
+            "name": "VENEZUELA",
+            "expertsMeeting": false,
+            "waveExercise": true,
+            "region": "Northern Venezuela",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 21,
+            "faultPlanes": [
+                "wmt"
+            ],
+            "id": "WMT",
+            "name": "WMT",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Muertos Trough",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 22,
+            "faultPlanes": [
+                "wscdb"
+            ],
+            "id": "WSCDB",
+            "name": "WSCDB",
+            "expertsMeeting": true,
+            "waveExercise": true,
+            "region": "South Caribbean Deformed Belt",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        }
+    ],
+    "numRows": 20
 }
