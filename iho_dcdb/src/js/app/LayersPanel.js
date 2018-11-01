@@ -178,11 +178,17 @@ define([
                 var s = '<b>Current filter:</b><br>';
                   
                 if (values.startDate) {
-                    s += '<br>Start Date: ' + this.toDateString(values.startDate);
+                    s += 'Start Date of Data Collection: ' + this.toDateString(values.startDate) + '<br>';
                 } 
                 if (values.endDate) {
-                    s += '<br>End Date: ' + this.toDateString(values.endDate);
+                    s += 'End Date of Data Collection: ' + this.toDateString(values.endDate) + '<br>';
+                }
+                if (values.startDateAdded) {
+                    s += 'Start Date Added to Database: ' + this.toDateString(values.startDateAdded) + '<br>';
                 } 
+                if (values.endDateAdded) {
+                    s += 'End Date Added to Database: ' + this.toDateString(values.endDateAdded) + '<br>';
+                }
                 if (values.provider) {
                     s += 'Provider: ' + values.provider + '<br>';
                 }                                   

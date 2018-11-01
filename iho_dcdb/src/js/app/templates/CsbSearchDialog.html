@@ -25,6 +25,21 @@
             </td>     
         </tr>
         <tr>
+            <td colspan="2">
+                Date Added to Database:<br>
+                <label for="startDateInput">Start:</label>
+                <input type="text" data-dojo-attach-point='startDateAddedInput' name="startDateAdded" value="" data-dojo-type="dijit/form/DateTextBox" 
+                    data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}" style="width: 90px;"/>
+                <label for="endDateAddedInput">End:</label>
+                <input type="text" data-dojo-attach-point='endDateAddedInput' name="endDateAdded" value="" data-dojo-type="dijit/form/DateTextBox"
+                    data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}" style="width: 90px;"/>
+                <img id="dateAddedHelp" class="tooltipButton" src="images/question-button.png">
+                <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'dateAddedHelp'">
+                    <div class="tooltipText">Date format: YYYY-MM-DD</div>
+                </div>   
+            </td>     
+        </tr>
+        <tr>
             <td align="left" colspan="2">               
                 <label>Provider:</label><br/>
                 <div data-dojo-attach-point="providerSelectDiv"></div>
@@ -42,12 +57,6 @@
                 <div data-dojo-attach-point="platformIdSelectDiv"></div>
             </td>
         </tr>
-        <!-- <tr>
-            <td align="left" colspan="2">               
-                <label>Instrument:</label><br/>
-                <div data-dojo-attach-point="instrumentSelectDiv"></div>
-            </td>
-        </tr> -->
         <tr>
             <td>
                 <input disabled data-dojo-attach-point="chkZoomToResults" data-dojo-type="dijit/form/CheckBox" checked="false" value="false" type="checkbox" name="chkZoomToResults"/>

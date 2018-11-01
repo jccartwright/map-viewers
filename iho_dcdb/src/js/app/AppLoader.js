@@ -338,6 +338,12 @@ define([
                 if (values.endDate) {
                     sql.push("START_DATE <= date '" + this.toDateString(values.endDate) + "'");                
                 }
+                if (values.startDateAdded) {
+                    sql.push("ARRIVAL_DATE >= date '" + this.toDateString(values.startDateAdded) + "'");          
+                }  
+                if (values.endDateAdded) {
+                    sql.push("ARRIVAL_DATE <= date '" + this.toDateString(values.endDateAdded) + "'");                
+                }
                 if (values.provider) {
                     sql.push("UPPER(PROVIDER) LIKE '" + values.provider.toUpperCase().replace(/\*/g, '%') + "'");                    
                 }

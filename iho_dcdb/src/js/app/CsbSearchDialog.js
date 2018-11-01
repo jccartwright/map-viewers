@@ -211,6 +211,7 @@ define([
                 
             isDefault: function() {
                 return (!this.startDateInput.get('value') && !this.endDateInput.get('value') &&
+                    !this.startDateAddedInput.get('value') && !this.endDateAddedInput.get('value') &&
                     this.providerSelect.get('_lastDisplayedValue') === '' && 
                     this.platformNameSelect.get('_lastDisplayedValue') === '' && 
                     this.platformIdSelect.get('_lastDisplayedValue') === '');
@@ -220,6 +221,8 @@ define([
             clearForm: function() {
                 this.startDateInput.reset();
                 this.endDateInput.reset();
+                this.startDateAddedInput.reset();
+                this.endDateAddedInput.reset();
                 this.providerSelect.set('value', '');
                 this.platformNameSelect.set('value', '');
                 this.platformIdSelect.set('value', '');
