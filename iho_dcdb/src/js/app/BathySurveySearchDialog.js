@@ -46,9 +46,9 @@ define([
             constructor: function(/*Object*/ kwArgs) {
                 lang.mixin(this, kwArgs); 
 
-                this.multibeamVisible = false;
+                this.multibeamVisible = true; //visible on startup
                 this.nosHydroVisible = false;
-                this.nosHydroAllVisible = true;
+                this.nosHydroAllVisible = false;
                 this.nosBagsVisible = false;
                 this.tracklineVisible = false;
             },

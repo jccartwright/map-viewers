@@ -281,7 +281,6 @@ define([
 
                     //CSB should be on top of boundaries
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/csb/MapServer', {
-                    //new ArcGISDynamicMapServiceLayer('https://gisdev.ngdc.noaa.gov/arcgis/rest/services/acceptance/csb_surge/MapServer', {                        
                         id: 'CSB',
                         visible: false,
                         imageParameters: this.imageParameters.png32
