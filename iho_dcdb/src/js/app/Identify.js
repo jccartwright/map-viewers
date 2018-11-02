@@ -173,16 +173,12 @@ define([
             csbFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
-                var localDate = new Date(a['START_DATE']);
-                var utcDate = new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000);
-                //console.log(localDate);
-                //console.log(utcDate);
-
                 var template =
                     '<h3>Crowdsourced Bathymetry File</h3>' +
                     '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
                     '<div class="valueName">Start Date: <span class="parameterValue">${startDate}</span></div>' +
                     '<div class="valueName">End Date: <span class="parameterValue">${endDate}</span></div>' + 
+                    '<div class="valueName">Date Added to Database: <span class="parameterValue">${dateAdded}</span></div>' + 
                     '<div class="valueName">Provider: <span class="parameterValue">${provider}</span></div>' +
                     '<div class="valueName">Platform Name: <span class="parameterValue">${platformName}</span></div>' +
                     '<div class="valueName">Platform ID: <span class="parameterValue">${platformId}</span></div>' +
@@ -192,6 +188,7 @@ define([
                         name: a['Name'],
                         startDate: a['Start Date'] === '' ? 'Unknown' : this.formatDate(a['Start Date']),
                         endDate: a['End Date'] === '' ? 'Unknown' : this.formatDate(a['End Date']),
+                        dateAdded: this.formatDate2(a['Date Added']),
                         provider: a['Provider'],
                         platformName: a['Platform'],
                         platformId: a['Platform ID'],
@@ -366,10 +363,16 @@ define([
                 }
             },
 
-            //Format a date as yyyy-mm-dd
+            //Format a date as yyyy-mm-ddTHH:MM
             formatDate: function(dateStr) {
                 var date = new Date(dateStr);
                 return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2) + 'T' + this.padDigits(date.getHours(),2) + ':' + this.padDigits(date.getMinutes(), 2);
+            },
+
+            //Format a date as yyyy-mm-dd
+            formatDate2: function(dateStr) {
+                var date = new Date(dateStr);
+                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
             },
 
             padDigits: function(n, totalDigits){
