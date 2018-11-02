@@ -369,7 +369,7 @@ define([
                 return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2) + 'T' + this.padDigits(date.getHours(),2) + ':' + this.padDigits(date.getMinutes(), 2);
             },
 
-            //Format a date as yyyy-mm-ddTHH:MM
+            //Format a date as yyyy-mm-dd
             formatDate2: function(dateStr) {
                 var date = new Date(dateStr);
                 return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
