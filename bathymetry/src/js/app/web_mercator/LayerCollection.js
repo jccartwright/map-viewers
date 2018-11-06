@@ -57,9 +57,9 @@ define([
                     new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2014_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
                         id: 'GEBCO_2014',
                         visible: false
-                    }),                    
-                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/ETOPO1_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
-                        id: 'ETOPO1',
+                    }),
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/gebco_2014_hillshade_grayscale/MapServer', {
+                        id: 'GEBCO_2014 Grayscale',
                         visible: false
                     }),
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer', {
@@ -193,6 +193,11 @@ define([
                     }),
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/dem_extents/MapServer', {
                         id: 'DEM Extents',
+                        visible: this.demVisible,
+                        imageParameters: this.imageParameters.png32
+                    }),
+                    new ArcGISDynamicMapServiceLayer('https://maps.coast.noaa.gov/arcgis/rest/services/DAV/ElevationFootprints/MapServer', {
+                        id: 'DEM Tiles',
                         visible: this.demVisible,
                         imageParameters: this.imageParameters.png32
                     }),

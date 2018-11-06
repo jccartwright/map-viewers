@@ -385,6 +385,17 @@ define([
                     ]
                 }, 'bagFootprintsLegend');
                 bagFootprintsLegend.startup();
+
+                var demLegend = new Legend({
+                    map: this.mercatorMapConfig.map,
+                    autoUpdate: false,
+                    respectVisibility: false,
+                    layerInfos: [
+                        {title: 'NCEI DEMs:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Extents')},
+                        {title: 'NCEI Tiled DEMs (hosted at OCM):', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')},
+                    ]
+                }, 'demLegend');
+                demLegend.startup();
             },
 
             //Sets layers visible on startup using the 'layers' url parameter, which can contain a comma-spearated list with 'multibeam', 'trackline', 'nos_hydro', 'dem'

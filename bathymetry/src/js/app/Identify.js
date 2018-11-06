@@ -1,10 +1,12 @@
 define([
     'dojo/_base/declare', 
     'dojo/string', 
+    'esri/geometry/webMercatorUtils',
     'ngdc/identify/AbstractIdentify'],
     function(
         declare, 
         string, 
+        webMercatorUtils,
         AbstractIdentify 
         ){
 
@@ -150,6 +152,62 @@ define([
                     verticalDatum: a['Vertical Datum'],
                     horizontalDatum: a['Horizontal Datum'],
                     completionDate: this.formatDate(a['Completion Date'])
+                });               
+                return html;
+            },
+
+            demTilesFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var id = parseInt(a['ID']);
+                var cellSize = '';
+                var metadataUrl = '';
+                var downloadUrl = '';
+                var bulkDownloadUrl = '';
+                if (id === 8483) {
+                    cellSize = '1/9 arc-second';
+                    metadataUrl = 'https://www.ncei.noaa.gov/metadata/geoportal/rest/metadata/item/gov.noaa.ngdc.mgg.dem:999919/html';
+                    downloadUrl = 'https://coast.noaa.gov/dataviewer/#/lidar/search/where:ID=8483';
+                    bulkDownloadUrl = 'https://coast.noaa.gov/htdata/raster2/elevation/NCEI_ninth_Topobathy_2014_8483/';
+                }
+                else if (id === 8580) {
+                    cellSize = '1/3 arc-second';
+                    metadataUrl = 'https://www.ncei.noaa.gov/metadata/geoportal/rest/metadata/item/gov.noaa.ngdc.mgg.dem:999913/html';
+                    downloadUrl = 'https://coast.noaa.gov/dataviewer/#/lidar/search/where:ID=8580';
+                    bulkDownloadUrl = 'https://coast.noaa.gov/htdata/raster2/elevation/NCEI_third_Topobathy_2014_8580/';
+                }
+
+                if (this.searchGeometry && this.searchGeometry.type !== 'point') {
+                    var extent = this.searchGeometry.getExtent();
+                    if (extent.spatialReference.wkid === 4326) {
+                        extent = webMercatorUtils.geographicToWebMercator(extent);
+                    }
+                    downloadUrl += '&extent:' + extent.xmin + ',' + extent.ymin + ',' + extent.xmax + ',' + extent.ymax;
+                }
+
+                var template = '<h3>NCEI Tiled DEMs: ${name}</h3>';
+
+                if (metadataUrl !== '') {
+                    template += '<div class="valueName"><span class="parameterValue"><a href="${metadataUrl}" target="_blank">Link to Metadata</a></span></div>';
+                }
+                if (downloadUrl !== '') {
+                    template += '<div class="valueName"><span class="parameterValue"><a href="${downloadUrl}" target="_blank">Extract DEM data from Data Access Viewer (NOAA Office for Coastal Management)</a></span></div>';
+                }
+                if (bulkDownloadUrl !== '') {
+                    template += '<div class="valueName"><span class="parameterValue"><a href="${bulkDownloadUrl}" target="_blank">Bulk DEM Download</a></span></div>';
+                }
+                template +=
+                    '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
+                    '<div class="valueName">Cell Size: <span class="parameterValue">${cellSize}</span></div>' +                    
+                    '<div class="valueName">Vertical Datum: <span class="parameterValue">${verticalDatum}</span></div>';
+
+                var html = string.substitute(template, {
+                    metadataUrl: metadataUrl,
+                    downloadUrl: downloadUrl,
+                    bulkDownloadUrl: bulkDownloadUrl,
+                    name: a['Name'],
+                    cellSize: cellSize,
+                    verticalDatum: a['NativeVdatum']
                 });               
                 return html;
             },

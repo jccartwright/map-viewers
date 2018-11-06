@@ -54,13 +54,23 @@ define([
 
                 this.mapLayerCollection.getLayerById('OCM Lidar').setVisibleLayers([-1]);
 
-                //Apply layer definitions to the CSC Lidar layer to only show bathymetric lidar
+                this.mapLayerCollection.getLayerById('DEM Extents').setLayerDefinitions(["CATEGORY <> 'Tiled' OR CATEGORY IS NULL"]);
+
+                //Apply layer definitions to the OCM Lidar layer to only show bathymetric lidar
                 var layerDefinitions = [];
                 layerDefinitions[0] = 'Data_Classes_Available LIKE \'%Bathymetric%\'';
                 layerDefinitions[1] = 'Data_Classes_Available LIKE \'%Bathymetric%\'';
                 layerDefinitions[2] = 'Data_Classes_Available LIKE \'%Bathymetric%\'';
                 layerDefinitions[3] = 'Data_Classes_Available LIKE \'%Bathymetric%\'';
                 this.mapLayerCollection.getLayerById('OCM Lidar').setLayerDefinitions(layerDefinitions);
+
+                //Apply layer defs to the OCM DEM Tiles layer to show only the NCEI 1/3 and 1/9 arc-second DEMs
+                layerDefinitions = [];
+                layerDefinitions[0] = "ID IN (8483, 8580)";
+                layerDefinitions[1] = "ID IN (8483, 8580)";
+                layerDefinitions[2] = "ID IN (8483, 8580)";
+                layerDefinitions[3] = "ID IN (8483, 8580)";
+                this.mapLayerCollection.getLayerById('DEM Tiles').setLayerDefinitions(layerDefinitions);
             }
          
             
