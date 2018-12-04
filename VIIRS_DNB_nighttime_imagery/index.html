@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <meta name="description" content="Calcite Maps Demo - ArcGIS">
   <link rel="icon" href="https://www.esri.com/favicon.ico">
-  <title>VIIRS DNB Nightly Mosaics</title>
+  <title>VIIRS Day/Night Band (DNB) Nighttime Imagery</title>
     <link rel="shortcut icon" href="https://www.ngdc.noaa.gov/image/favicon.ico">
 
   <!-- Calcite Bootstrap -->
@@ -18,7 +18,7 @@
     <!-- ArcGIS JS 4 -->
     <link rel="stylesheet" href="https://js.arcgis.com/4.8/esri/css/main.css">
 
-    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.1/css/calcite-web.min.css">
+    <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.1.0/css/calcite-web.min.css">
 
   <style>
     html, body {
@@ -94,6 +94,10 @@
       margin-bottom: 0px;
     }
 
+    .calcite-panels.calcite-text-light a {
+      color:lightblue;
+    }
+
     #chkBoundariesLabels {
       margin-left: 30px;
     }
@@ -132,11 +136,11 @@
       </ul>
     </div>
     <!-- Title -->
-    <div class="calcite-title calcite-overflow-hidden">
-      <img src="https://maps.ngdc.noaa.gov/viewers/images/NOAA_seal-shadowed-40px.png" style="padding-right:5px"/>  
-      <span class="calcite-title-main">VIIRS DNB Nightly Mosaics</span>
+    <div class="calcite-title calcite-overflow-hidden">  
+    <img src="https://maps.ngdc.noaa.gov/viewers/images/NOAA_seal-shadowed-40px.png" style="padding-right:5px"/>
+      <span class="calcite-title-sub hidden-xs">NOAA National Centers for Environmental Information</span>       
       <span class="calcite-title-divider hidden-xs"></span>
-      <span class="calcite-title-sub hidden-xs">NOAA National Centers for Environmental Information</span> 
+      <span class="calcite-title-main">VIIRS DNB Nighttime Imagery</span>
     </div>
      <!-- Nav -->
     <ul class="calcite-nav nav navbar-nav">                    
@@ -177,7 +181,7 @@
       </div>
       <div id="collapseInfo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingInfo">
         <div class="panel-body">
-          This map provides access to nightly mosaics of Visible Infrared Imaging Radiometer Suite (VIIRS) Day/Night Band (DNB) low light imaging data: detections of lighting from cities, towns, villages, combustion sources and lit fishing boats.<br /><br />Use the time slider to select the imagery date. The map can be swtiched between a 2D Map view and a 3D Globe view. Change the transparency of the imagery with the opacity slider. Toggle the boundaries/labels on/off using the checkbox. Click on the map to retrieve the radiance value (nanowatts/cm²/sr) at that location.<br /><br />The image service will contain approximately the past 60 days worth of imagery, with new imagery being added each day, and the older images being removed. The current image will be updated multiple times per day as data from new orbits arrive.<br /><br />NCEI also provides 4 time-enabled ArcGIS image services with access to the monthly VIIRS DNB composites:<ul><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_AvgRadiance/ImageServer" target="_blank">Average Radiance</a> | <a href="https://noaa.maps.arcgis.com/home/item.html?id=d7c95b2da6fd43cd9dec19b212f145db" target="_blank">NOAA GeoPlatform entry</a></li><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_AvgRadiance_StrayLightImpacted/ImageServer" target="_blank">Average Radiance (Stray Light Impacted)</a> | <a href="https://noaa.maps.arcgis.com/home/item.html?id=a88d1c4909d3402c896176f8b1ea2f32" target="_blank">NOAA GeoPlatform entry</a></li><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_CloudFreeCoverage/ImageServer" target="_blank">Cloud-Free Coverage</a></li><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_CloudFreeCoverage_StrayLightImpacted/ImageServer" target="_blank">Cloud-Free Coverage (Stray Light Impacted)</a></li></ul>The Earth Observations Group (EOG) at NOAA/NCEI is producing daily mosaic images using nighttime data from the Visible Infrared Imaging Radiometer Suite (VIIRS) Day/Night Band (DNB). VIIRS DNB sensors are on the Suomi National Polar-orbiting Partnership (NPP) satellite and on the NOAA-20 satellite. The imagery in this service is compiled from Suomi NPP data.<br /><br /><a href="https://ngdc.noaa.gov/eog/viirs/download_dnb_composites.html" target="_blank">More information about VIIRS DNB Nighttime Lights data at NOAA's National Centers for Environmental Information (NCEI)</a>
+          The Earth Observations Group (EOG) at NOAA/NCEI is producing daily mosaic images and monthly composites using nighttime data from the Visible Infrared Imaging Radiometer Suite (VIIRS) Day/Night Band (DNB). VIIRS DNB sensors are on the Suomi National Polar-orbiting Partnership (NPP) satellite and on the NOAA-20 satellite. The imagery in this service is compiled from Suomi NPP data. <a href="https://ngdc.noaa.gov/eog/viirs/download_dnb_composites.html" target="_blank">More information about VIIRS DNB Nighttime Lights data at NOAA's National Centers for Environmental Information (NCEI)</a>.<br /><br />This map provides access to nightly mosaics and monthly composites of VIIRS DNB low light imaging data: detections of lighting from cities, towns, villages, combustion sources and lit fishing boats.<br /><br />Under <b>Controls</b>, select between nightly mosaics and monthly composites using the "Select Imagery" input. Use the time slider to select the imagery date. The map can be swtiched between a 2D Map view and a 3D Globe view. Change the transparency of the imagery with the opacity slider. Toggle the boundaries/labels on/off using the checkbox. Click on the map to retrieve the radiance value (nanowatts/cm²/sr), or number of cloud-free observations at that location.<br /><br />The nightly image service will contain approximately the past 60 days worth of imagery, with new imagery being added each day, and the older images being removed. The current image is updated multiple times per day as data from new orbits arrive.<br /><br />There are two versions of the monthly imagery: the first excludes any data impacted by stray light; the second includes these data if the radiance vales have undergone a stray-light correction procedure. For each month, images displaying the number of cloud-free observations are also provided.<br /><br />More information about the ArcGIS image services used in this viewer:<ul><li> <a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Nightly_Radiance/ImageServer" target="_blank">Nightly Radiance</a> | <a href="https://noaa.maps.arcgis.com/home/item.html?id=6e61ea374f87494d955a09f7b7d72567" target="_blank">NOAA GeoPlatform entry</a></li><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_AvgRadiance/ImageServer" target="_blank">Monthly Average Radiance</a> | <a href="https://noaa.maps.arcgis.com/home/item.html?id=d7c95b2da6fd43cd9dec19b212f145db" target="_blank">NOAA GeoPlatform entry</a></li><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_AvgRadiance_StrayLightImpacted/ImageServer" target="_blank">Monthly Average Radiance (Stray Light Impacted)</a> | <a href="https://noaa.maps.arcgis.com/home/item.html?id=a88d1c4909d3402c896176f8b1ea2f32" target="_blank">NOAA GeoPlatform entry</a></li><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_CloudFreeCoverage/ImageServer" target="_blank">Monthly Cloud-Free Coverage</a></li><li><a href="https://gis.ngdc.noaa.gov/arcgis/rest/services/NPP_VIIRS_DNB/Monthly_CloudFreeCoverage_StrayLightImpacted/ImageServer" target="_blank">Monthly Cloud-Free Coverage (Stray Light Impacted)</a></li></ul>
         </div>
      </div>
     </div>
@@ -186,25 +190,66 @@
       <div id="headingControls" class="panel-heading" role="tab">
         <div class="panel-title">
           <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseControls"  aria-expanded="true" aria-controls="collapseControls"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><span class="panel-label">Controls</span></a> 
-          <!-- <a class="panel-close" role="button" data-toggle="collapse" tabindex="0" href="#panelControls"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>   -->
+          <a class="panel-close" role="button" data-toggle="collapse" tabindex="0" href="#panelControls"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>  
         </div>
       </div>
       <div id="collapseControls" class="panel-collapse in" role="tabpanel" aria-labelledby="headingControls">
         <div class="panel-body">
+
+          Select Imagery:<br>
+          <select id="selectLayer" class="form-control">
+            <option disabled style="font-weight:bold; font-style:italic">---VIIRS DNB Nightly Mosaics:---</option>
+            <option value="nightlyRadiance" selected>Nightly Radiance</option>
+            <option disabled style="font-weight:bold; font-style:italic">---VIIRS DNB Monthly Composites:---</option>
+            <option value="monthlyAvgRadiance">Monthly Average Radiance</option>
+            <option value="monthlyAvgRadianceStrayLightImpacted">Monthly Average Radiance (Stray Light Impacted)
+            <option value="monthlyCloudFreeCoverage">Monthly Cloud-Free Coverage</option>
+            <option value="monthlyCloudFreeCoverageStrayLightImpacted">Monthly Cloud-Free Coverage (Stray Light Impacted)</option>
+          </select><br>
         
-          <div class="sliderContainer">
+          <div id="sliderContainer1" class="sliderContainer">
             <div class="sliderInnerContainer">
-              Date: <span id="dateText">not selected</span>                
+              Date: <span id="dateTextNightly">not selected</span>
               <div class="rangeWrapper">
                 <table class="controlsTable">
-                  <tr>                  
-                    <td><button id="timeSliderLeftButton" type="button" class="sliderButton glyphicon glyphicon-chevron-left"></button></td>
-                    <td><input class="slider" id="timeSlider" type="range" min="0" max="50" value="50" step="1"/></td>
-                    <td><button id="timeSliderRightButton" type="button" class="sliderButton glyphicon glyphicon-chevron-right"></button></td>
+                  <tr>
+                    <td><button id="timeSliderNightlyLeftButton" type="button" class="sliderButton glyphicon glyphicon-chevron-left"></button></td>
+                    <td><input class="slider" id="timeSliderNightly" type="range" min="0" max="50" value="50" step="1"/></td>
+                    <td><button id="timeSliderNightlyRightButton" type="button" class="sliderButton glyphicon glyphicon-chevron-right"></button></td>
                   </tr>
                 </table>
               </div>
-            </div>        
+            </div>
+          </div>
+
+          <div id="sliderContainer2" class="sliderContainer" style="display:none">
+            <div class="sliderInnerContainer">
+              Date: <span id="dateTextMonthly1">not selected</span>
+              <div class="rangeWrapper">
+                <table class="controlsTable">
+                  <tr>
+                    <td><button id="timeSliderMonthlyLeftButton1" type="button" class="sliderButton glyphicon glyphicon-chevron-left"></button></td>
+                    <td><input class="slider" id="timeSliderMonthly1" type="range" min="0" max="50" value="50" step="1"/></td>
+                    <td><button id="timeSliderMonthlyRightButton1" type="button" class="sliderButton glyphicon glyphicon-chevron-right"></button></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div id="sliderContainer3" class="sliderContainer" style="display:none">
+            <div class="sliderInnerContainer">
+              Date: <span id="dateTextMonthly2">not selected</span>
+              <div class="rangeWrapper">
+                <table class="controlsTable">
+                  <tr>
+                    <td><button id="timeSliderMonthlyLeftButton2" type="button" class="sliderButton glyphicon glyphicon-chevron-left"></button></td>
+                    <td><input class="slider" id="timeSliderMonthly2" type="range" min="0" max="50" value="50" step="1"/></td>
+                    <td><button id="timeSliderMonthlyRightButton2" type="button" class="sliderButton glyphicon glyphicon-chevron-right"></button></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
           </div>
 
           <table class="controlsTable">
