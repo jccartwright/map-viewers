@@ -4,8 +4,7 @@
   "description": "Gulf of Mexico Hypoxia Watch Viewer",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "preinstall": "bower install"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
