@@ -59,7 +59,7 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://service.ncddc.noaa.gov/arcgis/rest/services/EnvironmentalMonitoring/Hypoxia/MapServer/', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/Hypoxia/MapServer', {
                         id: 'Hypoxia',
                         visible: true,
                         imageParameters: this.imageParameters.png32
