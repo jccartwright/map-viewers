@@ -4,6 +4,11 @@ define([
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISImageServiceLayer',
+    'esri/symbols/SimpleFillSymbol',
+    'esri/symbols/SimpleLineSymbol',
+    'esri/renderers/SimpleRenderer',
+    'esri/Color',
+    'esri/layers/LayerDrawingOptions',
     'esri/layers/WebTiledLayer',
     'ngdc/layers/TiledWMSLayer'],
     function(
@@ -12,6 +17,11 @@ define([
         ArcGISTiledMapServiceLayer, 
         ArcGISDynamicMapServiceLayer,
         ArcGISImageServiceLayer,
+        SimpleFillSymbol,
+        SimpleLineSymbol,
+        SimpleRenderer,
+        Color,
+        LayerDrawingOptions,
         WebTiledLayer,
         TiledWMSLayer
         ){
@@ -43,6 +53,9 @@ define([
                 this.setLayerTimeouts();
 
                 this.definePairedMapServices();
+
+                // this.imageServiceParametersJpeg = new ImageServiceParameters();
+                // this.imageServiceParametersJpeg.format = 'jpeg';
 
                 //this.setSubLayerVisibility(); //When using PairedMapServiceLayers, need to do this later in MapConfig.MapReady()
             },
@@ -98,8 +111,13 @@ define([
                         epsgCode: '3857',
                         layerNames: ['GMRT']
                     }),
-                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_hillshade/ImageServer', {
-                        id: 'DEM Hillshades',
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/DEM_global_mosaic_hillshade/ImageServer', {
+                        id: 'DEM Global Mosaic Hillshade',
+                        visible: false,
+                        imageServiceParameters: this.imageServiceParameters
+                    }),
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/DEM_tiles_mosaic_hillshade/ImageServer', {
+                        id: 'DEM Tiles Hillshade',
                         visible: false,
                         imageServiceParameters: this.imageServiceParameters
                     }),
@@ -207,6 +225,34 @@ define([
                         imageParameters: this.imageParameters.png32
                     })
                 ];
+
+                var symbol = new SimpleFillSymbol(
+                    SimpleFillSymbol.STYLE_SOLID,
+                    new SimpleLineSymbol(
+                        SimpleLineSymbol.STYLE_SOLID,
+                        new Color([230,76,0,255]),
+                        1.6
+                    ),
+                    new Color([0,0,0,0])
+                );
+
+                var layerDrawingOptions = [];
+                var layerDrawingOption = new LayerDrawingOptions();
+                layerDrawingOption.scaleSymbols = false;
+                layerDrawingOption.transparency = 0;
+
+                var renderer = new SimpleRenderer(new SimpleLineSymbol(symbol));
+                  
+                layerDrawingOption.renderer = renderer;
+                  
+                layerDrawingOptions[0] = layerDrawingOption;
+                layerDrawingOptions[1] = layerDrawingOption;
+                layerDrawingOptions[2] = layerDrawingOption;
+                layerDrawingOptions[3] = layerDrawingOption;
+                this.getLayerById('DEM Tiles').setLayerDrawingOptions(layerDrawingOptions);
+
+
+
             },  //end defineMapServices
 
             definePairedMapServices: function() {
