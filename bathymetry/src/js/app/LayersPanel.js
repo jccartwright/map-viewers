@@ -85,9 +85,28 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'DEM Extents', this.chkDems.checked);
                     topic.publish('/ngdc/layer/visibility', 'DEM Tiles', this.chkDems.checked);
                 })); 
+
+                this.showAllDems = true;
                 on(this.chkDemHillshades, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/layer/visibility', 'DEM Hillshades', this.chkDemHillshades.checked);
-                }));  
+                    if (this.showAllDems) {
+                        topic.publish('/ngdc/layer/visibility', 'DEM Global Mosaic Hillshade', this.chkDemHillshades.checked);
+                    } else {
+                        topic.publish('/ngdc/layer/visibility', 'DEM Tiles Hillshade', this.chkDemHillshades.checked);
+                    }
+                }));
+
+                on(this.radioDemAll, 'click', lang.hitch(this, function() {
+                    this.showAllDems = true;
+                    topic.publish('/bathymetry/showDemAll');
+                    topic.publish('/ngdc/layer/visibility', 'DEM Global Mosaic Hillshade', this.chkDemHillshades.checked);
+                    topic.publish('/ngdc/layer/visibility', 'DEM Tiles Hillshade', false);
+                }));
+                on(this.radioDemTiled, 'click', lang.hitch(this, function() {
+                    this.showAllDems = false;
+                    topic.publish('/bathymetry/showDemTiles');
+                    topic.publish('/ngdc/layer/visibility', 'DEM Global Mosaic Hillshade', false);
+                    topic.publish('/ngdc/layer/visibility', 'DEM Tiles Hillshade', this.chkDemHillshades.checked);
+                }));
 
                 on(this.chkOcmLidar, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayer/visibility', 'OCM Lidar', [0, 1, 2, 3], this.chkOcmLidar.checked);                    

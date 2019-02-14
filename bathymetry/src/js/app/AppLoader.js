@@ -144,6 +144,13 @@ define([
                 topic.subscribe('/bathymetry/ResetSearch', lang.hitch(this, function() {
                     this.resetSurveyFilter();
                 }));
+
+                topic.subscribe('/bathymetry/showDemAll', lang.hitch(this, function() {
+                    this.showDemAll();
+                }));
+                topic.subscribe('/bathymetry/showDemTiles', lang.hitch(this, function() {
+                    this.showDemTiles();
+                }));
             },
 
             setupBanner: function() {
@@ -391,8 +398,8 @@ define([
                     autoUpdate: false,
                     respectVisibility: false,
                     layerInfos: [
-                        {title: 'NCEI DEMs:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Extents')},
-                        {title: 'NCEI Tiled DEMs (hosted at OCM):', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')},
+                        {title: 'NCEI DEMs:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Extents')}//,
+                        //{title: 'NCEI Tiled DEMs (hosted at OCM):', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Tiles')},
                     ]
                 }, 'demLegend');
                 demLegend.startup();
@@ -430,7 +437,7 @@ define([
                     else if (startupLayers[i].toLowerCase() === 'dem') {
                         //Startup with DEM Footprints and DEM Hillshades visible
                         this.layersPanel.chkDems.set('checked', true);
-                        this.layersPanel.chkDemHillshades.set('checked', true);
+                        //this.layersPanel.chkDemHillshades.set('checked', true);
                         this.demVisible = true;
                     }
                 }
@@ -538,6 +545,14 @@ define([
                 if (values.zoomToResults) {
                     this.zoomToResults(serviceLayerDefs);
                 }
+            },
+
+            showDemAll: function() {
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Extents').setLayerDefinitions(["CATEGORY <> 'Tiled' OR CATEGORY IS NULL"]);
+            },
+
+            showDemTiles: function() {
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('DEM Extents').setLayerDefinitions(["CATEGORY = 'Tiled Coverage'"]);
             },
 
             resetSurveyFilter: function() {            
