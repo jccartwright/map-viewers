@@ -92,6 +92,10 @@ define([
                 on(this.chkNRCanMultibeam, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'NRCan Multibeam', this.chkNRCanMultibeam.checked);
                 }));
+
+                on(this.chkChsBathymetry, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'CHS 100m Bathymetry', this.chkChsBathymetry.checked);
+                }));
                 on(this.chkNRCanMultibeamHillshade, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'NRCan Multibeam East', this.chkNRCanMultibeamHillshade.checked);
                     topic.publish('/ngdc/layer/visibility', 'NRCan Multibeam West', this.chkNRCanMultibeamHillshade.checked);
@@ -123,6 +127,16 @@ define([
 
                 on(this.chkCanadaBathy, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Canada 500m Bathymetry', this.chkCanadaBathy.checked);
+                }));
+
+                on(this.chkAusSeabed50Multibeam, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'AusSeabed 50m Multibeam 2018', this.chkAusSeabed50Multibeam.checked);
+                }));
+                on(this.chkAusSeabedMH370, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'AusSeabed MH370 Phase 1 Data 150m', this.chkAusSeabedMH370.checked);
+                }));
+                on(this.chkAusSeabedBathymetryHoldings, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'AusSeabed Bathymetry Holdings', this.chkAusSeabedBathymetryHoldings.checked);
                 }));
                 
                 this.csbSearchDialog = new CsbSearchDialog({title: 'Search Crowdsourced Bathymetry Files'});

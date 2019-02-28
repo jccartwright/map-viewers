@@ -101,6 +101,23 @@ define([
                         imageParameters: this.imageParameters.png32
                     }),
 
+                    new TiledWMSLayer('https://marine.ga.gov.au/geoserver/marine/wms?', {
+                        id: 'AusSeabed 50m Multibeam 2018',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '3857',
+                        layerNames: ['marine:50m_multibeam_2018']
+                    }), 
+                    new TiledWMSLayer('https://marine.ga.gov.au/geoserver/marine/wms?', {
+                        id: 'AusSeabed MH370 Phase 1 Data 150m',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '3857',
+                        layerNames: ['marine:bathymetry_150m_3857']
+                    }), 
+
                     new ArcGISDynamicMapServiceLayer('https://geoportal.gc.ca/arcgis/rest/services/Bathymetry_500m_ENG/MapServer', {
                         id: 'Canada 500m Bathymetry',
                         visible: false,
@@ -140,6 +157,12 @@ define([
                         imageParameters: this.imageParameters.png32
                     }),
 
+                    new ArcGISDynamicMapServiceLayer('https://geoportal.gc.ca/arcgis/rest/services/FGP/CHS_NONNA_100/MapServer', {
+                        id: 'CHS 100m Bathymetry',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
+                    }),                    
+
                     new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_hillshade/ImageServer', {
                         id: 'Multibeam Mosaic',
                         visible: false
@@ -153,7 +176,7 @@ define([
                         id: 'BAG Hillshades (dynamic)',
                         imageServiceParameters: this.imageServiceParameters,
                         visible: false
-                    }),  
+                    }),
 
                     new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/gebco_2014_contours/MapServer', {
                         id: 'GEBCO_2014 Contours',
@@ -170,6 +193,15 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),
+
+                    new TiledWMSLayer('https://marine.ga.gov.au/geoserver/marine/wms?', {
+                        id: 'AusSeabed Bathymetry Holdings',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '3857',
+                        layerNames: ['marine:ausseabed_bathymetry']
+                    }), 
 
                     new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro/MapServer', {
                         id: 'NOS Hydrographic Surveys (tiled)',
@@ -342,13 +374,13 @@ define([
                 }
 
                 //NRCan multibeam hillshade services are composed of many sublayers, toggle them all to be visible by default.
-                //Only show at scales greater than 1:2,000,000 (zoom level 9)
+                //Only show at scales greater than 1:4,000,000 (zoom level 8)
                 this.getLayerById('NRCan Multibeam East').setVisibleLayers(visibleLayers);
-                this.getLayerById('NRCan Multibeam East').setScaleRange(2000000, 0);
+                this.getLayerById('NRCan Multibeam East').setScaleRange(4000000, 0);
                 this.getLayerById('NRCan Multibeam West').setVisibleLayers(visibleLayers);
-                this.getLayerById('NRCan Multibeam West').setScaleRange(2000000, 0);
+                this.getLayerById('NRCan Multibeam West').setScaleRange(4000000, 0);
                 this.getLayerById('NRCan Multibeam North').setVisibleLayers(visibleLayers);
-                this.getLayerById('NRCan Multibeam North').setScaleRange(2000000, 0);
+                this.getLayerById('NRCan Multibeam North').setScaleRange(4000000, 0);
             }
         });
     }
