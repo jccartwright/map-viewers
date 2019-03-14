@@ -1,6 +1,6 @@
 {
   "name": "iho_dcdb",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "IHO DCDB Viewer",
   "main": "index.html",
   "scripts": {
