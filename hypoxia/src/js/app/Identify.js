@@ -1,39 +1,33 @@
 define([
     'dojo/_base/declare', 
+    'dojo/_base/lang',
     'dojo/string', 
+    'dojo/topic',
     'esri/geometry/webMercatorUtils',
     'ngdc/identify/AbstractIdentify'],
     function(
         declare, 
+        lang,
         string, 
+        topic,
         webMercatorUtils,
         AbstractIdentify 
         ){
 
         return declare([AbstractIdentify], {
 
+            sstTimeFrame: 'Day',
+
+            init: function() {
+                this.inherited(arguments);
+
+                topic.subscribe('/sst/timeFrame', lang.hitch(this, function(timeFrame) {
+                    this.sstTimeFrame = timeFrame;
+                }));
+            },
+
             hypoxiaStationsFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
-
-                // Ship    Cruise Number   Leg Date    Time    Longitude   Latitude    Bottom Depth (m)    Dissolved Oxygen (mg/L)
-                // OREGON II   328 3   7/15/2018   23:44:09    -89.475 28.8395 55  4.8347
-
-                /*
-                objectid ( type: esriFieldTypeOID , alias: ID )
-                ship ( type: esriFieldTypeString , alias: Ship , length: 254 )
-                cruiseno ( type: esriFieldTypeDouble , alias: Cruise Number )
-                date_ ( type: esriFieldTypeDate , alias: Date , length: 36 )
-                time ( type: esriFieldTypeString , alias: Time , length: 50 )
-                leg ( type: esriFieldTypeString , alias: Leg , length: 5 )
-                station ( type: esriFieldTypeDouble , alias: Station )
-                cast_ ( type: esriFieldTypeDouble , alias: Cast )
-                seamap ( type: esriFieldTypeString , alias: SEAMAP , length: 32 )
-                longitude ( type: esriFieldTypeDouble , alias: Longitude )
-                latitude ( type: esriFieldTypeDouble , alias: Latitude )
-                waterdepth ( type: esriFieldTypeDouble , alias: Water Depth )
-                botdepth_m ( type: esriFieldTypeDouble , alias: Bottom Depth (m) )
-                oxmgl ( type: esriFieldTypeDouble , alias: Dissolved Oxygen (mg/l) )
-                */
 
                 var template =                     
                     '<div class="valueName">Ship: <span class="parameterValue">${ship}</span></div>' +
@@ -63,16 +57,6 @@ define([
 
             hypoxiaContoursFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
-                /*
-                objectid ( type: esriFieldTypeOID , alias: ID )
-                ship ( type: esriFieldTypeString , alias: Ship , length: 16 )
-                cruise ( type: esriFieldTypeDouble , alias: Cruise Number )
-                begin ( type: esriFieldTypeDate , alias: Begin , length: 36 )
-                end_ ( type: esriFieldTypeDate , alias: End , length: 36 )
-                min_02 ( type: esriFieldTypeDouble , alias: Min Oxygen Level )
-                max_02 ( type: esriFieldTypeDouble , alias: Max Oxygen Level )
-                range_02 ( type: esriFieldTypeString , alias: Oxygen Range , length: 16 )
-                */
 
                 var template =                     
                     '<div class="valueName">Ship: <span class="parameterValue">${ship}</span></div>' +
@@ -93,6 +77,43 @@ define([
                 });                
                 return html;
             },
+
+            sstContoursFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template =                     
+                    '<div class="valueName">Month: <span class="parameterValue">${month}</span></div>' +
+                    '<div class="valueName">Years: <span class="parameterValue">${years}</span></div>' +
+                    '<div class="valueName">Time Frame: <span class="parameterValue">${timeFrame}</span></div>' +
+                    '<div class="valueName">Mean Temperature (°C): <span class="parameterValue">${meanTemp}</span></div>';
+                var html = string.substitute(template, {
+                    month: a['Month'],
+                    years: a['Years'],
+                    timeFrame: this.sstTimeFrame,
+                    meanTemp: a['Mean Temperature']
+                });                
+                return html;
+            },
+
+            hypoxiaStationsSort: function(a, b) {
+                return parseInt(a.feature.attributes['Station']) > parseInt(b.feature.attributes['Station']) ? 1 : -1;
+            },
+
+            hypoxiaContoursSort: function(a, b) {
+                return parseFloat(a.feature.attributes['Min Oxygen Level']) > parseFloat(b.feature.attributes['Min Oxygen Level']) ? 1 : -1;
+            },
+
+            sortResults: function(results) {
+                var features;
+                if (results['Hypoxia']) {    
+                    if ((features = results['Hypoxia']['Hypoxia Stations'])) {
+                        features.sort(this.hypoxiaStationsSort);
+                    }
+                    if ((features = results['Hypoxia']['Hypoxia Contours'])) {
+                        features.sort(this.hypoxiaContoursSort);
+                    }
+                }
+            }
 
         });
     }

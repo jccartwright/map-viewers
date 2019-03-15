@@ -45,11 +45,14 @@ define([
 
             getLayerDisplayLabel: function(item, count) {
 
-                if (item.layerName.indexOf('Hypoxia Stations') > 0) {
+                if (item.layerName === 'Hypoxia Stations') {
                     return '<i><b>Hypoxia Stations (' + this.formatCountString(count) + ')</b></i>';
                 }
-                else if (item.layerName.indexOf('Hypoxia Contours') > 0) {
+                else if (item.layerName === 'Hypoxia Contours') {
                     return '<i><b>Hypoxia Contours (' + this.formatCountString(count) + ')</b></i>';
+                }
+                else if (item.layerName.indexOf('Mean SST') >= 0) {
+                    return '<i><b>Sea Surface Temperatures - Mean</b></i>';
                 }
             },
 
@@ -62,13 +65,15 @@ define([
             },
 
             getItemDisplayLabel: function(item, uid) {
-                //return item.value;
-                if (item.layerName.indexOf('Hypoxia Stations') > 0) {
-                    return this.getItemLabelSpan(item.feature.attributes['Station'], uid);
+                var a = item.feature.attributes;
+                if (item.layerName === 'Hypoxia Stations') {
+                    return this.getItemLabelSpan('Station: ' + a['Station'] + ' (' + a['Dissolved Oxygen (mg/l)'] + ' mg/L)', uid);
                 }
-                else if (item.layerName.indexOf('Hypoxia Contours') > 0) {
-                    //return this.getItemLabelSpan(item.feature.attributes['Survey ID'], uid);
-                    return this.getItemLabelSpan('Hypoxia Contours', uid);
+                else if (item.layerName ==='Hypoxia Contours') {
+                    return this.getItemLabelSpan('Dissolved Oxygen Range: ' + item.feature.attributes['Oxygen Range'] + ' mg/L', uid);
+                }
+                else if (item.layerName.indexOf('Mean SST') >= 0) {
+                    return this.getItemLabelSpan('Mean Sea Surface Temperature: ' + item.feature.attributes['Mean Temperature'] + '°C', uid);
                 }
             },
 

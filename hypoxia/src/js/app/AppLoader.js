@@ -101,7 +101,6 @@ define([
             },
 
             setupBanner: function() {
-
                 this.banner = new Banner({
                     breadcrumbs: [
                         {url: 'https://www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},

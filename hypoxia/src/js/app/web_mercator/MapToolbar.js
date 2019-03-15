@@ -12,8 +12,6 @@ define([
                     {base: 'Ocean Base', overlays: [{id: 'Ocean Reference'}], label: 'Ocean Basemap (Esri)'},
                     {base: 'GEBCO_2014', overlays: [{id: 'World Boundaries and Places'}], label: 'GEBCO_2014 (NOAA NCEI Visualization)'},
                     {base: 'GEBCO_2014 Grayscale', overlays: [{id: 'World Boundaries and Places'}], label: 'GEBCO_2014 Grayscale (NOAA NCEI Visualization)'},
-                    {base: 'GMRT Unmasked', overlays: [{id: 'Ocean Reference'}], label: 'Global Multi-Resolution Topography (GMRT) Data Synthesis (LDEO)'},
-                    {base: 'GMRT Masked', overlays: [{id: 'Ocean Reference'}], label: 'Global Multi-Resolution Topography (GMRT) Data Synthesis (LDEO),<br/><i>High-Resolution Areas Highlighted</i>'},
                     {base: 'Light Gray', overlays: [{id: 'Light Gray Reference'}], label: 'Light Gray (Esri)'},
                     {base: 'Dark Gray', overlays: [{id: 'Dark Gray Reference'}], label: 'Dark Gray (Esri)'},
                     {base: 'World Imagery', overlays: [{id: 'World Boundaries and Places'}], label: 'World Imagery (Esri)'},
@@ -32,22 +30,10 @@ define([
                         visible: false
                     },
                     {
-                        label: '<a href="https://nauticalcharts.noaa.gov/charts/noaa-raster-charts.html" target="_blank">NOAA Raster Navigational Charts (RNC®)</a>',
-                        services: [{id: 'RNC'}],
-                        visible: false
-                    },
-                    {
                         label: 'Graticule',
                         services: [{id: 'Graticule'}],
                         visible: false
-                    }//,
-                    /*
-                    {
-                        label: 'EMODNet Survey Tracks/Polygons',
-                        services: [{id: 'EMODNet'}],
-                        visible: true
                     }
-                    */
                 ];
 
                 this._identifyTools = [

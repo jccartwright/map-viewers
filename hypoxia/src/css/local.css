@@ -175,7 +175,7 @@ html,body {
     height: 75px;
 }
 
-#leftPane {
+#layersPanel {
     width: 350px;
 }
 
@@ -248,37 +248,6 @@ html,body {
     background: #EEE;
 }
 
-.surveySelect {
-    font-family: Verdana, Helvetica, sans-serif;
-    font-size: 12px;
-}
-
-.surveySelect-multiSelect {
-    width: 300px;
-}
-
-.surveySelect-filteringSelect {
-    width: 200px;
-}
-
-.surveySelect-yearSpinner {
-    width: 55px;
-}
-
-.surveySelect-countSpan {
-    font-size: smaller;
-}
-
-.surveySelect-dateTextBox {
-    font: 12px arial,helvetica,verdana,sans-serif;
-    width: 8em;
-}
-
-#surveyListDiv {
-    white-space: normal;
-    width: 300px;
-}
-
 .layersPanel_class {
     font: 12px arial,helvetica,verdana,sans-serif;
 }
@@ -300,34 +269,10 @@ html,body {
     display: none;
 }
 
-.queryIcon {
-    background-image: url(../images/magnifyingglass.png);
-    width: 20px;
-    height: 20px;
-}
-
-.clearSelectionIcon {
-    background-image: url(../images/x.png);
-    width: 16px;
-    height: 16px;
-}
-
-.timeSlider {
-  position:absolute; 
-  right: 165px; 
-  bottom:10px;  
-  width: 500px; 
-  background-color: #fff; 
-  color: #000; 
-  padding: 5px;
-  border: solid 1px gray;
-  text-align: center;
-  -moz-box-shadow: 3px 3px 8px #888;
-  -webkit-box-shadow: 3px 3px 8px #888;
-  z-index: 9999;
-  box-shadow: 3px 3px 8px #888888;
-} 
-
 .downloadTable table, .downloadTable th, .downloadTable td {
   border: 1px solid black;
+}
+
+.layerIcon {
+    vertical-align: middle;
 }
