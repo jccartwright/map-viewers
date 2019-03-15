@@ -5,6 +5,8 @@ define([
     'dojo/_base/lang',
     'dojo/dom-style',
     'dojo/io-query',
+    'dijit/Dialog',
+    'dijit/form/Button',
     'dijit/form/DropDownButton', 
     'dijit/DropDownMenu', 
     'dijit/MenuItem', 
@@ -19,6 +21,8 @@ define([
         lang,
         domStyle,
         ioQuery,
+        Dialog,
+        Button,
         DropDownButton,
         DropDownMenu,
         MenuItem,
@@ -46,7 +50,8 @@ define([
                     label: 'Extract Multibeam Data',
                     disabled: true,
                     onClick: lang.hitch(this, function(){ 
-                        this.extractData('multibeam');
+                        this.openNextWarningDialog('multibeam');
+                        //this.extractData('multibeam');
                     })
                 });
                 menu.addChild(this.multibeamMenuItem);
@@ -55,7 +60,8 @@ define([
                     label: 'Extract Single-Beam Data',
                     disabled: true,
                     onClick: lang.hitch(this, function(){ 
-                        this.extractData('trackline');
+                        this.openNextWarningDialog('trackline');
+                        //this.extractData('trackline');
                     })
                 });
                 menu.addChild(this.tracklineMenuItem);
@@ -64,7 +70,8 @@ define([
                     label: 'Extract CSB Data',
                     disabled: true,
                     onClick: lang.hitch(this, function(){ 
-                        this.extractData('csb');
+                        this.openNextWarningDialog('csb');
+                        //this.extractData('csb');
                     })
                 });
                 menu.addChild(this.csbMenuItem);
@@ -73,7 +80,8 @@ define([
                     label: 'Extract NOAA Hydrographic Survey Data',
                     disabled: true,
                     onClick: lang.hitch(this, function(){ 
-                        this.extractData('nos');
+                        this.openNextWarningDialog('nos');
+                        //this.extractData('nos');
                     })
                 });
                 menu.addChild(this.nosMenuItem);
@@ -85,25 +93,6 @@ define([
                     iconClass: 'downloadIcon',
                     dropDown: menu
                 }).placeAt(this.featurePageBottomBar);
-
-                // new Tooltip({
-                //     connectId: [this.extractDataButton.domNode],
-                //     label: 'Extract Crowdsourced Bathymetry data via NEXT (NCEI Extract System).'
-                // });
-
-                //Add a button to the main cruise feature page to request cruises
-                // this.extractSingleDatasetButton = new Button({
-                //     label: 'Extract This Survey',
-                //     style: 'bottom: 5px; left: 5px;',
-                //     iconClass: 'downloadIcon',
-                //     onClick: lang.hitch(this, function() {
-                //         var itemId;
-                //         if (this.currentItem.attributes['Name']) {
-                //             itemId = this.currentItem.attributes['Name'];
-                //         }.set
-                //         this.extractData(itemId);
-                //     })
-                // }).placeAt(this.infoPageBottomBar);
             },
 
             showResults: function() {
@@ -354,7 +343,26 @@ define([
                 }
             },
 
-            extractData: function(datasetId, itemId /*Optional survey/DEM id*/) {            
+            openNextWarningDialog: function(datasetId, itemId) {
+                //Temporary warning dialog for NEXT extract
+                var okDialog = new Dialog({
+                    title: 'Warning',
+                    content: 'We are experiencing technical difficulties with the data delivery system for bathymetry  data. If you experience problems or do not receive your requested data, please contact <a href="mailto:mb.info@noaa.gov">mb.info@noaa.gov</a> for assistance.<br>',
+                    'class': 'requestDataDialog',
+                    style: 'width:300px'
+                });
+                new Button({
+                    label: 'OK',
+                    type: 'submit',
+                    onClick: lang.hitch(this, function(){
+                        this.extractData(datasetId, itemId);
+                        okDialog.destroy();
+                    })
+                }).placeAt(okDialog.containerNode);
+                okDialog.show();
+            },
+
+            extractData: function(datasetId, itemId /*Optional survey/DEM id*/) {   
                 var filterCriteria = this.constructFilterCriteria(datasetId, itemId);
                 if (filterCriteria.items.length > 0) {   
                     if (datasetId === 'trackline') {

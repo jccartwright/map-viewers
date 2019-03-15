@@ -6,6 +6,7 @@ define([
     'dojo/_base/lang',
     'dojo/dom-style',
     'dojo/json',
+    'dijit/Dialog',
     'dijit/form/Button',
     'dijit/Tooltip',
     'esri/geometry/webMercatorUtils', 
@@ -18,6 +19,7 @@ define([
         lang,
         domStyle,
         JSON,
+        Dialog,
         Button,
         Tooltip,
         webMercatorUtils,
@@ -43,7 +45,8 @@ define([
                     style: 'bottom: 5px; left: 15px;',
                     iconClass: 'downloadIcon',
                     onClick: lang.hitch(this, function(){
-                        this.extractData();
+                        //this.extractData();
+                        this.openNextWarningDialog();
                     })
                 }).placeAt(this.featurePageBottomBar);
 
@@ -64,7 +67,8 @@ define([
                         } else if (this.currentItem.attributes['ITEM_ID']) {
                             itemId = this.currentItem.attributes['ITEM_ID'];
                         }
-                        this.extractData(itemId);
+                        //this.extractData(itemId);
+                        this.openNextWarningDialog(itemId);
                     })
                 }).placeAt(this.infoPageBottomBar);
             },
@@ -249,13 +253,32 @@ define([
                 }
             },
 
+            openNextWarningDialog: function(itemId) {
+                //Temporary warning dialog for NEXT extract
+                var okDialog = new Dialog({
+                    title: 'Warning',
+                    content: 'We are experiencing technical difficulties with the data delivery system for bathymetry data. If you experience problems or do not receive your requested data, please contact <a href="mailto:mb.info@noaa.gov">mb.info@noaa.gov</a> for assistance.<br>',
+                    'class': 'requestDataDialog',
+                    style: 'width:300px'
+                });
+                new Button({
+                    label: 'OK',
+                    type: 'submit',
+                    onClick: lang.hitch(this, function(){
+                        okDialog.destroy();
+                        this.extractData(itemId);
+                    })
+                }).placeAt(okDialog.containerNode);
+                okDialog.show();
+            },
+
             extractData: function(itemId /*Optional survey/DEM id*/) {                
                 var filterCriteria = this.constructFilterCriteria(itemId);
                 if (filterCriteria.items.length > 0) {
                     this.submitFormToNext(filterCriteria);
                 }
 
-                //filterCriteria = this.replaceWildcardsAndSubmit(filterCriteria);
+                filterCriteria = this.replaceWildcardsAndSubmit(filterCriteria);
             },
 
             getFilterItemById: function(filterCriteria, id /*'Multibeam'|'Sounding'*/) {

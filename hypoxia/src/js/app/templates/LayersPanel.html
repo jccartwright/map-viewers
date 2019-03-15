@@ -1,59 +1,108 @@
 <div class="layersPanel_class">
-    Select Year:<br>
-    <select data-dojo-attach-point="selectYear" data-dojo-type="dijit/form/Select" style="width:100px">
-        <option value="0">2001</option>
-        <option value="1">2002</option>
-        <option value="2">2003</option>
-        <option value="3">2004</option>
-        <option value="4">2005</option>
-        <option value="5">2006</option>
-        <option value="6">2007</option>
-        <option value="7">2008 (Summer)</option>
-        <option value="8">2008 (Fall)</option>
-        <option value="9">2009</option>
-        <option value="10">2010</option>
-        <option value="11">2011</option>
-        <option value="12">2012</option>
-        <option value="13">2013</option>
-        <option value="14">2014</option>
-        <option value="15">2015</option>
-        <option value="16">2016</option>
-        <option value="17">2017</option>
-        <option selected="selected" value="18">2018</option>
-    </select><br><br>
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Dissolved Oxygen Measurements', open: true">
+        Select Year:<br>
+        <select data-dojo-attach-point="selectYear" data-dojo-type="dijit/form/Select" style="width:100px">
+            <option value="2001">2001</option>
+            <option value="2002">2002</option>
+            <option value="2003">2003</option>
+            <option value="2004">2004</option>
+            <option value="2005">2005</option>
+            <option value="2006">2006</option>
+            <option value="2007">2007</option>
+            <option value="2008-Summer">2008 (Summer)</option>
+            <option value="2008-Fall">2008 (Fall)</option>
+            <option value="2009">2009</option>
+            <option value="2010">2010</option>
+            <option value="2011">2011</option>
+            <option value="2012">2012</option>
+            <option value="2013">2013</option>
+            <option value="2014">2014</option>
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option selected="selected" value="2018">2018</option>
+        </select><br><br>
 
-    <input checked type="checkbox" id="chkCtd" data-dojo-attach-point="chkCtd" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkCtd">CTD Stations</label>
-    <img id="ctdHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'ctdHelp'">
-        <div class="tooltipText">
-            Help text goes here
-        </div>
-    </div><br>
+        <input checked type="checkbox" id="chkCtd" data-dojo-attach-point="chkCtd" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkCtd">CTD Stations</label>
+        <img class="layerIcon" src="images/hypoxia_station.png"/>
+        <img id="ctdHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'ctdHelp'">
+            <div class="tooltipText">
+                CTD (conductivity, temperature, depth) stations collected on cruises from 2001 to the present. Click on a station (or use the identify tools in the upper-right) to display the dissolved oxygen value measured at each site.
+            </div>
+        </div><br>
 
-    <input checked type="checkbox" data-dojo-attach-point="chkContours" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkContours">Dissolved Oxygen Contours</label>
-    <img id="contoursHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'contoursHelp'">
-        <div class="tooltipText">
-            Help text goes here
+        <input checked type="checkbox" data-dojo-attach-point="chkContours" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkContours">Dissolved Oxygen Contours</label>
+        <img id="contoursHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'contoursHelp'">
+            <div class="tooltipText">
+                Contours of dissolved oxygen content derived from the point measurements. For details on the process steps involved in converting dissolved oxygen data into map contours, see <a href="https://service.ncddc.noaa.gov/rdn/www/media/documents/hypoxia/contour-process.ppt" target="_blank">Hypoxia Contour Process (1.14 MB)</a>.<br><br>
+                Click on a contour (or use the identify tools in the upper-right) to display the dissolved oxygen range for each contour. Mouse over the list to highlight the contours on the map.<br><br>
+                Legend:<br>
+                <img src="images/hypoxia_legend.jpg">
+            </div>
         </div>
-    </div><br>
-    <hr>
-    <br>
-    Download Data:<br>
-    <table class="downloadTable">
-        <tr>
-            <td>CTD Station Locations</td>
-            <td><a id="ctdMetadataLink" href="#" target="_blank">Metadata</a></td>
-            <td><a id="ctdJpgLink" href="#" target="_blank">JPG Image</a></td>
-            <td><a id="ctdShapefileLink" href="#" target="_blank">Shapefile</a></td>
-        </tr>
-        <tr>
-            <td>Bottom Dissolved Oxygen Contours</td>
-            <td><a id="ctrMetadataLink" href="#" target="_blank">Metadata</a></td>
-            <td><a id="ctrJpgLink" href="#" target="_blank">JPG Image</a></td>
-            <td><a id="ctrShapefileLink" href="#" target="_blank">Shapefile</a></td>            
-        </tr>
-    </table>
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Access Maps and Data', open: true">
+        Season selected: <span id="selectedSeasonSpan">2018</span><br>
+        <table class="downloadTable">
+            <tr>
+                <td>CTD Station Locations</td>
+                <td><a id="ctdMetadataLink" href="#" target="_blank">Metadata</a></td>
+                <td><a id="ctdJpgLink" href="#" target="_blank">JPG Image</a></td>
+                <td><a id="ctdShapefileLink" href="#" target="_blank"><img src="images/drive-download.png"/>Shapefile Download</a></td>
+            </tr>
+            <tr>
+                <td>Bottom Dissolved Oxygen Contours</td>
+                <td><a id="ctrMetadataLink" href="#" target="_blank">Metadata</a></td>
+                <td><a id="ctrJpgLink" href="#" target="_blank">JPG Image</a></td>
+                <td><a id="ctrShapefileLink" href="#" target="_blank"><img src="images/drive-download.png"/>Shapefile Download</a></td>            
+            </tr>
+        </table>
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Ancillary Data', open: true">
+        <input type="checkbox" id="chkSst" data-dojo-attach-point="chkSst" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkSst">Mean Sea Surface Temperatures</label>
+        <img id="sstHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'sstHelp'">
+            <div class="tooltipText">
+                Legend:<br>
+                <img src="images/meansst_legend.jpg">
+            </div>
+        </div><br>
+        &nbsp;&nbsp;<select data-dojo-attach-point="selectSst" data-dojo-type="dijit/form/Select" style="width:100px">
+            <option value="3">Day - June</option>
+            <option value="4">Night - June</option>
+            <option value="5">Combined - June</option>
+            <option value="6">Day - July</option>
+            <option value="7">Night - July</option>
+            <option value="8">Combined - July</option>
+            <option value="9">Day - August</option>
+            <option value="10">Night - August</option>
+            <option value="11">Combined - August</option>
+        </select><br><br>
+
+        <input type="checkbox" id="chkDepth10" data-dojo-attach-point="chkDepth10" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkDepth10">Depth - 10 m contour</label><br>
+
+        <input type="checkbox" id="chkDepth200" data-dojo-attach-point="chkDepth200" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkDepth200">Depth - 200 m contour</label>
+    </div>
+
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'More Information', open: true">
+        Hypoxia in aquatic systems refers to waters where the dissolved oxygen concentration is below 2 mg/L. Most organisms avoid, or become physiologically stressed, in waters with oxygen below this concentration. Also known as a dead zone, hypoxia can also kill marine organisms which cannot escape the low-oxygen water, affecting commercial harvests and the health of impacted ecosystems.<br><br>
+
+        The Gulf of Mexico Hypoxia Watch evolved as a cooperative project among the National Oceanic and Atmospheric Administration's (NOAA's) <a href="http://www.nmfs.noaa.gov/" target="_blank">National Marine Fisheries Service (NMFS)</a>, <a href="https://www.ncddc.noaa.gov/" target="_blank">NCEI at Stennis</a>, and the <a href="https://cwcaribbean.aoml.noaa.gov/" target="_blank">CoastWatch - Caribbean/Gulf of Mexico - Regional Node</a>.<br><br>
+
+        The objective of Hypoxia Watch is to develop new near-real time data and map products using shipboard measurements of bottom-dissolved oxygen and disseminate them over the Internet.<br><br>
+
+        The data collected from annual <a href="http://www.seamap.org/" target="_blank">Southeast Area Monitoring and Assessment Program (SEAMAP)</a> summer groundfish surveys is used to generate products that form the basis for summertime advisories on anoxic and hypoxic conditions in the north-central Gulf of Mexico. For details on the process steps involved in converting dissolved oxygen data into map contours, see <a href="https://service.ncddc.noaa.gov/rdn/www/media/documents/hypoxia/contour-process.ppt" target="_blank">Hypoxia Contour Process (1.14 MB)</a>.<br><br>
+
+        <a href="https://www.ncddc.noaa.gov/hypoxia/" target="_blank">More information at NCEI</a>
+    </div>
+
 </div>

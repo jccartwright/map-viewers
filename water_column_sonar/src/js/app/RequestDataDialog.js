@@ -6,6 +6,7 @@ define([
     'dijit/_WidgetsInTemplateMixin',
     'dijit/form/Button',
     'dijit/form/CheckBox',
+    'dijit/Dialog',
     'dojo/_base/lang',
     'dojo/_base/array',
     'dojo/on',
@@ -32,6 +33,7 @@ define([
         _WidgetsInTemplateMixin,
         Button,
         CheckBox,
+        Dialog,
         lang,
         array,
         on,
@@ -150,7 +152,8 @@ define([
                     }
                 }
 
-                this.submitOrder(orderParams);
+                //this.submitOrder(orderParams);
+                this.openNextWarningDialog(orderParams);
             },
 
             displayFileCountAndSize: function(cruiseList, instrumentList, geometry, /*optional*/ numFiles) {
@@ -259,12 +262,11 @@ define([
                 }));
             },
 
-            submitOrder: function(orderParams) {
-                var jsonString = JSON.stringify(orderParams);
-
+            openNextWarningDialog: function(orderParams) {
+                //Temporary warning dialog for NEXT extract
                 var okDialog = new Dialog({
-                    title: 'Request Submitted',
-                    //content: 'Your order has been received. ',
+                    title: 'Warning',
+                    content: 'We are experiencing technical difficulties with the data delivery system for water column sonar data. If you experience problems or do not receive your requested data, please contact <a href="mailto:wcd.info@noaa.gov">wcd.info@noaa.gov</a> for assistance.<br>',
                     'class': 'requestDataDialog',
                     style: 'width:300px'
                 });
@@ -273,8 +275,14 @@ define([
                     type: 'submit',
                     onClick: lang.hitch(this, function(){
                         okDialog.destroy();
+                        this.openGetMarineDataWindow(geometry, surveyIds, isSingleSurvey);
                     })
                 }).placeAt(okDialog.containerNode);
+                okDialog.show();
+            },
+
+            submitOrder: function(orderParams) {
+                var jsonString = JSON.stringify(orderParams);
 
                 topic.publish('/ngdc/showLoading'); //Show the loading spinner
                 xhr.post('//www.ngdc.noaa.gov/wcs-order/order', {

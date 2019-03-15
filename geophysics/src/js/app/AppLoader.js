@@ -11,6 +11,8 @@ define([
     'dojo/store/Memory',
     'dojo/aspect',
     'dojo/request/xhr',
+    'dijit/Dialog',
+    'dijit/form/Button',
     'dijit/form/CheckBox',
     'esri/config',
     'esri/geometry/Extent',
@@ -52,6 +54,8 @@ define([
         Memory,
         aspect,
         xhr,
+        Dialog,
+        Button,
         CheckBox,
         esriConfig,
         Extent,
@@ -137,10 +141,12 @@ define([
                 }));
 
                 topic.subscribe('/geophysics/GetMarineDataMultipleSurveys', lang.hitch(this, function(geometry, surveyIds) {
-                    this.openGetMarineDataWindow(geometry, surveyIds, false);
+                    //this.openGetMarineDataWindow(geometry, surveyIds, false);
+                    this.openNextWarningDialog(geometry, surveyIds, false);
                 }));
                 topic.subscribe('/geophysics/GetMarineDataSingleSurvey', lang.hitch(this, function(geometry, surveyIds) {
-                    this.openGetMarineDataWindow(geometry, surveyIds, true);
+                    //this.openGetMarineDataWindow(geometry, surveyIds, true);
+                    this.openNextWarningDialog(geometry, surveyIds, true);
                 }));
 
                 this.tracklineLayerDefinitions = []; //object containing the current layer definitions for all sublayers of the "Trackline Combined" service. 
@@ -561,6 +567,25 @@ define([
                 this.layersPanel.disableGetMarineDataButton();
             },
 
+            openNextWarningDialog: function(geometry, surveyIds, isSingleSurvey) {
+                //Temporary warning dialog for NEXT extract
+                var okDialog = new Dialog({
+                    title: 'Warning',
+                    content: 'We are experiencing technical difficulties with the data delivery system for trackline geophysical data. If you experience problems or do not receive your requested data, please contact <a href="mailto:trackline.info@noaa.gov">trackline.info@noaa.gov</a> for assistance.<br>',
+                    'class': 'requestDataDialog',
+                    style: 'width:300px'
+                });
+                new Button({
+                    label: 'OK',
+                    type: 'submit',
+                    onClick: lang.hitch(this, function(){
+                        okDialog.destroy();
+                        this.openGetMarineDataWindow(geometry, surveyIds, isSingleSurvey);
+                    })
+                }).placeAt(okDialog.containerNode);
+                okDialog.show();
+            },
+
             openGetMarineDataWindow: function(geometry, surveyIds, isSingleSurvey) {
                 var filter = this.filterValues;
                 var urlParams = [];
@@ -568,7 +593,7 @@ define([
                 var date;
                 var extent;
                 var url;
-                    
+                
                 var surveyTypes = [];
 
                 //Get the list of survey types currently visible on the map

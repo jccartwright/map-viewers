@@ -5,8 +5,8 @@
     <!-- Version: {{version}}, Last update: {{buildDate}} -->
     <title>Gulf of Mexico Hypoxia Watch Viewer</title>
     <link rel="shortcut icon" href="https://www.ngdc.noaa.gov/image/favicon.ico">
-    <link rel="stylesheet" href="https://js.arcgis.com/3.26/dijit/themes/tundra/tundra.css" />
-    <link rel="stylesheet" href="https://js.arcgis.com/3.26/esri/css/esri.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.27/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" href="https://js.arcgis.com/3.27/esri/css/esri.css">
 
     <link rel="stylesheet" href="https://gis.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc/css/MapToolbar.css">
     <link rel="stylesheet" href="https://gis.ngdc.noaa.gov/viewers/dijits-2.13.0/js/ngdc/identify/IdentifyPane.css">
@@ -22,9 +22,9 @@
 
     <link rel="stylesheet" href="js/app/css/CreditsPanel.css">
 
-    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.26/dojox/layout/resources/FloatingPane.css"/>
-    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.26/dojox/layout/resources/ResizeHandle.css"/>
-    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.26/dojox/form/resources/CheckedMultiSelect.css"/>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.27/dojox/layout/resources/FloatingPane.css"/>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.27/dojox/layout/resources/ResizeHandle.css"/>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/3.27/dojox/form/resources/CheckedMultiSelect.css"/>
 
     <link rel="stylesheet" href="css/local.css">
 
@@ -61,7 +61,7 @@
             }
         };
     </script>
-    <script src="https://js.arcgis.com/3.26/"></script>
+    <script src="https://js.arcgis.com/3.27/"></script>
     <script type="text/javascript" src="https://gis.ngdc.noaa.gov/proj4js/proj4js-compressed.js"></script>
     <script type="text/javascript" src="https://gis.ngdc.noaa.gov/proj4js/local_defs/EPSG3995.js"></script>
     <script type="text/javascript" src="https://gis.ngdc.noaa.gov/proj4js/local_defs/EPSG3031.js"></script>
@@ -81,33 +81,8 @@
         <div id="banner"></div>
     </div>
 
-    <div id="leftPane" data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'left', splitter:true">
-        <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" title="Layers">
-        </div>
-        <!-- <div id="legendPanel" data-dojo-type="dijit/layout/ContentPane" title="Legend">
-            <div id="legend">
-                <div id="dynamicLegend"></div><hr/>
-                Multibeam Mosaic Color Scale:
-                <img src="https://gis.ngdc.noaa.gov/viewers/images/multibeam_color_scale.png"></img><hr/>
-                <img src="images/bag_hillshades_color_scale.png"></img><hr/>
-                DEM Color Scale (elevation/depth in meters):
-                <img src="https://gis.ngdc.noaa.gov/viewers/images/dem_color_scale.png"></img><hr/>
-                GEBCO_2014 Bathymetry Color Scale (elevation/depth in meters):<br/>
-                <img src="images/gebco_color_scale.png"></img><hr/>
-                ETOPO1 Color Scale (elevation/depth in meters):<br/>
-                <img src="images/etopo1_color_scale.png"></img>
-
-
-            </div> 
-        </div> -->
-        <div id="aboutPanel" data-dojo-type="dijit/layout/ContentPane" title="More Information">
-            <div id="credits" data-dojo-type="app/CreditsPanel"></div>
-        </div>
-        <div id="helpPanel" data-dojo-type="dijit/layout/ContentPane" title="Help">
-            <div id="help" data-dojo-type="app/HelpPanel"></div>
-        </div>
-
-    </div> <!-- end leftPane -->
+    <div id="layersPanel" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'left', splitter:true"s>
+    </div>
 
     <!-- mapContainer nested inside ContentPane because it seems to force map to initially fill pane -->
     <div id="centerPane" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'center'">
@@ -125,7 +100,7 @@
     require([
         "ngdc/LoadingOverlay", "dijit/registry", "dojo/parser", "dojo/dom", "dojo/dom-style", "app/AppLoader",
         "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionContainer", "dijit/layout/TabContainer",
-        "app/HelpPanel", "app/CreditsPanel", "dojo/domReady!" ],
+        "dojo/domReady!" ],
             function(LoadingOverlay, registry, parser, dom, domStyle, AppLoader) {
                 var loadingOverlay = new LoadingOverlay();
                 var appLoader = new AppLoader();
