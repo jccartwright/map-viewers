@@ -59,17 +59,17 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gisdev.ngdc.noaa.gov/arcgis/rest/services/Hypoxia/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/Hypoxia/MapServer', {
                         id: 'Hypoxia',
                         visible: true,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gisdev.ngdc.noaa.gov/arcgis/rest/services/Hypoxia/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/Hypoxia/MapServer', {
                         id: '10m Contour',
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gisdev.ngdc.noaa.gov/arcgis/rest/services/Hypoxia/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/Hypoxia/MapServer', {
                         id: '200m Contour',
                         visible: false,
                         imageParameters: this.imageParameters.png32

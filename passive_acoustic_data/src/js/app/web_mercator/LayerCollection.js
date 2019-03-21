@@ -60,7 +60,7 @@ define([
                         visible: false,
                         opacity: 0.7
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gisdev.ngdc.noaa.gov/arcgis/rest/services/MPA_inventory/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/external/MPA_inventory/MapServer', {
                         id: 'MPA Inventory',
                         visible: false,
                         imageParameters: this.imageParameters.png32
