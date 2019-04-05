@@ -1,6 +1,6 @@
 {
   "name": "northeast_ocm",
-  "version": "2.8.2",
+  "version": "2.8.3",
   "description": "OCM Data for Northeast U.S. Sandy Recovery",
   "main": "index.html",
   "scripts": {

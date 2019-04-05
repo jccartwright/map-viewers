@@ -1,6 +1,6 @@
 {
   "name": "ecs_catalog",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "ECS Catalog Viewer",
   "main": "index.html",
   "scripts": {
