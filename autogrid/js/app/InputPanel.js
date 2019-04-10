@@ -74,7 +74,7 @@ define([
                 console.log('inside submitNextOrder...',evt);
 
                 var data = {
-                    "email": registry.byId('email').value,
+                    "email": registry.byId('emailInput').value,
                     "items": []
                 };
 

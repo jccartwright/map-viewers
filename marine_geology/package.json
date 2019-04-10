@@ -1,6 +1,6 @@
 {
   "name": "marine_geology",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "description": "marine geology viewer",
   "main": "index.html",
   "scripts": {

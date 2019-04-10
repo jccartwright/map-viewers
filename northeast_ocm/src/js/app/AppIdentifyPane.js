@@ -82,7 +82,7 @@ define([
                 else if (item.layerName == 'Surveys without Digital Sounding Data') {
                     return '<i>Surveys without Digital Sounding Data (' + this.formatCountString(count) + ')</i>';
                 } 
-                else if (item.layerName == 'All NCEI Bathymetric DEMs') {
+                else if (item.layerName == 'NCEI Digital Elevation Models') {
                     return '<i><b>Digital Elevation Models (' + this.formatCountString(count) + ')</b></i>';
                 }
                 else if (item.layerName == 'DEM Tiles') {
@@ -118,7 +118,7 @@ define([
                 else if (item.layerName == 'Surveys without Digital Sounding Data') {
                     return this.getItemLabelSpan(item.feature.attributes['Survey ID'] + (item.feature.attributes['Survey Year'] == 'Null' ? '' : ' <i>(' + item.feature.attributes['Survey Year'] + ')</i>'), uid);
                 } 
-                else if (item.layerName == 'All NCEI Bathymetric DEMs') {
+                else if (item.layerName == 'NCEI Digital Elevation Models') {
                     return this.getItemLabelSpan(item.feature.attributes['Name'] + ' <i>(' + item.feature.attributes['Cell Size'] + ')</i>', uid);
                 }
                 else if (item.layerName == 'DEM Tiles') {
