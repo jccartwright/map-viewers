@@ -63,6 +63,24 @@ define([
 
             showResults: function() {
                 this.inherited(arguments);
+
+                if (this.isPad) {
+                    domStyle.set(this.extractDataButton.domNode, 'display', '');
+                } else {
+                    domStyle.set(this.extractDataButton.domNode, 'display', 'none');
+                }
+            },
+
+            showInfo: function() {
+                this.inherited(arguments);
+
+                var layerName = this.currentItem.layerKey.split('/')[0];
+
+                if (layerName === 'PAD') {
+                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', '');
+                } else {
+                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', 'none');
+                }
             },
 
             getLayerDisplayLabel: function(item) {
@@ -103,6 +121,7 @@ define([
                 var totalFeatures = 0;
                 var numFeaturesForLayer = 0;
                 this.expandedNodePaths = [];
+                this.isPad = false;
 
                 this.computeFolderCounts(results);
 
@@ -129,6 +148,10 @@ define([
                                         parent: 'root'
                                     });
                                     //this.expandedNodePaths.push(layerName);
+                                }
+
+                                if (svcName === 'PAD') {
+                                    this.isPad = true;
                                 }
                                 
                                 //Add the current item to the store, with the layerName folder as parent
