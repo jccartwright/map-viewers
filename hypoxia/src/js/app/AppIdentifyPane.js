@@ -67,7 +67,7 @@ define([
             getItemDisplayLabel: function(item, uid) {
                 var a = item.feature.attributes;
                 if (item.layerName === 'Hypoxia Stations') {
-                    return this.getItemLabelSpan('Station: ' + a['Station'] + ' (' + a['Dissolved Oxygen (mg/l)'] + ' mg/L)', uid);
+                    return this.getItemLabelSpan('Station Number: ' + a['Station'] + ' (' + a['Dissolved Oxygen (mg/l)'] + ' mg/L)', uid);
                 }
                 else if (item.layerName ==='Hypoxia Contours') {
                     return this.getItemLabelSpan('Dissolved Oxygen Range: ' + item.feature.attributes['Oxygen Range'] + ' mg/L', uid);

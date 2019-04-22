@@ -276,3 +276,15 @@ html,body {
 .layerIcon {
     vertical-align: middle;
 }
+
+.backwardIcon {
+    background-image: url(../images/backward_20px.png);
+    width: 20px;
+    height: 20px;
+}
+
+.forwardIcon {
+    background-image: url(../images/forward_20px.png);
+    width: 20px;
+    height: 20px;
+}

@@ -5,6 +5,7 @@ define([
     'dojo/on',
     'dojo/dom',
     'dojo/dom-attr',
+    'dojo/dom-style',
     'dijit/form/CheckBox',
     'dijit/form/Select',
     'dijit/TitlePane',
@@ -19,6 +20,7 @@ define([
         on,
         dom,
         domAttr,
+        domStyle,
         CheckBox,
         Select,
         TitlePane,
@@ -32,39 +34,62 @@ define([
             // A class to be applied to the root node in our template
             baseClass: 'layersPanel',
             
-            yearStrings: ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008-Summer', '2008-Fall', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'],
-
-            cruiseNumbers: {
-                '2001': 246,
-                '2002': 250,
-                '2003': 254,
-                '2004': 259,
-                '2005': 265,
-                '2006': 271,
-                '2007': 276,
-                '2008-Summer': 282,
-                '2008-Fall': 284,
-                '2009': 287,
-                '2010': 290,
-                '2011': 295,
-                '2012': 299,
-                '2013': 304,
-                '2014': 308,
-                '2015': 313,
-                '2016': 318,
-                '2017': 323,
-                '2018': 328
-            },
+            cruiseInfos: [
+                {yearString: '2001', cruiseNumber: 246, accessionLink: ''},
+                {yearString: '2002', cruiseNumber: 250, accessionLink: ''},
+                {yearString: '2003', cruiseNumber: 254, accessionLink: ''},
+                {yearString: '2004', cruiseNumber: 259, accessionLink: ''},
+                {yearString: '2005', cruiseNumber: 265, accessionLink: ''},
+                {yearString: '2006', cruiseNumber: 271, accessionLink: ''},
+                {yearString: '2007', cruiseNumber: 276, accessionLink: ''},
+                {yearString: '2008-Summer', cruiseNumber: 282, accessionLink: ''},
+                {yearString: '2008-Fall', cruiseNumber: 284, accessionLink: ''},
+                {yearString: '2009', cruiseNumber: 287, accessionLink: ''},
+                {yearString: '2010', cruiseNumber: 290, accessionLink: ''},
+                {yearString: '2011', cruiseNumber: 295, accessionLink: ''},
+                {yearString: '2012', cruiseNumber: 299, accessionLink: ''},
+                {yearString: '2013', cruiseNumber: 304, accessionLink: ''},
+                {yearString: '2014', cruiseNumber: 308, accessionLink: ''},
+                {yearString: '2015', cruiseNumber: 313, accessionLink: ''},
+                {yearString: '2016', cruiseNumber: 318, accessionLink: ''},
+                {yearString: '2017', cruiseNumber: 323, accessionLink: ''},
+                //{yearString: '2018', cruiseNumber: 328, accessionLink: 'https://www.ncei.noaa.gov/metadata/geoportal/rest/metadata/item/gov.noaa.nodc:0174810/html'}
+                {yearString: '2018', cruiseNumber: 328, accessionLink: 'https://data.nodc.noaa.gov/cgi-bin/iso?id=gov.noaa.nodc:0174810'}                
+            ],
 
             visibleSstLayer: 3,
+
+            startup: function() {
+                this.inherited(arguments);
+
+                this.updateDownloadUrls();
+                this.updateAccessionLink();
+            },
 
             postCreate: function() {
                 this.inherited(arguments);
 
+                var numCruises = this.cruiseInfos.length;
+                this.timeSpanIndex = numCruises - 1;                
+
                 on(this.selectYear, 'change', lang.hitch(this, function() {    
-                    var yearString = this.selectYear.get('value');
-                    this.updateHypoxiaCruise(yearString);
-                    this.updateDownloadUrls(yearString);
+                    this.timeSpanIndex = parseInt(this.selectYear.get('value'));
+                    this.updateHypoxiaCruise();
+                    this.updateDownloadUrls();
+                    this.updateAccessionLink();
+                }));
+
+                on(this.leftButton, 'click', lang.hitch(this, function() {    
+                    if (this.timeSpanIndex > 0) {
+                        this.timeSpanIndex--;
+                        this.selectYear.set('value', this.timeSpanIndex);
+                    }
+                }));
+                on(this.rightButton, 'click', lang.hitch(this, function() {    
+                    if (this.timeSpanIndex < numCruises - 1) {
+                        this.timeSpanIndex++;
+                        this.selectYear.set('value', this.timeSpanIndex);
+                    }
                 }));
 
                 on(this.chkCtd, 'change', lang.hitch(this, function() {
@@ -94,8 +119,8 @@ define([
                 }));
             },
 
-            updateHypoxiaCruise: function(yearString) {
-                var cruiseNumber = this.cruiseNumbers[yearString];
+            updateHypoxiaCruise: function() {
+                var cruiseNumber = this.cruiseInfos[this.timeSpanIndex].cruiseNumber;
 
                 var layerDefs = [];
                 layerDefs[1] = 'cruiseno=' + cruiseNumber;
@@ -103,7 +128,8 @@ define([
                 this.hypoxiaLayer.setLayerDefinitions(layerDefs);
             },
 
-            updateDownloadUrls: function(yearString) {
+            updateDownloadUrls: function() {
+                var yearString = this.cruiseInfos[this.timeSpanIndex].yearString;
                 dom.byId('selectedSeasonSpan').innerHTML = yearString;
 
                 dom.byId('ctdMetadataLink').href = 'https://service.ncddc.noaa.gov/rdn/www/media/documents/hypoxia/metadata/' + yearString + '-Hypoxia-Stations.html';
@@ -113,6 +139,18 @@ define([
                 dom.byId('ctrMetadataLink').href = 'https://service.ncddc.noaa.gov/rdn/www/media/documents/hypoxia/metadata/' + yearString + '-Hypoxia-Contours.html';
                 dom.byId('ctrJpgLink').href = 'https://service.ncddc.noaa.gov/rdn/www/media/hypoxia/maps/' + yearString.toLowerCase() + '-hypoxia-contours.jpg';
                 dom.byId('ctrShapefileLink').href = 'https://service.ncddc.noaa.gov/rdn/www/media/documents/hypoxia/data/' + yearString + '-Hypoxia-Contours.zip';
+            },
+
+            updateAccessionLink: function() {
+                var accessionLink = this.cruiseInfos[this.timeSpanIndex].accessionLink;
+                var accessionLinkNode = dom.byId('accessionLink');
+                accessionLinkNode.href = accessionLink;
+
+                if (accessionLink == '') {
+                    domStyle.set(accessionLinkNode, 'display', 'none');
+                } else {
+                    domStyle.set(accessionLinkNode, 'display', 'block');
+                }
             }
         });
     }
