@@ -1,27 +1,30 @@
 <div class="layersPanel_class">
     <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Dissolved Oxygen Measurements', open: true">
         Select Year:<br>
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="leftButton" data-dojo-props="iconClass:'backwardIcon', showLabel:false"></div>
         <select data-dojo-attach-point="selectYear" data-dojo-type="dijit/form/Select" style="width:100px">
-            <option value="2001">2001</option>
-            <option value="2002">2002</option>
-            <option value="2003">2003</option>
-            <option value="2004">2004</option>
-            <option value="2005">2005</option>
-            <option value="2006">2006</option>
-            <option value="2007">2007</option>
-            <option value="2008-Summer">2008 (Summer)</option>
-            <option value="2008-Fall">2008 (Fall)</option>
-            <option value="2009">2009</option>
-            <option value="2010">2010</option>
-            <option value="2011">2011</option>
-            <option value="2012">2012</option>
-            <option value="2013">2013</option>
-            <option value="2014">2014</option>
-            <option value="2015">2015</option>
-            <option value="2016">2016</option>
-            <option value="2017">2017</option>
-            <option selected="selected" value="2018">2018</option>
-        </select><br><br>
+            <option value="0">2001</option>
+            <option value="1">2002</option>
+            <option value="2">2003</option>
+            <option value="3">2004</option>
+            <option value="4">2005</option>
+            <option value="5">2006</option>
+            <option value="6">2007</option>
+            <option value="7">2008 (Summer)</option>
+            <option value="8">2008 (Fall)</option>
+            <option value="9">2009</option>
+            <option value="10">2010</option>
+            <option value="11">2011</option>
+            <option value="12">2012</option>
+            <option value="13">2013</option>
+            <option value="14">2014</option>
+            <option value="15">2015</option>
+            <option value="16">2016</option>
+            <option value="17">2017</option>
+            <option selected="selected" value="18">2018</option>
+        </select>
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="rightButton" data-dojo-props="iconClass:'forwardIcon', showLabel:false"></div>
+        <br><br>
 
         <input checked type="checkbox" id="chkCtd" data-dojo-attach-point="chkCtd" data-dojo-type="dijit/form/CheckBox">
         <label for="chkCtd">CTD Stations</label>
@@ -40,10 +43,11 @@
             <div class="tooltipText">
                 Contours of dissolved oxygen content derived from the point measurements. For details on the process steps involved in converting dissolved oxygen data into map contours, see <a href="https://service.ncddc.noaa.gov/rdn/www/media/documents/hypoxia/contour-process.ppt" target="_blank">Hypoxia Contour Process (1.14 MB)</a>.<br><br>
                 Click on a contour (or use the identify tools in the upper-right) to display the dissolved oxygen range for each contour. Mouse over the list to highlight the contours on the map.<br><br>
-                Legend:<br>
-                <img src="images/hypoxia_legend.jpg">
+                <!-- Legend:<br> -->
+                <!-- <img src="images/hypoxia_legend.jpg"> -->
             </div>
-        </div>
+        </div><br>
+        <img src="images/hypoxia_legend.jpg">
     </div>
 
     <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Access Maps and Data', open: true">
@@ -62,6 +66,8 @@
                 <td><a id="ctrShapefileLink" href="#" target="_blank"><img src="images/drive-download.png"/>Shapefile Download</a></td>            
             </tr>
         </table>
+        <a id="accessionLink" href="#" target="_blank">Archived Data Accession</a>
+        <!-- https://data.nodc.noaa.gov/cgi-bin/iso?id=gov.noaa.nodc:0174810 -->
     </div>
 
     <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Ancillary Data', open: true">
@@ -102,7 +108,7 @@
 
         The data collected from annual <a href="http://www.seamap.org/" target="_blank">Southeast Area Monitoring and Assessment Program (SEAMAP)</a> summer groundfish surveys is used to generate products that form the basis for summertime advisories on anoxic and hypoxic conditions in the north-central Gulf of Mexico. For details on the process steps involved in converting dissolved oxygen data into map contours, see <a href="https://service.ncddc.noaa.gov/rdn/www/media/documents/hypoxia/contour-process.ppt" target="_blank">Hypoxia Contour Process (1.14 MB)</a>.<br><br>
 
-        <a href="https://www.ncddc.noaa.gov/hypoxia/" target="_blank">More information at NCEI</a>
+        <a href="https://www.ncddc.noaa.gov/hypoxia/" target="_blank">More information about the Hypoxia Watch program at NCEI</a>
     </div>
 
 </div>

@@ -29,23 +29,22 @@ define([
             hypoxiaStationsFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
-                var template =                     
-                    '<div class="valueName">Ship: <span class="parameterValue">${ship}</span></div>' +
-                    '<div class="valueName">Cruise Number: <span class="parameterValue">${cruiseNumber}</span></div>' +
+                var template =   
+                    '<div class="valueName">Bottom Dissolved Oxygen (mg/l): <span class="parameterValue">${dissolvedOxygen}</span></div>' +                  
+                    '<div class="valueName">Ship/Cruise Number/Station: <span class="parameterValue">${ship}/${cruiseNumber}/${station}</span></div>' +
+                    // '<div class="valueName">Cruise Number: <span class="parameterValue">${cruiseNumber}</span></div>' +
                     '<div class="valueName">Date: <span class="parameterValue">${date}</span></div>' +
-                    '<div class="valueName">Time: <span class="parameterValue">${time}</span></div>' +
-                    '<div class="valueName">Leg: <span class="parameterValue">${leg}</span></div>' +
-                    '<div class="valueName">Station: <span class="parameterValue">${station}</span></div>' +
+                    '<div class="valueName">Time (UTC): <span class="parameterValue">${time}</span></div>' +
+                    // '<div class="valueName">Station Number: <span class="parameterValue">${station}</span></div>' +
                     '<div class="valueName">Longitude: <span class="parameterValue">${longitude}</span></div>' +
                     '<div class="valueName">Latitude: <span class="parameterValue">${latitude}</span></div>' +
-                    '<div class="valueName">Bottom Depth (m): <span class="parameterValue">${bottomDepth}</span></div>' +
-                    '<div class="valueName">Dissolved Oxygen (mg/l): <span class="parameterValue">${dissolvedOxygen}</span></div>';
+                    '<div class="valueName">Bottom Depth (m): <span class="parameterValue">${bottomDepth}</span></div>';
+                    
                 var html = string.substitute(template, {
                     ship: a['Ship'],
                     cruiseNumber: a['Cruise Number'],
                     date: a['Date'],
                     time: a['Time'],
-                    leg: a['Leg'],
                     station: a['Station'],
                     longitude: a['Longitude'],
                     latitude: a['Latitude'],
@@ -58,14 +57,15 @@ define([
             hypoxiaContoursFormatter: function(feature) {
                 var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
 
-                var template =                     
+                var template =    
+                    '<div class="valueName">Min Oxygen Level: <span class="parameterValue">${minOxygenLevel}</span></div>' +
+                    '<div class="valueName">Max Oxygen Level: <span class="parameterValue">${maxOxygenLevel}</span></div>' +
+                    '<div class="valueName">Oxygen Range: <span class="parameterValue">${oxygenRange}</span></div>' +                 
                     '<div class="valueName">Ship: <span class="parameterValue">${ship}</span></div>' +
                     '<div class="valueName">Cruise Number: <span class="parameterValue">${cruiseNumber}</span></div>' +
                     '<div class="valueName">Begin: <span class="parameterValue">${begin}</span></div>' +
-                    '<div class="valueName">End: <span class="parameterValue">${end}</span></div>' +
-                    '<div class="valueName">Mix Oxygen Level: <span class="parameterValue">${minOxygenLevel}</span></div>' +
-                    '<div class="valueName">Max Oxygen Level: <span class="parameterValue">${maxOxygenLevel}</span></div>' +
-                    '<div class="valueName">Oxygen Range: <span class="parameterValue">${oxygenRange}</span></div>';
+                    '<div class="valueName">End: <span class="parameterValue">${end}</span></div>';
+                    
                 var html = string.substitute(template, {
                     ship: a['Ship'],
                     cruiseNumber: a['Cruise Number'],
