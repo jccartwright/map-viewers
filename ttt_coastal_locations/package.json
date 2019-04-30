@@ -1,6 +1,6 @@
 {
   "name": "ttt_coastal_locations",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Estimated Tsunami Travel Times to Coastal Locations",
   "main": "index.html",
   "scripts": {
