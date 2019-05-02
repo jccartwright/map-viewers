@@ -46,14 +46,14 @@ define([
                         id: 'GEBCO_2019 Grayscale (NCEI)',
                         visible: true
                     }),
-                    new TiledWMSLayer('https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?', {
-                        id: 'GEBCO_2014',
-                        visible: false,
-                        format: 'jpeg',
-                        wmsVersion: '1.3.0',
-                        epsgCode: '3857',
-                        layerNames: ['GEBCO_LATEST']
-                    }), 
+                    // new TiledWMSLayer('https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?', {
+                    //     id: 'GEBCO_2014',
+                    //     visible: false,
+                    //     format: 'jpeg',
+                    //     wmsVersion: '1.3.0',
+                    //     epsgCode: '3857',
+                    //     layerNames: ['GEBCO_LATEST']
+                    // }), 
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer', {
                         id: 'Light Gray',
                         visible: false
@@ -164,6 +164,13 @@ define([
                         visible: false
                     }),  
 
+                    // new ArcGISDynamicMapServiceLayer('https://maps.ccom.unh.edu/server/rest/services/Seabed2030/GMRT_Global/MapServer', {
+                    //     id: 'GMRT_Global',
+                    //     visible: true,
+                    //     imageParameters: this.imageParameters.png32
+                    // }),  
+                    
+
                     new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
                         id: 'BAG Hillshades (tiled)',
                         visible: false
@@ -172,6 +179,13 @@ define([
                         id: 'BAG Hillshades (dynamic)',
                         imageServiceParameters: this.imageServiceParameters,
                         visible: false
+                    }),
+
+                    new ArcGISDynamicMapServiceLayer('https://maps.ccom.unh.edu/server/rest/services/Seabed2030/GEBCO_2019_SID/MapServer', {
+                        id: 'GEBCO_2019 SID',
+                        visible: false,
+                        opacity: 0.5,
+                        imageParameters: this.imageParameters.png32
                     }),
 
                     new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/web_mercator_gebco_2019_contours/MapServer', {
@@ -223,7 +237,6 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        //sld: 'http://maps.ngdc.noaa.gov/viewers/emodnet.sld',
                         layerNames: ['Enkeltstraale']
                     }),
 
@@ -305,6 +318,12 @@ define([
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Reference/MapServer', {
                         id: 'Ocean Reference',
                         visible: true
+                    }),
+
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/undersea_features/MapServer', {
+                        id: 'Undersea Features',
+                        visible: false,
+                        imageParameters: this.imageParameters.png32
                     }),
 
                     //CSB should be on top of boundaries

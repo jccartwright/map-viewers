@@ -138,6 +138,10 @@ define([
                 on(this.chkAusSeabedBathymetryHoldings, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'AusSeabed Bathymetry Holdings', this.chkAusSeabedBathymetryHoldings.checked);
                 }));
+
+                // on(this.chkGebcoSID, 'change', lang.hitch(this, function() {
+                //     topic.publish('/ngdc/layer/visibility', 'GEBCO_2019 SID', this.chkGebcoSID.checked);
+                // }));
                 
                 this.csbSearchDialog = new CsbSearchDialog({title: 'Search Crowdsourced Bathymetry Files'});
                 on(this.csbSearchButton, 'click', lang.hitch(this, function() {
@@ -162,8 +166,8 @@ define([
                     topic.publish('/bathymetry/ResetSearch');
                 })); 
 
-                domConstruct.place('<img id="nceiHelp" class="tooltipButtonMiddle" src="images/question-white.png">', this.nceiTitlePane.focusNode);
-                domConstruct.place('<img id="otherIhoHelp" class="tooltipButtonMiddle" src="images/question-white.png">', this.otherIhoTitlePane.focusNode);   
+                domConstruct.place('<img id="nceiHelp" class="tooltipButtonMiddle" src="images/question-white.png">', this.dcdbTitlePane.focusNode);
+                //domConstruct.place('<img id="otherIhoHelp" class="tooltipButtonMiddle" src="images/question-white.png">', this.otherIhoTitlePane.focusNode);   
             },
 
             disableCsbResetButton: function() {
