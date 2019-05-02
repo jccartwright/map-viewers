@@ -1,6 +1,6 @@
 {
   "name": "geophysics",
-  "version": "2.6.2",
+  "version": "2.7.0",
   "description": "NCEI Trackline Geophysical Data Viewer",
   "main": "index.html",
   "scripts": {

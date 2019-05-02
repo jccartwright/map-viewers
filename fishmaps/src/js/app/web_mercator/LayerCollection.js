@@ -3,14 +3,16 @@ define([
     'ngdc/layers/AbstractLayerCollection', 
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
-    'esri/layers/ArcGISImageServiceLayer'
+    'esri/layers/ArcGISImageServiceLayer',
+    'esri/layers/WebTiledLayer',
     ],
     function(
         declare, 
         AbstractLayerCollection, 
         ArcGISTiledMapServiceLayer, 
         ArcGISDynamicMapServiceLayer,
-        ArcGISImageServiceLayer
+        ArcGISImageServiceLayer,
+        WebTiledLayer
         ){
 
         return declare([AbstractLayerCollection], {
@@ -33,12 +35,12 @@ define([
                         id: 'NatGeo',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2014_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
-                        id: 'GEBCO_2014',
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2019_basemap_ncei/MapServer', {
+                        id: 'GEBCO_2019 (NCEI)',
                         visible: false
-                    }),                    
-                    new ArcGISTiledMapServiceLayer('http://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/ETOPO1_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
-                        id: 'ETOPO1',
+                    }),
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2019_grayscale_basemap_ncei/MapServer', {
+                        id: 'GEBCO_2019 Grayscale (NCEI)',
                         visible: false
                     }),
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer', {
@@ -60,7 +62,17 @@ define([
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/arcgis/rest/services/Ocean/World_Ocean_Base/MapServer', {
                         id: 'Ocean Base',
                         visible: true,
-                    }),         
+                    }),   
+                    new WebTiledLayer('https://tileservice.charts.noaa.gov/tiles/50000_1/{level}/{col}/{row}.png', {
+                        id: 'RNC',
+                        visible: false,
+                        opacity: 0.5
+                    }),
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/web_mercator_gebco_2019_contours/MapServer', {
+                        id: 'GEBCO_2019 Contours',
+                        visible: false,
+                        opacity: 0.5
+                    }),      
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/fishmaps/MapServer', {
                         id: 'Fish Maps',
                         visible: true,

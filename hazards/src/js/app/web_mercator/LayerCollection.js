@@ -49,12 +49,12 @@ define([
                         id: 'NatGeo',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2014_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
-                        id: 'GEBCO_2014',
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2019_basemap_ncei/MapServer', {
+                        id: 'GEBCO_2019 (NCEI)',
                         visible: false
-                    }),                    
-                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/ETOPO1_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
-                        id: 'ETOPO1',
+                    }),
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2019_grayscale_basemap_ncei/MapServer', {
+                        id: 'GEBCO_2019 Grayscale (NCEI)',
                         visible: false
                     }),
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer', {
@@ -88,8 +88,8 @@ define([
                         visible: false,
                         imageParameters: this.imageParameters.png32
                     }),
-                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/gebco_2014_contours/MapServer', {
-                        id: 'GEBCO_2014 Contours',
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/web_mercator_gebco_2019_contours/MapServer', {
+                        id: 'GEBCO_2019 Contours',
                         visible: false,
                         opacity: 0.5
                     }),

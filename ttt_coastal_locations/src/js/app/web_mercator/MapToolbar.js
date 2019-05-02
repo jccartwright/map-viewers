@@ -15,8 +15,8 @@ define([
             constructor: function() {
                 this._basemaps = [
                     {base: 'Ocean Base', overlays: [{id: 'Ocean Reference'}], label: 'Ocean Basemap (Esri)'},
-                    {base: 'GEBCO_2014', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (GEBCO_2014)'},
-                    {base: 'ETOPO1', overlays: [{id: 'World Boundaries and Places'}], label: 'Shaded Relief (ETOPO1)'},
+                    {base: 'GEBCO_2019 (NCEI)', overlays: [{id: 'Ocean Reference'}], label: 'GEBCO_2019 (NOAA NCEI Visualization)'},
+                    {base: 'GEBCO_2019 Grayscale (NCEI)', overlays: [{id: 'Ocean Reference'}], label: 'GEBCO_2019 Grayscale (NOAA NCEI Visualization)'},
                     {base: 'Light Gray', overlays: [{id: 'Light Gray Reference'}], label: 'Light Gray (Esri)'},
                     {base: 'Dark Gray', overlays: [{id: 'Dark Gray Reference'}], label: 'Dark Gray (Esri)'},
                     {base: 'World Imagery', overlays: [{id: 'World Boundaries and Places'}], label: 'World Imagery (Esri)'},
@@ -30,8 +30,8 @@ define([
                         visible: true
                     },
                     {
-                        label: 'Regional Bathymetric Contours (from GEBCO_2014)',
-                        services: [{id: 'GEBCO_2014 Contours'}],
+                        label: 'Regional Bathymetric Contours (from GEBCO_2019)',
+                        services: [{id: 'GEBCO_2019 Contours'}],
                         visible: false
                     },
                     {

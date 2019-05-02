@@ -33,15 +33,13 @@ define([
                         id: 'NatGeo',
                         visible: false
                     }),
-                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2014_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
-                        id: 'GEBCO_2014',
-                        visible: false,
-                        opacity: 0.7
-                    }),                    
-                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/ETOPO1_Global_Relief_Model_Color_Shaded_Relief/MapServer', {
-                        id: 'ETOPO1',
-                        visible: false,
-                        opacity: 0.5
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2019_basemap_ncei/MapServer', {
+                        id: 'GEBCO_2019 (NCEI)',
+                        visible: false
+                    }),
+                    new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/GEBCO_2019_grayscale_basemap_ncei/MapServer', {
+                        id: 'GEBCO_2019 Grayscale (NCEI)',
+                        visible: false
                     }),
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer', {
                         id: 'Light Gray',
