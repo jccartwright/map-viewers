@@ -1,11 +1,11 @@
 <div class="layersPanel_class">
 
-    <div data-dojo-attach-point="nceiTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'NOAA NCEI/IHO DCDB', open: true">
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nceiHelp'">
-        <div class="tooltipText">
-            Bathymetric data holdings archived at the International Hydrographic Organization's Data Centre for Digital Bathymetry (IHO DCDB), which is hosted by NOAA's National Centers for Environmental Information (NOAA NCEI), and downloadable from the DCDB.
+    <div data-dojo-attach-point="dcdbTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'IHO DCDB/NOAA NCEI', open: true">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nceiHelp'">
+            <div class="tooltipText">
+                Bathymetric data holdings archived at the International Hydrographic Organization's Data Centre for Digital Bathymetry (IHO DCDB), which is hosted by NOAA's National Centers for Environmental Information (NOAA NCEI), and downloadable from the DCDB.
+            </div>
         </div>
-    </div>
 
         <input checked type="checkbox" id="chkMultibeam" data-dojo-attach-point="chkMultibeam" data-dojo-type="dijit/form/CheckBox">
         <label for="chkMultibeam">Multibeam Surveys</label>
@@ -123,176 +123,182 @@
         </div>
     </div>
 
-    <div data-dojo-attach-point="otherIhoTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Other IHO Member States / International Compilations', open: true">
-    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'otherIhoHelp'">
-        <div class="tooltipText">
-            Visual representation of bathymetric surveys and compilations from a variety of contributors. Data can be accessed by visiting the data contributor website.
+    <div data-dojo-attach-point="australiaTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Australia', open: true">
+        <input type="checkbox" id="chkAusSeabedBathymetryHoldings" data-dojo-attach-point="chkAusSeabedBathymetryHoldings" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblAusSeabedBathymetryHoldings" for="chkAusSeabedBathymetryHoldings">AusSeabed Bathymetry Holdings</label>
+        <img id="AusSeabedBathymetryHoldingsHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabedBathymetryHoldingsHelp'">
+            <div class="tooltipText">
+                This dataset represents the current extent of bathymetry datasets held by AusSeabed as of January 2019. This dataset is live and will continue to be augmented as coverage is supplied from respective AusSeabed partners. Surveys have been conducted by a wide range of organisations and countries, both inside and outside of Australia's EEZ and for various purposes. Each polygon contains metadata describing the nature of data collection, including details of the survey, as well as the principle investigator of the project. Not all surveys are currently available for download; if available, the Data Access URL attribute will indicate how to access the survey data. Polygons are based on a 500m gridding of the survey data, so may not be representative of the true survey extent when viewed at large scale.<br><br>
+                For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.<br><br>
+                <i>Please note: clicking the map to identify and view attributes is not currently enabled for this layer.</i>
+            </div>
+        </div><br>
+        
+        <input type="checkbox" id="chkAusSeabed50Multibeam" data-dojo-attach-point="chkAusSeabed50Multibeam" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblAusSeabed50Multibeam" for="chkAusSeabed50Multibeam">AusSeabed 50m Multibeam 2018</label>
+        <img id="AusSeabed50MultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabed50MultibeamHelp'">
+            <div class="tooltipText">
+                This dataset represents the ocean depth values surrounding Australia. It contains all multibeam data held by Geoscience Australia as of June 2018, compiled from multibeam bathymetry holdings lying within the outer edge of the offshore area of Australia, as well as some data in international waters, and gridded at 50m. Source information can be found in the associated vector product, AusSeabed Bathymetry Holdings.<br><br>
+                For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.
+            </div>
+        </div><br>
+
+        <input type="checkbox" id="chkAusSeabedMH370" data-dojo-attach-point="chkAusSeabedMH370" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblAusSeabedMH370" for="chkAusSeabedMH370">AusSeabed MH370 Phase 1 Data 150m</label>
+        <img id="AusSeabedMH370Help" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabedMH370Help'">
+            <div class="tooltipText">
+                Bathymetric data acquired from Phase 1 Marine Surveys (Geoscience Australia survey reference: GA-4421, GA-4422 &amp; GA-4430) conducted by the Governments of Australia, Malaysia and the People Republic of China for the search of Malaysian Airlines flight MH370 in the Indian Ocean. This bathymetry data was acquired from June 2014 to February 2017 and processed by Geoscience Australia to a range of resolutions (25-83 m).<br><br>
+                For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.
+            </div>
         </div>
     </div>
-        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Multibeam Bathymetry', open: false">  
 
-            <input type="checkbox" id="chkEmodNetMultibeam" data-dojo-attach-point="chkEmodNetMultibeam" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblEmodNetMultibeam" for="chkEmodNetMultibeam">EMODnet Multibeam Surveys</label>
-            <img id="emodnetMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'emodnetMultibeamHelp'">
-                <div class="tooltipText">
-                    Multibeam bathymetric surveys archived by the European Marine Observation and Data Network (EMODnet).<br><br>
-                    For more information, please see <a href="http://www.emodnet-bathymetry.eu/">http://www.emodnet-bathymetry.eu/</a>.<br>
-                    <a href="geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?service=WMS&request=GetCapabilities" target="_blank">WMS service</a>                
-                </div>
-            </div><br><br>
-
-            &nbsp;&nbsp;<input type="checkbox" id="chkMareanoMultibeam" data-dojo-attach-point="chkMareanoMultibeam" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblMareanoMultibeam" for="chkMareanoMultibeam">MAREANO Multibeam Surveys</label>
-            <img id="mareanoMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mareanoMultibeamHelp'">
-                <div class="tooltipText">
-                    Multibeam survey coverage from <a href="" target="_blank">MAREANO</a> (Norway). See the <a href="http://www.mareano.no/en/maps/mareano_en.html" target="_blank">MAREANO map page</a>.<br><br>
-                    Legend:<br>
-                    Multibeam or Lidar data footprints <img src="images/flerstrale.JPG"><br>
-                    <a href="https://wms.geonorge.no/skwms1/wms.dekning_sjomaaling?service=wms&version=1.3.0&request=GetCapabilities" target="_blank">WMS service</a>
-                </div>
-            </div><br>
-
-            &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkMareanoMultibeamShadedRelief" data-dojo-type="dijit/form/CheckBox">
-            <label for="chkMareanoMultibeamShadedRelief">MAREANO Multibeam Shaded Relief</label>
-            <img id="mareanoShadedReliefHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mareanoShadedReliefHelp'">
-                <div class="tooltipText">
-                    Shaded relief visualizations of multibeam bathymetric data from <a href="" target="_blank">MAREANO</a> (Norway).<br>
-                    See the <a href="https://www.mareano.no/en/maps/mareano_en.html" target="_blank">MAREANO map page</a>.<br>
-                    <a href="https://wms.geonorge.no/skwms1/wms.havbunnraster2?service=wms&version=1.3.0&request=GetCapabilities" target="_blank">WMS service</a>
-                </div>
+    <div data-dojo-attach-point="canadaTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Canada', open: true">
+        <input type="checkbox" id="chkNRCanMultibeam" data-dojo-attach-point="chkNRCanMultibeam" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblNRCanMultibeam" for="chkNRCanMultibeam">NRCan Multibeam Surveys</label>
+        <img id="nrCanMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanMultibeamHelp'">
+            <div class="tooltipText">
+                Footprints of multibeam bathymetric data archived by <a href="https://www.nrcan.gc.ca/home" target="_blank">Natural Resources Canada (NRCan)</a>.<br><br>
+                <a href="https://www.nrcan.gc.ca/earth-sciences/resources/tools-applications/web-map-services/marine-geoscience-data/17402" target="_blank">More information about available web services</a>
             </div>
+        </div><br>
 
-            <hr>
-
-            <input type="checkbox" id="chkNRCanMultibeam" data-dojo-attach-point="chkNRCanMultibeam" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblNRCanMultibeam" for="chkNRCanMultibeam">NRCan Multibeam Surveys</label>
-            <img id="nrCanMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanMultibeamHelp'">
-                <div class="tooltipText">
-                    Footprints of multibeam bathymetric data archived by <a href="https://www.nrcan.gc.ca/home" target="_blank">Natural Resources Canada (NRCan)</a>.<br><br>
-                    <a href="https://www.nrcan.gc.ca/earth-sciences/resources/tools-applications/web-map-services/marine-geoscience-data/17402" target="_blank">More information about available web services</a>
-                </div>
-            </div><br>
-
-            <input type="checkbox" id="chkNRCanMultibeamHillshade" data-dojo-attach-point="chkNRCanMultibeamHillshade" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblNRCanMultibeamHillshade" for="chkNRCanMultibeamHillshade">NRCan Multibeam Shaded Relief</label>
-            <img id="nrCanMultibeamHillshadeHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanMultibeamHillshadeHelp'">
-                <div class="tooltipText">
-                    Shaded relief visualizations of multibeam bathymetric data archived by <a href="https://www.nrcan.gc.ca/home" target="_blank">Natural Resources Canada (NRCan)</a>.<br><br>
-                    Note: this layer will only appear when zoomed in fairly closely to the Canadian coastline.<br><br>
-                    <a href="https://www.nrcan.gc.ca/earth-sciences/resources/tools-applications/web-map-services/marine-geoscience-data/17402" target="_blank">More information about available web services</a>
-                </div>
+        <input type="checkbox" id="chkNRCanMultibeamHillshade" data-dojo-attach-point="chkNRCanMultibeamHillshade" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblNRCanMultibeamHillshade" for="chkNRCanMultibeamHillshade">NRCan Multibeam Shaded Relief</label>
+        <img id="nrCanMultibeamHillshadeHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanMultibeamHillshadeHelp'">
+            <div class="tooltipText">
+                Shaded relief visualizations of multibeam bathymetric data archived by <a href="https://www.nrcan.gc.ca/home" target="_blank">Natural Resources Canada (NRCan)</a>.<br><br>
+                Note: this layer will only appear when zoomed in fairly closely to the Canadian coastline.<br><br>
+                <a href="https://www.nrcan.gc.ca/earth-sciences/resources/tools-applications/web-map-services/marine-geoscience-data/17402" target="_blank">More information about available web services</a>
             </div>
+        </div><br>
 
-            <hr>
-
-            <input type="checkbox" id="chkAusSeabedBathymetryHoldings" data-dojo-attach-point="chkAusSeabedBathymetryHoldings" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblAusSeabedBathymetryHoldings" for="chkAusSeabedBathymetryHoldings">AusSeabed Bathymetry Holdings</label>
-            <img id="AusSeabedBathymetryHoldingsHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabedBathymetryHoldingsHelp'">
-                <div class="tooltipText">
-                    This dataset represents the current extent of bathymetry datasets held by AusSeabed as of January 2019. This dataset is live and will continue to be augmented as coverage is supplied from respective AusSeabed partners. Surveys have been conducted by a wide range of organisations and countries, both inside and outside of Australia's EEZ and for various purposes. Each polygon contains metadata describing the nature of data collection, including details of the survey, as well as the principle investigator of the project. Not all surveys are currently available for download; if available, the Data Access URL attribute will indicate how to access the survey data. Polygons are based on a 500m gridding of the survey data, so may not be representative of the true survey extent when viewed at large scale.<br><br>
-                    For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.<br><br>
-                    <i>Please note: clicking the map to identify and view attributes is not currently enabled for this layer.</i>
-                </div>
-            </div><br>
-            
-            <input type="checkbox" id="chkAusSeabed50Multibeam" data-dojo-attach-point="chkAusSeabed50Multibeam" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblAusSeabed50Multibeam" for="chkAusSeabed50Multibeam">AusSeabed 50m Multibeam 2018</label>
-            <img id="AusSeabed50MultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabed50MultibeamHelp'">
-                <div class="tooltipText">
-                    This dataset represents the ocean depth values surrounding Australia. It contains all multibeam data held by Geoscience Australia as of June 2018, compiled from multibeam bathymetry holdings lying within the outer edge of the offshore area of Australia, as well as some data in international waters, and gridded at 50m. Source information can be found in the associated vector product, AusSeabed Bathymetry Holdings.<br><br>
-                    For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.
-                </div>
-            </div><br>
-
-            <input type="checkbox" id="chkAusSeabedMH370" data-dojo-attach-point="chkAusSeabedMH370" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblAusSeabedMH370" for="chkAusSeabedMH370">AusSeabed MH370 Phase 1 Data 150m</label>
-            <img id="AusSeabedMH370Help" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabedMH370Help'">
-                <div class="tooltipText">
-                    Bathymetric data acquired from Phase 1 Marine Surveys (Geoscience Australia survey reference: GA-4421, GA-4422 &amp; GA-4430) conducted by the Governments of Australia, Malaysia and the People Republic of China for the search of Malaysian Airlines flight MH370 in the Indian Ocean. This bathymetry data was acquired from June 2014 to February 2017 and processed by Geoscience Australia to a range of resolutions (25-83 m).<br><br>
-                    For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.
-                </div>
-            </div>          
-        </div> 
-        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Single-Beam Bathymetry', open: false">
-            <input type="checkbox" id="chkEmodNetSinglebeam" data-dojo-attach-point="chkEmodNetSinglebeam" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblEmodNetSinglebeam" for="chkEmodNetSinglebeam">EMODnet Single-Beam Surveys</label>
-            <img id="emodnetSinglebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'emodnetSinglebeamHelp'">
-                <div class="tooltipText">
-                    Single-beam bathymetric surveys archived by the European Marine Observation and Data Network (EMODnet).<br><br>
-                    For more information, please see <a href="http://www.emodnet-bathymetry.eu/">http://www.emodnet-bathymetry.eu/</a>.<br>
-                    <a href="geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?service=WMS&request=GetCapabilities" target="_blank">WMS service</a>
-                </div>
-            </div><br>
-
-            <!-- <input disabled type="checkbox" id="chkNRCanSinglebeam" data-dojo-attach-point="chkNRCanSinglebeam" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblNRCanSinglebeam" for="chkNRCanSinglebeam">NRCan Single-Beam Surveys</label>
-            <img id="nrCanSinglebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanSinglebeamHelp'">
-                <div class="tooltipText">Text/legend goes here</div>
-            </div><br> -->
-
-            &nbsp;&nbsp;<input type="checkbox" id="chkMareanoSinglebeam" data-dojo-attach-point="chkMareanoSinglebeam" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblMareanoSinglebeam" for="chkMareanoSinglebeam">MAREANO Single-Beam Surveys</label>
-            <img id="mareanoSinglebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mareanoSinglebeamHelp'">
-                <div class="tooltipText">
-                    Single-beam bathymetric survey coverage from <a href="" target="_blank">MAREANO</a> (Norway). See the <a href="https://www.mareano.no/en/maps/mareano_en.html" target="_blank">MAREANO map page</a>.<br><br>
-                    Legend:<br>
-                    Single-beam data footprints <img src="images/enkeltstrale.JPG"><br>
-                    <a href="https://wms.geonorge.no/skwms1/wms.dekning_sjomaaling?service=wms&version=1.3.0&request=GetCapabilities" target="_blank">WMS service</a>
-                </div>
+        <input type="checkbox" id="chkChsBathymetry" data-dojo-attach-point="chkChsBathymetry" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblChsBathymetry" for="chkChsBathymetry">Canadian Hydrographic Service NONNA-100</label>
+        <img id="chsBathymetryHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'chsBathymetryHelp'">
+            <div class="tooltipText">
+                The <a href="https://open.canada.ca/data/en/dataset/d3881c4c-650d-4070-bf9b-1e00aabf0a1d" target="_blank">CHS NONNA-100</a> Bathymetric Data products represent a complete inventory of bathymetric sources acquired by the Canadian Hydrographic Service, combined at a resolution of approximately 100 metres. NONNA refers to NON-NAvigational.
             </div>
+        </div><br>
 
-        </div> 
-        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Bathymetric Compilations', open: false">
-            <input type="checkbox" data-dojo-attach-point="chkGMRT" data-dojo-type="dijit/form/CheckBox">
-            <label for="chkGMRT">Global Multi-Resolution Topography Synthesis (GMRT)</label>
-            <img id="gmrtHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'gmrtHelp'">
-                <div class="tooltipText">
-                    The <a href="https://www.gmrt.org/" target="_blank">Global Multi-Resolution Topography (GMRT)</a> synthesis, from <a href="https://www.ldeo.columbia.edu/" target="_blank">Lamont-Doherty Earth Observatory (LEDO)</a>, Columbia University, is a multi-resolutional compilation of edited multibeam sonar data collected by scientists and institutions worldwide, that is reviewed, processed and gridded by the Marine Geoscience Data System (MGDS) Team and merged into a single continuously updated compilation of global elevation data.
-                </div>
-            </div><br>
-
-            <input type="checkbox" id="chkEmodNetDtm" data-dojo-attach-point="chkEmodNetDtm" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblEmodNetDtm" for="chkEmodNetDtm">EMODnet Digital Terrain Model (DTM)</label>
-            <img id="emodnetDtmHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'emodnetDtmHelp'">
-                <div class="tooltipText">
-                    A harmonised European Marine Observation and Data Network (EMODnet) Digital Terrain Model (DTM) is generated for European sea regions from selected bathymetric survey data sets and composite DTMs, while gaps with no data coverage are completed by integrating the GEBCO Digital Bathymetry.<br><br>
-                    For more information, please see <a href="http://www.emodnet-bathymetry.eu/">http://www.emodnet-bathymetry.eu/</a>.<br>
-                    <a href="http://ows.emodnet-bathymetry.eu/wms?service=wms&version=1.3.0&request=GetCapabilities" target="_blank">WMS service</a><br>
-                    <a href="http://portal.emodnet-bathymetry.eu/services/" target="_blank">More information about available web services</a>
-                </div>
-            </div><br>
-
-            <input type="checkbox" id="chkChsBathymetry" data-dojo-attach-point="chkChsBathymetry" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblChsBathymetry" for="chkChsBathymetry">Canadian Hydrographic Service NONNA-100</label>
-            <img id="chsBathymetryHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'chsBathymetryHelp'">
-                <div class="tooltipText">
-                    The <a href="https://open.canada.ca/data/en/dataset/d3881c4c-650d-4070-bf9b-1e00aabf0a1d" target="_blank">CHS NONNA-100</a> Bathymetric Data products represent a complete inventory of bathymetric sources acquired by the Canadian Hydrographic Service, combined at a resolution of approximately 100 metres. NONNA refers to NON-NAvigational.
-                </div>
-            </div><br>
-
-            <input type="checkbox" id="chkCanadaBathy" data-dojo-attach-point="chkCanadaBathy" data-dojo-type="dijit/form/CheckBox">
-            <label id="lblCanadaBathy" for="chkCanadaBathy">Fisheries and Oceans Canada 500m Bathymetry Compilation</label>
-            <img id="canada500mHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-            <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'canada500mHelp'">
-                <div class="tooltipText">
-                    Compilation of bathymetric gridded data at 500m resolution, provided by <a href="http://www.dfo-mpo.gc.ca/index-eng.htm" target="_blank">Fisheries and Oceans Canada</a>.<br><br>
-                    <a href="http://www.charts.gc.ca/data-gestion/index-eng.asp#bathymetry" target="_blank">More information</a>
-                </div>
+        <input type="checkbox" id="chkCanadaBathy" data-dojo-attach-point="chkCanadaBathy" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblCanadaBathy" for="chkCanadaBathy">Fisheries and Oceans Canada 500m Bathymetry Compilation</label>
+        <img id="canada500mHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'canada500mHelp'">
+            <div class="tooltipText">
+                Compilation of bathymetric gridded data at 500m resolution, provided by <a href="http://www.dfo-mpo.gc.ca/index-eng.htm" target="_blank">Fisheries and Oceans Canada</a>.<br><br>
+                <a href="http://www.charts.gc.ca/data-gestion/index-eng.asp#bathymetry" target="_blank">More information</a>
             </div>
-        </div> 
+        </div>
     </div>
+
+    <div data-dojo-attach-point="emodnetTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'EMODnet', open: true">
+        <input type="checkbox" id="chkEmodNetMultibeam" data-dojo-attach-point="chkEmodNetMultibeam" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblEmodNetMultibeam" for="chkEmodNetMultibeam">EMODnet Multibeam Surveys</label>
+        <img id="emodnetMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'emodnetMultibeamHelp'">
+            <div class="tooltipText">
+                Multibeam bathymetric surveys archived by the European Marine Observation and Data Network (EMODnet).<br><br>
+                For more information, please see <a href="http://www.emodnet-bathymetry.eu/">http://www.emodnet-bathymetry.eu/</a>.<br>
+                <a href="geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?service=WMS&request=GetCapabilities" target="_blank">WMS service</a>                
+            </div>
+        </div><br><br>
+
+        &nbsp;&nbsp;<input type="checkbox" id="chkMareanoMultibeam" data-dojo-attach-point="chkMareanoMultibeam" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblMareanoMultibeam" for="chkMareanoMultibeam">MAREANO Multibeam Surveys</label>
+        <img id="mareanoMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mareanoMultibeamHelp'">
+            <div class="tooltipText">
+                Multibeam survey coverage from <a href="" target="_blank">MAREANO</a> (Norway). See the <a href="http://www.mareano.no/en/maps/mareano_en.html" target="_blank">MAREANO map page</a>.<br><br>
+                Legend:<br>
+                Multibeam or Lidar data footprints <img src="images/flerstrale.JPG"><br>
+                <a href="https://wms.geonorge.no/skwms1/wms.dekning_sjomaaling?service=wms&version=1.3.0&request=GetCapabilities" target="_blank">WMS service</a>
+            </div>
+        </div><br>
+
+        &nbsp;&nbsp;<input type="checkbox" data-dojo-attach-point="chkMareanoMultibeamShadedRelief" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkMareanoMultibeamShadedRelief">MAREANO Multibeam Shaded Relief</label>
+        <img id="mareanoShadedReliefHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mareanoShadedReliefHelp'">
+            <div class="tooltipText">
+                Shaded relief visualizations of multibeam bathymetric data from <a href="" target="_blank">MAREANO</a> (Norway).<br>
+                See the <a href="https://www.mareano.no/en/maps/mareano_en.html" target="_blank">MAREANO map page</a>.<br>
+                <a href="https://wms.geonorge.no/skwms1/wms.havbunnraster2?service=wms&version=1.3.0&request=GetCapabilities" target="_blank">WMS service</a>
+            </div>
+        </div>
+
+        <hr>
+
+        <input type="checkbox" id="chkEmodNetSinglebeam" data-dojo-attach-point="chkEmodNetSinglebeam" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblEmodNetSinglebeam" for="chkEmodNetSinglebeam">EMODnet Single-Beam Surveys</label>
+        <img id="emodnetSinglebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'emodnetSinglebeamHelp'">
+            <div class="tooltipText">
+                Single-beam bathymetric surveys archived by the European Marine Observation and Data Network (EMODnet).<br><br>
+                For more information, please see <a href="http://www.emodnet-bathymetry.eu/">http://www.emodnet-bathymetry.eu/</a>.<br>
+                <a href="geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?service=WMS&request=GetCapabilities" target="_blank">WMS service</a>
+            </div>
+        </div><br><br>
+
+        <!-- <input disabled type="checkbox" id="chkNRCanSinglebeam" data-dojo-attach-point="chkNRCanSinglebeam" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblNRCanSinglebeam" for="chkNRCanSinglebeam">NRCan Single-Beam Surveys</label>
+        <img id="nrCanSinglebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanSinglebeamHelp'">
+            <div class="tooltipText">Text/legend goes here</div>
+        </div><br> -->
+
+        &nbsp;&nbsp;<input type="checkbox" id="chkMareanoSinglebeam" data-dojo-attach-point="chkMareanoSinglebeam" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblMareanoSinglebeam" for="chkMareanoSinglebeam">MAREANO Single-Beam Surveys</label>
+        <img id="mareanoSinglebeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'mareanoSinglebeamHelp'">
+            <div class="tooltipText">
+                Single-beam bathymetric survey coverage from <a href="" target="_blank">MAREANO</a> (Norway). See the <a href="https://www.mareano.no/en/maps/mareano_en.html" target="_blank">MAREANO map page</a>.<br><br>
+                Legend:<br>
+                Single-beam data footprints <img src="images/enkeltstrale.JPG"><br>
+                <a href="https://wms.geonorge.no/skwms1/wms.dekning_sjomaaling?service=wms&version=1.3.0&request=GetCapabilities" target="_blank">WMS service</a>
+            </div>
+        </div>
+
+        <hr>
+
+        <input type="checkbox" id="chkEmodNetDtm" data-dojo-attach-point="chkEmodNetDtm" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblEmodNetDtm" for="chkEmodNetDtm">EMODnet Digital Terrain Model (DTM)</label>
+        <img id="emodnetDtmHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'emodnetDtmHelp'">
+            <div class="tooltipText">
+                A harmonised European Marine Observation and Data Network (EMODnet) Digital Terrain Model (DTM) is generated for European sea regions from selected bathymetric survey data sets and composite DTMs, while gaps with no data coverage are completed by integrating the GEBCO Digital Bathymetry.<br><br>
+                For more information, please see <a href="http://www.emodnet-bathymetry.eu/">http://www.emodnet-bathymetry.eu/</a>.<br>
+                <a href="http://ows.emodnet-bathymetry.eu/wms?service=wms&version=1.3.0&request=GetCapabilities" target="_blank">WMS service</a><br>
+                <a href="http://portal.emodnet-bathymetry.eu/services/" target="_blank">More information about available web services</a>
+            </div>
+        </div>
+    </div>
+
+    <div data-dojo-attach-point="bathymetricCoveragesTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Bathymetric Coverage Maps', open: true">
+        <input type="checkbox" data-dojo-attach-point="chkGMRT" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGMRT">Global Multi-Resolution Topography Synthesis (GMRT)</label>
+        <img id="gmrtHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'gmrtHelp'">
+            <div class="tooltipText">
+                The <a href="https://www.gmrt.org/" target="_blank">Global Multi-Resolution Topography (GMRT)</a> synthesis, from <a href="https://www.ldeo.columbia.edu/" target="_blank">Lamont-Doherty Earth Observatory (LEDO)</a>, Columbia University, is a multi-resolutional compilation of edited multibeam sonar data collected by scientists and institutions worldwide, that is reviewed, processed and gridded by the Marine Geoscience Data System (MGDS) Team and merged into a single continuously updated compilation of global elevation data.
+            </div>
+        </div><br>
+
+        <!-- <input type="checkbox" data-dojo-attach-point="chkGebcoSID" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGebcoSID">GEBCO_2019 SID</label>
+        <img id="gebcoSIDHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'gebcoSIDHelp'">
+            <div class="tooltipText">
+                Source Identifier (SID) grid for the GEBCO_2019 grid. Explanations of the data sources are available <a href="https://www.gebco.net/data_and_products/gridded_bathymetry_data/gebco_2019/gebco_2019_info.html" target="_blank">here</a>. Map service provided by UNH/CCOM.<br>
+                <div id="gebcoSIDLegend"></div>
+            </div>
+        </div> -->
+    </div>
+
 </div>

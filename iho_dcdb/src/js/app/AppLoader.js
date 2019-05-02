@@ -209,7 +209,7 @@ define([
                 var center;
                 var zoom;
                 if (!this.initialExtent) {
-                    center = [-70, 20]; //centered over western Atlantic
+                    center = [0, 20]; //centered over western Atlantic
                     zoom = 1; //relative zoom level; equivalent to absolute zoom level 3
                 }
 
@@ -326,6 +326,16 @@ define([
                     ]
                 }, 'nosHydroLegend');
                 nosHydroLegend.startup();
+
+                var gebcoSIDLegend = new Legend({
+                    map: this.mercatorMapConfig.map,
+                    autoUpdate: false,
+                    respectVisibility: false,
+                    layerInfos: [
+                        {title: 'Legend:', layer: this.mercatorMapConfig.mapLayerCollection.getLayerById('GEBCO_2019 SID')}
+                    ]
+                }, 'gebcoSIDLegend');
+                gebcoSIDLegend.startup();
             },
 
             filterCsbData: function(values) {
