@@ -38,7 +38,7 @@ define([
                     // '<div class="valueName">Station Number: <span class="parameterValue">${station}</span></div>' +
                     '<div class="valueName">Longitude: <span class="parameterValue">${longitude}</span></div>' +
                     '<div class="valueName">Latitude: <span class="parameterValue">${latitude}</span></div>' +
-                    '<div class="valueName">Bottom Depth (m): <span class="parameterValue">${bottomDepth}</span></div>';
+                    '<div class="valueName">Sample Depth (m): <span class="parameterValue">${sampleDepth}</span></div>';
                     
                 var html = string.substitute(template, {
                     ship: a['Ship'],
@@ -48,7 +48,7 @@ define([
                     station: a['Station'],
                     longitude: a['Longitude'],
                     latitude: a['Latitude'],
-                    bottomDepth: a['Bottom Depth (m)'],
+                    sampleDepth: a['Sample Depth (m)'],
                     dissolvedOxygen: a['Dissolved Oxygen (mg/l)']
                 });                
                 return html;
