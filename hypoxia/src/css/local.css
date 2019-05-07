@@ -171,8 +171,40 @@ html,body {
     padding-bottom: 0px;
 }
 
-#header {
-    height: 75px;
+#nceiHeader{
+    height: 60px;
+    width:100%;
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+    background-repeat:repeat;
+    background-position:left top;
+    text-align:left;
+    background-color:#112E51;
+}
+
+#nceiHeader a{
+    color:white;
+    text-decoration:none;
+}
+
+#nceiFooter{
+    height:20px;
+    width:100%;
+    color:white;
+    font-size:14px;
+    background-color:#112E51;
+    margin:0;
+    background-repeat:repeat;
+    background-position:left top;
+    padding:5px 0;
+    text-align:center;
+    overflow:hidden;
+}
+
+#nceiFooter a{
+    color:white;
+    text-decoration:none;
 }
 
 #layersPanel {
