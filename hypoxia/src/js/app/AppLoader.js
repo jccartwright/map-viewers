@@ -18,7 +18,9 @@ define([
     'ngdc/Logger',
     'app/web_mercator/MapConfig',
     'ngdc/web_mercator/ZoomLevels',
-    'ngdc/Banner',
+    //'ngdc/Banner',
+    'app/Header',
+    'app/Footer',
     'ngdc/CoordinatesWithElevationToolbar',
     'app/web_mercator/LayerCollection',
     'app/web_mercator/MapToolbar',
@@ -45,7 +47,9 @@ define([
         Logger,
         MapConfig,
         MercatorZoomLevels,
-        Banner,
+        //Banner,
+        Header,
+        Footer,
         CoordinatesWithElevationToolbar,
         LayerCollection,
         MapToolbar,
@@ -91,7 +95,8 @@ define([
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
 
-                this.setupBanner();
+                this.setupHeader();
+                this.setupFooter();
 
                 this.setupLayersPanel();
 
@@ -100,21 +105,21 @@ define([
                 this.setupMapViews();
             },
 
-            setupBanner: function() {
-                this.banner = new Banner({
-                    breadcrumbs: [
-                        {url: 'https://www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
-                        {url: 'https://www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
-                        {url: 'https://www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
-                        {url: 'https://maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
-                        {url: 'https://www.ncddc.noaa.gov/hypoxia/', label: 'Hypoxia'}           
-                    ],
-                    dataUrl: 'https://www.ncddc.noaa.gov/hypoxia/',
-                    image: 'images/hypoxia_banner_sm.jpg',
-                    imageAlt: 'NCEI Bathymetric Data Viewer - go to data home'
+            setupHeader: function() {
+                this.header = new Header({
+                    title: 'Gulf of Mexico Hypoxia Watch',
+                    titleUrl: 'https://www.ncddc.noaa.gov/hypoxia/',
+                    imageSrc: 'images/hypoxia_banner_sm.jpg',
+                    imageUrl: 'https://www.ncddc.noaa.gov/hypoxia/',
+                    imageAlt: 'Gulf of Mexico Hypoxia Watch',
+                    imageUrlTitle: 'Gulf of Mexico Hypoxia Watch'
                 });
-                this.banner.mapserviceImg.width = 746;
-                this.banner.placeAt('banner');
+                this.header.placeAt('banner');
+            },
+
+            setupFooter: function() {
+                this.footer = new Footer();
+                this.footer.placeAt('footer');
             },
 
             setupLayersPanel: function() {
