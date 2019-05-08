@@ -33,6 +33,25 @@ define([
 
         return declare([IdentifyPane], {
 
+            gebcoSIDDescriptions: {
+                '0': 'Predicted based on satellite-derived gravity data - depth value is an interpolated value guided by satellite-derived gravity data (from SRTM15_plus)',
+                '10': 'Singlebeam - depth value collected by a single beam echo-sounder',
+                '11': 'Multibeam - depth value collected by a multibeam echo-sounder',
+                '12': 'Seismic - depth value collected by seismic methods',
+                '13': 'Isolated sounding - depth value that is not part of a regular survey or trackline',
+                '14': 'ENC sounding - depth value extracted from an Electronic Navigation Chart (ENC)',
+                '15': 'Interpolated based on a computer algorithm - depth value is an interpolated value based on a computer algorithm (e.g. Generic Mapping Tools)',
+                '16': 'Digital bathymetric contours from charts - depth value taken from a bathymetric contour data set',
+                '17': 'Digital bathymetric contours from ENCs - depth value taken from bathymetric contours from an Electronic Navigation Chart (ENC)',
+                '18': 'Pre-generated grid - depth value is taken from a pre-generated grid that is based on mixed source data types, e.g. single beam, multibeam, interpolation etc.',
+                '19': 'Unknown source - depth value from an unknown source',
+                '20': 'Steering points - depth value used to constrain the grid in areas of poor data coverage',
+                '21': 'Lidar - depth derived from a bathymetric lidar sensor',
+                '22': 'Bathymetric sounding - depth value at this location is constrained by bathymetric sounding(s) from the SRTM15_plus data set. <i>Note: this includes many multibeam surveys from the IHO DCDB.</i>',
+                '23': 'Pre-generated grid - depth value is based on the GEBCO_08 Grid. This data set is a global grid at 30 arc-seconds. It was largely generated from a data base of ship-track soundings with interpolation between soundings guided by satellite-derived gravity data',
+                '-8888': 'Land elevations'
+            },
+
             constructor: function() {
                 this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl + '/identify/images/magnifier.png';
             },
@@ -169,7 +188,9 @@ define([
                 else if (layerKey === 'EMODnet Multibeam Polygons/default' || layerKey === 'EMODnet Multibeam Lines/default') {
                     return 'EMODnet Multibeam Bathymetric Surveys';
                 }
-
+                else if (layerKey === 'GEBCO_2019 SID/GEBCO_2019 SID') {
+                    return 'GEBCO_2019 Source Identifier Grid';
+                }
                 
             },
 
@@ -218,10 +239,10 @@ define([
                 else if (item.formatter === 'NRCan Multibeam/Multibeam Bathymetry Index Map - Bathymétrie Multifaisceaux Couches Index ') {
                     return this.getItemLabelSpan(item.feature.attributes['TITLE_EN'], uid);
                 }
-                else if (item.formatter === 'EMODnet Singlebeam Polygons/default' || item.formatter === 'EMODnet Singlebeam Lines/default' ||
-                    item.formatter === 'EMODnet Multibeam Polygons/default' || item.formatter === 'EMODnet Multibeam Lines/default') {
-                    return this.getItemLabelSpan(item.feature.attributes['Data set name'], uid);
-                }
+                
+                else if (item.layerName === 'GEBCO_2019 SID') {
+                    return this.gebcoSIDDescriptions[item.feature.attributes['Pixel Value']];
+                } 
             },
 
             getItemLabelSpan: function(text, uid) {
