@@ -139,9 +139,9 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'AusSeabed Bathymetry Holdings', this.chkAusSeabedBathymetryHoldings.checked);
                 }));
 
-                // on(this.chkGebcoSID, 'change', lang.hitch(this, function() {
-                //     topic.publish('/ngdc/layer/visibility', 'GEBCO_2019 SID', this.chkGebcoSID.checked);
-                // }));
+                on(this.chkGebcoSID, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'GEBCO_2019 SID', this.chkGebcoSID.checked);
+                }));
                 
                 this.csbSearchDialog = new CsbSearchDialog({title: 'Search Crowdsourced Bathymetry Files'});
                 on(this.csbSearchButton, 'click', lang.hitch(this, function() {

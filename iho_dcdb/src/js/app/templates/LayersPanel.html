@@ -1,6 +1,6 @@
 <div class="layersPanel_class">
 
-    <div data-dojo-attach-point="dcdbTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'IHO DCDB/NOAA NCEI', open: true">
+    <div data-dojo-attach-point="dcdbTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'IHO DCDB/NOAA NCEI', open: false">
         <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nceiHelp'">
             <div class="tooltipText">
                 Bathymetric data holdings archived at the International Hydrographic Organization's Data Centre for Digital Bathymetry (IHO DCDB), which is hosted by NOAA's National Centers for Environmental Information (NOAA NCEI), and downloadable from the DCDB.
@@ -123,7 +123,7 @@
         </div>
     </div>
 
-    <div data-dojo-attach-point="australiaTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Australia', open: true">
+    <div data-dojo-attach-point="australiaTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Australia', open: false">
         <input type="checkbox" id="chkAusSeabedBathymetryHoldings" data-dojo-attach-point="chkAusSeabedBathymetryHoldings" data-dojo-type="dijit/form/CheckBox">
         <label id="lblAusSeabedBathymetryHoldings" for="chkAusSeabedBathymetryHoldings">AusSeabed Bathymetry Holdings</label>
         <img id="AusSeabedBathymetryHoldingsHelp" class="tooltipButtonMiddle" src="images/question-white.png">
@@ -156,7 +156,7 @@
         </div>
     </div>
 
-    <div data-dojo-attach-point="canadaTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Canada', open: true">
+    <div data-dojo-attach-point="canadaTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Canada', open: false">
         <input type="checkbox" id="chkNRCanMultibeam" data-dojo-attach-point="chkNRCanMultibeam" data-dojo-type="dijit/form/CheckBox">
         <label id="lblNRCanMultibeam" for="chkNRCanMultibeam">NRCan Multibeam Surveys</label>
         <img id="nrCanMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
@@ -198,7 +198,7 @@
         </div>
     </div>
 
-    <div data-dojo-attach-point="emodnetTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'EMODnet', open: true">
+    <div data-dojo-attach-point="emodnetTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'EMODnet', open: false">
         <input type="checkbox" id="chkEmodNetMultibeam" data-dojo-attach-point="chkEmodNetMultibeam" data-dojo-type="dijit/form/CheckBox">
         <label id="lblEmodNetMultibeam" for="chkEmodNetMultibeam">EMODnet Multibeam Surveys</label>
         <img id="emodnetMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
@@ -280,7 +280,7 @@
         </div>
     </div>
 
-    <div data-dojo-attach-point="bathymetricCoveragesTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Bathymetric Coverage Maps', open: true">
+    <div data-dojo-attach-point="bathymetricCoveragesTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Bathymetric Coverage Maps', open: false">
         <input type="checkbox" data-dojo-attach-point="chkGMRT" data-dojo-type="dijit/form/CheckBox">
         <label for="chkGMRT">Global Multi-Resolution Topography Synthesis (GMRT)</label>
         <img id="gmrtHelp" class="tooltipButtonMiddle" src="images/question-white.png">
@@ -290,15 +290,15 @@
             </div>
         </div><br>
 
-        <!-- <input type="checkbox" data-dojo-attach-point="chkGebcoSID" data-dojo-type="dijit/form/CheckBox">
-        <label for="chkGebcoSID">GEBCO_2019 SID</label>
+        <input type="checkbox" data-dojo-attach-point="chkGebcoSID" data-dojo-type="dijit/form/CheckBox">
+        <label for="chkGebcoSID">GEBCO_2019 Source Identifier</label>
         <img id="gebcoSIDHelp" class="tooltipButtonMiddle" src="images/question-white.png">
         <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'gebcoSIDHelp'">
             <div class="tooltipText">
-                Source Identifier (SID) grid for the GEBCO_2019 grid. Explanations of the data sources are available <a href="https://www.gebco.net/data_and_products/gridded_bathymetry_data/gebco_2019/gebco_2019_info.html" target="_blank">here</a>. Map service provided by UNH/CCOM.<br>
+                Source Identifier (SID) grid for the GEBCO_2019 grid. Explanations of the data sources are available <a href="https://www.gebco.net/data_and_products/gridded_bathymetry_data/gebco_2019/gebco_2019_info.html" target="_blank">here</a>. Note: when zoomed out, resampling artifacts may cause smaller lines to disappear; zoom in for a more accurate view. Click on the map to display the source identifier description at each point.<br>
                 <div id="gebcoSIDLegend"></div>
             </div>
-        </div> -->
+        </div>
     </div>
 
 </div>
