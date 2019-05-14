@@ -275,7 +275,8 @@ define([
                     type: 'submit',
                     onClick: lang.hitch(this, function(){
                         okDialog.destroy();
-                        this.openGetMarineDataWindow(geometry, surveyIds, isSingleSurvey);
+                        this.submitOrder(orderParams);
+                        //this.openGetMarineDataWindow(geometry, surveyIds, isSingleSurvey);
                     })
                 }).placeAt(okDialog.containerNode);
                 okDialog.show();
