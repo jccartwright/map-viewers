@@ -181,10 +181,11 @@ define([
                         visible: false
                     }),
 
-                    new ArcGISDynamicMapServiceLayer('https://maps.ccom.unh.edu/server/rest/services/Seabed2030/GEBCO_2019_SID/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/GEBCO_2019_SID/MapServer', {
                         id: 'GEBCO_2019 SID',
                         visible: false,
                         opacity: 0.5,
+                        //minScale: 5000000,
                         imageParameters: this.imageParameters.png32
                     }),
 

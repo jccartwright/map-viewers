@@ -26,7 +26,8 @@ define([
                     'EMODnet Multibeam Polygons',
                     'EMODnet Singlebeam Lines',
                     'EMODnet Multibeam Lines',
-                    'MAREANO Multibeam'
+                    'MAREANO Multibeam',
+                    'GEBCO_2019 SID'
                 ];
 
                 //pass along reference to Map, LayerCollection, list of LayerIds
@@ -41,7 +42,7 @@ define([
                     'EMODnet Multibeam Polygons/default': lang.hitch(this, this.emodnetMultibeamFormatter),
                     'EMODnet Multibeam Lines/default': lang.hitch(this, this.emodnetMultibeamFormatter),
                     'EMODnet Singlebeam Polygons/default': lang.hitch(this, this.emodnetSinglebeamFormatter),
-                    'EMODnet Singlebeam Lines/default': lang.hitch(this, this.emodnetSinglebeamFormatter),
+                    'EMODnet Singlebeam Lines/default': lang.hitch(this, this.emodnetSinglebeamFormatter)
                 };
             } //end constructor
         });
