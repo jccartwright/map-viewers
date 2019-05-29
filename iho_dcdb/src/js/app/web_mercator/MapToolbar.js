@@ -33,7 +33,7 @@ define([
                         visible: false
                     },
                     {
-                        label: 'Undersea Feature Names (SCUFN))',
+                        label: 'Undersea Feature Names (GEBCO/SCUFN)',
                         services: [{id: 'Undersea Features'}],
                         visible: false
                     },

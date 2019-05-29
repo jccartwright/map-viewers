@@ -191,7 +191,6 @@ define([
                 else if (layerKey === 'GEBCO_2019 SID/GEBCO_2019 SID') {
                     return 'GEBCO_2019 Source Identifier Grid';
                 }
-                
             },
 
             formatCountString: function(count) {
@@ -238,6 +237,11 @@ define([
                 }
                 else if (item.formatter === 'NRCan Multibeam/Multibeam Bathymetry Index Map - Bathymétrie Multifaisceaux Couches Index ') {
                     return this.getItemLabelSpan(item.feature.attributes['TITLE_EN'], uid);
+                }
+
+                else if (item.formatter === 'EMODnet Singlebeam Polygons/default' || item.formatter === 'EMODnet Singlebeam Lines/default' ||
+                    item.formatter === 'EMODnet Multibeam Polygons/default' || item.formatter === 'EMODnet Multibeam Lines/default') {
+                    return this.getItemLabelSpan(item.feature.attributes['Data set name'], uid);
                 }
                 
                 else if (item.layerName === 'GEBCO_2019 SID') {
