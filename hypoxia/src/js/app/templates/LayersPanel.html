@@ -68,9 +68,24 @@
         </table>
         <a id="accessionLink" href="#" target="_blank">Archived Data Accession</a>
         <!-- https://data.nodc.noaa.gov/cgi-bin/iso?id=gov.noaa.nodc:0174810 -->
+
+        <table class="downloadTable" style="padding-top: 15px;">
+            <tr><th colspan="3">Data from the <a href="http://www.wlf.louisiana.gov/">Louisana Dept. Wildlife and Fisheries (LDWF)</a></th></tr>
+            <tr style="text-align: center">
+                <td>2015</td>
+                <td><a title="Link to 2015 Louisiana Department of Wildlife and Fisheries Map" href="http://service.ncddc.noaa.gov/rdn/www/media/hypoxia/maps/LDWF2015.jpg" target="_blank">map image</a></td>
+                <td><a title="Link to 2015 Louisiana Department of Wildlife and Fisheries Data" href="http://service.ncddc.noaa.gov/rdn/www/media/documents/hypoxia/data/LDWF2015.zip" target="_blank">data</a></td>
+            </tr>
+            <tr style="text-align: center">
+                <td>2013</td>
+                <td><a title="Link to 2013 Louisiana Department of Wildlife and Fisheries Map" href="http://service.ncddc.noaa.gov/rdn/www/media/hypoxia/maps/LDWF2013.jpg" target="_blank">map image</a></td>
+                <td><a title="Link to 2013 Louisiana Department of Wildlife and Fisheries Data" href="http://service.ncddc.noaa.gov/rdn/www/media/documents/hypoxia/data/LDWF2013.zip" target="_blank">data</a></td>
+            </tr>
+        </table> 
+
     </div>
 
-    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Ancillary Data', open: true">
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Ancillary Data', open: false">
         <input type="checkbox" id="chkSst" data-dojo-attach-point="chkSst" data-dojo-type="dijit/form/CheckBox">
         <label for="chkSst">Mean Sea Surface Temperatures</label>
         <img id="sstHelp" class="tooltipButtonMiddle" src="images/question-white.png">
@@ -99,7 +114,7 @@
         <label for="chkDepth200">Depth - 200 m contour</label>
     </div>
 
-    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'More Information', open: true">
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'More Information', open: false">
         Hypoxia in aquatic systems refers to waters where the dissolved oxygen concentration is below 2 mg/L. Most organisms avoid, or become physiologically stressed, in waters with oxygen below this concentration. Also known as a dead zone, hypoxia can also kill marine organisms which cannot escape the low-oxygen water, affecting commercial harvests and the health of impacted ecosystems.<br><br>
 
         The Gulf of Mexico Hypoxia Watch evolved as a cooperative project among the National Oceanic and Atmospheric Administration's (NOAA's) <a href="http://www.nmfs.noaa.gov/" target="_blank">National Marine Fisheries Service (NMFS)</a>, <a href="https://www.ncddc.noaa.gov/" target="_blank">NCEI at Stennis</a>, and the <a href="https://cwcaribbean.aoml.noaa.gov/" target="_blank">CoastWatch - Caribbean/Gulf of Mexico - Regional Node</a>.<br><br>
