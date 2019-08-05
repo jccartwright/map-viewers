@@ -247,7 +247,7 @@ define([
                         imageParameters: this.imageParameters.png32
                     }),
 
-                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
+                    new TiledWMSLayer('https://geoservice.maris.nl/wms/seadatanet/emodnet_hydrography?', {
                         id: 'EMODnet Singlebeam Polygons',
                         visible: false,
                         format: 'png',
@@ -257,7 +257,7 @@ define([
                         layerNames: ['EMODnet_Bathymetry_single_beams_polygons'],
                         opacity: 0.5
                     }),
-                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
+                    new TiledWMSLayer('https://geoservice.maris.nl/wms/seadatanet/emodnet_hydrography?', {
                         id: 'EMODnet Multibeam Polygons',
                         visible: false,
                         format: 'png',
@@ -267,7 +267,7 @@ define([
                         layerNames: ['EMODnet_Bathymetry_multi_beams_polygons'],
                         opacity: 0.5
                     }),
-                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
+                    new TiledWMSLayer('https://geoservice.maris.nl/wms/seadatanet/emodnet_hydrography?', {
                         id: 'EMODnet Singlebeam Lines',
                         visible: false,
                         format: 'png',
@@ -276,7 +276,7 @@ define([
                         sld: 'http://geomag.colorado.edu/sld/emodnet.sld',
                         layerNames: ['EMODnet_Bathymetry_single_beams_points', 'EMODnet_Bathymetry_single_beams_lines']
                     }),
-                    new TiledWMSLayer('https://gis.ngdc.noaa.gov/https-proxy/proxy?http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?', {
+                    new TiledWMSLayer('https://geoservice.maris.nl/wms/seadatanet/emodnet_hydrography?', {
                         id: 'EMODnet Multibeam Lines',
                         visible: false,
                         format: 'png',
