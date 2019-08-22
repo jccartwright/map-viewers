@@ -1,6 +1,9 @@
 Gulf of Mexico Hypoxia Watch Viewer
 ======================
 
+# WARNING - this repo has been deprecated. Please use [GitLab](https://git.ncei.noaa.gov/gis/hypoxia) instead
+
+
 Tasks
 ---------------
 
