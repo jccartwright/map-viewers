@@ -158,13 +158,13 @@ define([
             setupBanner: function() {
                 this.banner = new Banner({
                     breadcrumbs: [
-                        {url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
-                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
-                        {url: '//www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
-                        {url: '//maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
-                        {url: '//ngdc.noaa.gov/mgg/geodas/trackline.html', label: 'Trackline Geophysical Data', title: 'Go to NCEI Trackline Geophysical Data home'}
+                        {url: 'https://www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
+                        {url: 'https://www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
+                        {url: 'https://www.ncei.noaa.gov/', label: 'NCEI', title: 'Go to the National Centers for Environmental Information home'},
+                        {url: 'https://www.ncei.noaa.gov/maps-and-geospatial-products', label: 'Maps', title: 'Go to NCEI maps home'},
+                        {url: 'https://ngdc.noaa.gov/mgg/geodas/trackline.html', label: 'Trackline Geophysical Data', title: 'Go to NCEI Trackline Geophysical Data home'}
                     ],
-                    dataUrl: '//ngdc.noaa.gov/mgg/geodas/trackline.html',
+                    dataUrl: 'https://ngdc.noaa.gov/mgg/geodas/trackline.html',
                     image: 'images/trackline_viewer_logo.png',
                     imageAlt: 'NCEI Trackline Geophysical Data Viewer - go to data home'
                 });

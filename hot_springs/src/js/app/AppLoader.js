@@ -94,13 +94,13 @@ define([
 
                 this.banner = new Banner({
                     breadcrumbs: [
-                        {url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
-                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
-                        {url: '//www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
-                        {url: '//maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
-                        {url: '//ngdc.noaa.gov/hazard/geotherm.shtml', label: 'Geothermal'}           
+                        {url: 'https://www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
+                        {url: 'https://www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
+                        {url: 'https://www.ncei.noaa.gov/', label: 'NCEI', title: 'Go to the National Centers for Environmental Information home'},
+                        {url: 'https://www.ncei.noaa.gov/maps-and-geospatial-products', label: 'Maps', title: 'Go to NCEI maps home'},
+                        {url: 'https://ngdc.noaa.gov/hazard/geotherm.shtml', label: 'Geothermal'}           
                     ],
-                    dataUrl: '//ngdc.noaa.gov/hazard/geotherm.shtml',
+                    dataUrl: 'https://ngdc.noaa.gov/hazard/geotherm.shtml',
                     image: 'images/hot_springs_viewer_logo.png',
                     imageAlt: 'NCEI Thermal Springs Viewer - go to data home'
                 });

@@ -1,6 +1,6 @@
 {
   "name": "fishmaps",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "U.S. Bathymetric and Fishing Maps",
   "main": "index.html",
   "scripts": {

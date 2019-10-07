@@ -163,13 +163,13 @@ define([
             setupBanner: function() {
                 this.banner = new Banner({
                     breadcrumbs: [
-                        {url: '//www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
-                        {url: '//www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
-                        {url: '//www.ngdc.noaa.gov', label: 'NCEI (formerly NGDC)', title: 'Go to the National Centers for Environmental Information (formerly the National Geophysical Data Center) home'},
-                        {url: '//maps.ngdc.noaa.gov', label: 'Maps', title: 'Go to NCEI maps home'},
-                        {url: 'http://dx.doi.org/doi:10.7289/V5H41PB8', label: 'Sample Index', title: 'Go to Sample Index home'}        
+                        {url: 'https://www.noaa.gov', label: 'NOAA', title: 'Go to the National Oceanic and Atmospheric Administration home'},
+                        {url: 'https://www.nesdis.noaa.gov', label: 'NESDIS', title: 'Go to the National Environmental Satellite, Data, and Information Service home'},
+                        {url: 'https://www.ncei.noaa.gov/', label: 'NCEI', title: 'Go to the National Centers for Environmental Information home'},
+                        {url: 'https://www.ncei.noaa.gov/maps-and-geospatial-products', label: 'Maps', title: 'Go to NCEI maps home'},
+                        {url: 'https://dx.doi.org/doi:10.7289/V5H41PB8', label: 'Sample Index', title: 'Go to Sample Index home'}        
                     ],
-                    dataUrl: 'http://dx.doi.org/doi:10.7289/V5H41PB8',
+                    dataUrl: 'https://dx.doi.org/doi:10.7289/V5H41PB8',
                     image: 'images/sample_index_viewer_logo.gif',
                     imageAlt: 'NCEI Index to Marine and Lacustrine Geological Samples Viewer - go to data home'
                 });
