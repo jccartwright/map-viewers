@@ -5,6 +5,9 @@ define([
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISImageServiceLayer',
     'esri/layers/WebTiledLayer',
+    'esri/geometry/Extent',
+    'esri/SpatialReference',
+    'esri/geometry/webMercatorUtils',
     'ngdc/layers/TiledWMSLayer'
     ],
     function(
@@ -14,6 +17,9 @@ define([
         ArcGISDynamicMapServiceLayer,
         ArcGISImageServiceLayer,
         WebTiledLayer,
+        Extent,
+        SpatialReference,
+        webMercatorUtils,
         TiledWMSLayer
         ){
 
@@ -114,6 +120,104 @@ define([
                         layerNames: ['marine:bathymetry_150m_3857']
                     }), 
 
+                    new TiledWMSLayer('https://services.data.shom.fr/INSPIRE/wms/r?', {
+                        id: 'France Grids 1',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '3857',
+                        layerNames: ['MNT_REU100m_HOMONIM_PBMA_PYR_PNG_3857_WMSR'],
+                        additionalParams: {
+                            styles: ''
+                        },
+                        fullExtent: webMercatorUtils.geographicToWebMercator(new Extent(54.5, -22, 56.5, -20.25, new SpatialReference({wkid:4326})))
+                    }), 
+                    new TiledWMSLayer('https://services.data.shom.fr/INSPIRE/wms/r?', {
+                        id: 'France Grids 2',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '3857',
+                        layerNames: ['MNT_MAY100m_HOMONIM_PBMA_PYR_PNG_3857_WMSR'],
+                        additionalParams: {
+                            styles: ''
+                        },
+                        fullExtent: webMercatorUtils.geographicToWebMercator(new Extent(44.5, -13.5, 45.75, -12.25, new SpatialReference({wkid:4326})))
+                    }), 
+                    new TiledWMSLayer('https://services.data.shom.fr/INSPIRE/wms/r?', {
+                        id: 'France Grids 3',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '3857',
+                        layerNames: ['MNT_GUY100m_HOMONIM_PBMA_3857_WMSR'],
+                        additionalParams: {
+                            styles: ''
+                        },
+                        fullExtent: webMercatorUtils.geographicToWebMercator(new Extent(-54.75, 3.25, -49.75, 8, new SpatialReference({wkid:4326})))
+                    }), 
+                    new TiledWMSLayer('https://services.data.shom.fr/INSPIRE/wms/r?', {
+                        id: 'France Grids 4',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '3857',
+                        layerNames: ['MNT_FACADE_CLIPPERTON_3857_WMSR'],
+                        additionalParams: {
+                            styles: ''
+                        },
+                        fullExtent: webMercatorUtils.geographicToWebMercator(new Extent(-109.819, 9.7805, -108.681, 10.6795, new SpatialReference({wkid:4326})))
+                    }), 
+                    new TiledWMSLayer('https://services.data.shom.fr/INSPIRE/wms/r?', {
+                        id: 'France Grids 5',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '3857',
+                        layerNames: ['MNT_COTIER_CLIPPERTON_3857_WMSR'],
+                        additionalParams: {
+                            styles: ''
+                        },
+                        fullExtent: webMercatorUtils.geographicToWebMercator(new Extent(-109.35, 10.2, -109.124, 10.4385, new SpatialReference({wkid:4326})))
+                    }), 
+                    new TiledWMSLayer('https://services.data.shom.fr/INSPIRE/wms/r?', {
+                        id: 'France Grids 6',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '3857',
+                        layerNames: ['MNT_ANTS100m_HOMONIM_4326_WMSR'],
+                        additionalParams: {
+                            styles: ''
+                        },
+                        fullExtent: webMercatorUtils.geographicToWebMercator(new Extent(-62.3, 14.1, -60.3, 16.9, new SpatialReference({wkid:4326})))
+                    }), 
+                    new TiledWMSLayer('https://services.data.shom.fr/INSPIRE/wms/r?', {
+                        id: 'France Grids 7',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '3857',
+                        layerNames: ['MNT_ANTN100m_HOMONIM_PBMA_4326_WMSR'],
+                        additionalParams: {
+                            styles: ''
+                        },
+                        fullExtent: webMercatorUtils.geographicToWebMercator(new Extent(-63.5, 17.6, -62.5, 18.5, new SpatialReference({wkid:4326})))
+                    }), 
+
+                    new TiledWMSLayer('https://inspire.caris.nl/server/services/ows/view/map/Caribbean_inspire?', {
+                        id: 'Netherlands Caribbean Grids',
+                        visible: false,
+                        format: 'png',
+                        wmsVersion: '1.3.0',
+                        epsgCode: '3857',
+                        layerNames: ['Bathy_CAR_2017_raster.EL.GridCoverage'],
+                        additionalParams: {
+                            styles: ''
+                        },
+                        fullExtent: webMercatorUtils.geographicToWebMercator(new Extent(-70.4184971, 11.663932899999999, -62.823577, 18.055868099999998, new SpatialReference({wkid:4326})))
+                    }), 
+
                     new ArcGISDynamicMapServiceLayer('https://geoportal.gc.ca/arcgis/rest/services/Bathymetry_500m_ENG/MapServer', {
                         id: 'Canada 500m Bathymetry',
                         visible: false,
@@ -126,7 +230,8 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        layerNames: ['mean_atlas_land']
+                        layerNames: ['mean_atlas_land'],
+                        fullExtent: webMercatorUtils.geographicToWebMercator(new Extent(-36, 15, 43, 90, new SpatialReference({wkid:4326})))
                     }),
                     new TiledWMSLayer('https://wms.geonorge.no/skwms1/wms.havbunnraster2?', {
                         id: 'MAREANO Multibeam Shaded Relief',
