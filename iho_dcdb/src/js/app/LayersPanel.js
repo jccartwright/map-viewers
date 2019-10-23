@@ -125,6 +125,21 @@ define([
                     topic.publish('/ngdc/layer/visibility', 'EMODnet DTM', this.chkEmodNetDtm.checked);
                 }));
 
+                on(this.chkNetherlandsCaribGrids, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'Netherlands Caribbean Grids', this.chkNetherlandsCaribGrids.checked);
+                }));
+
+                on(this.chkFranceGrids, 'change', lang.hitch(this, function() {
+                    topic.publish('/ngdc/layer/visibility', 'France Grids 1', this.chkFranceGrids.checked);
+                    topic.publish('/ngdc/layer/visibility', 'France Grids 2', this.chkFranceGrids.checked);
+                    topic.publish('/ngdc/layer/visibility', 'France Grids 3', this.chkFranceGrids.checked);
+                    topic.publish('/ngdc/layer/visibility', 'France Grids 4', this.chkFranceGrids.checked);
+                    topic.publish('/ngdc/layer/visibility', 'France Grids 5', this.chkFranceGrids.checked);
+                    topic.publish('/ngdc/layer/visibility', 'France Grids 6', this.chkFranceGrids.checked);
+                    topic.publish('/ngdc/layer/visibility', 'France Grids 7', this.chkFranceGrids.checked);
+                }));
+                
+
                 on(this.chkCanadaBathy, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Canada 500m Bathymetry', this.chkCanadaBathy.checked);
                 }));

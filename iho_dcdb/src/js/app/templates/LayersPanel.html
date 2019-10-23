@@ -123,81 +123,6 @@
         </div>
     </div>
 
-    <div data-dojo-attach-point="australiaTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Australia', open: false">
-        <input type="checkbox" id="chkAusSeabedBathymetryHoldings" data-dojo-attach-point="chkAusSeabedBathymetryHoldings" data-dojo-type="dijit/form/CheckBox">
-        <label id="lblAusSeabedBathymetryHoldings" for="chkAusSeabedBathymetryHoldings">AusSeabed Bathymetry Holdings</label>
-        <img id="AusSeabedBathymetryHoldingsHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabedBathymetryHoldingsHelp'">
-            <div class="tooltipText">
-                This dataset represents the current extent of bathymetry datasets held by AusSeabed as of January 2019. This dataset is live and will continue to be augmented as coverage is supplied from respective AusSeabed partners. Surveys have been conducted by a wide range of organisations and countries, both inside and outside of Australia's EEZ and for various purposes. Each polygon contains metadata describing the nature of data collection, including details of the survey, as well as the principle investigator of the project. Not all surveys are currently available for download; if available, the Data Access URL attribute will indicate how to access the survey data. Polygons are based on a 500m gridding of the survey data, so may not be representative of the true survey extent when viewed at large scale.<br><br>
-                For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.<br><br>
-                <i>Please note: clicking the map to identify and view attributes is not currently enabled for this layer.</i>
-            </div>
-        </div><br>
-        
-        <input type="checkbox" id="chkAusSeabed50Multibeam" data-dojo-attach-point="chkAusSeabed50Multibeam" data-dojo-type="dijit/form/CheckBox">
-        <label id="lblAusSeabed50Multibeam" for="chkAusSeabed50Multibeam">AusSeabed 50m Multibeam 2018</label>
-        <img id="AusSeabed50MultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabed50MultibeamHelp'">
-            <div class="tooltipText">
-                This dataset represents the ocean depth values surrounding Australia. It contains all multibeam data held by Geoscience Australia as of June 2018, compiled from multibeam bathymetry holdings lying within the outer edge of the offshore area of Australia, as well as some data in international waters, and gridded at 50m. Source information can be found in the associated vector product, AusSeabed Bathymetry Holdings.<br><br>
-                For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.
-            </div>
-        </div><br>
-
-        <input type="checkbox" id="chkAusSeabedMH370" data-dojo-attach-point="chkAusSeabedMH370" data-dojo-type="dijit/form/CheckBox">
-        <label id="lblAusSeabedMH370" for="chkAusSeabedMH370">AusSeabed MH370 Phase 1 Data 150m</label>
-        <img id="AusSeabedMH370Help" class="tooltipButtonMiddle" src="images/question-white.png">
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabedMH370Help'">
-            <div class="tooltipText">
-                Bathymetric data acquired from Phase 1 Marine Surveys (Geoscience Australia survey reference: GA-4421, GA-4422 &amp; GA-4430) conducted by the Governments of Australia, Malaysia and the People Republic of China for the search of Malaysian Airlines flight MH370 in the Indian Ocean. This bathymetry data was acquired from June 2014 to February 2017 and processed by Geoscience Australia to a range of resolutions (25-83 m).<br><br>
-                For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.
-            </div>
-        </div>
-    </div>
-
-    <div data-dojo-attach-point="canadaTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Canada', open: false">
-        <input type="checkbox" id="chkNRCanMultibeam" data-dojo-attach-point="chkNRCanMultibeam" data-dojo-type="dijit/form/CheckBox">
-        <label id="lblNRCanMultibeam" for="chkNRCanMultibeam">NRCan Multibeam Surveys</label>
-        <img id="nrCanMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanMultibeamHelp'">
-            <div class="tooltipText">
-                Footprints of multibeam bathymetric data archived by <a href="https://www.nrcan.gc.ca/home" target="_blank">Natural Resources Canada (NRCan)</a>.<br><br>
-                <a href="https://www.nrcan.gc.ca/earth-sciences/resources/tools-applications/web-map-services/marine-geoscience-data/17402" target="_blank">More information about available web services</a>
-            </div>
-        </div><br>
-
-        <input type="checkbox" id="chkNRCanMultibeamHillshade" data-dojo-attach-point="chkNRCanMultibeamHillshade" data-dojo-type="dijit/form/CheckBox">
-        <label id="lblNRCanMultibeamHillshade" for="chkNRCanMultibeamHillshade">NRCan Multibeam Shaded Relief</label>
-        <img id="nrCanMultibeamHillshadeHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanMultibeamHillshadeHelp'">
-            <div class="tooltipText">
-                Shaded relief visualizations of multibeam bathymetric data archived by <a href="https://www.nrcan.gc.ca/home" target="_blank">Natural Resources Canada (NRCan)</a>.<br><br>
-                Note: this layer will only appear when zoomed in fairly closely to the Canadian coastline.<br><br>
-                <a href="https://www.nrcan.gc.ca/earth-sciences/resources/tools-applications/web-map-services/marine-geoscience-data/17402" target="_blank">More information about available web services</a>
-            </div>
-        </div><br>
-
-        <input type="checkbox" id="chkChsBathymetry" data-dojo-attach-point="chkChsBathymetry" data-dojo-type="dijit/form/CheckBox">
-        <label id="lblChsBathymetry" for="chkChsBathymetry">Canadian Hydrographic Service NONNA-100</label>
-        <img id="chsBathymetryHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'chsBathymetryHelp'">
-            <div class="tooltipText">
-                The <a href="https://open.canada.ca/data/en/dataset/d3881c4c-650d-4070-bf9b-1e00aabf0a1d" target="_blank">CHS NONNA-100</a> Bathymetric Data products represent a complete inventory of bathymetric sources acquired by the Canadian Hydrographic Service, combined at a resolution of approximately 100 metres. NONNA refers to NON-NAvigational.
-            </div>
-        </div><br>
-
-        <input type="checkbox" id="chkCanadaBathy" data-dojo-attach-point="chkCanadaBathy" data-dojo-type="dijit/form/CheckBox">
-        <label id="lblCanadaBathy" for="chkCanadaBathy">Fisheries and Oceans Canada 500m Bathymetry Compilation</label>
-        <img id="canada500mHelp" class="tooltipButtonMiddle" src="images/question-white.png">
-        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'canada500mHelp'">
-            <div class="tooltipText">
-                Compilation of bathymetric gridded data at 500m resolution, provided by <a href="http://www.dfo-mpo.gc.ca/index-eng.htm" target="_blank">Fisheries and Oceans Canada</a>.<br><br>
-                <a href="http://www.charts.gc.ca/data-gestion/index-eng.asp#bathymetry" target="_blank">More information</a>
-            </div>
-        </div>
-    </div>
-
     <div data-dojo-attach-point="emodnetTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'EMODnet', open: false">
         <input type="checkbox" id="chkEmodNetMultibeam" data-dojo-attach-point="chkEmodNetMultibeam" data-dojo-type="dijit/form/CheckBox">
         <label id="lblEmodNetMultibeam" for="chkEmodNetMultibeam">EMODnet Multibeam Surveys</label>
@@ -278,6 +203,105 @@
                 <a href="http://portal.emodnet-bathymetry.eu/services/" target="_blank">More information about available web services</a>
             </div>
         </div>
+    </div>
+
+    <div data-dojo-attach-point="australiaTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Australia', open: false">
+        <input type="checkbox" id="chkAusSeabedBathymetryHoldings" data-dojo-attach-point="chkAusSeabedBathymetryHoldings" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblAusSeabedBathymetryHoldings" for="chkAusSeabedBathymetryHoldings">AusSeabed Bathymetry Holdings</label>
+        <img id="AusSeabedBathymetryHoldingsHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabedBathymetryHoldingsHelp'">
+            <div class="tooltipText">
+                This dataset represents the current extent of bathymetry datasets held by AusSeabed as of January 2019. This dataset is live and will continue to be augmented as coverage is supplied from respective AusSeabed partners. Surveys have been conducted by a wide range of organisations and countries, both inside and outside of Australia's EEZ and for various purposes. Each polygon contains metadata describing the nature of data collection, including details of the survey, as well as the principle investigator of the project. Not all surveys are currently available for download; if available, the Data Access URL attribute will indicate how to access the survey data. Polygons are based on a 500m gridding of the survey data, so may not be representative of the true survey extent when viewed at large scale.<br><br>
+                For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.<br><br>
+                <i>Please note: clicking the map to identify and view attributes is not currently enabled for this layer.</i>
+            </div>
+        </div><br>
+        
+        <input type="checkbox" id="chkAusSeabed50Multibeam" data-dojo-attach-point="chkAusSeabed50Multibeam" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblAusSeabed50Multibeam" for="chkAusSeabed50Multibeam">AusSeabed 50m Multibeam 2018</label>
+        <img id="AusSeabed50MultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabed50MultibeamHelp'">
+            <div class="tooltipText">
+                This dataset represents the ocean depth values surrounding Australia. It contains all multibeam data held by Geoscience Australia as of June 2018, compiled from multibeam bathymetry holdings lying within the outer edge of the offshore area of Australia, as well as some data in international waters, and gridded at 50m. Source information can be found in the associated vector product, AusSeabed Bathymetry Holdings.<br><br>
+                For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.
+            </div>
+        </div><br>
+
+        <input type="checkbox" id="chkAusSeabedMH370" data-dojo-attach-point="chkAusSeabedMH370" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblAusSeabedMH370" for="chkAusSeabedMH370">AusSeabed MH370 Phase 1 Data 150m</label>
+        <img id="AusSeabedMH370Help" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'AusSeabedMH370Help'">
+            <div class="tooltipText">
+                Bathymetric data acquired from Phase 1 Marine Surveys (Geoscience Australia survey reference: GA-4421, GA-4422 &amp; GA-4430) conducted by the Governments of Australia, Malaysia and the People Republic of China for the search of Malaysian Airlines flight MH370 in the Indian Ocean. This bathymetry data was acquired from June 2014 to February 2017 and processed by Geoscience Australia to a range of resolutions (25-83 m).<br><br>
+                For more information, please visit the <a href="https://marine.ga.gov.au" target="_blank">AusSeabed Marine Data Discovery portal</a>.
+            </div>
+        </div>
+    </div>
+
+    <div data-dojo-attach-point="canadaTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Canada', open: false">
+        <input type="checkbox" id="chkNRCanMultibeam" data-dojo-attach-point="chkNRCanMultibeam" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblNRCanMultibeam" for="chkNRCanMultibeam">NRCan Multibeam Surveys</label>
+        <img id="nrCanMultibeamHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanMultibeamHelp'">
+            <div class="tooltipText">
+                Footprints of multibeam bathymetric data archived by <a href="https://www.nrcan.gc.ca/home" target="_blank">Natural Resources Canada (NRCan)</a>.<br><br>
+                <a href="https://www.nrcan.gc.ca/earth-sciences/resources/tools-applications/web-map-services/marine-geoscience-data/17402" target="_blank">More information about available web services</a>
+            </div>
+        </div><br>
+
+        <input type="checkbox" id="chkNRCanMultibeamHillshade" data-dojo-attach-point="chkNRCanMultibeamHillshade" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblNRCanMultibeamHillshade" for="chkNRCanMultibeamHillshade">NRCan Multibeam Shaded Relief</label>
+        <img id="nrCanMultibeamHillshadeHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrCanMultibeamHillshadeHelp'">
+            <div class="tooltipText">
+                Shaded relief visualizations of multibeam bathymetric data archived by <a href="https://www.nrcan.gc.ca/home" target="_blank">Natural Resources Canada (NRCan)</a>.<br><br>
+                Note: this layer will only appear when zoomed in fairly closely to the Canadian coastline.<br><br>
+                <a href="https://www.nrcan.gc.ca/earth-sciences/resources/tools-applications/web-map-services/marine-geoscience-data/17402" target="_blank">More information about available web services</a>
+            </div>
+        </div><br>
+
+        <input type="checkbox" id="chkChsBathymetry" data-dojo-attach-point="chkChsBathymetry" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblChsBathymetry" for="chkChsBathymetry">Canadian Hydrographic Service NONNA-100</label>
+        <img id="chsBathymetryHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'chsBathymetryHelp'">
+            <div class="tooltipText">
+                The <a href="https://open.canada.ca/data/en/dataset/d3881c4c-650d-4070-bf9b-1e00aabf0a1d" target="_blank">CHS NONNA-100</a> Bathymetric Data products represent a complete inventory of bathymetric sources acquired by the Canadian Hydrographic Service, combined at a resolution of approximately 100 metres. NONNA refers to NON-NAvigational.
+            </div>
+        </div><br>
+
+        <input type="checkbox" id="chkCanadaBathy" data-dojo-attach-point="chkCanadaBathy" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblCanadaBathy" for="chkCanadaBathy">Fisheries and Oceans Canada 500m Bathymetry Compilation</label>
+        <img id="canada500mHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'canada500mHelp'">
+            <div class="tooltipText">
+                Compilation of bathymetric gridded data at 500m resolution, provided by <a href="http://www.dfo-mpo.gc.ca/index-eng.htm" target="_blank">Fisheries and Oceans Canada</a>.<br><br>
+                <a href="http://www.charts.gc.ca/data-gestion/index-eng.asp#bathymetry" target="_blank">More information</a>
+            </div>
+        </div>
+    </div>
+
+    <div data-dojo-attach-point="franceTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'France', open: false">
+        <input type="checkbox" id="chkFranceGrids" data-dojo-attach-point="chkFranceGrids" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblFranceGrids" for="chkFranceGrids">SHOM Bathymetric Grids</label>
+        <img id="franceGridsHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'franceGridsHelp'">
+            <div class="tooltipText">
+                Bathymetric grids from France's Naval Hydrographic and Oceanographic Service (Service hydrographique et océanographique de la Marine or SHOM). Included are bathymetric grids around Caribbean Islands (Saint-Martin, Saint-Barthélemy, Guadeloupe, and Martinique), Réunion, Mayotte, French Guiana, and Clipperton Island.
+                <a href="https://data.shom.fr" target="_blank">More information</a>
+            </div>
+        </div><br>
+    </div>
+
+    <div data-dojo-attach-point="netherlandsTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Netherlands', open: false">
+        <input type="checkbox" id="chkNetherlandsCaribGrids" data-dojo-attach-point="chkNetherlandsCaribGrids" data-dojo-type="dijit/form/CheckBox">
+        <label id="lblNetherlandsCaribGrids" for="chkNetherlandsCaribGrids">Netherlands Caribbean Grids</label>
+        <img id="netherlandsCaribGridsHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+        <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'netherlandsCaribGridsHelp'">
+            <div class="tooltipText">
+                Bathymetric data from the Royal Netherlands Navy (Koninklijke Marine). Included are data around Aruba, Curaçao, Sint Maarten, Bonaire, Sint Eustatius, and Saba.
+                <a href="https://inspire.caris.nl/viewer/mapViewer/map.action" target="_blank">More information</a>
+            </div>
+        </div><br>
     </div>
 
     <div data-dojo-attach-point="bathymetricCoveragesTitlePane" data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Bathymetric Coverage Maps', open: false">
