@@ -363,7 +363,8 @@ define([
                 }
 
                 if (faultPlanes && faultPlanes.length > 0) {
-                    this.mapConfig.mapLayerCollection.getLayerById('Scenarios').setLayerDefinitions(["segmento in (" + faultPlanes.join(',') + ')']);
+                    var layerDef = 'segmento in (' + faultPlanes.join(',') + ')';
+                    this.mapConfig.mapLayerCollection.getLayerById('Scenarios').setLayerDefinitions([layerDef, layerDef]);
                 } else {
                     this.mapConfig.mapLayerCollection.getLayerById('Scenarios').setLayerDefinitions([]);
                 }
