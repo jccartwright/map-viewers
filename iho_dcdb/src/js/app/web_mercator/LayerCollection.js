@@ -258,7 +258,7 @@ define([
                         imageParameters: this.imageParameters.png32
                     }),
 
-                    new ArcGISDynamicMapServiceLayer('https://geoportal.gc.ca/arcgis/rest/services/FGP/CHS_NONNA_100/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gisp.dfo-mpo.gc.ca/arcgis/rest/services/FGP/CHS_NONNA_100/MapServer', {
                         id: 'CHS 100m Bathymetry',
                         visible: false,
                         imageParameters: this.imageParameters.png32
