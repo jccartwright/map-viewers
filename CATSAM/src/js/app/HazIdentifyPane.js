@@ -117,8 +117,8 @@ define([
                 else if (item.layerName === 'Tsunami Capable Tide Stations') {
                     return this.getItemLabelSpan(attr['ID'] + ': ' + attr['Name'], uid);
                 }
-                else {
-                    return this.getItemLabelSpan(item.value, uid);
+                else if (item.layerName === 'CARIBE-EWS Scenarios' || item.layerName === 'CARIBE-EWS Scenarios - Points') {
+                    return this.getItemLabelSpan(attr['Name'], uid);
                 }
             },
 

@@ -39,7 +39,8 @@ define([
                     'Hazards/Retrospective BPR Deployments': lang.hitch(this, this.retrospectiveBprFormatter),
                     'Hazards/Tsunami Capable Tide Stations': lang.hitch(this, this.tideGaugeFormatter),
                     'Hazards/Plate Boundaries [from UTIG]': lang.hitch(this, this.plateBoundariesFormatter),
-                    'Scenarios/CARIBE-EWS Scenarios': lang.hitch(this, this.scenarioFormatter)
+                    'Scenarios/CARIBE-EWS Scenarios': lang.hitch(this, this.scenarioFormatter),
+                    'Scenarios/CARIBE-EWS Scenarios - Points': lang.hitch(this, this.pointScenarioFormatter)
                 };
             }, //end constructor
 
@@ -105,6 +106,39 @@ define([
                     modelEmployed: a['Model Employed'],
                     lon: a['Longitude (Centroid)'],
                     lat: a['Latitude (Centroid)'],
+                    reference: a['Reference']
+                });                
+                return html;
+            },
+
+            pointScenarioFormatter: function(feature) {
+                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
+
+                var template = 
+                    '<h3>Tsunami Point Source</h3>' +
+                    '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
+                    '<div class="valueName">Basin: <span class="parameterValue">${basin}</span></div>' +
+                    '<div class="valueName">Region: <span class="parameterValue">${region}</span></div>' +                    
+                    '<div class="valueName">Mw: <span class="parameterValue">${mw}</span></div>' +
+                    '<div class="valueName">Generated at Experts Meeting: <span class="parameterValue">${meeting}</span></div>' +
+                    '<div class="valueName">Related Historical Events: <span class="parameterValue">${historical}</span></div>' +
+                    '<div class="valueName">Used in Exercise: <span class="parameterValue">${exercise}</span></div>' +
+                    '<div class="valueName">Model Employed: <span class="parameterValue">${modelEmployed}</span></div>' +
+                    '<div class="valueName">Longitude (Centroid): <span class="parameterValue">${lon}</span></div>' +
+                    '<div class="valueName">Latitude (Centroid): <span class="parameterValue">${lat}</span></div>' +
+                    '<div class="valueName">Reference: <span class="parameterValue">${reference}</span></div>';
+
+                var html = string.substitute(template, {                
+                    name: a['Name'],
+                    basin: a['Basin'],
+                    region: a['Region'],
+                    mw: a['Mw'],
+                    meeting: a['Generated at Experts Meeting'],
+                    historical: a['Related Historical Events'],
+                    exercise: a['Used in Exercise'],
+                    modelEmployed: a['Model Employed'],
+                    lon: a['Longitude'],
+                    lat: a['Latitude'],
                     reference: a['Reference']
                 });                
                 return html;

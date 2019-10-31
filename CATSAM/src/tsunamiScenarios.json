@@ -356,6 +356,36 @@
             "xmin": -85,
             "ymax": 40,
             "ymin": 10
+        },
+        {
+            "energyLayer": -1,
+            "faultPlanes": [
+                "panama19"
+            ],
+            "id": "panama19",
+            "name": "panama19",
+            "expertsMeeting": false,
+            "waveExercise": true,
+            "region": "North Panama Deformed Belt",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": -1,
+            "faultPlanes": [
+                "Kick ''em Jenny Volcano"
+            ],
+            "id": "Kick 'em Jenny Volcano",
+            "name": "Kick 'em Jenny Volcano",
+            "expertsMeeting": false,
+            "waveExercise": true,
+            "region": "Lesser Antilles",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
         }
     ],
     "numRows": 20
