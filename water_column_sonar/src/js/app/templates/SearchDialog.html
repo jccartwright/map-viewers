@@ -9,7 +9,7 @@
     </div>
     <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContent">
         <table cellpadding="3" cellspacing="1">
-            <tr>
+            <tr style="vertical-align: top;">
                 <td colspan="2">
                     Cruise Date:<br>
                     <label for="startDate">Start:</label>
@@ -24,7 +24,7 @@
                     </div>
                 </td>   
             </tr>
-            <tr>
+            <tr style="vertical-align: top;">
                 <td>
                     Survey Ship:&nbsp;&nbsp;&nbsp;
                     <input data-dojo-attach-point="chkAllShips" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllShips"/>
@@ -38,7 +38,7 @@
                     <select multiple="true" data-dojo-attach-point="sourceInstSelect" class="surveySelect-multiSelect" name="institutions" data-dojo-type="dojox/form/CheckedMultiSelect"/>
                 </td>
             </tr>
-            <tr>
+            <tr style="vertical-align: top;">
                 <td>
                     Instrument:&nbsp;&nbsp;&nbsp;
                     <input data-dojo-attach-point="chkAllInstruments" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllInstruments"/>
@@ -65,8 +65,8 @@
                 </td>
             </tr> 
 
-            <tr>
-                <td colspan="2">
+            <tr style="vertical-align: top;"">
+                <td>
                     Center Frequencies for Single Beam:&nbsp;&nbsp;&nbsp;
                     <input data-dojo-attach-point="chkAllFrequencies" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllFrequencies"/>
                     <label>All</label><br>
@@ -121,6 +121,18 @@
                             <td></td>
                         </tr>
                     </table>
+                </td>
+                <td>
+                    Calibration State:&nbsp;&nbsp;&nbsp;
+                    <input data-dojo-attach-point="chkAllCalibrationStates" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllCalibrationStates"/>
+                    <label>All</label><br>
+                    <select disabled multiple="true" data-dojo-type="dojox/form/CheckedMultiSelect" data-dojo-attach-point="calibrationStateSelect" name="calibrationStates">
+                        <option value="4">Calibrated with calibration data</option>
+                        <option value="3">Calibrated without calibration data</option>
+                        <option value="1">Uncalibrated</option>
+                        <option value="2">Uncalibrated with calibration data</option>
+                        <option value="0">Unknown</option>
+                    </select>
                 </td>
             </tr>  
             <tr>
