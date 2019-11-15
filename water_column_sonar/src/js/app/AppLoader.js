@@ -96,6 +96,9 @@ define([
                 if (queryParams.surveys) {
                     this.startupSurveys = queryParams.surveys.split(',');
                 }
+                if (queryParams.instruments) {
+                    this.startupInstruments = queryParams.instruments.split(',');
+                }
 
                 //put the logger into global so all modules have access
                 window.logger = new Logger(config.app.loglevel);
@@ -120,9 +123,10 @@ define([
                 topic.subscribe('/wcd/MapReady', lang.hitch(this, function() {
                     this.mapReadyCount++;
                     
-                    if (this.mapReadyCount === 3 && this.startupSurveys.length > 0) {
+                    if (this.mapReadyCount === 3 && (this.startupSurveys.length > 0 || this.startupInstruments.length > 0)) {
                         var filterValues = {};
                         filterValues.surveyIds = this.startupSurveys;
+                        filterValues.instruments = this.startupInstruments;
                         filterValues.zoomToResults = true;
                         this.filterWcd(filterValues);
                     }
@@ -339,6 +343,11 @@ define([
                     cruiseCond.push(frequencyClause);
                 }
 
+                if (values.calibrationStates && values.calibrationStates.length > 0) {
+                    fileCond.push("CAL_STATE_VALUE in (" + values.calibrationStates.join(',') + ")");
+                    cruiseCond.push("CAL_STATE_VALUE in (" + values.calibrationStates.join(',') + ")");    
+                }
+
                 if (values.bottomSoundingsOnly) {
                     fileCond.push("BOTTOM_HIT='Y'");
                 }   
@@ -397,7 +406,7 @@ define([
                     var params = {};
                     params.layerDefs = layerDefsStr;
 
-                    var url = '//gis.ngdc.noaa.gov/geoextents/water_column_sonar/';
+                    var url = 'https://gis.ngdc.noaa.gov/geoextents/water_column_sonar/';
 
                     xhr.post(
                         url, {

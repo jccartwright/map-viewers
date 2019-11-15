@@ -113,6 +113,23 @@ define([
                 if (values.instruments && values.instruments.length > 0) {
                     s += 'Instrument: ' + values.instruments.join(', ') + '<br>';
                 }
+                if (values.calibrationStates && values.calibrationStates.length > 0) {
+                    var calibrationStateStrings = [];
+                    array.forEach(values.calibrationStates, function(calibrationState) {
+                        if (calibrationState === '0') {
+                            calibrationStateStrings.push('Unknown');
+                        } else if (calibrationState === '1') {
+                            calibrationStateStrings.push('Uncalibrated');
+                        } else if (calibrationState === '2') {
+                            calibrationStateStrings.push('Uncalibrated with calibration data');
+                        } else if (calibrationState === '3') {
+                            calibrationStateStrings.push('Calibrated without calibration data');
+                        } else if (calibrationState === '4') {
+                            calibrationStateStrings.push('Calibrated with calibration data');
+                        }
+                    });
+                    s += 'Calibration State: ' + calibrationStateStrings.join(', ') + '<br>';
+                }
 
                 if (values.bottomSoundingsOnly) {
                     s += 'Bottom soundings only';

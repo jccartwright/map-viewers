@@ -79,6 +79,9 @@ define([
                 on(this.chkAllFrequencies, 'click', lang.hitch(this, function() {
                     this.setFrequencyCheckboxesDisabled(this.chkAllFrequencies.checked);
                 }));
+                on(this.chkAllCalibrationStates, 'click', lang.hitch(this, function() {
+                    this.calibrationStateSelect.set('disabled', this.chkAllCalibrationStates.checked);
+                }));
 
                 script.get("https://gis.ngdc.noaa.gov/mapviewer-support/wcd/ships.groovy", {
                         preventCache: true,
@@ -207,6 +210,7 @@ define([
                     (this.chkAllSurveys.checked || values.surveyIds.length === 0) &&
                     (this.chkAllInstruments.checked || values.instruments.length === 0) &&
                     (this.chkAllFrequencies.checked || values.frequencies.length === 0) &&
+                    (this.chkAllCalibrationStates.checked || values.calibrationStates.length === 0) &&
                     isNaN(values.minFrequency) && isNaN(values.maxFrequency) &&
                     isNaN(values.minNumBeams) && isNaN(values.maxNumBeams) &&
                     isNaN(values.minSwathWidth) && isNaN(values.maxSwathWidth)) &&
@@ -253,6 +257,11 @@ define([
                 this.chkNarrowband710.set('checked', false);
 
                 this.chkAllFrequencies.set('checked', true);
+
+                this.calibrationStateSelect.reset();
+                this.calibrationStateSelect._updateSelection();
+                this.calibrationStateSelect.set('disabled', true);
+                this.chkAllCalibrationStates.set('checked', true);
 
                 this.chkBottomSoundings.set('checked', false);
                 this.chkZoomToResults.set('checked', true);
