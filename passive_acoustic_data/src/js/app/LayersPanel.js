@@ -89,8 +89,8 @@ define([
                 if (values.instruments) {
                     s += '<br>Instrument Name: ' + values.instruments.join(', ');
                 }
-                if (values.platforms) {
-                    s += '<br>Platform Type: ' + values.platforms.join(', ');
+                if (values.platformTypes) {
+                    s += '<br>Platform Type: ' + values.platformTypes.join(', ');
                 }
                 if (!isNaN(values.minSampleRate)) {
                     s += '<br>Min Sample Rate: ' + values.minSampleRate;
