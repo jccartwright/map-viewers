@@ -99,11 +99,11 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
-                        this.populatePlatformSelect(data.items);
+                        this.populatePlatformTypeSelect(data.items);
                     }
                 }), lang.hitch(this, function(err){
                     logger.error('Error retrieving platforms JSON: ' + err);
-                    this.populatePlatformSelect(null);
+                    this.populatePlatformTypeSelect(null);
                 }));
 
                 on(this.chkAllSourceOrganizations, 'click', lang.hitch(this, function() {
@@ -115,8 +115,8 @@ define([
                 on(this.chkAllInstruments, 'click', lang.hitch(this, function() {
                     this.instrumentSelect.set('disabled', this.chkAllInstruments.checked);
                 }));
-                on(this.chkAllPlatforms, 'click', lang.hitch(this, function() {
-                    this.platformSelect.set('disabled', this.chkAllPlatforms.checked);
+                on(this.chkAllPlatformTypes, 'click', lang.hitch(this, function() {
+                    this.platformTypeSelect.set('disabled', this.chkAllPlatformTypes.checked);
                 }));
                 // on(this.chkRecordingDurationContinuous, 'click', lang.hitch(this, function() {
                 //     this.recordingDurationSelect.set('disabled', this.chkRecordingDurationContinuous.checked);
@@ -157,13 +157,13 @@ define([
                 this.instrumentSelect.set('disabled', true); //Freezes the widget if it's in postCreate() for some reason
             },
 
-            populatePlatformSelect: function(items) {
+            populatePlatformTypeSelect: function(items) {
                 var options = [];
                 array.forEach(items, lang.hitch(this, function(item) { 
                     options.push({ value: item.id, label: item.id, selected: false });
                 }));
-                this.platformSelect.addOption(options);
-                this.platformSelect.set('disabled', true); //Freezes the widget if it's in postCreate() for some reason
+                this.platformTypeSelect.addOption(options);
+                this.platformTypeSelect.set('disabled', true); //Freezes the widget if it's in postCreate() for some reason
             },
 
             execute: function(values) {  
@@ -184,7 +184,7 @@ define([
                     (this.chkAllSourceOrganizations.checked || values.sourceOrganizations.length === 0) && 
                     (this.chkAllFundingOrganizations.checked || values.fundingOrganizations.length === 0) &&
                     (this.chkAllInstruments.checked || values.instruments.length === 0) &&
-                    (this.chkAllPlatforms.checked || values.platforms.length === 0) &&
+                    (this.chkAllPlatformTypes.checked || values.platformTypes.length === 0) &&
                     !values.minSampleRate && !values.maxSampleRate && !values.minSensorDepth && !values.maxSensorDepth &&
                     !values.minBottomDepth && !values.maxBottomDepth &&
                     values.recordingDuration === '' && values.numChannels === '');
@@ -209,10 +209,10 @@ define([
                 this.instrumentSelect.set('disabled', true);
                 this.chkAllInstruments.set('checked', true);
 
-                this.platformSelect.reset();
-                this.platformSelect._updateSelection();
-                this.platformSelect.set('disabled', true);
-                this.chkAllPlatforms.set('checked', true);
+                this.platformTypeSelect.reset();
+                this.platformTypeSelect._updateSelection();
+                this.platformTypeSelect.set('disabled', true);
+                this.chkAllPlatformTypes.set('checked', true);
 
                 this.minSampleRateSpinner.set('value', '');
                 this.maxSampleRateSpinner.set('value', '');
