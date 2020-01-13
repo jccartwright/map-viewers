@@ -20,6 +20,21 @@
         {
             "energyLayer": 1,
             "faultPlanes": [
+                "aruba"
+            ],
+            "id": "ARUBA",
+            "name": "ARUBA",
+            "expertsMeeting": false,
+            "waveExercise": true,
+            "region": "South Caribbean Deformed Belt",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 2,
+            "faultPlanes": [
                 "eslat"
             ],
             "id": "BARBADOS",
@@ -33,7 +48,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 2,
+            "energyLayer": 3,
             "faultPlanes": [
                 "colec"
             ],
@@ -48,7 +63,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 3,
+            "energyLayer": 4,
             "faultPlanes": [
                 "cuba"
             ],
@@ -63,7 +78,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 4,
+            "energyLayer": 5,
             "faultPlanes": [
                 "dom"
             ],
@@ -78,7 +93,22 @@
             "ymin": 10
         },
         {
-            "energyLayer": 5,
+            "energyLayer": 6,
+            "faultPlanes": [
+                "fonseca"
+            ],
+            "id": "FONSECA",
+            "name": "FONSECA",
+            "expertsMeeting": true,
+            "waveExercise": false,
+            "region": "Gulf of Fonseca",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 7,
             "faultPlanes": [
                 "escdb",
                 "wscdb"
@@ -94,7 +124,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 6,
+            "energyLayer": 8,
             "faultPlanes": [
                 "guanica1",
                 "guanica2",
@@ -111,12 +141,27 @@
             "ymin": 10
         },
         {
-            "energyLayer": 7,
+            "energyLayer": 9,
+            "faultPlanes": [
+                "la"
+            ],
+            "id": "LA",
+            "name": "LA",
+            "expertsMeeting": false,
+            "waveExercise": true,
+            "region": "Lesser Antilles",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 10,
             "faultPlanes": [
                 "limon"
             ],
-            "id": "Limon",
-            "name": "Limon",
+            "id": "LIMON",
+            "name": "LIMON",
             "expertsMeeting": true,
             "waveExercise": true,
             "region": "North Panama Deformed Belt",
@@ -126,7 +171,22 @@
             "ymin": 10
         },
         {
-            "energyLayer": 8,
+            "energyLayer": 11,
+            "faultPlanes": [
+                "lisbon"
+            ],
+            "id": "LISBON",
+            "name": "LISBON",
+            "expertsMeeting": false,
+            "waveExercise": true,
+            "region": "Atlantic Ocean and Caribbean Sea",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 12,
             "faultPlanes": [
                 "mef"
             ],
@@ -141,7 +201,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 9,
+            "energyLayer": 13,
             "faultPlanes": [
                 "ms"
             ],
@@ -156,7 +216,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 10,
+            "energyLayer": 14,
             "faultPlanes": [
                 "nicobano1",
                 "nicobano2"
@@ -172,7 +232,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 11,
+            "energyLayer": 15,
             "faultPlanes": [
                 "hai3a",
                 "hai3b",
@@ -189,7 +249,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 12,
+            "energyLayer": 16,
             "faultPlanes": [
                 "panama"
             ],
@@ -204,7 +264,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 13,
+            "energyLayer": 17,
             "faultPlanes": [
                 "osa1",
                 "osa2",
@@ -221,7 +281,22 @@
             "ymin": 10
         },
         {
-            "energyLayer": 14,
+            "energyLayer": 18,
+            "faultPlanes": [
+                "panama19"
+            ],
+            "id": "PANAMA19",
+            "name": "PANAMA19",
+            "expertsMeeting": false,
+            "waveExercise": true,
+            "region": "North Panama Deformed Belt",
+            "xmax": -40,
+            "xmin": -85,
+            "ymax": 40,
+            "ymin": 10
+        },
+        {
+            "energyLayer": 19,
             "faultPlanes": [
                 "prt"
             ],
@@ -236,7 +311,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 15,
+            "energyLayer": 20,
             "faultPlanes": [
                 "roatan"
             ],
@@ -251,7 +326,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 16,
+            "energyLayer": 21,
             "faultPlanes": [
                 "g_honduras"
             ],
@@ -266,7 +341,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 17,
+            "energyLayer": 22,
             "faultPlanes": [
                 "smt1"
             ],
@@ -281,7 +356,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 18,
+            "energyLayer": 23,
             "faultPlanes": [
                 "smt2"
             ],
@@ -296,7 +371,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 19,
+            "energyLayer": 24,
             "faultPlanes": [
                 "USVI1",
                 "USVI2"
@@ -312,7 +387,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 20,
+            "energyLayer": 25,
             "faultPlanes": [
                 "ven1",
                 "ven2"
@@ -328,7 +403,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 21,
+            "energyLayer": 26,
             "faultPlanes": [
                 "wmt"
             ],
@@ -343,7 +418,7 @@
             "ymin": 10
         },
         {
-            "energyLayer": 22,
+            "energyLayer": 27,
             "faultPlanes": [
                 "wscdb"
             ],
@@ -352,21 +427,6 @@
             "expertsMeeting": true,
             "waveExercise": true,
             "region": "South Caribbean Deformed Belt",
-            "xmax": -40,
-            "xmin": -85,
-            "ymax": 40,
-            "ymin": 10
-        },
-        {
-            "energyLayer": -1,
-            "faultPlanes": [
-                "panama19"
-            ],
-            "id": "panama19",
-            "name": "panama19",
-            "expertsMeeting": false,
-            "waveExercise": true,
-            "region": "North Panama Deformed Belt",
             "xmax": -40,
             "xmin": -85,
             "ymax": 40,
