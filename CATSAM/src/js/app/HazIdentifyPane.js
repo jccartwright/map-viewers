@@ -120,6 +120,9 @@ define([
                 else if (item.layerName === 'CARIBE-EWS Scenarios' || item.layerName === 'CARIBE-EWS Scenarios - Points') {
                     return this.getItemLabelSpan(attr['Name'], uid);
                 }
+                else if (item.layerName === 'Plate Boundaries [from UTIG]') {
+                    return this.getItemLabelSpan(attr['Description'], uid);
+                }
             },
 
             getItemLabelSpan: function(text, uid) {
