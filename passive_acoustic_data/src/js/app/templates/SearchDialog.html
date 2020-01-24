@@ -54,6 +54,14 @@
             </tr>
             <tr>
                 <td>
+                    Project Name:&nbsp;&nbsp;&nbsp;
+                    <input data-dojo-attach-point="chkAllProjects" data-dojo-type="dijit/form/CheckBox" checked="true" value="true" type="checkbox" name="chkAllProjects"/>
+                    <label>All</label><br>
+                    <select multiple="true" data-dojo-attach-point="projectSelect" class="surveySelect-multiSelect" name="projects" data-dojo-type="dojox/form/CheckedMultiSelect"/>
+                </td>                
+            </tr>
+            <tr>
+                <td>
                     Sample Rate (kHz):<br>
                     <label for="minSampleRateSpinner">Min:</label>
                     <div data-dojo-type="dijit/form/NumberSpinner" data-dojo-attach-point="minSampleRateSpinner" 

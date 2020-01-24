@@ -303,7 +303,7 @@ html,body {
 }
 
 .tooltipText {
-    width: 200px;
+    width: 250px;
 }
 
 .wildcardLabel {
@@ -329,4 +329,12 @@ html,body {
 
 .privacyStatement {
     font-size: 9px;
+}
+
+.downloadIcon {
+    background-image:  url('../images/drive-download.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 16px;
+    height: 16px;   
 }
