@@ -36,7 +36,7 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/passive_acoustic_data/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/test/passive_acoustic_data/MapServer', {
                         id: 'PAD',
                         visible: true,
                         imageParameters: this.imageParameters.png32
@@ -59,7 +59,13 @@ define([
                     })
                 ];
 
-                this.getLayerById('PAD').objectIdFields = {0: 'Data Collections ID'};
+                this.getLayerById('PAD').objectIdFields = {
+                    0: 'Data Collections ID',
+                    1: 'Data Collections ID',
+                    2: 'Data Collections ID',
+                    3: 'Data Collections ID',
+                    4: 'Data Collections ID'
+                };
             },  //end defineMapServices
 
             definePairedMapServices: function() {

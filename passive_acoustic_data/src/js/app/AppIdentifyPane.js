@@ -6,7 +6,13 @@ define([
     'dojo/topic', 
     'dojo/_base/lang',
     'dojo/dom-style',
+    'dojo/request/xhr',
+    'dojo/store/Memory',
     'dijit/form/Button', 
+    'dijit/form/DropDownButton', 
+    'dijit/DropDownMenu', 
+    'dijit/MenuItem', 
+    'dijit/Tooltip',
     'ngdc/identify/IdentifyPane',
     'app/RequestDataDialog'
     ],
@@ -18,14 +24,36 @@ define([
         topic,
         lang,
         domStyle,
+        xhr,
+        Memory,
         Button,
+        DropDownButton,
+        DropDownMenu,
+        MenuItem,
+        Tooltip,
         IdentifyPane,
         RequestDataDialog
         ){
 
         return declare([IdentifyPane], {
 
+            bucketStore: null,
+
             constructor: function() {
+                xhr('buckets.json', {
+                    preventCache: true,
+                    handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data.items) {
+                        console.log(data.items);
+                        this.bucketStore = new Memory({data: data.items});
+                        console.log('foo');
+                    }
+                }), lang.hitch(this, function(err){
+                    logger.error('Error retrieving buckets JSON: ' + err);
+                    this.bucketStore = null;
+                }));
+
                 this.magnifyingGlassIconUrl = config.app.ngdcDijitsUrl + '/identify/images/magnifier.png';
             },
 
@@ -37,28 +65,85 @@ define([
                 domStyle.set(this.featurePageBottomBar.domNode, 'height', '30px');
                 this.featurePageBottomBar.style = 'height: 50px;';
 
-                this.extractDataButton = new Button({
+                var extractDataMenu = new DropDownMenu({ style: "display: none;"});
+                this.menuItemNcei = new MenuItem({
+                    label: 'Request Data from NCEI',
+                    onClick: lang.hitch(this, function(){ 
+                        this.requestDataFiles();
+                    })
+                });
+                extractDataMenu.addChild(this.menuItemNcei);
+
+                this.menuItemGoogle = new MenuItem({
+                    label: 'Access Data from Google',
+                    onClick: lang.hitch(this, function() {
+                        window.open('https://console.cloud.google.com/storage/browser/noaa-passive-bioacoustic/NCEI/NRS_deployments');
+                    })
+                });
+                extractDataMenu.addChild(this.menuItemGoogle);
+                extractDataMenu.startup();
+
+                this.extractDataButton = new DropDownButton({
                     label: 'Request These Data',
                     style: 'bottom: 5px; left: 15px;',
                     iconClass: 'downloadIcon',
-                    onClick: lang.hitch(this, function(){
-                        this.requestDataFiles();
-                    })
+                    dropDown: extractDataMenu
                 }).placeAt(this.featurePageBottomBar);
 
-                //Add a button to the main deployment feature page to request cruises
-                this.extractSingleDatasetButton = new Button({
-                    label: 'Request This Data Collection',
-                    style: 'bottom: 5px; left: 5px;',
-                    iconClass: 'downloadIcon',
-                    onClick: lang.hitch(this, function() {
-                        //var itemId = this.currentItem.attributes['Data Collections ID'];
+
+                var extractSingleDatasetMenu = new DropDownMenu({ style: "display: none;"});
+                this.menuItemSingleDatasetNcei = new MenuItem({
+                    label: 'Request Data from NCEI',
+                    onClick: lang.hitch(this, function(){ 
                         this.requestDataFile();
                     })
+                });
+                extractSingleDatasetMenu.addChild(this.menuItemSingleDatasetNcei);
+
+                this.menuItemSingleDatasetGoogle = new MenuItem({
+                    label: 'Access Data from Google',
+                    onClick: lang.hitch(this, function(){ 
+                        var datasetName = this.currentItem.attributes['Data Collection Name'];
+                        var bucket = null;
+                        if (this.isGoogleDataset(datasetName)) {
+                            var bucket = this.bucketStore.get(datasetName).bucket;
+                            var url = 'https://console.cloud.google.com/storage/browser/noaa-passive-bioacoustic/NCEI/NRS_deployments/' + bucket;
+                            window.open(url);
+                        }
+                    })
+                });
+                extractSingleDatasetMenu.addChild(this.menuItemSingleDatasetGoogle);
+                extractSingleDatasetMenu.startup();
+
+                this.extractSingleDatasetButton = new DropDownButton({
+                    label: 'Request This Data Collection',
+                    style: 'bottom: 5px; left: 15px;',
+                    iconClass: 'downloadIcon',
+                    dropDown: extractSingleDatasetMenu
                 }).placeAt(this.infoPageBottomBar);
 
                 //Create the Request Data Dialog
                 this.requestDataDialog = new RequestDataDialog({style: 'width: 300px;'});
+            },
+
+            isGoogleDataset: function(datasetName) {
+                if (this.bucketStore && this.bucketStore.get(datasetName)) {
+                    return true;
+                }
+                return false;
+            },
+
+            isGoogleDatasetInResults: function(results) {
+                var padResults = results.results['PAD'];
+                var returnVal = false;
+                for (var resultId in padResults) {
+                    array.forEach(padResults[resultId], lang.hitch(this, function(item) {
+                        if (this.isGoogleDataset(item.feature.attributes['Data Collection Name'])) {
+                            returnVal = true;
+                        }  
+                    })); 
+                }
+                return returnVal;
             },
 
             showResults: function() {
@@ -66,6 +151,11 @@ define([
 
                 if (this.isPad) {
                     domStyle.set(this.extractDataButton.domNode, 'display', '');
+                    if (this.isGoogleDatasetInResults(this.results)) {
+                        this.menuItemGoogle.set('disabled', false);
+                    } else {
+                        this.menuItemGoogle.set('disabled', true);
+                    }
                 } else {
                     domStyle.set(this.extractDataButton.domNode, 'display', 'none');
                 }
@@ -78,6 +168,11 @@ define([
 
                 if (layerName === 'PAD') {
                     domStyle.set(this.extractSingleDatasetButton.domNode, 'display', '');
+                    if (this.isGoogleDataset(this.currentItem.attributes['Data Collection Name'])) {
+                        this.menuItemSingleDatasetGoogle.set('disabled', false);
+                    } else {
+                        this.menuItemSingleDatasetGoogle.set('disabled', true);
+                    }
                 } else {
                     domStyle.set(this.extractSingleDatasetButton.domNode, 'display', 'none');
                 }
@@ -88,7 +183,8 @@ define([
             },
 
             getFolderName: function(layerKey) {
-                if (layerKey === 'PAD/Data Collections') {
+                //if (layerKey === 'PAD/Data Collections') {
+                if (layerKey.indexOf('PAD') !== -1) {
                     return 'Passive Acoustic Data';
                 }
                 else if (layerKey === 'MPA Inventory/Major Federal Marine Protected Areas') {
@@ -105,7 +201,8 @@ define([
             },
 
             getItemDisplayLabel: function(item, uid) {
-                if (item.formatter === 'PAD/Data Collections') {
+                //if (item.formatter === 'PAD/Data Collections') {
+                if (item.formatter.indexOf('PAD') !== -1) {
                     return this.getItemLabelSpan(item.feature.attributes['Data Collection Name'], uid);
                 }
                 else if (item.formatter === 'MPA Inventory/Major Federal Marine Protected Areas') {
@@ -122,6 +219,7 @@ define([
                 var numFeaturesForLayer = 0;
                 this.expandedNodePaths = [];
                 this.isPad = false;
+                this.identifyResults = results;
 
                 this.computeFolderCounts(results);
 

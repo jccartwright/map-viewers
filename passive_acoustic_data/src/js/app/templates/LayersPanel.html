@@ -1,24 +1,98 @@
 <div class="layersPanel_class">
     <br>
-    <input checked type="checkbox" id="chkPad" data-dojo-attach-point="chkPad" data-dojo-type="dijit/form/CheckBox">
-    <label for="chkPad"><b>Passive Acoustic Data Deployments</b></label>
-    <img id="padHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+    <h2>Passive Acoustic Data Deployments</h2>
+    <table cellpadding=-"1" cellspacing="2">
+        <tr>
+            <td><input data-dojo-attach-point="chkNRS" id="chkNRS" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>
+            <td><label for="chkNRS" title="NOAA Ocean Noise Reference Station Network (NRS)">NRS</label></td>
+            <td><img style="vertical-align:middle;" src="images/green_circle.png"></img></td>
+        </tr>
+        
+        <tr>
+            <td><input data-dojo-attach-point="chkADEON" id="chkADEON" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                        
+            <td><label for="chkADEON" title="Atlantic Deepwater Ecosystem Observing Network (ADEON)">ADEON</label></td>
+            <td><img style="vertical-align:middle;" src="images/purple_circle.png"></img></td>
+        </tr>
+
+        <tr>
+            <td><input data-dojo-attach-point="chkSanctSound" id="chkSanctSound" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                          
+            <td><label for="chkSanctSound" title="NOAA-Navy Sanctuary Soundscape Monitoring Project (SanctSound)">SanctSound</label></td>
+            <td><img style="vertical-align:middle;" src="images/orange_circle.png"></img></td>
+        </tr>
+
+        <tr>
+            <td><input data-dojo-attach-point="chkNMFS" id="chkNMFS" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                          
+            <td><label for="chkNMFS" title="NOAA National Marine Fisheries Service (NMFS)">NMFS</label></td>
+            <td><img style="vertical-align:middle;" src="images/red_circle.png"></img></td>
+        </tr>
+
+        <tr>
+            <td><input data-dojo-attach-point="chkNPS" id="chkNPS" type="checkBox" data-dojo-type="dijit/form/CheckBox" checked></input></td>                          
+            <td><label for="chkNPS" title="National Park Service (NPS)">NPS</label></td>
+            <td><img style="vertical-align:middle;" src="images/yellow_circle.png"></img></td>
+        </tr>
+    </table>
+
+    <!--<img id="padHelp" class="tooltipButtonMiddle" src="images/question-white.png">
     <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'padHelp'">
         <div class="tooltipText">
             Description/Legend goes here
         </div>
-    </div><br>
+    </div> -->
+    <br>
 
     <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="searchButton" data-dojo-props="iconClass:'queryIcon', showLabel:true" id="searchButton"><b>Additional Filters</b></div>
     <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="resetButton" data-dojo-props="iconClass:'clearSelectionIcon', showLabel:true" id="resetButton" disabled><b>Reset</b></div>
     <div id="currentFilter" class="filterText"></div><br><br>
 
     <b>Background</b><br>
-    Passive acoustic data are used by NOAA and other agencies and institutions for a wide range of activities including monitoring living marine resources, monitoring of earthquake and geological activity, and assessing impacts of anthropogenic noise on marine life.<br><br>
+    Passive acoustic data are used by NOAA and other agencies and institutions to monitor living marine resources, monitor earthquake and geological activity, and assess impacts of anthropogenic noise on marine life.<br><br>
 
     Information on the archive is available on the <a href="https://www.ngdc.noaa.gov/mgg/pad/" target="_blank">NCEI Passive Acoustic Data Archive</a> page.<br><br>
 
-    The NOAA Ocean Noise Reference Station Network, through a unique collaborative effort across offices in NOAA's OAR, NMFS, and NOS and the Department of Interior's National Park Service, is NOAA's first ever acoustic monitoring system deployed broadly throughout the US exclusive economic zone, and enables the collection of consistent and comparable multi-year acoustic data sets covering all major regions of the US.<br><br>
+    <b>Archived Projects</b><br>
+    <ul>
+    <li>
+    <a href="https://www.pmel.noaa.gov/acoustics/noaanps-ocean-noise-reference-station-network" target="_blank">Ocean Noise Reference Station Network</a> (NRS)
+    <img id="nrsHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'nrsHelp'">
+        <div class="tooltipText">
+            The NOAA Ocean Noise Reference Station Network, through a unique collaborative effort across offices in NOAA's <a href="https://research.noaa.gov/" target="_blank">OAR</a>, <a href="https://www.fisheries.noaa.gov/" target="_blank">NMFS</a>, and <a href="https://oceanservice.noaa.gov/" target="_blank">NOS</a> and the Department of Interior's <a href="https://www.nps.gov/subjects/sound/index.htm" target="_blank">National Park Service</a>, is NOAA's first ever acoustic monitoring system deployed broadly throughout the US exclusive economic zone, and enables the collection of consistent and comparable multi-year acoustic data sets covering all major regions of the U.S.<br>
+            If you have any questions on the collection and use of these data, please contact <a href="mailto:NRS.inquiries@noaa.gov">NRS.inquiries@noaa.gov</a>.
+        </div>
+    </div>
+    </li>
+
+    <!-- <li>
+    <a href="https://sanctuaries.noaa.gov/science/monitoring/sound/" target="_blank">NOAA-Navy Sanctuary Soundscape Monitoring Project</a> (SanctSound)
+    <img id="sanctSoundHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'sanctSoundHelp'">
+        <div class="tooltipText">
+            NOAA and the U.S. Navy are working to better understand underwater sound within the National Marine Sanctuary System. For the next few years, these agencies will work with numerous scientific partners to study sound within seven national marine sanctuaries and one marine national monument, which includes waters off Hawai'i and the east and west coasts. Standardized measurements will assess sounds produced by marine animals, physical processes (e.g., wind and waves), and human activities. Collectively, this information will help NOAA and the Navy measure sound levels and baseline acoustic conditions in sanctuaries. This work is a continuation of ongoing <a href="https://www.navymarinespeciesmonitoring.us/" target="_blank">Navy</a> and <a href="https://cetsound.noaa.gov/ons" target="_blank">NOAA</a> monitoring and research, including efforts by <a href="https://sanctuaries.noaa.gov/science/sentinel-site-program/noise.html" target="_blank">NOAA's Office of National Marine Sanctuaries</a>.
+        </div>
+    </div>
+    </li> -->
+
+    <li>
+    <a href="https://adeon.unh.edu/" target="_blank">Atlantic Deepwater Ecosystem Observing Network</a> (ADEON)
+    <img id="adeonHelp" class="tooltipButtonMiddle" src="images/question-white.png">
+    <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'adeonHelp'">
+        <div class="tooltipText">
+            This observatory network will generate long-term measurements of both the natural and human factors active in this region, thus informing the ecology and soundscape of the U.S. Mid- and South Atlantic Outer Continental Shelf. These data will provide a mechanistic understanding of the cumulative impacts these factors have on marine resources and provide insight for ecosystem-based management efforts. Long-term observations of living marine resources and marine sound will assist Federal agencies, including <a href="https://www.boem.gov/" target="_blank">BOEM</a>, <a href="https://www.onr.navy.mil/" target="_blank">ONR</a>, and <a href="https://www.noaa.gov/" target="_blank">NOAA</a>, in complying with mandates in the Endangered Species Act, Marine Mammal Protection Act, and Sustainable Fisheries Act.
+        </div>
+    </div>
+    </li>
+
+    </ul>
+
+    <!-- <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Pane 1', open: false">
+        Content goes here
+    </div>
+    <div data-dojo-type="dijit/TitlePane" data-dojo-props="title: 'Pane 2', open: false">
+        Content goes here
+    </div> -->
+
+    <!-- The NOAA Ocean Noise Reference Station Network, through a unique collaborative effort across offices in NOAA's OAR, NMFS, and NOS and the Department of Interior's National Park Service, is NOAA's first ever acoustic monitoring system deployed broadly throughout the US exclusive economic zone, and enables the collection of consistent and comparable multi-year acoustic data sets covering all major regions of the US.<br><br> -->
 
     <b>Fair Use Guidance</b><br>
     Please review this <a href="https://www.ngdc.noaa.gov/mgg/pad/docs/pad_fair_use.pdf" target="_blank">document</a> to identify appropriate and inappropriate applications of the archived data along with other guidance.<br><br>
@@ -29,6 +103,7 @@
     <b>Online Resources:</b>
     <ul>
     	<li><a href="http://dosits.org/" target="_blank">Discovery of Sound in the Sea</a></li>
+        <li><a href="https://noaa.maps.arcgis.com/apps/Cascade/index.html?appid=c653c78262a7487da42149ebc86f80c2" target="_blank">NCEI Passive Acoustic Story Map</a></li>
     	<li><a href="http://www.iobis.org/mapper/" target="_blank">Ocean Biogeographic Information System</a></li>
     </ul>
     <hr>

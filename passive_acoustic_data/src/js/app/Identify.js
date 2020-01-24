@@ -27,6 +27,7 @@ define([
                     '<div class="valueName">Dates: <span class="parameterValue">${startDate} to ${endDate}</span></div>' +
                     '<div class="valueName">Source Organization: <span class="parameterValue">${sourceOrganization}</span></div>' + 
                     '<div class="valueName">Funding Organization: <span class="parameterValue">${fundingOrganization}</span></div>' + 
+                    '<div class="valueName">Project Name: <span class="parameterValue">${projectName}</span></div>' + 
                     '<div class="valueName">Instrument Name: <span class="parameterValue">${instrumentName}</span></div>' + 
                     '<div class="valueName">Platform Type: <span class="parameterValue">${platformName}</span></div>';
 

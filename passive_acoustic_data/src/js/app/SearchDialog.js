@@ -18,7 +18,6 @@ define([
     'dojo/on',
     'dojo/topic',
     'dojo/request/xhr',
-    'dojo/store/Memory', 
     'dojo/text!./templates/SearchDialog.html'
     ],
     function(
@@ -41,7 +40,6 @@ define([
         on,
         topic,
         xhr,
-        Memory,
         template 
     ){
         return declare([Dialog, _TemplatedMixin, _WidgetsInTemplateMixin], {
@@ -106,6 +104,18 @@ define([
                     this.populatePlatformTypeSelect(null);
                 }));
 
+                xhr('https://gis.ngdc.noaa.gov/mapviewer-support/pad/projects.groovy', {
+                    preventCache: true,
+                    handleAs: 'json',
+                }).then(lang.hitch(this, function(data){
+                    if (data.items) {
+                        this.populateProjectSelect(data.items);
+                    }
+                }), lang.hitch(this, function(err){
+                    logger.error('Error retrieving projects JSON: ' + err);
+                    this.populateProjectSelect(null);
+                }));
+
                 on(this.chkAllSourceOrganizations, 'click', lang.hitch(this, function() {
                     this.sourceOrganizationSelect.set('disabled', this.chkAllSourceOrganizations.checked);
                 }));
@@ -118,9 +128,9 @@ define([
                 on(this.chkAllPlatformTypes, 'click', lang.hitch(this, function() {
                     this.platformTypeSelect.set('disabled', this.chkAllPlatformTypes.checked);
                 }));
-                // on(this.chkRecordingDurationContinuous, 'click', lang.hitch(this, function() {
-                //     this.recordingDurationSelect.set('disabled', this.chkRecordingDurationContinuous.checked);
-                // }));
+                on(this.chkAllProjects, 'click', lang.hitch(this, function() {
+                    this.projectSelect.set('disabled', this.chkAllProjects.checked);
+                }));
                 
                 on(this.cancelButton, 'click', lang.hitch(this, function(){
                     this.onCancel();
@@ -166,6 +176,15 @@ define([
                 this.platformTypeSelect.set('disabled', true); //Freezes the widget if it's in postCreate() for some reason
             },
 
+            populateProjectSelect: function(items) {
+                var options = [];
+                array.forEach(items, lang.hitch(this, function(item) { 
+                    options.push({ value: item.id, label: item.id, selected: false });
+                }));
+                this.projectSelect.addOption(options);
+                this.projectSelect.set('disabled', true); //Freezes the widget if it's in postCreate() for some reason
+            },
+
             execute: function(values) {  
                 values.recordingDuration = this.recordingDurationSelect.get('value');
                 values.numChannels = this.numChannelsSelect.get('value');
@@ -185,6 +204,7 @@ define([
                     (this.chkAllFundingOrganizations.checked || values.fundingOrganizations.length === 0) &&
                     (this.chkAllInstruments.checked || values.instruments.length === 0) &&
                     (this.chkAllPlatformTypes.checked || values.platformTypes.length === 0) &&
+                    (this.chkAllProjects.checked || values.projects.length === 0) &&
                     !values.minSampleRate && !values.maxSampleRate && !values.minSensorDepth && !values.maxSensorDepth &&
                     !values.minBottomDepth && !values.maxBottomDepth &&
                     values.recordingDuration === '' && values.numChannels === '');
@@ -213,6 +233,11 @@ define([
                 this.platformTypeSelect._updateSelection();
                 this.platformTypeSelect.set('disabled', true);
                 this.chkAllPlatformTypes.set('checked', true);
+
+                this.projectSelect.reset();
+                this.projectSelect._updateSelection();
+                this.projectSelect.set('disabled', true);
+                this.chkAllProjects.set('checked', true);
 
                 this.minSampleRateSpinner.set('value', '');
                 this.maxSampleRateSpinner.set('value', '');

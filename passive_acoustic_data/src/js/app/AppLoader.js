@@ -371,6 +371,20 @@ define([
                     }
                 }
 
+                if (values.projects && values.projects.length > 0) {
+                    conditionals = [];
+                    for (i = 0; i < values.projects.length; i++) {
+                        //Surround each string with single quotes
+                        conditionals.push("PROJECT_NAME='" + values.projects[i] + "'");
+                    }
+                    if (conditionals.length > 1) {
+                        sql.push('(' + conditionals.join(' OR ') + ')');
+                    }
+                    else {
+                        sql.push(conditionals[0]);
+                    }
+                }
+
                 if (!isNaN(values.minSampleRate)) {
                     sql.push("MAX_SAMPLE_RATE>=" + values.minSampleRate);
                 }
@@ -417,10 +431,10 @@ define([
                 }
   
                 layerDefinition = sql.join(' and ');
-                this.mercatorMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([layerDefinition]);
-                this.arcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([layerDefinition]);
-                this.antarcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions([layerDefinition]);
-
+                var allLayerDefs = [layerDefinition, layerDefinition, layerDefinition, layerDefinition, layerDefinition]; //Apply to all 5 sublayers
+                this.mercatorMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions(allLayerDefs);
+                this.arcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions(allLayerDefs);
+                this.antarcticMapConfig.mapLayerCollection.getLayerById('PAD').setLayerDefinitions(allLayerDefs);
 
                 this.layersPanel.enableResetButton();
                 this.layersPanel.setCurrentFilterString(values);
