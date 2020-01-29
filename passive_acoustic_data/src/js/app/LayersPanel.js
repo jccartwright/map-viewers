@@ -43,15 +43,15 @@ define([
                 on(this.chkADEON, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/sublayer/visibility', 'PAD', [1], this.chkADEON.checked);
                 }));
-                on(this.chkSanctSound, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'PAD', [2], this.chkSanctSound.checked);
-                }));
-                on(this.chkNMFS, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'PAD', [3], this.chkNMFS.checked);
-                }));
-                on(this.chkNPS, 'change', lang.hitch(this, function() {
-                    topic.publish('/ngdc/sublayer/visibility', 'PAD', [4], this.chkNPS.checked);
-                }));
+                // on(this.chkSanctSound, 'change', lang.hitch(this, function() {
+                //     topic.publish('/ngdc/sublayer/visibility', 'PAD', [2], this.chkSanctSound.checked);
+                // }));
+                // on(this.chkNMFS, 'change', lang.hitch(this, function() {
+                //     topic.publish('/ngdc/sublayer/visibility', 'PAD', [3], this.chkNMFS.checked);
+                // }));
+                // on(this.chkNPS, 'change', lang.hitch(this, function() {
+                //     topic.publish('/ngdc/sublayer/visibility', 'PAD', [4], this.chkNPS.checked);
+                // }));
 
                 on(this.chkMpas, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'MPA Inventory', this.chkMpas.checked);
