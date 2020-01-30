@@ -241,7 +241,7 @@ define([
 
                 else if (item.formatter === 'EMODnet Singlebeam Polygons/default' || item.formatter === 'EMODnet Singlebeam Lines/default' ||
                     item.formatter === 'EMODnet Multibeam Polygons/default' || item.formatter === 'EMODnet Multibeam Lines/default') {
-                    return this.getItemLabelSpan(item.feature.attributes['Data set name'], uid);
+                    return this.getItemLabelSpan(item.feature.attributes['dataname'], uid);
                 }
                 
                 else if (item.layerName === 'GEBCO_2019 SID') {

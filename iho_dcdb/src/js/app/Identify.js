@@ -203,15 +203,13 @@ define([
                 var template =
                     '<h3>EMODnet Multibeam Bathymetric Survey</h3>' +
                     '<div class="valueName">CDI Partner: <span class="parameterValue">${cdiPartner}</span></div>' +
-                    '<div class="valueName">CDI Record ID: <span class="parameterValue">${cdiRecordId}</span></div>' +
                     '<div class="valueName">Dataset Name: <span class="parameterValue">${datasetName}</span></div>' +
                     '<div class="valueName"><span class="parameterValue"><a href="${details}" target="_blank">More Details from EMODNet</a></span></div>';
 
                 var html = string.substitute(template, {
-                        cdiPartner: a['CDI-partner'],
-                        cdiRecordId: a['CDI-record id'],
-                        datasetName: a['Data set name'],
-                        details: a['Details']
+                        cdiPartner: a['c_author_edmo'],
+                        datasetName: a['dataname'],
+                        details: a['detail_url']
                     });                
                 return html;
             },
@@ -222,15 +220,13 @@ define([
                 var template =
                     '<h3>EMODnet Single-Beam Bathymetric Survey</h3>' +
                     '<div class="valueName">CDI Partner: <span class="parameterValue">${cdiPartner}</span></div>' +
-                    '<div class="valueName">CDI Record ID: <span class="parameterValue">${cdiRecordId}</span></div>' +
                     '<div class="valueName">Dataset Name: <span class="parameterValue">${datasetName}</span></div>' +
                     '<div class="valueName"><span class="parameterValue"><a href="${details}" target="_blank">More Details from EMODNet</a></span></div>';
 
                 var html = string.substitute(template, {
-                        cdiPartner: a['CDI-partner'],
-                        cdiRecordId: a['CDI-record id'],
-                        datasetName: a['Data set name'],
-                        details: a['Details']
+                        cdiPartner: a['c_author_edmo'],
+                        datasetName: a['dataname'],
+                        details: a['detail_url']
                     });                
                 return html;
             },

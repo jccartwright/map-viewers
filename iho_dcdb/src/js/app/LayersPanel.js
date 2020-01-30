@@ -54,6 +54,7 @@ define([
                 }));
                 on(this.chkMultibeamMosaic, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Multibeam Mosaic', this.chkMultibeamMosaic.checked);
+                    topic.publish('/ngdc/layer/visibility', 'Okeanos Explorer Mosaic', this.chkMultibeamMosaic.checked);
                 }));
                 on(this.chkGMRT, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'GMRT', this.chkGMRT.checked);
