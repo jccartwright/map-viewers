@@ -4,6 +4,8 @@ define([
     'esri/layers/ArcGISTiledMapServiceLayer',
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISImageServiceLayer',
+    'esri/layers/ImageServiceParameters', 
+    'esri/layers/RasterFunction',
     'esri/symbols/SimpleFillSymbol',
     'esri/symbols/SimpleLineSymbol',
     'esri/renderers/SimpleRenderer',
@@ -17,6 +19,8 @@ define([
         ArcGISTiledMapServiceLayer, 
         ArcGISDynamicMapServiceLayer,
         ArcGISImageServiceLayer,
+        ImageServiceParameters,
+        RasterFunction,
         SimpleFillSymbol,
         SimpleLineSymbol,
         SimpleRenderer,
@@ -61,6 +65,15 @@ define([
             },
 
             defineMapServices: function() {
+
+                var exBathyImageServiceParams = new ImageServiceParameters();
+                exBathyImageServiceParams.format = 'jpgpng';
+                exBathyImageServiceParams.compressionQuality = 90;
+                exBathyImageServiceParams.interpolation = ImageServiceParameters.INTERPOLATION_BILINEAR;
+                var rasterFunction = new RasterFunction();
+                rasterFunction.functionName = "MultidirectionalHillshadeHaxby_8000-0";
+                exBathyImageServiceParams.renderingRule = rasterFunction;
+
                 //TODO check to ensure unique id
                 this.mapServices = [
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer', {
@@ -123,6 +136,11 @@ define([
                     }),
                     new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_hillshade/ImageServer', {
                         id: 'Multibeam Mosaic',
+                        visible: false
+                    }),
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/OceanExploration/okeanos_explorer_grids/ImageServer', {
+                        id: 'Okeanos Explorer Mosaic',
+                        imageServiceParameters: exBathyImageServiceParams,
                         visible: false
                     }),
                     new ArcGISTiledMapServiceLayer('https://tiles.arcgis.com/tiles/C8EMgrsFcRFL6LrL/arcgis/rest/services/web_mercator_gebco_2019_contours/MapServer', {

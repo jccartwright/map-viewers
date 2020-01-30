@@ -42,6 +42,7 @@ define([
                 }));
                 on(this.chkMultibeamMosaic, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Multibeam Mosaic', this.chkMultibeamMosaic.checked);
+                    topic.publish('/ngdc/layer/visibility', 'Okeanos Explorer Mosaic', this.chkMultibeamMosaic.checked);
                 }));
                 on(this.chkTrackline, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'Trackline Bathymetry', this.chkTrackline.checked);                    
