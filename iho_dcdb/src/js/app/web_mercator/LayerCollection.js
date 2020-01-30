@@ -5,6 +5,8 @@ define([
     'esri/layers/ArcGISDynamicMapServiceLayer',
     'esri/layers/ArcGISImageServiceLayer',
     'esri/layers/WebTiledLayer',
+    'esri/layers/ImageServiceParameters', 
+    'esri/layers/RasterFunction',
     'esri/geometry/Extent',
     'esri/SpatialReference',
     'esri/geometry/webMercatorUtils',
@@ -17,6 +19,8 @@ define([
         ArcGISDynamicMapServiceLayer,
         ArcGISImageServiceLayer,
         WebTiledLayer,
+        ImageServiceParameters,
+        RasterFunction,
         Extent,
         SpatialReference,
         webMercatorUtils,
@@ -38,6 +42,14 @@ define([
 
             defineMapServices: function() {
 
+                var exBathyImageServiceParams = new ImageServiceParameters();
+                exBathyImageServiceParams.format = 'jpgpng';
+                exBathyImageServiceParams.compressionQuality = 90;
+                exBathyImageServiceParams.interpolation = ImageServiceParameters.INTERPOLATION_BILINEAR;
+                var rasterFunction = new RasterFunction();
+                rasterFunction.functionName = "MultidirectionalHillshadeHaxby_8000-0";
+                exBathyImageServiceParams.renderingRule = rasterFunction;
+
                 //TODO check to ensure unique id
                 this.mapServices = [
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer', {
@@ -52,14 +64,6 @@ define([
                         id: 'GEBCO_2019 Grayscale (NCEI)',
                         visible: true
                     }),
-                    // new TiledWMSLayer('https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?', {
-                    //     id: 'GEBCO_2014',
-                    //     visible: false,
-                    //     format: 'jpeg',
-                    //     wmsVersion: '1.3.0',
-                    //     epsgCode: '3857',
-                    //     layerNames: ['GEBCO_LATEST']
-                    // }), 
                     new ArcGISTiledMapServiceLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer', {
                         id: 'Light Gray',
                         visible: false
@@ -268,6 +272,12 @@ define([
                         id: 'Multibeam Mosaic',
                         visible: false
                     }),  
+                    
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/OceanExploration/okeanos_explorer_grids/ImageServer', {
+                        id: 'Okeanos Explorer Mosaic',
+                        imageServiceParameters: exBathyImageServiceParams,
+                        visible: false
+                    }),
 
                     // new ArcGISDynamicMapServiceLayer('https://maps.ccom.unh.edu/server/rest/services/Seabed2030/GMRT_Global/MapServer', {
                     //     id: 'GMRT_Global',
@@ -275,7 +285,6 @@ define([
                     //     imageParameters: this.imageParameters.png32
                     // }),  
                     
-
                     new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/bag_hillshades/ImageServer', {
                         id: 'BAG Hillshades (tiled)',
                         visible: false
@@ -352,43 +361,46 @@ define([
                         imageParameters: this.imageParameters.png32
                     }),
 
-                    new TiledWMSLayer('https://geoservice.maris.nl/wms/seadatanet/emodnet_hydrography?', {
+                    new TiledWMSLayer('https://geo-service.maris.nl/emodnet_bathymetry/wms?', {
                         id: 'EMODnet Singlebeam Polygons',
                         visible: false,
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'http://geomag.colorado.edu/sld/emodnet.sld',
-                        layerNames: ['EMODnet_Bathymetry_single_beams_polygons'],
-                        opacity: 0.5
+                        layerNames: ['single_beams_polygons'],
+                        opacity: 0.5,
                     }),
-                    new TiledWMSLayer('https://geoservice.maris.nl/wms/seadatanet/emodnet_hydrography?', {
+                    new TiledWMSLayer('https://geo-service.maris.nl/emodnet_bathymetry/wms?', {
                         id: 'EMODnet Multibeam Polygons',
                         visible: false,
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'http://geomag.colorado.edu/sld/emodnet.sld',
-                        layerNames: ['EMODnet_Bathymetry_multi_beams_polygons'],
-                        opacity: 0.5
+                        styles: 'seadatanet_selected',
+                        layerNames: ['multi_beams_polygons'],
+                        opacity: 0.5,
+                        additionalParams: {
+                            styles: 'seadatanet_selected'
+                        },
                     }),
-                    new TiledWMSLayer('https://geoservice.maris.nl/wms/seadatanet/emodnet_hydrography?', {
+                    new TiledWMSLayer('https://geo-service.maris.nl/emodnet_bathymetry/wms?', {
                         id: 'EMODnet Singlebeam Lines',
                         visible: false,
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'http://geomag.colorado.edu/sld/emodnet.sld',
-                        layerNames: ['EMODnet_Bathymetry_single_beams_points', 'EMODnet_Bathymetry_single_beams_lines']
+                        layerNames: ['single_beams_points', 'single_beams_tracks']
                     }),
-                    new TiledWMSLayer('https://geoservice.maris.nl/wms/seadatanet/emodnet_hydrography?', {
+                    new TiledWMSLayer('https://geo-service.maris.nl/emodnet_bathymetry/wms?', {
                         id: 'EMODnet Multibeam Lines',
                         visible: false,
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        sld: 'http://geomag.colorado.edu/sld/emodnet.sld',
-                        layerNames: ['EMODnet_Bathymetry_multi_beams_points', 'EMODnet_Bathymetry_multi_beams_lines']
+                        layerNames: ['multi_beams_tracks'],
+                        additionalParams: {
+                            styles: 'seadatanet_selected'
+                        },
                     }),                      
                     new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer', {
                         id: 'Trackline Bathymetry (tiled)',
@@ -437,7 +449,7 @@ define([
                         id: 'CSB',
                         visible: false,
                         imageParameters: this.imageParameters.png32
-                    }),
+                    }),                    
 
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
                         id: 'Graticule',
