@@ -73,35 +73,35 @@ function preInit() {
 				name: 'crm',
 				label: "Coastal Relief Models",
 				resolution: "0.000833333333333334", //3 arcsecond
-				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/DEM_global_mosaic_hillshade/ImageServer",
 				description: "Coastal Relief Model (3-second resolution)"
 			},
 			{
 				name: 'socal_3as',
 				label: "Southern California Coastal Relief Model (3 arc-second)",
 				resolution: "0.000833333333333334", //3 arcsecond
-				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/DEM_global_mosaic_hillshade/ImageServer",
 				description: "Southern California Coastal Relief Model (3-second resolution)"
 			},
 			{
 				name: 'socal_3as_hs',
 				label: "Southern California Coastal Relief Model Hillshade (3 arc-second)",
 				resolution: "0.000833333333333334", //3 arcsond
-				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/DEM_global_mosaic_hillshade/ImageServer",
 				description: "Southern California Relief Model Hillshade (3 arc-second resolution)"
 			},
 			{
 				name: 'socal_1as',
 				label: "Southern California Coastal Relief Model (1 arc-second)",
 				resolution: "0.000277777780000", //1 arcsecond
-				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/DEM_global_mosaic_hillshade/ImageServer",
 				description: "Southern California Coastal Relief Model (1 arc-second resolution)"
 			},
 			{
 				name: 'socal_1as_hs',
 				label: "Southern California Coastal Relief Model Hillshade (1 arc-second)",
 				resolution: "0.000277777780000", //1 arcsecond
-				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/DEM_global_mosaic_hillshade/ImageServer",
 				description: "Southern California Coastal Relief Model Hillshade (1 arc-second resolution)"
 			},
 /*
@@ -147,7 +147,7 @@ function preInit() {
 				name: 'great_lakes',
 				label: "Great Lakes Bathymetry",
 				resolution: "0.000833333333333334", //3 arcsecond
-				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer",
+				previewUrl: "https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/DEM_global_mosaic_hillshade/ImageServer",
 				description: "Great Lakes Bathymetry (3-second resolution)"
 			}
 			]
@@ -350,7 +350,7 @@ function getMapServiceList(){
 	 	visible: false,
 	 	opacity: 1
 	}),
-	new esri.layers.ArcGISImageServiceLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_global_mosaic_hillshade/ImageServer", {
+	new esri.layers.ArcGISImageServiceLayer("https://gis.ngdc.noaa.gov/arcgis/rest/services/DEM_mosaics/DEM_global_mosaic_hillshade/ImageServer", {
 		id: "DEM Hillshades",
 		visible: false,
 		opacity: 1
