@@ -45,9 +45,7 @@ define([
                     handleAs: 'json',
                 }).then(lang.hitch(this, function(data){
                     if (data.items) {
-                        console.log(data.items);
                         this.bucketStore = new Memory({data: data.items});
-                        console.log('foo');
                     }
                 }), lang.hitch(this, function(err){
                     logger.error('Error retrieving buckets JSON: ' + err);
@@ -77,7 +75,7 @@ define([
                 this.menuItemGoogle = new MenuItem({
                     label: 'Access Data from Google',
                     onClick: lang.hitch(this, function() {
-                        window.open('https://console.cloud.google.com/storage/browser/noaa-passive-bioacoustic/NCEI/NRS_deployments');
+                        window.open('https://console.cloud.google.com/storage/browser/noaa-passive-bioacoustic');
                     })
                 });
                 extractDataMenu.addChild(this.menuItemGoogle);
@@ -107,7 +105,7 @@ define([
                         var bucket = null;
                         if (this.isGoogleDataset(datasetName)) {
                             var bucket = this.bucketStore.get(datasetName).bucket;
-                            var url = 'https://console.cloud.google.com/storage/browser/noaa-passive-bioacoustic/NCEI/NRS_deployments/' + bucket;
+                            var url = 'https://console.cloud.google.com/storage/browser/noaa-passive-bioacoustic/' + bucket;
                             window.open(url);
                         }
                     })
