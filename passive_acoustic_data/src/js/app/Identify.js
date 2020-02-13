@@ -93,7 +93,10 @@ define([
                 }
 
                 //template += '<div class="valueName">Citation: <span class="parameterValue">NOAA OAR Pacific Marine Environmental Laboratory, National Marine Fisheries Service, NOS Office of National Marine Sanctuaries, and DOI NPS Natural Resource Stewardship and Science Directorate (2014) Passive Acoustic Data Collection (NRS) NOAA National Centers for Environmental Information <a href="http://doi.org/10.7289/V5M32T0D" target="_blank">doi:10.7289/V5M32T0D</a> [access date]</span></div>';
-                template += '<br><div class="valueName">Long-term Spectogram Image (click for larger image):</div><br><a href="${imageFullsize}" target="_blank"><img src="${imageThumbnail}"></img></a>';
+
+                if (a['Image Fullsize'] !== '' && a['Image Thumbnail'] !== '') {
+                    template += '<br><div class="valueName">Long-term Spectogram Image (click for larger image):</div><br><a href="${imageFullsize}" target="_blank"><img src="${imageThumbnail}"></img></a>';
+                }
 
                 var html = string.substitute(template, {                        
                         id: a['Data Collections ID'],
