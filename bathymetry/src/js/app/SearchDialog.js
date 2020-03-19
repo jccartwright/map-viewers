@@ -9,6 +9,7 @@ define([
     'dijit/form/Select', 
     'dijit/form/CheckBox', 
     'dijit/form/TextBox', 
+    'dijit/form/DateTextBox',
     'dijit/form/FilteringSelect',
     'dojo/_base/lang',
     'dojo/_base/array',
@@ -31,6 +32,7 @@ define([
         Select, 
         CheckBox, 
         TextBox, 
+        DateTextBox,
         FilteringSelect,
         lang,
         array,
@@ -92,42 +94,6 @@ define([
                     this.filterSelects();
                     this.setActiveLayersText();
                 }));
-
-                // xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/platforms.groovy', {
-                //     preventCache: true,
-                //     handleAs: 'json'
-                // }).then(lang.hitch(this, function(data){
-                //     if (data.items) {
-                //         this.populatePlatformSelect(data.items);
-                //     }
-                // }), lang.hitch(this, function(err){
-                //     logger.error('Error retrieving platforms JSON: ' + err);
-                //     this.populatePlatformSelect(null);
-                // }));
-
-                // xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/institutions.groovy', {
-                //     preventCache: true,
-                //     handleAs: 'json'
-                // }).then(lang.hitch(this, function(data){
-                //     if (data.items) {
-                //         this.populateInstitutionSelect(data.items);
-                //     }
-                // }), lang.hitch(this, function(err){
-                //     logger.error('Error retrieving institutions JSON: ' + err);
-                //     this.populateInstitutionSelect(null);
-                // }));
-
-                // xhr('https://gis.ngdc.noaa.gov/mapviewer-support/bathymetry/surveys.groovy', {
-                //     preventCache: true,
-                //     handleAs: 'json'
-                // }).then(lang.hitch(this, function(data){
-                //     if (data.items) {
-                //         this.populateSurveySelect(data.items);
-                //     }
-                // }), lang.hitch(this, function(err){
-                //     logger.error('Error retrieving surveys JSON: ' + err);
-                //     this.populateSurveySelect(null);
-                // }));
 
                 on(this.cancelButton, 'click', lang.hitch(this, function(){
                     this.onCancel();
@@ -362,7 +328,8 @@ define([
                 return (!values.startYear && !values.endYear && 
                     this.platformSelect.get('_lastDisplayedValue') === '' && 
                     this.institutionSelect.get('_lastDisplayedValue') === '' && 
-                    this.surveySelect.get('_lastDisplayedValue') === '');
+                    this.surveySelect.get('_lastDisplayedValue') === '' &&
+                    !this.startDateAddedInput.get('value') && !this.endDateAddedInput.get('value'));
             },
                    
             clearForm: function() {                
@@ -372,6 +339,8 @@ define([
                 this.startYearSpinner.set('value', '');
                 this.endYearSpinner.set('value', '');
                 this.chkZoomToResults.set('checked', true);
+                this.startDateAddedInput.reset();
+                this.endDateAddedInput.reset();
             },
 
             reset: function() {

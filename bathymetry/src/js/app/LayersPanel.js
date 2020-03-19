@@ -5,6 +5,7 @@ define([
     'dojo/on',
     'dojo/dom',
     'dojo/dom-attr',
+    'dojo/string',
     'dijit/form/CheckBox',
     'dijit/form/RadioButton',
     'dijit/TitlePane',
@@ -20,6 +21,7 @@ define([
         on,
         dom,
         domAttr,
+        string,
         CheckBox,
         RadioButton,
         TitlePane,
@@ -168,8 +170,21 @@ define([
                 if (values.institution) {
                     s += 'Source Institution: ' + values.institution + '<br>';
                 }
+
+                if (values.startDateAdded && !values.endDateAdded) {
+                    s += 'Date Added: ' + this.toDateString(values.startDateAdded) + '-present<br>';
+                } else if (values.startDateAdded && values.endDateAdded) {
+                    s += 'Date Added: ' + this.toDateString(values.startDateAdded) + ' to ' + this.toDateString(values.endDateAdded) + '<br>';
+                } else if (!values.startDateAdded && values.endDateAdded) {
+                    s += 'Date Added: ' + this.toDateString(values.endDateAdded) + ' and earlier<br>';
+                }
                 filterDiv.innerHTML = s;
-            }
+            },
+
+            //Format a date in the form yyyy-mm-dd
+            toDateString: function(date) {
+                return date.getFullYear() + '-' + string.pad(date.getMonth()+1, 2) + '-' + string.pad(date.getDate(), 2);
+            },
         });
     }
 );

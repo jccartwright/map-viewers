@@ -105,68 +105,13 @@ define([
                     '<div class="valueName">Platform Name: <span class="parameterValue">${platformName}</span></div>';
 
                 var html = string.substitute(template, {
-                        url: a['Download URL'],
-                        surveyId: a['Survey ID'],
-                        surveyYear: a['Survey Year'],
-                        locality: a['Locality'],
-                        sublocality: a['Sublocality'],
-                        platformName: a['Platform Name']
-                    });                
-                return html;
-            },
-
-            demFormatter: function(feature) {
-                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
-
-                var template =
-                    '<h3>Digital Elevation Model: ${name}</h3>' +
-                    '<div class="valueName"><span class="parameterValue"><a href="${url}" target="_blank">Link to Data</a></span></div>' +
-                    '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
-                    '<div class="valueName">Cell Size: <span class="parameterValue">${cellSize}</span></div>' +
-                    '<div class="valueName">Category: <span class="parameterValue">${category}</span></div>' +
-                    '<div class="valueName">Source: <span class="parameterValue">${source}</span></div>' +
-                    '<div class="valueName">Project: <span class="parameterValue">${project}</span></div>' +
-                    '<div class="valueName">Vertical Datum: <span class="parameterValue">${verticalDatum}</span></div>' +
-                    '<div class="valueName">Status: <span class="parameterValue">${status}</span></div>' +
-                    '<div class="valueName">Type: <span class="parameterValue">${type}</span></div>' +
-                    '<div class="valueName">Coverage: <span class="parameterValue">${coverage}</span></div>' +
-                    '<div class="valueName">Completion Date: <span class="parameterValue">${completionDate}</span></div>';
-
-                var html = string.substitute(template, {
-                        url: a['DEMURL'],
-                        name: a['Name'],
-                        cellSize: a['Cell Size'],
-                        category: a['Category'],
-                        source: a['Source'],
-                        project: a['Project'],
-                        verticalDatum: a['Vertical Datum'],
-                        status: a['Status'],
-                        type: a['Type'],
-                        coverage: a['Coverage'],
-                        completionDate: a['Completion Date']
-                    });               
-                return html;
-            },
-
-            demTileFormatter: function(feature) {
-                var a = this.replaceNullAttributesWithEmptyString(feature.attributes);
-
-                var template =
-                    '<h3>DEM Tile: ${name}</h3>' +
-                    '<div class="valueName">Name: <span class="parameterValue">${name}</span></div>' +
-                    '<div class="valueName">Cell Size: <span class="parameterValue">${cellSize}</span></div>' +
-                    '<div class="valueName">Dataset: <span class="parameterValue">${dataset}</span></div>' +
-                    '<div class="valueName">File Size: <span class="parameterValue">${fileSize}</span></div>' +
-                    '<div class="valueName">Vertical Datum: <span class="parameterValue">${verticalDatum}</span></div>';
-                    
-                var html = string.substitute(template, {
-                        itemId: a['ITEM_ID'],
-                        name: a['NAME'],
-                        dataset: a['DATASET'],
-                        fileSize: a['FILE_SIZE'],
-                        cellSize: a['CELL_SIZE'],
-                        verticalDatum: a['VERTICAL_DATUM']
-                    });                
+                    url: a['Download URL'],
+                    surveyId: a['Survey ID'],
+                    surveyYear: a['Survey Year'],
+                    locality: a['Locality'],
+                    sublocality: a['Sublocality'],
+                    platformName: a['Platform Name']
+                });                
                 return html;
             },
 

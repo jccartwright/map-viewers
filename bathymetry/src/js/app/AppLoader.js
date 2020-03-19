@@ -467,6 +467,12 @@ define([
                 if (values.institution) {
                     sql.push("UPPER(SOURCE) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
                 }
+                if (values.startDateAdded) {
+                    sql.push("ENTERED_DATE >= date '" + this.toDateString(values.startDateAdded) + "'");
+                }
+                if (values.endDateAdded) {
+                    sql.push("ENTERED_DATE <= date '" + this.toDateString(values.endDateAdded) + "'");
+                }
                 layerDefinition = sql.join(' and ');
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
@@ -491,6 +497,12 @@ define([
                 if (values.institution) {
                     sql.push("UPPER(INST_SHORT) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
                 }
+                if (values.startDateAdded) {
+                    sql.push("DATE_ADDED >= date '" + this.toDateString(values.startDateAdded) + "'");
+                }
+                if (values.endDateAdded) {
+                    sql.push("DATE_ADDED <= date '" + this.toDateString(values.endDateAdded) + "'");
+                }
                 layerDefinition = sql.join(' and ');
                 var allLayerDefinitions = [];
                 allLayerDefinitions[1] = layerDefinition;
@@ -514,6 +526,12 @@ define([
                 }
                 if (values.platform) {
                     sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
+                }
+                if (values.startDateAdded) {
+                    sql.push("DATE_ADDED >= date '" + this.toDateString(values.startDateAdded) + "'");
+                }
+                if (values.endDateAdded) {
+                    sql.push("DATE_ADDED <= date '" + this.toDateString(values.endDateAdded) + "'");
                 }
                 layerDefinition = sql.join(' and ');
                 allLayerDefinitions = [];
@@ -719,6 +737,22 @@ define([
                 }), function(error) {
                     logger.error(error);
                 });
+            },
+
+            //Format a date in the form yyyy-mm-dd
+            toDateString: function(date) {  
+                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
+            },
+
+            padDigits: function(n, totalDigits){
+                n = n.toString();
+                var pd = '';
+                if (totalDigits > n.length) {
+                    for (var i = 0; i < (totalDigits - n.length); i++) {
+                        pd += '0';
+                    }
+                }
+                return pd + n.toString();
             }
         });
     }

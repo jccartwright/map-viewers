@@ -318,7 +318,6 @@ define([
                         visible: false,
                         opacity: 0.5
                     }),
-
                     new TiledWMSLayer('https://marine.ga.gov.au/geoserver/marine/wms?', {
                         id: 'AusSeabed Bathymetry Holdings',
                         visible: false,
@@ -327,7 +326,6 @@ define([
                         epsgCode: '3857',
                         layerNames: ['marine:ausseabed_bathymetry']
                     }), 
-
                     new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/nos_hydro/MapServer', {
                         id: 'NOS Hydrographic Surveys (tiled)',
                         visible: false
@@ -368,7 +366,10 @@ define([
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
                         layerNames: ['single_beams_polygons'],
-                        opacity: 0.5,
+                        opacity: 0.5
+                        // additionalParams: {
+                        //     styles: 'seadatanet_selected'
+                        // },
                     }),
                     new TiledWMSLayer('https://geo-service.maris.nl/emodnet_bathymetry/wms?', {
                         id: 'EMODnet Multibeam Polygons',
@@ -376,12 +377,11 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        styles: 'seadatanet_selected',
                         layerNames: ['multi_beams_polygons'],
                         opacity: 0.5,
                         additionalParams: {
                             styles: 'seadatanet_selected'
-                        },
+                        }
                     }),
                     new TiledWMSLayer('https://geo-service.maris.nl/emodnet_bathymetry/wms?', {
                         id: 'EMODnet Singlebeam Lines',
@@ -389,7 +389,10 @@ define([
                         format: 'png',
                         wmsVersion: '1.3.0',
                         epsgCode: '900913',
-                        layerNames: ['single_beams_points', 'single_beams_tracks']
+                        layerNames: ['single_beams_tracks']
+                        // additionalParams: {
+                        //     styles: 'seadatanet_selected'
+                        // }
                     }),
                     new TiledWMSLayer('https://geo-service.maris.nl/emodnet_bathymetry/wms?', {
                         id: 'EMODnet Multibeam Lines',
@@ -400,8 +403,8 @@ define([
                         layerNames: ['multi_beams_tracks'],
                         additionalParams: {
                             styles: 'seadatanet_selected'
-                        },
-                    }),                      
+                        }
+                    }),   
                     new ArcGISTiledMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/trackline_bathymetry/MapServer', {
                         id: 'Trackline Bathymetry (tiled)',
                         visible: false
@@ -449,8 +452,7 @@ define([
                         id: 'CSB',
                         visible: false,
                         imageParameters: this.imageParameters.png32
-                    }),                    
-
+                    }),  
                     new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/graticule/MapServer', {
                         id: 'Graticule',
                         visible: false,
@@ -488,7 +490,7 @@ define([
                         dynamicService: this.getLayerById('NOS Hydrographic Surveys (dynamic)'),
                         visible: this.nosHydroVisible,
                         cutoffZoom: 9,
-                        defaultVisibleLayers: [0, 1, 2]
+                        defaultVisibleLayers: [0, 1]
                     },
                     {
                         id: 'BAG Hillshades',

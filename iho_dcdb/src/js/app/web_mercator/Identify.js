@@ -36,7 +36,9 @@ define([
                 //formatter specific to each sublayer, keyed by Layer/sublayer name.
                 this.formatters = {
                     'Multibeam/Multibeam Bathymetric Surveys': lang.hitch(this, this.multibeamFormatter),
-                    'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),                    
+                    'Trackline Bathymetry/Marine Trackline Surveys: Bathymetry': lang.hitch(this, this.tracklineFormatter),
+                    'NOS Hydrographic Surveys/Surveys with BAGs': lang.hitch(this, this.nosHydroFormatter),
+                    'NOS Hydrographic Surveys/Surveys with Digital Sounding Data': lang.hitch(this, this.nosHydroFormatter),                   
                     'CSB/CSB': lang.hitch(this, this.csbFormatter),
                     'NRCan Multibeam/Multibeam Bathymetry Index Map - Bathymétrie Multifaisceaux Couches Index ': lang.hitch(this, this.nrCanFormatter),
                     'EMODnet Multibeam Polygons/default': lang.hitch(this, this.emodnetMultibeamFormatter),
