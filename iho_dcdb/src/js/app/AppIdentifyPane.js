@@ -268,78 +268,79 @@ define([
                 for (var i = 0; i < this.identify.layerIds.length; i++) { //Iterate through the layerIds, specified in Identify.js. This maintains the desired ordering of the layers.
                     var svcName = this.identify.layerIds[i];
                     for (var layerName in results[svcName]) {
+                        if (results[svcName].hasOwnProperty(layerName)) {
+                            numFeaturesForLayer = results[svcName][layerName].length;
+                            totalFeatures += numFeaturesForLayer;
 
-                        numFeaturesForLayer = results[svcName][layerName].length;
-                        totalFeatures += numFeaturesForLayer;
+                            for (var j = 0; j < results[svcName][layerName].length; j++) {
+                                var item = results[svcName][layerName][j];
+                                var layerKey = svcName + '/' + layerName;
+                                var layerUrl = results[svcName][layerName][j].layerUrl;
+                                var layerType = results[svcName][layerName][j].layerType;
 
-                        for (var j = 0; j < results[svcName][layerName].length; j++) {
-                            var item = results[svcName][layerName][j];
-                            var layerKey = svcName + '/' + layerName;
-                            var layerUrl = results[svcName][layerName][j].layerUrl;
-                            var layerType = results[svcName][layerName][j].layerType;
-
-                            if (svcName === 'NOS Hydrographic Surveys') {
-                                this.isNosHydro = true;
-                                //Create an "NOS Hydrographic Surveys" folder if it doesn't already exist
-                                if (this.featureStore.query({id: 'NOS Hydrographic Surveys'}).length === 0) {
+                                if (svcName === 'NOS Hydrographic Surveys') {
+                                    this.isNosHydro = true;
+                                    //Create an "NOS Hydrographic Surveys" folder if it doesn't already exist
+                                    if (this.featureStore.query({id: 'NOS Hydrographic Surveys'}).length === 0) {
+                                        this.featureStore.put({
+                                            uid: ++this.uid,
+                                            id: 'NOS Hydrographic Surveys',
+                                            label: '<b><i>NOS Hydrographic Surveys</i></b>',
+                                            type: 'folder',
+                                            parent: 'root'
+                                        });                                      
+                                    }
+                                }
+                                
+                                //Create a layer "folder" node if it doesn't already exist
+                                if (this.featureStore.query({id: this.getFolderName(layerKey)}).length === 0) {
                                     this.featureStore.put({
                                         uid: ++this.uid,
-                                        id: 'NOS Hydrographic Surveys',
-                                        label: '<b><i>NOS Hydrographic Surveys</i></b>',
+                                        id: this.getFolderName(layerKey),
+                                        label: this.getLayerDisplayLabel(item, this.folderCounts[this.getFolderName(layerKey)]),
                                         type: 'folder',
-                                        parent: 'root'
-                                    });                                      
+                                        //If NOS Hydro, parent is the NOS Hydro folder, else parent is root.
+                                        parent: svcName === 'NOS Hydrographic Surveys' ? 
+                                            'NOS Hydrographic Surveys' : 'root'
+                                    });
                                 }
-                            }
-                            
-                            //Create a layer "folder" node if it doesn't already exist
-                            if (this.featureStore.query({id: this.getFolderName(layerKey)}).length === 0) {
+
+                                if (svcName === 'CSB') {
+                                    this.isCsb = true;
+                                }
+                                if (svcName === 'Multibeam') {
+                                    this.isMultibeam = true;
+                                }
+                                if (svcName === 'Trackline Bathymetry') {
+                                    this.isTracklineBathymetry = true;
+                                }
+                                
+                                //Add the current item to the store, with the layerName folder as parent
                                 this.featureStore.put({
                                     uid: ++this.uid,
-                                    id: this.getFolderName(layerKey),
-                                    label: this.getLayerDisplayLabel(item, this.folderCounts[this.getFolderName(layerKey)]),
-                                    type: 'folder',
-                                    //If NOS Hydro, parent is the NOS Hydro folder, else parent is root.
-                                    parent: svcName === 'NOS Hydrographic Surveys' ? 
-                                        'NOS Hydrographic Surveys' : 'root'
+                                    id: this.uid,                                
+                                    displayLabel: this.getItemDisplayLabel(item, this.uid),
+                                    label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
+                                    layerUrl: layerUrl,
+                                    layerKey: layerKey,
+                                    layerType: layerType,
+                                    attributes: item.feature.attributes,
+                                    parent: this.getFolderName(layerKey),
+                                    type: 'item'
                                 });
                             }
-
-                            if (svcName === 'CSB') {
-                                this.isCsb = true;
-                            }
-                            if (svcName === 'Multibeam') {
-                                this.isMultibeam = true;
-                            }
-                            if (svcName === 'Trackline Bathymetry') {
-                                this.isTracklineBathymetry = true;
-                            }
-                            
-                            //Add the current item to the store, with the layerName folder as parent
-                            this.featureStore.put({
-                                uid: ++this.uid,
-                                id: this.uid,                                
-                                displayLabel: this.getItemDisplayLabel(item, this.uid),
-                                label: this.getItemDisplayLabel(item, this.uid) + " <a id='zoom-" + this.uid + "' href='#' class='zoomto-link'><img src='" + this.magnifyingGlassIconUrl + "'></a>",
-                                layerUrl: layerUrl,
-                                layerKey: layerKey,
-                                layerType: layerType,
-                                attributes: item.feature.attributes,
-                                parent: this.getFolderName(layerKey),
-                                type: 'item'
-                            });
                         }
                     }
-                }
-                if (this.identify.searchGeometry.type !== 'point') {
-                    this.featureStore.put({
-                        uid: ++this.uid,
-                        id: 'EMODnet',
-                        label: '<i>Note: WMS layers (EMODnet, MAREANO) are only available using a point (single-click) to identify.</i>',
-                        type: 'item',
-                        //If NOS Hydro, parent is the NOS Hydro folder, else parent is root.
-                        parent: 'root'
-                    });
+                    if (this.identify.searchGeometry.type !== 'point') {
+                        this.featureStore.put({
+                            uid: ++this.uid,
+                            id: 'EMODnet',
+                            label: '<i>Note: WMS layers (EMODnet, MAREANO) are only available using a point (single-click) to identify.</i>',
+                            type: 'item',
+                            //If NOS Hydro, parent is the NOS Hydro folder, else parent is root.
+                            parent: 'root'
+                        });
+                    }
                 }
                 return totalFeatures;
             },
@@ -360,12 +361,12 @@ define([
 
                 var layerName = this.currentItem.layerKey.split('/')[0];
 
-                if (layerName === 'CSB') {
-                    this.extractSingleDatasetButton.set('label', 'Extract this File');
-                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', '');
-                } else {
-                    domStyle.set(this.extractSingleDatasetButton.domNode, 'display', 'none');
-                }
+                // if (layerName === 'CSB') {
+                //     this.extractSingleDatasetButton.set('label', 'Extract this File');
+                //     domStyle.set(this.extractSingleDatasetButton.domNode, 'display', '');
+                // } else {
+                //     domStyle.set(this.extractSingleDatasetButton.domNode, 'display', 'none');
+                // }
             },
 
             openNextWarningDialog: function(datasetId, itemId) {

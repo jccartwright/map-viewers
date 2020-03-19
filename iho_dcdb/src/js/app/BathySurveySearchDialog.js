@@ -8,6 +8,7 @@ define([
     'dijit/form/Select', 
     'dijit/form/CheckBox', 
     'dijit/form/TextBox', 
+    'dijit/form/DateTextBox',
     'dijit/form/FilteringSelect',
     'dojo/_base/lang',
     'dojo/_base/array',
@@ -27,6 +28,7 @@ define([
         Select, 
         CheckBox, 
         TextBox, 
+        DateTextBox,
         FilteringSelect,
         lang,
         array,
@@ -316,7 +318,8 @@ define([
                 return (!values.startYear && !values.endYear && 
                     this.platformSelect.get('_lastDisplayedValue') === '' && 
                     this.institutionSelect.get('_lastDisplayedValue') === '' && 
-                    this.surveySelect.get('_lastDisplayedValue') === '');
+                    this.surveySelect.get('_lastDisplayedValue') === '' &&
+                    !this.startDateAddedInput.get('value') && !this.endDateAddedInput.get('value'));
             },
                    
             clearForm: function() {                
@@ -326,6 +329,8 @@ define([
                 this.startYearSpinner.set('value', '');
                 this.endYearSpinner.set('value', '');
                 this.chkZoomToResults.set('checked', true);
+                this.startDateAddedInput.reset();
+                this.endDateAddedInput.reset();
             },
 
             reset: function() {

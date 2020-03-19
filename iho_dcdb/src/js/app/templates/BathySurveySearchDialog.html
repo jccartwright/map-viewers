@@ -51,6 +51,18 @@
         </tr>
         <tr>
             <td>
+                <label>Date added to database: </label><img id="bathyDateAddedHelp" class="tooltipButton" src="images/question-button.png"></label><br/>
+                <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'bathyDateAddedHelp'">
+                    <div class="tooltipText">Search by date the survey was added to NCEI's archives. Note that surveys prior to ~2006 may lack this information and will be excluded.</div>
+                </div>
+                <label for="startDateAddedInput">Start:</label>
+                <input data-dojo-type="dijit/form/DateTextBox" class="surveySelect-dateTextBox" data-dojo-attach-point="startDateAddedInput" name="startDateAdded" type="text" data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}">
+                <label for="endDateAddedInput">End:</label>
+                <input data-dojo-type="dijit/form/DateTextBox" class="surveySelect-dateTextBox" data-dojo-attach-point="endDateAddedInput" name="endDateAdded" type="text" data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}">
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <input data-dojo-attach-point="chkZoomToResults" data-dojo-type="dijit/form/CheckBox" checked="true" value="false" type="checkbox" name="chkZoomToResults"/>
                 Zoom to Results
             </td>

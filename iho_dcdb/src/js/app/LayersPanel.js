@@ -5,6 +5,7 @@ define([
     'dojo/on',
     'dojo/dom',
     'dojo/dom-attr',
+    'dojo/string',
     'dojo/dom-construct',
     'dijit/form/CheckBox',
     'dijit/form/RadioButton',
@@ -24,6 +25,7 @@ define([
         on,
         dom,
         domAttr,
+        string,
         domConstruct,
         CheckBox,
         RadioButton,
@@ -158,7 +160,7 @@ define([
                 on(this.chkGebcoSID, 'change', lang.hitch(this, function() {
                     topic.publish('/ngdc/layer/visibility', 'GEBCO_2019 SID', this.chkGebcoSID.checked);
                 }));
-                
+                                
                 this.csbSearchDialog = new CsbSearchDialog({title: 'Search Crowdsourced Bathymetry Files'});
                 on(this.csbSearchButton, 'click', lang.hitch(this, function() {
                     if (!this.csbSearchDialog) {
@@ -267,13 +269,20 @@ define([
                 if (values.institution) {
                     s += 'Source Institution: ' + values.institution + '<br>';
                 }
+
+                if (values.startDateAdded && !values.endDateAdded) {
+                    s += 'Date Added: ' + this.toDateString(values.startDateAdded) + '-present<br>';
+                } else if (values.startDateAdded && values.endDateAdded) {
+                    s += 'Date Added: ' + this.toDateString(values.startDateAdded) + ' to ' + this.toDateString(values.endDateAdded) + '<br>';
+                } else if (!values.startDateAdded && values.endDateAdded) {
+                    s += 'Date Added: ' + this.toDateString(values.endDateAdded) + ' and earlier<br>';
+                }
                 filterDiv.innerHTML = s;
             },
 
-            //Format a date as yyyy-mm-dd
-            toDateString: function(dateStr) {
-                var date = new Date(dateStr);
-                return date.getFullYear() + '-' + this.padDigits(date.getMonth()+1,2) + '-' + this.padDigits(date.getDate(),2);
+            //Format a date in the form yyyy-mm-dd
+            toDateString: function(date) {
+                return date.getFullYear() + '-' + string.pad(date.getMonth()+1, 2) + '-' + string.pad(date.getDate(), 2);
             },
 
             padDigits: function(n, totalDigits){

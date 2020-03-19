@@ -413,6 +413,12 @@ define([
                 if (values.institution) {
                     sql.push("UPPER(SOURCE) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
                 }
+                if (values.startDateAdded) {
+                    sql.push("ENTERED_DATE >= date '" + this.toDateString(values.startDateAdded) + "'");
+                }
+                if (values.endDateAdded) {
+                    sql.push("ENTERED_DATE <= date '" + this.toDateString(values.endDateAdded) + "'");
+                }
                 layerDefinition = sql.join(' and ');
                 this.mercatorMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
                 this.arcticMapConfig.mapLayerCollection.getLayerById('Multibeam').setLayerDefinitions([layerDefinition]);
@@ -437,6 +443,12 @@ define([
                 if (values.institution) {
                     sql.push("UPPER(INST_SHORT) LIKE '" + values.institution.toUpperCase().replace(/\*/g, '%') + "'");
                 }
+                if (values.startDateAdded) {
+                    sql.push("DATE_ADDED >= date '" + this.toDateString(values.startDateAdded) + "'");
+                }
+                if (values.endDateAdded) {
+                    sql.push("DATE_ADDED <= date '" + this.toDateString(values.endDateAdded) + "'");
+                }
                 layerDefinition = sql.join(' and ');
                 var allLayerDefinitions = [];
                 allLayerDefinitions[1] = layerDefinition;
@@ -460,6 +472,12 @@ define([
                 }
                 if (values.platform) {
                     sql.push("UPPER(PLATFORM) LIKE '" + values.platform.toUpperCase().replace(/\*/g, '%') + "'");
+                }
+                if (values.startDateAdded) {
+                    sql.push("DATE_ADDED >= date '" + this.toDateString(values.startDateAdded) + "'");
+                }
+                if (values.endDateAdded) {
+                    sql.push("DATE_ADDED <= date '" + this.toDateString(values.endDateAdded) + "'");
                 }
                 layerDefinition = sql.join(' and ');
                 allLayerDefinitions = [];
