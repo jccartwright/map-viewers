@@ -35,7 +35,7 @@
             <td align="left" colspan="2">               
                 <label>Source Institution: <img id="institutionHelp" class="tooltipButton" src="images/question-button.png"></label><br/>
                 <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'institutionHelp'">
-                    <div class="tooltipText">Select the source institution for the survey. Institutions are shown for the currently-visible layers. You can enter a wildcard (*) to find multiple matches.Note: this field currently does not apply to NOS Hydrographic Surveys.</div>
+                    <div class="tooltipText">Select the source institution for the survey. Institutions are shown for the currently-visible layers. You can enter a wildcard (*) to find multiple matches. Note: this field currently does not apply to NOS Hydrographic Surveys.</div>
                 </div>
                 <div data-dojo-attach-point="institutionSelectDiv"></div>
             </td>
@@ -47,6 +47,18 @@
                     <div class="tooltipText">Select the survey ID for the survey. Survey IDs are shown for the currently-visible layers. The list is filtered by the selected min/max year and platform. You can enter a wildcard (*) to find multiple matches. For example, typing EX* would find EX0801, EX0802, EX0901, etc.</div>
                 </div>
                 <div data-dojo-attach-point="surveySelectDiv"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Date added to database: </label><img id="dateAddedHelp" class="tooltipButton" src="images/question-button.png"></label><br/>
+                <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId:'dateAddedHelp'">
+                    <div class="tooltipText">Search by date the survey was added to NCEI's archives. Note that surveys prior to ~2006 may lack this information and will be excluded.</div>
+                </div>
+                <label for="startDateAddedInput">Start:</label>
+                <input data-dojo-type="dijit/form/DateTextBox" class="surveySelect-dateTextBox" data-dojo-attach-point="startDateAddedInput" name="startDateAdded" type="text" data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}">
+                <label for="endDateAddedInput">End:</label>
+                <input data-dojo-type="dijit/form/DateTextBox" class="surveySelect-dateTextBox" data-dojo-attach-point="endDateAddedInput" name="endDateAdded" type="text" data-dojo-props="constraints: {datePattern: 'yyyy-MM-dd'}">
             </td>
         </tr>
         <tr>
