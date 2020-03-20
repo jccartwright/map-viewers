@@ -103,22 +103,22 @@ define([
                                       
                 var basemapLayer = this.mapLayerCollection.getLayerById('Ocean Base');
                 var boundariesLayer = this.mapLayerCollection.getLayerById('Ocean Reference');
-                //var hillshadeLayer = this.mapLayerCollection.getLayerById('Multibeam Mosaic');
-                //hillshadeLayer.setDefinitionExpression("SurveyID='" + this.survey + "'");
+                var hillshadeLayer = this.mapLayerCollection.getLayerById('Multibeam Mosaic');
+                hillshadeLayer.setDefinitionExpression("SURVEY_ID='" + this.survey + "'");
 
-                //var toggleHillshade = registry.byId('toggleHillshade');
+                var toggleHillshade = registry.byId('toggleHillshade');
 
-                // on(toggleHillshade, "click", lang.hitch(this, function() {
-                //     var checked = toggleHillshade.get('checked');
-                //     if (checked) {                        
-                //         toggleHillshade.set('label', 'Hide Hillshade');
-                //         hillshadeLayer.show();
-                //     }
-                //     else {                        
-                //         toggleHillshade.set('label', 'Show Hillshade');
-                //         hillshadeLayer.hide();
-                //     }
-                // }));
+                on(toggleHillshade, "click", lang.hitch(this, function() {
+                    var checked = toggleHillshade.get('checked');
+                    if (checked) {                        
+                        toggleHillshade.set('label', 'Hide Hillshade');
+                        hillshadeLayer.show();
+                    }
+                    else {                        
+                        toggleHillshade.set('label', 'Show Hillshade');
+                        hillshadeLayer.hide();
+                    }
+                }));
                 basemapLayer.show();
                 boundariesLayer.show();
                 
@@ -132,8 +132,6 @@ define([
 
                 this.hideLoading(); //Manually hide the loading icon... seems to be getting stuck sometimes.                  
             }
-
-            
         });
     }
 );

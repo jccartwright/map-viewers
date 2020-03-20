@@ -29,16 +29,14 @@ define([
             },
 
             defineMapServices: function() {
-                //TODO check to ensure unique id
-
-                // var params = new ImageServiceParameters();
-                // params.format = 'jpgpng';
-                // params.compressionQuality = 90;
-                // params.interpolation = ImageServiceParameters.INTERPOLATION_BILINEAR;
+                var params = new ImageServiceParameters();
+                params.format = 'jpgpng';
+                params.compressionQuality = 90;
+                params.interpolation = ImageServiceParameters.INTERPOLATION_BILINEAR;
                 
-                // var rasterFunction = new RasterFunction();
-                // rasterFunction.functionName = "ColorHillshade";
-                // params.renderingRule = rasterFunction;
+                var rasterFunction = new RasterFunction();
+                rasterFunction.functionName = "MultidirectionalHillshadeHaxby_8000-0";
+                params.renderingRule = rasterFunction;
 
                 //all are invisible by default to hide the initial zoom to extent
                 this.mapServices = [
@@ -46,11 +44,11 @@ define([
                         id: 'Ocean Base',
                         visible: true
                     }),                                 
-                    // new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_subsets/ImageServer', {
-                    //     id: 'Multibeam Mosaic',
-                    //     imageServiceParameters: params,
-                    //     visible: false
-                    // }),
+                    new ArcGISImageServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/multibeam_mosaic_subsets/ImageServer', {
+                        id: 'Multibeam Mosaic',
+                        imageServiceParameters: params,
+                        visible: false
+                    }),
                     new FeatureLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/web_mercator/multibeam_dynamic/MapServer/0', {
                         id: 'Multibeam',
                         mode: FeatureLayer.MODE_ONDEMAND,
