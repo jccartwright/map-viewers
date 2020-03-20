@@ -85,7 +85,7 @@ define([
                     }, new LayerCollection());
                 }
                 else {
-                    //domStyle.set(registry.byId('toggleHillshade').domNode, 'display', 'none');
+                    domStyle.set(registry.byId('toggleHillshade').domNode, 'display', 'none');
                     dom.byId('centerPane').innerHTML = 'Map disabled. Please provide survey, xmin, ymin, xmax, and ymax parameters.';
                 }
 
@@ -97,10 +97,10 @@ define([
                 //     }
                 // });
 
-                //var tooltipTimeout;
-                //var mouseLeaveTimeout;
-                //var toggleHillshade = registry.byId('toggleHillshade');
-                //Show the tooltip 1/2 sec after entering the toggle button
+                // var tooltipTimeout;
+                // var mouseLeaveTimeout;
+                // var toggleHillshade = registry.byId('toggleHillshade');
+                // //Show the tooltip 1/2 sec after entering the toggle button
                 // on(toggleHillshade, 'mouseenter', lang.hitch(this, function() {
                 //     tooltipTimeout = setTimeout(lang.hitch(this, function() {
                 //         popup.open({
@@ -110,20 +110,20 @@ define([
                 //     }), 500);
                 // }));
 
-                //Hide the tooltip when toggle button is clicked
+                // //Hide the tooltip when toggle button is clicked
                 // on(toggleHillshade, 'click', lang.hitch(this, function() {
                 //     clearTimeout(tooltipTimeout);
                 //     popup.close(hillshadeTooltip);
                 // }));  
 
-                //Hide the tooltip 1 sec after leaving the toggle button
+                // //Hide the tooltip 1 sec after leaving the toggle button
                 // on(toggleHillshade, 'mouseleave', lang.hitch(this, function() {
                 //     mouseLeaveTimeout = setTimeout(function() {
                 //         popup.close(hillshadeTooltip);
                 //     }, 1000);
                 // })); 
 
-                //Keep showing the tooltip when the tooltip is entered
+                // //Keep showing the tooltip when the tooltip is entered
                 // on(hillshadeTooltip.domNode, 'mouseenter', lang.hitch(this, function() {                    
                 //     setTimeout(function() {
                 //         //short timeout to make sure this happens after the above mouseleave event
