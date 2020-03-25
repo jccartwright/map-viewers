@@ -419,8 +419,11 @@ define([
                 this.signifTsEventSelect.set('value', tsEventId);
 
                 if (tsEventId !== '') {
-                    tttLayer = this.signifTsEventSelect.store.query({id: tsEventId})[0].tttLayer;
-                    riftLayer = this.signifTsEventSelect.store.query({id: tsEventId})[0].riftLayer;
+                    var signifTsEvent = this.signifTsEventSelect.store.query({id: tsEventId})[0];
+                    if (signifTsEvent) {
+                        tttLayer = signifTsEvent.tttLayer;
+                        riftLayer = signifTsEvent.riftLayer;
+                    }
                 }
 
                 topic.publish('/ngdc/sublayer/visibility', 'TTT', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], false);

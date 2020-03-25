@@ -75,7 +75,7 @@ define([
                     '<i><b>Tsunami Event</b></i><br>' +
                     '<table class="idTable">' +
                         '<tr colspan="2">' +
-                            '<td><a href="http://www.ngdc.noaa.gov/nndc/struts/results?EQ_0=${ID}&t=101650&s=9&d=99,91,95,93&nd=display" target="_blank">Additional Info</a>' +
+                            '<td><a href="https://www.ngdc.noaa.gov/hazel/view/hazards/tsunami/event-more-info/${ID}" target="_blank">Additional Info</a>' +
                         '</tr>' +
                         '<tr class="idTr">' +
                             '<td><b>Date (yyyy/mm/dd):</b></td>' +
@@ -208,7 +208,7 @@ define([
                     '<i><b>Tsunami Observation</b></i><br>' +
                     '<table class="idTable">' +
                         '<tr colspan="2">' +
-                            '<td><a href="http://www.ngdc.noaa.gov/nndc/struts/results?EQ_0=${ID}&t=101650&s=10&d=99,185,186,76,78&nd=display" target="_blank">Additional Info</a>' +
+                            '<td><a href="https://www.ngdc.noaa.gov/hazel/view/hazards/tsunami/runup-more-info/${ID}" target="_blank">Additional Info</a>' +
                         '</tr>' +
                         '<tr class="idTr">' +
                             '<td><b>Location Name:</b></td>' +
@@ -356,7 +356,7 @@ define([
                     '<i><b>Significant Earthquake</b></i><br>' +
                     '<table class="idTable">' +
                         '<tr colspan="2">' +
-                            '<td><a href="http://www.ngdc.noaa.gov/nndc/struts/results?EQ_0=${ID}&t=101650&s=13&d=22,26,13,12&nd=display" target="_blank">Additional Info</a>' +
+                            '<td><a href="https://www.ngdc.noaa.gov/hazel/view/hazards/earthquake/event-more-info/${ID}" target="_blank">Additional Info</a>' +
                         '</tr>' +
                         '<tr class="idTr">' +
                             '<td><b>Date (yyyy/mm/dd):</b></td>' +
@@ -493,7 +493,7 @@ define([
                     '<i><b>Significant Volcanic Eruption</b></i><br>' +
                     '<table class="idTable">' +
                         '<tr colspan="2">' +
-                            '<td><a href="http://www.ngdc.noaa.gov/nndc/struts/results?EQ_0=${ID}&t=102557&s=1&d=140,145,175,180&nd=display" target="_blank">Additional Info</a>' +
+                            '<td><a href="https://www.ngdc.noaa.gov/hazel/view/hazards/volcano/event-more-info/${ID}" target="_blank">Additional Info</a>' +
                         '</tr>' +
                         '<tr class="idTr">' +
                             '<td><b>Name:</b></td>' +
@@ -603,7 +603,7 @@ define([
                     '<i><b>Volcano</b></i><br>' +
                     '<table class="idTable">' +
                         '<tr colspan="2">' +
-                            '<td><a href="http://www.ngdc.noaa.gov/nndc/struts/results?type_0=Like&op_8=eq&v_8=&type_10=EXACT&query_10=None+Selected&le_2=&ge_3=&le_3=&ge_2=&op_5=eq&v_5=&op_6=eq&v_6=&op_7=eq&v_7=&t=102557&s=5&d=5&query_0=${name}" target="_blank">Additional Info</a>' +
+                            '<td><a href="https://www.ngdc.noaa.gov/hazel/view/hazards/volcano/loc-data?nameMatch=${name}" target="_blank">Additional Info</a>' +
                         '</tr>' +
                         '<tr class="idTr">' +
                             '<td><b>Name:</b></td>' +
