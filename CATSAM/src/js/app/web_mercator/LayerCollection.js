@@ -57,7 +57,7 @@ define([
                         id: 'Ocean Base',
                         visible: false,
                     }),
-                    new ArcGISDynamicMapServiceLayer('https://gis.ngdc.noaa.gov/arcgis/rest/services/caribe_ews_energy_plots/MapServer', {
+                    new ArcGISDynamicMapServiceLayer('https://gisdev.ngdc.noaa.gov/arcgis/rest/services/caribe_ews_energy_plots/MapServer', {
                         id: 'CARIBE-EWS Tsunami Energy',
                         visible: false,
                         opacity: 0.7,
