@@ -26,7 +26,7 @@
     "gulp-util": "^3.0.8",
     "gulp-watch": "^4.3.11",
     "gulp-zip": "^4.0.0",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.3",
     "proj4": "^2.3.17",
     "run-sequence": "^1.2.2"
   },
