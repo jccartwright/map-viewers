@@ -14,7 +14,7 @@
   "devDependencies": {
     "browser-sync": "^2.18.7",
     "eslint-html-reporter": "^0.5.2",
-    "express": "^4.14.1",
+    "express": "^4.17.3",
     "graceful-fs": "^4.1.11",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
